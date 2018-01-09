@@ -1,0 +1,6 @@
+$black: black;
+
+// responsive
+@mixin res($width, $dir: max) {
+	@media (#{$dir}-width: #{$width} + "px") {@content}
+}

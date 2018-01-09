@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  app:
+    container_name: sikane-app
+    image: signifly/node8
+    ports:
+      - "3000-3010:3000-3010"
+    volumes:
+      - ./:/app
