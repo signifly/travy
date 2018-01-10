@@ -1,15 +1,18 @@
 <template>
-	<div class="text" :class="status">
-		{{text}}
+	<div class="status">
+		<Tag :type="status" size="medium">{{text}}</Tag>
 	</div>
 </template>
 
 <script>
+import {Tag} from "element-ui";
+
 export default {
+	components: {Tag},
 	props: {
 		text: {type: String, required: true},
 		status: {
-			required: false,
+			required: true,
 			validator: function (value) {
 				return ["danger", "warning", "info", "success"].includes(value);
 			}
@@ -19,18 +22,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.text {
-	&.danger {
-		color: $--color-danger;
-	}
-	&.warning {
-		color: $--color-warning;
-	}
-	&.info {
-		color: $--color-info;
-	}
-	&.success {
-		color: $--color-success;
+.status {
+	.el-tag {
+		width: 6em;
+		text-align: center;
 	}
 }
 </style>

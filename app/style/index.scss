@@ -1,5 +1,7 @@
 @import "~normalize.css/normalize";
+@import "var";
 
 body {
 	font-family: Helvetica;
+	background-color: $white2;
 }

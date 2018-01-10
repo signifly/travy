@@ -1,12 +1,19 @@
 <template>
 	<div class="products">
-		products
+		<mainTable v-bind="{title}"></mainTable>
 	</div>
 </template>
 
 <script>
-export default {
+import mainTable from "../components/table/main.vue";
 
+export default {
+	components: {mainTable},
+	data() {
+		return {
+			title: "Products"
+		}
+	}
 };
 </script>
 

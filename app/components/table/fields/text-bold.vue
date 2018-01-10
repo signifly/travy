@@ -1,17 +1,19 @@
 <template>
-	<div class="thumbnail">
-		thumbnail
+	<div class="text">
+		{{text}}
 	</div>
 </template>
 
 <script>
 export default {
-
+	props: {
+		text: {type: String, required: true}
+	}
 };
 </script>
 
 <style lang="scss" scoped>
-.thumbnail {
-
+.text {
+	font-weight: 600;
 }
 </style>
