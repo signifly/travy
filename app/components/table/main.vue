@@ -11,7 +11,7 @@
 			@sort-change="sort"
 			header-row-class-name="header-row"
 			header-cell-class-name="header-cell">
-				<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name">
+				<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name" :prop="column.sortBy">
 					<component
 						slot-scope="scope"
 						v-if="components[column.fieldType.id]"
@@ -21,6 +21,8 @@
 					/>
 				</TableColumn>
 			</Table>
+
+			<pagination v-bind="{data: pagination}" @page="page" />
 		</box>
 	</div>
 </template>
@@ -28,22 +30,26 @@
 <script>
 import {mapValues} from "lodash";
 import box from "../box.vue";
+import pagination from "./pagination.vue";
 import {Table, TableColumn} from "element-ui";
 import {vText, vTextBold, vStatus, vImage, vSwitch, vSelect} from "./fields";
 
 export default {
-	components: {box, Table, TableColumn, vText, vTextBold, vStatus, vImage, vSwitch, vSelect},
+	components: {box, pagination, Table, TableColumn, vText, vTextBold, vStatus, vImage, vSwitch, vSelect},
 	props: {
 		title: {type: String, required: false}
 	},
 	data() {
 		return {
 			columns: [],
-			data: null
+			data: null,
+			pages: null,
+			pagination: {}
 		}
 	},
 	computed: {
 		components: (t) => t.$options.components,
+		query: (t) => t.$route.query,
 
 		tableColumns() {
 			return this.columns.map(x => ({
@@ -61,12 +67,20 @@ export default {
 			console.log(prop, order);
 		},
 
+		page(page) {
+			this.$router.push({query: {page}});
+			this.getData();
+		},
+
 		getData() {
+			const page = this.query.page;
+
 			this.columns = [
 				{
 					name: "title",
 					label: "Title",
 					sortable: true,
+					sortBy: "text",
 					fieldType: {
 						id: "vText"
 					},
@@ -78,7 +92,6 @@ export default {
 				{
 					name: "image",
 					label: "Image",
-					sortable: false,
 					fieldType: {
 						id: "vImage"
 					},
@@ -89,7 +102,6 @@ export default {
 				{
 					name: "switch",
 					label: "Switch",
-					sortable: false,
 					fieldType: {
 						id: "vSwitch"
 					},
@@ -100,7 +112,6 @@ export default {
 				{
 					name: "status",
 					label: "Status",
-					sortable: false,
 					fieldType: {
 						id: "vStatus"
 					},
@@ -112,7 +123,6 @@ export default {
 				{
 					name: "select",
 					label: "Select",
-					sortable: false,
 					fieldType: {
 						id: "vSelect"
 					},
@@ -125,6 +135,7 @@ export default {
 					name: "prisforskel",
 					label: "Prisforskel",
 					sortable: true,
+					sortBy: "priceDiff",
 					fieldType: {
 						id: "vText"
 					},
@@ -193,7 +204,19 @@ export default {
 					priceDiff: "-1,3%",
 					priceDiffStatus: "danger"
 				}
-			]
+			];
+
+			const meta = {
+				current_page: 1,
+				from: 1,
+				last_page: 2,
+				path: "http://api.sikane.dk/v1/products",
+				per_page: 15,
+				to: 17,
+				total: 17
+			};
+
+			this.pagination = meta;
 		}
 	},
 	created() {
