@@ -18,8 +18,8 @@ module.exports = {
 	output: {
 		path: __dirname + "/dist",
 		publicPath: "/",
-		filename: production ? "app-[hash].js" : "app.js",
-		chunkFilename: production ? "[name].app-[hash].js" : "[name].app.js"
+		filename: "app.js",
+		chunkFilename: "[name].app.js"
 	},
 	module: {
 		rules: [
@@ -80,11 +80,7 @@ module.exports = {
 				]
 			},
 			{
-				test: /\.css$/,
-				loader: "style-loader!css-loader"
-			},
-			{
-				test: /\.(scss|sass)$/,
+				test: /\.(css|scss|sass)$/,
 				use: ExtractTextPlugin.extract({
 					use: ["css-loader", "sass-loader", "postcss-loader"],
 					fallback: "style-loader"
@@ -92,7 +88,7 @@ module.exports = {
 			},
 			{
 				test: /\.(woff|woff2|eot|ttf)$/,
-				loader: "file-loader" + (production ? "?name=/fonts/[name].[ext]" : "")
+				loader: "file-loader?name=[name].[ext]"
 			}
 		]
 	},
@@ -116,13 +112,18 @@ module.exports = {
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NamedModulesPlugin(),
 
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "commons",
+			filename: "commons.js"
+		}),
+
 		new HtmlWebpackPlugin({
 			template: "app/index.hbs",
 			hash: production,
 			title: "Sikane"
 		}),
 
-		new ExtractTextPlugin({filename: production ? "app-[hash].css" : "app.css", disable: !production}),
+		new ExtractTextPlugin({filename: "app.css", disable: !production}),
 
 		new BrowserSyncPlugin({
 			open: false,
