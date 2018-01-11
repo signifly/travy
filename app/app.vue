@@ -22,6 +22,9 @@ export default {
 
 <style lang="scss" scoped>
 .app {
+	background-color: $white2;
+	min-height: 100vh;
+
 	.el-header {
 		background-color: #334056;
 

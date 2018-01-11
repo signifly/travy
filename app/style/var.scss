@@ -8,7 +8,13 @@ $white2: #F5F7FA;
 
 $blue1: #334056;
 $blue2: #E0E6ED;
+$blue3: #C0CCDA;
+$blue4: #5E6D82;
 
+
+// settings
+
+$width: 1440px;
 
 // utils
 @mixin res($width, $dir: max) {

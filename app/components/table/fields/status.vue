@@ -1,6 +1,6 @@
 <template>
 	<div class="status">
-		<Tag :type="status" size="medium">{{text}}</Tag>
+		<Tag :type="status" size="small">{{text}}</Tag>
 	</div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
 <style lang="scss" scoped>
 .status {
 	.el-tag {
-		width: 6em;
+		min-width: 6em;
 		text-align: center;
 	}
 }

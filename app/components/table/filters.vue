@@ -1,6 +1,6 @@
 <template>
-	<div class="table">
-		table
+	<div class="filters">
+		filters
 	</div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table {
-
+.filters {
+	
 }
 </style>

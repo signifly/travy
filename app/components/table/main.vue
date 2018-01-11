@@ -1,60 +1,83 @@
 <template>
-	<div class="table-main">
-		<box>
-			<div class="header">
-				<div class="info">
-					<div class="title">{{title}}</div>
-				</div>
-			</div>
-			<Table
-			v-bind="{data}"
-			@sort-change="sort"
-			header-row-class-name="header-row"
-			header-cell-class-name="header-cell">
-				<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name" :prop="column.sortBy">
-					<component
-						slot-scope="scope"
-						v-if="components[column.fieldType.id]"
-						:is="column.fieldType.id"
-						:column="column"
-						v-bind="props(column.props, scope.row)"
-					/>
-				</TableColumn>
-			</Table>
+	<div class="table-main" v-if="data">
 
-			<pagination v-bind="{data: pagination}" @page="page" />
-		</box>
+		<div class="header">
+			<filters />
+			<actions v-bind="{actions}" />
+		</div>
+
+		<div class="table">
+			<box>
+				<div class="top">
+					<div class="info">
+						<div class="title">{{title}}</div>
+						<div class="total">{{pagination.total}}</div>
+					</div>
+				</div>
+
+				<Table
+				:default-sort="defaultSort"
+				ref="table"
+				v-bind="{data}"
+				header-row-class-name="header-row"
+				header-cell-class-name="header-cell"
+				@sort-change="sort"
+				@selection-change="select">
+
+					<TableColumn type="selection" v-if="batch.active" />
+
+					<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name">
+						<component
+						 	slot-scope="scope"
+							v-if="components[column.fieldType.id]"
+							:is="column.fieldType.id"
+							:column="column"
+							v-bind="props(column.props, scope.row)"
+						/>
+					</TableColumn>
+
+				</Table>
+
+				<pagination v-bind="{data: pagination}" @page="page" />
+				<panel v-if="selected.length > 0" v-bind="{selected, batch}" @unselect="unselect" />
+			</box>
+		</div>
 	</div>
 </template>
 
 <script>
 import {mapValues} from "lodash";
 import box from "../box.vue";
-import pagination from "./pagination.vue";
+import {pagination, panel, actions, filters} from "./index";
 import {Table, TableColumn} from "element-ui";
 import {vText, vTextBold, vStatus, vImage, vSwitch, vSelect} from "./fields";
 
 export default {
-	components: {box, pagination, Table, TableColumn, vText, vTextBold, vStatus, vImage, vSwitch, vSelect},
+	components: {box, pagination, panel, actions, filters, Table, TableColumn, vText, vTextBold, vStatus, vImage, vSwitch, vSelect},
 	props: {
 		title: {type: String, required: false}
 	},
 	data() {
 		return {
-			columns: [],
+			definitions: null,
 			data: null,
-			pages: null,
-			pagination: {}
+			pagination: {},
+			selected: [],
+			loaded: false
 		}
 	},
 	computed: {
 		components: (t) => t.$options.components,
 		query: (t) => t.$route.query,
+		batch: (t) => t.definitions.batch,
+		actions: (t) => t.definitions.actions,
+		defaults: (t) => t.definitions.defaults,
+		defaultSort: (t) => t.query.sort ? {} : t.defaults.sort,
 
 		tableColumns() {
-			return this.columns.map(x => ({
-				...x,
-				sortable: x.sortable ? "custom" : false
+			return this.definitions.columns.map(x => ({...x,
+				sortable: x.sortable ? "custom" : false,
+				prop: x.sortBy
 			}));
 		}
 	},
@@ -64,87 +87,143 @@ export default {
 		},
 
 		sort({prop, order}) {
-			console.log(prop, order);
+			const sort = {sortBy: prop || undefined, sortDir: order || undefined};
+			this.$router.push({query: {...this.query, ...sort}});
+			this.getData({sort});
 		},
 
 		page(page) {
-			this.$router.push({query: {page}});
+			page = page === 1 ? undefined : page;
+			this.$router.push({query: {...this.query, page}});
 			this.getData();
 		},
 
-		getData() {
-			const page = this.query.page;
+		select(items) {
+			this.selected = items;
+		},
 
-			this.columns = [
-				{
-					name: "title",
-					label: "Title",
-					sortable: true,
-					sortBy: "text",
-					fieldType: {
-						id: "vText"
-					},
-					props: {
-						text: "text",
-						status: "textStatus"
+		unselect() {
+			this.$refs.table.clearSelection();
+		},
+
+		getData({sort} = {}) {
+			const query = this.query;
+
+			// don't trigger getData if sort runs on load
+			if (!this.loaded && sort) return;
+
+			const params = {
+				page: query.page,
+				sort: query.sortBy ? `${query.sortBy}:${query.sortDir}` : undefined
+			};
+
+			this.definitions = {
+				defaults: {
+					sort: {
+						prop: "text",
+						order: "ascending"
 					}
 				},
-				{
-					name: "image",
-					label: "Image",
-					fieldType: {
-						id: "vImage"
-					},
-					props: {
-						image: "image"
-					}
+				batch: {
+					active: true,
+					actions: [
+						{
+							icon: "plus",
+							title: "Add",
+							status: "success"
+						},
+						{
+							icon: "edit",
+							title: "Edit",
+							status: "primary"
+						}
+					]
 				},
-				{
-					name: "switch",
-					label: "Switch",
-					fieldType: {
-						id: "vSwitch"
+				actions: [
+					{
+						icon: "plus",
+						title: "Nyt produkt",
+						status: "primary",
+						type: "create"
 					},
-					props: {
-						value: "switchProp"
+					{
+						icon: "",
+						title: "Nuke 🚀",
+						status: "danger",
+						type: "nuke"
 					}
-				},
-				{
-					name: "status",
-					label: "Status",
-					fieldType: {
-						id: "vStatus"
+				],
+				columns: [
+					{
+						name: "title",
+						label: "Title",
+						sortable: true,
+						sortBy: "text",
+						fieldType: {
+							id: "vText"
+						},
+						props: {
+							text: "text",
+							status: "textStatus"
+						}
 					},
-					props: {
-						text: "status",
-						status: "statusAv"
-					}
-				},
-				{
-					name: "select",
-					label: "Select",
-					fieldType: {
-						id: "vSelect"
+					{
+						name: "image",
+						label: "Image",
+						fieldType: {
+							id: "vImage"
+						},
+						props: {
+							image: "image"
+						}
 					},
-					props: {
-						options: "selectOptions",
-						value: "selectValue"
-					}
-				},
-				{
-					name: "prisforskel",
-					label: "Prisforskel",
-					sortable: true,
-					sortBy: "priceDiff",
-					fieldType: {
-						id: "vText"
+					{
+						name: "switch",
+						label: "Switch",
+						fieldType: {
+							id: "vSwitch"
+						},
+						props: {
+							value: "switchProp"
+						}
 					},
-					props: {
-						text: "priceDiff",
-						status: "priceDiffStatus"
+					{
+						name: "status",
+						label: "Status",
+						fieldType: {
+							id: "vStatus"
+						},
+						props: {
+							text: "status",
+							status: "statusAv"
+						}
+					},
+					{
+						name: "select",
+						label: "Select",
+						fieldType: {
+							id: "vSelect"
+						},
+						props: {
+							options: "selectOptions",
+							value: "selectValue"
+						}
+					},
+					{
+						name: "prisforskel",
+						label: "Prisforskel",
+						sortable: true,
+						sortBy: "priceDiff",
+						fieldType: {
+							id: "vText"
+						},
+						props: {
+							text: "priceDiff",
+							status: "priceDiffStatus"
+						}
 					}
-				},
-			];
+				]
+			};
 
 			this.data = [
 				{
@@ -217,6 +296,8 @@ export default {
 			};
 
 			this.pagination = meta;
+
+			setTimeout(() => this.loaded = true, 500);
 		}
 	},
 	created() {
@@ -228,32 +309,58 @@ export default {
 <style lang="scss" scoped>
 .table-main {
 	.header {
-		padding: 1.5em 1.5em;
+		margin-bottom: 1.5em;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 	}
-}
-</style>
+	.table {
+		.top {
+			padding: 1.5em 1.5em;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 
-<style lang="scss">
-.table-main {
-	.el-table {
-		overflow: visible;
+			.info {
+				display: flex;
+				align-items: center;
 
-		&__body-wrapper {
-			overflow: visible;
-		}
-
-		.header {
-			&-row {
-				background-color: $white2;
-			}
-			&-cell {
-				background-color: transparent;
+				.total {
+					font-size: em(12);
+					margin-left: 0.75em;
+					color: $blue3;
+				}
 			}
 		}
 
-		.cell {
-			overflow: visible;
+		/deep/ {
+			.el-table {
+				overflow: visible;
+
+				&__body-wrapper {
+					overflow: visible;
+				}
+
+				td, th {
+					padding: 3px 0;
+				}
+
+				.header {
+					&-row {
+						background-color: $white2;
+					}
+					&-cell {
+						background-color: transparent;
+						color: $blue4;
+					}
+				}
+
+				.cell {
+					overflow: visible;
+				}
+			}
 		}
 	}
+
 }
 </style>
