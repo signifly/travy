@@ -13,6 +13,7 @@
 						<div class="title">{{title}}</div>
 						<div class="total">{{pagination.total}}</div>
 					</div>
+					<modifiers v-bind="{modifiers}" />
 				</div>
 
 				<Table
@@ -48,12 +49,12 @@
 <script>
 import {mapValues} from "lodash";
 import box from "../box.vue";
-import {pagination, panel, actions, filters} from "./index";
+import {pagination, panel, actions, filters, modifiers} from "./index";
 import {Table, TableColumn} from "element-ui";
 import {vText, vTextBold, vStatus, vImage, vSwitch, vSelect} from "./fields";
 
 export default {
-	components: {box, pagination, panel, actions, filters, Table, TableColumn, vText, vTextBold, vStatus, vImage, vSwitch, vSelect},
+	components: {box, pagination, panel, actions, filters, modifiers, Table, TableColumn, vText, vTextBold, vStatus, vImage, vSwitch, vSelect},
 	props: {
 		title: {type: String, required: false}
 	},
@@ -69,6 +70,7 @@ export default {
 		components: (t) => t.$options.components,
 		query: (t) => t.$route.query,
 		batch: (t) => t.definitions.batch,
+		modifiers: (t) => t.definitions.modifiers,
 		actions: (t) => t.definitions.actions,
 		defaults: (t) => t.definitions.defaults,
 		sortDefault: (t) => t.defaults.sort,
@@ -121,12 +123,14 @@ export default {
 						{
 							icon: "plus",
 							title: "Add",
-							status: "success"
+							status: "success",
+							type: "create"
 						},
 						{
 							icon: "edit",
 							title: "Edit",
-							status: "primary"
+							status: "primary",
+							type: "update"
 						}
 					]
 				},
@@ -142,6 +146,51 @@ export default {
 						title: "Nuke 🚀",
 						status: "danger",
 						type: "nuke"
+					}
+				],
+				modifiers: [
+					{
+						title: "Language",
+						value: "dk",
+						options: [
+							{
+								label: "Danmark", // required
+								value: "dk", // required
+								icon: "flags/dk",
+								disabled: false
+							},
+							{
+								label: "England",
+								value: "uk",
+								icon: "flags/gb"
+							},
+							{
+								label: "Murica",
+								value: "US",
+								icon: "flags/us",
+								disabled: true
+							}
+						]
+					},
+					{
+						title: "Language",
+						value: "dk",
+						options: [
+							{
+								label: "Danmark", // required
+								value: "dk", // required
+								disabled: false
+							},
+							{
+								label: "England",
+								value: "UK",
+							},
+							{
+								label: "Murica",
+								value: "US",
+								disabled: true
+							}
+						]
 					}
 				],
 				columns: [

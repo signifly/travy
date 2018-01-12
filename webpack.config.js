@@ -46,23 +46,14 @@ module.exports = {
 			},
 			{
 				test: /\.svg$/,
-				oneOf: [
-					{
-						resourceQuery: /file/,
-						loader: "file-loader"
-					},
-					{
-						loader: "svg-inline-loader",
-						options: {
-							removeTags: true,
-							removingTags: ["title", "desc"],
-							classPrefix: true,
-							idPrefix: true,
-							removeSVGTagAttrs: false
-						}
-					}
-				]
-
+				loader: "svg-inline-loader",
+				options: {
+					removeTags: true,
+					removingTags: ["title", "desc"],
+					classPrefix: true,
+					idPrefix: true,
+					removeSVGTagAttrs: false
+				}
 			},
 			{
 				test: /\.(png|jpg|gif|eps|pdf)$/,
@@ -96,6 +87,7 @@ module.exports = {
 		alias: {
 			"vue$": "vue/dist/vue.runtime.esm.js",
 			"style": __dirname + "/app/style",
+			"@": __dirname + "/app"
 		}
 	},
 	devServer: {

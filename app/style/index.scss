@@ -7,3 +7,13 @@ body {
 	max-width: $width;
 	margin: 0 auto;
 }
+
+img {
+	max-width: 100%;
+}
+
+svg {
+	path {
+		fill: $black1;
+	}
+}

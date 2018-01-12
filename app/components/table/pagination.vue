@@ -16,7 +16,7 @@ export default {
 		pagination: (t) => ({
 			total: t.data.total,
 			"page-size": t.data.per_page,
-			"current-page": t.$route.query.page
+			"current-page": Number(t.$route.query.page) || 1
 		})
 	},
 	methods: {
