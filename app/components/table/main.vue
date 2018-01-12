@@ -1,5 +1,5 @@
 <template>
-	<div class="table-main" v-if="data">
+	<div class="table-main" v-if="definitions">
 
 		<div class="header">
 			<filters />
@@ -16,7 +16,7 @@
 				</div>
 
 				<Table
-				:default-sort="defaultSort"
+				:default-sort="SortFinal"
 				ref="table"
 				v-bind="{data}"
 				header-row-class-name="header-row"
@@ -62,8 +62,7 @@ export default {
 			definitions: null,
 			data: null,
 			pagination: {},
-			selected: [],
-			loaded: false
+			selected: []
 		}
 	},
 	computed: {
@@ -72,7 +71,9 @@ export default {
 		batch: (t) => t.definitions.batch,
 		actions: (t) => t.definitions.actions,
 		defaults: (t) => t.definitions.defaults,
-		defaultSort: (t) => t.query.sort ? {} : t.defaults.sort,
+		sortDefault: (t) => t.defaults.sort,
+		sortQuery: (t) => t.query.sortBy && t.query.sortBy ? {prop: t.query.sortBy, order: t.query.sortDir} : null,
+		SortFinal: (t) => t.sortQuery || t.sortDefault,
 
 		tableColumns() {
 			return this.definitions.columns.map(x => ({...x,
@@ -88,8 +89,8 @@ export default {
 
 		sort({prop, order}) {
 			const sort = {sortBy: prop || undefined, sortDir: order || undefined};
-			this.$router.push({query: {...this.query, ...sort}});
-			this.getData({sort});
+			if (this.data) this.$router.push({query: sort}); // don't set query params for default sorting
+			this.getData();
 		},
 
 		page(page) {
@@ -106,17 +107,7 @@ export default {
 			this.$refs.table.clearSelection();
 		},
 
-		getData({sort} = {}) {
-			const query = this.query;
-
-			// don't trigger getData if sort runs on load
-			if (!this.loaded && sort) return;
-
-			const params = {
-				page: query.page,
-				sort: query.sortBy ? `${query.sortBy}:${query.sortDir}` : undefined
-			};
-
+		getDefinitions() {
 			this.definitions = {
 				defaults: {
 					sort: {
@@ -225,6 +216,17 @@ export default {
 				]
 			};
 
+			// setTimeout(() => this.loaded = true, 500);
+		},
+
+		getData() {
+			const sort = this.SortFinal;
+
+			const params = {
+				page: this.query.page,
+				sort: `${sort.prop}:${sort.order}`
+			};
+
 			this.data = [
 				{
 					id: 1,
@@ -296,12 +298,10 @@ export default {
 			};
 
 			this.pagination = meta;
-
-			setTimeout(() => this.loaded = true, 500);
 		}
 	},
 	created() {
-		this.getData();
+		this.getDefinitions();
 	}
 };
 </script>
