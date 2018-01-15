@@ -2,7 +2,7 @@
 	<div class="modifiers">
 		<div class="item" v-for="item in items">
 			<div class="title">{{item.title}}</div>
-			<Select filterable v-model="item.value" size="medium">
+			<Select filterable v-model="item.value" size="medium" @change="update">
 				<Option v-for="option in item.options" v-bind="option" :key="option.value">
 					<div class="option">
 						<div class="icon" v-if="option.icon && icon(option.icon)"><img :src="icon(option.icon)"></div>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import {keyBy, mapValues} from "lodash";
 import {Select, Option} from "element-ui";
 
 export default {
@@ -35,6 +36,10 @@ export default {
 			} catch(err) {
 				console.log(err);
 			}
+		},
+		update(val) {
+			const obj = mapValues(keyBy(this.items, "key"), (x) => x.value);
+			this.$emit("update", obj);
 		}
 	}
 };

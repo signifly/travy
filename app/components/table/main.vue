@@ -13,11 +13,11 @@
 						<div class="title">{{title}}</div>
 						<div class="total">{{pagination.total}}</div>
 					</div>
-					<modifiers v-bind="{modifiers}" />
+					<modifiers v-bind="{modifiers}" @update="modifier" />
 				</div>
 
 				<Table
-				:default-sort="SortFinal"
+				:default-sort="sorting"
 				ref="table"
 				v-bind="{data}"
 				header-row-class-name="header-row"
@@ -33,8 +33,8 @@
 							v-if="components[column.fieldType.id]"
 							:is="column.fieldType.id"
 							:column="column"
-							v-bind="props(column.props, scope.row)"
-							@update="update($event, scope.row)"
+							v-bind="props({props: column.props, item: scope.row})"
+							@update="update({props: $event, item: scope.row})"
 						/>
 					</TableColumn>
 
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import {mapValues, omit} from "lodash";
+import {mapValues, mapKeys, omit, pickBy} from "lodash";
 import box from "../box.vue";
 import {Table, TableColumn} from "element-ui";
 import {pagination, panel, actions, filters, modifiers} from "./components";
@@ -75,9 +75,7 @@ export default {
 		actions: (t) => t.definitions.actions,
 		defaults: (t) => t.definitions.defaults,
 		endpoints: (t) => t.definitions.endpoints,
-		sortDefault: (t) => t.defaults.sort,
-		sortQuery: (t) => t.query.sortBy && t.query.sortBy ? {prop: t.query.sortBy, order: t.query.sortDir} : null,
-		SortFinal: (t) => t.sortQuery || t.sortDefault,
+		sorting: (t) => t.query.sort || t.defaults.sort,
 
 		tableColumns() {
 			return this.definitions.columns.map(x => ({...x,
@@ -87,19 +85,24 @@ export default {
 		}
 	},
 	methods: {
-		props(props, item) {
+		props({props, item}) {
 			return mapValues(props, (key) => item[key]);
 		},
 
 		sort({prop, order}) {
-			const sort = {sortBy: prop || undefined, sortDir: order || undefined};
-			if (this.data) this.$router.push({query: sort}); // don't set query params for default sorting
+			const sort = prop && order ? {prop, order} : undefined;
+			if (this.data) this.$router.replace({query: {sort}}); // don't set query params for default sorting
 			this.getData();
 		},
 
 		page(page) {
 			page = page === 1 ? undefined : page;
-			this.$router.push({query: {...this.query, page}});
+			this.$router.replace({query: {...this.query, page}});
+			this.getData();
+		},
+
+		modifier(modifiers) {
+			this.$router.replace({query: {...this.query, modifiers}});
 			this.getData();
 		},
 
@@ -121,7 +124,7 @@ export default {
 			}
 		},
 
-		async update(data, item) {
+		async update({data, item}) {
 			const modifiers = this.modifiers.map(x => omit(x, "options"));
 			const url = this.endpoint({type: "update", item});
 			await this.$http.put(url, {data, modifiers});
@@ -202,6 +205,7 @@ export default {
 					{
 						title: "Language",
 						value: "dk",
+						key: "lang",
 						options: [
 							{
 								label: "Danmark", // required
@@ -216,7 +220,7 @@ export default {
 							},
 							{
 								label: "Murica",
-								value: "US",
+								value: "us",
 								icon: "flags/us",
 								disabled: true
 							}
@@ -225,6 +229,7 @@ export default {
 					{
 						title: "Language",
 						value: "dk",
+						key: "øv",
 						options: [
 							{
 								label: "Danmark", // required
@@ -233,11 +238,11 @@ export default {
 							},
 							{
 								label: "England",
-								value: "UK",
+								value: "uk",
 							},
 							{
 								label: "Murica",
-								value: "US",
+								value: "us",
 								disabled: true
 							}
 						]
@@ -314,16 +319,15 @@ export default {
 					}
 				]
 			};
-
-			// setTimeout(() => this.loaded = true, 500);
 		},
 
 		getData() {
-			const sort = this.SortFinal;
+			const sort = this.sorting;
 
 			const params = {
+				sort: `${sort.prop}:${sort.order}`,
 				page: this.query.page,
-				sort: `${sort.prop}:${sort.order}`
+				...this.query.modifiers
 			};
 
 			this.data = [

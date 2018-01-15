@@ -1,4 +1,5 @@
 import Vue from "vue";
+import qs from "qs";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
@@ -12,7 +13,14 @@ const routes = [
 
 const router = new VueRouter({
 	mode: "history",
-	routes
+	routes,
+	parseQuery(query) {
+		return qs.parse(query);
+	},
+	stringifyQuery(query) {
+		const res = qs.stringify(query);
+		return res ? ("?" + res) : "";
+	}
 });
 
 export default router;
