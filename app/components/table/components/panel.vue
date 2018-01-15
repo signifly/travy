@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import panel from "../panel.vue";
+import panel from "../../panel.vue";
 import {Button, Checkbox} from "element-ui";
 
 export default {

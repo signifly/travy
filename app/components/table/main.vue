@@ -34,6 +34,7 @@
 							:is="column.fieldType.id"
 							:column="column"
 							v-bind="props(column.props, scope.row)"
+							@update="update($event, scope.row)"
 						/>
 					</TableColumn>
 
@@ -47,10 +48,10 @@
 </template>
 
 <script>
-import {mapValues} from "lodash";
+import {mapValues, omit} from "lodash";
 import box from "../box.vue";
-import {pagination, panel, actions, filters, modifiers} from "./index";
 import {Table, TableColumn} from "element-ui";
+import {pagination, panel, actions, filters, modifiers} from "./components";
 import {vText, vTextBold, vStatus, vImage, vSwitch, vSelect} from "./fields";
 
 export default {
@@ -73,6 +74,7 @@ export default {
 		modifiers: (t) => t.definitions.modifiers,
 		actions: (t) => t.definitions.actions,
 		defaults: (t) => t.definitions.defaults,
+		endpoints: (t) => t.definitions.endpoints,
 		sortDefault: (t) => t.defaults.sort,
 		sortQuery: (t) => t.query.sortBy && t.query.sortBy ? {prop: t.query.sortBy, order: t.query.sortDir} : null,
 		SortFinal: (t) => t.sortQuery || t.sortDefault,
@@ -109,8 +111,56 @@ export default {
 			this.$refs.table.clearSelection();
 		},
 
+		endpoint({type, item}) {
+			const endpoint = this.endpoints[type];
+
+			if (endpoint.url.includes("{id}")) {
+				return endpoint.url.replace("{id}", item[endpoint.id]);
+			} else {
+				return endpoint.url;
+			}
+		},
+
+		async update(data, item) {
+			const modifiers = this.modifiers.map(x => omit(x, "options"));
+			const url = this.endpoint({type: "update", item});
+			await this.$http.put(url, {data, modifiers});
+		},
+
 		getDefinitions() {
 			this.definitions = {
+				endpoints: {
+					index: {
+						method: "GET",
+						url: "products",
+						id: "id"
+					},
+					store: {
+						method: "POST",
+						url: "products",
+						id: "id"
+					},
+					show: {
+						method: "GET",
+						url: "products/{id}",
+						id: "id"
+					},
+					update: {
+						method: "PUT",
+						url: "products/{id}",
+						id: "id"
+					},
+					destroy: {
+						method: "DELETE",
+						url: "products/{id}",
+						id: "slug"
+					},
+					bulkUpdate: {
+						method: "PUT",
+						url: "products",
+						id: "id"
+					}
+				},
 				defaults: {
 					sort: {
 						prop: "text",

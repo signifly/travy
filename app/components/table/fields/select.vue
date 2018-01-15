@@ -1,6 +1,6 @@
 <template>
 	<div class="dropdown">
-		<Select v-model="val">
+		<Select v-model="val" @change="update">
 			<Option v-for="option in options" v-bind="option" :key="option.value" />
 		</Select>
 	</div>
@@ -13,11 +13,22 @@ export default {
 	components: {Select, Option},
 	props: {
 		options: {type: Array, required: true},
+		column: {type: Object, required: true},
 		value: {type: String, required: false}
 	},
 	data() {
 		return {
 			val: this.value
+		}
+	},
+	computed: {
+		key() {
+			return this.column.props.value;
+		}
+	},
+	methods: {
+		update(val) {
+			this.$emit("update", {[this.key]: val});
 		}
 	}
 };

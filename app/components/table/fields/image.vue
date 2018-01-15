@@ -36,10 +36,7 @@ export default {
 		top: 0;
 		bottom: 0;
 		align-items: center;
-
-		img {
-			width: em(165);
-		}
+		width: em(165);
 	}
 }
 </style>
