@@ -23,7 +23,7 @@ export default {
 	},
 	computed: {
 		key() {
-			return this.column.props.value;
+			return this.column.fieldType.props.value;
 		}
 	},
 	methods: {

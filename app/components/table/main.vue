@@ -2,7 +2,7 @@
 	<div class="table-main" v-if="definitions">
 
 		<div class="header">
-			<filters />
+			<filters v-bind="{filters, search, getData}" />
 			<actions v-bind="{actions}" />
 		</div>
 
@@ -13,7 +13,7 @@
 						<div class="title">{{title}}</div>
 						<div class="total">{{pagination.total}}</div>
 					</div>
-					<modifiers v-bind="{modifiers}" @update="modifier" />
+					<modifiers v-bind="{modifiers}" @getData="getData" />
 				</div>
 
 				<Table
@@ -33,14 +33,14 @@
 							v-if="components[column.fieldType.id]"
 							:is="column.fieldType.id"
 							:column="column"
-							v-bind="props({props: column.props, item: scope.row})"
-							@update="update({props: $event, item: scope.row})"
+							v-bind="props({props: column.fieldType.props, item: scope.row})"
+							@update="update({data: $event, item: scope.row})"
 						/>
 					</TableColumn>
 
 				</Table>
 
-				<pagination v-bind="{data: pagination}" @page="page" />
+				<pagination v-bind="{data: pagination}" @getData="getData" />
 				<panel v-if="selected.length > 0" v-bind="{selected, batch}" @unselect="unselect" />
 			</box>
 		</div>
@@ -75,6 +75,8 @@ export default {
 		actions: (t) => t.definitions.actions,
 		defaults: (t) => t.definitions.defaults,
 		endpoints: (t) => t.definitions.endpoints,
+		filters: (t) => t.definitions.filters,
+		search: (t) => t.definitions.search,
 		sorting: (t) => t.query.sort || t.defaults.sort,
 
 		tableColumns() {
@@ -91,18 +93,7 @@ export default {
 
 		sort({prop, order}) {
 			const sort = prop && order ? {prop, order} : undefined;
-			if (this.data) this.$router.replace({query: {sort}}); // don't set query params for default sorting
-			this.getData();
-		},
-
-		page(page) {
-			page = page === 1 ? undefined : page;
-			this.$router.replace({query: {...this.query, page}});
-			this.getData();
-		},
-
-		modifier(modifiers) {
-			this.$router.replace({query: {...this.query, modifiers}});
+			if (this.data) this.$router.replace({query: {sort, filter: this.query.filter}}); // don't set query params for default sorting
 			this.getData();
 		},
 
@@ -170,6 +161,7 @@ export default {
 						order: "ascending"
 					}
 				},
+
 				batch: {
 					active: true,
 					actions: [
@@ -187,6 +179,40 @@ export default {
 						}
 					]
 				},
+
+				search: {
+					placeholder: "search"
+				},
+
+				filters: [
+					{
+						id: "switch2",
+						title: "show Prices",
+						fieldType: {
+							id: "vSwitch",
+							props: {
+								value: "prices"
+							}
+						},
+						data: {
+							prices: false
+						}
+					},
+					{
+						id: "checkbox1",
+						title: "show Dates",
+						fieldType: {
+							id: "vCheckbox",
+							props: {
+								value: "dates"
+							}
+						},
+						data: {
+							dates: false
+						}
+					}
+				],
+
 				actions: [
 					{
 						icon: "plus",
@@ -201,6 +227,7 @@ export default {
 						type: "nuke"
 					}
 				],
+
 				modifiers: [
 					{
 						title: "Language",
@@ -248,6 +275,7 @@ export default {
 						]
 					}
 				],
+
 				columns: [
 					{
 						name: "title",
@@ -255,53 +283,53 @@ export default {
 						sortable: true,
 						sortBy: "text",
 						fieldType: {
-							id: "vText"
-						},
-						props: {
-							text: "text",
-							status: "textStatus"
+							id: "vText",
+							props: {
+								text: "text",
+								status: "textStatus"
+							}
 						}
 					},
 					{
 						name: "image",
 						label: "Image",
 						fieldType: {
-							id: "vImage"
-						},
-						props: {
-							image: "image"
+							id: "vImage",
+							props: {
+								image: "image"
+							}
 						}
 					},
 					{
 						name: "switch",
 						label: "Switch",
 						fieldType: {
-							id: "vSwitch"
-						},
-						props: {
-							value: "switchProp"
+							id: "vSwitch",
+							props: {
+								value: "switchProp"
+							}
 						}
 					},
 					{
 						name: "status",
 						label: "Status",
 						fieldType: {
-							id: "vStatus"
-						},
-						props: {
-							text: "status",
-							status: "statusAv"
+							id: "vStatus",
+							props: {
+								text: "status",
+								status: "statusAv"
+							}
 						}
 					},
 					{
 						name: "select",
 						label: "Select",
 						fieldType: {
-							id: "vSelect"
-						},
-						props: {
-							options: "selectOptions",
-							value: "selectValue"
+							id: "vSelect",
+							props: {
+								options: "selectOptions",
+								value: "selectValue"
+							}
 						}
 					},
 					{
@@ -310,25 +338,28 @@ export default {
 						sortable: true,
 						sortBy: "priceDiff",
 						fieldType: {
-							id: "vText"
-						},
-						props: {
-							text: "priceDiff",
-							status: "priceDiffStatus"
+							id: "vText",
+							props: {
+								text: "priceDiff",
+								status: "priceDiffStatus"
+							}
 						}
 					}
 				]
 			};
 		},
 
-		getData() {
+		async getData() {
 			const sort = this.sorting;
 
 			const params = {
 				sort: `${sort.prop}:${sort.order}`,
 				page: this.query.page,
-				...this.query.modifiers
+				...this.query.modifiers,
+				...this.query.filter
 			};
+
+			console.log("getData", params);
 
 			this.data = [
 				{

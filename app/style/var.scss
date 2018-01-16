@@ -24,3 +24,7 @@ $width: 1440px;
 @function em($pixels) {
 	@return #{$pixels/16}em;
 }
+
+@function cubic($property, $time: 0.1s) {
+	@return $property $time cubic-bezier(0.645, 0.045, 0.355, 1);
+};

@@ -1,6 +1,6 @@
 <template>
 	<div class="pagination">
-		<Pagination background layout="prev, pager, next" v-bind="pagination" @current-change="change" />
+		<Pagination background layout="prev, pager, next" v-bind="pagination" @current-change="update" />
 	</div>
 </template>
 
@@ -13,6 +13,7 @@ export default {
 		data: {type: Object, required: true}
 	},
 	computed: {
+		query: (t) => t.$route.query,
 		pagination: (t) => ({
 			total: t.data.total,
 			"page-size": t.data.per_page,
@@ -20,8 +21,10 @@ export default {
 		})
 	},
 	methods: {
-		change(page) {
-			this.$emit("page", page);
+		update(page) {
+			page = page === 1 ? undefined : page;
+			this.$router.replace({query: {...this.query, page}});
+			this.$emit("getData");
 		}
 	}
 };

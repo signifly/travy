@@ -29,6 +29,9 @@ export default {
 			items: this.modifiers
 		}
 	},
+	computed: {
+		query: (t) => t.$route.query
+	},
 	methods: {
 		icon(file) {
 			try {
@@ -38,8 +41,9 @@ export default {
 			}
 		},
 		update(val) {
-			const obj = mapValues(keyBy(this.items, "key"), (x) => x.value);
-			this.$emit("update", obj);
+			const modifiers = mapValues(keyBy(this.items, "key"), (x) => x.value);
+			this.$router.replace({query: {...this.query, modifiers}});
+			this.$emit("getData");
 		}
 	}
 };
