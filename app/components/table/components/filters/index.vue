@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import {mapValues, mapKeys, debounce} from "lodash";
+import {mapValues, mapKeys, debounce, get} from "lodash";
 import {Input, Button} from "element-ui";
 import {vSwitch, vCheckbox} from "./fields";
 
@@ -42,7 +42,7 @@ export default {
 	},
 	data() {
 		return  {
-			input: this.$route.query.filter.q,
+			input: get(this.$route.query, "filter.q"),
 			loading: false,
 			settings: false
 		}
