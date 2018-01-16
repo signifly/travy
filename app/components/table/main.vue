@@ -485,6 +485,7 @@ export default {
 					}
 					&-cell {
 						background-color: transparent;
+						border-top: 1px solid #ebeef5;
 						color: $blue4;
 					}
 				}

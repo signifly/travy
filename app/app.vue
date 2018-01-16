@@ -24,13 +24,5 @@ export default {
 .app {
 	background-color: $white2;
 	min-height: 100vh;
-
-	.el-header {
-		background-color: #334056;
-
-		.el-menu {
-			background-color: #334056;
-		}
-	}
 }
 </style>

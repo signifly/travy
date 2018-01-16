@@ -1,14 +1,12 @@
 <template>
 	<Header>
+		<router-link class="home" :to="{name: 'index'}" v-html="icons.home" />
+
 		<Menu
 			mode="horizontal"
-			background-color="#334056"
-			text-color="#fff"
 			active-text-color="lightblue"
 			:router="true"
 			menu-trigger="click">
-
-			<MenuItem index="/">Home</MenuItem>
 			<Submenu index="2">
 				<template slot="title">Catalogue</template>
 				<MenuItem index="products">Products</MenuItem>
@@ -19,33 +17,147 @@
 				<MenuItem index="6">Price lists</MenuItem>
 				<MenuItem index="7">Files</MenuItem>
 			</Submenu>
-			<MenuItem index="2">Translations</MenuItem>
-			<MenuItem index="3">Shops</MenuItem>
-			<MenuItem index="4">Orders</MenuItem>
-			<MenuItem index="5">Partners</MenuItem>
-			<Submenu index="6">
+			<MenuItem index="23">Translations</MenuItem>
+			<MenuItem index="3234">Shops</MenuItem>
+			<MenuItem index="4234234">Orders</MenuItem>
+			<MenuItem index="5234234">Partners</MenuItem>
+			<Submenu index="6234234">
 				<template slot="title">Settings</template>
-				<MenuItem index="1">Shops</MenuItem>
-				<MenuItem index="2">Language</MenuItem>
-				<MenuItem index="3">Currencies</MenuItem>
-				<MenuItem index="4">Materials</MenuItem>
-				<MenuItem index="5">Users</MenuItem>
+				<MenuItem index="123423423423">Shops</MenuItem>
+				<MenuItem index="21231">Language</MenuItem>
+				<MenuItem index="31223">Currencies</MenuItem>
+				<MenuItem index="423">Materials</MenuItem>
+				<MenuItem index="51231">Users</MenuItem>
 			</Submenu>
-
 		</Menu>
+
+		<div class="account">
+			<div class="dropdown">
+				<Dropdown trigger="click">
+					<span class="el-dropdown-link">
+						Nickelodeon<i class="el-icon-arrow-down el-icon--right"></i>
+					</span>
+
+					<DropdownMenu slot="dropdown">
+						<DropdownItem>Settings</DropdownItem>
+						<DropdownItem>Admin</DropdownItem>
+						<DropdownItem divided>Logout</DropdownItem>
+					</DropdownMenu>
+				</Dropdown>
+			</div>
+
+			<a class="notification">
+				<Badge is-dot>
+					<div class="icon" v-html="icons.bell" />
+				</Badge>
+			</a>
+		</div>
 	</Header>
 </template>
 
 <script>
-import {Header, Menu, Submenu, MenuItem} from "element-ui";
+import {Header, Menu, Submenu, MenuItem, Dropdown, DropdownMenu, DropdownItem, Badge} from "element-ui";
 
 export default {
-	components: {Header, Menu, Submenu, MenuItem}
+	components: {Header, Menu, Submenu, MenuItem, Dropdown, DropdownMenu, DropdownItem, Badge},
+	data() {
+		return {
+			icons: {
+				home: require("@/assets/icons/home.svg"),
+				bell: require("@/assets/icons/bell.svg")
+			}
+		}
+	}
 };
 </script>
 
 <style lang="scss" scoped>
 .el-header {
+	background-color: #334056;
+	color: $white1;
 	user-select: none;
+	display: flex;
+	align-items: center;
+	padding: 0;
+
+	.home {
+		background-color: #2B384B;
+		height: 100%;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 60px;
+
+		/deep/ svg {
+			$s: 1.9em;
+			width: $s;
+			height: $s;
+			path {
+				fill: $white1;
+			}
+		}
+	}
+
+	.el-menu--horizontal {
+		background-color: #334056;
+		border-bottom: 0;
+
+		> .el-menu-item {
+			background-color: #334056;
+			color: $white1;
+		}
+
+		/deep/ {
+			.el-submenu {
+				.el-submenu__title {
+					background-color: #334056;
+					color: $white1;
+				}
+			}
+		}
+	}
+
+	.account {
+		margin-left: auto;
+		display: flex;
+		align-items: center;
+
+		.dropdown {
+			.el-dropdown {
+				color: $white1;
+
+				.el-dropdown-link {
+					cursor: pointer;
+				}
+			}
+		}
+
+		.notification {
+			display: inline-flex;
+			height: 100%;
+			align-items: center;
+			justify-content: center;
+			width: 60px;
+
+			.icon {
+				/deep/ svg {
+					$s: 1.7em;
+					width: $s;
+					height: $s;
+					path {
+						fill: $white1;
+					}
+				}
+			}
+
+			.el-badge {
+				/deep/ .is-dot {
+					border: 0px;
+					right: 1em;
+					top: 0.4em;
+				}
+			}
+		}
+	}
 }
 </style>
