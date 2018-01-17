@@ -5,6 +5,7 @@ import store from "./store";
 import app from "./app.vue";
 import "./style/index.scss";
 import "./modules/axios";
+import "./modules/notify";
 
 new Vue({
 	router, store,

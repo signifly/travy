@@ -1,13 +1,13 @@
 <template>
-	<div class="text" :class="status">
-		{{text}}
-	</div>
+	<router-link v-if="action" class="text" :class="status" :to="action">{{text}}</router-link>
+	<div class="text" :class="status" v-else>{{text}}</div>
 </template>
 
 <script>
 export default {
 	props: {
 		text: {type: String, required: true},
+		action: {type: String, required: false},
 		status: {
 			required: false,
 			validator: function (value) {
@@ -20,6 +20,9 @@ export default {
 
 <style lang="scss" scoped>
 .text {
+	color: $black1;
+	text-decoration: none;
+
 	&.danger {
 		color: $--color-danger;
 	}

@@ -1,6 +1,6 @@
 <template>
 	<div class="dropdown">
-		<Select v-model="val" @change="update">
+		<Select v-model="val" @change="update" size="small">
 			<Option v-for="option in options" v-bind="option" :key="option.value" />
 		</Select>
 	</div>

@@ -26,18 +26,17 @@
 				@selection-change="select">
 
 					<TableColumn type="selection" v-if="batch.active" />
-
 					<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name">
 						<component
 						 	slot-scope="scope"
 							v-if="components[column.fieldType.id]"
 							:is="column.fieldType.id"
-							:column="column"
 							v-bind="props({props: column.fieldType.props, item: scope.row})"
+							:action="action({type: column.action, item: scope.row})"
+							:column="column"
 							@update="update({data: $event, item: scope.row})"
 						/>
 					</TableColumn>
-
 				</Table>
 
 				<pagination v-bind="{data: pagination}" @getData="getData" />
@@ -103,6 +102,10 @@ export default {
 
 		unselect() {
 			this.$refs.table.clearSelection();
+		},
+
+		action({type, item}) {
+			return type && item ? this.endpoint({type, item}) : null;
 		},
 
 		endpoint({type, item}) {
@@ -282,8 +285,9 @@ export default {
 						label: "Title",
 						sortable: true,
 						sortBy: "text",
+						action: "show",
 						fieldType: {
-							id: "vText",
+							id: "vTextBold",
 							props: {
 								text: "text",
 								status: "textStatus"
@@ -476,7 +480,8 @@ export default {
 				}
 
 				td, th {
-					padding: 3px 0;
+					padding: 0;
+					height: 3.25em;
 				}
 
 				.header {
