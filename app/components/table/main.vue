@@ -287,7 +287,7 @@ export default {
 						sortBy: "text",
 						action: "show",
 						fieldType: {
-							id: "vTextBold",
+							id: "vText",
 							props: {
 								text: "text",
 								status: "textStatus"

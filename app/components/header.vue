@@ -10,24 +10,24 @@
 			<Submenu index="2">
 				<template slot="title">Catalogue</template>
 				<MenuItem index="/products">Products</MenuItem>
-				<MenuItem index="2">Collections</MenuItem>
-				<MenuItem index="3">Stock items</MenuItem>
-				<MenuItem index="4">Stock item models</MenuItem>
-				<MenuItem index="5">Prices</MenuItem>
-				<MenuItem index="6">Price lists</MenuItem>
-				<MenuItem index="7">Files</MenuItem>
+				<MenuItem index="/2">Collections</MenuItem>
+				<MenuItem index="/3">Stock items</MenuItem>
+				<MenuItem index="/4">Stock item models</MenuItem>
+				<MenuItem index="/5">Prices</MenuItem>
+				<MenuItem index="/6">Price lists</MenuItem>
+				<MenuItem index="/7">Files</MenuItem>
 			</Submenu>
-			<MenuItem index="23">Translations</MenuItem>
-			<MenuItem index="3234">Shops</MenuItem>
-			<MenuItem index="4234234">Orders</MenuItem>
-			<MenuItem index="5234234">Partners</MenuItem>
-			<Submenu index="6234234">
+			<MenuItem index="/23">Translations</MenuItem>
+			<MenuItem index="/3234">Shops</MenuItem>
+			<MenuItem index="/4234234">Orders</MenuItem>
+			<MenuItem index="/5234234">Partners</MenuItem>
+			<Submenu index="/6234234">
 				<template slot="title">Settings</template>
-				<MenuItem index="123423423423">Shops</MenuItem>
-				<MenuItem index="21231">Language</MenuItem>
-				<MenuItem index="31223">Currencies</MenuItem>
-				<MenuItem index="423">Materials</MenuItem>
-				<MenuItem index="51231">Users</MenuItem>
+				<MenuItem index="/123423423423">Shops</MenuItem>
+				<MenuItem index="/21231">Language</MenuItem>
+				<MenuItem index="/31223">Currencies</MenuItem>
+				<MenuItem index="/423">Materials</MenuItem>
+				<MenuItem index="/51231">Users</MenuItem>
 			</Submenu>
 		</Menu>
 

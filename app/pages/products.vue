@@ -1,14 +1,17 @@
 <template>
 	<div class="products">
+		<breadcrumb />
 		<mainTable v-bind="{title}"></mainTable>
 	</div>
 </template>
 
 <script>
-import mainTable from "../components/table/main.vue";
+import breadcrumb from "@/components/breadcrumb.vue";
+import mainTable from "@/components/table/main.vue";
+
 
 export default {
-	components: {mainTable},
+	components: {breadcrumb, mainTable},
 	data() {
 		return {
 			title: "Products"

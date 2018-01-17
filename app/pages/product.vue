@@ -1,16 +1,29 @@
 <template>
 	<div class="product">
+		<breadcrumb :items="breadcrumb"/>
 
-		<a @click="notify">Success</a>
+		<div class="header">
+			header
+		</div>
+
+		
 	</div>
 </template>
 
 <script>
-export default {
-	data() {
-		return {
+import breadcrumb from "@/components/breadcrumb.vue";
 
-		}
+export default {
+	components: {breadcrumb},
+	computed: {
+		id: (t) => t.$route.params.id,
+
+		breadcrumb: (t) => [
+			{to: {name: "products"}, title: "products"},
+			{to: {name: "product", id: t.id}, title: t.id}
+		],
+
+
 	},
 	methods: {
 		notify() {

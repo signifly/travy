@@ -3,8 +3,7 @@
 		<Container class="is-vertical">
 			<vHeader/>
 			<Main>
-				<breadcrumb/>
-				<router-view/>
+				<router-view />
 			</Main>
 		</Container>
 	</div>
@@ -13,10 +12,9 @@
 <script>
 import {Container, Header, Main, Menu, MenuItem} from "element-ui";
 import vHeader from "./components/header.vue";
-import breadcrumb from "./components/breadcrumb.vue";
 
 export default {
-	components: {Container, Main, vHeader, breadcrumb}
+	components: {Container, Main, vHeader}
 };
 </script>
 
