@@ -25,7 +25,11 @@ export default {
 	},
 	methods: {
 		update(val) {
-			this.$emit("update", {[this.key]: val});
+			this.$emit("update", {
+				data: {
+					[this.key]: val
+				}
+			});
 		}
 	}
 }

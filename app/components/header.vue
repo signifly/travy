@@ -33,7 +33,7 @@
 
 		<div class="account">
 			<div class="dropdown">
-				<Dropdown trigger="click">
+				<Dropdown trigger="click" :show-timeout="0" :hide-timeout="0">
 					<span class="el-dropdown-link">
 						Nickelodeon<i class="el-icon-arrow-down el-icon--right"></i>
 					</span>

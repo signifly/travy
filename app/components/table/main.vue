@@ -34,7 +34,9 @@
 							v-bind="props({props: column.fieldType.props, item: scope.row})"
 							:action="action({type: column.action, item: scope.row})"
 							:column="column"
-							@update="update({data: $event, item: scope.row})"
+							@update="update({item: scope.row}, $event)"
+							@remove="remove({item: scope.row}, $event)"
+							@show="show({item: scope.row}, $event)"
 						/>
 					</TableColumn>
 				</Table>
@@ -51,10 +53,10 @@ import {mapValues, mapKeys, omit, pickBy} from "lodash";
 import box from "../box.vue";
 import {Table, TableColumn} from "element-ui";
 import {pagination, panel, actions, filters, modifiers} from "./components";
-import {vText, vTextBold, vStatus, vImage, vSwitch, vSelect} from "./fields";
+import {vText, vTextBold, vStatus, vImage, vSwitch, vSelect, vActions} from "./fields";
 
 export default {
-	components: {box, pagination, panel, actions, filters, modifiers, Table, TableColumn, vText, vTextBold, vStatus, vImage, vSwitch, vSelect},
+	components: {box, pagination, panel, actions, filters, modifiers, Table, TableColumn, vText, vTextBold, vStatus, vImage, vSwitch, vSelect, vActions},
 	props: {
 		title: {type: String, required: false}
 	},
@@ -112,19 +114,45 @@ export default {
 			const endpoint = this.endpoints[type];
 
 			if (endpoint.url.includes("{id}")) {
+				const id = item[endpoint.id];
+				if (!id) throw new Error(`missing ${endpoint.id} on item ${item.id}`);
+
 				return endpoint.url.replace("{id}", item[endpoint.id]);
 			} else {
 				return endpoint.url;
 			}
 		},
 
-		async update({data, item}) {
-			const modifiers = this.modifiers.map(x => omit(x, "options"));
-			const url = this.endpoint({type: "update", item});
-			await this.$http.put(url, {data, modifiers});
+		show({item}) {
+			const url = this.endpoint({type: "show", item});
+			this.$router.push(`/${url}`);
 		},
 
-		getDefinitions() {
+		async update({item}, {data, done}) {
+			try {
+				const modifiers = this.modifiers.map(x => omit(x, "options"));
+				const url = this.endpoint({type: "update", item});
+				await this.$http.put(url, {data, modifiers});
+			} catch (err) {
+
+			} finally {
+				if (done) done();
+			}
+		},
+
+		async remove({item}, {done}) {
+			try {
+				const url = this.endpoint({type: "destroy", item});
+				await this.$http.delete(url);
+				await this.getData();
+			} catch (err) {
+
+			} finally {
+				if (done) done();
+			}
+		},
+
+		async getDefinitions() {
 			this.definitions = {
 				endpoints: {
 					index: {
@@ -150,7 +178,7 @@ export default {
 					destroy: {
 						method: "DELETE",
 						url: "products/{id}",
-						id: "slug"
+						id: "id"
 					},
 					bulkUpdate: {
 						method: "PUT",
@@ -348,6 +376,17 @@ export default {
 								status: "priceDiffStatus"
 							}
 						}
+					},
+					{
+						name: "actions",
+						label: "Actions",
+						sortable: false,
+						fieldType: {
+							id: "vActions",
+							props: {
+								items: "actionItems"
+							}
+						}
 					}
 				]
 			};
@@ -357,13 +396,16 @@ export default {
 			const sort = this.sorting;
 
 			const params = {
-				sort: `${sort.prop}:${sort.order}`,
+				get sort() {
+					const order = sort.order === "descending" ? "-" : "";
+					return `${order}${sort.prop}`;
+				},
 				page: this.query.page,
 				...this.query.modifiers,
 				...this.query.filter
-			};
+			}
 
-			console.log("getData", params);
+			console.log("getData", {...params});
 
 			this.data = [
 				{
@@ -393,7 +435,14 @@ export default {
 						}
 					],
 					priceDiff: "+5,2%",
-					priceDiffStatus: "success"
+					priceDiffStatus: "success",
+					actionItems: [
+						{
+							title: "Delete",
+							type: "delete",
+							description: "Do you wanna delete this product?"
+						}
+					]
 				},
 				{
 					id: 2,
@@ -421,7 +470,18 @@ export default {
 						}
 					],
 					priceDiff: "-1,3%",
-					priceDiffStatus: "danger"
+					priceDiffStatus: "danger",
+					actionItems: [
+						{
+							title: "Delete",
+							type: "delete",
+							description: "Do you wanna delete this product?"
+						},
+						{
+							title: "View",
+							type: "show"
+						}
+					]
 				}
 			];
 
