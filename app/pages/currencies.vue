@@ -1,5 +1,5 @@
 <template>
-	<div class="products">
+	<div class="currencies">
 		<breadcrumb />
 		<mainTable v-bind="{id, title}"></mainTable>
 	</div>
@@ -14,15 +14,15 @@ export default {
 	components: {breadcrumb, mainTable},
 	data() {
 		return {
-			id: "products",
-			title: "Products"
+			id: "currencies",
+			title: "Currencies"
 		}
 	}
 };
 </script>
 
 <style lang="scss" scoped>
-.products {
+.currencies {
 
 }
 </style>

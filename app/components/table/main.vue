@@ -58,6 +58,7 @@ import {vText, vTextBold, vStatus, vImage, vSwitch, vSelect, vActions} from "./f
 export default {
 	components: {box, pagination, panel, actions, filters, modifiers, Table, TableColumn, vText, vTextBold, vStatus, vImage, vSwitch, vSelect, vActions},
 	props: {
+		id: {type: String, required: true},
 		title: {type: String, required: false}
 	},
 	data() {
@@ -153,6 +154,13 @@ export default {
 		},
 
 		async getDefinitions() {
+			if (this.id === "currencies") {
+				const {data} = await this.$http.get(`definitions/table/${this.id}`);
+				this.definitions = data;
+
+				return;
+			};
+
 			this.definitions = {
 				endpoints: {
 					index: {
@@ -403,9 +411,18 @@ export default {
 				page: this.query.page,
 				...this.query.modifiers,
 				...this.query.filter
-			}
+			};
 
 			console.log("getData", {...params});
+
+			if (this.id === "currencies") {
+				const {data} = await this.$http.get(this.endpoints.index.url, {params});
+				this.data = data.data;
+				this.pagination = data.meta;
+
+				return;
+			};
+
 
 			this.data = [
 				{

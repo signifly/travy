@@ -9,7 +9,7 @@
 		:placeholder="search.placeholder"
 		@input="updateSearchQ"
 		clearable>
-			<Button slot="append" icon="el-icon-tickets" @click="toggleSettings">Tilføj filter</Button>
+			<Button v-if="filters.length > 0" slot="append" icon="el-icon-tickets" @click="toggleSettings">Tilføj filter</Button>
 		</Input>
 
 		<transition name="settings">
@@ -95,6 +95,12 @@ export default {
 			.el-input-group__append {
 				background-color: $white1;
 				transition: cubic(background-color);
+			}
+
+			.el-input__prefix {
+				.el-icon-loading {
+					color: $blue5;
+				}
 			}
 		}
 
