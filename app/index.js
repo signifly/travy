@@ -1,9 +1,11 @@
 import Vue from "vue";
 
+import "./assets/favicon.png?name";
+import "./style/index.scss";
+
 import router from "./modules/router";
 import store from "./store";
 import app from "./app.vue";
-import "./style/index.scss";
 import "./modules/axios";
 import "./modules/notify";
 

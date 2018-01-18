@@ -79,7 +79,10 @@ module.exports = {
 			},
 			{
 				test: /\.(woff|woff2|eot|ttf)$/,
-				loader: "file-loader?name=[name].[ext]"
+				loader: "file-loader",
+				options: {
+					name: "[name].[ext]"
+				}
 			}
 		]
 	},
