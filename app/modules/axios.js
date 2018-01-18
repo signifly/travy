@@ -15,7 +15,7 @@ api.interceptors.response.use(res => {
 
 	Notification({
 		title: "Error",
-		message: "Error message",
+		message: "🔥 fire 🔥",
 		type: "error"
 	});
 

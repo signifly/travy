@@ -56,7 +56,12 @@ import {pagination, panel, actions, filters, modifiers} from "./components";
 import {vText, vTextBold, vStatus, vImage, vSwitch, vSelect, vActions} from "./fields";
 
 export default {
-	components: {box, pagination, panel, actions, filters, modifiers, Table, TableColumn, vText, vTextBold, vStatus, vImage, vSwitch, vSelect, vActions},
+	components: {
+		box,
+		Table, TableColumn,
+		pagination, panel, actions, filters, modifiers,
+		vText, vTextBold, vStatus, vImage, vSwitch, vSelect, vActions
+	},
 	props: {
 		id: {type: String, required: true},
 		title: {type: String, required: false}

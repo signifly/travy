@@ -20,6 +20,7 @@ export default {
 
 <style lang="scss" scoped>
 .text {
+	display: block;
 	color: $black1;
 	text-decoration: none;
 

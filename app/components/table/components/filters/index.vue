@@ -92,6 +92,10 @@ export default {
 
 	.search {
 		/deep/ {
+			.el-input__inner {
+				width: em(284);
+			}
+			
 			.el-input-group__append {
 				background-color: $white1;
 				transition: cubic(background-color);
