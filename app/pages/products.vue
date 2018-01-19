@@ -14,15 +14,9 @@ export default {
 	components: {breadcrumb, mainTable},
 	data() {
 		return {
-			id: "products",
+			id: "",
 			title: "Products"
 		}
 	}
 };
 </script>
-
-<style lang="scss" scoped>
-.products {
-
-}
-</style>

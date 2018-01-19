@@ -159,7 +159,7 @@ export default {
 		},
 
 		async getDefinitions() {
-			if (this.id === "currencies") {
+			if (this.id) {
 				const {data} = await this.$http.get(`definitions/table/${this.id}`);
 				this.definitions = data;
 
@@ -418,9 +418,7 @@ export default {
 				...this.query.filter
 			};
 
-			console.log("getData", {...params});
-
-			if (this.id === "currencies") {
+			if (this.id) {
 				const {data} = await this.$http.get(this.endpoints.index.url, {params});
 				this.data = data.data;
 				this.pagination = data.meta;

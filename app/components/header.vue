@@ -24,7 +24,7 @@
 			<Submenu index="/6234234">
 				<template slot="title">Settings</template>
 				<MenuItem index="/123423423423">Shops</MenuItem>
-				<MenuItem index="/21231">Language</MenuItem>
+				<MenuItem index="/languages">Languages</MenuItem>
 				<MenuItem index="/currencies">Currencies</MenuItem>
 				<MenuItem index="/423">Materials</MenuItem>
 				<MenuItem index="/51231">Users</MenuItem>
