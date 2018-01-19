@@ -18,12 +18,12 @@
 				<MenuItem index="/7">Files</MenuItem>
 			</Submenu>
 			<MenuItem index="/23">Translations</MenuItem>
-			<MenuItem index="/3234">Shops</MenuItem>
+			<MenuItem index="/shops">Shops</MenuItem>
 			<MenuItem index="/4234234">Orders</MenuItem>
 			<MenuItem index="/5234234">Partners</MenuItem>
 			<Submenu index="/6234234">
 				<template slot="title">Settings</template>
-				<MenuItem index="/123423423423">Shops</MenuItem>
+				<MenuItem index="/shops">Shops</MenuItem>
 				<MenuItem index="/languages">Languages</MenuItem>
 				<MenuItem index="/currencies">Currencies</MenuItem>
 				<MenuItem index="/423">Materials</MenuItem>
@@ -46,11 +46,11 @@
 				</Dropdown>
 			</div>
 
-			<a class="notification">
+			<!-- <a class="notification">
 				<Badge is-dot>
 					<div class="icon" v-html="icons.bell" />
 				</Badge>
-			</a>
+			</a> -->
 		</div>
 	</Header>
 </template>
@@ -121,6 +121,7 @@ export default {
 		margin-left: auto;
 		display: flex;
 		align-items: center;
+		padding-right: 1em;
 
 		.dropdown {
 			.el-dropdown {
