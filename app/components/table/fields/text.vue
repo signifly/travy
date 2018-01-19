@@ -6,7 +6,7 @@
 <script>
 export default {
 	props: {
-		text: {type: String, required: true},
+		text: {type: String, required: false},
 		action: {type: String, required: false},
 		status: {
 			required: false,
