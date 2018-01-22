@@ -160,9 +160,8 @@ export default {
 
 		async getDefinitions() {
 			if (this.id) {
-				const {data} = await this.$http.get(`definitions/table/${this.id}`);
+				const {data} = await this.$http.get(`definitions/table/${this.id}`, {params: this.query.modifiers});
 				this.definitions = data;
-
 				return;
 			};
 
@@ -405,11 +404,12 @@ export default {
 			};
 		},
 
-		async getData() {
-			const sort = this.sorting;
+		async getData({type} = {}) {
+			if (type === "modifiers") await this.getDefinitions();
 
 			const params = {
 				get sort() {
+					const sort = this.sorting;
 					const order = sort.order === "descending" ? "-" : "";
 					return `${order}${sort.prop}`;
 				},

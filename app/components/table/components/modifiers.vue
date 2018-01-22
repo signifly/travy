@@ -43,7 +43,7 @@ export default {
 		update(val) {
 			const modifiers = mapValues(keyBy(this.items, "key"), (x) => x.value);
 			this.$router.replace({query: {...this.query, modifiers}});
-			this.$emit("getData");
+			this.$emit("getData", {type: "modifiers"});
 		}
 	}
 };
