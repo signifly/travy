@@ -14,6 +14,13 @@ $blue5: #20A0FF;
 
 $width: 1440px;
 
+// built-in colors
+$primary: $--color-primary;
+$danger: $--color-danger;
+$warning: $--color-warning;
+$info: $--color-info;
+$success: $--color-success;
+
 // utils
 @mixin res($width, $dir: max) {
 	@media (#{$dir}-width: #{$width} + "px") {@content}

@@ -25,16 +25,16 @@ export default {
 	text-decoration: none;
 
 	&.danger {
-		color: $--color-danger;
+		color: $danger;
 	}
 	&.warning {
-		color: $--color-warning;
+		color: $warning;
 	}
 	&.info {
-		color: $--color-info;
+		color: $info;
 	}
 	&.success {
-		color: $--color-success;
+		color: $success;
 	}
 }
 </style>

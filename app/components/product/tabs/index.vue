@@ -23,20 +23,13 @@ export default {
 	props: {
 		tabs: {type: Array, required: true}
 	},
-	data() {
-		return {
-			data: null,
-			tab: ""
-		}
-	},
 	computed: {
-		components: (t) => t.$options.components
-
+		components: (t) => t.$options.components,
+		tab: (t) => t.$route.params.tab || "basic"
 	},
 	methods: {
 		tabClick(id) {
-			console.log(id);
-			this.$router.push({name: this.$route.name, params: {tab: id}});
+			this.$router.push({name: "product-tab", params: {tab: id}});
 		}
 	}
 };
