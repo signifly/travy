@@ -407,9 +407,10 @@ export default {
 		async getData({type} = {}) {
 			if (type === "modifiers") await this.getDefinitions();
 
+			const sort = this.sorting;
+
 			const params = {
 				get sort() {
-					const sort = this.sorting;
 					const order = sort.order === "descending" ? "-" : "";
 					return `${order}${sort.prop}`;
 				},
