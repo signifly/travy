@@ -265,8 +265,8 @@ export default {
 					},
 					{
 						icon: "",
-						title: "Nuke 🚀",
-						status: "danger",
+						title: "Ny sofa/lampe 🛋️",
+						status: "success",
 						type: "nuke"
 					}
 				],

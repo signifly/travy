@@ -35,7 +35,7 @@
 			<div class="dropdown">
 				<Dropdown trigger="click" :show-timeout="0" :hide-timeout="0">
 					<a class="el-dropdown-link">
-						Nickelodeon<i class="el-icon-arrow-down el-icon--right"></i>
+						Sikaline<i class="el-icon-arrow-down el-icon--right"></i>
 					</a>
 
 					<DropdownMenu slot="dropdown">
