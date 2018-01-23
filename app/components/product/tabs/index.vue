@@ -1,27 +1,39 @@
 <template>
 	<div class="tabs">
-		<tabs v-bind="{tabs, tab}" @tab="tabClick">
-			<div slot="tab" slot-scope="item">
-				<template v-if="item.id === tab">
-					<component
-						v-if="components[item.fieldType.id]"
-						:is="item.fieldType.id"
-						v-bind="item"
-					/>
-				</template>
-			</div>
-		</tabs>
+		<vTabs v-bind="{tabs, tab}" @tab="tabClick">
+
+			<template slot="label" slot-scope="item">
+				<vLabel v-bind="item" :edit="edits[item.id]"></vLabel>
+			</template>
+
+			<template slot="content" slot-scope="item" v-if="loaded.has(item.id)">
+				<div class="title">{{item.label}}</div>
+				<component
+					v-if="components[item.fieldType.id]"
+					:is="item.fieldType.id"
+					v-bind="item"
+					@edit="edit({id: item.id, func: $event})"
+				/>
+			</template>
+		</vTabs>
 	</div>
 </template>
 
 <script>
-import tabs from "@/components/tabs.vue";
+import vTabs from "@/components/tabs.vue";
+import vLabel from "./label.vue";
 import {vBasic, vContent} from "./components";
 
 export default {
-	components: {tabs, vBasic, vContent},
+	components: {vTabs, vLabel, vBasic, vContent},
 	props: {
 		tabs: {type: Array, required: true}
+	},
+	data() {
+		return {
+			loaded: new Set(),
+			edits: {}
+		}
 	},
 	computed: {
 		components: (t) => t.$options.components,
@@ -30,19 +42,27 @@ export default {
 	methods: {
 		tabClick(id) {
 			this.$router.push({name: "product-tab", params: {tab: id}});
+			this.loaded.add(id);
+		},
+		edit({id, func}) {
+			this.$set(this.edits, id, func);
 		}
+	},
+	created() {
+		this.loaded.add(this.tab);
 	}
 };
 </script>
 
 <style lang="scss" scoped>
 .tabs {
+	.title {
+		margin-bottom: 1.5em;
+	}
 	/deep/ {
 		.el-tabs__header {
+			display: flex;
 			margin: 0;
-		}
-		.el-tabs__nav {
-			overflow: hidden;
 		}
 		.el-tabs__item {
 			font-weight: 400;
@@ -62,6 +82,14 @@ export default {
 			border-top-left-radius: 0;
 			margin-top: -1px;
 			padding: 1.5em;
+		}
+
+		.el-tabs__nav-scroll {
+			overflow: visible;
+		}
+
+		.el-tabs__nav-wrap {
+			overflow: unset;
 		}
 	}
 }

@@ -22,11 +22,12 @@ export default {
 	},
 	methods: {
 		async getData() {
+			console.log("get");
 
 			this.data = {
 				sections: [
 					{
-						title: "product data",
+						title: "Product data",
 						fields: [
 							{
 								label: "product name",
@@ -60,7 +61,7 @@ export default {
 							},
 							{
 								label: "Seat width",
-								value: 30,
+								value: null,
 								unit: "cm"
 							},
 							{
@@ -107,6 +108,12 @@ export default {
 				]
 			};
 
+			this.$watch("data", () => {
+				this.$emit("edit", this.update);
+			}, {deep: true});
+		},
+		async update() {
+			this.$http.post("sef", this.data);
 		}
 	},
 	created() {
@@ -118,7 +125,7 @@ export default {
 <style lang="scss" scoped>
 .basic {
 	.sections {
-		
+
 	}
 }
 </style>

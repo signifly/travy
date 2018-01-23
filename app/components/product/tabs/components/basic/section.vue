@@ -3,13 +3,17 @@
 		<div class="title">
 			{{title}}
 			<Tag v-if="outdated" size="small" class="status" type="warning">Outdated</Tag>
+			<Tag v-if="nodata" size="small" class="status" type="danger">No data</Tag>
 		</div>
 
 		<div class="items">
 			<div class="item" v-for="item in fields">
 				<div class="label">
 					{{item.label}}
-					<span class="outdated" v-if="item.outdated"></span>
+					<span class="dot outdated" v-if="item.outdated"></span>
+					<transition name="el-fade-in">
+						<span class="dot nodata" v-if="!item.disabled && !item.value"></span>
+					</transition>
 				</div>
 				<Input v-model="item.value" :disabled="item.disabled" size="medium">
 					<span class="unit" slot="suffix">{{item.unit}}</span>
@@ -29,7 +33,8 @@ export default {
 		fields: {type: Array, required: true}
 	},
 	computed: {
-		outdated: (t) => t.fields.some(x => x.outdated)
+		outdated: (t) => t.fields.some(x => x.outdated),
+		nodata: (t) => t.fields.some(x => !x.disabled && !x.value)
 	}
 };
 </script>
@@ -40,9 +45,13 @@ export default {
 
 	.title {
 		font-size: em(14);
+		font-weight: 500;
 		border-bottom: 1px solid $black1;
 		padding-bottom: 1.2em;
 		margin-bottom: 1.2em;
+		height: 1.3em;
+		display: flex;
+		align-items: center;
 
 		.status {
 			margin-left: 0.5em;
@@ -65,14 +74,20 @@ export default {
 				display: flex;
 				align-items: center;
 
-				.outdated {
+				.dot {
 					display: block;
-					$s: 0.7em;
+					$s: 9px;
 					width: $s;
 					height: $s;
 					border-radius: 50%;
-					background-color: $warning;
 					margin-left: 0.5em;
+
+					&.outdated {
+						background-color: $warning;
+					}
+					&.nodata {
+						background-color: $danger;
+					}
 				}
 			}
 
