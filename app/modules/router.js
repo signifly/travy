@@ -9,9 +9,24 @@ import tables from "./tables";
 import index from "@/pages/index.vue";
 import product from "@/pages/product.vue";
 import table from "@/pages/table.vue";
+import view from "@/pages/view.vue";
 import _404 from "@/pages/404.vue";
 
-const routesTables = map(tables, (item, id) => ({path: `/${id}`, name: id, component: table}));
+const routesTables = map(tables, (item, id) => ({
+	path: `/${id}`,
+	name: id,
+	component: table,
+	meta: item
+}));
+
+const routesViews = map(tables, (item, id) => ({
+	path: `/${id}/:id`,
+	name: `${id}-view`,
+	component: view,
+	meta: {
+		parent: {...item, id}
+	}
+}));
 
 const routes = [
 	{path: "/", name: "index", component: index},
@@ -27,6 +42,7 @@ const router = new VueRouter({
 	mode: "history",
 	routes: [
 		...routesTables,
+		...routesViews,
 		...routes
 	],
 	parseQuery(query) {

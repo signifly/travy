@@ -12,7 +12,7 @@ export default {
 		title: "Collections"
 	},
 	languages: {
-		title: "languages"
+		title: "Languages"
 	},
 	materials: {
 		title: "Materials"
