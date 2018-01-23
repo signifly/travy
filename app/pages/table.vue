@@ -1,7 +1,7 @@
 <template>
-	<div class="shops">
-		<breadcrumb />
-		<mainTable v-bind="{id, title}"></mainTable>
+	<div class="table">
+		<breadcrumb/>
+		<mainTable v-bind="{id, title}" :key="id"></mainTable>
 	</div>
 </template>
 
@@ -9,14 +9,13 @@
 import breadcrumb from "@/components/breadcrumb.vue";
 import mainTable from "@/components/table/main.vue";
 
+import tables from "@/modules/tables";
 
 export default {
 	components: {breadcrumb, mainTable},
-	data() {
-		return {
-			id: "shops",
-			title: "Shops"
-		}
+	computed: {
+		id: (t) => t.$route.name,
+		title: (t) => tables[t.id].title
 	}
 };
 </script>

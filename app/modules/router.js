@@ -1,35 +1,34 @@
 import Vue from "vue";
 import qs from "qs";
+import {map} from "lodash";
 import VueRouter from "vue-router";
+
 Vue.use(VueRouter);
 
+import tables from "./tables";
 import index from "@/pages/index.vue";
-import products from "@/pages/products.vue";
 import product from "@/pages/product.vue";
+import table from "@/pages/table.vue";
+import _404 from "@/pages/404.vue";
 
-import collections from "@/pages/collections.vue";
-import currencies from "@/pages/currencies.vue";
-import languages from "@/pages/languages.vue";
-import materials from "@/pages/materials.vue";
-import shops from "@/pages/shops.vue";
+const routesTables = map(tables, (item, id) => ({path: `/${id}`, name: id, component: table}));
 
 const routes = [
 	{path: "/", name: "index", component: index},
-	{path: "/products", name: "products", component: products},
 	{path: "/products/:id", name: "product", component: product, children: [
 		{path: ":tab", name: "product-tab", component: product}
 	]},
 
-	{path: "/collections", name: "collections", component: collections},
-	{path: "/currencies", name: "currencies", component: currencies},
-	{path: "/languages", name: "languages", component: languages},
-	{path: "/materials", name: "materials", component: materials},
-	{path: "/shops", name: "shops", component: shops},
+	{path: "/*", name: "404", component: _404}
 ];
+
 
 const router = new VueRouter({
 	mode: "history",
-	routes,
+	routes: [
+		...routesTables,
+		...routes
+	],
 	parseQuery(query) {
 		return qs.parse(query);
 	},

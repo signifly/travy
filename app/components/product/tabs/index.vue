@@ -41,8 +41,8 @@ export default {
 	},
 	methods: {
 		tabClick(id) {
-			this.$router.push({name: "product-tab", params: {tab: id}});
 			this.loaded.add(id);
+			this.$router.push({name: "product-tab", params: {tab: id}});
 		},
 		edit({id, func}) {
 			this.$set(this.edits, id, func);
