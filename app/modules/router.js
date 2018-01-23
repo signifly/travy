@@ -9,6 +9,7 @@ import product from "@/pages/product.vue";
 
 import currencies from "@/pages/currencies.vue";
 import languages from "@/pages/languages.vue";
+import materials from "@/pages/materials.vue";
 import shops from "@/pages/shops.vue";
 
 const routes = [
@@ -20,6 +21,7 @@ const routes = [
 
 	{path: "/currencies", name: "currencies", component: currencies},
 	{path: "/languages", name: "languages", component: languages},
+	{path: "/materials", name: "materials", component: materials},
 	{path: "/shops", name: "shops", component: shops},
 ];
 
