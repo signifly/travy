@@ -32,7 +32,7 @@
 							v-if="components[column.fieldType.id]"
 							:is="column.fieldType.id"
 							v-bind="props({props: column.fieldType.props, item: scope.row})"
-							:action="action({type: column.action, item: scope.row})"
+							:action="action({type: column.fieldType.action, item: scope.row})"
 							:column="column"
 							@update="update({item: scope.row}, $event)"
 							@remove="remove({item: scope.row}, $event)"
@@ -325,9 +325,9 @@ export default {
 						label: "Title",
 						sortable: true,
 						sortBy: "text",
-						action: "show",
 						fieldType: {
 							id: "vText",
+							action: "show",
 							props: {
 								text: "text",
 								status: "textStatus"
