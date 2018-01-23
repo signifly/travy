@@ -1,10 +1,10 @@
 <template>
 	<div class="tabs">
 		<vTabs v-bind="{tabs, tab}" @tab="tabClick">
-
 			<template slot="label" slot-scope="item">
 				<vLabel v-bind="item" :edit="edits[item.id]"></vLabel>
 			</template>
+
 
 			<template slot="content" slot-scope="item" v-if="loaded.has(item.id)">
 				<div class="title">{{item.label}}</div>

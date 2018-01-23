@@ -12,7 +12,6 @@ import vSection from "./section.vue";
 export default {
 	components: {vSection},
 	props: {
-		label: {type: String, required: true},
 		endpoint: {type: String, required: true}
 	},
 	data() {
