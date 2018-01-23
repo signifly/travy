@@ -10,7 +10,7 @@
 			<Submenu index="2">
 				<template slot="title">Catalogue</template>
 				<MenuItem index="/products">Products</MenuItem>
-				<MenuItem index="/2">Collections</MenuItem>
+				<MenuItem index="/collections">Collections</MenuItem>
 				<MenuItem index="/3">Stock items</MenuItem>
 				<MenuItem index="/4">Stock item models</MenuItem>
 				<MenuItem index="/5">Prices</MenuItem>

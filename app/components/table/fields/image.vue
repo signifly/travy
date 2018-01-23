@@ -32,7 +32,7 @@ export default {
 		display: none;
 		z-index: 1;
 		position: absolute;
-		right: 1em;
+		right: 2em;
 		top: 0;
 		bottom: 0;
 		align-items: center;

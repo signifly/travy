@@ -7,6 +7,7 @@ import index from "@/pages/index.vue";
 import products from "@/pages/products.vue";
 import product from "@/pages/product.vue";
 
+import collections from "@/pages/collections.vue";
 import currencies from "@/pages/currencies.vue";
 import languages from "@/pages/languages.vue";
 import materials from "@/pages/materials.vue";
@@ -19,6 +20,7 @@ const routes = [
 		{path: ":tab", name: "product-tab", component: product}
 	]},
 
+	{path: "/collections", name: "collections", component: collections},
 	{path: "/currencies", name: "currencies", component: currencies},
 	{path: "/languages", name: "languages", component: languages},
 	{path: "/materials", name: "materials", component: materials},
