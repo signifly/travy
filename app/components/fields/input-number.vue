@@ -1,17 +1,20 @@
 <template>
 	<div class="input">
-		<Input v-model.number="val" @input="update" />
+		<InputNumber v-model="val" @change="update" v-bind="{disabled}" :controls="false" size="medium" />
+		<div class="unit" v-if="unit">{{unit}}</div>
 	</div>
 </template>
 
 <script>
-import {Input} from "element-ui";
+import {InputNumber} from "element-ui";
 
 export default {
-	components: {Input},
+	components: {InputNumber},
 	props: {
 		props: {type: Object, required: true},
-		value: {type: Number, required: true}
+		value: {type: Number, required: true},
+		unit: {type: String, required: false},
+		disabled: {type: Boolean, required: false}
 	},
 	data() {
 		return {
@@ -20,6 +23,7 @@ export default {
 	},
 	methods: {
 		update(val) {
+			console.log(val);
 			this.$emit("update", {
 				data: {[this.props.value]: this.val}
 			});
@@ -29,7 +33,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input {
+.input {
+	position: relative;
+	.el-input-number {
+		width: 100%;
 
+		/deep/ {
+			.el-input__inner {
+				text-align: left;
+			}
+		}
+	}
+	.unit {
+		pointer-events: none;
+		position: absolute;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		display: flex;
+		align-items: center;
+		font-size: em(12);
+		color: $blue3;
+		margin-right: 1em;
+	}
 }
 </style>

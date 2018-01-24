@@ -48,7 +48,7 @@ export default {
 						title: "Basic",
 						sections: [
 							{
-								title: "Basic",
+								title: "wfewf",
 								fields: [
 									{
 										name: "seatWidth",
@@ -59,7 +59,7 @@ export default {
 											readonly: true,
 											unit: "cm",
 											props: {
-												value: "seat_width"
+												value: "s1"
 											}
 										}
 									},
@@ -68,10 +68,60 @@ export default {
 										label: "Seat width2",
 										fieldType: {
 											id: "vInputNumber",
+											unit: "cm",
+											props: {
+												value: "s2"
+											}
+										}
+									}
+								]
+							},
+							{
+								title: "wfdsfsdf",
+								fields: [
+									{
+										name: "seatWidth",
+										label: "Seat width",
+										tooltip: "do something",
+										fieldType: {
+											id: "vInputNumber",
 											readonly: true,
 											unit: "cm",
 											props: {
-												value: "seat_width2"
+												value: "s3"
+											}
+										}
+									},
+									{
+										name: "seatWidtsh2",
+										label: "Seat widt32",
+										fieldType: {
+											id: "vInputNumber",
+											unit: "cm",
+											props: {
+												value: "s4"
+											}
+										}
+									},
+									{
+										name: "seatWidath2",
+										label: "Seat width2",
+										fieldType: {
+											id: "vInputNumber",
+											unit: "cm",
+											props: {
+												value: "s4"
+											}
+										}
+									},
+									{
+										name: "seatWidAth2",
+										label: "Seat width2",
+										fieldType: {
+											id: "vInputNumber",
+											unit: "cm",
+											props: {
+												value: "s4"
 											}
 										}
 									}
@@ -94,7 +144,7 @@ export default {
 											readonly: true,
 											unit: "cm",
 											props: {
-												value: "seat_width"
+												value: "s5"
 											}
 										}
 									},
@@ -103,10 +153,9 @@ export default {
 										label: "Seat width2",
 										fieldType: {
 											id: "vInputNumber",
-											readonly: true,
 											unit: "cm",
 											props: {
-												value: "seat_width2"
+												value: "s6"
 											}
 										}
 									}
@@ -121,8 +170,12 @@ export default {
 		},
 		async getData() {
 			this.data = {
-				seat_width: 60,
-				seat_width2: 60
+				s1: 60,
+				s2: 60,
+				s3: 50,
+				s4: 40,
+				s5: 30,
+				s6: 20
 			};
 		}
 	},
