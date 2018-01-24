@@ -1,7 +1,13 @@
 <template>
 	<div class="field" :class="id">
 		<div class="info" slot="info">
-			<div class="label">{{label}}</div>
+			<div class="label">
+				{{label}}
+				<transition name="el-fade-in">
+					<span class="dot nodata" v-if="!disabled && nodata"></span>
+				</transition>
+				<div
+			</div>
 			<div class="tooltip" v-if="tooltip">
 				<Tooltip :content="tooltip" placement="top">
 					<i class="el-icon-info"></i>
@@ -10,11 +16,13 @@
 		</div>
 
 		<component
+			ref="field"
+			v-if="components[id]"
 			:is="id"
 			:props="props"
-			v-bind="propsData"
 			:disabled="disabled"
 			:unit="unit"
+			v-bind="propsData"
 			@update="$emit('update', $event)"
 		/>
 
@@ -22,18 +30,23 @@
 </template>
 
 <script>
-import {mapValues} from "lodash";
+import {mapValues, map, get} from "lodash";
+import {Tooltip, Tag} from "element-ui";
 import * as fields from "@/components/fields";
-import {Tooltip} from "element-ui";
 
 export default {
 	components: {
-		...fields,
-		Tooltip
+		Tooltip, Tag,
+		...fields
 	},
 	props: {
 		field: {type: Object, required: true},
 		data: {type: Object, required: true}
+	},
+	data() {
+		return {
+			mounted: false
+		}
 	},
 	computed: {
 		components: (t) => t.$options.components,
@@ -45,7 +58,18 @@ export default {
 		unit: (t) => t.field.fieldType.unit,
 
 		props: (t) => t.field.fieldType.props,
-		propsData: (t) => mapValues(t.props, (key) => t.data[key])
+		propsData: (t) => mapValues(t.props, (key) => t.data[key]),
+
+		nodata() {
+			if (!this.mounted) return;
+			
+			const fieldData = get(this.$refs, "field.data");
+			const keys = map(fieldData, (val, key) => key);
+			return keys.map(key => this.propsData[key]).every(x => !x);
+		}
+	},
+	mounted() {
+		this.mounted = true;
 	}
 };
 </script>
@@ -62,6 +86,27 @@ export default {
 		font-size: em(14);
 		color: $blue4;
 		margin-bottom: 0.5em;
+
+		.label {
+			display: flex;
+			align-items: center;
+
+			.dot {
+				display: block;
+				$s: 9px;
+				width: $s;
+				height: $s;
+				border-radius: 50%;
+				margin-left: 0.5em;
+
+				&.outdated {
+					background-color: $warning;
+				}
+				&.nodata {
+					background-color: $danger;
+				}
+			}
+		}
 
 		.tooltip {
 			font-size: 0.8em;

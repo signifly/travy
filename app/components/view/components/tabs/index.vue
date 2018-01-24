@@ -1,23 +1,52 @@
 <template>
 	<div class="tabs">
-		<tabs v-bind="{tabs}">
-			<template slot="label" slot-scope="item">{{item.label}}</template>
-			<template slot="content" slot-scope="page">
-				<page v-bind="{page, data}" @update="$emit('update', $event)"/>
+		<vTabs v-bind="{tabs, tab}" @tab="tabClick">
+			<template slot="label" slot-scope="item">
+				<vLabel v-bind="item" :edit="edit" :refs="refs"></vLabel>
 			</template>
-		</tabs>
+
+			<template slot="content" slot-scope="tab">
+				<vTab v-bind="{tab, data}" @update="update" :ref="tab.id"/>
+			</template>
+		</vTabs>
 	</div>
 </template>
 
 <script>
-import tabs from "@/components/tabs.vue";
-import page from "./page.vue";
+import vTabs from "@/components/tabs.vue";
+import vLabel from "./label.vue";
+import vTab from "./tab.vue";
 
 export default {
-	components: {tabs, page},
+	components: {vTabs, vLabel, vTab},
 	props: {
 		tabs: {type: Array, required: true},
 		data: {type: Object, required: true}
+	},
+	data() {
+		return {
+			mounted: false,
+			edit: {}
+		}
+	},
+	computed: {
+		tab: (t) => t.$route.params.tab || "basic",
+		refs() {
+			if (!this.mounted) return;
+			return this.$refs;
+		}
+	},
+	methods: {
+		update({data, section, tab}) {
+			this.$set(this.edit, tab, true);
+			this.$emit("update", {data});
+		},
+		tabClick(id) {
+			this.$router.push({params: {tab: id}});
+		}
+	},
+	mounted() {
+		this.mounted = true;
 	}
 };
 </script>

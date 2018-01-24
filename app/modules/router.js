@@ -20,7 +20,7 @@ const routesTables = map(tables, (item, id) => ({
 }));
 
 const routesViews = map(tables, (item, id) => ({
-	path: `/${id}/:id`,
+	path: `/${id}/:id/:tab?`,
 	name: `${id}-view`,
 	component: view,
 	meta: {

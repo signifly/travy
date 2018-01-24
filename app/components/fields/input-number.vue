@@ -1,6 +1,6 @@
 <template>
 	<div class="input">
-		<InputNumber v-model="val" @change="update" v-bind="{disabled}" :controls="false" size="medium" />
+		<InputNumber v-model="data.value" @change="update" v-bind="{disabled}" :controls="false" size="medium" />
 		<div class="unit" v-if="unit">{{unit}}</div>
 	</div>
 </template>
@@ -12,20 +12,21 @@ export default {
 	components: {InputNumber},
 	props: {
 		props: {type: Object, required: true},
-		value: {type: Number, required: true},
+		value: {type: Number, required: false},
 		unit: {type: String, required: false},
 		disabled: {type: Boolean, required: false}
 	},
 	data() {
 		return {
-			val: this.value
+			data: {
+				value: this.value
+			}
 		}
 	},
 	methods: {
 		update(val) {
-			console.log(val);
 			this.$emit("update", {
-				data: {[this.props.value]: this.val}
+				data: {[this.props.value]: val}
 			});
 		}
 	}

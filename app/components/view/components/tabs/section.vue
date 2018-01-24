@@ -1,21 +1,48 @@
 <template>
 	<div class="section">
-		<div class="title">{{section.title}}</div>
+		<div class="title">
+			{{section.title}}
+			<Tag v-if="nodata" size="small" class="status" type="danger">No data</Tag>
+		</div>
 
 		<div class="fields">
-			<field v-for="field in section.fields" v-bind="{field, data}" :key="field.name" @update="$emit('update', $event)"/>
+			<field v-for="field in section.fields" v-bind="{field, data}" :key="field.name" @update="update" ref="field"/>
 		</div>
 	</div>
 </template>
 
 <script>
+import {map, pick} from "lodash";
+import {Tag} from "element-ui";
 import field from "./field.vue";
 
 export default {
-	components: {field},
+	components: {Tag, field},
 	props: {
 		section: {type: Object, required: true},
 		data: {type: Object, required: true}
+	},
+	data() {
+		return {
+			mounted: false
+		}
+	},
+	computed: {
+		nodata() {
+			if (!this.mounted) return;
+			return this.$refs.field.some(x =>  x.nodata);
+		}
+	},
+	methods: {
+		update({data}) {
+			this.$emit("update", {
+				data,
+				section: this.section.id
+			});
+		}
+	},
+	mounted() {
+		this.mounted = true;
 	}
 };
 </script>
@@ -46,7 +73,7 @@ export default {
 		// .item {
 		// 	width: calc(50% - 1em);
 		// 	margin-bottom: 1.5em;
-    // 
+    //
 		// 	.label {
 		// 		font-size: em(14);
 		// 		color: $blue4;

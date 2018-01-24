@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import {mapValues} from "lodash";
 import {Row, Col} from "element-ui";
 import {tabs} from "./components";
 
@@ -44,10 +45,12 @@ export default {
 			this.definitions = {
 				tabs: [
 					{
+						id: "basic",
 						label: "Basic",
 						title: "Basic",
 						sections: [
 							{
+								id: "wfewf",
 								title: "wfewf",
 								fields: [
 									{
@@ -77,6 +80,7 @@ export default {
 								]
 							},
 							{
+								id: "wfdsfsdf",
 								title: "wfdsfsdf",
 								fields: [
 									{
@@ -110,7 +114,7 @@ export default {
 											id: "vInputNumber",
 											unit: "cm",
 											props: {
-												value: "s4"
+												value: "s5"
 											}
 										}
 									},
@@ -121,7 +125,7 @@ export default {
 											id: "vInputNumber",
 											unit: "cm",
 											props: {
-												value: "s4"
+												value: "s6"
 											}
 										}
 									}
@@ -130,10 +134,12 @@ export default {
 						]
 					},
 					{
+						id: "content",
 						label: "Content",
 						title: "Content",
 						sections: [
 							{
+								id: "basic",
 								title: "Basic",
 								fields: [
 									{
@@ -144,7 +150,7 @@ export default {
 											readonly: true,
 											unit: "cm",
 											props: {
-												value: "s5"
+												value: "s7"
 											}
 										}
 									},
@@ -155,7 +161,7 @@ export default {
 											id: "vInputNumber",
 											unit: "cm",
 											props: {
-												value: "s6"
+												value: "s8"
 											}
 										}
 									}
@@ -171,11 +177,13 @@ export default {
 		async getData() {
 			this.data = {
 				s1: 60,
-				s2: 60,
+				s2: null,
 				s3: 50,
 				s4: 40,
 				s5: 30,
-				s6: 20
+				s6: 20,
+				s7: 20,
+				s8: 20
 			};
 		}
 	},
