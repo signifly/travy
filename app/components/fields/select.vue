@@ -12,8 +12,8 @@ import {Select, Option} from "element-ui";
 export default {
 	components: {Select, Option},
 	props: {
+		props: {type: Object, required: true},
 		options: {type: Array, required: true},
-		column: {type: Object, required: true},
 		value: {type: String, required: false}
 	},
 	data() {
@@ -21,15 +21,10 @@ export default {
 			val: this.value
 		}
 	},
-	computed: {
-		key() {
-			return this.column.fieldType.props.value;
-		}
-	},
 	methods: {
 		update(val) {
 			this.$emit("update", {
-				data: {[this.key]: val}
+				data: {[this.props.value]: val}
 			});
 		}
 	}

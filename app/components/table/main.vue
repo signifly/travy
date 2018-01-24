@@ -31,9 +31,9 @@
 						 	slot-scope="scope"
 							v-if="components[column.fieldType.id]"
 							:is="column.fieldType.id"
-							v-bind="props({props: column.fieldType.props, item: scope.row})"
+							v-bind="propsData({props: column.fieldType.props, item: scope.row})"
 							:action="action({type: column.fieldType.action, item: scope.row})"
-							:column="column"
+							:props="column.fieldType.props"
 							@update="update({item: scope.row}, $event)"
 							@remove="remove({item: scope.row}, $event)"
 							@show="show({item: scope.row}, $event)"
@@ -52,15 +52,14 @@
 import {mapValues, mapKeys, omit, pickBy} from "lodash";
 import box from "../box.vue";
 import {Table, TableColumn} from "element-ui";
-import {pagination, panel, actions, filters, modifiers} from "./components";
-import {vText, vTextBold, vStatus, vImage, vSwitch, vSelect, vActions} from "./fields";
+import * as components from "./components";
+import * as fields from "@/components/fields";
 
 export default {
 	components: {
-		box,
-		Table, TableColumn,
-		pagination, panel, actions, filters, modifiers,
-		vText, vTextBold, vStatus, vImage, vSwitch, vSelect, vActions
+		box, Table, TableColumn,
+		...components,
+		...fields
 	},
 	props: {
 		id: {type: String, required: true},
@@ -94,7 +93,7 @@ export default {
 		}
 	},
 	methods: {
-		props({props, item}) {
+		propsData({props, item}) {
 			return mapValues(props, (key) => item[key]);
 		},
 

@@ -1,7 +1,7 @@
 <template>
 	<div class="view">
 		<breadcrumb :items="breadcrumb"/>
-		<mainView v-bind="{id}"/>
+		<mainView v-bind="{id, meta}"/>
 	</div>
 </template>
 

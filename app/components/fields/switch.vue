@@ -10,25 +10,18 @@ import {Switch} from "element-ui";
 export default {
 	components: {elSwitch: Switch},
 	props: {
-		value: {type: Boolean, required: true},
-		column: {type: Object, required: true}
+		props: {type: Object, required: true},
+		value: {type: Boolean, required: true}
 	},
 	data() {
 		return {
 			val: this.value
 		}
 	},
-	computed: {
-		key() {
-			return this.column.fieldType.props.value;
-		}
-	},
 	methods: {
 		update(val) {
 			this.$emit("update", {
-				data: {
-					[this.key]: val
-				}
+				data: {[this.props.value]: val}
 			});
 		}
 	}
