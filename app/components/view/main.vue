@@ -101,7 +101,6 @@ export default {
 										label: "Seat widt32",
 										fieldType: {
 											id: "vInputNumber",
-											unit: "cm",
 											props: {
 												value: "s4"
 											}

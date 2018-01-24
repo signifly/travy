@@ -7,7 +7,6 @@ Vue.use(VueRouter);
 
 import tables from "./tables";
 import index from "@/pages/index.vue";
-import product from "@/pages/product.vue";
 import table from "@/pages/table.vue";
 import view from "@/pages/view.vue";
 import _404 from "@/pages/404.vue";
@@ -30,10 +29,6 @@ const routesViews = map(tables, (item, id) => ({
 
 const routes = [
 	{path: "/", name: "index", component: index},
-	{path: "/products/:id", name: "product", component: product, children: [
-		{path: ":tab", name: "product-tab", component: product}
-	]},
-
 	{path: "/*", name: "404", component: _404}
 ];
 
