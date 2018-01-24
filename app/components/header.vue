@@ -27,7 +27,7 @@
 				<MenuItem index="/languages">Languages</MenuItem>
 				<MenuItem index="/currencies">Currencies</MenuItem>
 				<MenuItem index="/materials">Materials</MenuItem>
-				<MenuItem index="/51231">Users</MenuItem>
+				<MenuItem index="/users">Users</MenuItem>
 			</Submenu>
 		</Menu>
 

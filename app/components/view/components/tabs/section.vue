@@ -62,54 +62,13 @@ export default {
 		align-items: center;
 
 		.status {
-			margin-left: 0.5em;
+			margin-left: 1em;
 		}
 	}
 	.fields {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
-
-		// .item {
-		// 	width: calc(50% - 1em);
-		// 	margin-bottom: 1.5em;
-    //
-		// 	.label {
-		// 		font-size: em(14);
-		// 		color: $blue4;
-		// 		margin-bottom: 0.5em;
-    //
-		// 		display: flex;
-		// 		align-items: center;
-    //
-		// 		.dot {
-		// 			display: block;
-		// 			$s: 9px;
-		// 			width: $s;
-		// 			height: $s;
-		// 			border-radius: 50%;
-		// 			margin-left: 0.5em;
-    //
-		// 			&.outdated {
-		// 				background-color: $warning;
-		// 			}
-		// 			&.nodata {
-		// 				background-color: $danger;
-		// 			}
-		// 		}
-		// 	}
-    //
-		// 	.el-input {
-		// 		.unit {
-		// 			user-select: none;
-		// 			height: 100%;
-		// 			display: flex;
-		// 			align-items: center;
-		// 			font-size: em(14);
-		// 			margin-right: 0.5em;
-		// 		}
-		// 	}
-		// }
 	}
 }
 </style>

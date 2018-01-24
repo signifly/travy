@@ -16,5 +16,8 @@ export default {
 	},
 	materials: {
 		title: "Materials"
+	},
+	users: {
+		title: "Users"
 	}
 };
