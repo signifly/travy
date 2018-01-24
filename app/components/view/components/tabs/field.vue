@@ -6,7 +6,6 @@
 				<transition name="el-fade-in">
 					<span class="dot nodata" v-if="!disabled && nodata"></span>
 				</transition>
-				<div
 			</div>
 			<div class="tooltip" v-if="tooltip">
 				<Tooltip :content="tooltip" placement="top">
@@ -25,6 +24,11 @@
 			v-bind="propsData"
 			@update="$emit('update', $event)"
 		/>
+
+		<div class="reference" v-if="reference">
+			<div class="title">Reference:</div>
+			<div class="text">{{reference}}</div>
+		</div>
 
 	</div>
 </template>
@@ -56,13 +60,14 @@ export default {
 		tooltip: (t) => t.field.tooltip,
 		disabled: (t) => t.field.fieldType.readonly,
 		unit: (t) => t.field.fieldType.unit,
+		reference: (t) => t.field.fieldType.reference,
 
 		props: (t) => t.field.fieldType.props,
 		propsData: (t) => mapValues(t.props, (key) => t.data[key]),
 
 		nodata() {
 			if (!this.mounted) return;
-			
+
 			const fieldData = get(this.$refs, "field.data");
 			const keys = map(fieldData, (val, key) => key);
 			return keys.map(key => this.propsData[key]).every(x => !x);
@@ -113,6 +118,23 @@ export default {
 			color: $blue3;
 		}
 	}
+
+	.reference {
+		margin-top: 1em;
+		margin-bottom: 0.5em;
+		font-size: em(13);
+		display: flex;
+
+		.title {
+			font-weight: 500;
+			margin-right: 1em;
+		}
+		.text {
+			font-style: italic;
+			color: $blue4;
+		}
+	}
+
 	&.vInputNumber {
 		width: calc(50% - 1em);
 	}

@@ -91,6 +91,7 @@ export default {
 											id: "vInputNumber",
 											readonly: true,
 											unit: "cm",
+											reference: "earg iaeorjg ioerg jeopig jesrgo ipjseg sepog ijesr pogiserj goesrijg seroi gjserop gijser goiesrj geosrig jseiog j.",
 											props: {
 												value: "s3"
 											}
