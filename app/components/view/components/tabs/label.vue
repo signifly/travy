@@ -64,6 +64,7 @@ export default {
 
 	.edit {
 		z-index: 1;
+		pointer-events: none;
 		background-color: $white1;
 		border: 1px solid $blue2;
 		color: $blue1;
