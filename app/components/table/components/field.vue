@@ -49,12 +49,12 @@ export default {
 		}
 	},
 	methods: {
-		endpoint({type, item}) {
+		endpoint({type}) {
 			const endpoint = this.endpoints[type];
 
 			if (endpoint.url.includes("{id}")) {
-				const id = item[endpoint.id];
-				if (!id) throw new Error(`missing ${endpoint.id} on item ${item.id}`);
+				const id = this.item[endpoint.id];
+				if (!id) throw new Error(`missing ${endpoint.id} on item ${this.item.id}`);
 
 				return endpoint.url.replace("{id}", id);
 			} else {
@@ -63,14 +63,14 @@ export default {
 		},
 
 		show() {
-			const url = this.endpoint({type: "show", item: this.item});
+			const url = this.endpoint({type: "show"});
 			this.$router.push(`/${url}`);
 		},
 
 		async update({data, done}) {
 			try {
 				const modifiers = this.modifiers.map(x => omit(x, "options"));
-				const url = this.endpoint({type: "update", item: this.item});
+				const url = this.endpoint({type: "update"});
 				await this.$http.put(url, {data, modifiers});
 			} catch (err) {
 				console.log(err);
@@ -81,7 +81,7 @@ export default {
 
 		async remove({done}) {
 			try {
-				const url = this.endpoint({type: "destroy", item: this.item});
+				const url = this.endpoint({type: "destroy"});
 				await this.$http.delete(url);
 				await this.getData();
 			} catch (err) {

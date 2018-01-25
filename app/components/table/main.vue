@@ -11,7 +11,7 @@
 				<div class="top">
 					<div class="info">
 						<div class="title">{{title}}</div>
-						<div class="total">{{pagination.total}}</div>
+						<div class="total" v-if="pagination">{{pagination.total}}</div>
 					</div>
 					<modifiers v-bind="{modifiers}" @getData="getData" />
 				</div>
@@ -31,7 +31,7 @@
 					</TableColumn>
 				</Table>
 
-				<pagination v-bind="{data: pagination}" @getData="getData" />
+				<pagination v-if="pagination" v-bind="pagination" @getData="getData" />
 				<panel v-if="selected.length > 0" v-bind="{selected, batch}" @unselect="unselect" />
 			</box>
 		</div>
@@ -40,16 +40,13 @@
 
 <script>
 import {mapValues, mapKeys, omit, pickBy, get} from "lodash";
-import box from "../box.vue";
-import {Table, TableColumn} from "element-ui";
 import * as components from "./components";
+import {Table, TableColumn} from "element-ui";
 import field from "./components/field.vue";
+import box from "../box.vue";
 
 export default {
-	components: {
-		box, Table, TableColumn, field,
-		...components
-	},
+	components: {...components, Table, TableColumn, field, box},
 	props: {
 		id: {type: String, required: true},
 		title: {type: String, required: false}
@@ -58,8 +55,8 @@ export default {
 		return {
 			definitions: null,
 			data: null,
-			pagination: {},
-			selected: []
+			pagination: null,
+			selected: [],
 		}
 	},
 	computed: {
@@ -95,7 +92,7 @@ export default {
 		unselect() {
 			this.$refs.table.clearSelection();
 		},
-		
+
 		async getDefinitions() {
 			if (this.id !== "products") {
 				const {data} = await this.$http.get(`definitions/table/${this.id}`, {params: this.query.modifiers});

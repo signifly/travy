@@ -10,13 +10,14 @@ import {Pagination} from "element-ui";
 export default {
 	components: {Pagination},
 	props: {
-		data: {type: Object, required: true}
+		total: {type: Number, required: true},
+		per_page: {type: Number, required: true}
 	},
 	computed: {
 		query: (t) => t.$route.query,
 		pagination: (t) => ({
-			total: t.data.total,
-			"page-size": t.data.per_page,
+			total: t.total,
+			"page-size": t.per_page,
 			"current-page": Number(t.$route.query.page) || 1
 		})
 	},
