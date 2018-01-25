@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import {mapValues, mapKeys, omit, pickBy} from "lodash";
+import {mapValues, mapKeys, omit, pickBy, get} from "lodash";
 import box from "../box.vue";
 import {Table, TableColumn} from "element-ui";
 import * as components from "./components";
@@ -83,6 +83,7 @@ export default {
 		endpoints: (t) => t.definitions.endpoints,
 		filters: (t) => t.definitions.filters,
 		search: (t) => t.definitions.search,
+		includes: (t) => t.definitions.includes,
 		sorting: (t) => t.query.sort || t.defaults.sort,
 
 		tableColumns() {
@@ -94,7 +95,7 @@ export default {
 	},
 	methods: {
 		propsData({props, item}) {
-			return mapValues(props, (key) => item[key]);
+			return mapValues(props, (key) => get(item, key));
 		},
 
 		sort({prop, order}) {
@@ -413,6 +414,7 @@ export default {
 					const order = sort.order === "descending" ? "-" : "";
 					return `${order}${sort.prop}`;
 				},
+				include: this.includes.join(","),
 				page: this.query.page,
 				...this.query.modifiers,
 				...this.query.filter

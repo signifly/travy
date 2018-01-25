@@ -22,5 +22,8 @@ export default {
 	},
 	partners: {
 		title: "Partners"
+	},
+	orders: {
+		title: "Orders"
 	}
 };
