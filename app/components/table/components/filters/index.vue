@@ -76,7 +76,7 @@ export default {
 			this.$router.replace({query: {...this.query, filter: {...this.query.filter, q: input}}});
 			await this.getData();
 			this.loading = false;
-		}, 1000),
+		}, 500),
 
 		updateSearchQ(data) {
 			this.loading = true;
@@ -95,7 +95,7 @@ export default {
 			.el-input__inner {
 				width: em(284);
 			}
-			
+
 			.el-input-group__append {
 				background-color: $white1;
 				transition: cubic(background-color);

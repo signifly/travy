@@ -1,6 +1,6 @@
 <template>
-	<div class="select">
-		<Select v-model="val" @change="update" v-bind="{size}" filterable>
+	<div class="select-tags-multi-add">
+		<Select v-model="data.value" @change="update" v-bind="{size}" filterable multiple allow-create>
 			<Option v-for="option in options" v-bind="option" :key="option.value" />
 		</Select>
 	</div>
@@ -12,14 +12,16 @@ import {Select, Option} from "element-ui";
 export default {
 	components: {Select, Option},
 	props: {
-		meta: {type: Object, require: false, default: () => ({})},
+		meta: {type: Object, require: false},
 		props: {type: Object, required: true},
 		options: {type: Array, required: true},
-		value: {type: String, required: false}
+		value: {type: Array, required: false}
 	},
 	data() {
 		return {
-			val: this.value
+			data: {
+				value: this.value
+			}
 		}
 	},
 	computed: {
@@ -35,17 +37,13 @@ export default {
 			});
 		}
 	}
-};
+}
 </script>
 
 <style lang="scss" scoped>
-.select {
+.select-tags-multi-add {
 	.el-select {
-		/deep/ {
-			.el-input__inner {
-				// border: 0;
-			}
-		}
+		width: 100%;
 	}
 }
 </style>

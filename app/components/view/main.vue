@@ -165,6 +165,23 @@ export default {
 										}
 									}
 								]
+							},
+							{
+								id: "classification",
+								title: "Classification",
+								fields: [
+									{
+										name: "tags",
+										label: "Tags",
+										fieldType: {
+											id: "vSelectTagsMultiAdd",
+											props: {
+												options: "tagsOptions",
+												value: "tagsValue"
+											}
+										}
+									},
+								]
 							}
 						]
 					}
@@ -183,7 +200,25 @@ export default {
 				s6: 20,
 				s7: 20,
 				s8: 20,
-				markdown: ""
+				markdown: "",
+				tagsValue: ["testing"],
+				tagsOptions: [
+					{
+						label: "A",
+						value: "a",
+						disabled: false
+					},
+					{
+						label: "B",
+						value: "b",
+						disabled: false
+					},
+					{
+						label: "C",
+						value: "c",
+						disabled: true
+					}
+				],
 			};
 		}
 	},

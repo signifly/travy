@@ -27,17 +27,7 @@
 
 					<TableColumn type="selection" v-if="batch.active" />
 					<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name">
-						<component
-						 	slot-scope="scope"
-							v-if="components[column.fieldType.id]"
-							:is="column.fieldType.id"
-							v-bind="propsData({props: column.fieldType.props, item: scope.row})"
-							:action="action({type: column.fieldType.action, item: scope.row})"
-							:props="column.fieldType.props"
-							@update="update({item: scope.row}, $event)"
-							@remove="remove({item: scope.row}, $event)"
-							@show="show({item: scope.row}, $event)"
-						/>
+						<field slot-scope="scope" v-bind="{scope, column, modifiers, endpoints}"/>
 					</TableColumn>
 				</Table>
 
@@ -53,13 +43,12 @@ import {mapValues, mapKeys, omit, pickBy, get} from "lodash";
 import box from "../box.vue";
 import {Table, TableColumn} from "element-ui";
 import * as components from "./components";
-import * as fields from "@/components/fields";
+import field from "./components/field.vue";
 
 export default {
 	components: {
-		box, Table, TableColumn,
-		...components,
-		...fields
+		box, Table, TableColumn, field,
+		...components
 	},
 	props: {
 		id: {type: String, required: true},
@@ -74,7 +63,6 @@ export default {
 		}
 	},
 	computed: {
-		components: (t) => t.$options.components,
 		query: (t) => t.$route.query,
 		batch: (t) => t.definitions.batch,
 		modifiers: (t) => t.definitions.modifiers,
@@ -94,10 +82,6 @@ export default {
 		}
 	},
 	methods: {
-		propsData({props, item}) {
-			return mapValues(props, (key) => get(item, key));
-		},
-
 		sort({prop, order}) {
 			const sort = prop && order ? {prop, order} : undefined;
 			if (this.data) this.$router.replace({query: {sort, filter: this.query.filter}}); // don't set query params for default sorting
@@ -111,53 +95,7 @@ export default {
 		unselect() {
 			this.$refs.table.clearSelection();
 		},
-
-		action({type, item}) {
-			return type && item ? this.endpoint({type, item}) : null;
-		},
-
-		endpoint({type, item}) {
-			const endpoint = this.endpoints[type];
-
-			if (endpoint.url.includes("{id}")) {
-				const id = item[endpoint.id];
-				if (!id) throw new Error(`missing ${endpoint.id} on item ${item.id}`);
-
-				return endpoint.url.replace("{id}", item[endpoint.id]);
-			} else {
-				return endpoint.url;
-			}
-		},
-
-		show({item}) {
-			const url = this.endpoint({type: "show", item});
-			this.$router.push(`/${url}`);
-		},
-
-		async update({item}, {data, done}) {
-			try {
-				const modifiers = this.modifiers.map(x => omit(x, "options"));
-				const url = this.endpoint({type: "update", item});
-				await this.$http.put(url, {data, modifiers});
-			} catch (err) {
-
-			} finally {
-				if (done) done();
-			}
-		},
-
-		async remove({item}, {done}) {
-			try {
-				const url = this.endpoint({type: "destroy", item});
-				await this.$http.delete(url);
-				await this.getData();
-			} catch (err) {
-
-			} finally {
-				if (done) done();
-			}
-		},
-
+		
 		async getDefinitions() {
 			if (this.id !== "products") {
 				const {data} = await this.$http.get(`definitions/table/${this.id}`, {params: this.query.modifiers});
@@ -329,7 +267,7 @@ export default {
 						sortBy: "text",
 						fieldType: {
 							id: "vText",
-							action: "show",
+							action: "products/{id}",
 							props: {
 								text: "text",
 								status: "textStatus"

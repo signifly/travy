@@ -1,6 +1,6 @@
 <template>
 	<div class="switch">
-		<elSwitch v-model="val" @change="update" />
+		<elSwitch v-model="data.value" @change="update" />
 	</div>
 </template>
 
@@ -15,7 +15,9 @@ export default {
 	},
 	data() {
 		return {
-			val: this.value
+			data: {
+				value: this.value
+			}
 		}
 	},
 	methods: {

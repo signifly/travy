@@ -1,13 +1,11 @@
 <template>
-	<router-link v-if="action" class="text" :to="action">{{text}}</router-link>
-	<div class="text" v-else>{{text}}</div>
+	<div class="text">{{text}}</div>
 </template>
 
 <script>
 export default {
 	props: {
-		text: {type: String, required: false},
-		action: {type: String, required: false}
+		text: {type: String, required: false}
 	}
 };
 </script>

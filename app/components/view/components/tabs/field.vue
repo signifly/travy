@@ -15,12 +15,13 @@
 		</div>
 
 		<component
-			ref="field"
 			v-if="components[id]"
+			ref="field"
 			:is="id"
+			:unit="unit"
 			:props="props"
 			:disabled="disabled"
-			:unit="unit"
+			:meta="{location: 'tabs'}"
 			v-bind="propsData"
 			@update="$emit('update', $event)"
 		/>
