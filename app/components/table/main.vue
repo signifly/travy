@@ -223,6 +223,8 @@ export default {
 					]
 				},
 
+				includes: [],
+
 				search: {
 					placeholder: "search"
 				},

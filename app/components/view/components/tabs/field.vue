@@ -63,7 +63,7 @@ export default {
 		reference: (t) => t.field.fieldType.reference,
 
 		props: (t) => t.field.fieldType.props,
-		propsData: (t) => mapValues(t.props, (key) => t.data[key]),
+		propsData: (t) => mapValues(t.props, (key) => get(t.data, key)),
 
 		nodata() {
 			if (!this.mounted) return;
