@@ -19,5 +19,8 @@ export default {
 	},
 	users: {
 		title: "Users"
+	},
+	partners: {
+		title: "Partners"
 	}
 };

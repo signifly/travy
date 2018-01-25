@@ -20,7 +20,7 @@
 			<MenuItem index="/23">Translations</MenuItem>
 			<MenuItem index="/shops">Shops</MenuItem>
 			<MenuItem index="/4234234">Orders</MenuItem>
-			<MenuItem index="/5234234">Partners</MenuItem>
+			<MenuItem index="/partners">Partners</MenuItem>
 			<Submenu index="/6234234">
 				<template slot="title">Settings</template>
 				<MenuItem index="/shops">Shops</MenuItem>
