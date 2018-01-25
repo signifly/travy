@@ -37,16 +37,17 @@ export default {
 		.el-tabs__header {
 			display: flex;
 			margin: 0;
-		}
-		.el-tabs__item {
-			font-weight: 400;
-			color: $blue4;
-			background-color: $white1;
-			border-bottom: 1px solid #e4e7ed;
 
-			&.is-active {
-				border-bottom-color: $white1;
-				color: $blue5;
+			.el-tabs__item {
+				font-weight: 400;
+				color: $blue4;
+				background-color: $white1;
+				border-bottom: 1px solid #e4e7ed;
+
+				&.is-active {
+					border-bottom-color: $white1;
+					color: $blue5;
+				}
 			}
 		}
 		.el-tabs__content {
