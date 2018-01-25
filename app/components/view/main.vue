@@ -139,18 +139,17 @@ export default {
 						title: "Content",
 						sections: [
 							{
-								id: "basic",
-								title: "Basic",
+								id: "product_description",
+								title: "Product description",
 								fields: [
 									{
-										name: "seatWidth",
-										label: "Seat width",
+										name: "product_description",
+										label: "Product description",
 										fieldType: {
-											id: "vInputNumber",
-											readonly: true,
-											unit: "cm",
+											id: "vEditor",
+											readonly: false,
 											props: {
-												value: "s7"
+												content: "markdown"
 											}
 										}
 									},
@@ -183,7 +182,8 @@ export default {
 				s5: 30,
 				s6: 20,
 				s7: 20,
-				s8: 20
+				s8: 20,
+				markdown: ""
 			};
 		}
 	},

@@ -6,3 +6,4 @@ export {default as vSwitch} from "./switch.vue";
 export {default as vSelect} from "./select.vue";
 export {default as vActions} from "./actions/index.vue";
 export {default as vInputNumber} from "./input-number.vue";
+export {default as vEditor} from "./editor.vue";

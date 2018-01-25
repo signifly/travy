@@ -58,8 +58,8 @@ export default {
 		label: (t) => t.field.label,
 		id: (t) => t.field.fieldType.id,
 		tooltip: (t) => t.field.tooltip,
-		disabled: (t) => t.field.fieldType.readonly,
 		unit: (t) => t.field.fieldType.unit,
+		disabled: (t) => t.field.fieldType.readonly,
 		reference: (t) => t.field.fieldType.reference,
 
 		props: (t) => t.field.fieldType.props,
@@ -81,6 +81,7 @@ export default {
 
 <style lang="scss" scoped>
 .field {
+	width: 100%;
 	margin-bottom: 1.5em;
 
 	.info {
