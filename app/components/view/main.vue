@@ -181,6 +181,17 @@ export default {
 											}
 										}
 									},
+									{
+										name: "collections",
+										label: "Collections",
+										fieldType: {
+											id: "vSelectTagsMulti",
+											props: {
+												options: "tagsOptions2",
+												value: "tagsValue2"
+											}
+										}
+									},
 								]
 							}
 						]
@@ -203,6 +214,24 @@ export default {
 				markdown: "",
 				tagsValue: ["testing"],
 				tagsOptions: [
+					{
+						label: "A",
+						value: "a",
+						disabled: false
+					},
+					{
+						label: "B",
+						value: "b",
+						disabled: false
+					},
+					{
+						label: "C",
+						value: "c",
+						disabled: true
+					}
+				],
+				tagsValue2: ["testinger"],
+				tagsOptions2: [
 					{
 						label: "A",
 						value: "a",
