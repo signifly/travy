@@ -3,10 +3,11 @@ const path = require("path");
 const webpack = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const MinifyPlugin = require("babel-minify-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+
 
 const production = process.env.NODE_ENV === "production";
 
@@ -18,8 +19,8 @@ module.exports = {
 	output: {
 		path: __dirname + "/dist",
 		publicPath: "/",
-		filename: "[name].chunk.js",
-		chunkFilename: "[name].chunk.js"
+		filename: "[name].js",
+		chunkFilename: "[name].js"
 	},
 	module: {
 		rules: [
@@ -107,18 +108,18 @@ module.exports = {
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NamedModulesPlugin(),
 
-		new webpack.optimize.CommonsChunkPlugin({
-			name: "vendor",
-			minChunks: ({resource}) => /node_modules/.test(resource)
-		}),
-
 		new HtmlWebpackPlugin({
 			template: "app/index.hbs",
 			hash: production,
 			title: "Sikane"
 		}),
 
-		new ExtractTextPlugin({filename: "[name].css", disable: !production}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "vendor",
+			minChunks: ({resource}) => /node_modules/.test(resource)
+		}),
+
+		new ExtractTextPlugin({filename: "[name].css", disable: !production, allChunks: true}),
 
 		new BrowserSyncPlugin({
 			open: false,
@@ -133,7 +134,7 @@ module.exports = {
 		})
 	],
 
-	devtool: production ? "" : "#eval-source-map"
+	devtool: production ? "source-map" : "eval-source-map"
 }
 
 if (production) {
@@ -144,11 +145,14 @@ if (production) {
 			}
 		}),
 
+		new UglifyJsPlugin({
+			parallel: true,
+			sourceMap: true
+		}),
+
 		new OptimizeCssAssetsPlugin({
 			cssProcessorOptions: {discardComments: {removeAll: true}},
 			canPrint: true
-		}),
-
-		new MinifyPlugin()
+		})
 	]);
 }
