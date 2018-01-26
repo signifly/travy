@@ -118,7 +118,7 @@ module.exports = {
 			title: "Sikane"
 		}),
 
-		new ExtractTextPlugin({filename: "app.css", disable: !production}),
+		new ExtractTextPlugin({filename: "[name].css", disable: !production}),
 
 		new BrowserSyncPlugin({
 			open: false,
