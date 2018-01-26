@@ -11,15 +11,15 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const production = process.env.NODE_ENV === "production";
 
 module.exports = {
-	entry: [
-		"babel-polyfill",
-		"./app/index.js"
-	],
+	entry: {
+		vendor: ["babel-polyfill"],
+		app: ["./app/index.js"]
+	},
 	output: {
 		path: __dirname + "/dist",
 		publicPath: "/",
-		filename: "app.js",
-		chunkFilename: "[name].app.js"
+		filename: "[name].chunk.js",
+		chunkFilename: "[name].chunk.js"
 	},
 	module: {
 		rules: [
@@ -108,8 +108,8 @@ module.exports = {
 		new webpack.NamedModulesPlugin(),
 
 		new webpack.optimize.CommonsChunkPlugin({
-			name: "commons",
-			filename: "commons.js"
+			name: "vendor",
+			minChunks: ({resource}) => /node_modules/.test(resource)
 		}),
 
 		new HtmlWebpackPlugin({
