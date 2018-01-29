@@ -195,6 +195,59 @@ export default {
 								]
 							}
 						]
+					},
+					{
+						id: "models",
+						label: "Models",
+						title: "Models",
+						sections: [
+							{
+								id: "models",
+								title: "Models",
+								draggable: true,
+								fields: [
+									{
+										name: "sort",
+										label: "Sort",
+										fieldType: {
+											id: "vEditor",
+											readonly: false,
+											props: {
+												content: "markdown"
+											}
+										}
+									}
+								]
+							},
+							{
+								id: "classification",
+								title: "Classification",
+								fields: [
+									{
+										name: "tags",
+										label: "Tags",
+										fieldType: {
+											id: "vSelectTagsMultiAdd",
+											props: {
+												options: "tagsOptions",
+												value: "tagsValue"
+											}
+										}
+									},
+									{
+										name: "collections",
+										label: "Collections",
+										fieldType: {
+											id: "vSelectTagsMulti",
+											props: {
+												options: "tagsOptions2",
+												value: "tagsValue2"
+											}
+										}
+									},
+								]
+							}
+						]
 					}
 				]
 			};
@@ -248,6 +301,11 @@ export default {
 						disabled: true
 					}
 				],
+				drag: [
+					{
+						
+					}
+				]
 			};
 		}
 	},

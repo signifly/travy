@@ -5,8 +5,10 @@
 			<Tag v-if="nodata" size="small" class="status" type="danger">No data</Tag>
 		</div>
 
-		<div class="fields">
-			<field v-for="field in section.fields" v-bind="{field, data}" :key="field.name" @update="update" ref="field"/>
+		<vDrag v-if="draggable"></vDrag>
+
+		<div class="fields" v-else>
+			<field v-for="field in fields" v-bind="{field, data}" :key="field.name" @update="update" ref="field"/>
 		</div>
 	</div>
 </template>
@@ -15,9 +17,10 @@
 import {map, pick} from "lodash";
 import {Tag} from "element-ui";
 import field from "./field.vue";
+import {vDrag} from "@/components/fields";
 
 export default {
-	components: {Tag, field},
+	components: {Tag, field, vDrag},
 	props: {
 		section: {type: Object, required: true},
 		data: {type: Object, required: true}
@@ -28,9 +31,12 @@ export default {
 		}
 	},
 	computed: {
+		fields: (t) => t.section.fields,
+		draggable: (t) => t.section.draggable,
 		nodata() {
 			if (!this.mounted) return;
-			return this.$refs.field.some(x =>  x.nodata);
+			return false;
+			// return this.$refs.field.some(x => x.nodata);
 		}
 	},
 	methods: {
