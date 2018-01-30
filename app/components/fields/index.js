@@ -9,3 +9,4 @@ export {default as vSelectTagsMultiAdd} from "./select-tags-multi-add.vue";
 export {default as vActions} from "./actions/index.vue";
 export {default as vInputNumber} from "./input-number.vue";
 export {default as vEditor} from "./editor.vue";
+export {default as vLine} from "./line.vue";

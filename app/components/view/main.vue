@@ -204,17 +204,20 @@ export default {
 							{
 								id: "models",
 								title: "Models",
-								draggable: "images",
+								draggable: "lines",
 								fields: [
 									{
 										name: "dfsffd",
 										label: "sefesf",
 										fieldType: {
-											id: "vInputNumber",
+											id: "vLine",
 											readonly: false,
 											props: {
-												order: "images[0].order",
-												value: "images[0].value"
+												order: "lines[0].order",
+												toggle: "lines[0].toggle",
+												toggleTitle: "lines[0].toggleTitle",
+												info: "lines[0].info",
+												actions: "lines[0].actions"
 											}
 										}
 									},
@@ -222,39 +225,14 @@ export default {
 										name: "awfawef",
 										label: "sefsef",
 										fieldType: {
-											id: "vInputNumber",
+											id: "vLine",
 											readonly: false,
 											props: {
-												order: "images[1].order",
-												value: "images[1].value"
-											}
-										}
-									}
-								]
-							},
-							{
-								id: "classification",
-								title: "Classification",
-								fields: [
-									{
-										name: "tags",
-										label: "Tags",
-										fieldType: {
-											id: "vSelectTagsMultiAdd",
-											props: {
-												options: "tagsOptions",
-												value: "tagsValue"
-											}
-										}
-									},
-									{
-										name: "collections",
-										label: "Collections",
-										fieldType: {
-											id: "vSelectTagsMulti",
-											props: {
-												options: "tagsOptions2",
-												value: "tagsValue2"
+												order: "lines[1].order",
+												toggle: "lines[1].toggle",
+												toggleTitle: "lines[1].toggleTitle",
+												info: "lines[1].info",
+												actions: "lines[1].actions"
 											}
 										}
 									}
@@ -314,16 +292,62 @@ export default {
 						disabled: true
 					}
 				],
-				images: [
+				lines: [
 					{
-						title: "111",
 						order: 0,
-						value: 0
+						toggle: true,
+						toggleTitle: "toggle",
+						info: [
+							{
+								title: "Model",
+								value: "111modalbreeze",
+								tooltip: "111just a tooltip"
+							},
+							{
+								title: "Variants",
+								value: "Breeze ewfffwefew",
+								tooltip: "1111just a tooltip"
+							}
+						],
+						actions: [
+							{
+								title: "Delete",
+								type: "delete",
+								description: "Do you wanna delete this product?"
+							},
+							{
+								title: "View",
+								type: "show"
+							}
+						]
 					},
 					{
-						title: "222",
 						order: 1,
-						value: 222
+						toggle: false,
+						toggleTitle: "toggle",
+						info: [
+							{
+								title: "Model",
+								value: "222modalbreeze",
+								tooltip: "just a tooltip"
+							},
+							{
+								title: "Variants",
+								value: "222Breeze sto",
+								tooltip: "just a tooltip"
+							}
+						],
+						actions: [
+							{
+								title: "Delete",
+								type: "delete",
+								description: "Do you wanna delete this product?"
+							},
+							{
+								title: "View",
+								type: "show"
+							}
+						]
 					}
 				]
 			};

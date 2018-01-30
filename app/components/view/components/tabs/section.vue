@@ -10,7 +10,7 @@
 		</div>
 
 		<vDrag v-else v-bind="{fields, data, draggable}" @update="update" element="div" class="fields">
-			<field slot-scope="{field}" v-bind="{field, data}" :key="field.name" @update="$emit('update', $event)" @nodata="fieldsDataSet"/>
+			<field slot-scope="{field}" v-bind="{field, data, draggable}" :key="field.name" @update="update" @nodata="fieldsDataSet"/>
 		</vDrag>
 	</div>
 </template>
@@ -39,8 +39,8 @@ export default {
 	methods: {
 		update({data}) {
 			this.$emit("update", {
-				data,
-				section: this.section.id
+				section: this.section.id,
+				data
 			});
 		},
 		fieldsDataSet({id, nodata}) {

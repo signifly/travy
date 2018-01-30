@@ -1,8 +1,6 @@
 <template>
 	<draggable :list="items" v-if="items && updated" @end="update">
-		<template v-for="field in fieldsSorted">
-			<slot v-bind="{field}"></slot>
-		</template>
+		<slot v-for="field in fieldsSorted" v-bind="{field}" ></slot>
 	</draggable>
 </template>
 
@@ -28,7 +26,7 @@ export default {
 		props: (t) => t.fields.map(x => x.fieldType.props),
 		propsData: (t) => t.props.map(props => mapValues(props, (key) => get(t.data, key))),
 
-		fieldsSorted() { // order fields by {order} in data
+		fieldsSorted() { // sort fields by {order} in data
 			return sortBy(this.fields, (field) => {
 				const data = mapValues(field.fieldType.props, (key) => get(this.data, key));
 				return data.order;

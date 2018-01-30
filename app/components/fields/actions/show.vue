@@ -8,6 +8,7 @@ export default {
 		item: {type: Object, required: true}
 	},
 	created() {
+		this.$emit("close");
 		this.$parent.$emit("show");
 	}
 };

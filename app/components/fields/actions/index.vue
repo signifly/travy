@@ -11,7 +11,6 @@
 		</Dropdown>
 
 		<component v-if="component" :is="component" v-bind="{item}" @close="item = null" />
-
 	</div>
 </template>
 

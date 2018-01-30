@@ -34,12 +34,8 @@ const routes = [
 
 
 const router = new VueRouter({
+	routes: [...routesTables, ...routesViews, ...routes],
 	mode: "history",
-	routes: [
-		...routesTables,
-		...routesViews,
-		...routes
-	],
 	parseQuery(query) {
 		return qs.parse(query);
 	},

@@ -1,6 +1,6 @@
 <template>
-	<div class="field" :class="id">
-		<div class="info" slot="info">
+	<div class="field" :class="[id, {draggable}]">
+		<div class="info" slot="info" v-if="!draggable">
 			<div class="label">
 				{{label}}
 				<transition name="el-fade-in">
@@ -46,7 +46,8 @@ export default {
 	},
 	props: {
 		field: {type: Object, required: true},
-		data: {type: Object, required: true}
+		data: {type: Object, required: true},
+		draggable: {type: String, required: false}
 	},
 	data() {
 		return {
@@ -93,6 +94,10 @@ export default {
 .field {
 	width: 100%;
 	margin-bottom: 1.5em;
+
+	&.draggable {
+		margin-bottom: 0;
+	}
 
 	.info {
 		display: flex;

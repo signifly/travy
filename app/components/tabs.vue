@@ -1,6 +1,6 @@
 <template>
 	<div class="tabs">
-		<Tabs type="card" v-model="active" @tab-click="click">
+		<Tabs type="card" v-model="active">
 			<TabPane v-for="tab in tabs" :name="tab.id" :key="tab.id">
 				<slot name="label" slot="label" v-bind="tab">{{tab.label}}</slot>
 				<slot name="content" v-bind="tab">content</slot>
@@ -18,14 +18,14 @@ export default {
 		tabs: {type: Array, required: true},
 		tab: {type: String, required: false}
 	},
-	data() {
-		return {
-			active: this.tab
-		}
-	},
-	methods: {
-		click() {
-			this.$emit("tab", this.active);
+	computed: {
+		active: {
+			get() {
+				return this.tab;
+			},
+			set(tab) {
+				this.$emit("tab", tab);
+			}
 		}
 	}
 };
