@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {mapValues} from "lodash";
+import {mapValues, forEach, set} from "lodash";
 import {Row, Col} from "element-ui";
 import {tabs} from "./components";
 
@@ -39,7 +39,7 @@ export default {
 	},
 	methods: {
 		update({data}) {
-			this.data = {...this.data, ...data};
+			forEach(data, (val, key) => set(this.data, key, val));
 		},
 		async getDefinitions() {
 			this.definitions = {
@@ -204,16 +204,29 @@ export default {
 							{
 								id: "models",
 								title: "Models",
-								draggable: true,
+								draggable: "images",
 								fields: [
 									{
-										name: "sort",
-										label: "Sort",
+										name: "dfsffd",
+										label: "sefesf",
 										fieldType: {
-											id: "vEditor",
+											id: "vInputNumber",
 											readonly: false,
 											props: {
-												content: "markdown"
+												order: "images[0].order",
+												value: "images[0].value"
+											}
+										}
+									},
+									{
+										name: "awfawef",
+										label: "sefsef",
+										fieldType: {
+											id: "vInputNumber",
+											readonly: false,
+											props: {
+												order: "images[1].order",
+												value: "images[1].value"
 											}
 										}
 									}
@@ -244,7 +257,7 @@ export default {
 												value: "tagsValue2"
 											}
 										}
-									},
+									}
 								]
 							}
 						]
@@ -301,9 +314,16 @@ export default {
 						disabled: true
 					}
 				],
-				drag: [
+				images: [
 					{
-						
+						title: "111",
+						order: 0,
+						value: 0
+					},
+					{
+						title: "222",
+						order: 1,
+						value: 222
 					}
 				]
 			};

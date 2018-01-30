@@ -56,6 +56,7 @@ export default {
 	computed: {
 		components: (t) => t.$options.components,
 
+		name: (t) => t.field.name,
 		label: (t) => t.field.label,
 		id: (t) => t.field.fieldType.id,
 		tooltip: (t) => t.field.tooltip,
@@ -71,11 +72,19 @@ export default {
 
 			const fieldData = get(this.$refs, "field.data");
 			const keys = map(fieldData, (val, key) => key);
-			return keys.map(key => this.propsData[key]).every(x => !x);
+			return keys.map(key => this.propsData[key]).some(x => !x);
 		}
 	},
 	mounted() {
 		this.mounted = true;
+	},
+	watch: {
+		nodata(bool) {
+			this.$emit("nodata", {
+				id: this.name,
+				nodata: bool
+			});
+		}
 	}
 };
 </script>

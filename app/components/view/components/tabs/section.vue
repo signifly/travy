@@ -5,19 +5,20 @@
 			<Tag v-if="nodata" size="small" class="status" type="danger">No data</Tag>
 		</div>
 
-		<vDrag v-if="draggable"></vDrag>
-
-		<div class="fields" v-else>
-			<field v-for="field in fields" v-bind="{field, data}" :key="field.name" @update="update" ref="field"/>
+		<div class="fields" v-if="!draggable">
+			<field v-for="field in fields" v-bind="{field, data}" :key="field.name" @update="update" @nodata="fieldsDataSet" ref="field"/>
 		</div>
+
+		<vDrag v-else v-bind="{fields, data, draggable}" @update="update" element="div" class="fields">
+			<field slot-scope="{field}" v-bind="{field, data}" :key="field.name" @update="$emit('update', $event)" @nodata="fieldsDataSet"/>
+		</vDrag>
 	</div>
 </template>
 
 <script>
-import {map, pick} from "lodash";
 import {Tag} from "element-ui";
 import field from "./field.vue";
-import {vDrag} from "@/components/fields";
+import vDrag from "./drag.vue";
 
 export default {
 	components: {Tag, field, vDrag},
@@ -27,17 +28,13 @@ export default {
 	},
 	data() {
 		return {
-			mounted: false
+			fieldsData: {}
 		}
 	},
 	computed: {
 		fields: (t) => t.section.fields,
 		draggable: (t) => t.section.draggable,
-		nodata() {
-			if (!this.mounted) return;
-			return false;
-			// return this.$refs.field.some(x => x.nodata);
-		}
+		nodata: (t) => Object.values(t.fieldsData).some(x => x)
 	},
 	methods: {
 		update({data}) {
@@ -45,10 +42,10 @@ export default {
 				data,
 				section: this.section.id
 			});
+		},
+		fieldsDataSet({id, nodata}) {
+			this.$set(this.fieldsData, id, nodata);
 		}
-	},
-	mounted() {
-		this.mounted = true;
 	}
 };
 </script>
