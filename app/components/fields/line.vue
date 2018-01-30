@@ -78,6 +78,7 @@ export default {
 		justify-content: center;
 		font-size: 1.25em;
 		margin-right: 1.5em;
+		color: $blue4;
 	}
 
 	.info {

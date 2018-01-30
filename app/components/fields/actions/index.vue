@@ -47,6 +47,8 @@ export default {
 
 <style lang="scss" scoped>
 .actions {
+	display: inline-block;
+	
 	.el-dropdown-link {
 		user-select: none;
 		font-size: em(14);

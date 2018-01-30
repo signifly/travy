@@ -65,7 +65,7 @@ export default {
 
 		/deep/ {
 			.el-popover {
-				right: calc(100% - 3em);
+				right: 0;
 			}
 		}
 	}
