@@ -7,7 +7,7 @@
 </template>
 
 <script>
-const draggable = () => import(/* webpackChunkName: "vuedraggable" */ "vuedraggable");
+import draggable from "vuedraggable";
 import {mapValues, sortBy, get} from "lodash";
 import field from "./field.vue";
 
