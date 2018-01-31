@@ -60,6 +60,34 @@ export default {
 
 <style lang="scss" scoped>
 .table {
+	/deep/ {
+		.el-table {
+			overflow: visible;
 
+			&__body-wrapper {
+				overflow: visible;
+			}
+
+			td, th {
+				padding: 0;
+				height: 3.25em;
+			}
+
+			.header {
+				&-row {
+					background-color: $white2;
+				}
+				&-cell {
+					background-color: transparent;
+					border-top: 1px solid #ebeef5;
+					color: $blue4;
+				}
+			}
+
+			.cell {
+				overflow: visible;
+			}
+		}
+	}
 }
 </style>

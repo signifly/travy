@@ -6,7 +6,7 @@
 			<vActions v-bind="{actions}" />
 		</div>
 
-		<div class="table">
+		<div class="content">
 			<box>
 				<div class="top">
 					<div class="info">
@@ -440,7 +440,7 @@ export default {
 		align-items: center;
 		justify-content: space-between;
 	}
-	.table {
+	.content {
 		.top {
 			padding: 1.5em 1.5em;
 			display: flex;
@@ -455,36 +455,6 @@ export default {
 					font-size: em(12);
 					margin-left: 0.75em;
 					color: $blue3;
-				}
-			}
-		}
-
-		/deep/ {
-			.el-table {
-				overflow: visible;
-
-				&__body-wrapper {
-					overflow: visible;
-				}
-
-				td, th {
-					padding: 0;
-					height: 3.25em;
-				}
-
-				.header {
-					&-row {
-						background-color: $white2;
-					}
-					&-cell {
-						background-color: transparent;
-						border-top: 1px solid #ebeef5;
-						color: $blue4;
-					}
-				}
-
-				.cell {
-					overflow: visible;
 				}
 			}
 		}
