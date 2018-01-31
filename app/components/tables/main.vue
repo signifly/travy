@@ -2,8 +2,8 @@
 	<div class="table-main" v-if="definitions">
 
 		<div class="header">
-			<filters v-bind="{filters, search, getData}" />
-			<actions v-bind="{actions}" />
+			<vFilters v-bind="{filters, search, getData}" />
+			<vActions v-bind="{actions}" />
 		</div>
 
 		<div class="table">
@@ -13,26 +13,13 @@
 						<div class="title">{{title}}</div>
 						<div class="total" v-if="pagination">{{pagination.total}}</div>
 					</div>
-					<modifiers v-bind="{modifiers}" @getData="getData" />
+					<vModifiers v-bind="{modifiers}" @getData="getData" />
 				</div>
 
-				<Table
-				:default-sort="sorting"
-				ref="table"
-				v-bind="{data}"
-				header-row-class-name="header-row"
-				header-cell-class-name="header-cell"
-				@sort-change="sort"
-				@selection-change="select">
+				<vTable v-bind="{data, columns, defaults, selected, batch, modifiers, endpoints}" @getData="getData" @select="selected = $event" ref="vTable" />
 
-					<TableColumn type="selection" v-if="batch.active" />
-					<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name">
-						<field slot-scope="scope" v-bind="{scope, column, modifiers, endpoints}"/>
-					</TableColumn>
-				</Table>
-
-				<pagination v-if="pagination" v-bind="pagination" @getData="getData" />
-				<panel v-if="selected.length > 0" v-bind="{selected, batch}" @unselect="unselect" />
+				<vPagination v-if="pagination" v-bind="pagination" @getData="getData" />
+				<vPanel v-if="selected.length > 0" v-bind="{selected, batch}" @unselect="unselect" />
 			</box>
 		</div>
 	</div>
@@ -41,12 +28,10 @@
 <script>
 import {mapValues, mapKeys, omit, pickBy, get} from "lodash";
 import * as components from "./components";
-import {Table, TableColumn} from "element-ui";
-import field from "./components/field.vue";
 import box from "../box.vue";
 
 export default {
-	components: {...components, Table, TableColumn, field, box},
+	components: {...components, box},
 	props: {
 		id: {type: String, required: true},
 		title: {type: String, required: false}
@@ -61,6 +46,7 @@ export default {
 	},
 	computed: {
 		query: (t) => t.$route.query,
+		columns: (t) => t.definitions.columns,
 		batch: (t) => t.definitions.batch,
 		modifiers: (t) => t.definitions.modifiers,
 		actions: (t) => t.definitions.actions,
@@ -70,27 +56,10 @@ export default {
 		search: (t) => t.definitions.search,
 		includes: (t) => t.definitions.includes,
 		sorting: (t) => t.query.sort || t.defaults.sort,
-
-		tableColumns() {
-			return this.definitions.columns.map(x => ({...x,
-				sortable: x.sortable ? "custom" : false,
-				prop: x.sortBy
-			}));
-		}
 	},
 	methods: {
-		sort({prop, order}) {
-			const sort = prop && order ? {prop, order} : undefined;
-			if (this.data) this.$router.replace({query: {sort, filter: this.query.filter}}); // don't set query params for default sorting
-			this.getData();
-		},
-
-		select(items) {
-			this.selected = items;
-		},
-
 		unselect() {
-			this.$refs.table.clearSelection();
+			this.$refs.vTable.unselect();
 		},
 
 		async getDefinitions() {
