@@ -218,11 +218,11 @@ export default {
 											id: "vLine",
 											readonly: false,
 											props: {
-												order: "lines[0].order",
-												toggle: "lines[0].toggle",
-												toggleTitle: "lines[0].toggleTitle",
+												switchValue: "lines[0].switchValue",
+												switchTitle: "lines[0].switchTitle",
 												info: "lines[0].info",
-												actions: "lines[0].actions"
+												actions: "lines[0].actions",
+												order: "lines[0].order"
 											}
 										}
 									},
@@ -233,11 +233,11 @@ export default {
 											id: "vLine",
 											readonly: false,
 											props: {
-												order: "lines[1].order",
-												toggle: "lines[1].toggle",
-												toggleTitle: "lines[1].toggleTitle",
+												switchValue: "lines[1].switchValue",
+												switchTitle: "lines[1].switchTitle",
 												info: "lines[1].info",
-												actions: "lines[1].actions"
+												actions: "lines[1].actions",
+												order: "lines[1].order"
 											}
 										}
 									}
@@ -301,8 +301,8 @@ export default {
 				lines: [
 					{
 						order: 0,
-						toggle: true,
-						toggleTitle: "toggle",
+						switchValue: true,
+						switchTitle: "toggle",
 						info: [
 							{
 								title: "Model",
@@ -329,8 +329,8 @@ export default {
 					},
 					{
 						order: 1,
-						toggle: false,
-						toggleTitle: "toggle",
+						switchValue: false,
+						switchTitle: "toggle",
 						info: [
 							{
 								title: "Model",

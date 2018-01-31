@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="toggle">
-			<elSwitch v-model="data.toggle" :inactive-text="`${toggleTitle}:`" @change="update" />
+			<elSwitch v-model="data.switchValue" :inactive-text="`${switchTitle}:`" @change="update" />
 		</div>
 
 		<actions :items="actions" @show="show" @remove="remove"/>
@@ -33,21 +33,21 @@ export default {
 	props: {
 		props: {type: Object, required: true},
 		info: {type: Array, required: true},
-		toggle: {type: Boolean, required: true},
-		toggleTitle: {type: String, required: true},
+		switchValue: {type: Boolean, required: true},
+		switchTitle: {type: String, required: true},
 		actions: {type: Array, required: true}
 	},
 	data() {
 		return {
 			data: {
-				toggle: this.toggle
+				switchValue: this.switchValue
 			}
 		}
 	},
 	methods: {
 		update(val) {
 			this.$emit("update", {
-				data: {[this.props.toggle]: val}
+				data: {[this.props.switchValue]: val}
 			});
 		},
 		show() {
