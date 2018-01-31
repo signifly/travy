@@ -152,17 +152,6 @@ export default {
 												content: "markdown"
 											}
 										}
-									},
-									{
-										name: "seatWidth2",
-										label: "Seat width2",
-										fieldType: {
-											id: "vInputNumber",
-											unit: "cm",
-											props: {
-												value: "s8"
-											}
-										}
 									}
 								]
 							},
@@ -192,6 +181,22 @@ export default {
 											}
 										}
 									},
+								]
+							},
+							{
+								id: "media_url",
+								title: "Media URL",
+								fields: [
+									{
+										name: "url",
+										label: "URL",
+										fieldType: {
+											id: "vInput",
+											props: {
+												value: "url"
+											}
+										}
+									}
 								]
 							}
 						]
@@ -292,6 +297,7 @@ export default {
 						disabled: true
 					}
 				],
+				url: "",
 				lines: [
 					{
 						order: 0,
