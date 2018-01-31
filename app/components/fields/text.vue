@@ -9,7 +9,7 @@ export default {
 		status: {
 			required: false,
 			validator: function (value) {
-				return ["danger", "warning", "info", "success"].includes(value);
+				return ["danger", "warning", "info", "primary", "success"].includes(value);
 			}
 		}
 	}
@@ -26,6 +26,9 @@ export default {
 	}
 	&.info {
 		color: $info;
+	}
+	&.primary {
+		color: $primary;
 	}
 	&.success {
 		color: $success;

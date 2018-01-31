@@ -14,7 +14,7 @@ export default {
 		status: {
 			required: true,
 			validator: function (value) {
-				return ["danger", "warning", "info", "success"].includes(value);
+				return ["danger", "warning", "info", "primary", "success"].includes(value);
 			}
 		}
 	}

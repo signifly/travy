@@ -51,7 +51,6 @@ export default {
 			});
 		},
 		show() {
-			console.log("show");
 			this.$router.push({params: {tab: "basic"}});
 		},
 		remove({done}) {
