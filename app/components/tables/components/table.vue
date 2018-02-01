@@ -19,7 +19,7 @@
 
 <script>
 import {Table, TableColumn} from "element-ui";
-import vField from "./field.vue";
+import {vField} from "./index.js";
 
 export default {
 	components: {Table, TableColumn, vField},

@@ -1,6 +1,6 @@
 <template>
 	<div class="field" :class="[id, {draggable}]">
-		<div class="info" slot="info" v-if="!draggable">
+		<div class="info" slot="info" v-if="info">
 			<div class="label">
 				{{label}}
 				<transition name="el-fade-in">
@@ -56,7 +56,6 @@ export default {
 	},
 	computed: {
 		components: (t) => t.$options.components,
-
 		name: (t) => t.field.name,
 		label: (t) => t.field.label,
 		id: (t) => t.field.fieldType.id,
@@ -67,6 +66,14 @@ export default {
 
 		props: (t) => t.field.fieldType.props,
 		propsData: (t) => mapValues(t.props, (key) => get(t.data, key)),
+
+		opts: (t) => t.mounted ? get(t.$refs, "field.opts", {}) : {},
+
+		info() {
+			if (this.draggable) return false;
+			if (this.opts.label === false) return false;
+			return true;
+		},
 
 		nodata() {
 			if (!this.mounted) return;

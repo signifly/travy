@@ -6,9 +6,9 @@
 			:meta="{location: 'table'}"
 			:props="props"
 			v-bind="propsData"
-			@update="update"
-			@remove="remove"
-			@show="show"
+			@update="$emit('update', $event)"
+			@remove="$emit('remove', $event)"
+			@show="$emit('show', $event)"
 		/>
 	</component>
 </template>

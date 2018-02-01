@@ -244,6 +244,30 @@ export default {
 								]
 							}
 						]
+					},
+					{
+						id: "access",
+						label: "Accessibility",
+						title: "Accessibility",
+						sections: [
+							{
+								id: "t",
+								title: "Table",
+								fields: [
+									{
+										name: "dfsffd",
+										label: "sefesf",
+										fieldType: {
+											id: "vTable",
+											props: {
+												columns: "dateTableColumns",
+												columnsData: "dateTableData"
+											}
+										}
+									}
+								]
+							}
+						]
 					}
 				]
 			};
@@ -354,6 +378,54 @@ export default {
 								type: "show"
 							}
 						]
+					}
+				],
+				dateTableColumns: [
+					{
+						name: "title",
+						label: "Title",
+						fieldType: {
+							id: "vText",
+							props: {
+								text: "title"
+							}
+						}
+					},
+					{
+						name: "access",
+						label: "Access",
+						fieldType: {
+							id: "vDateRange",
+							props: {
+								dates: "dates1",
+							}
+						}
+					},
+					{
+						name: "salad",
+						label: "Salad",
+						fieldType: {
+							id: "vDateRange",
+							props: {
+								dates: "dates2",
+							}
+						}
+					}
+				],
+				dateTableData: [
+					{
+						title: "sfef",
+						statustext: "spflwe",
+						status: "warning",
+						dates1: ["02-10-2012", "02-10-2014"],
+						dates2: ["02-10-2012", "02-10-2014"]
+					},
+					{
+						title: "spflsefs",
+						statustext: "spfasacacs",
+						status: "primary",
+						dates1: ["2012-10-02", "2014-10-02"],
+						dates2: ["02-10-2012", "02-10-2014"]
 					}
 				]
 			};

@@ -57,6 +57,7 @@ export default {
 			border-top-left-radius: 0;
 			margin-top: -1px;
 			padding: 1.5em;
+			overflow: visible;
 		}
 
 		.el-tabs__nav-scroll {
