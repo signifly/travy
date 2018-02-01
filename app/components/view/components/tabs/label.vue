@@ -37,7 +37,7 @@ export default {
 	align-items: center;
 
 	.status {
-		$s: 0.7em;
+		$s: 10px;
 		width: $s;
 		height: $s;
 		border-radius: 50%;

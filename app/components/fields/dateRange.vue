@@ -3,7 +3,7 @@
 		<DatePicker
 			v-model="data.dates"
 			size="small"
-			align="right"
+			align="center"
 			type="daterange"
 			:clearable="false"
 			:picker-options="pickerOpts"
