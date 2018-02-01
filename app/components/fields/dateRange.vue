@@ -9,6 +9,8 @@
 			:picker-options="pickerOpts"
 			start-placeholder="Start Date"
 			end-placeholder="End Date"
+			format="yyyy-MM-dd"
+			value-format="yyyy-MM-dd"
 			@change="update"
 		/>
 	</div>

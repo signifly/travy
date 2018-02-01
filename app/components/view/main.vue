@@ -407,16 +407,16 @@ export default {
 						title: "sfef",
 						statustext: "spflwe",
 						status: "warning",
-						dates1: ["02-10-2012", "02-10-2014"],
-						dates2: ["02-10-2012", "02-10-2014"]
+						dates1: ["2010-10-02", "2014-10-02"],
+						dates2: ["2010-10-02", "2014-10-02"],
 					},
 					{
 						id: 1,
 						title: "spflsefs",
 						statustext: "spfasacacs",
 						status: "primary",
-						dates1: ["2012-10-02", "2014-10-02"],
-						dates2: ["02-10-2012", "02-10-2014"]
+						dates1: ["2010-10-02", "2014-10-02"],
+						dates2: ["2010-10-02", "2014-10-02"],
 					}
 				]
 			};
