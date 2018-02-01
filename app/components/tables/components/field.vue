@@ -1,14 +1,12 @@
 <template>
 	<component :is="link ? 'router-link' : 'div'" class="field" :to="link">
 		<component
+			:meta="{location: 'table'}"
 			v-if="components[id]"
 			:is="id"
-			:meta="{location: 'table'}"
 			:props="props"
 			v-bind="propsData"
-			@update="$emit('update', $event)"
-			@remove="$emit('remove', $event)"
-			@show="$emit('show', $event)"
+			@fieldA="fieldA"
 		/>
 	</component>
 </template>
@@ -21,9 +19,7 @@ export default {
 	components: {...fields},
 	props: {
 		column: {type: Object, required: true},
-		scope: {type: Object, required: true},
-		modifiers: {type: Array, required: true},
-		endpoints: {type: Object, required: true}
+		scope: {type: Object, required: true}
 	},
 	computed: {
 		components: (t) => t.$options.components,
@@ -49,46 +45,8 @@ export default {
 		}
 	},
 	methods: {
-		endpoint({type}) {
-			const endpoint = this.endpoints[type];
-
-			if (endpoint.url.includes("{id}")) {
-				const id = this.item[endpoint.id];
-				if (!id) throw new Error(`missing ${endpoint.id} on item ${this.item.id}`);
-
-				return endpoint.url.replace("{id}", id);
-			} else {
-				return endpoint.url;
-			}
-		},
-
-		show() {
-			const url = this.endpoint({type: "show"});
-			this.$router.push(`/${url}`);
-		},
-
-		async update({data, done}) {
-			try {
-				const modifiers = this.modifiers.map(x => omit(x, "options"));
-				const url = this.endpoint({type: "update"});
-				await this.$http.put(url, {data, modifiers});
-			} catch (err) {
-				console.log(err);
-			} finally {
-				if (done) done();
-			}
-		},
-
-		async remove({done}) {
-			try {
-				const url = this.endpoint({type: "destroy"});
-				await this.$http.delete(url);
-				await this.getData();
-			} catch (err) {
-				console.log(err);
-			} finally {
-				if (done) done();
-			}
+		fieldA(obj) {
+			this.$emit("fieldA", {...obj, item: this.item});
 		}
 	}
 };

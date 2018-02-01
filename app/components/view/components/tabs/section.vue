@@ -6,10 +6,10 @@
 		</div>
 
 		<div class="fields" v-if="!draggable">
-			<field v-for="field in fields" v-bind="{field, data}" :key="field.name" @update="update" @nodata="fieldsDataSet" ref="field"/>
+			<field v-for="field in fields" v-bind="{field, data}" :key="field.name" @fieldA="fieldA" @nodata="fieldsDataSet" ref="field"/>
 		</div>
 
-		<vDrag v-else v-bind="{field, data, draggable}" @update="update" element="div" class="fields"/>
+		<vDrag v-else v-bind="{field, data, draggable}" @fieldA="fieldA" element="div" class="fields"/>
 	</div>
 </template>
 
@@ -36,11 +36,8 @@ export default {
 		nodata: (t) => Object.values(t.fieldsData).some(x => x)
 	},
 	methods: {
-		update({data}) {
-			this.$emit("update", {
-				section: this.section.id,
-				data
-			});
+		fieldA(obj) {
+			this.$emit("fieldA", {...obj, section: this.section.id});
 		},
 		fieldsDataSet({id, nodata}) {
 			this.$set(this.fieldsData, id, nodata);

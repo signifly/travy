@@ -35,7 +35,8 @@ export default {
 		remove() {
 			this.loading = true;
 
-			this.$parent.$emit("remove", {
+			this.$parent.$emit("fieldA", {
+				action: "remove",
 				done: () => {
 					this.loading = false;
 					this.close();

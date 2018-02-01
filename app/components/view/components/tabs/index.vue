@@ -6,7 +6,7 @@
 			</template>
 
 			<template slot="content" slot-scope="tab">
-				<vTab v-bind="{tab, data}" @update="update" :ref="tab.id"/>
+				<vTab v-bind="{tab, data}" @fieldA="fieldA" :ref="tab.id"/>
 			</template>
 		</vTabs>
 	</div>
@@ -37,9 +37,9 @@ export default {
 		}
 	},
 	methods: {
-		update({data, section, tab}) {
-			this.$set(this.edit, tab, true);
-			this.$emit("update", {data});
+		fieldA(obj) {
+			this.$set(this.edit, obj.tab, true);
+			this.$emit("fieldA", obj);
 		},
 		tabClick(id) {
 			this.$router.push({params: {tab: id}});

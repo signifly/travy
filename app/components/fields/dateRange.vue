@@ -2,7 +2,7 @@
 	<div class="dateRange">
 		<DatePicker
 			v-model="data.dates"
-			size="medium"
+			size="small"
 			align="right"
 			type="daterange"
 			:clearable="false"
@@ -34,9 +34,10 @@ export default {
 		}
 	},
 	methods: {
-		update(val) {
-			this.$emit("update", {
-				data: {[this.props.dates]: val}
+		update(dates) {
+			this.$emit("fieldA", {
+				action: "update",
+				data: {[this.props.dates]: dates}
 			});
 		}
 	}

@@ -9,12 +9,13 @@
 			:endpoints="{}"
 			:selected="[]"
 			:batch="{}"
+			@fieldA="fieldA"
 		/>
 	</div>
 </template>
 
 <script>
-
+import {mapKeys} from "lodash";
 
 export default {
 	props: {
@@ -30,14 +31,19 @@ export default {
 			mounted: false,
 			opts: {
 				label: false
-			},
-			data: {
-				// value: this.value
 			}
 		}
 	},
 	methods: {
+		fieldA(obj) {
+			// find index of the item in columnsData by {id}, and change key for every data property
+			const prop = this.props.columnsData;
+			const index = this.columnsData.findIndex(x => x.id === obj.item.id);
+			const dataKey = `${prop}[${index}]`;
+			obj.data = mapKeys(obj.data, (val, key) => `${dataKey}.${key}`);
 
+			this.$emit("fieldA", obj);
+		}
 	},
 	mounted() {
 		this.mounted = true;
@@ -47,6 +53,8 @@ export default {
 
 <style lang="scss" scoped>
 .table {
-
+	border: 0.5px solid $blue2;
+	border-top: 0;
+	border-bottom: 0;
 }
 </style>

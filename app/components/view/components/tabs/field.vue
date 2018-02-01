@@ -23,7 +23,7 @@
 			:disabled="disabled"
 			:meta="{location: 'tabs'}"
 			v-bind="propsData"
-			@update="$emit('update', $event)"
+			@fieldA="$emit('fieldA', $event)"
 		/>
 
 		<div class="reference" v-if="reference">

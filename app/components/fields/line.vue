@@ -46,7 +46,8 @@ export default {
 	},
 	methods: {
 		update(val) {
-			this.$emit("update", {
+			this.$emit("fieldA", {
+				action: "update",
 				data: {[this.props.switchValue]: val}
 			});
 		},

@@ -7,7 +7,7 @@
 		<div class="main">
 			<Row>
 				<Col :span="16">
-					<tabs v-bind="{tabs, data}" @update="update"/>
+					<tabs v-bind="{tabs, data}" @fieldA="fieldA"/>
 				</Col>
 				<Col :span="8">
 					right
@@ -38,6 +38,9 @@ export default {
 		tabs: (t) => t.definitions.tabs
 	},
 	methods: {
+		fieldA({action, data}) {
+			this[action]({data});
+		},
 		update({data}) {
 			forEach(data, (val, key) => set(this.data, key, val));
 		},
@@ -396,6 +399,7 @@ export default {
 				],
 				dateTableData: [
 					{
+						id: 0,
 						title: "sfef",
 						statustext: "spflwe",
 						status: "warning",
@@ -403,6 +407,7 @@ export default {
 						dates2: ["02-10-2012", "02-10-2014"]
 					},
 					{
+						id: 1,
 						title: "spflsefs",
 						statustext: "spfasacacs",
 						status: "primary",

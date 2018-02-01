@@ -26,7 +26,8 @@ export default {
 	},
 	methods: {
 		update: debounce(function(content) {
-			this.$emit("update", {
+			this.$emit("fieldA", {
+				action: "update",
 				data: {[this.props.content]: content}
 			});
 		}, 400)

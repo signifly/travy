@@ -16,7 +16,13 @@
 					<vModifiers v-bind="{modifiers}" @getData="getData" />
 				</div>
 
-				<vTable v-bind="{data, columns, defaults, selected, batch, modifiers, endpoints}" @getData="getData" @select="selected = $event" ref="vTable" />
+				<vTable
+					ref="vTable"
+					v-bind="{data, columns, defaults, batch}"
+					@select="selected = $event"
+					@getData="getData"
+					@fieldA="fieldA"
+				/>
 
 				<vPagination v-if="pagination" v-bind="pagination" @getData="getData" />
 				<vPanel v-if="selected.length > 0" v-bind="{selected, batch}" @unselect="unselect" />
@@ -60,6 +66,52 @@ export default {
 	methods: {
 		unselect() {
 			this.$refs.vTable.unselect();
+		},
+
+		fieldA({action, data, item, done}) {
+			this[action]({data, item, done});
+		},
+
+		endpoint({type, item}) {
+			const endpoint = this.endpoints[type];
+
+			if (endpoint.url.includes("{id}")) {
+				const id = item[endpoint.id];
+				if (!id) throw new Error(`missing ${endpoint.id} on item ${this.item.id}`);
+
+				return endpoint.url.replace("{id}", id);
+			} else {
+				return endpoint.url;
+			}
+		},
+
+		show({item}) {
+			const url = this.endpoint({type: "show", item});
+			this.$router.push(`/${url}`);
+		},
+
+		async update({item, data, done}) {
+			try {
+				const modifiers = this.modifiers.map(x => omit(x, "options"));
+				const url = this.endpoint({type: "update", item});
+				await this.$http.put(url, {data, modifiers});
+			} catch (err) {
+				console.log(err);
+			} finally {
+				if (done) done();
+			}
+		},
+
+		async remove({item, done}) {
+			try {
+				const url = this.endpoint({type: "destroy", item});
+				await this.$http.delete(url);
+				await this.getData();
+			} catch (err) {
+				console.log(err);
+			} finally {
+				if (done) done();
+			}
 		},
 
 		async getDefinitions() {
