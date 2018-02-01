@@ -1,52 +1,41 @@
 <template>
-	<draggable :list="items" v-if="items && updated" @end="update">
-		<slot v-for="field in fieldsSorted" v-bind="{field}" ></slot>
+	<draggable :list="items" v-if="items" @end="listUpdate">
+		<field
+			v-for="(data, index) in items"
+			v-bind="{data, field, draggable}"
+			@update="update({$event, index})"
+			:key="data.id"
+		/>
 	</draggable>
 </template>
 
 <script>
 import draggable from "vuedraggable";
-import {mapValues, sortBy, get} from "lodash";
+import {mapKeys} from "lodash";
 import field from "./field.vue";
 
 export default {
 	components: {draggable, field},
 	props: {
 		draggable: {type: String, required: true},
-		fields: {type: Array, required: true},
+		field: {type: Object, required: true},
 		data: {type: Object, required: true}
 	},
 	data() {
 		return {
-			updated: false,
-			items: null
-		}
-	},
-	computed: {
-		props: (t) => t.fields.map(x => x.fieldType.props),
-		propsData: (t) => t.props.map(props => mapValues(props, (key) => get(t.data, key))),
-
-		fieldsSorted() { // sort fields by {order} in data
-			return sortBy(this.fields, (field) => {
-				const data = mapValues(field.fieldType.props, (key) => get(this.data, key));
-				return data.order;
-			});
+			items: [...this.data[this.draggable]]
 		}
 	},
 	methods: {
-		update() {
-			const items = this.propsData.map((x, i) => ({...x, order: this.items[i].order}));
-
+		listUpdate() {
 			this.$emit("update", {
-				data: {[this.draggable]: items}
+				data: {[this.draggable]: this.items}
 			});
+		},
+		update({$event, index}) {
+			const data = mapKeys($event.data, (val, key) => `${this.draggable}[${index}].${key}`);
+			this.$emit("update", {data});
 		}
-	},
-	created() {
-		this.items = [...this.propsData];
-	},
-	mounted() {
-		this.updated = true;
 	}
 };
 </script>

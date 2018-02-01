@@ -9,9 +9,7 @@
 			<field v-for="field in fields" v-bind="{field, data}" :key="field.name" @update="update" @nodata="fieldsDataSet" ref="field"/>
 		</div>
 
-		<vDrag v-else v-bind="{fields, data, draggable}" @update="update" element="div" class="fields">
-			<field slot-scope="{field}" v-bind="{field, data, draggable}" :key="field.name" @update="update" @nodata="fieldsDataSet"/>
-		</vDrag>
+		<vDrag v-else v-bind="{field, data, draggable}" @update="update" element="div" class="fields"/>
 	</div>
 </template>
 
@@ -32,6 +30,7 @@ export default {
 		}
 	},
 	computed: {
+		field: (t) => t.section.field,
 		fields: (t) => t.section.fields,
 		draggable: (t) => t.section.draggable,
 		nodata: (t) => Object.values(t.fieldsData).some(x => x)

@@ -210,38 +210,20 @@ export default {
 								id: "models",
 								title: "Models",
 								draggable: "lines",
-								fields: [
-									{
-										name: "dfsffd",
-										label: "sefesf",
-										fieldType: {
-											id: "vLine",
-											readonly: false,
-											props: {
-												switchValue: "lines[0].switchValue",
-												switchTitle: "lines[0].switchTitle",
-												info: "lines[0].info",
-												actions: "lines[0].actions",
-												order: "lines[0].order"
-											}
-										}
-									},
-									{
-										name: "awfawef",
-										label: "sefsef",
-										fieldType: {
-											id: "vLine",
-											readonly: false,
-											props: {
-												switchValue: "lines[1].switchValue",
-												switchTitle: "lines[1].switchTitle",
-												info: "lines[1].info",
-												actions: "lines[1].actions",
-												order: "lines[1].order"
-											}
+								field: {
+									name: "dfsffd",
+									label: "sefesf",
+									fieldType: {
+										id: "vLine",
+										readonly: false,
+										props: {
+											switchValue: "switchValue",
+											switchTitle: "switchTitle",
+											info: "info",
+											actions: "actions"
 										}
 									}
-								]
+								}
 							}
 						]
 					},
@@ -324,7 +306,7 @@ export default {
 				url: "",
 				lines: [
 					{
-						order: 0,
+						id: 1,
 						switchValue: true,
 						switchTitle: "toggle",
 						info: [
@@ -352,7 +334,7 @@ export default {
 						]
 					},
 					{
-						order: 1,
+						id: 2,
 						switchValue: false,
 						switchTitle: "toggle",
 						info: [
