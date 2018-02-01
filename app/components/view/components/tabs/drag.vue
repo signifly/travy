@@ -3,7 +3,7 @@
 		<field
 			v-for="(data, index) in items"
 			v-bind="{data, field, draggable}"
-			@update="update({$event, index})"
+			@fieldA="fieldA($event, index)"
 			:key="data.id"
 		/>
 	</draggable>
@@ -32,9 +32,24 @@ export default {
 				data: {[this.draggable]: this.items}
 			});
 		},
-		update({$event, index}) {
-			const data = mapKeys($event.data, (val, key) => `${this.draggable}[${index}].${key}`);
-			this.$emit("update", {data});
+
+		fieldA({action, data, done}, index) {
+			this[action]({data, done, index});
+		},
+
+		show() {
+
+		},
+
+		update({data, index, done}) {
+			data = mapKeys(data, (val, key) => `${this.draggable}[${index}].${key}`);
+			this.$emit("fieldA", {action: "update", data, done});
+		},
+
+		remove({index, done}) {
+			this.items.splice(index, 1);
+			this.listUpdate();
+			if (done) done();
 		}
 	}
 };

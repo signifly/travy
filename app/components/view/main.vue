@@ -44,6 +44,10 @@ export default {
 		update({data}) {
 			forEach(data, (val, key) => set(this.data, key, val));
 		},
+
+		remove({data}) {
+			console.log("remove", data);
+		},
 		async getDefinitions() {
 			this.definitions = {
 				tabs: [

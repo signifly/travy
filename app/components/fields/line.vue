@@ -17,10 +17,10 @@
 		</div>
 
 		<div class="toggle">
-			<elSwitch v-model="data.switchValue" :inactive-text="`${switchTitle}:`" @change="update" />
+			<elSwitch v-model="data.switchValue" :inactive-text="`${switchTitle}:`" @change="switchUpdate" />
 		</div>
 
-		<actions :items="actions" @show="show" @remove="remove"/>
+		<actions :items="actions" @fieldA="$emit('fieldA', $event)"/>
 	</div>
 </template>
 
@@ -45,17 +45,11 @@ export default {
 		}
 	},
 	methods: {
-		update(val) {
+		switchUpdate(val) {
 			this.$emit("fieldA", {
 				action: "update",
 				data: {[this.props.switchValue]: val}
 			});
-		},
-		show() {
-			this.$router.push({params: {tab: "basic"}});
-		},
-		remove({done}) {
-			done();
 		}
 	}
 }
