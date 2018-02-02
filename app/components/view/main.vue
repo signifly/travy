@@ -240,7 +240,7 @@ export default {
 						title: "Accessibility",
 						sections: [
 							{
-								id: "t",
+								id: "table",
 								title: "Table",
 								fields: [
 									{

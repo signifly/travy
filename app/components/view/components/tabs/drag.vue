@@ -1,5 +1,5 @@
 <template>
-	<draggable :list="items" v-if="items" @end="listUpdate">
+	<draggable :list="items" v-if="items.length > 0" @end="listUpdate">
 		<field
 			v-for="(data, index) in items"
 			v-bind="{data, field, draggable}"
@@ -7,6 +7,10 @@
 			:key="data.id"
 		/>
 	</draggable>
+
+	<div v-else class="noitems">
+		No {{label}}
+	</div>
 </template>
 
 <script>
@@ -25,6 +29,9 @@ export default {
 		return {
 			items: [...this.data[this.draggable]]
 		}
+	},
+	computed: {
+		label: (t) => t.field.label
 	},
 	methods: {
 		listUpdate() {
@@ -56,7 +63,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.drag {
-
+.noitems {
+	color: $blue4;
+	font-size: em(14);
 }
 </style>

@@ -42,7 +42,7 @@ export default {
 	},
 	data() {
 		return  {
-			input: get(this.$route.query, "filter.q"),
+			input: get(this.$route.query, "filter.q") || "",
 			loading: false,
 			settings: false
 		}
