@@ -3,7 +3,7 @@
 
 		<div class="header">
 			<vFilters v-bind="{filters, search, getData}" />
-			<vActions v-bind="{actions}" />
+			<vActions v-bind="{actions, endpoints}" />
 		</div>
 
 		<div class="content">
@@ -217,15 +217,26 @@ export default {
 				actions: [
 					{
 						icon: "plus",
-						title: "Nyt produkt",
+						title: "New product",
 						status: "primary",
-						type: "create"
-					},
-					{
-						icon: "",
-						title: "Ny sofa/lampe 🛋️",
-						status: "success",
-						type: "nuke"
+						type: "store",
+						fields: [
+							{
+								name: "stuff",
+								label: "some stuff",
+								fieldType: {
+									id: "vSelectMultiSearch",
+									props: {
+										options: "stuffOptions",
+										value: "stuffValue"
+									}
+								}
+							}
+						],
+						data: {
+							stuffOptions: "https://sikaline.glitch.me/products-actions-store-options",
+							stuffValue: []
+						}
 					}
 				],
 

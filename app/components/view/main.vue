@@ -170,7 +170,7 @@ export default {
 										name: "tags",
 										label: "Tags",
 										fieldType: {
-											id: "vSelectTagsMultiAdd",
+											id: "vSelectMultiAdd",
 											props: {
 												options: "tagsOptions",
 												value: "tagsValue"
@@ -181,7 +181,7 @@ export default {
 										name: "collections",
 										label: "Collections",
 										fieldType: {
-											id: "vSelectTagsMulti",
+											id: "vSelectMulti",
 											props: {
 												options: "tagsOptions2",
 												value: "tagsValue2"

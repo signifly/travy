@@ -1,5 +1,5 @@
 <template>
-	<div class="select-tags-multi-add">
+	<div class="select-multi-add">
 		<Select v-model="data.value" @change="update" v-bind="{size}" filterable multiple allow-create>
 			<Option v-for="option in options" v-bind="option" :key="option.value" />
 		</Select>
@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.select-tags-multi-add {
+.select-multi-add {
 	.el-select {
 		width: 100%;
 	}
