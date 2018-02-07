@@ -6,7 +6,7 @@
 
 <script>
 import {debounce} from "lodash";
-const editor = () => import(/* webpackChunkName: "markdown-editor" */ "vue-simplemde/src/markdown-editor.vue");
+import editor from "vue-simplemde/src/markdown-editor.vue";
 
 export default {
 	components: {editor},
