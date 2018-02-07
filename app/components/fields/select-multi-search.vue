@@ -1,6 +1,6 @@
 <template>
 	<div class="select-multi-search">
-		<Select v-model="data.value" @change="update" v-bind="{size}" :remote-method="getList" filterable multiple remote>
+		<Select v-model="data.value" @change="update" v-bind="{size, loading}" :remote-method="getList" filterable multiple remote reserve-keyword>
 			<Option v-for="item in list" v-bind="item" :key="item.value" />
 		</Select>
 	</div>
@@ -19,6 +19,7 @@ export default {
 	},
 	data() {
 		return {
+			loading: false,
 			list: [],
 			data: {
 				value: this.value
@@ -40,8 +41,10 @@ export default {
 		},
 
 		async getList(q) {
+			this.loading = true;
 			const {data} = await this.$http.get(this.options, {params: {q}});
 			this.list = data;
+			this.loading = false;
 		}
 	},
 	created() {

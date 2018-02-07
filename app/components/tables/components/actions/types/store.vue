@@ -21,10 +21,15 @@ export default {
 	},
 	methods: {
 		async create() {
-			this.loading = true;
-			// this.$http.post(this.endpoints.store.url, this.payload);
-			const {data} = await this.$http.post("https://sikaline.glitch.me/products", this.payload);
-			this.$router.push(`products/${data.id}`);
+			try {
+				this.loading = true;
+				const {data} = await this.$http.post(this.endpoints.store.url, this.payload);
+				this.$router.push(`products/${data.id}`);
+			} catch (err) {
+				console.log(err);
+			} finally {
+				this.loading = false;
+			}
 		}
 	}
 };
