@@ -25,7 +25,7 @@
 				/>
 
 				<vPagination v-if="pagination" v-bind="pagination" @getData="getData" />
-				<vPanel v-if="selected.length > 0" v-bind="{selected, batch}" @unselect="unselect" />
+				<vBatch v-if="selected.length > 0" v-bind="{endpoints, selected, batch}" @unselect="unselect" />
 			</box>
 		</div>
 	</div>
@@ -61,7 +61,7 @@ export default {
 		filters: (t) => t.definitions.filters,
 		search: (t) => t.definitions.search,
 		includes: (t) => t.definitions.includes,
-		sorting: (t) => t.query.sort || t.defaults.sort,
+		sorting: (t) => t.query.sort || t.defaults.sort
 	},
 	methods: {
 		unselect() {
@@ -136,8 +136,8 @@ export default {
 				},
 				include: this.includes.join(","),
 				page: this.query.page,
-				...this.query.modifiers,
-				...this.query.filter
+				filter: this.query.filters,
+				modifier: this.query.modifiers
 			};
 
 			if (this.id !== "products") {

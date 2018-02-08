@@ -42,7 +42,7 @@ export default {
 	},
 	data() {
 		return  {
-			input: get(this.$route.query, "filter.q") || "",
+			input: get(this.$route.query, "filters.q") || "",
 			loading: false,
 			settings: false
 		}
@@ -66,14 +66,14 @@ export default {
 			const props = item.fieldType.props;
 			data = mapKeys(data, (val, key) => props[key]);
 
-			const filter = {...this.query.filter, ...data};
-			this.$router.replace({query: {...this.query, filter}});
+			const filters = {...this.query.filters, ...data};
+			this.$router.replace({query: {...this.query, filters}});
 			await this.getData();
 			this.loading = false;
 		},
 
 		updateSearch: debounce(async function(input) {
-			this.$router.replace({query: {...this.query, filter: {...this.query.filter, q: input}}});
+			this.$router.replace({query: {...this.query, filters: {...this.query.filters, q: input}}});
 			await this.getData();
 			this.loading = false;
 		}, 500),

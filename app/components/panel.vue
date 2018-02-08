@@ -1,5 +1,5 @@
 <template>
-	<transition name="el-zoom-in-bottom">
+	<transition name="el-zoom-in-bottom" appear>
 		<div class="panel">
 			<div class="wrap">
 				<slot/>

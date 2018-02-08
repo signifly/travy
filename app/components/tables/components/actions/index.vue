@@ -18,7 +18,7 @@
 
 <script>
 import {Button} from "element-ui";
-import modal from "./modal.vue";
+import modal from "./modal/index.vue";
 
 export default {
 	components: {Button, modal},

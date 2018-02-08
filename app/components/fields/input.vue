@@ -1,6 +1,6 @@
 <template>
 	<div class="input">
-		<Input v-model="data.value" @input="update" :debounce="500" v-bind="{disabled}" :controls="false" size="medium" />
+		<Input v-model="data.value" @input="update" v-bind="{disabled}" :controls="false" size="medium" />
 		<div class="unit" v-if="unit">{{unit}}</div>
 	</div>
 </template>
