@@ -11,7 +11,7 @@
 				<template slot="title">Catalogue</template>
 				<MenuItem index="/products">Products</MenuItem>
 				<MenuItem index="/collections">Collections</MenuItem>
-				<MenuItem index="/3">Stock items</MenuItem>
+				<MenuItem index="/stock-items">Stock items</MenuItem>
 				<MenuItem index="/4">Stock item models</MenuItem>
 				<MenuItem index="/5">Prices</MenuItem>
 				<MenuItem index="/6">Price lists</MenuItem>

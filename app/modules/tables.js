@@ -25,5 +25,8 @@ export default {
 	},
 	orders: {
 		title: "Orders"
+	},
+	"stock-items": {
+		title: "Stock items"
 	}
 };
