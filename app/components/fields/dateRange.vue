@@ -23,7 +23,7 @@ export default {
 	components: {DatePicker},
 	props: {
 		props: {type: Object, required: true},
-		dates: {type: Array, required: true}
+		dates: {type: Array, required: false}
 	},
 	data() {
 		return {
