@@ -27,9 +27,9 @@ export default {
 	components: {...fields, Tooltip},
 	props: {
 		fieldType: {type: Object, required: true},
-		label: {type: String, required: true},
 		tooltip: {type: String, required: false},
-		data: {type: Object, required: true}
+		label: {type: String, required: true},
+		data: {type: Object, default: () => ({})}
 	},
 	computed: {
 		comps: (t) => t.$options.components,
@@ -42,13 +42,15 @@ export default {
 
 <style lang="scss" scoped>
 .field {
+	margin-bottom: 1.25em;
+
 	.info {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 
 		color: $blue1;
-		margin-bottom: 0.5em;
+		margin-bottom: 0.25em;
 
 		.label {
 			display: flex;

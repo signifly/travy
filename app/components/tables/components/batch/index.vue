@@ -30,7 +30,7 @@
 import {get} from "lodash";
 import {Button, Checkbox, Dropdown, DropdownMenu, DropdownItem} from "element-ui";
 import vPanel from "@/components/panel.vue";
-import vModal from "./modal/index.vue";
+import vModal from "./modal.vue";
 import vPopover from "./popover.vue";
 
 export default {

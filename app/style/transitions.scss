@@ -1,0 +1,13 @@
+.trans {
+	&-fadeDown {
+		$t: 0.15s;
+
+		&-enter-active, &-leave-active {
+			transition: cubic(opacity, $t), cubic(transform, $t);
+		}
+		&-enter, &-leave-to {
+			opacity: 0 !important;
+			transform: translateY(-10px) scale(0.98);
+		}
+	}
+}

@@ -14,7 +14,7 @@
 <script>
 import {forEach, set} from "lodash";
 import {Dialog, Button} from "element-ui";
-import field from "./field.vue";
+import field from "@/components/field.vue";
 
 export default {
 	components: {Dialog, Button, field},
@@ -23,7 +23,7 @@ export default {
 		active: {type: Boolean, required: true},
 		fields: {type: Array, required: true},
 		title: {type: String, required: true},
-		data: {type: Object, required: true}
+		data: {type: Object, required: false}
 	},
 	data() {
 		return {

@@ -1,14 +1,14 @@
 <template>
-	<div class="switch">
-		<elSwitch v-model="data.value" @change="update" />
+	<div class="checkbox">
+		<Checkbox v-model="data.value" @change="update" />
 	</div>
 </template>
 
 <script>
-import {Switch} from "element-ui";
+import {Checkbox} from "element-ui";
 
 export default {
-	components: {elSwitch: Switch},
+	components: {Checkbox},
 	props: {
 		props: {type: Object, required: true},
 		value: {type: Boolean, required: false}

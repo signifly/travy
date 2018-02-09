@@ -134,10 +134,10 @@ export default {
 					const order = sort.order === "descending" ? "-" : "";
 					return `${order}${sort.prop}`;
 				},
-				include: this.includes.join(","),
 				page: this.query.page,
 				filter: this.query.filters,
-				modifier: this.query.modifiers
+				modifier: this.query.modifiers,
+				include: this.includes.join(",")
 			};
 
 			if (this.id !== "products") {
@@ -145,7 +145,7 @@ export default {
 				this.data = data.data;
 				this.pagination = data.meta;
 			} else {
-				const {data} = await this.$http.get("https://sikaline.glitch.me/table-data/products");
+				const {data} = await this.$http.get("https://sikaline.glitch.me/table-data/products", {params});
 				this.data = data.data;
 				this.pagination = data.meta;
 			}

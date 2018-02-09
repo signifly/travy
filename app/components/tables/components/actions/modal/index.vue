@@ -1,7 +1,7 @@
 <template>
 	<Dialog :title="title" :visible.sync="open" width="500px">
-		<div class="modal">
-			<field v-for="field in fields" v-bind="field" :data="data" :key="field.type" @fieldA="fieldA" />
+		<div class="fields">
+			<field v-for="field in fields" v-bind="field" :data="data" :key="field.name" @fieldA="fieldA" />
 		</div>
 
 		<component
@@ -16,7 +16,7 @@
 <script>
 import {forEach, set} from "lodash";
 import {Dialog, Button} from "element-ui";
-import field from "./field.vue";
+import field from "@/components/field.vue";
 import * as types from "./types";
 
 export default {
@@ -27,7 +27,7 @@ export default {
 		fields: {type: Array, required: true},
 		type: {type: String, required: true},
 		title: {type: String, required: true},
-		data: {type: Object, required: true}
+		data: {type: Object, required: false}
 	},
 	data() {
 		return {

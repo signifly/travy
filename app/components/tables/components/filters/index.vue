@@ -1,42 +1,36 @@
 <template>
 	<div class="filters">
+
+		<Popover popper-class="pop" v-model="active" ref="pop" placement="bottom-end" width="300" transition="trans-fadeDown">
+			<div class="fields">
+				<field v-for="field in fields" :key="field.name" v-bind="field" :data="data" @fieldA="update" />
+			</div>
+		</Popover>
+
 		<Input
 		class="search"
-		:class="{settingsActive: settings}"
+		:class="{active}"
 		size="medium"
 		:prefix-icon="searchIcon"
 		v-model="input"
 		:placeholder="search.placeholder"
 		@input="updateSearchQ"
 		clearable>
-			<Button v-if="filters.length > 0" slot="append" icon="el-icon-tickets" @click="toggleSettings">Tilføj filter</Button>
+			<Button slot="append" icon="el-icon-tickets" v-if="fields" v-popover:pop>Add filter</Button>
 		</Input>
-
-		<transition name="settings">
-			<div class="settings" v-show="settings">
-				<div class="item" v-for="item in filters" v-if="components[item.fieldType.id]">
-					<component
-						:is="item.fieldType.id"
-						:title="item.title"
-						v-bind="props(item)"
-						@update="update({data: $event, item})"
-					/>
-				</div>
-			</div>
-		</transition>
 
 	</div>
 </template>
 
 <script>
 import {mapValues, mapKeys, debounce, get} from "lodash";
-import {Input, Button} from "element-ui";
-import {vSwitch, vCheckbox} from "./fields";
+import {Input, Button, Popover} from "element-ui";
+import field from "@/components/field.vue";
 
 export default {
-	components: {Input, Button, vSwitch, vCheckbox},
+	components: {Input, Button, Popover, field},
 	props: {
-		filters: {type: Array, required: true},
+		filters: {type: Object, required: true},
 		search: {type: Object, required: true},
 		getData: {type: Function, required: true}
 	},
@@ -44,27 +38,20 @@ export default {
 		return  {
 			input: get(this.$route.query, "filters.q") || "",
 			loading: false,
-			settings: false
+			active: false
 		}
 	},
 	computed: {
+		searchIcon: (t) => t.loading ? "el-icon-loading": "el-icon-search",
 		components: (t) => t.$options.components,
-		query: (t) => t.$route.query,
-		searchIcon: (t) => t.loading ? "el-icon-loading": "el-icon-search"
+		fields: (t) => t.filters.fields,
+		data: (t) => ({...t.filters.data, ...t.query.filters}),
+		query: (t) => t.$route.query
+
 	},
 	methods: {
-		props({data, fieldType}) {
-			return mapValues(fieldType.props, (key) => data[key]);
-		},
-
-		toggleSettings() {
-			this.settings = !this.settings;
-		},
-
-		async update({data, item}) {
+		async update({data}) {
 			this.loading = true;
-			const props = item.fieldType.props;
-			data = mapKeys(data, (val, key) => props[key]);
 
 			const filters = {...this.query.filters, ...data};
 			this.$router.replace({query: {...this.query, filters}});
@@ -87,6 +74,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fields {
+	zoom: 95%;
+	padding: 0.5em;
+	padding-bottom: 0;
+}
+
 .filters {
 	position: relative;
 
@@ -108,37 +101,13 @@ export default {
 			}
 		}
 
-		&.settingsActive {
+		&.active {
 			/deep/ {
 				.el-input-group__append {
 					background-color: $blue4;
 					color: $white1;
 				}
 			}
-		}
-	}
-
-	.settings {
-		z-index: 1;
-		position: absolute;
-		top: calc(100% + 0.5em);
-		left: 0;
-		right: 0;
-		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-		border-radius: 4px;
-		background-color: $white1;
-		padding: 0.5em 1em;
-
-		.item {
-			margin: 1em 0;
-		}
-
-		&-enter-active, &-leave-active {
-			transition: cubic(opacity), cubic(transform);
-		}
-		&-enter, &-leave-to {
-			opacity: 0;
-			transform: translateY(-10px);
 		}
 	}
 }

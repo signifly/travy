@@ -12,7 +12,7 @@ export default {
 	components: {editor},
 	props: {
 		props: {type: Object, required: true},
-		content: {type: String, required: true, default: ""}
+		content: {type: String, required: false}
 	},
 	data() {
 		return {

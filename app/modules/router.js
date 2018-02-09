@@ -1,6 +1,6 @@
 import Vue from "vue";
 import qs from "qs";
-import {map} from "lodash";
+import {map, mapValues} from "lodash";
 import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
@@ -32,12 +32,12 @@ const routes = [
 	{path: "/*", name: "404", component: _404}
 ];
 
-
 const router = new VueRouter({
 	routes: [...routesTables, ...routesViews, ...routes],
 	mode: "history",
 	parseQuery(query) {
-		return qs.parse(query);
+		const types = {false: false, true: true, null: null, undefined: undefined};
+		return mapValues(qs.parse(query), (val1) => mapValues(val1, (val2) => val2 in types ? types[val2] : val2));
 	},
 	stringifyQuery(query) {
 		const res = qs.stringify(query);
