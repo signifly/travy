@@ -7,40 +7,72 @@
 		<div class="main">
 			<Row>
 				<Col :span="16">
-					<tabs v-bind="{tabs, data}" @fieldA="fieldA"/>
+					<vTabs v-bind="{tabs, data, edits, errors}" @fieldA="fieldA"/>
 				</Col>
 				<Col :span="8">
 					right
 				</Col>
 			</Row>
 		</div>
+
+		<vPanel v-if="edited" v-bind="{loading}" @save="save" />
 	</div>
 </template>
 
 <script>
-import {mapValues, forEach, set} from "lodash";
+import {mapValues, forEach, set, get} from "lodash";
 import {Row, Col} from "element-ui";
-import {tabs} from "./components";
+import {vTabs, vPanel} from "./components";
+
+const edits = () => ({
+	tabs: new Set(),
+	data: new Set()
+});
 
 export default {
-	components: {Row, Col, tabs},
+	components: {Row, Col, vTabs, vPanel},
 	props: {
 		id: {type: String, required: true},
 		meta: {type: Object, required: true}
 	},
 	data() {
 		return {
+			error: {},
+			loading: false,
 			definitions: null,
-			data: null
+			data: null,
+			editsC: 0,
+			edits: edits()
 		}
 	},
 	computed: {
-		tabs: (t) => t.definitions.tabs
+		endpoint: (t) => `${t.$route.meta.parent.id}/${t.id}`,
+		errors: (t) => t.error.errors,
+		tabs: (t) => t.definitions.tabs,
+		edited: (t) => t.editsC > 0,
+		dataUpdated() {
+			const editsC = this.editsC; // force update, cause sets are not reactive
+
+			return [...this.edits.data].reduce((sum, key) => {
+				key = key.split(".")[0].split("[")[0]; // use the root key to update the field if it's nested
+
+				sum[key] = get(this.data, key);
+				return sum;
+			}, {});
+		}
 	},
 	methods: {
-		fieldA({action, data}) {
-			this[action]({data});
+		fieldA({action, tab, data}) {
+			this.track({tab, data});
+			if (this[action]) this[action]({data});
 		},
+
+		track({tab, data}) { // track tab and data edits
+			this.edits.tabs.add(tab);
+			Object.keys(data).forEach(key => this.edits.data.add(key));
+			this.editsC++;
+		},
+
 		update({data}) {
 			forEach(data, (val, key) => set(this.data, key, val));
 		},
@@ -48,14 +80,32 @@ export default {
 		remove({data}) {
 			console.log("remove", data);
 		},
+
 		async getDefinitions() {
 			const {data} = await this.$http.get("https://sikaline.glitch.me/view-defs/products");
 			this.definitions = data;
 			await this.getData();
 		},
+
 		async getData() {
 			const {data} = await this.$http.get("https://sikaline.glitch.me/view-data/products");
 			this.data = data;
+		},
+
+		async save() {
+			try {
+				this.loading = true;
+				await this.$http.put(this.endpoint, this.dataUpdated);
+
+				// reset edits
+				this.edits = edits();
+				this.editsC = 0;
+				
+			} catch ({response}) {
+				this.error = response.data;
+			} finally {
+				this.loading = false;
+			}
 		}
 	},
 	created() {

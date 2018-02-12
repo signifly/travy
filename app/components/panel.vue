@@ -22,14 +22,16 @@ export default {
 	right: 0;
 	max-width: $width;
 	margin: 0 auto;
+	z-index: 1;
 
 	.wrap {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 0.5em 1em;
 		background-color: $white1;
 		border-top: 1px solid $blue3;
+		height: em(60);
+		padding: 0 1em;
 	}
 }
 </style>

@@ -36,6 +36,7 @@ export default {
 	methods: {
 		listUpdate() {
 			this.$emit("update", {
+				action: "update",
 				data: {[this.draggable]: this.items}
 			});
 		},

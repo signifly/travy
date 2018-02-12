@@ -42,7 +42,6 @@ export default {
 		id: (t) => t.fieldType.id,
 		props: (t) => t.fieldType.props,
 		propsData: (t) => mapValues(t.props, (key) => get(t.data, key)),
-
 		error: (t) => get(t.errors, `${t.name}[0]`)
 	}
 };

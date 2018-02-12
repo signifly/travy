@@ -6,10 +6,10 @@
 		</div>
 
 		<div class="fields" v-if="!draggable">
-			<field v-for="field in fields" v-bind="{field, data}" :key="field.name" @fieldA="fieldA" @nodata="fieldsDataSet" ref="field"/>
+			<field v-for="field in fields" v-bind="{field, data, errors}" :key="field.name" @fieldA="fieldA" @nodata="fieldsDataSet" ref="field"/>
 		</div>
 
-		<vDrag v-else v-bind="{field, data, draggable}" @fieldA="fieldA" element="div" class="fields"/>
+		<vDrag v-else v-bind="{field, data, draggable}" @fieldA="fieldA" element="div" class="fields" @update="fieldA"/>
 	</div>
 </template>
 
@@ -22,7 +22,8 @@ export default {
 	components: {Tag, field, vDrag},
 	props: {
 		section: {type: Object, required: true},
-		data: {type: Object, required: true}
+		data: {type: Object, required: true},
+		errors: {type: Object, required: false}
 	},
 	data() {
 		return {

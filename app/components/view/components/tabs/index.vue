@@ -2,11 +2,11 @@
 	<div class="tabs">
 		<vTabs v-bind="{tabs, tab}" @tab="tabClick">
 			<template slot="label" slot-scope="item">
-				<vLabel v-bind="item" :edit="edit" :refs="refs"></vLabel>
+				<vLabel v-bind="item" :edits="edits" :refs="refs"></vLabel>
 			</template>
 
 			<template slot="content" slot-scope="tab">
-				<vTab v-bind="{tab, data}" @fieldA="fieldA" :ref="tab.id"/>
+				<vTab v-bind="{tab, data, errors}" @fieldA="$emit('fieldA', $event)" :ref="tab.id"/>
 			</template>
 		</vTabs>
 	</div>
@@ -21,12 +21,13 @@ export default {
 	components: {vTabs, vLabel, vTab},
 	props: {
 		tabs: {type: Array, required: true},
-		data: {type: Object, required: true}
+		data: {type: Object, required: true},
+		edits: {type: Object, required: true},
+		errors: {type: Object, required: false}
 	},
 	data() {
 		return {
-			mounted: false,
-			edit: {}
+			mounted: false
 		}
 	},
 	computed: {
@@ -37,10 +38,6 @@ export default {
 		}
 	},
 	methods: {
-		fieldA(obj) {
-			this.$set(this.edit, obj.tab, true);
-			this.$emit("fieldA", obj);
-		},
 		tabClick(id) {
 			this.$router.push({params: {tab: id}});
 		}

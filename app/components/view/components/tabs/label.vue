@@ -6,7 +6,7 @@
 		</transition>
 
 		<transition name="el-fade-in">
-			<div class="edit" v-if="edit[id]">
+			<div class="edit" v-if="edits.tabs.has(id)">
 				<i class="el-icon-edit"></i>
 			</div>
 		</transition>
@@ -19,7 +19,7 @@ export default {
 		id: {type: String, required: true},
 		label: {type: String, required: true},
 		status: {type: String, required: false},
-		edit: {type: Object, required: false},
+		edits: {type: Object, required: false},
 		refs: {type: Object, required: true}
 	},
 	computed: {

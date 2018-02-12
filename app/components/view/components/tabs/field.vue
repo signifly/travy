@@ -26,6 +26,8 @@
 			@fieldA="$emit('fieldA', $event)"
 		/>
 
+		<div class="error" v-if="error">{{error}}</div>
+
 		<div class="reference" v-if="reference">
 			<div class="title">Reference:</div>
 			<div class="text">{{reference}}</div>
@@ -47,7 +49,8 @@ export default {
 	props: {
 		field: {type: Object, required: true},
 		data: {type: Object, required: true},
-		draggable: {type: String, required: false}
+		draggable: {type: String, required: false},
+		errors: {type: Object, required: false}
 	},
 	data() {
 		return {
@@ -63,11 +66,10 @@ export default {
 		unit: (t) => t.field.fieldType.unit,
 		disabled: (t) => t.field.fieldType.readonly,
 		reference: (t) => t.field.fieldType.reference,
-
 		props: (t) => t.field.fieldType.props,
 		propsData: (t) => mapValues(t.props, (key) => get(t.data, key)),
-
 		opts: (t) => t.mounted ? get(t.$refs, "field.opts", {}) : {},
+		error: (t) => get(t.errors, `${t.name}[0]`),
 
 		info() {
 			if (this.draggable) return false;
@@ -140,6 +142,13 @@ export default {
 			font-size: 0.8em;
 			color: $blue3;
 		}
+	}
+
+	.error {
+		font-weight: 500;
+		font-size: 0.75em;
+		color: $danger;
+		margin-top: 0.5em;
 	}
 
 	.reference {
