@@ -22,3 +22,13 @@ svg {
 		fill: $black1;
 	}
 }
+
+body {
+	.el-popover, .el-dialog__body {
+		font-size: 1em;
+	}
+
+	.el-dialog {
+		padding: 0.5em;
+	}
+}

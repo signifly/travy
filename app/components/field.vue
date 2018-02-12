@@ -50,7 +50,15 @@ export default {
 
 <style lang="scss" scoped>
 .field {
-	margin-bottom: 1.25em;
+	margin: 1.25em 0;
+
+	&:first-child {
+		margin-top: 0;
+	}
+
+	&:last-child {
+		margin-bottom: 0;
+	}
 
 	.info {
 		display: flex;

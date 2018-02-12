@@ -3,7 +3,7 @@
 
 		<Popover popper-class="pop" v-model="active" ref="pop" placement="bottom-end" width="300" transition="trans-fadeDown">
 			<div class="fields">
-				<field v-for="field in fields" :key="field.name" v-bind="field" :data="data" @fieldA="update" />
+				<field v-for="field in fields" :key="field.name" v-bind="field" :data="data" @fieldA="updateQ" />
 			</div>
 		</Popover>
 
@@ -14,7 +14,7 @@
 		:prefix-icon="searchIcon"
 		v-model="input"
 		:placeholder="search.placeholder"
-		@input="updateSearchQ"
+		@input="updateQ({data: {q: $event}})"
 		clearable>
 			<Button slot="append" icon="el-icon-tickets" v-if="fields" v-popover:pop>Add filter</Button>
 		</Input>
@@ -43,31 +43,24 @@ export default {
 	},
 	computed: {
 		searchIcon: (t) => t.loading ? "el-icon-loading": "el-icon-search",
+		data: (t) => ({...t.filters.data, ...t.$route.query.filters}),
 		components: (t) => t.$options.components,
 		fields: (t) => t.filters.fields,
-		data: (t) => ({...t.filters.data, ...t.query.filters}),
 		query: (t) => t.$route.query
-
 	},
 	methods: {
-		async update({data}) {
-			this.loading = true;
+		update: debounce(async function({data}) {
+			let filters = {...this.query.filters, ...data};
+			filters = mapValues(filters, (val, key) => val === "" ? undefined : val);
 
-			const filters = {...this.query.filters, ...data};
 			this.$router.replace({query: {...this.query, filters}});
-			await this.getData();
-			this.loading = false;
-		},
-
-		updateSearch: debounce(async function(input) {
-			this.$router.replace({query: {...this.query, filters: {...this.query.filters, q: input}}});
 			await this.getData();
 			this.loading = false;
 		}, 500),
 
-		updateSearchQ(data) {
+		updateQ({data}) {
 			this.loading = true;
-			this.updateSearch(data);
+			this.update({data});
 		}
 	}
 };
@@ -75,9 +68,8 @@ export default {
 
 <style lang="scss" scoped>
 .fields {
-	zoom: 95%;
-	padding: 0.5em;
-	padding-bottom: 0;
+	padding: 0.25em;
+	transform: scale(0.95);
 }
 
 .filters {

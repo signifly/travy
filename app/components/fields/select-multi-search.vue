@@ -30,6 +30,7 @@ export default {
 		size() {
 			if (this.meta.location === "table") return "small";
 			if (this.meta.location === "tabs") return "medium";
+			return "medium";
 		}
 	},
 	methods: {
