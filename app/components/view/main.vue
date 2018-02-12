@@ -15,7 +15,7 @@
 			</Row>
 		</div>
 
-		<vPanel v-if="edited" v-bind="{loading, edited}" @save="save" />
+		<vPanel v-bind="{id, loading, edited}" title="some product, thingy" @save="save" />
 	</div>
 </template>
 
@@ -29,7 +29,7 @@ const edits = () => ({tabs: new Set(), data: new Set()});
 export default {
 	components: {Row, Col, vTabs, vPanel},
 	props: {
-		id: {type: String, required: true},
+		id: {type: Number, required: true},
 		meta: {type: Object, required: true}
 	},
 	data() {
