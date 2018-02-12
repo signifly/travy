@@ -1,8 +1,8 @@
 <template>
 	<vPanel>
-		<div class="text">There's unsaved changes</div>
+		<div class="text">BATCH</div>
 		<div class="actions">
-			<Button size="medium" type="primary" v-bind="{loading}" @click="save">Save changes</Button>
+			<Button size="medium" type="success" v-bind="{loading}" @click="save">Save changes</Button>
 		</div>
 	</vPanel>
 </template>
@@ -18,7 +18,7 @@ export default {
 	},
 	methods: {
 		save() {
-			this.$emit("save");
+			this.$parent.$emit("save");
 		}
 	}
 };

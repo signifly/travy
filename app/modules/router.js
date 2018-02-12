@@ -25,6 +25,7 @@ const routesViews = map(tables, (item, id) => ({
 	path: `/${id}/:id/:tab?`,
 	name: `${id}-view`,
 	component: view,
+	props: true,
 	meta: {
 		parent: {...item, id}
 	}

@@ -6,7 +6,7 @@
 			</div>
 
 			<div class="actions">
-				<Button size="medium">Sequential edit</Button>
+				<Button size="medium" @click="seq">Sequential edit</Button>
 
 				<Dropdown trigger="click" :show-timeout="0" :hide-timeout="0" @command="open">
 					<Button size="medium">
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import {get} from "lodash";
+import {sortBy} from "lodash";
 import {Button, Checkbox, Dropdown, DropdownMenu, DropdownItem} from "element-ui";
 import vPanel from "@/components/panel.vue";
 import vModal from "./modal.vue";
@@ -50,8 +50,9 @@ export default {
 		}
 	},
 	computed: {
+		first: (t) => t.endpoints.show.url.replace("{id}", t.ids[0]),
+		ids: (t) => sortBy(t.selected.map(x => x.id)),
 		actions: (t) => t.batch.actions,
-		ids: (t) => t.selected.map(x => x.id)
 	},
 	methods: {
 		unselect() {
@@ -72,6 +73,10 @@ export default {
 				if (custom) this.error = response.data;
 				done({error: true});
 			}
+		},
+
+		seq() {
+			this.$router.push({path: this.first, query: {seq: this.ids}});
 		}
 	}
 };

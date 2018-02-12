@@ -15,7 +15,7 @@
 			</Row>
 		</div>
 
-		<vPanel v-if="edited" v-bind="{loading}" @save="save" />
+		<vPanel v-if="edited" v-bind="{loading, edited}" @save="save" />
 	</div>
 </template>
 
@@ -24,10 +24,7 @@ import {mapValues, forEach, set, get} from "lodash";
 import {Row, Col} from "element-ui";
 import {vTabs, vPanel} from "./components";
 
-const edits = () => ({
-	tabs: new Set(),
-	data: new Set()
-});
+const edits = () => ({tabs: new Set(), data: new Set()});
 
 export default {
 	components: {Row, Col, vTabs, vPanel},
@@ -92,7 +89,7 @@ export default {
 			this.data = data;
 		},
 
-		async save() {
+		async save({done} = {}) {
 			try {
 				this.loading = true;
 				await this.$http.put(this.endpoint, this.dataUpdated);
@@ -100,7 +97,9 @@ export default {
 				// reset edits
 				this.edits = edits();
 				this.editsC = 0;
-				
+
+				if (done) done();
+
 			} catch ({response}) {
 				this.error = response.data;
 			} finally {
