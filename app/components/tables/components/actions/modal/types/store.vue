@@ -1,7 +1,7 @@
 <template>
 	<div class="store">
 		<div class="actions">
-			<Button type="info" size="medium" :disabled="loading" plain>Cancel</Button>
+			<Button type="info" size="medium" :disabled="loading" plain @click="close">Cancel</Button>
 			<Button type="info" size="medium" :loading="loading" @click="create">Create</Button>
 		</div>
 
@@ -25,6 +25,9 @@ export default {
 		}
 	},
 	methods: {
+		close() {
+			this.$emit("close");
+		},
 		async create() {
 			try {
 				this.loading = true;

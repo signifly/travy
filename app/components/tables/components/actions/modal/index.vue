@@ -5,11 +5,12 @@
 		</div>
 
 		<component
+			slot="footer"
 			v-if="comps[type]"
 			:is="type"
-			v-bind="{payload, endpoints}"
 			:error.sync="error"
-			slot="footer"
+			v-bind="{payload, endpoints}"
+			@close="open = false"
 		/>
 	</Dialog>
 </template>
