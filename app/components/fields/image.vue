@@ -30,7 +30,7 @@ export default {
 
 	.img {
 		display: none;
-		z-index: 1;
+		z-index: 2;
 		position: absolute;
 		right: 2em;
 		top: 0;

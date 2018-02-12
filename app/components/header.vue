@@ -41,7 +41,7 @@
 					<DropdownMenu slot="dropdown">
 						<DropdownItem>Settings</DropdownItem>
 						<DropdownItem>Admin</DropdownItem>
-						<DropdownItem divided command="logout">Logout</DropdownItem>
+						<DropdownItem divided :command="logout">Logout</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
 			</div>
@@ -69,8 +69,8 @@ export default {
 		}
 	},
 	methods: {
-		account(action) {
-			this[action]();
+		account(action = () => {}) {
+			action();
 		},
 		logout() {
 			this.$store.dispatch("user/logout");
