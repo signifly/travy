@@ -20,10 +20,15 @@ api.interceptors.response.use(res => {
 	return res;
 }, (error) => {
 	const res = error.response;
-
 	console.log(res);
 
-	if (get(res, "config.custom")) return Promise.reject(error); // if the request catches the error itself, stop global error handling.
+	if (res.config.custom) { // if the request catches the error itself, stop global error handling.
+		return Promise.reject(error);
+	}
+
+	if (res.status === 401) { // if token is invalid, logout
+		store.dispatch("user/logout");
+	}
 
 	Notification({
 		title: "Error",

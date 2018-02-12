@@ -10,12 +10,14 @@ export default {
 
 	mutations: {
 		login(state, auth) {
-			localStorage.setItem("auth", JSON.stringify(auth));
 			state.auth = auth;
+			localStorage.setItem("auth", JSON.stringify(auth));
+			router.push({name: "index"});
 		},
 		logout(state) {
-			localStorage.removeItem("auth");
 			state.auth = null;
+			localStorage.removeItem("auth");
+			router.push({name: "login"});
 		}
 	},
 
@@ -23,7 +25,6 @@ export default {
 		async logout({commit}) {
 			await axios.post("logout");
 			commit("logout");
-			router.push({name: "login"});
 		}
 	},
 

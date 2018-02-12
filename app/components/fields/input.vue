@@ -25,12 +25,12 @@ export default {
 		}
 	},
 	methods: {
-		update: debounce(function(val) {
+		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
 				data: {[this.props.value]: val}
 			});
-		}, 300)
+		}
 	}
 };
 </script>

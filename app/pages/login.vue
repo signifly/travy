@@ -65,7 +65,6 @@ export default {
 				this.loading = true;
 				const {data} = await this.$http.post("login", this.form, {custom: true});
 				this.$store.commit("user/login", data);
-				this.$router.push({name: "index"});
 			} catch ({response}) {
 				this.error = response.data;
 			} finally {
