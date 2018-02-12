@@ -11,6 +11,7 @@ export {default as vSelectMultiSearch} from "./select-multi-search.vue";
 export {default as vActions} from "./actions/index.vue";
 export {default as vInput} from "./input.vue";
 export {default as vInputNumber} from "./input-number.vue";
+export {default as vInputPassword} from "./input-password.vue";
 export {default as vEditor} from "./editor.vue";
 export {default as vLine} from "./line.vue";
 export {default as vTable} from "./table.vue";

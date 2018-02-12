@@ -5,8 +5,11 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
+import store from "@/store";
+
 import tables from "./tables";
 import index from "@/pages/index.vue";
+import login from "@/pages/login.vue";
 import table from "@/pages/table.vue";
 import view from "@/pages/view.vue";
 import _404 from "@/pages/404.vue";
@@ -29,6 +32,7 @@ const routesViews = map(tables, (item, id) => ({
 
 const routes = [
 	{path: "/", name: "index", component: index},
+	{path: "/login", name: "login", component: login, meta: {layout: "vBase"}},
 	{path: "/*", name: "404", component: _404}
 ];
 
@@ -42,6 +46,17 @@ const router = new VueRouter({
 	stringifyQuery(query) {
 		const res = qs.stringify(query);
 		return res ? ("?" + res) : "";
+	}
+});
+
+router.beforeEach((to, from, next) => {
+	if (to.name === "login") return next();
+	const auth = store.getters["user/auth"];
+
+	if (!auth) {
+		next({name: "login", replace: true});
+	} else {
+		next();
 	}
 });
 

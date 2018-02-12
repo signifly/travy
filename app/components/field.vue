@@ -8,6 +8,7 @@
 				</Tooltip>
 			</div>
 		</div>
+
 		<component
 			v-if="comps[id]"
 			:is="id"
@@ -15,6 +16,9 @@
 			:props="props"
 			@fieldA="$emit('fieldA', $event)"
 		/>
+
+		<div class="error" v-if="error">{{error}}</div>
+
 	</div>
 </template>
 
@@ -26,16 +30,20 @@ import {Tooltip} from "element-ui";
 export default {
 	components: {...fields, Tooltip},
 	props: {
+		name: {type: String, required: true},
 		fieldType: {type: Object, required: true},
 		tooltip: {type: String, required: false},
 		label: {type: String, required: true},
+		errors: {type: Object, required: false},
 		data: {type: Object, default: () => ({})}
 	},
 	computed: {
 		comps: (t) => t.$options.components,
 		id: (t) => t.fieldType.id,
 		props: (t) => t.fieldType.props,
-		propsData: (t) => mapValues(t.props, (key) => get(t.data, key))
+		propsData: (t) => mapValues(t.props, (key) => get(t.data, key)),
+
+		error: (t) => get(t.errors, `${t.name}[0]`)
 	}
 };
 </script>
@@ -48,9 +56,9 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-
-		color: $blue1;
-		margin-bottom: 0.25em;
+		margin-bottom: 0.5em;
+		font-size: 0.875em;
+		color: $blue4;
 
 		.label {
 			display: flex;
@@ -61,6 +69,13 @@ export default {
 			font-size: 0.8em;
 			color: $blue3;
 		}
+	}
+
+	.error {
+		font-weight: 500;
+		font-size: 0.75em;
+		color: $danger;
+		margin-top: 0.5em;
 	}
 }
 </style>

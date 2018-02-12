@@ -33,7 +33,7 @@
 
 		<div class="account">
 			<div class="dropdown">
-				<Dropdown trigger="click" :show-timeout="0" :hide-timeout="0">
+				<Dropdown trigger="click" :show-timeout="0" :hide-timeout="0" @command="account">
 					<a class="el-dropdown-link">
 						Sikaline<i class="el-icon-arrow-down el-icon--right"></i>
 					</a>
@@ -41,7 +41,7 @@
 					<DropdownMenu slot="dropdown">
 						<DropdownItem>Settings</DropdownItem>
 						<DropdownItem>Admin</DropdownItem>
-						<DropdownItem divided>Logout</DropdownItem>
+						<DropdownItem divided command="logout">Logout</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
 			</div>
@@ -66,6 +66,14 @@ export default {
 				home: require("@/assets/icons/home.svg"),
 				bell: require("@/assets/icons/bell.svg")
 			}
+		}
+	},
+	methods: {
+		account(action) {
+			this[action]();
+		},
+		logout() {
+			this.$store.dispatch("user/logout");
 		}
 	}
 };

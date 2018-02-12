@@ -1,26 +1,25 @@
 <template>
 	<div class="app">
-		<Container class="is-vertical">
-			<vHeader/>
-			<Main>
-				<router-view />
-			</Main>
-		</Container>
+		<component :is="layout" />
 	</div>
 </template>
 
 <script>
-import {Container, Header, Main, Menu, MenuItem} from "element-ui";
-import vHeader from "./components/header.vue";
+import * as layouts from "./components/layouts";
 
 export default {
-	components: {Container, Main, vHeader}
+	components: {...layouts},
+	computed: {
+		layout: (t) => t.$route.meta.layout || "vMain"
+	}
 };
 </script>
 
 <style lang="scss" scoped>
 .app {
-	background-color: $white2;
-	min-height: 100vh;
+	.main {
+		background-color: $white2;
+		min-height: 100vh;
+	}
 }
 </style>

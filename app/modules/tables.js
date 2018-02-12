@@ -1,32 +1,62 @@
 export default {
 	products: {
-		title: "Products"
+		title: "Products",
+		auth: {
+			roles: ["admin"]
+		}
 	},
 	shops: {
-		title: "Shops"
+		title: "Shops",
+		auth: {
+			roles: ["admin"]
+		}
 	},
 	currencies: {
-		title: "Currencies"
+		title: "Currencies",
+		auth: {
+			roles: ["admin"]
+		}
 	},
 	collections: {
-		title: "Collections"
+		title: "Collections",
+		auth: {
+			roles: ["admin"]
+		}
 	},
 	languages: {
-		title: "Languages"
+		title: "Languages",
+		auth: {
+			roles: ["admin"]
+		}
 	},
 	materials: {
-		title: "Materials"
+		title: "Materials",
+		auth: {
+			roles: ["admin"]
+		}
 	},
 	users: {
-		title: "Users"
+		title: "Users",
+		auth: {
+			roles: ["admin"]
+		}
 	},
 	partners: {
-		title: "Partners"
+		title: "Partners",
+		auth: {
+			roles: ["admin"]
+		}
 	},
 	orders: {
-		title: "Orders"
+		title: "Orders",
+		auth: {
+			roles: ["admin"]
+		}
 	},
 	"stock-items": {
-		title: "Stock items"
+		title: "Stock items",
+		auth: {
+			roles: ["admin"]
+		}
 	}
 };

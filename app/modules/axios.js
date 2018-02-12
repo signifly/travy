@@ -1,25 +1,37 @@
-import Vue from "vue";
-import axios from "axios";
 import {get} from "lodash";
+import axios from "axios";
 import {Notification} from "element-ui";
+import store from "../store";
 
 const api = axios.create({
 	baseURL: "https://api.sikane.signifly.com/v1/"
 });
 
+api.interceptors.request.use(config => {
+	const auth = store.getters["user/auth"];
+	if (auth) config.headers.common["Authorization"] = `${auth.token_type} ${auth.access_token}`;
+
+	return config;
+}, (error) => {
+	return Promise.reject(error);
+});
+
 api.interceptors.response.use(res => {
 	return res;
-}, err => {
-	if (err.response) console.log(err.response);
-	if (get(err, "response.config.custom")) return Promise.reject(err); // if the request catches the error itself, stop global error handling.
+}, (error) => {
+	const res = error.response;
+
+	console.log(res);
+
+	if (get(res, "config.custom")) return Promise.reject(error); // if the request catches the error itself, stop global error handling.
 
 	Notification({
 		title: "Error",
-		message: "En kunde har købt en forkert stol.",
+		message: res.data.message,
 		type: "error"
 	});
 
-	return Promise.reject(err);
+	return Promise.reject(error);
 });
 
-Vue.prototype.$http = api;
+export default api;
