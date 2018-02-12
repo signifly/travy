@@ -1,12 +1,17 @@
 <template>
 	<Dialog :title="title" :visible.sync="open" width="500px">
 		<div class="modal">
-			<field v-for="field in fields" v-bind="field" :data="data" :key="field.type" @fieldA="fieldA" />
+			<field v-for="field in fields" v-bind="field" :errors="error.errors" :data="data" :key="field.type" @fieldA="fieldA" />
 		</div>
 
-		<div class="buttons" slot="footer">
-			<Button size="medium" type="info" plain :disabled="loading" @click="close">Cancel</Button>
-			<Button size="medium" type="primary" :loading="loading" @click="save">Apply</Button>
+		<div class="footer" slot="footer">
+			<div class="actions">
+				<Button size="medium" type="info" plain :disabled="loading" @click="close">Cancel</Button>
+				<Button size="medium" type="primary" :loading="loading" @click="save">Apply</Button>
+			</div>
+
+			<div class="error" v-if="error.message">{{error.message}}</div>
+
 		</div>
 	</Dialog>
 </template>
@@ -21,6 +26,7 @@ export default {
 	props: {
 		endpoints: {type: Object, required: true},
 		active: {type: Boolean, required: true},
+		error: {type: Object, required: true},
 		fields: {type: Array, required: true},
 		title: {type: String, required: true},
 		data: {type: Object, required: false}
@@ -55,9 +61,9 @@ export default {
 
 			this.$emit("save", {
 				data: this.payload,
-				done: () => {
+				done: ({error}) => {
 					this.loading = false;
-					this.close();
+					if (!error) this.close();
 				}
 			})
 		}
@@ -69,6 +75,14 @@ export default {
 /deep/ {
 	.el-dialog__title {
 		font-weight: 600;
+	}
+}
+
+.footer {
+	.error {
+		margin-top: 1em;
+		font-size: 0.875em;
+		color: $danger;
 	}
 }
 </style>

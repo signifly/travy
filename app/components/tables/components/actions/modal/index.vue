@@ -1,13 +1,14 @@
 <template>
 	<Dialog :title="title" :visible.sync="open" width="500px">
 		<div class="fields">
-			<field v-for="field in fields" v-bind="field" :data="data" :key="field.name" @fieldA="fieldA" />
+			<field v-for="field in fields" v-bind="field" :errors="error.errors" :data="data" :key="field.name" @fieldA="fieldA" />
 		</div>
 
 		<component
 			v-if="comps[type]"
 			:is="type"
 			v-bind="{payload, endpoints}"
+			:error.sync="error"
 			slot="footer"
 		/>
 	</Dialog>
@@ -31,6 +32,7 @@ export default {
 	},
 	data() {
 		return {
+			error: {},
 			payload: {}
 		}
 	},

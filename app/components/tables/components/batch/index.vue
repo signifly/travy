@@ -17,12 +17,12 @@
 						<DropdownItem v-for="action in actions" :key="action.title" :command="action">{{action.title}}</DropdownItem>
 					</DropdownMenu>
 
-					<vPopover :popover.sync="popover" v-bind="{action, endpoints}" @save="save"/>
+					<vPopover :popover.sync="popover" v-bind="{action, endpoints}" @save="save($event, {custom: false})"/>
 				</Dropdown>
 			</div>
 		</vPanel>
 
-		<vModal v-if="modal" :active.sync="modal" v-bind="action" :endpoints="endpoints" @save="save"/>
+		<vModal v-if="modal" :active.sync="modal" v-bind="action" :endpoints="endpoints" :error="error" @save="save($event, {custom: true})"/>
 	</div>
 </template>
 
@@ -42,9 +42,9 @@ export default {
 	},
 	data() {
 		return {
+			error: {},
 			checked: true,
 			action: null,
-
 			popover: false,
 			modal: false
 		}
@@ -64,11 +64,13 @@ export default {
 			this.modal = action.type === "modal";
 		},
 
-		async save({data, done}) {
+		async save({data, done}, {custom}) {
 			try {
-				const res = await this.$http.put(this.endpoints.bulkUpdate.url, {data, ids: this.ids});
-			} catch(err) {} finally {
-				if (done) done();
+				const res = await this.$http.put(this.endpoints.bulkUpdate.url, {data, ids: this.ids}, {custom});
+				done();
+			} catch({response}) {
+				if (custom) this.error = response.data;
+				done({error: true});
 			}
 		}
 	}
