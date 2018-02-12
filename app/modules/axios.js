@@ -26,7 +26,7 @@ api.interceptors.response.use(res => {
 		return Promise.reject(error);
 	}
 
-	if (res.status === 401) { // if token is invalid, logout
+	if (res.status === 401 && !res.config.url.endsWith("logout")) { // if token is invalid, logout
 		store.dispatch("user/logout");
 	}
 
