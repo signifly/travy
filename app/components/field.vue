@@ -24,8 +24,8 @@
 
 <script>
 import {mapValues, get} from "lodash";
-import * as fields from "@/components/fields";
 import {Tooltip} from "element-ui";
+import * as fields from "@/components/fields";
 
 export default {
 	components: {...fields, Tooltip},

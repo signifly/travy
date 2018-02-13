@@ -29,7 +29,7 @@ export default {
 		fields: {type: Array, required: true},
 		type: {type: String, required: true},
 		title: {type: String, required: true},
-		data: {type: Object, required: false}
+		data: {type: Object, required: true}
 	},
 	data() {
 		return {

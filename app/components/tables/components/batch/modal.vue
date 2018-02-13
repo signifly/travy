@@ -29,7 +29,7 @@ export default {
 		error: {type: Object, required: true},
 		fields: {type: Array, required: true},
 		title: {type: String, required: true},
-		data: {type: Object, required: false}
+		data: {type: Object, required: true}
 	},
 	data() {
 		return {
@@ -61,7 +61,7 @@ export default {
 
 			this.$emit("save", {
 				data: this.payload,
-				done: ({error}) => {
+				done: ({error} = {}) => {
 					this.loading = false;
 					if (!error) this.close();
 				}
