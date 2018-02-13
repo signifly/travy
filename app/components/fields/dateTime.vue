@@ -11,7 +11,7 @@ export default {
 	},
 	computed: {
 		date: (t) => date(t.epoch),
-		dateTime: (t) => t.date.sDateTime
+		dateTime: (t) => t.epoch ? t.date.sDateTime : ""
 	}
 };
 </script>
