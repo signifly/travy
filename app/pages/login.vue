@@ -21,6 +21,9 @@ import field from "@/components/field.vue";
 
 export default {
 	components: {Form, FormItem, Input, Button, field},
+	props: {
+		route: {type: Object, required: false, default: () => ({name: "index"})}
+	},
 	data() {
 		return {
 			loading: false,
@@ -64,7 +67,7 @@ export default {
 			try {
 				this.loading = true;
 				const {data} = await this.$http.post("login", this.form, {custom: true});
-				this.$store.commit("user/login", data);
+				this.$store.commit("user/login", {data, route: {...this.route}});
 			} catch ({response}) {
 				this.error = response.data;
 			} finally {

@@ -33,7 +33,7 @@ const routesViews = map(tables, (item, id) => ({
 
 const routes = [
 	{path: "/", name: "index", component: index},
-	{path: "/login", name: "login", component: login, meta: {layout: "vBase"}},
+	{path: "/login", name: "login", component: login, props: true, meta: {layout: "vBase"}},
 	{path: "/*", name: "404", component: _404}
 ];
 
@@ -55,7 +55,7 @@ router.beforeEach((to, from, next) => {
 	const auth = store.getters["user/auth"];
 
 	if (!auth) {
-		next({name: "login", replace: true});
+		next({name: "login", replace: true, params: {route: to}});
 	} else {
 		next();
 	}

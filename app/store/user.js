@@ -9,10 +9,10 @@ export default {
 	},
 
 	mutations: {
-		login(state, auth) {
-			state.auth = auth;
-			localStorage.setItem("auth", JSON.stringify(auth));
-			router.push({name: "index"});
+		login(state, {data, route}) {
+			state.auth = data;
+			localStorage.setItem("auth", JSON.stringify(data));
+			router.push(route);
 		},
 		logout(state) {
 			state.auth = null;
