@@ -41,7 +41,7 @@ export default {
 		comps: (t) => t.$options.components,
 		id: (t) => t.fieldType.id,
 		props: (t) => t.fieldType.props,
-		propsData: (t) => mapValues(t.props, (key) => get(t.data, key)),
+		propsData: (t) => mapValues(t.props, (val, key) => get(t.data, val, val)),
 		error: (t) => get(t.errors, `${t.name}[0]`)
 	}
 };

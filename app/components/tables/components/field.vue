@@ -27,7 +27,7 @@ export default {
 		item: (t) => t.scope.row,
 		action: (t) => t.column.fieldType.action,
 		props: (t) => t.column.fieldType.props,
-		propsData: (t) => mapValues(t.props, (key) => get(t.item, key)),
+		propsData: (t) => mapValues(t.props, (val, key) => get(t.item, val, val)),
 
 		link() {
 			if (!this.action) return;
