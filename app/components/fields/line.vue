@@ -65,6 +65,7 @@ export default {
 	align-items: center;
 	margin: 0.25em 0;
 	height: em(100);
+	cursor: grab;
 
 	.icon {
 		display: flex;

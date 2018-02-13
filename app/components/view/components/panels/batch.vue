@@ -14,11 +14,11 @@
 
 		<div class="actions">
 			<Button v-if="prev" size="medium" type="success" icon="el-icon-arrow-left" @click="prevSave">
-				Back
+				Save and back
 			</Button>
 
 			<Button v-if="next" size="medium" type="success" @click="nextSave">
-				Next
+				Save and next
 				<i class="el-icon-arrow-right el-icon-right"></i>
 			</Button>
 
