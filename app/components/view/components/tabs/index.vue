@@ -6,7 +6,7 @@
 			</template>
 
 			<template slot="content" slot-scope="tab">
-				<vTab v-bind="{tab, data, errors}" @fieldA="$emit('fieldA', $event)" :ref="tab.id"/>
+				<vTab v-bind="{tab, data, errors}" :key="dataU" @fieldA="$emit('fieldA', $event)" :ref="tab.id"/>
 			</template>
 		</vTabs>
 	</div>
@@ -23,7 +23,8 @@ export default {
 		tabs: {type: Array, required: true},
 		data: {type: Object, required: true},
 		edits: {type: Object, required: true},
-		errors: {type: Object, required: false}
+		errors: {type: Object, required: false},
+		dataU: {type: Number, required: true}
 	},
 	data() {
 		return {
@@ -32,14 +33,11 @@ export default {
 	},
 	computed: {
 		tab: (t) => t.$route.params.tab || "basic",
-		refs() {
-			if (!this.mounted) return;
-			return this.$refs;
-		}
+		refs: (t) => t.mounted ? t.$refs : null
 	},
 	methods: {
-		tabClick(id) {
-			this.$router.push({params: {tab: id}});
+		tabClick(tab) {
+			this.$router.push({...this.$route, params: {tab}});
 		}
 	},
 	mounted() {

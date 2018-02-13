@@ -7,7 +7,7 @@
 		<div class="main">
 			<Row>
 				<Col :span="16">
-					<vTabs v-bind="{tabs, data, edits, errors}" @fieldA="fieldA"/>
+					<vTabs v-bind="{tabs, data, edits, errors, dataU}" @fieldA="fieldA"/>
 				</Col>
 				<Col :span="8">
 					right
@@ -15,7 +15,7 @@
 			</Row>
 		</div>
 
-		<vPanel v-bind="{id, loading, edited}" title="some product, thingy" @save="save" />
+		<vPanel v-bind="{id, loading, edited, getData}" title="some product, thingy" @save="save" />
 	</div>
 </template>
 
@@ -29,7 +29,7 @@ const edits = () => ({tabs: new Set(), data: new Set()});
 export default {
 	components: {Row, Col, vTabs, vPanel},
 	props: {
-		id: {type: Number, required: true},
+		id: {type: String, required: true},
 		meta: {type: Object, required: true}
 	},
 	data() {
@@ -38,17 +38,18 @@ export default {
 			loading: false,
 			definitions: null,
 			data: null,
-			editsC: 0,
-			edits: edits()
+			dataU: 0,
+			edits: edits(),
+			editsU: 0
 		}
 	},
 	computed: {
 		endpoint: (t) => `${t.$route.meta.parent.id}/${t.id}`,
 		errors: (t) => t.error.errors,
 		tabs: (t) => t.definitions.tabs,
-		edited: (t) => t.editsC > 0,
+		edited: (t) => t.editsU > 0,
 		dataUpdated() {
-			const editsC = this.editsC; // force update, cause sets are not reactive
+			const editsU = this.editsU; // force update, because sets are not reactive
 
 			return [...this.edits.data].reduce((sum, key) => {
 				key = key.split(".")[0].split("[")[0]; // use the root key to update the field if it's nested
@@ -67,7 +68,7 @@ export default {
 		track({tab, data}) { // track tab and data edits
 			this.edits.tabs.add(tab);
 			Object.keys(data).forEach(key => this.edits.data.add(key));
-			this.editsC++;
+			this.editsU++;
 		},
 
 		update({data}) {
@@ -87,6 +88,7 @@ export default {
 		async getData() {
 			const {data} = await this.$http.get("https://sikaline.glitch.me/view-data/products");
 			this.data = data;
+			this.dataU++;
 		},
 
 		async save({done} = {}) {
@@ -96,9 +98,9 @@ export default {
 
 				// reset edits
 				this.edits = edits();
-				this.editsC = 0;
+				this.editsU = 0;
 
-				if (done) done();
+				if (done) await done();
 
 			} catch ({response}) {
 				this.error = response.data;

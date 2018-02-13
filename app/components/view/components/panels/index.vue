@@ -1,5 +1,5 @@
 <template>
-	<component v-if="active" :is="comp" v-bind="{id, loading, title, seq}" />
+	<component v-if="active" :is="comp" v-bind="{loading, title, seq, getData}" />
 </template>
 
 <script>
@@ -10,15 +10,18 @@ import vBatch from "./batch.vue";
 export default {
 	components: {vSave, vBatch},
 	props: {
-		id: {type: Number, required: true},
 		title: {type: String, required: true},
 		loading: {type: Boolean, required: true},
-		edited: {type: Boolean, required: true}
+		edited: {type: Boolean, required: true},
+		getData: {type: Function, required: true}
 	},
 	computed: {
-		seq: (t) => map(t.$route.query.seq, (val) => Number(val)), // make sure seq is an array
-		active: (t) => t.edited || t.seq.length > 0,
-		comp: (t) => t.seq ? "vBatch" : "vSave"
+		seq: (t) => t.$route.query.seq,
+		comp: (t) => t.seq ? "vBatch" : "vSave",
+		active() {
+			if (this.comp === "vBatch") return true;
+			if (this.comp === "vSave") return this.edited;
+		}
 	},
 	methods: {
 		save() {

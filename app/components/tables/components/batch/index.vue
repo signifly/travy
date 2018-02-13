@@ -76,7 +76,7 @@ export default {
 		},
 
 		seq() {
-			this.$router.push({path: this.first, query: {seq: this.ids}});
+			this.$router.push({path: this.first, query: {seq: {items: this.ids}}});
 		}
 	}
 };

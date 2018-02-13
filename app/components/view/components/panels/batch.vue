@@ -3,13 +3,11 @@
 		<div class="text">{{title}}</div>
 		<div class="progress">
 			<div class="line"><Progress :percentage="progress" :show-text="false" /></div>
-			<div class="text">{{index + 1}} / {{seq.length}}</div>
+			<div class="text">{{index + 1}} / {{items.length}}</div>
 		</div>
 		<div class="actions">
-			<Button size="medium" type="success" v-bind="{loading}" @click="save">
-				<template v-if="next">Save and next</template>
-				<template v-else>Save and exit</template>
-			</Button>
+			<Button v-if="next" size="medium" type="success" v-bind="{loading}" @click="save">Save and next</Button>
+			<Button v-else size="medium" type="success" icon="el-icon-check" v-bind="{loading}" @click="save">Save and exit</Button>
 		</div>
 	</vPanel>
 </template>
@@ -21,22 +19,31 @@ import vPanel from "@/components/panel.vue";
 export default {
 	components: {Button, Progress, vPanel},
 	props: {
-		id: {type: Number, required: true},
 		title: {type: String, required: true},
 		loading: {type: Boolean, required: true},
-		seq: {type: Array, required: true}
+		seq: {type: Object, required: true},
+		getData: {type: Function, required: true}
 	},
 	computed: {
-		index: (t) => t.seq.indexOf(t.id),
-		next: (t) => t.seq[t.index + 1],
-		progress: (t) => ((t.index + 1) / t.seq.length) * 100
+		id: (t) => t.$route.params.id.toString(),
+		index: (t) => t.items.indexOf(t.id),
+		items: (t) => t.seq.items.map(x => x.toString()),
+		next: (t) => t.items[t.index + 1],
+		progress: (t) => ((t.index + 1) / t.items.length) * 100
 	},
 	methods: {
 		save() {
 			this.$parent.$emit("save", {
-				done: () => {
+				done: async () => {
 					if (this.next) {
-						this.$router.push({path: this.next.toString(), query: {seq: this.seq}});
+						this.$router.push({
+							params: {...this.$route.params, id: this.next},
+							query: {seq: {items: this.items}}
+						});
+
+						await this.$nextTick(); // wait for id to change
+						await this.getData();
+
 					} else {
 						this.$router.push("/" + this.$route.meta.parent.id);
 					}

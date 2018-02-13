@@ -12,7 +12,7 @@ import mainView from "@/components/view/main.vue";
 export default {
 	components: {breadcrumb, mainView},
 	computed: {
-		id: (t) => Number(t.$route.params.id),
+		id: (t) => t.$route.params.id,
 		meta: (t) => t.$route.meta,
 		breadcrumb: (t) => [
 			{to: {name: t.meta.parent.id}, title: t.meta.parent.id},
