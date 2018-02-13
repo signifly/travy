@@ -135,7 +135,8 @@ export default {
 					return `${order}${sort.prop}`;
 				},
 				page: this.query.page,
-				filter: this.query.filters,
+				filter: omit(this.query.filters, ["q"]),
+				q: get(this.query.filters, "q"),
 				modifier: this.query.modifiers,
 				include: this.includes.join(",")
 			};
