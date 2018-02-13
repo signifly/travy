@@ -1,7 +1,7 @@
 <template>
 	<vPanel v-bind="{loading: loadingAll}">
 		<div class="left">
-			<Tooltip content="Close and save">
+			<Tooltip content="Save and close">
 				<a class="close" @click="closeSave"><i class="el-icon-circle-close-outline"></i></a>
 			</Tooltip>
 			<div class="text">{{title}}</div>
@@ -14,16 +14,16 @@
 
 		<div class="actions">
 			<Button v-if="prev" size="medium" type="success" icon="el-icon-arrow-left" @click="prevSave">
-				Back and save
+				Back
 			</Button>
 
 			<Button v-if="next" size="medium" type="success" @click="nextSave">
-				Next and save
+				Next
 				<i class="el-icon-arrow-right el-icon-right"></i>
 			</Button>
 
 			<Button v-if="!next" size="medium" type="success" @click="closeSave">
-				Exit and save
+				Save and close
 				<i class="el-icon-check el-icon-right"></i>
 			</Button>
 
@@ -114,7 +114,7 @@ export default {
 	.close {
 		color: $danger;
 		padding: 0.5em;
-		margin-top: 0.2em;
+		margin-top: 0.1em;
 		margin-left: -0.5em;
 		font-size: 1.1em;
 
