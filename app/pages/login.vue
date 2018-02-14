@@ -3,7 +3,7 @@
 		<div class="box">
 			<div class="title">Login</div>
 			<Form class="form" title="iskf" :model="form" label-position="top" @keydown.native.enter="login">
-				<field v-for="field in fields" v-bind="field" :errors="error.errors" :key="field.name" @fieldA="fieldA" />
+				<field v-for="field in fields" v-bind="field" :data="form" :errors="error.errors" :key="field.name" @fieldA="fieldA" />
 
 				<div class="actions">
 					<Button type="primary" size="medium" v-bind="{loading}" @click="login">Login</Button>
