@@ -23,8 +23,11 @@ export default {
 
 	actions: {
 		async logout({commit}) {
-			await axios.post("logout");
-			commit("logout");
+			try {
+				await axios.post("logout");
+			} catch (err) {} finally {
+				commit("logout");
+			}
 		}
 	},
 
