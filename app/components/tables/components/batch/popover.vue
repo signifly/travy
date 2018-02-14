@@ -2,9 +2,7 @@
 	<div class="pop">
 		<Popover v-model="active" placement="top-end" ref="pop">
 			<div class="content">
-				<div class="text">
-					{{desc}}
-				</div>
+				<div class="text">{{desc}}</div>
 				<div class="buttons">
 					<Button size="mini" :disabled="loading" @click="close">Cancel</Button>
 					<Button size="mini" type="primary" :loading="loading" @click="save">Confirm</Button>
@@ -54,9 +52,9 @@ export default {
 
 			this.$emit("save", {
 				data: this.data,
-				done: () => {
-					this.loading = false;
+				done: async () => {
 					this.close();
+					setTimeout(() => this.loading = false, 200);
 				}
 			});
 		}
@@ -79,7 +77,7 @@ export default {
 		word-break: break-word;
 		text-align: left;
 		margin-bottom: 1em;
-		font-size: em(15);
+		font-size: 0.85em;
 	}
 	.buttons {
 		display: flex;

@@ -61,7 +61,7 @@ export default {
 
 			this.$emit("save", {
 				data: this.payload,
-				done: ({error} = {}) => {
+				done: async ({error} = {}) => {
 					this.loading = false;
 					if (!error) this.close();
 				}

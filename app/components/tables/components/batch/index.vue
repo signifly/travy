@@ -68,10 +68,10 @@ export default {
 		async save({data, done}, {custom}) {
 			try {
 				const res = await this.$http.put(this.endpoints.bulkUpdate.url, {data, ids: this.ids}, {custom});
-				done();
+				await done();
 			} catch({response}) {
 				if (custom) this.error = response.data;
-				done({error: true});
+				await done({error: true});
 			}
 		},
 
