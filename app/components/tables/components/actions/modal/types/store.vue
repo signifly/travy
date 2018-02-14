@@ -32,7 +32,7 @@ export default {
 			try {
 				this.loading = true;
 				const {data} = await this.$http.post(this.endpoints.store.url, this.payload, {custom: true});
-				this.$router.push(`products/${data.id}`);
+				this.$router.push(`products/${data.data.id}`);
 			} catch ({response}) {
 				this.$emit("update:error", response.data);
 			} finally {
