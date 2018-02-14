@@ -34,7 +34,7 @@ export default {
 
 <style lang="scss" scoped>
 .breadcrumb {
-	margin-bottom: 2em;
+	margin-bottom: 1em;
 
 	.el-breadcrumb {
 		font-size: 16px;

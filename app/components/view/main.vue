@@ -1,12 +1,9 @@
 <template>
 	<div class="view-main" v-if="data">
-		<div class="header">
-			header
-		</div>
-
 		<div class="main">
 			<Row>
 				<Col :span="16">
+					<vHeader v-bind="{data, header}" />
 					<vTabs v-bind="{tabs, data, edits, errors, dataU}" @fieldA="fieldA"/>
 				</Col>
 				<Col :span="8">
@@ -22,12 +19,12 @@
 <script>
 import {mapValues, forEach, set, get} from "lodash";
 import {Row, Col} from "element-ui";
-import {vTabs, vPanel} from "./components";
+import {vHeader, vTabs, vPanel} from "./components";
 
 const edits = () => ({tabs: new Set(), data: new Set()});
 
 export default {
-	components: {Row, Col, vTabs, vPanel},
+	components: {Row, Col, vHeader, vTabs, vPanel},
 	props: {
 		id: {type: String, required: true},
 		meta: {type: Object, required: true}
@@ -44,9 +41,10 @@ export default {
 		}
 	},
 	computed: {
+		header: (t) => t.definitions.header,
+		tabs: (t) => t.definitions.tabs,
 		endpoint: (t) => `${t.$route.meta.parent.id}/${t.id}`,
 		errors: (t) => t.error.errors,
-		tabs: (t) => t.definitions.tabs,
 		edited: (t) => t.editsU > 0,
 		dataUpdated() {
 			const editsU = this.editsU; // force update, because sets are not reactive

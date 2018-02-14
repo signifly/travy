@@ -1,7 +1,7 @@
 <template>
 	<div class="field">
 		<div class="info" slot="info">
-			<div class="label">{{label}}</div>
+			<div class="label" v-if="label">{{label}}</div>
 			<div class="tooltip" v-if="tooltip">
 				<Tooltip :content="tooltip" placement="top">
 					<i class="el-icon-info"></i>
@@ -33,7 +33,7 @@ export default {
 		name: {type: String, required: true},
 		fieldType: {type: Object, required: true},
 		tooltip: {type: String, required: false},
-		label: {type: String, required: true},
+		label: {type: String, required: false},
 		errors: {type: Object, required: false},
 		data: {type: Object, default: () => ({})}
 	},

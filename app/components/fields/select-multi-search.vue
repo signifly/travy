@@ -1,7 +1,7 @@
 <template>
 	<div class="select-multi-search">
 		<Select v-model="data.value" @change="update" v-bind="{size, loading}" :remote-method="getList" filterable multiple remote reserve-keyword>
-			<Option v-for="item in list" v-bind="item" :key="item.value" />
+			<Option v-for="item in listMap" v-bind="item" :key="item.value" />
 		</Select>
 	</div>
 </template>
@@ -14,7 +14,7 @@ export default {
 	props: {
 		meta: {type: Object, require: false, default: () => ({})},
 		props: {type: Object, required: true},
-		options: {type: String, required: true},
+		options: {type: Object, required: true},
 		value: {type: Array, required: false}
 	},
 	data() {
@@ -27,6 +27,15 @@ export default {
 		}
 	},
 	computed: {
+		endpoint: (t) => t.options.endpoint,
+		oLabel: (t) => t.options.label,
+		oValue: (t) => t.options.value,
+
+		listMap: (t) => t.list.map(x => ({
+			label: x[t.oLabel],
+			value: x[t.oValue]
+		})),
+
 		size() {
 			if (this.meta.location === "table") return "small";
 			if (this.meta.location === "tabs") return "medium";
@@ -43,7 +52,7 @@ export default {
 
 		async getList(q) {
 			this.loading = true;
-			const {data} = await this.$http.get(this.options, {params: {q}});
+			const {data} = await this.$http.get(this.endpoint, {params: {q}});
 			this.list = data;
 			this.loading = false;
 		}

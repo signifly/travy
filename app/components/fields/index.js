@@ -17,3 +17,4 @@ export {default as vLine} from "./line.vue";
 export {default as vTable} from "./table.vue";
 export {default as vDateRange} from "./dateRange.vue";
 export {default as vDateTime} from "./dateTime.vue";
+export {default as vViewHead} from "./view-head.vue";
