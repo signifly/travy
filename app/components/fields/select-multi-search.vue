@@ -1,13 +1,13 @@
 <template>
 	<div class="select-multi-search">
-		<Select v-model="data.value" @change="update" v-bind="{size, loading}" :remote-method="getList" filterable multiple remote reserve-keyword>
+		<Select v-model="data.value" @change="update" v-bind="{size, loading}" :remote-method="getListQ" filterable multiple remote reserve-keyword>
 			<Option v-for="item in listMap" v-bind="item" :key="item.value" />
 		</Select>
 	</div>
 </template>
 
 <script>
-import {get} from "lodash";
+import {get, debounce} from "lodash";
 import {Select, Option} from "element-ui";
 
 export default {
@@ -53,15 +53,16 @@ export default {
 			});
 		},
 
-		async getList(q) {
-			this.loading = true;
-			const {data} = await this.$http.get(this.endpoint, {params: {q}});
+		getList: debounce(async function(q) {
+			const {data} = await this.$http.get(this.endpoint, {params: {q, count: 30}});
 			this.res = data;
 			this.loading = false;
+		}, 500),
+
+		getListQ(q) {
+			this.getList(q);
+			this.loading = true;
 		}
-	},
-	created() {
-		// this.getList();
 	}
 };
 </script>

@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import {debounce} from "lodash";
 import editor from "vue-simplemde/src/markdown-editor.vue";
 
 export default {

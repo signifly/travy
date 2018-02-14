@@ -7,7 +7,7 @@ import {date} from "@/modules/utils";
 
 export default {
 	props: {
-		epoch: {type: String, required: false}
+		epoch: {type: Number, required: false}
 	},
 	computed: {
 		date: (t) => date(t.epoch),
