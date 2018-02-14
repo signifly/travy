@@ -6,7 +6,7 @@
 		</transition>
 
 		<transition name="el-fade-in">
-			<div class="edit" v-if="edits.tabs.has(id)">
+			<div class="edit" v-if="edited">
 				<i class="el-icon-edit"></i>
 			</div>
 		</transition>
@@ -23,6 +23,7 @@ export default {
 		refs: {type: Object, required: true}
 	},
 	computed: {
+		edited: (t) => t.edits.tabs.has(t.id),
 		nodata() {
 			const ref = this.refs[this.id];
 			return ref.$refs.section.some(x => x.nodata);

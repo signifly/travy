@@ -1,0 +1,25 @@
+body {
+	.el-popover, .el-dialog__body {
+		font-size: 1em;
+	}
+
+	.el-dialog {
+		padding: 0.5em;
+	}
+
+	.el-select .el-tag {
+		background-color: $--color-primary-light-9;
+		border-color: $--color-primary-light-7;
+		color: $primary;
+	}
+
+	.el-select .el-tag__close.el-icon-close {
+		background-color: transparent;
+		color: $primary;
+	}
+
+	.el-select .el-tag__close.el-icon-close:hover {
+		background-color: transparent;
+		color: $black1;
+	}
+}

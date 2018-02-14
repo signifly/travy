@@ -1,6 +1,7 @@
 @import "~normalize.css/normalize";
 @import "var";
 @import "transitions";
+@import "element-ui";
 
 body {
 	font-family: "Helvetica Neue", Helvetica;
@@ -20,15 +21,5 @@ a {
 svg {
 	path {
 		fill: $black1;
-	}
-}
-
-body {
-	.el-popover, .el-dialog__body {
-		font-size: 1em;
-	}
-
-	.el-dialog {
-		padding: 0.5em;
 	}
 }

@@ -66,8 +66,10 @@ export default {
 		},
 
 		track({tab, data}) { // track tab and data edits
-			this.edits.tabs.add(tab);
-			Object.keys(data).forEach(key => this.edits.data.add(key));
+			const edits = {...this.edits};
+			edits.tabs.add(tab);
+			Object.keys(data).forEach(key => edits.data.add(key));
+			this.edits = edits;
 			this.editsU++;
 		},
 
