@@ -53,7 +53,7 @@ export default {
 
 			.text {
 				font-size: em(20);
-				margin-right: 1em;
+				margin-right: 0.75em;
 			}
 		}
 	}

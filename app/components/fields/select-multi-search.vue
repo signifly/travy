@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import {get} from "lodash";
 import {Select, Option} from "element-ui";
 
 export default {
@@ -20,7 +21,7 @@ export default {
 	data() {
 		return {
 			loading: false,
-			list: [],
+			res: null,
 			data: {
 				value: this.value
 			}
@@ -28,8 +29,10 @@ export default {
 	},
 	computed: {
 		endpoint: (t) => t.options.endpoint,
+		oKey: (t) => t.options.key,
 		oLabel: (t) => t.options.label,
 		oValue: (t) => t.options.value,
+		list: (t) => t.oKey ? get(t.res, t.oKey, []) : t.res || [],
 
 		listMap: (t) => t.list.map(x => ({
 			label: x[t.oLabel],
@@ -53,7 +56,7 @@ export default {
 		async getList(q) {
 			this.loading = true;
 			const {data} = await this.$http.get(this.endpoint, {params: {q}});
-			this.list = data;
+			this.res = data;
 			this.loading = false;
 		}
 	},
