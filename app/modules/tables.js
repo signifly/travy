@@ -1,4 +1,10 @@
 export default {
+	test: {
+		title: "Test",
+		auth: {
+			roles: ["admin"]
+		}
+	},
 	products: {
 		title: "Products",
 		auth: {

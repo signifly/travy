@@ -115,7 +115,7 @@ export default {
 		},
 
 		async getDefinitions() {
-			if (this.id !== "products") {
+			if (this.id !== "test") {
 				const {data} = await this.$http.get(`definitions/table/${this.id}`, {params: this.query.modifiers});
 				this.definitions = data;
 			} else {
@@ -141,7 +141,7 @@ export default {
 				include: this.includes.join(",")
 			};
 
-			if (this.id !== "products") {
+			if (this.id !== "test") {
 				const {data} = await this.$http.get(this.endpoints.index.url, {params});
 				this.data = data.data;
 				this.pagination = data.meta;
