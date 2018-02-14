@@ -10,7 +10,7 @@
 			start-placeholder="Start Date"
 			end-placeholder="End Date"
 			format="yyyy-MM-dd"
-			value-format="yyyy-MM-dd"
+			value-format="timestamp"
 			@change="update"
 		/>
 	</div>
@@ -31,12 +31,14 @@ export default {
 				firstDayOfWeek: 1
 			},
 			data: {
-				dates: this.dates
+				dates: this.dates.map(x => x * 1000)
 			}
 		}
 	},
 	methods: {
 		update(dates) {
+			dates = dates.map(x => x / 1000);
+
 			this.$emit("fieldA", {
 				action: "update",
 				data: {[this.props.dates]: dates}
