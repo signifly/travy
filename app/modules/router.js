@@ -7,6 +7,8 @@ Vue.use(VueRouter);
 
 import store from "@/store";
 
+const doc = () => import(/* webpackChunkName: "doc" */ "@/pages/doc.vue");
+
 import tables from "./tables";
 import index from "@/pages/index.vue";
 import login from "@/pages/login.vue";
@@ -34,6 +36,7 @@ const routesViews = map(tables, (item, id) => ({
 const routes = [
 	{path: "/", name: "index", component: index},
 	{path: "/login", name: "login", component: login, props: true, meta: {layout: "vBase"}},
+	{path: "/doc", name: "doc", component: doc, meta: {layout: "vBase"}},
 	{path: "/*", name: "404", component: _404}
 ];
 
