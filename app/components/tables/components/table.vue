@@ -31,7 +31,7 @@ export default {
 	},
 	computed: {
 		query: (t) => t.$route.query,
-		sorting: (t) => t.query.sort || t.defaults.sort,
+		sorting: (t) => t.query.sort || t.defaults.sort || {},
 
 		tableColumns() {
 			return this.columns.map(x => ({...x,
