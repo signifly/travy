@@ -13,7 +13,7 @@
 				<MenuItem index="/products">Products</MenuItem>
 				<MenuItem index="/collections">Collections</MenuItem>
 				<MenuItem index="/stock-items">Stock items</MenuItem>
-				<MenuItem index="/4">Stock item models</MenuItem>
+				<MenuItem index="/stock-item-models">Stock item models</MenuItem>
 				<MenuItem index="/5">Prices</MenuItem>
 				<MenuItem index="/6">Price lists</MenuItem>
 				<MenuItem index="/7">Files</MenuItem>

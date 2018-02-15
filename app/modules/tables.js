@@ -64,5 +64,11 @@ export default {
 		auth: {
 			roles: ["admin"]
 		}
+	},
+	"stock-item-models": {
+		title: "Stock item models",
+		auth: {
+			roles: ["admin"]
+		}
 	}
 };
