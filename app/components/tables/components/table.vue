@@ -65,9 +65,13 @@ export default {
 				overflow: visible;
 			}
 
-			td, th {
+			th {
 				padding: 0;
 				height: 3.25em;
+			}
+
+			td {
+				padding: em(13) 0;
 			}
 
 			.header {
