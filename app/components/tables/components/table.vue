@@ -32,6 +32,7 @@ export default {
 	computed: {
 		query: (t) => t.$route.query,
 		sorting: (t) => t.query.sort || t.defaults.sort,
+
 		tableColumns() {
 			return this.columns.map(x => ({...x,
 				sortable: x.sortable ? "custom" : false,
@@ -45,12 +46,25 @@ export default {
 			if (this.data) this.$router.replace({query: {sort, filter: this.query.filter}}); // don't set query params for default sorting
 			this.$emit("getData");
 		},
+
 		select(items) {
 			this.$emit("select", items);
 		},
+
 		unselect() {
 			this.$refs.table.clearSelection();
+		},
+
+		sortCheck() {
+			const sortProp = this.sorting.prop;
+			const sortProps = this.columns.map(x => x.sortBy).filter(x => x);
+			if (!sortProps.includes(sortProp)) {
+				console.error("default sort prop doesn't exist in any of the columns as sortBy. Can't get data");
+			}
 		}
+	},
+	created() {
+		this.sortCheck();
 	}
 };
 </script>
