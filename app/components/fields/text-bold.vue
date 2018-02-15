@@ -6,6 +6,9 @@
 export default {
 	props: {
 		text: {type: [String, Number], required: false}
+	},
+	propsD: {
+		text: "text",
 	}
 };
 </script>

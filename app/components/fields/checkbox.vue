@@ -9,6 +9,10 @@ import {Checkbox} from "element-ui";
 
 export default {
 	components: {Checkbox},
+	propsD: {
+		value: false,
+		xValue: "key"
+	},
 	props: {
 		value: {type: Boolean, required: false},
 		xValue: {type: String, required: true}

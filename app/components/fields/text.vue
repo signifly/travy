@@ -7,11 +7,17 @@ export default {
 	props: {
 		text: {type: [String, Number], required: false},
 		status: {
+			type: String,
 			required: false,
+			note: `danger, warning, info, primary, success`,
 			validator: function (value) {
 				return ["danger", "warning", "info", "primary", "success"].includes(value);
 			}
 		}
+	},
+	propsD: {
+		text: "text",
+		status: "primary"
 	}
 };
 </script>

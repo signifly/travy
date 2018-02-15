@@ -1,6 +1,6 @@
 <template>
 	<div class="app">
-		<component :is="layout" />
+		<component :is="layout" v-if="$route.name" />
 	</div>
 </template>
 

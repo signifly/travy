@@ -9,6 +9,10 @@ import {Switch} from "element-ui";
 
 export default {
 	components: {elSwitch: Switch},
+	propsD: {
+		value: false,
+		xValue: "key"
+	},
 	props: {
 		value: {type: Boolean, required: false},
 		xValue: {type: String, required: true}
