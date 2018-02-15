@@ -31,9 +31,9 @@ import actions from "./actions/index.vue";
 export default {
 	components: {Tooltip, elSwitch: Switch, actions},
 	props: {
-		props: {type: Object, required: true},
 		info: {type: Array, required: true},
 		switchValue: {type: Boolean, required: true},
+		xSwitchValue: {type: String, required: true},
 		switchTitle: {type: String, required: true},
 		actions: {type: Array, required: true}
 	},
@@ -48,7 +48,7 @@ export default {
 		switchUpdate(val) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this.props.switchValue]: val}
+				data: {[this.xSwitchValue]: val}
 			});
 		}
 	}

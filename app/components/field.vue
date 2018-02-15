@@ -12,7 +12,7 @@
 		<component
 			v-if="comps[id]"
 			:is="id"
-			v-bind="propsData"
+			v-bind="[propsData, propsX]"
 			:props="props"
 			@fieldA="$emit('fieldA', $event)"
 		/>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {mapValues, get} from "lodash";
+import {mapValues, mapKeys, get} from "lodash";
 import {Tooltip} from "element-ui";
 import * as fields from "@/components/fields";
 
@@ -38,12 +38,14 @@ export default {
 		data: {type: Object, default: () => ({})}
 	},
 	computed: {
+		error: (t) => get(t.errors, `${t.name}[0]`),
 		comps: (t) => t.$options.components,
 		id: (t) => t.fieldType.id,
+
 		props: (t) => t.fieldType.props,
-		propsData: (t) => mapValues(t.props, (val, key) => get(t.data, val, val)),
-		error: (t) => get(t.errors, `${t.name}[0]`)
-	}
+		propsData: (t) => mapValues(t.props, (val) => get(t.data, val)),
+		propsX: (t) => mapKeys(t.props, (val, key) => "x" + key.charAt(0).toUpperCase() + key.slice(1))
+	},
 };
 </script>
 

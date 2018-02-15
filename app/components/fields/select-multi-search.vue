@@ -14,9 +14,9 @@ export default {
 	components: {Select, Option},
 	props: {
 		meta: {type: Object, require: false, default: () => ({})},
-		props: {type: Object, required: true},
-		options: {type: Object, required: true},
-		value: {type: Array, required: false}
+		value: {type: Array, required: false},
+		xValue: {type: String, required: true},
+		xOptions: {type: Object, required: true}
 	},
 	data() {
 		return {
@@ -28,10 +28,10 @@ export default {
 		}
 	},
 	computed: {
-		endpoint: (t) => t.options.endpoint,
-		oKey: (t) => t.options.key,
-		oLabel: (t) => t.options.label,
-		oValue: (t) => t.options.value,
+		endpoint: (t) => t.xOptions.endpoint,
+		oKey: (t) => t.xOptions.key,
+		oLabel: (t) => t.xOptions.label,
+		oValue: (t) => t.xOptions.value,
 		list: (t) => t.oKey ? get(t.res, t.oKey, []) : t.res || [],
 
 		listMap: (t) => t.list.map(x => ({
@@ -49,7 +49,7 @@ export default {
 		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this.props.value]: val}
+				data: {[this.xValue]: val}
 			});
 		},
 

@@ -10,8 +10,8 @@ import {Checkbox} from "element-ui";
 export default {
 	components: {Checkbox},
 	props: {
-		props: {type: Object, required: true},
-		value: {type: Boolean, required: false}
+		value: {type: Boolean, required: false},
+		xValue: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -24,7 +24,7 @@ export default {
 		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this.props.value]: val}
+				data: {[this.xValue]: val}
 			});
 		}
 	}

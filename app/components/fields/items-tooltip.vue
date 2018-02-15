@@ -31,7 +31,6 @@ export default {
 	computed: {
 		tooltip: (t) => t.items.map(x => x[t.itemKey]).join("<br>"),
 		itemKey: (t) => t.props.itemKey
-
 	}
 };
 </script>

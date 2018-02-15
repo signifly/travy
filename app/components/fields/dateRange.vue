@@ -22,8 +22,8 @@ import {DatePicker} from "element-ui";
 export default {
 	components: {DatePicker},
 	props: {
-		props: {type: Object, required: true},
-		dates: {type: Array, required: false}
+		dates: {type: Array, required: false},
+		xDates: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -41,7 +41,7 @@ export default {
 
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this.props.dates]: dates}
+				data: {[this.xDates]: dates}
 			});
 		}
 	}

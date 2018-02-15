@@ -13,9 +13,9 @@ export default {
 	components: {Select, Option},
 	props: {
 		meta: {type: Object, require: false, default: () => ({})},
-		props: {type: Object, required: true},
 		options: {type: Array, required: true},
-		value: {type: String, required: false}
+		value: {type: String, required: false},
+		xValue: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -32,7 +32,7 @@ export default {
 		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this.props.value]: val}
+				data: {[this.xValue]: val}
 			});
 		}
 	}

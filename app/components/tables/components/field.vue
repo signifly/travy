@@ -5,14 +5,14 @@
 			v-if="components[id]"
 			:is="id"
 			:props="props"
-			v-bind="propsData"
+			v-bind="[propsData, propsX]"
 			@fieldA="fieldA"
 		/>
 	</component>
 </template>
 
 <script>
-import {mapValues, omit, get} from "lodash";
+import {mapValues, mapKeys, omit, get} from "lodash";
 import * as fields from "@/components/fields";
 
 export default {
@@ -26,8 +26,10 @@ export default {
 		id: (t) => t.column.fieldType.id,
 		item: (t) => t.scope.row,
 		action: (t) => t.column.fieldType.action,
+
 		props: (t) => t.column.fieldType.props,
-		propsData: (t) => mapValues(t.props, (val, key) => get(t.item, val, val)),
+		propsData: (t) => mapValues(t.props, (val) => get(t.item, val)),
+		propsX: (t) => mapKeys(t.props, (val, key) => "x" + key.charAt(0).toUpperCase() + key.slice(1)),
 
 		link() {
 			if (!this.action) return;

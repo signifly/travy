@@ -10,8 +10,8 @@ import editor from "vue-simplemde/src/markdown-editor.vue";
 export default {
 	components: {editor},
 	props: {
-		props: {type: Object, required: true},
-		content: {type: String, required: false}
+		content: {type: String, required: false},
+		xContent: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -27,7 +27,7 @@ export default {
 		update(content) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this.props.content]: content}
+				data: {[this.xContent]: content}
 			});
 		}
 	}

@@ -11,8 +11,8 @@ import {Input} from "element-ui";
 export default {
 	components: {Input},
 	props: {
-		props: {type: Object, required: true},
 		value: {type: String, required: false},
+		xValue: {type: String, required: true},
 		unit: {type: String, required: false},
 		disabled: {type: Boolean, required: false}
 	},
@@ -27,7 +27,7 @@ export default {
 		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this.props.value]: val}
+				data: {[this.xValue]: val}
 			});
 		}
 	}

@@ -22,7 +22,7 @@
 			:props="props"
 			:disabled="disabled"
 			:meta="{location: 'tabs'}"
-			v-bind="propsData"
+			v-bind="[propsData, propsX]"
 			@fieldA="$emit('fieldA', $event)"
 		/>
 
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import {mapValues, map, get} from "lodash";
+import {mapValues, mapKeys, map, get} from "lodash";
 import {Tooltip, Tag} from "element-ui";
 import * as fields from "@/components/fields";
 
@@ -66,10 +66,12 @@ export default {
 		unit: (t) => t.field.fieldType.unit,
 		disabled: (t) => t.field.fieldType.readonly,
 		reference: (t) => t.field.fieldType.reference,
-		props: (t) => t.field.fieldType.props,
-		propsData: (t) => mapValues(t.props, (key) => get(t.data, key)),
 		opts: (t) => t.mounted ? get(t.$refs, "field.opts", {}) : {},
 		error: (t) => get(t.errors, `${t.name}[0]`),
+
+		props: (t) => t.field.fieldType.props,
+		propsData: (t) => mapValues(t.props, (key) => get(t.data, key)),
+		propsX: (t) => mapKeys(t.props, (val, key) => "x" + key.charAt(0).toUpperCase() + key.slice(1)),
 
 		info() {
 			if (this.draggable) return false;
