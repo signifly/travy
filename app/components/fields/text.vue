@@ -5,7 +5,7 @@
 <script>
 export default {
 	props: {
-		text: {type: String, required: false},
+		text: {type: [String, Number], required: false},
 		status: {
 			required: false,
 			validator: function (value) {
