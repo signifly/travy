@@ -2,7 +2,7 @@
 	<div class="table-main" v-if="definitions">
 
 		<div class="header">
-			<vFilters v-bind="{filters, search, getData}" />
+			<vFilters v-bind="[filters, {search, getData}]" />
 			<vActions v-bind="{actions, endpoints}" />
 		</div>
 
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {mapValues, mapKeys, omit, pickBy, get} from "lodash";
+import {omit, get} from "lodash";
 import * as components from "./components";
 import box from "../box.vue";
 

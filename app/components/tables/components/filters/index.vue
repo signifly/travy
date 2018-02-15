@@ -3,7 +3,7 @@
 
 		<Popover popper-class="pop" v-model="active" ref="pop" placement="bottom-end" width="300" transition="trans-fadeDown">
 			<div class="fields">
-				<field v-for="field in fields" :key="field.name" v-bind="field" :data="data" @fieldA="updateQ" />
+				<field v-for="field in fields" :key="field.name" v-bind="field" :data="dataComb" @fieldA="updateQ" />
 			</div>
 		</Popover>
 
@@ -30,7 +30,8 @@ import field from "@/components/field.vue";
 export default {
 	components: {Input, Button, Popover, field},
 	props: {
-		filters: {type: Object, required: true},
+		data: {type: Object, required: false, default: () => ({})},
+		fields: {type: Array, required: false},
 		search: {type: Object, required: true},
 		getData: {type: Function, required: true}
 	},
@@ -43,9 +44,8 @@ export default {
 	},
 	computed: {
 		searchIcon: (t) => t.loading ? "el-icon-loading": "el-icon-search",
-		data: (t) => ({...t.filters.data, ...t.$route.query.filters}),
+		dataComb: (t) => ({...t.data, ...t.query.filters}),
 		components: (t) => t.$options.components,
-		fields: (t) => t.filters.fields,
 		query: (t) => t.$route.query
 	},
 	methods: {
