@@ -24,7 +24,6 @@ import field from "@/components/field.vue";
 export default {
 	components: {Dialog, Button, field},
 	props: {
-		endpoints: {type: Object, required: true},
 		active: {type: Boolean, required: true},
 		error: {type: Object, required: true},
 		fields: {type: Array, required: true},

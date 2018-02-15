@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import {sortBy} from "lodash";
+import {get, sortBy} from "lodash";
 import {Button, Checkbox, Dropdown, DropdownMenu, DropdownItem} from "element-ui";
 import vPanel from "@/components/panel.vue";
 import vModal from "./modal.vue";
@@ -50,6 +50,7 @@ export default {
 		}
 	},
 	computed: {
+		endpoint: (t) => get(t.action, "endpoint", t.endpoints.bulkUpdate),
 		first: (t) => t.endpoints.show.url.replace("{id}", t.ids[0]),
 		ids: (t) => sortBy(t.selected.map(x => x.id)),
 		actions: (t) => t.batch.actions,
@@ -66,8 +67,10 @@ export default {
 		},
 
 		async save({data, done}, {custom}) {
+			const ept = this.endpoint;
+
 			try {
-				const res = await this.$http.put(this.endpoints.bulkUpdate.url, {data, ids: this.ids}, {custom});
+				await this.$http[ept.method](ept.url, {data, ids: this.ids}, {custom});
 				await done();
 			} catch({response}) {
 				if (custom) this.error = response.data;
