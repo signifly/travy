@@ -17,20 +17,10 @@ export default {
 	components: {Tooltip},
 	props: {
 		items: {type: Array, required: true},
-
-		props: {type: Object, required: true, validator(props) {
-			const valid = typeof props.itemKey === "string";
-			if (!valid) {
-				console.warn("props.itemKey is not a string");
-				return false;
-			} else {
-				return true;
-			}
-		}}
+		xItemKey: {type: String, required: true}
 	},
 	computed: {
-		tooltip: (t) => t.items.map(x => x[t.itemKey]).join("<br>"),
-		itemKey: (t) => t.props.itemKey
+		tooltip: (t) => t.items.map(x => x[t.xItemKey]).join("<br>")
 	}
 };
 </script>
