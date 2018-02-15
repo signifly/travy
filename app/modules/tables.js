@@ -23,6 +23,12 @@ export default {
 			roles: ["admin"]
 		}
 	},
+	prices: {
+		title: "Prices",
+		auth: {
+			roles: ["admin"]
+		}
+	},
 	collections: {
 		title: "Collections",
 		auth: {
