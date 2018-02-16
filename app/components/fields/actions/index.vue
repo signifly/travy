@@ -22,12 +22,33 @@ import vShow from "./show.vue";
 
 export default {
 	components: {Dropdown, DropdownMenu, DropdownItem, vDelete, vShow},
+	meta: {
+		res: {
+			props: {
+				items: [
+					{
+						title: "Delete",
+						type: "delete",
+						description: "delete this?"
+					},
+					{
+						title: "View",
+						type: "show"
+					}
+				]
+			},
+			data: {
+
+			}
+		}
+	},
 	props: {
-		items: {type: Array, required: false}
+		items: {type: Array, required: false},
+		_items: {type: Array, required: true}
 	},
 	data() {
 		return {
-			actions: this.items,
+			actions: this._items,
 			item: null
 		}
 	},
@@ -48,7 +69,7 @@ export default {
 <style lang="scss" scoped>
 .actions {
 	display: inline-block;
-	
+
 	.el-dropdown-link {
 		user-select: none;
 		font-size: em(14);

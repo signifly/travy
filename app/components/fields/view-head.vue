@@ -18,6 +18,20 @@ import {Tag} from "element-ui";
 
 export default {
 	components: {Tag},
+	meta: {
+		res: {
+			props: {
+				title: "title",
+				image: "image",
+				tag: "tag"
+			},
+			data: {
+				title: "a title",
+				image: noimage,
+				tag: "1432"
+			}
+		}
+	},
 	props: {
 		title: {type: String, required: true},
 		image: {type: String, required: false, default: noimage},

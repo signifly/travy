@@ -4,11 +4,18 @@
 
 <script>
 export default {
+	meta: {
+		res: {
+			props: {
+				text: "title"
+			},
+			data: {
+				title: "some text"
+			}
+		}
+	},
 	props: {
 		text: {type: [String, Number], required: false}
-	},
-	propsD: {
-		text: "text",
 	}
 };
 </script>

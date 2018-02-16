@@ -9,13 +9,19 @@ import {Switch} from "element-ui";
 
 export default {
 	components: {elSwitch: Switch},
-	propsD: {
-		value: false,
-		xValue: "key"
+	meta: {
+		res: {
+			props: {
+				value: "switchVal"
+			},
+			data: {
+				switchVal: false
+			}
+		}
 	},
 	props: {
 		value: {type: Boolean, required: false},
-		xValue: {type: String, required: true}
+		_value: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -28,7 +34,7 @@ export default {
 		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this.xValue]: val}
+				data: {[this._value]: val}
 			});
 		}
 	}

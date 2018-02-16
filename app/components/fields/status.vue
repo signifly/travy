@@ -1,6 +1,6 @@
 <template>
 	<div class="status">
-		<Tag :type="status" size="small">{{text}}</Tag>
+		<Tag :type="_status" size="small">{{text}}</Tag>
 	</div>
 </template>
 
@@ -9,9 +9,20 @@ import {Tag} from "element-ui";
 
 export default {
 	components: {Tag},
+	meta: {
+		res: {
+			props: {
+				text: "statusText",
+				status: "primary"
+			},
+			data: {
+				statusText: "14/144"
+			}
+		}
+	},
 	props: {
 		text: {type: String, required: true},
-		status: {
+		_status: {
 			type: String,
 			required: true,
 			note: `danger, warning, info, primary, success`,
@@ -19,10 +30,6 @@ export default {
 				return ["danger", "warning", "info", "primary", "success"].includes(value);
 			}
 		}
-	},
-	propsD: {
-		text: "status",
-		status: "primary"
 	}
 };
 </script>

@@ -20,7 +20,7 @@
 			<elSwitch v-model="data.switchValue" :inactive-text="`${switchTitle}:`" @change="switchUpdate" />
 		</div>
 
-		<actions :items="actions" @fieldA="$emit('fieldA', $event)"/>
+		<actions :_items="actions" @fieldA="$emit('fieldA', $event)"/>
 	</div>
 </template>
 
@@ -30,10 +30,47 @@ import actions from "./actions/index.vue";
 
 export default {
 	components: {Tooltip, elSwitch: Switch, actions},
+	meta: {
+		res: {
+			props: {
+				switchValue: "switchVal",
+				switchTitle: "switchT",
+				info: "infoArray",
+				actions: "actionsArray"
+			},
+			data: {
+				switchVal: false,
+				switchT: "title",
+				infoArray: [
+					{
+						title: "Model",
+						value: "breeze table",
+						tooltip: "just a tooltip"
+					},
+					{
+						title: "Variants",
+						value: "Breeze chair",
+						tooltip: "just a tooltip"
+					}
+				],
+				actionsArray: [
+					{
+						title: "Delete",
+						type: "delete",
+						description: "delete this?"
+					},
+					{
+						title: "View",
+						type: "show"
+					}
+				]
+			}
+		}
+	},
 	props: {
 		info: {type: Array, required: true},
 		switchValue: {type: Boolean, required: true},
-		xSwitchValue: {type: String, required: true},
+		_switchValue: {type: String, required: true},
 		switchTitle: {type: String, required: true},
 		actions: {type: Array, required: true}
 	},
@@ -48,7 +85,7 @@ export default {
 		switchUpdate(val) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this.xSwitchValue]: val}
+				data: {[this._switchValue]: val}
 			});
 		}
 	}

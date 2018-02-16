@@ -11,11 +11,36 @@ import {Select, Option} from "element-ui";
 
 export default {
 	components: {Select, Option},
+	meta: {
+		res: {
+			props: {
+				value: "selectValue",
+				options: "selectOptions"
+			},
+			data: {
+				selectValue: [],
+				selectOptions: [
+					{
+						label: "Danmark",
+						value: "dk",
+					},
+					{
+						label: "England",
+						value: "UK"
+					},
+					{
+						label: "Murica",
+						value: "US",
+					}
+				]
+			}
+		}
+	},
 	props: {
-		meta: {type: Object, require: false},
+		_meta: {type: Object, require: false, default: () => ({})},
 		options: {type: Array, required: true},
 		value: {type: Array, required: false},
-		xValue: {type: String, required: true}
+		_value: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -26,8 +51,8 @@ export default {
 	},
 	computed: {
 		size() {
-			if (this.meta.location === "table") return "small";
-			if (this.meta.location === "tabs") return "medium";
+			if (this._meta.location === "table") return "small";
+			if (this._meta.location === "tabs") return "medium";
 			return "medium";
 		}
 	},
@@ -35,7 +60,7 @@ export default {
 		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this.xValue]: val}
+				data: {[this._value]: val}
 			});
 		}
 	}

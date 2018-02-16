@@ -9,6 +9,16 @@
 
 <script>
 export default {
+	meta: {
+		res: {
+			props: {
+				image: "imageUrl"
+			},
+			data: {
+				imageUrl: "http://via.placeholder.com/100x100"
+			}
+		}
+	},
 	props: {
 		image: {type: String, required: false}
 	}

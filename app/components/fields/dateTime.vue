@@ -6,6 +6,16 @@
 import {date} from "@/modules/utils";
 
 export default {
+	meta: {
+		res: {
+			props: {
+				epoch: "dateTime"
+			},
+			data: {
+				dateTime: 1517529600
+			}
+		}
+	},
 	props: {
 		epoch: {type: Number, required: false}
 	},

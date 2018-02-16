@@ -9,13 +9,19 @@ import {Checkbox} from "element-ui";
 
 export default {
 	components: {Checkbox},
-	propsD: {
-		value: false,
-		xValue: "key"
+	meta: {
+		res: {
+			props: {
+				value: "checkbox"
+			},
+			data: {
+				checkbox: false
+			}
+		}
 	},
 	props: {
 		value: {type: Boolean, required: false},
-		xValue: {type: String, required: true}
+		_value: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -28,7 +34,7 @@ export default {
 		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this.xValue]: val}
+				data: {[this._value]: val}
 			});
 		}
 	}

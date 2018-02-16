@@ -15,12 +15,26 @@ import {Tooltip} from "element-ui";
 
 export default {
 	components: {Tooltip},
+	meta: {
+		res: {
+			props: {
+				itemKey: "key",
+				items: "itemList"
+			},
+			data: {
+				itemList: [
+					{key: "item1"},
+					{key: "item2"}
+				]
+			}
+		}
+	},
 	props: {
 		items: {type: Array, required: true},
-		xItemKey: {type: String, required: true}
+		_itemKey: {type: String, required: true}
 	},
 	computed: {
-		tooltip: (t) => t.items.map(x => x[t.xItemKey]).join("<br>")
+		tooltip: (t) => t.items.map(x => x[t._itemKey]).join("<br>")
 	}
 };
 </script>

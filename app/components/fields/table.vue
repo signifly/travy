@@ -18,6 +18,63 @@
 import {mapKeys} from "lodash";
 
 export default {
+	meta: {
+		res: {
+			props: {
+				dateTableData: "tableData",
+				dateTableColumns: [
+					{
+						name: "title",
+						label: "Title",
+						fieldType: {
+							id: "vText",
+							props: {
+								text: "title"
+							}
+						}
+					},
+					{
+						name: "access",
+						label: "Access",
+						fieldType: {
+							id: "vDateRange",
+							props: {
+								dates: "dates1"
+							}
+						}
+					},
+					{
+						name: "salad",
+						label: "Salad",
+						fieldType: {
+							id: "vDateRange",
+							props: {
+								dates: "dates2"
+							}
+						}
+					}
+				]
+			},
+			data: {
+				tableData: [
+					{
+						id: 0,
+						title: "sfef",
+						statustext: "spflwe",
+						status: "warning",
+						dates1: [
+							1325376000,
+							1356998400
+						],
+						dates2: [
+							1325376000,
+							1356998400
+						]
+					}
+				]
+			}
+		}
+	},
 	props: {
 		props: {type: Object, required: true},
 		columns: {type: Array, required: true},

@@ -1,6 +1,6 @@
 <template>
 	<div class="field">
-		<div class="info" slot="info">
+		<div class="info" slot="info" v-if="label || tooltip">
 			<div class="label" v-if="label">{{label}}</div>
 			<div class="tooltip" v-if="tooltip">
 				<Tooltip :content="tooltip" placement="top">
@@ -12,7 +12,7 @@
 		<component
 			v-if="comps[id]"
 			:is="id"
-			v-bind="[propsData, propsX]"
+			v-bind="[propsData, propsValue]"
 			:props="props"
 			@fieldA="$emit('fieldA', $event)"
 		/>
@@ -44,7 +44,7 @@ export default {
 
 		props: (t) => t.fieldType.props,
 		propsData: (t) => mapValues(t.props, (val) => get(t.data, val)),
-		propsX: (t) => mapKeys(t.props, (val, key) => "x" + key.charAt(0).toUpperCase() + key.slice(1))
+		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`)
 	},
 };
 </script>

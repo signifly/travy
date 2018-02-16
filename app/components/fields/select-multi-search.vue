@@ -12,11 +12,28 @@ import {Select, Option} from "element-ui";
 
 export default {
 	components: {Select, Option},
+	meta: {
+		res: {
+			props: {
+				value: "selectValue",
+				options: {
+					endpoint: "https://sikaline.glitch.me/table-actions/options",
+					key: "",
+					label: "name",
+					value: "id"
+				}
+			},
+			data: {
+				selectValue: []
+			}
+		}
+	},
 	props: {
-		meta: {type: Object, require: false, default: () => ({})},
+		_meta: {type: Object, require: false, default: () => ({})},
 		value: {type: Array, required: false},
-		xValue: {type: String, required: true},
-		xOptions: {type: Object, required: true}
+		_value: {type: String, required: true},
+		_options: {type: Object, required: true},
+		options: {type: Object, required: false}
 	},
 	data() {
 		return {
@@ -28,10 +45,10 @@ export default {
 		}
 	},
 	computed: {
-		endpoint: (t) => t.xOptions.endpoint,
-		oKey: (t) => t.xOptions.key,
-		oLabel: (t) => t.xOptions.label,
-		oValue: (t) => t.xOptions.value,
+		endpoint: (t) => t._options.endpoint,
+		oKey: (t) => t._options.key,
+		oLabel: (t) => t._options.label,
+		oValue: (t) => t._options.value,
 		list: (t) => t.oKey ? get(t.res, t.oKey, []) : t.res || [],
 
 		listMap: (t) => t.list.map(x => ({
@@ -40,8 +57,8 @@ export default {
 		})),
 
 		size() {
-			if (this.meta.location === "table") return "small";
-			if (this.meta.location === "tabs") return "medium";
+			if (this._meta.location === "table") return "small";
+			if (this._meta.location === "tabs") return "medium";
 			return "medium";
 		}
 	},
@@ -49,7 +66,7 @@ export default {
 		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this.xValue]: val}
+				data: {[this._value]: val}
 			});
 		},
 

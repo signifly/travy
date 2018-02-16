@@ -7,8 +7,7 @@ Vue.use(VueRouter);
 
 import store from "@/store";
 
-const doc = () => import(/* webpackChunkName: "doc" */ "@/pages/doc.vue");
-
+import doc from "@/pages/doc.vue";
 import tables from "./tables";
 import index from "@/pages/index.vue";
 import login from "@/pages/login.vue";

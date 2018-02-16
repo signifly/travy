@@ -4,6 +4,16 @@
 
 <script>
 export default {
+	meta: {
+		res: {
+			props: {
+				text: "title"
+			},
+			data: {
+				title: "some text"
+			}
+		}
+	},
 	props: {
 		text: {type: [String, Number], required: false},
 		status: {
@@ -14,10 +24,6 @@ export default {
 				return ["danger", "warning", "info", "primary", "success"].includes(value);
 			}
 		}
-	},
-	propsD: {
-		text: "text",
-		status: "primary"
 	}
 };
 </script>

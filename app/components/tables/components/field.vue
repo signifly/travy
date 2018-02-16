@@ -1,11 +1,11 @@
 <template>
 	<component :is="link ? 'router-link' : 'div'" class="field" :to="link">
 		<component
-			:meta="{location: 'table'}"
+			:_meta="{location: 'table'}"
 			v-if="components[id]"
 			:is="id"
 			:props="props"
-			v-bind="[propsData, propsX]"
+			v-bind="[propsData, propsValues]"
 			@fieldA="fieldA"
 		/>
 	</component>
@@ -29,7 +29,7 @@ export default {
 
 		props: (t) => t.column.fieldType.props,
 		propsData: (t) => mapValues(t.props, (val) => get(t.item, val)),
-		propsX: (t) => mapKeys(t.props, (val, key) => "x" + key.charAt(0).toUpperCase() + key.slice(1)),
+		propsValues: (t) => mapKeys(t.props, (val, key) => `_${key}`),
 
 		link() {
 			if (!this.action) return;

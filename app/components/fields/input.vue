@@ -10,9 +10,19 @@ import {Input} from "element-ui";
 
 export default {
 	components: {Input},
+	meta: {
+		res: {
+			props: {
+				value: "inputVal"
+			},
+			data: {
+				inputVal: ""
+			}
+		}
+	},
 	props: {
 		value: {type: String, required: false},
-		xValue: {type: String, required: true},
+		_value: {type: String, required: true},
 		unit: {type: String, required: false},
 		disabled: {type: Boolean, required: false}
 	},
@@ -27,7 +37,7 @@ export default {
 		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this.xValue]: val}
+				data: {[this._value]: val}
 			});
 		}
 	}
