@@ -29,10 +29,12 @@ export default {
 			this.$emit("close");
 		},
 		async create() {
+			const epts = this.endpoints;
+
 			try {
 				this.loading = true;
-				const {data} = await this.$http.post(this.endpoints.store.url, this.payload, {custom: true});
-				this.$router.push(`products/${data.data.id}`);
+				const {data} = await this.$http.post(epts.store.url, this.payload, {custom: true});
+				this.$router.push(epts.show.url.replace("{id}", data.id));
 			} catch ({response}) {
 				this.$emit("update:error", response.data);
 			} finally {

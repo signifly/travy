@@ -11,7 +11,7 @@
 						<th>Required</th>
 						<th>Map</th>
 						<th>Default</th>
-						<th>note</th>
+						<th>Note</th>
 						<th>Validator</th>
 					</tr>
 
