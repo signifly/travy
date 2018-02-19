@@ -10,6 +10,7 @@ export {default as vSelectMultiAdd} from "./select-multi-add.vue";
 export {default as vSelectMultiSearch} from "./select-multi-search.vue";
 export {default as vActions} from "./actions/index.vue";
 export {default as vInput} from "./input.vue";
+export {default as vInputFile} from "./input-file.vue";
 export {default as vInputNumber} from "./input-number.vue";
 export {default as vInputPassword} from "./input-password.vue";
 export {default as vTextarea} from "./textarea.vue";
