@@ -1,5 +1,5 @@
 <template>
-	<div class="text" :class="status">{{text}}</div>
+	<div class="text" :class="_status">{{text}}</div>
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
 	},
 	props: {
 		text: {type: [String, Number], required: false, doc: true},
-		status: {
+		_status: {
 			type: String,
 			required: false,
 			doc: true,
