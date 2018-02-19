@@ -2,14 +2,7 @@
 	<div class="modifiers">
 		<div class="item" v-for="item in items">
 			<div class="title">{{item.title}}</div>
-			<Select filterable v-model="item.value" size="medium" @change="update">
-				<Option v-for="option in item.options" v-bind="option" :key="option.value">
-					<div class="option">
-						<div class="icon" v-if="option.icon && icon(option.icon)"><img :src="icon(option.icon)"></div>
-						{{option.label}}
-					</div>
-				</Option>
-			</Select>
+			<vSelect v-bind="item" _value="value" @fieldA="fieldA(item, $event)" />
 		</div>
 		</div>
 	</div>
@@ -17,10 +10,10 @@
 
 <script>
 import {keyBy, mapValues} from "lodash";
-import {Select, Option} from "element-ui";
+import {vSelect} from "@/components/fields";
 
 export default {
-	components: {Select, Option},
+	components: {vSelect},
 	props: {
 		modifiers: {type: Array, required: true}
 	},
@@ -33,14 +26,12 @@ export default {
 		query: (t) => t.$route.query
 	},
 	methods: {
-		icon(file) {
-			try {
-				return require(`!file-loader!@/assets/icons/${file}.svg`);
-			} catch(err) {
-				console.log(err);
-			}
+		fieldA(item, {data}) {
+			const index = this.items.indexOf(item);
+			this.$set(this.items[index], "value", data.value);
+			this.update();
 		},
-		update(val) {
+		update() {
 			const modifiers = mapValues(keyBy(this.items, "key"), (x) => x.value);
 			this.$router.replace({query: {...this.query, modifiers}});
 			this.$emit("getData", {type: "modifiers"});

@@ -1,6 +1,6 @@
 <template>
 	<div class="textarea">
-		<Input v-model="data.content" @input="update" v-bind="{disabled}" type="textarea" :rows="3" :controls="false" size="medium" />
+		<Input v-model="data.text" @input="update" v-bind="{disabled}" type="textarea" :rows="3" :controls="false" size="medium" />
 	</div>
 </template>
 
@@ -12,30 +12,30 @@ export default {
 	meta: {
 		res: {
 			props: {
-				content: "text"
+				text: "content"
 			},
 			data: {
-				text: ""
+				content: ""
 			}
 		}
 	},
 	props: {
-		content: {type: String, required: false, doc: true},
-		_content: {type: String, required: true},
+		text: {type: String, required: false, doc: true},
+		_text: {type: String, required: true},
 		disabled: {type: Boolean, required: false}
 	},
 	data() {
 		return {
 			data: {
-				value: this.content
+				text: this.text
 			}
 		}
 	},
 	methods: {
-		update(content) {
+		update(text) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this._content]: content}
+				data: {[this._text]: text}
 			});
 		}
 	}
