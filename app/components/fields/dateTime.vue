@@ -17,7 +17,7 @@ export default {
 		}
 	},
 	props: {
-		epoch: {type: Number, required: false}
+		epoch: {type: Number, required: false, doc: true}
 	},
 	computed: {
 		date: (t) => date(t.epoch),

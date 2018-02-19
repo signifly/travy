@@ -30,8 +30,8 @@ export default {
 		}
 	},
 	props: {
-		items: {type: Array, required: true},
-		_itemKey: {type: String, required: true}
+		items: {type: Array, required: true, doc: true},
+		_itemKey: {type: String, required: true, doc: true}
 	},
 	computed: {
 		tooltip: (t) => t.items.map(x => x[t._itemKey]).join("<br>")

@@ -21,8 +21,8 @@ export default {
 	meta: {
 		res: {
 			props: {
-				dateTableData: "tableData",
-				dateTableColumns: [
+				columnsData: "tableData",
+				columns: [
 					{
 						name: "title",
 						label: "Title",
@@ -77,14 +77,15 @@ export default {
 	},
 	props: {
 		props: {type: Object, required: true},
-		columns: {type: Array, required: true},
-		columnsData: {type: Array, required: true}
+		_columns: {type: Array, required: true, doc: true},
+		columnsData: {type: Array, required: true, doc: true}
 	},
 	computed: {
 		vTable: (t) => require("@/components/tables/components/table.vue").default // stuff happens
 	},
 	data() {
 		return {
+			columns: this._columns,
 			mounted: false,
 			opts: {
 				label: false

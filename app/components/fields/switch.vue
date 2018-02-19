@@ -20,7 +20,7 @@ export default {
 		}
 	},
 	props: {
-		value: {type: Boolean, required: false},
+		value: {type: Boolean, required: false, doc: true},
 		_value: {type: String, required: true}
 	},
 	data() {

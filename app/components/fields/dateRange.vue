@@ -32,7 +32,7 @@ export default {
 		}
 	},
 	props: {
-		dates: {type: Array, required: false},
+		dates: {type: Array, required: false, doc: true},
 		_dates: {type: String, required: true}
 	},
 	data() {

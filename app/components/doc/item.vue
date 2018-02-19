@@ -27,7 +27,7 @@
 				</table>
 			</div>
 
-			<div class="field" v-if="id !== 'vTable'">
+			<div class="field">
 				<vField
 					:name="id"
 					:fieldType="fieldType"
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import {mapValues, pickBy, get, has, startsWith} from "lodash";
+import {mapValues, mapKeys, pickBy, get} from "lodash";
 import vField from "@/components/field.vue";
 
 export default {
@@ -74,38 +74,32 @@ export default {
 		id: {type: String, required: true},
 		field: {type: Object, required: true},
 		props: {type: Object, required: true},
-		res: {type: Object, required: true, default: () => ({})}
+		res: {type: Object, required: true}
 	},
 	data() {
 		return {
+			propsDisplay: this.res.props,
+			dataDisplay: this.res.data,
 			event: null
 		}
 	},
 	computed: {
-		field_: (t) => mapValues(t.field, (val, key) => ({...val})),
 		fieldType: (t) => ({id: t.id, props: t.res.props}),
-		dataDisplay: (t) => t.removeLodash(t.res.data),
-		propsDisplay: (t) => t.removeLodash(t.res.props),
 
 		propsTable() {
-			const props = this.removeLodash(this.props);
-			const res = this.res;
+			let props = pickBy(this.props, (x) => x.doc); // find props where {doc: true}
 
-			return mapValues(props, (prop, key) => ({...prop,
+			props = mapValues(props, (prop, key) => ({...prop,
 				type: get(prop.type, "name") || prop.type.map(x => x.name).join("|"),
 				default: typeof prop.default === "function" ? prop.default() : prop.default,
-				get map() {
-					const dataKey = res.props[key];
-					return !!res.data[dataKey];
-				}
+				map: key.charAt(0) !== "_"
 			}));
+
+			// remove underscore if first character from prop name/key
+			return mapKeys(props, (val, key) => key.charAt(0) === "_" ? key.substr(1) : key);
 		}
 	},
 	methods: {
-		removeLodash(obj) {
-			return pickBy(obj, (val, key) => !startsWith(key, "_"))
-		},
-
 		async fieldA({data, done}) {
 			this.event = data;
 			if (done) await done();

@@ -55,6 +55,12 @@ export default {
 				font-size: 0.9em;
 				display: block;
 				margin: 0.5em 0;
+				color: $black1;
+				text-decoration: none;
+
+				&:hover {
+					color: $blue5;
+				}
 			}
 		}
 	}

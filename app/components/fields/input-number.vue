@@ -21,7 +21,7 @@ export default {
 		}
 	},
 	props: {
-		value: {type: Number, required: false},
+		value: {type: Number, required: false, doc: true},
 		_value: {type: String, required: true},
 		unit: {type: String, required: false},
 		disabled: {type: Boolean, required: false}

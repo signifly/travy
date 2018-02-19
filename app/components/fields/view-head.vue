@@ -33,9 +33,9 @@ export default {
 		}
 	},
 	props: {
-		title: {type: String, required: true},
-		image: {type: String, required: false, default: noimage},
-		tag: {type: [String, Number], required: true}
+		title: {type: String, required: true, doc: true},
+		image: {type: String, required: false, default: noimage, doc: true},
+		tag: {type: [String, Number], required: true, doc: true}
 	}
 };
 </script>

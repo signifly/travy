@@ -21,10 +21,11 @@ export default {
 		}
 	},
 	props: {
-		text: {type: String, required: true},
+		text: {type: String, required: true, doc: true},
 		_status: {
 			type: String,
 			required: true,
+			doc: true,
 			note: `danger, warning, info, primary, success`,
 			validator: function (value) {
 				return ["danger", "warning", "info", "primary", "success"].includes(value);

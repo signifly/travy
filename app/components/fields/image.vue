@@ -20,7 +20,7 @@ export default {
 		}
 	},
 	props: {
-		image: {type: String, required: false}
+		image: {type: String, required: false, doc: true}
 	}
 };
 </script>

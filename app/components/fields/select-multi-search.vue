@@ -30,10 +30,10 @@ export default {
 	},
 	props: {
 		_meta: {type: Object, require: false, default: () => ({})},
-		value: {type: Array, required: false},
+		value: {type: Array, required: false, doc: true},
 		_value: {type: String, required: true},
-		_options: {type: Object, required: true},
-		options: {type: Object, required: false}
+		options: {type: Object, required: false},
+		_options: {type: Object, required: true, doc: true}
 	},
 	data() {
 		return {

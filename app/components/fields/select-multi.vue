@@ -38,8 +38,8 @@ export default {
 	},
 	props: {
 		_meta: {type: Object, require: false, default: () => ({})},
-		options: {type: Array, required: true},
-		value: {type: Array, required: false},
+		options: {type: Array, required: true, doc: true},
+		value: {type: Array, required: false, doc: true},
 		_value: {type: String, required: true}
 	},
 	data() {

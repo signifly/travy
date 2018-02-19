@@ -15,10 +15,11 @@ export default {
 		}
 	},
 	props: {
-		text: {type: [String, Number], required: false},
+		text: {type: [String, Number], required: false, doc: true},
 		status: {
 			type: String,
 			required: false,
+			doc: true,
 			note: `danger, warning, info, primary, success`,
 			validator: function (value) {
 				return ["danger", "warning", "info", "primary", "success"].includes(value);

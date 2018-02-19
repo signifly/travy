@@ -68,11 +68,11 @@ export default {
 		}
 	},
 	props: {
-		info: {type: Array, required: true},
-		switchValue: {type: Boolean, required: true},
+		info: {type: Array, required: true, doc: true},
+		switchValue: {type: Boolean, required: true, doc: true},
 		_switchValue: {type: String, required: true},
-		switchTitle: {type: String, required: true},
-		actions: {type: Array, required: true}
+		switchTitle: {type: String, required: true, doc: true},
+		actions: {type: Array, required: true, doc: true}
 	},
 	data() {
 		return {
