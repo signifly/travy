@@ -10,7 +10,12 @@
 import vFields from "./fields.vue";
 
 export default {
-	components: {vFields}
+	components: {vFields},
+	mounted() {
+		const hash = location.hash;
+		location.hash = "";
+		location.hash = hash;
+	}
 };
 </script>
 
