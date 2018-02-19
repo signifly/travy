@@ -72,7 +72,6 @@ export default {
 	components: {vField},
 	props: {
 		id: {type: String, required: true},
-		field: {type: Object, required: true},
 		props: {type: Object, required: true},
 		res: {type: Object, required: true}
 	},

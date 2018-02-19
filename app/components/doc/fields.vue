@@ -9,14 +9,13 @@
 			</div>
 
 			<div class="items">
-				<vItem v-for="(field, key) in fields" :key="key" :id="key" :props="field.props" v-bind="[field.meta, {field}]" />
+				<vItem v-for="(field, key) in fields" :key="key" :id="key" :props="field.props" v-bind="field.meta" />
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import {mapValues, pickBy, startsWith} from "lodash";
 import * as fields from "@/components/fields";
 import vItem from "./item.vue";
 
