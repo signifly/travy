@@ -65,6 +65,12 @@ export default {
 			roles: ["admin"]
 		}
 	},
+	files: {
+		title: "Files",
+		auth: {
+			roles: ["admin"]
+		}
+	},
 	"price-lists": {
 		title: "Price lists",
 		auth: {
