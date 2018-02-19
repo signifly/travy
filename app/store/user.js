@@ -17,7 +17,7 @@ export default {
 		logout(state) {
 			state.auth = null;
 			localStorage.removeItem("auth");
-			router.push({name: "login"});
+			router.push({name: "login", params: {route: {path: window.location.pathname}}});
 		}
 	},
 
