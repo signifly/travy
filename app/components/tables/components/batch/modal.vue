@@ -33,7 +33,7 @@ export default {
 	data() {
 		return {
 			loading: false,
-			payload: {}
+			payload: this.data
 		}
 	},
 	computed: {

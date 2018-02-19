@@ -34,7 +34,7 @@ export default {
 	data() {
 		return {
 			error: {},
-			payload: {}
+			payload: this.data
 		}
 	},
 	computed: {
