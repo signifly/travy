@@ -59,7 +59,7 @@ export default {
 			const sortProp = this.sorting.prop;
 			const sortProps = this.columns.map(x => x.sortBy).filter(x => x);
 			if (!sortProps.includes(sortProp)) {
-				console.error("default sort prop doesn't exist in any of the columns as sortBy. Can't get data");
+				console.warn("default sort prop doesn't exist in any of the columns as sortBy. Can't get data");
 			}
 		}
 	},

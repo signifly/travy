@@ -27,14 +27,18 @@ export default {
 				selectOptions: [
 					{
 						label: "Danmark",
-						value: "dk",
+						icon: "flags/dk",
+						value: "dk"
 					},
 					{
 						label: "England",
+						icon: "flags/gb",
 						value: "UK"
 					},
 					{
 						label: "Murica",
+						icon: "flags/us",
+						disabled: true,
 						value: "US",
 					}
 				]

@@ -55,16 +55,4 @@ export default {
 		}
 	}
 }
-
-.option {
-	display: flex;
-	align-content: center;
-
-	.icon {
-		display: flex;
-		align-items: center;
-		width: 1.2em;
-		margin-right: 0.75em;
-	}
-}
 </style>
