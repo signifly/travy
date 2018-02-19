@@ -43,8 +43,7 @@ export default {
 		}
 	},
 	props: {
-		items: {type: Array, required: false},
-		_items: {type: Array, required: true}
+		_items: {type: Array, required: true, doc: true}
 	},
 	data() {
 		return {
