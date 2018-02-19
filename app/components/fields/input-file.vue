@@ -35,7 +35,7 @@ export default {
 	props: {
 		file: {type: String, required: false, doc: true, note: "base64"},
 		_file: {type: String, required: true},
-		_note: {type: String, required: false}
+		_note: {type: String, required: false, doc: true}
 	},
 	data() {
 		return {
