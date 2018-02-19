@@ -65,6 +65,12 @@ export default {
 			roles: ["admin"]
 		}
 	},
+	"price-lists": {
+		title: "Price lists",
+		auth: {
+			roles: ["admin"]
+		}
+	},
 	"stock-items": {
 		title: "Stock items",
 		auth: {

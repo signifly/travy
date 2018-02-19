@@ -15,7 +15,7 @@
 				<MenuItem index="/stock-items">Stock items</MenuItem>
 				<MenuItem index="/stock-item-models">Stock item models</MenuItem>
 				<MenuItem index="/prices">Prices</MenuItem>
-				<MenuItem index="/6">Price lists</MenuItem>
+				<MenuItem index="/price-lists">Price lists</MenuItem>
 				<MenuItem index="/7">Files</MenuItem>
 			</Submenu>
 			<MenuItem index="/23">Translations</MenuItem>
