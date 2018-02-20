@@ -34,7 +34,7 @@ export default {
 			try {
 				this.loading = true;
 				const {data} = await this.$http.post(epts.store.url, this.payload, {custom: true});
-				this.$router.push(epts.show.url.replace("{id}", data.id));
+				this.$router.push(epts.show.url.replace("{id}", data.data.id));
 			} catch ({response}) {
 				this.$emit("update:error", response.data);
 			} finally {
