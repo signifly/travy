@@ -5,6 +5,7 @@
 		ref="upload"
 		:auto-upload="false"
 		:file-list="data.fileList"
+		:accept="_fileTypes"
 		:on-change="addFile"
 		:on-remove="removeFile">
 
@@ -25,7 +26,8 @@ export default {
 		res: {
 			props: {
 				file: "base64",
-				note: "jpg/png files with a size less than 500kb"
+				note: "jpg/png files with a size less than 500kb",
+				fileTypes: ".jpg, .jpeg, .png"
 			},
 			data: {
 				base64: ""
@@ -35,7 +37,8 @@ export default {
 	props: {
 		file: {type: String, required: false, doc: true, note: "base64"},
 		_file: {type: String, required: true},
-		_note: {type: String, required: false, doc: true}
+		_note: {type: String, required: false, doc: true},
+		_fileTypes: {type: String, required: false, doc: true}
 	},
 	data() {
 		return {
