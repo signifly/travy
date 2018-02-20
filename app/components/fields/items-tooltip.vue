@@ -1,9 +1,9 @@
 <template>
 	<div class="items-tooltip">
-		<Tooltip placement="right">
+		<Tooltip placement="right" v-bind="{disabled}">
 			<div class="info">
 				<div class="count">{{items.length}}</div>
-				<i class="el-icon-info" />
+				<i class="el-icon-info" v-if="!disabled" />
 			</div>
 			<div slot="content" v-html="tooltip" />
 		</Tooltip>
@@ -34,7 +34,8 @@ export default {
 		_itemKey: {type: String, required: true, doc: true}
 	},
 	computed: {
-		tooltip: (t) => t.items.map(x => x[t._itemKey]).join("<br>")
+		tooltip: (t) => t.items.map(x => x[t._itemKey]).join("<br>"),
+		disabled: (t) => t.items.length < 1
 	}
 };
 </script>
@@ -49,7 +50,11 @@ export default {
 		.count {
 			font-size: 0.9em;
 			font-weight: 500;
-			margin-right: 0.5em;
+			margin-right: 0.4em;
+		}
+
+		i {
+			font-size: 0.85em;
 		}
 	}
 }
