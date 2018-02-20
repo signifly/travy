@@ -43,7 +43,7 @@ export default {
 	computed: {
 		header: (t) => t.definitions.header,
 		tabs: (t) => t.definitions.tabs,
-		endpoint: (t) => `${t.$route.meta.parent.id}/${t.id}`,
+		parentId: (t) => t.$route.meta.parent.id,
 		errors: (t) => t.error.errors,
 		edited: (t) => t.editsU > 0,
 		dataUpdated() {
@@ -80,14 +80,27 @@ export default {
 		},
 
 		async getDefinitions() {
-			const {data} = await this.$http.get("https://sikaline.glitch.me/view-defs/products");
-			this.definitions = data;
+
+			if (this.parentId === "test") {
+				const {data} = await this.$http.get("https://sikaline.glitch.me/view-defs/products");
+				this.definitions = data;
+			} else {
+				const {data} = await this.$http.get(`definitions/view/${this.parentId}`);
+				this.definitions = data;
+			}
+
 			await this.getData();
 		},
 
 		async getData() {
-			const {data} = await this.$http.get("https://sikaline.glitch.me/view-data/products");
-			this.data = data;
+			if (this.parentId === "test") {
+				const {data} = await this.$http.get("https://sikaline.glitch.me/view-data/products");
+				this.data = data;
+			} else {
+				const {data} = await this.$http.get(`${this.parentId}/${this.id}`);
+				this.data = data.data;
+			}
+
 			this.dataU++;
 		},
 
