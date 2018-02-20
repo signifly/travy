@@ -1,6 +1,6 @@
 <template>
 	<div class="select">
-		<Select v-model="val" @change="update" v-bind="{size}" filterable>
+		<Select v-model="val" @change="update" v-bind="{size}" filterable clearable>
 			<Option v-for="option in options" v-bind="option" :key="option.value">
 				<div class="option">
 					<div class="icon" v-if="option.icon && icon(option.icon)"><img :src="icon(option.icon)"></div>
@@ -85,7 +85,7 @@ export default {
 .select {
 	.el-select {
 		width: 100%;
-		
+
 		/deep/ {
 			.el-input__inner {
 				// border: 0;
