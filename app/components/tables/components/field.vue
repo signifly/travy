@@ -1,7 +1,7 @@
 <template>
 	<component :is="link ? 'router-link' : 'div'" class="field" :to="link">
 		<component
-			:_meta="{location: 'table'}"
+			:meta="{location: 'table'}"
 			v-if="components[id]"
 			:is="id"
 			:props="props"

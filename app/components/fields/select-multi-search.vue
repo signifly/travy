@@ -29,7 +29,7 @@ export default {
 		}
 	},
 	props: {
-		_meta: {type: Object, require: false, default: () => ({})},
+		meta: {type: Object, require: false, default: () => ({})},
 		value: {type: Array, required: false, doc: true},
 		_value: {type: String, required: true},
 		options: {type: Object, required: false},
@@ -57,8 +57,8 @@ export default {
 		})),
 
 		size() {
-			if (this._meta.location === "table") return "small";
-			if (this._meta.location === "tabs") return "medium";
+			if (this.meta.location === "table") return "small";
+			if (this.meta.location === "tabs") return "medium";
 			return "medium";
 		}
 	},

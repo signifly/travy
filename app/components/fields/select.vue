@@ -46,7 +46,7 @@ export default {
 		}
 	},
 	props: {
-		_meta: {type: Object, require: false, default: () => ({})},
+		meta: {type: Object, require: false, default: () => ({})},
 		options: {type: Array, required: true, doc: true},
 		value: {type: [String, Number], required: false, doc: true},
 		_value: {type: String, required: true}
@@ -58,8 +58,8 @@ export default {
 	},
 	computed: {
 		size() {
-			if (this._meta.location === "table") return "small";
-			if (this._meta.location === "tabs") return "medium";
+			if (this.meta.location === "table") return "small";
+			if (this.meta.location === "tabs") return "medium";
 		}
 	},
 	methods: {
@@ -84,6 +84,8 @@ export default {
 <style lang="scss" scoped>
 .select {
 	.el-select {
+		width: 100%;
+		
 		/deep/ {
 			.el-input__inner {
 				// border: 0;

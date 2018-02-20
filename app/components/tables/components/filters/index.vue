@@ -2,8 +2,21 @@
 	<div class="filters">
 
 		<Popover popper-class="pop" v-model="active" ref="pop" placement="bottom-end" width="300" transition="trans-fadeDown">
-			<div class="fields">
-				<field v-for="field in fields" :key="field.name" v-bind="field" :data="dataComb" @fieldA="updateQ" />
+			<div class="pop">
+				<div class="fields" :key="resetU">
+					<field v-for="field in fields" :key="field.name" v-bind="field" :data="dataComb" @fieldA="updateQ" />
+				</div>
+
+				<div class="reset">
+					<Button
+					plain
+					size="mini"
+					type="info"
+					icon="el-icon-refresh"
+					@click="reset">
+						Reset
+					</Button>
+				</div>
 			</div>
 		</Popover>
 
@@ -39,7 +52,8 @@ export default {
 		return  {
 			input: get(this.$route.query, "filters.q") || "",
 			loading: false,
-			active: false
+			active: false,
+			resetU: 0
 		}
 	},
 	computed: {
@@ -61,15 +75,29 @@ export default {
 		updateQ({data}) {
 			this.loading = true;
 			this.update({data});
+		},
+
+		async reset() {
+			this.loading = true;
+			this.active = false;
+			const filters = this.input ? {q: this.input} : undefined;
+			this.$router.replace({query: {...this.query, filters}});
+			await this.getData();
+			this.loading = false;
+			this.resetU++;
 		}
 	}
 };
 </script>
 
 <style lang="scss" scoped>
-.fields {
+.pop {
 	padding: 0.25em;
 	transform: scale(0.95);
+
+	.reset {
+		margin-top: 1.5em;
+	}
 }
 
 .filters {
