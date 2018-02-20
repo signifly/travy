@@ -1,11 +1,15 @@
 import {get} from "lodash";
 import axios from "axios";
+import qs from "qs";
+
 import {Notification} from "element-ui";
 import store from "../store";
 
 const api = axios.create({
 	baseURL: "https://api.sikane.signifly.com/v1/"
 });
+
+api.defaults.paramsSerializer = (params) => qs.stringify(params);
 
 api.interceptors.request.use(config => {
 	const auth = store.getters["user/auth"];
