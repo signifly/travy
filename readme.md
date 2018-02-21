@@ -2,9 +2,6 @@
 
 ### Docker setup
 ``` bash
-# create docker network
-$ docker network create sikane
-
 # start container(s)
 $ docker-compose up
 
