@@ -10,6 +10,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 
 const production = process.env.NODE_ENV === "production";
+const config = process.env.config || "default";
 
 module.exports = {
 	entry: {
@@ -131,6 +132,12 @@ module.exports = {
 			reportFilename: "report.html",
 			analyzerPort: 3005,
 			openAnalyzer: false
+		}),
+
+		new webpack.DefinePlugin({
+			"process.env": {
+				config: JSON.stringify(config)
+			}
 		})
 	],
 
@@ -141,6 +148,7 @@ if (production) {
 	module.exports.plugins = module.exports.plugins.concat([
 		new webpack.DefinePlugin({
 			"process.env": {
+				config: JSON.stringify(config),
 				NODE_ENV: "'production'"
 			}
 		}),

@@ -4,12 +4,14 @@ import qs from "qs";
 
 import {Notification} from "element-ui";
 import store from "../store";
+import config from "@/config";
 
 const api = axios.create({
-	baseURL: "https://api.sikane.signifly.com/v1/"
+	baseURL: config.api
 });
 
 api.defaults.paramsSerializer = (params) => qs.stringify(params);
+
 
 api.interceptors.request.use(config => {
 	const auth = store.getters["user/auth"];
@@ -19,6 +21,7 @@ api.interceptors.request.use(config => {
 }, (error) => {
 	return Promise.reject(error);
 });
+
 
 api.interceptors.response.use(res => {
 	return res;
