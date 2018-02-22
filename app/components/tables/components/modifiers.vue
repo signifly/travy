@@ -1,6 +1,6 @@
 <template>
 	<div class="modifiers">
-		<div class="item" v-for="item in items">
+		<div class="item" v-for="item in itemsMap">
 			<div class="title">{{item.title}}</div>
 			<vSelect v-bind="item" _value="value" @fieldA="fieldA(item, $event)" />
 		</div>
@@ -23,7 +23,15 @@ export default {
 		}
 	},
 	computed: {
-		query: (t) => t.$route.query
+		query: (t) => t.$route.query,
+
+		itemsMap: (t) => t.items.map(x => ({...x,
+			list: x.options,
+			_options: {
+				label: "label",
+				value: "value"
+			}
+		}))
 	},
 	methods: {
 		fieldA(item, {data}) {
