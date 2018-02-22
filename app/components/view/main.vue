@@ -12,7 +12,7 @@
 			</Row>
 		</div>
 
-		<vPanel v-bind="{id, loading, edited, getData}" title="some product, thingy" @save="save" />
+		<vPanel v-bind="{id, loading, edited, getData, error}" title="some product, thingy" @save="save" />
 	</div>
 </template>
 
@@ -112,16 +112,19 @@ export default {
 		async save({done} = {}) {
 			try {
 				this.loading = true;
-				await this.$http.put(this.endpoint({type: "update"}), {data: this.dataUpdated});
+				await this.$http.put(this.endpoint({type: "update"}), {data: this.dataUpdated}, {custom: true});
 
 				// reset edits
 				this.edits = edits();
 				this.editsU = 0;
 
+				// reset errors
+				this.error = {};
+
 				if (done) await done();
 
 			} catch ({response}) {
-				this.error = response.data;
+				this.error = get(response, "data", {});
 			} finally {
 				this.loading = false;
 			}

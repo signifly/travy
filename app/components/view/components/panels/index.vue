@@ -1,5 +1,5 @@
 <template>
-	<component v-if="active" :is="comp" v-bind="{loading, title, seq, getData}" />
+	<component v-if="active" :is="comp" v-bind="{loading, title, seq, getData, error}" />
 </template>
 
 <script>
@@ -13,7 +13,8 @@ export default {
 		title: {type: String, required: true},
 		loading: {type: Boolean, required: true},
 		edited: {type: Boolean, required: true},
-		getData: {type: Function, required: true}
+		getData: {type: Function, required: true},
+		error: {type: Object, required: true}
 	},
 	computed: {
 		seq: (t) => t.$route.query.seq,

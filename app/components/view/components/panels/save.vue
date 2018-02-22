@@ -2,6 +2,7 @@
 	<vPanel>
 		<div class="text">There's unsaved changes</div>
 		<div class="actions">
+			<div class="error" v-if="error.message">{{error.message}}</div>
 			<Button size="medium" type="primary" v-bind="{loading}" @click="save">Save changes</Button>
 		</div>
 	</vPanel>
@@ -14,7 +15,8 @@ import vPanel from "@/components/panel.vue";
 export default {
 	components: {Button, vPanel},
 	props: {
-		loading: {type: Boolean, required: true}
+		loading: {type: Boolean, required: true},
+		error: {type: Object, required: true}
 	},
 	methods: {
 		save() {
@@ -28,5 +30,17 @@ export default {
 .text {
 	font-size: em(14);
 	color: $blue4;
+}
+
+.actions {
+	display: flex;
+	align-items: center;
+
+	.error {
+		font-size: em(12);
+		font-weight: 500;
+		margin-right: 1em;
+		color: $danger;
+	}
 }
 </style>

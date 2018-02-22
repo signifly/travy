@@ -87,9 +87,7 @@ export default {
 				const modifiers = this.modifiers.map(x => omit(x, "options"));
 				const url = this.endpoint({type: "update", item});
 				await this.$http.put(url, {data, modifiers});
-			} catch (err) {
-				console.log(err);
-			} finally {
+			} catch (err) {} finally {
 				if (done) done();
 			}
 		},
@@ -99,9 +97,7 @@ export default {
 				const url = this.endpoint({type: "destroy", item});
 				await this.$http.delete(url);
 				await this.getData();
-			} catch (err) {
-				console.log(err);
-			} finally {
+			} catch (err) {} finally {
 				if (done) done();
 			}
 		},

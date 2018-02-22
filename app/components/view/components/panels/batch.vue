@@ -13,6 +13,8 @@
 		</div>
 
 		<div class="actions">
+			<div class="error" v-if="error.message">{{error.message}}</div>
+
 			<Button v-if="prev" size="medium" type="success" icon="el-icon-arrow-left" @click="prevSave">
 				Save and back
 			</Button>
@@ -41,7 +43,8 @@ export default {
 		title: {type: String, required: true},
 		loading: {type: Boolean, required: true},
 		seq: {type: Object, required: true},
-		getData: {type: Function, required: true}
+		getData: {type: Function, required: true},
+		error: {type: Object, required: true}
 	},
 	data() {
 		return {
@@ -151,5 +154,12 @@ export default {
 .actions {
 	display: flex;
 	align-items: center;
+
+	.error {
+		font-size: em(12);
+		font-weight: 500;
+		margin-right: 1em;
+		color: $danger;
+	}
 }
 </style>

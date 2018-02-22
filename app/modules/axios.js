@@ -7,10 +7,9 @@ import store from "../store";
 import config from "@/config";
 
 const api = axios.create({
-	baseURL: config.api
+	baseURL: config.api,
+	paramsSerializer: (params) => qs.stringify(params)
 });
-
-api.defaults.paramsSerializer = (params) => qs.stringify(params);
 
 
 api.interceptors.request.use(config => {
@@ -45,5 +44,6 @@ api.interceptors.response.use(res => {
 
 	return Promise.reject(error);
 });
+
 
 export default api;
