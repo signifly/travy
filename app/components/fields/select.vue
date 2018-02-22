@@ -1,7 +1,7 @@
 <template>
 	<div class="select">
 		<Select v-model="val" @change="update" v-bind="{size}" filterable clearable>
-			<Option v-for="option in options" v-bind="option" :key="option.value">
+			<Option v-for="option in listMap" v-bind="option" :key="option.value">
 				<div class="option">
 					<div class="icon" v-if="option.icon && icon(option.icon)"><img :src="icon(option.icon)"></div>
 					{{option.label}}
@@ -20,26 +20,30 @@ export default {
 		res: {
 			props: {
 				value: "selectValue",
-				options: "selectOptions"
+				list: "selectOptions",
+				options: {
+					label: "name",
+					value: "id"
+				}
 			},
 			data: {
-				selectValue: "",
+				selectValue: "DK",
 				selectOptions: [
 					{
-						label: "Danmark",
+						name: "Danmark",
 						icon: "flags/dk",
-						value: "dk"
+						id: "DK"
 					},
 					{
-						label: "England",
+						name: "England",
 						icon: "flags/gb",
 						value: "UK"
 					},
 					{
-						label: "Murica",
+						name: "Murica",
 						icon: "flags/us",
 						disabled: true,
-						value: "US",
+						id: "US",
 					}
 				]
 			}
@@ -47,9 +51,10 @@ export default {
 	},
 	props: {
 		meta: {type: Object, require: false, default: () => ({})},
-		options: {type: Array, required: true, doc: true},
+		_options: {type: Object, required: true, doc: true},
 		value: {type: [String, Number], required: false, doc: true},
-		_value: {type: String, required: true}
+		_value: {type: String, required: true},
+		list: {type: Array, required: true, doc: true}
 	},
 	data() {
 		return {
@@ -57,6 +62,16 @@ export default {
 		}
 	},
 	computed: {
+		oLabel: (t) => t._options.label,
+		oValue: (t) => t._options.value,
+
+		listMap: (t) => t.list.map(x => ({
+			label: x[t.oLabel],
+			value: x[t.oValue],
+			disabled: x.disabled,
+			icon: x.icon
+		})),
+
 		size() {
 			if (this.meta.location === "table") return "small";
 			if (this.meta.location === "tabs") return "medium";

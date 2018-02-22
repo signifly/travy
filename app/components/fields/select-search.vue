@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import {get, debounce} from "lodash";
+import {get, debounce, uniqBy} from "lodash";
 import {Select, Option} from "element-ui";
 
 export default {
@@ -24,13 +24,13 @@ export default {
 				}
 			},
 			data: {
-				selectValue: null
+				selectValue: "1"
 			}
 		}
 	},
 	props: {
 		meta: {type: Object, require: false, default: () => ({})},
-		value: {type: Array, required: false, doc: true},
+		value: {type: [String, Number], required: false, doc: true},
 		_value: {type: String, required: true},
 		options: {type: Object, required: false},
 		_options: {type: Object, required: true, doc: true}
@@ -38,6 +38,7 @@ export default {
 	data() {
 		return {
 			loading: false,
+			item: null,
 			res: null,
 			data: {
 				value: this.value
@@ -49,7 +50,14 @@ export default {
 		oKey: (t) => t._options.key,
 		oLabel: (t) => t._options.label,
 		oValue: (t) => t._options.value,
-		list: (t) => t.oKey ? get(t.res, t.oKey, []) : t.res || [],
+
+		list() {
+			const resList = this.oKey ? get(this.res, this.oKey, []) : this.res || [];
+			const itemList = this.item ? [this.item] : [];
+			const list = [...itemList, ...resList];
+
+			return uniqBy(list, this.oValue);
+		},
 
 		listMap: (t) => t.list.map(x => ({
 			label: x[t.oLabel],
@@ -79,7 +87,15 @@ export default {
 		getListQ(q) {
 			this.getList(q);
 			this.loading = true;
+		},
+
+		async getItem() {
+			const {data} = await this.$http.get(`${this.endpoint}/${this.value}`);
+			this.item = this.oKey ? data[this.oKey] : data;
 		}
+	},
+	created() {
+		if (this.value) this.getItem();
 	}
 };
 </script>

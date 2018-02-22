@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import {get, debounce} from "lodash";
+import {get, debounce, uniqBy} from "lodash";
 import {Select, Option} from "element-ui";
 
 export default {
@@ -16,15 +16,26 @@ export default {
 		res: {
 			props: {
 				value: "selectValue",
+				defaultList: "defaultItems",
 				options: {
-					endpoint: "https://sikaline.glitch.me/table-actions/options",
+					list: "https://sikaline.glitch.me/table-actions/options",
 					key: "",
 					label: "name",
 					value: "id"
 				}
 			},
 			data: {
-				selectValue: []
+				selectValue: ["1", "2"],
+				defaultItems: [
+					{
+						id: "1",
+						name: "stol"
+					},
+					{
+						id: "2",
+						name: "taske"
+					}
+				]
 			}
 		}
 	},
@@ -33,7 +44,8 @@ export default {
 		value: {type: Array, required: false, doc: true},
 		_value: {type: String, required: true},
 		options: {type: Object, required: false},
-		_options: {type: Object, required: true, doc: true}
+		_options: {type: Object, required: true, doc: true},
+		defaultList: {type: Array, required: false, doc: true}
 	},
 	data() {
 		return {
@@ -45,11 +57,18 @@ export default {
 		}
 	},
 	computed: {
-		endpoint: (t) => t._options.endpoint,
+		endpoint: (t) => t._options.list,
 		oKey: (t) => t._options.key,
 		oLabel: (t) => t._options.label,
 		oValue: (t) => t._options.value,
-		list: (t) => t.oKey ? get(t.res, t.oKey, []) : t.res || [],
+
+		list() {
+			const resList = this.oKey ? get(this.res, this.oKey, []) : this.res || [];
+			const defaultList = this.defaultList || [];
+			const list = [...defaultList, ...resList];
+
+			return uniqBy(list, this.oValue);
+		},
 
 		listMap: (t) => t.list.map(x => ({
 			label: x[t.oLabel],

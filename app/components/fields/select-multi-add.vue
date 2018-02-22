@@ -1,7 +1,7 @@
 <template>
 	<div class="select-multi-add">
 		<Select v-model="data.value" @change="update" v-bind="{size}" filterable multiple allow-create>
-			<Option v-for="option in options" v-bind="option" :key="option.value" />
+			<Option v-for="option in listMap" v-bind="option" :key="option.value" />
 		</Select>
 	</div>
 </template>
@@ -15,24 +15,26 @@ export default {
 		res: {
 			props: {
 				value: "selectValue",
-				options: "selectOptions"
+				list: "selectOptions",
+				options: {
+					label: "name",
+					value: "id"
+				}
 			},
 			data: {
-				selectValue: [],
+				selectValue: ["DK"],
 				selectOptions: [
 					{
-						label: "Danmark",
-						value: "dk",
-						disabled: false
+						name: "Danmark",
+						id: "DK",
 					},
 					{
-						label: "England",
-						value: "UK"
+						name: "England",
+						id: "UK"
 					},
 					{
-						label: "Murica",
-						value: "US",
-						disabled: true
+						name: "Murica",
+						id: "US",
 					}
 				]
 			}
@@ -40,9 +42,10 @@ export default {
 	},
 	props: {
 		meta: {type: Object, require: false, default: () => ({})},
-		options: {type: Array, required: true, doc: true},
+		_options: {type: Object, required: true, doc: true},
 		value: {type: Array, required: false, doc: true},
 		_value: {type: String, required: true},
+		list: {type: Array, required: true, doc: true}
 	},
 	data() {
 		return {
@@ -52,6 +55,14 @@ export default {
 		}
 	},
 	computed: {
+		oLabel: (t) => t._options.label,
+		oValue: (t) => t._options.value,
+
+		listMap: (t) => t.list.map(x => ({
+			label: x[t.oLabel],
+			value: x[t.oValue]
+		})),
+
 		size() {
 			if (this.meta.location === "table") return "small";
 			if (this.meta.location === "tabs") return "medium";
