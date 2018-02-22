@@ -5,7 +5,9 @@
 		<div class="main">
 			<div class="sidebar">
 				<div class="title">Index</div>
-				<a v-for="(field, key) in fields" class="link" :href="`#${key}`">{{key}}</a>
+				<div class="fields">
+					<a v-for="(field, key) in fields" class="link" :href="`#${key}`">{{key}}</a>
+				</div>
 			</div>
 
 			<div class="items">
@@ -39,10 +41,10 @@ export default {
 		display: flex;
 
 		.sidebar {
+			align-self: flex-start;
 			position: sticky;
-			display: table;
 			margin-right: 5em;
-			padding-top: 3em;
+			padding-top: 2em;
 			top: 0;
 			left: 0;
 
@@ -50,15 +52,21 @@ export default {
 				font-size: 1.25em;
 				margin-bottom: 1em;
 			}
-			.link {
-				font-size: 0.9em;
-				display: block;
-				margin: 0.5em 0;
-				color: $black1;
-				text-decoration: none;
 
-				&:hover {
-					color: $blue5;
+			.fields {
+				overflow: auto;
+				padding-right: 1em;
+
+				.link {
+					font-size: 0.9em;
+					display: block;
+					margin: 0.5em 0;
+					color: $black1;
+					text-decoration: none;
+
+					&:hover {
+						color: $blue5;
+					}
 				}
 			}
 		}

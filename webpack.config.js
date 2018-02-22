@@ -127,13 +127,6 @@ module.exports = {
 			proxy: "http://localhost:3001",
 		}, {reload: false, ws: true}),
 
-		new BundleAnalyzerPlugin({
-			analyzerMode: production ? "static" : "server",
-			reportFilename: "report.html",
-			analyzerPort: 3005,
-			openAnalyzer: false
-		}),
-
 		new webpack.DefinePlugin({
 			"process.env": {
 				config: JSON.stringify(config)
@@ -151,6 +144,11 @@ if (production) {
 				config: JSON.stringify(config),
 				NODE_ENV: "'production'"
 			}
+		}),
+
+		new BundleAnalyzerPlugin({
+			analyzerMode: "static",
+			reportFilename: "report.html"
 		}),
 
 		new UglifyJsPlugin({
