@@ -5,6 +5,7 @@ export {default as vImage} from "./image.vue";
 export {default as vSwitch} from "./switch.vue";
 export {default as vCheckbox} from "./checkbox.vue";
 export {default as vSelect} from "./select.vue";
+export {default as vSelectSearch} from "./select-search.vue";
 export {default as vSelectMulti} from "./select-multi.vue";
 export {default as vSelectMultiAdd} from "./select-multi-add.vue";
 export {default as vSelectMultiSearch} from "./select-multi-search.vue";
