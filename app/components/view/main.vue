@@ -53,7 +53,6 @@ export default {
 
 			return [...this.edits.data].reduce((sum, key) => {
 				key = key.split(".")[0].split("[")[0]; // use the root key to update the field if it's nested
-
 				sum[key] = get(this.data, key);
 				return sum;
 			}, {});
@@ -113,7 +112,7 @@ export default {
 		async save({done} = {}) {
 			try {
 				this.loading = true;
-				await this.$http.put(this.endpoint({type: "update"}), this.dataUpdated);
+				await this.$http.put(this.endpoint({type: "update"}), {data: this.dataUpdated});
 
 				// reset edits
 				this.edits = edits();
