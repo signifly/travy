@@ -18,6 +18,7 @@
 
 <script>
 import {mapValues, forEach, set, get} from "lodash";
+import {endpoint} from "@/modules/utils";
 import {Row, Col} from "element-ui";
 import {vHeader, vTabs, vPanel} from "./components";
 
@@ -41,6 +42,7 @@ export default {
 		}
 	},
 	computed: {
+		endpoints: (t) => t.definitions.endpoints,
 		header: (t) => t.definitions.header,
 		tabs: (t) => t.definitions.tabs,
 		parentId: (t) => t.$route.meta.parent.id,
@@ -79,6 +81,10 @@ export default {
 			console.log("remove", data);
 		},
 
+		endpoint({type}) {
+			return endpoint({type, item: this.data, endpoints: this.endpoints});
+		},
+
 		async getDefinitions() {
 
 			if (this.parentId === "test") {
@@ -107,7 +113,7 @@ export default {
 		async save({done} = {}) {
 			try {
 				this.loading = true;
-				await this.$http.put(this.endpoint, this.dataUpdated);
+				await this.$http.put(this.endpoint({type: "update"}), this.dataUpdated);
 
 				// reset edits
 				this.edits = edits();

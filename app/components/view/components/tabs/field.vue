@@ -82,8 +82,10 @@ export default {
 		nodata() {
 			if (!this.mounted) return;
 
-			const fieldData = get(this.$refs, "field.data");
-			const keys = map(fieldData, (val, key) => key);
+			const field = get(this.$refs, "field", {});
+			if (field.disabled) return false;
+
+			const keys = map(field.data, (val, key) => key);
 			return keys.map(key => this.propsData[key]).some(x => !x);
 		}
 	},

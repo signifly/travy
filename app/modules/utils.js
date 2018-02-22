@@ -29,6 +29,7 @@ export const date = (epoch) => {
 	};
 };
 
+
 export const base64Encode = (file) => {
 	return new Promise((resolve, reject) => {
 		const reader = new FileReader();
@@ -36,4 +37,18 @@ export const base64Encode = (file) => {
 		reader.onload = () => resolve(reader.result);
 		reader.onerror = error => reject(error);
 	});
+};
+
+
+export const endpoint = ({type, item, endpoints}) => {
+	const endpoint = endpoints[type];
+
+	if (endpoint.url.includes("{id}")) {
+		const id = item[endpoint.id];
+		if (!id) throw new Error(`missing ${endpoint.id} on item ${this.item.id}`);
+
+		return endpoint.url.replace("{id}", id);
+	} else {
+		return endpoint.url;
+	}
 };

@@ -33,6 +33,7 @@
 
 <script>
 import {omit, get} from "lodash";
+import {endpoint} from "@/modules/utils";
 import * as components from "./components";
 import box from "../box.vue";
 
@@ -73,16 +74,7 @@ export default {
 		},
 
 		endpoint({type, item}) {
-			const endpoint = this.endpoints[type];
-
-			if (endpoint.url.includes("{id}")) {
-				const id = item[endpoint.id];
-				if (!id) throw new Error(`missing ${endpoint.id} on item ${this.item.id}`);
-
-				return endpoint.url.replace("{id}", id);
-			} else {
-				return endpoint.url;
-			}
+			return endpoint({type, item, endpoints: this.endpoints});
 		},
 
 		show({item}) {
