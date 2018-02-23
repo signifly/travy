@@ -197,6 +197,13 @@ export default {
 					padding: 1em 1.5em;
 					padding-right: 2em;
 				}
+
+				&.event {
+					pre {
+						max-width: 18em;
+						overflow: auto;
+					}
+				}
 			}
 		}
 	}
