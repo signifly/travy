@@ -1,0 +1,7 @@
+version: "3"
+
+services:
+  command: npm run staging && serve -s -p 80 dist
+  app:
+    ports:
+      - "80:80"
