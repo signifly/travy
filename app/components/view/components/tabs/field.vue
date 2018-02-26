@@ -67,7 +67,7 @@ export default {
 		disabled: (t) => t.field.fieldType.readonly,
 		reference: (t) => t.field.fieldType.reference,
 		opts: (t) => t.mounted ? get(t.$refs, "field.opts", {}) : {},
-		error: (t) => get(t.errors, `${t.name}[0]`),
+		error: (t) => get(t.errors, `data.${t.name}`, [])[0],
 
 		props: (t) => t.field.fieldType.props,
 		propsData: (t) => mapValues(t.props, (val) => get(t.data, val)),

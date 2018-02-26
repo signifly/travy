@@ -38,7 +38,7 @@ export default {
 		data: {type: Object, default: () => ({})}
 	},
 	computed: {
-		error: (t) => get(t.errors, `${t.name}[0]`),
+		error: (t) => get(t.errors, `data.${t.name}`, [])[0],
 		comps: (t) => t.$options.components,
 		id: (t) => t.fieldType.id,
 
