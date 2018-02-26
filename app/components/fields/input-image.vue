@@ -26,16 +26,20 @@ export default {
 	meta: {
 		res: {
 			props: {
-				image: "image"
+				image: "image",
+				base64: "base"
 			},
 			data: {
-				image: "https://pbs.twimg.com/media/DVnfJkqVAAAqS91.jpg"
+				image: "https://pbs.twimg.com/media/DVnfJkqVAAAqS91.jpg",
+				base: undefined
 			}
 		}
 	},
 	props: {
 		image: {type: String, required: false, doc: true, note: "url"},
-		_image: {type: String, required: true}
+		base64: {type: String, required: false, doc: true, note: "base64 encoded"},
+		_base64: {type: String, required: true}
+
 	},
 	data() {
 		return {
@@ -63,7 +67,7 @@ export default {
 		update(file) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this._image]: file}
+				data: {[this._base64]: file}
 			});
 		}
 	}
