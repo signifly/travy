@@ -3,5 +3,16 @@ version: "3"
 services:
   app:
     restart: unless-stopped
+    environment:
+      VIRTUAL_HOST: sikane-prod.signifly.com
+      VIRTUAL_PORT: "80"
+
+  https-portal:
+    image: steveltn/https-portal:1
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      STAGE: production
