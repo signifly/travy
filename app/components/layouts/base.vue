@@ -12,6 +12,6 @@ export default {
 
 <style lang="scss" scoped>
 .base {
-
+	background-color: $white1;
 }
 </style>
