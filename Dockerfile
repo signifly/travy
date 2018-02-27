@@ -11,8 +11,11 @@ RUN yarn global add npm-check-updates
 
 WORKDIR /app
 
-COPY package*.json ./
+# install dependencies
+COPY package.json ./
+COPY yarn.lock ./
 
+# install app
 RUN yarn
 
 COPY . .
