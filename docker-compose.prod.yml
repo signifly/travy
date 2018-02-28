@@ -2,7 +2,7 @@ version: "3"
 
 services:
   app:
-    image: docker-registry.signifly.com/sikane-app
+    image: docker-registry.signifly.com/sikane-app:production
     restart: unless-stopped
     labels:
       virtual.host: "sikane-prod.signifly.com"
