@@ -12,24 +12,26 @@
 
 			<div class="item">
 				<div class="title">{{_infoKey}}:</div>
-				<div class="text"></div>
+				<div class="text">
+					<vItemsTooltip :items="infoItems" :_itemKey="_infoItemKey" />
+				</div>
 			</div>
 		</div>
 
 		<div class="toggle">
-			<elSwitch v-model="data.switchValue" :inactive-text="`${_switchTitle}:`" @change="switchUpdate" />
+			<elSwitch v-model="data.switchValue" :inactive-text="`${_switchTitle}:`" @change="switchUpdate"/>
 		</div>
 
-		<actions :_items="_actions" @fieldA="$emit('fieldA', $event)"/>
+		<vActions :_items="_actions" @fieldA="$emit('fieldA', $event)"/>
 	</div>
 </template>
 
 <script>
-import {Tooltip, Switch} from "element-ui";
-import actions from "./actions/index.vue";
+import {Switch} from "element-ui";
+import {vActions, vItemsTooltip} from "./index";
 
 export default {
-	components: {Tooltip, elSwitch: Switch, actions},
+	components: {elSwitch: Switch, vActions, vItemsTooltip},
 	meta: {
 		res: {
 			props: {
@@ -76,7 +78,7 @@ export default {
 		_infoItemKey: {type: String, required: true, doc: true},
 		_switchTitle: {type: String, required: true, doc: true},
 		switchValue: {type: Boolean, required: false, doc: true},
-		_switchValue: {type: Boolean, required: false},
+		_switchValue: {type: String, required: true},
 		_actions: {type: Array, required: true, doc: true}
 	},
 	data() {

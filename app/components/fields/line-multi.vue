@@ -1,12 +1,18 @@
 <template>
 	<div class="line-multi">
-		multi
+		<div class="items">
+			<vLine v-for="(item, i) in items" :key="i" v-bind="[itemsPropsData[i], itemsPropsValue[i]]" />
+		</div>
 	</div>
 </template>
 
 <script>
+import {mapValues, mapKeys, get} from "lodash";
+import draggable from "vuedraggable";
+import {vLine} from "./index";
 
 export default {
+	components: {draggable, vLine},
 	meta: {
 		res: {
 			props: {
@@ -37,7 +43,7 @@ export default {
 			data: {
 				models: [
 					{
-						titleValue: "a modal",
+						titleValue: "modal #1",
 						switchValue: false,
 						infoItems: [
 							{
@@ -49,7 +55,7 @@ export default {
 						]
 					},
 					{
-						title: "a model2",
+						titleValue: "modal #2",
 						switchValue: false,
 						infoItems: [
 							{
@@ -68,6 +74,18 @@ export default {
 		items: {type: Array, required: true, doc: true},
 		_itemFieldId: {type: String, required: true, doc: true},
 		_itemFieldProps: {type: Object, required: true, doc: true}
+	},
+	computed: {
+		itemsPropsData() {
+			return this.items.map(item => {
+				return mapValues(this._itemFieldProps, (val) => get(item, val));
+			});
+		},
+		itemsPropsValue() {
+			return this.items.map(item => {
+				return mapKeys(this._itemFieldProps, (val, key) => `_${key}`);
+			});
+		}
 	}
 };
 </script>
