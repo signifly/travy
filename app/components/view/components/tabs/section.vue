@@ -5,21 +5,18 @@
 			<Tag v-if="nodata" size="small" class="status" type="danger">No data</Tag>
 		</div>
 
-		<div class="fields" v-if="!draggable">
+		<div class="fields">
 			<field v-for="field in fields" v-bind="{field, data, errors}" :key="field.name" @fieldA="fieldA" @nodata="fieldsDataSet" ref="field"/>
 		</div>
-
-		<vDrag v-else v-bind="{field, data, draggable}" @fieldA="fieldA" element="div" class="fields" @update="fieldA"/>
 	</div>
 </template>
 
 <script>
 import {Tag} from "element-ui";
 import field from "./field.vue";
-import vDrag from "./drag.vue";
 
 export default {
-	components: {Tag, field, vDrag},
+	components: {Tag, field},
 	props: {
 		section: {type: Object, required: true},
 		data: {type: Object, required: true},
@@ -33,7 +30,6 @@ export default {
 	computed: {
 		field: (t) => t.section.field,
 		fields: (t) => t.section.fields,
-		draggable: (t) => t.section.draggable,
 		nodata: (t) => Object.values(t.fieldsData).some(x => x)
 	},
 	methods: {

@@ -1,7 +1,13 @@
 <template>
 	<div class="line-multi">
-		<div class="items">
-			<vLine v-for="(item, i) in items" :key="i" v-bind="[itemsPropsData[i], itemsPropsValue[i]]" @fieldA="fieldA($event, i)" />
+		<draggable :list="items" @end="listUpdate" v-if="items.length > 0">
+			<div class="item" v-for="(item, i) in items" :key="item.id">
+				<vLine v-bind="[itemsPropsData[i], itemsPropsValue[i]]" @fieldA="fieldA($event, i)" />
+			</div>
+		</draggable>
+
+		<div v-else class="noitems">
+			No items
 		</div>
 	</div>
 </template>
@@ -76,13 +82,6 @@ export default {
 		_itemFieldId: {type: String, required: true, doc: true},
 		_itemFieldProps: {type: Object, required: true, doc: true}
 	},
-	data() {
-		return {
-			data: {
-				items: this.items
-			}
-		}
-	},
 	computed: {
 		itemsPropsData() {
 			return this.items.map(item => {
@@ -128,6 +127,13 @@ export default {
 
 <style lang="scss" scoped>
 .line-multi {
-
+	.item {
+		margin: 0.5em 0;
+	}
+	.noitems {
+		color: $blue4;
+		font-size: em(12);
+		margin: 1em 0;
+	}
 }
 </style>
