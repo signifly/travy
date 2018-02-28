@@ -28,7 +28,8 @@
 
 <script>
 import {Switch} from "element-ui";
-import {vActions, vItemsTooltip} from "./index";
+import vActions from "./actions/index.vue";
+import vItemsTooltip from "./items-tooltip.vue";
 
 export default {
 	components: {elSwitch: Switch, vActions, vItemsTooltip},
