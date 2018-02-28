@@ -1,7 +1,7 @@
 <template>
 	<div class="line-multi">
 		<div class="items">
-			<vLine v-for="(item, i) in items" :key="i" v-bind="[itemsPropsData[i], itemsPropsValue[i]]" />
+			<vLine v-for="(item, i) in items" :key="i" v-bind="[itemsPropsData[i], itemsPropsValue[i]]" @fieldA="fieldA($event, i)" />
 		</div>
 	</div>
 </template>
@@ -72,8 +72,16 @@ export default {
 	},
 	props: {
 		items: {type: Array, required: true, doc: true},
+		_items: {type: String, required: true},
 		_itemFieldId: {type: String, required: true, doc: true},
 		_itemFieldProps: {type: Object, required: true, doc: true}
+	},
+	data() {
+		return {
+			data: {
+				items: this.items
+			}
+		}
 	},
 	computed: {
 		itemsPropsData() {
@@ -86,6 +94,34 @@ export default {
 				return mapKeys(this._itemFieldProps, (val, key) => `_${key}`);
 			});
 		}
+	},
+	methods: {
+		fieldA({action, data, done}, i) {
+			this[action]({data, done, i});
+		},
+
+		update({data, done, i}) {
+			data = mapKeys(data, (val, key) => `${this._items}[${i}].${key}`);
+			this.$emit("fieldA", {action: "update", data, done});
+		},
+
+		show({data, i}) {
+			const {id} = this.items[i];
+			this.$router.push("/" + data.endpoint.replace("{id}", id));
+		},
+
+		remove({done, i}) {
+			this.items.splice(i, 1);
+			this.listUpdate();
+			if (done) done();
+		},
+
+		listUpdate() {
+			this.$emit("fieldA", {
+				action: "update",
+				data: {[this._items]: this.items}
+			});
+		},
 	}
 };
 </script>

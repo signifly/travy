@@ -60,11 +60,10 @@ export default {
 	},
 	methods: {
 		fieldA({action, tab, data}) {
-			this.track({tab, data});
-			if (this[action]) this[action]({data});
+			if (this[action]) this[action]({tab, data});
 		},
 
-		track({tab, data}) { // track tab and data edits
+		track({tab, data}) { // track tab and data updates
 			const edits = {...this.edits};
 			edits.tabs.add(tab);
 			Object.keys(data).forEach(key => edits.data.add(key));
@@ -72,16 +71,17 @@ export default {
 			this.editsU++;
 		},
 
-		update({data}) {
+		endpoint({type}) {
+			return endpoint({type, item: this.data, endpoints: this.endpoints});
+		},
+
+		update({tab, data}) {
+			this.track({tab, data});
 			forEach(data, (val, key) => set(this.data, key, val));
 		},
 
 		remove({data}) {
 			console.log("remove", data);
-		},
-
-		endpoint({type}) {
-			return endpoint({type, item: this.data, endpoints: this.endpoints});
 		},
 
 		async getDefinitions() {

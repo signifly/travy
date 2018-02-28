@@ -9,7 +9,7 @@ export default {
 	},
 	created() {
 		this.$emit("close");
-		this.$parent.$emit("fieldA", {action: "show"});
+		this.$parent.$emit("fieldA", {action: "show", data: this.item});
 	}
 };
 </script>
