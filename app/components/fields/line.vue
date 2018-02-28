@@ -5,22 +5,22 @@
 		</div>
 
 		<div class="info">
-			<div class="item" v-for="item in info">
-				<div class="title">{{item.title}}:</div>
-				<div class="text">{{item.value}}</div>
-				<div class="tooltip" v-if="item.tooltip">
-					<Tooltip :content="item.tooltip" placement="right">
-						<i class="el-icon-info"></i>
-					</Tooltip>
-				</div>
+			<div class="item">
+				<div class="title">{{_titleKey}}:</div>
+				<div class="text">{{titleValue}}</div>
+			</div>
+
+			<div class="item">
+				<div class="title">{{_infoKey}}:</div>
+				<div class="text"></div>
 			</div>
 		</div>
 
 		<div class="toggle">
-			<elSwitch v-model="data.switchValue" :inactive-text="`${switchTitle}:`" @change="switchUpdate" />
+			<elSwitch v-model="data.switchValue" :inactive-text="`${_switchTitle}:`" @change="switchUpdate" />
 		</div>
 
-		<actions :_items="actions" @fieldA="$emit('fieldA', $event)"/>
+		<actions :_items="_actions" @fieldA="$emit('fieldA', $event)"/>
 	</div>
 </template>
 
@@ -33,27 +33,14 @@ export default {
 	meta: {
 		res: {
 			props: {
-				switchValue: "switchVal",
-				switchTitle: "switchT",
-				info: "infoArray",
-				actions: "actionsArray"
-			},
-			data: {
-				switchVal: false,
-				switchT: "title",
-				infoArray: [
-					{
-						title: "Model",
-						value: "breeze table",
-						tooltip: "just a tooltip"
-					},
-					{
-						title: "Variants",
-						value: "Breeze chair",
-						tooltip: "just a tooltip"
-					}
-				],
-				actionsArray: [
+				titleKey: "Modal",
+				titleValue: "titleValue",
+				infoKey: "Variants",
+				infoItems: "infoItems",
+				infoItemKey: "name",
+				switchTitle: "switch",
+				switchValue: "switchValue",
+				actions: [
 					{
 						title: "Delete",
 						type: "delete",
@@ -61,18 +48,36 @@ export default {
 					},
 					{
 						title: "View",
-						type: "show"
+						type: "show",
+						endpoint: "stock-item-models/{id}"
+					}
+				]
+			},
+			data: {
+				titleValue: "a modal",
+				switchValue: false,
+				switchT: "title",
+				infoItems: [
+					{
+						name: "model #1"
+					},
+					{
+						name: "model #2"
 					}
 				]
 			}
 		}
 	},
 	props: {
-		info: {type: Array, required: true, doc: true},
-		switchValue: {type: Boolean, required: true, doc: true},
-		_switchValue: {type: String, required: true},
-		switchTitle: {type: String, required: true, doc: true},
-		actions: {type: Array, required: true, doc: true}
+		_titleKey: {type: String, required: true, doc: true},
+		titleValue: {type: String, required: true, doc: true},
+		_infoKey: {type: String, required: true, doc: true},
+		infoItems: {type: Array, required: true, doc: true},
+		_infoItemKey: {type: String, required: true, doc: true},
+		_switchTitle: {type: String, required: true, doc: true},
+		switchValue: {type: Boolean, required: false, doc: true},
+		_switchValue: {type: Boolean, required: false},
+		_actions: {type: Array, required: true, doc: true}
 	},
 	data() {
 		return {
