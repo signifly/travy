@@ -124,7 +124,8 @@ export default {
 		async save({done} = {}) {
 			try {
 				this.loading = true;
-				await this.$http.put(this.endpoint({type: "update"}), {data: this.dataUpdated}, {custom: true});
+				const {data} = await this.$http.put(this.endpoint({type: "update"}), {data: this.dataUpdated}, {custom: true});
+				this.data = data.data;
 
 				// reset edits
 				this.edits = edits();
@@ -132,8 +133,6 @@ export default {
 
 				// reset errors
 				this.error = {};
-
-				await this.getData();
 
 				if (done) await done();
 
