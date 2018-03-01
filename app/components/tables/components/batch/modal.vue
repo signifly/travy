@@ -11,13 +11,13 @@
 			</div>
 
 			<div class="error" v-if="error.message">{{error.message}}</div>
-
+			<div class="error-ids" v-if="idsError">{{idsError}}</div>
 		</div>
 	</Dialog>
 </template>
 
 <script>
-import {forEach, set} from "lodash";
+import {forEach, get, set} from "lodash";
 import {Dialog, Button} from "element-ui";
 import field from "@/components/field.vue";
 
@@ -37,6 +37,8 @@ export default {
 		}
 	},
 	computed: {
+		idsError: (t) => get(t.error, "errors.ids[0]"),
+
 		open: {
 			get() {
 				return this.active;
@@ -82,6 +84,12 @@ export default {
 		margin-top: 1em;
 		font-size: 0.875em;
 		color: $danger;
+
+		&-ids {
+			margin-top: 0.5em;
+			font-size: 0.875em;
+			color: $danger;
+		}
 	}
 }
 </style>
