@@ -50,7 +50,7 @@ export default {
 	data() {
 		return {
 			data: {
-				value: this.value
+				value: []
 			}
 		}
 	},
@@ -76,6 +76,9 @@ export default {
 				data: {[this._value]: val}
 			});
 		}
+	},
+	created() {
+		this.data.value = this.listMap.map(x => x.value);
 	}
 }
 </script>

@@ -52,7 +52,7 @@ export default {
 			loading: false,
 			res: null,
 			data: {
-				value: this.value
+				value: []
 			}
 		}
 	},
@@ -99,6 +99,9 @@ export default {
 			this.getList(q);
 			this.loading = true;
 		}
+	},
+	created() {
+		this.data.value = this.listMap.map(x => x.value);
 	}
 };
 </script>

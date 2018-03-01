@@ -2,11 +2,11 @@
 	<div class="view-main" v-if="data">
 		<div class="main">
 			<Row>
-				<Col :span="16">
+				<Col class="left" :span="16">
 					<vHeader v-bind="{data, header}" />
 					<vTabs v-bind="{tabs, data, edits, errors, dataU}" @fieldA="fieldA"/>
 				</Col>
-				<Col :span="8">
+				<Col class="right" :span="8">
 					<vModifiers v-bind="{modifiers}" />
 				</Col>
 			</Row>
@@ -140,6 +140,12 @@ export default {
 
 <style lang="scss" scoped>
 .view-main {
-
+	.right {
+		/deep/ {
+			.modifiers {
+				justify-content: flex-end;
+			}
+		}
+	}
 }
 </style>
