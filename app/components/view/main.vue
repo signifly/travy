@@ -43,6 +43,7 @@ export default {
 		}
 	},
 	computed: {
+		query: (t) => t.$route.query,
 		endpoints: (t) => t.definitions.endpoints,
 		header: (t) => t.definitions.header,
 		modifiers: (t) => t.definitions.modifiers,
@@ -87,24 +88,33 @@ export default {
 		},
 
 		async getDefinitions() {
+			const params = {
+				modifier: this.query.modifiers
+			};
 
 			if (this.parentId === "test") {
 				const {data} = await this.$http.get("https://sikaline.glitch.me/view-defs/products");
 				this.definitions = data;
 			} else {
-				const {data} = await this.$http.get(`definitions/view/${this.parentId}`);
+				const {data} = await this.$http.get(`definitions/view/${this.parentId}`, {params});
 				this.definitions = data;
 			}
 
 			await this.getData();
 		},
 
-		async getData() {
+		async getData({type} = {}) {
+			if (type === "modifiers") await this.getDefinitions();
+
+			const params = {
+				modifier: this.query.modifiers
+			};
+
 			if (this.parentId === "test") {
 				const {data} = await this.$http.get("https://sikaline.glitch.me/view-data/products");
 				this.data = data;
 			} else {
-				const {data} = await this.$http.get(`${this.parentId}/${this.id}`);
+				const {data} = await this.$http.get(`${this.parentId}/${this.id}`, {params});
 				this.data = data.data;
 			}
 
@@ -122,6 +132,8 @@ export default {
 
 				// reset errors
 				this.error = {};
+
+				await this.getData();
 
 				if (done) await done();
 
