@@ -21,7 +21,7 @@
 						<td>{{prop.required}}</td>
 						<td>{{prop.map}}</td>
 						<td>{{prop.default}}</td>
-						<td>{{prop.note}}</td>
+						<td v-html="prop.note"></td>
 						<td>{{prop.validator}}</td>
 					</tr>
 				</table>
