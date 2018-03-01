@@ -41,7 +41,7 @@ export default {
 						{
 							title: "View",
 							type: "show",
-							endpoint: "stock-item-models/{id}"
+							endpoint: "doc"
 						}
 					]
 				}
