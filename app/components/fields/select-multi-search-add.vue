@@ -43,7 +43,6 @@ export default {
 	},
 	props: {
 		meta: {type: Object, require: false, default: () => ({})},
-		options: {type: Object, required: false},
 		_options: {type: Object, required: true, doc: true},
 		_values: {type: String, required: true},
 		values: {type: Array, required: false, doc: true, note: `
