@@ -7,7 +7,7 @@
 					<vTabs v-bind="{tabs, data, edits, errors, dataU}" @fieldA="fieldA"/>
 				</Col>
 				<Col :span="8">
-					right
+					<vModifiers v-bind="{modifiers}" />
 				</Col>
 			</Row>
 		</div>
@@ -21,11 +21,12 @@ import {mapValues, forEach, set, get} from "lodash";
 import {endpoint} from "@/modules/utils";
 import {Row, Col} from "element-ui";
 import {vHeader, vTabs, vPanel} from "./components";
+import vModifiers from "@/components/modifiers.vue";
 
 const edits = () => ({tabs: new Set(), data: new Set()});
 
 export default {
-	components: {Row, Col, vHeader, vTabs, vPanel},
+	components: {Row, Col, vHeader, vTabs, vPanel, vModifiers},
 	props: {
 		id: {type: String, required: true},
 		meta: {type: Object, required: true}
@@ -44,6 +45,7 @@ export default {
 	computed: {
 		endpoints: (t) => t.definitions.endpoints,
 		header: (t) => t.definitions.header,
+		modifiers: (t) => t.definitions.modifiers,
 		tabs: (t) => t.definitions.tabs,
 		parentId: (t) => t.$route.meta.parent.id,
 		errors: (t) => t.error.errors,

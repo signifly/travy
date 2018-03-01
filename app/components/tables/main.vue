@@ -35,10 +35,11 @@
 import {omit, get} from "lodash";
 import {endpoint} from "@/modules/utils";
 import * as components from "./components";
+import vModifiers from "@/components/modifiers.vue";
 import box from "../box.vue";
 
 export default {
-	components: {...components, box},
+	components: {...components, vModifiers, box},
 	props: {
 		id: {type: String, required: true},
 		title: {type: String, required: false}
