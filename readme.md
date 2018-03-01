@@ -1,6 +1,7 @@
 ## Setup
 
-### Docker setup
+### Docker development
+
 ``` bash
 # start container(s)
 $ docker-compose up
@@ -18,12 +19,12 @@ $ cd /app && npm run dev-staging
 $ cd /app && npm run build
 ```
 
-
-### Or manual setup
-- install node 8+
+### Docker production
 
 ``` bash
-$ npm install
-$ npm run dev
-$ npm run build
+# pull latest images
+$ docker-compose -f docker-compose.yml -f docker-compose.prod.yml pull
+
+# start
+$ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --remove-orphans
 ```
