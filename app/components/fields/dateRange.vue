@@ -28,8 +28,8 @@ export default {
 				dateEnd: "dateEnd"
 			},
 			data: {
-				// dateStart: 1325376000,
-				// dateEnd: 1356998400
+				dateStart: 1325376000,
+				dateEnd: 1356998400
 			}
 		}
 	},
