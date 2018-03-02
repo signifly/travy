@@ -2,29 +2,23 @@
 	<div class="modal">
 		<Button :type="_buttonType" :icon="`el-icon-${_buttonIcon}`" @click="modal = true">{{_buttonText}}</Button>
 
-		<Dialog :title="_modalTitle" :visible.sync="modal" width="500px">
-			<div class="fields">
-				<vField v-for="field in _fields" :key="field.name" :errors="error.errors" v-bind="field" @fieldA="fieldA" />
-			</div>
-
-			<div slot="footer" class="footer">
-				<div class="actions">
-					<Button @click="modal = false" :disabled="loading">Cancel</Button>
-					<Button type="primary" @click="save" :loading="loading">Save</Button>
-				</div>
-
-				<div class="error" v-if="error.message">{{error.message}}</div>
-			</div>
-		</Dialog>
+		<vModalFields
+			v-bind="{loading, error}"
+			:visible.sync="modal"
+			:fields="_fields"
+			:data="_fieldsData"
+			:title="_modalTitle"
+			@fieldA="fieldA"
+			@submit="save"/>
 	</div>
 </template>
 
 <script>
-import {Button, Dialog} from "element-ui";
-import vField from "@/components/field.vue";
+import {Button} from "element-ui";
+import vModalFields from "@/components/modal-fields.vue";
 
 export default {
-	components: {Button, Dialog},
+	components: {Button, vModalFields},
 	meta: {
 		res: {
 			props: {
@@ -99,9 +93,6 @@ export default {
 				this.loading = false;
 			}
 		}
-	},
-	beforeCreate() {
-		this.$options.components.vField = vField;
 	}
 }
 </script>
