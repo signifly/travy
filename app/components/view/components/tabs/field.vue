@@ -20,6 +20,7 @@
 			:is="id"
 			:unit="unit"
 			:props="props"
+			:rootData="data"
 			:disabled="disabled"
 			:meta="{location: 'tabs'}"
 			v-bind="[propsData, propsValue]"
@@ -42,10 +43,7 @@ import {Tooltip, Tag} from "element-ui";
 import * as fields from "@/components/fields";
 
 export default {
-	components: {
-		Tooltip, Tag,
-		...fields
-	},
+	components: {Tooltip, Tag, ...fields},
 	props: {
 		field: {type: Object, required: true},
 		data: {type: Object, required: true},

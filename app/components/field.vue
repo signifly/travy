@@ -14,6 +14,7 @@
 			:is="id"
 			v-bind="[propsData, propsValue]"
 			:props="props"
+			:rootData="data"
 			@fieldA="$emit('fieldA', $event)"
 		/>
 

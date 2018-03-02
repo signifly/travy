@@ -6,7 +6,7 @@
 			v-bind="{loading, error}"
 			:visible.sync="modal"
 			:fields="_fields"
-			:data="_fieldsData"
+			:data="dataComb"
 			:title="_modalTitle"
 			@fieldA="fieldA"
 			@submit="save"/>
@@ -51,11 +51,12 @@ export default {
 				}
 			},
 			data: {
-				postid: "1"
+				postid: "1",
 			}
 		}
 	},
 	props: {
+		rootData: {type: Object, required: true},
 		_buttonText: {type: String, required: true, doc: true},
 		_buttonIcon: {type: String, required: false, doc: true},
 		_buttonType: {type: String, required: false, doc: true},
@@ -72,6 +73,9 @@ export default {
 			loading: false,
 			modal: false
 		}
+	},
+	computed: {
+		dataComb: (t) => ({...t.rootData, fieldsData: t._fieldsData})
 	},
 	methods: {
 		fieldA({data}) {
