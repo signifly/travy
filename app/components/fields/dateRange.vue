@@ -45,7 +45,7 @@ export default {
 				firstDayOfWeek: 1
 			},
 			data: {
-				dates: [this.dateStart, this.dateEnd].map(x => x * 1000).filter(x => x)
+				dates: [this.dateStart, this.dateEnd].map(x => x ? x * 1000 : null)
 			}
 		}
 	},
