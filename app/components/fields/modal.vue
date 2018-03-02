@@ -9,8 +9,8 @@
 
 			<div slot="footer" class="footer">
 				<div class="actions">
-					<Button @click="modal = false">Cancel</Button>
-					<Button type="primary" @click="save">Save</Button>
+					<Button @click="modal = false" :disabled="loading">Cancel</Button>
+					<Button type="primary" @click="save" :loading="loading">Save</Button>
 				</div>
 
 				<div class="error" v-if="error.message">{{error.message}}</div>
@@ -66,8 +66,8 @@ export default {
 		_buttonIcon: {type: String, required: false, doc: true},
 		_buttonType: {type: String, required: false, doc: true},
 		_modalTitle: {type: String, required: true, doc: true},
-		_endpoint: {type: Object, required: true, doc: true},
 		endpointId: {type: [String, Number], required: true, doc: true},
+		_endpoint: {type: Object, required: true, doc: true},
 		_fields: {type: Array, required: true, doc: true},
 		_fieldsData: {type: Object, required: true, doc: true},
 	},
@@ -75,6 +75,7 @@ export default {
 		return {
 			error: {},
 			payload: {},
+			loading: false,
 			modal: false
 		}
 	},
@@ -88,11 +89,14 @@ export default {
 			const url = ept.url.replace("{id}", this.endpointId);
 
 			try {
+				this.loading = true;
 				await this.$http[ept.method](url, {data: this.payload}, {custom: true});
 				this.$emit("fieldA", {action: "getData"});
-
+				this.modal = false;
 			} catch({response}) {
 				this.error = response.data;
+			} finally {
+				this.loading = false;
 			}
 		}
 	},
