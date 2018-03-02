@@ -5,7 +5,7 @@
 			v-for="field in fields"
 			:key="field.name"
 			:errors="error.errors"
-			v-bind="field"
+			v-bind="[field, {data}]"
 			@fieldA="$emit('fieldA', $event)"/>
 
 			<div class="footer" slot="footer">
