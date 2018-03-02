@@ -17,6 +17,7 @@
 				<MenuItem index="/prices">Prices</MenuItem>
 				<MenuItem index="/price-lists">Price lists</MenuItem>
 				<MenuItem index="/files">Files</MenuItem>
+				<MenuItem index="/options">Options</MenuItem>
 			</Submenu>
 			<MenuItem index="/23">Translations</MenuItem>
 			<MenuItem index="/shops">Shops</MenuItem>
