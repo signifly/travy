@@ -9,14 +9,14 @@
 			@fieldA="$emit('fieldA', $event)"/>
 
 			<div class="footer" slot="footer">
-				<slot name="footer">
-					<div class="actions">
-						<Button @click="_visible = false" :disabled="loading">{{buttonCancelText}}</Button>
-						<Button type="primary" @click="$emit('submit')" :loading="loading">{{buttonSubmitText}}</Button>
-					</div>
+				<div class="actions">
+					<Button @click="_visible = false" :disabled="loading">{{buttonCancelText}}</Button>
+					<Button type="primary" @click="$emit('submit')" :loading="loading">{{buttonSubmitText}}</Button>
+				</div>
 
-					<div class="error" v-if="error.message">{{error.message}}</div>
-				</slot>
+				<div class="error" v-if="error.message">{{error.message}}</div>
+
+				<slot name="footer" />
 			</div>
 		</Dialog>
 	</div>
@@ -57,6 +57,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/deep/ {
+	.el-dialog__title {
+		font-weight: 600;
+	}
+}
+
 .footer {
 	.error {
 		margin-top: 1em;

@@ -1,28 +1,17 @@
 <template>
-	<Dialog :title="title" :visible.sync="open" width="500px">
-		<div class="modal">
-			<field v-for="field in fields" v-bind="field" :errors="error.errors" :data="data" :key="field.type" @fieldA="fieldA" />
-		</div>
-
+	<vModalFields v-bind="{title, fields, data, error, loading}" :visible.sync="open" @submit="save">
 		<div class="footer" slot="footer">
-			<div class="actions">
-				<Button size="medium" type="info" plain :disabled="loading" @click="close">Cancel</Button>
-				<Button size="medium" type="primary" :loading="loading" @click="save">Apply</Button>
-			</div>
-
-			<div class="error" v-if="error.message">{{error.message}}</div>
 			<div class="error-ids" v-if="idsError">{{idsError}}</div>
 		</div>
-	</Dialog>
+	</vModalFields>
 </template>
 
 <script>
 import {forEach, get, set} from "lodash";
-import {Dialog, Button} from "element-ui";
-import field from "@/components/field.vue";
+import vModalFields from "@/components/modal-fields.vue";
 
 export default {
-	components: {Dialog, Button, field},
+	components: {vModalFields},
 	props: {
 		active: {type: Boolean, required: true},
 		error: {type: Object, required: true},
@@ -73,23 +62,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/deep/ {
-	.el-dialog__title {
-		font-weight: 600;
-	}
-}
-
 .footer {
-	.error {
-		margin-top: 1em;
+	.error-ids {
+		margin-top: 0.5em;
 		font-size: 0.875em;
 		color: $danger;
-
-		&-ids {
-			margin-top: 0.5em;
-			font-size: 0.875em;
-			color: $danger;
-		}
 	}
 }
 </style>
