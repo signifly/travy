@@ -1,12 +1,30 @@
 <template>
 	<div class="modal">
-		vModal
+		<Button :type="_buttonType" :icon="`el-icon-${_buttonIcon}`" @click="modal = true">{{_buttonText}}</Button>
+
+		<Dialog :title="_modalTitle" :visible.sync="modal" width="500px">
+			<div class="fields">
+				<vField v-for="field in _fields" :key="field.name" :errors="error.errors" v-bind="field" @fieldA="fieldA" />
+			</div>
+
+			<div slot="footer" class="footer">
+				<div class="actions">
+					<Button @click="modal = false">Cancel</Button>
+					<Button type="primary" @click="save">Save</Button>
+				</div>
+
+				<div class="error" v-if="error.message">{{error.message}}</div>
+			</div>
+		</Dialog>
 	</div>
 </template>
 
 <script>
+import {Button, Dialog} from "element-ui";
+import vField from "@/components/field.vue";
 
 export default {
+	components: {Button, Dialog},
 	meta: {
 		res: {
 			props: {
@@ -46,21 +64,48 @@ export default {
 		_buttonIcon: {type: String, required: false, doc: true},
 		_buttonType: {type: String, required: false, doc: true},
 		_modalTitle: {type: String, required: true, doc: true},
+		_endpoint: {type: Object, required: true, doc: true},
 		_fields: {type: Array, required: true, doc: true},
 		_fieldsData: {type: Object, required: true, doc: true}
 	},
 	data() {
 		return {
+			error: {},
+			payload: {},
+			modal: false
 
 		}
 	},
 	methods: {
-		update(val) {
-			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._value]: val}
-			});
+		fieldA({data}) {
+			this.payload = {...this.payload, ...data};
+		},
+
+		async save() {
+			const method = this._endpoint.method;
+			const url = this._endpoint.url;
+
+			try {
+				await this.$http[method](url, {data: this.payload}, {custom: true});
+				this.$emit("fieldA", {action: "getData"});
+
+			} catch({response}) {
+				this.error = response.data;
+			}
 		}
+	},
+	beforeCreate() {
+		this.$options.components.vField = vField;
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+.footer {
+	.error {
+		margin-top: 1em;
+		font-size: 0.875em;
+		color: $danger;
+	}
+}
+</style>
