@@ -31,8 +31,8 @@ export default {
 	props: {
 		fields: {type: Array, required: true},
 		data: {type: Object, required: true},
-		title: {type: String, required: false},
 		error: {type: Object, required: true},
+		title: {type: String, required: false},
 		loading: {type: Boolean, required: false},
 
 		width: {type: String, default: "500px"},

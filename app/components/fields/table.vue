@@ -33,28 +33,28 @@ export default {
 							}
 						}
 					},
-					{
-						name: "access",
-						label: "Access",
-						fieldType: {
-							id: "vDateRange",
-							props: {
-								dateStart: "dateStart1",
-								dateEnd: "dateEnd1"
-							}
-						}
-					},
-					{
-						name: "salad",
-						label: "Salad",
-						fieldType: {
-							id: "vDateRange",
-							props: {
-								dateStart: "dateStart2",
-								dateEnd: "dateEnd2"
-							}
-						}
-					}
+					// {
+					// 	name: "access",
+					// 	label: "Access",
+					// 	fieldType: {
+					// 		id: "vDateRange",
+					// 		props: {
+					// 			dateStart: "dateStart1",
+					// 			dateEnd: "dateEnd1"
+					// 		}
+					// 	}
+					// },
+					// {
+					// 	name: "salad",
+					// 	label: "Salad",
+					// 	fieldType: {
+					// 		id: "vDateRange",
+					// 		props: {
+					// 			dateStart: "dateStart2",
+					// 			dateEnd: "dateEnd2"
+					// 		}
+					// 	}
+					// }
 				]
 			},
 			data: {
