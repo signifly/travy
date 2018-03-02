@@ -24,16 +24,20 @@ export default {
 	meta: {
 		res: {
 			props: {
-				dates: "dateRange"
+				dateStart: "dateStart",
+				dateEnd: "dateEnd"
 			},
 			data: {
-				dateRange: [1325376000, 1356998400]
+				// dateStart: 1325376000,
+				// dateEnd: 1356998400
 			}
 		}
 	},
 	props: {
-		dates: {type: Array, required: false, doc: true},
-		_dates: {type: String, required: true}
+		dateStart: {type: Number, required: false, doc: true},
+		dateEnd: {type: Number, required: false, doc: true},
+		_dateStart: {type: String, required: true},
+		_dateEnd: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -41,7 +45,7 @@ export default {
 				firstDayOfWeek: 1
 			},
 			data: {
-				dates: this.dates.map(x => x * 1000)
+				dates: [this.dateStart, this.dateEnd].map(x => x * 1000).filter(x => x)
 			}
 		}
 	},
@@ -51,7 +55,10 @@ export default {
 
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this._dates]: dates}
+				data: {
+					[this._dateStart]: dates[0],
+					[this._dateEnd]: dates[1]
+				}
 			});
 		}
 	}

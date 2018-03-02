@@ -39,7 +39,8 @@ export default {
 						fieldType: {
 							id: "vDateRange",
 							props: {
-								dates: "dates1"
+								dateStart: "dateStart1",
+								dateEnd: "dateEnd1"
 							}
 						}
 					},
@@ -49,7 +50,8 @@ export default {
 						fieldType: {
 							id: "vDateRange",
 							props: {
-								dates: "dates2"
+								dateStart: "dateStart2",
+								dateEnd: "dateEnd2"
 							}
 						}
 					}
@@ -62,14 +64,10 @@ export default {
 						title: "sfef",
 						statustext: "spflwe",
 						status: "warning",
-						dates1: [
-							1325376000,
-							1356998400
-						],
-						dates2: [
-							1325376000,
-							1356998400
-						]
+						dateStart1: 1325376000,
+						dateEnd1: 1356998400,
+						dateStart2: 1356998400,
+						dateEnd2: 1356998400
 					}
 				]
 			}
