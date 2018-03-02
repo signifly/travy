@@ -55,6 +55,7 @@ export default {
 		}
 	},
 	computed: {
+		nodata: (t) => t.data.values.length === 0,
 		oLabel: (t) => t._options.label,
 		oValue: (t) => t._options.value,
 

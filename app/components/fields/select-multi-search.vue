@@ -62,6 +62,7 @@ export default {
 		}
 	},
 	computed: {
+		nodata: (t) => t.data.values.length === 0,
 		valuesObj: (t) => t.values.map(x => isObjectLike(x)).every(x => x),
 		endpoint: (t) => t._options.list,
 		oKey: (t) => t._options.key,
