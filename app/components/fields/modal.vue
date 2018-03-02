@@ -33,9 +33,11 @@ export default {
 				buttonType: "primary",
 				modalTitle: "modal title",
 
+				endpointId: "postid",
+
 				endpoint: {
 					method: "post",
-					url: "https://api.sikane.signifly.com/v1/stock-item-models"
+					url: "https://api.sikane.signifly.com/v1/stock-item-models/{id}"
 				},
 
 				fields: [
@@ -55,7 +57,7 @@ export default {
 				}
 			},
 			data: {
-
+				postid: "1"
 			}
 		}
 	},
@@ -65,15 +67,15 @@ export default {
 		_buttonType: {type: String, required: false, doc: true},
 		_modalTitle: {type: String, required: true, doc: true},
 		_endpoint: {type: Object, required: true, doc: true},
+		endpointId: {type: [String, Number], required: true, doc: true},
 		_fields: {type: Array, required: true, doc: true},
-		_fieldsData: {type: Object, required: true, doc: true}
+		_fieldsData: {type: Object, required: true, doc: true},
 	},
 	data() {
 		return {
 			error: {},
 			payload: {},
 			modal: false
-
 		}
 	},
 	methods: {
@@ -82,11 +84,11 @@ export default {
 		},
 
 		async save() {
-			const method = this._endpoint.method;
-			const url = this._endpoint.url;
+			const ept = this._endpoint;
+			const url = ept.url.replace("{id}", this.endpointId);
 
 			try {
-				await this.$http[method](url, {data: this.payload}, {custom: true});
+				await this.$http[ept.method](url, {data: this.payload}, {custom: true});
 				this.$emit("fieldA", {action: "getData"});
 
 			} catch({response}) {
