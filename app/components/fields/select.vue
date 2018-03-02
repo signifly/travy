@@ -1,6 +1,6 @@
 <template>
 	<div class="select">
-		<Select v-model="val" @change="update" v-bind="{size}" filterable clearable>
+		<Select v-model="data.value" @change="update" v-bind="{size}" filterable clearable>
 			<Option v-for="option in listMap" v-bind="option" :key="option.value">
 				<div class="option">
 					<div class="icon" v-if="option.icon && icon(option.icon)"><img :src="icon(option.icon)"></div>
@@ -58,10 +58,13 @@ export default {
 	},
 	data() {
 		return {
-			val: this.value
+			data: {
+				value: this.value
+			}
 		}
 	},
 	computed: {
+		nodata: (t) => !t.data.value,
 		oLabel: (t) => t._options.label,
 		oValue: (t) => t._options.value,
 
@@ -86,10 +89,10 @@ export default {
 			}
 		},
 
-		update(val) {
+		update(value) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this._value]: val}
+				data: {[this._value]: value}
 			});
 		}
 	}

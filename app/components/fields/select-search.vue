@@ -46,6 +46,7 @@ export default {
 		}
 	},
 	computed: {
+		nodata: (t) => !t.data.value,
 		endpoint: (t) => t._options.endpoint,
 		oKey: (t) => t._options.key,
 		oLabel: (t) => t._options.label,
@@ -55,7 +56,6 @@ export default {
 			const resList = this.oKey ? get(this.res, this.oKey, []) : this.res || [];
 			const itemList = this.item ? [this.item] : [];
 			const list = [...itemList, ...resList];
-
 			return uniqBy(list, this.oValue);
 		},
 
