@@ -33,6 +33,9 @@ export default {
 			}
 		}
 	},
+	computed: {
+		nodata: (t) => !t.data.content
+	},
 	methods: {
 		update(content) {
 			this.$emit("fieldA", {

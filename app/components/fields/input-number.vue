@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import {isNumber} from "lodash";
 import {InputNumber} from "element-ui";
 
 export default {
@@ -16,7 +17,7 @@ export default {
 				value: "inputVal"
 			},
 			data: {
-				inputVal: 3
+				inputVal: "ad"
 			}
 		}
 	},
@@ -32,6 +33,9 @@ export default {
 				value: this.value
 			}
 		}
+	},
+	computed: {
+		nodata: (t) => !isNumber(t.data.value)
 	},
 	methods: {
 		update(val) {
