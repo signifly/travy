@@ -29,7 +29,7 @@ export default {
 			},
 			data: {
 				dateStart: 1325376000,
-				dateEnd: 1356998400
+				dateEnd: null
 			}
 		}
 	},
@@ -45,7 +45,7 @@ export default {
 				firstDayOfWeek: 1
 			},
 			data: {
-				dates: [this.dateStart, this.dateEnd].map(x => x ? x * 1000 : null)
+				dates: [this.dateStart, this.dateEnd].map(x => x ? x * 1000 : undefined)
 			}
 		}
 	},

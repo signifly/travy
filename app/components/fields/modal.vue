@@ -64,7 +64,14 @@ export default {
 		endpointId: {type: [String, Number], required: true, doc: true},
 		_endpoint: {type: Object, required: true, doc: true},
 		_fields: {type: Array, required: true, doc: true},
-		_fieldsData: {type: Object, required: true, doc: true},
+		_fieldsData: {type: Object, required: true, doc: true, note: `
+			if you need to map field props to fieldData you can do:<br>
+			<code>
+				props: {
+					value: fieldsData.value
+				}
+			</code>
+		`},
 	},
 	data() {
 		return {
