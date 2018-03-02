@@ -94,7 +94,7 @@ export default {
 
 		getListOptions: debounce(async function(q) {
 			const {data} = await this.$http.get(this.endpoint, {params: {q, count: 30}});
-			this.listOptions = get(data, this.oKey, data.data) || [];
+			this.listOptions = get(data, this.oKey, []);
 			this.loading = false;
 		}, 500),
 
@@ -105,7 +105,7 @@ export default {
 
 		async getListSelected() {
 			const {data} = await this.$http.get(this.endpoint, {params: {filter: this.values}});
-			return get(data, this.oKey, data, data.data) || [];
+			return get(data, this.oKey, []);
 		},
 
 		async init() {
