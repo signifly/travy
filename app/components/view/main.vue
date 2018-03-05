@@ -7,7 +7,7 @@
 					<vTabs v-bind="{tabs, data, edits, errors, dataU}" @fieldA="fieldA"/>
 				</Col>
 				<Col class="right" :span="8">
-					<vModifiers v-bind="{modifiers}" />
+					<vModifiers v-bind="{modifiers}" @getData="getData" />
 				</Col>
 			</Row>
 		</div>
@@ -99,8 +99,6 @@ export default {
 				const {data} = await this.$http.get(`definitions/view/${this.parentId}`, {params});
 				this.definitions = data;
 			}
-
-			await this.getData();
 		},
 
 		async getData({type} = {}) {
@@ -143,8 +141,9 @@ export default {
 			}
 		}
 	},
-	created() {
-		this.getDefinitions();
+	async created() {
+		await this.getDefinitions();
+		await this.getData();
 	}
 };
 </script>
