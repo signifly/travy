@@ -1,7 +1,7 @@
 <template>
 	<div class="view-main" v-if="data">
 		<div class="main">
-			<Row class="top">
+			<Row class="top" :gutter="20">
 				<Col class="left" :span="16">
 					<vHeader v-bind="{data, header}" />
 				</Col>
@@ -11,11 +11,12 @@
 				</Col>
 			</Row>
 
-			<Row class="mid">
+			<Row class="mid" :gutter="20">
 				<Col class="left" :span="16">
 					<vTabs v-bind="{tabs, data, edits, errors, dataU}" @fieldA="fieldA"/>
 				</Col>
 				<Col class="right" :span="8">
+					<vSidebar v-bind="{sidebar, data}" @fieldA="fieldA" />
 				</Col>
 			</Row>
 
@@ -29,14 +30,14 @@
 import {mapValues, forEach, set, get} from "lodash";
 import {endpoint} from "@/modules/utils";
 import {Row, Col} from "element-ui";
-import {vHeader, vTabs, vPanel} from "./components";
+import {vHeader, vSidebar, vTabs, vPanel} from "./components";
 import vModifiers from "@/components/modifiers.vue";
 import vActions from "@/components/actions/index.vue";
 
 const edits = () => ({tabs: new Set(), data: new Set()});
 
 export default {
-	components: {Row, Col, vHeader, vTabs, vPanel, vModifiers, vActions},
+	components: {Row, Col, vHeader, vSidebar, vTabs, vPanel, vModifiers, vActions},
 	props: {
 		id: {type: String, required: true},
 		meta: {type: Object, required: true}
@@ -56,6 +57,7 @@ export default {
 		query: (t) => t.$route.query,
 		endpoints: (t) => t.definitions.endpoints,
 		header: (t) => t.definitions.header,
+		sidebar: (t) => t.definitions.sidebar,
 		modifiers: (t) => t.definitions.modifiers,
 		actions: (t) => t.definitions.actions,
 		tabs: (t) => t.definitions.tabs,
