@@ -1,7 +1,6 @@
 <template>
 	<div class="input">
 		<Input v-model="data.value" @input="update" v-bind="{disabled}" :controls="false" size="medium" />
-		<div class="unit" v-if="unit">{{unit}}</div>
 	</div>
 </template>
 
@@ -23,7 +22,6 @@ export default {
 	props: {
 		value: {type: String, required: false, doc: true},
 		_value: {type: String, required: true},
-		unit: {type: String, required: false},
 		disabled: {type: Boolean, required: false}
 	},
 	data() {
@@ -58,18 +56,6 @@ export default {
 				text-align: left;
 			}
 		}
-	}
-	.unit {
-		pointer-events: none;
-		position: absolute;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		display: flex;
-		align-items: center;
-		font-size: em(12);
-		color: $blue3;
-		margin-right: 1em;
 	}
 }
 </style>

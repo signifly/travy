@@ -1,7 +1,7 @@
 <template>
 	<div class="input">
 		<InputNumber v-model="data.value" @change="update" v-bind="{disabled}" :controls="false" size="medium" />
-		<div class="unit" v-if="unit">{{unit}}</div>
+		<div class="unit" v-if="_unit">{{_unit}}</div>
 	</div>
 </template>
 
@@ -14,7 +14,8 @@ export default {
 	meta: {
 		res: {
 			props: {
-				value: "inputVal"
+				value: "inputVal",
+				unit: "cm"
 			},
 			data: {
 				inputVal: 3
@@ -22,10 +23,10 @@ export default {
 		}
 	},
 	props: {
+		disabled: {type: Boolean, required: false},
+		_unit: {type: String, required: false, doc: true},
 		value: {type: Number, required: false, doc: true},
 		_value: {type: String, required: true},
-		unit: {type: String, required: false},
-		disabled: {type: Boolean, required: false}
 	},
 	data() {
 		return {

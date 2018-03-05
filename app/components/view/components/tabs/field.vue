@@ -18,7 +18,6 @@
 			v-if="components[id]"
 			ref="field"
 			:is="id"
-			:unit="unit"
 			:props="props"
 			:rootData="data"
 			:disabled="disabled"
@@ -61,7 +60,6 @@ export default {
 		label: (t) => t.field.label,
 		id: (t) => t.field.fieldType.id,
 		tooltip: (t) => t.field.tooltip,
-		unit: (t) => t.field.fieldType.unit,
 		disabled: (t) => t.field.fieldType.readonly,
 		reference: (t) => t.field.fieldType.reference,
 		opts: (t) => t.mounted ? get(t.$refs, "field.opts", {}) : {},
