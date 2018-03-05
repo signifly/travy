@@ -1,5 +1,5 @@
 <template>
-	<vModalFields v-bind="{title, fields, data, error, loading}" :visible.sync="open" @submit="save">
+	<vModalFields v-bind="{title, fields, error, loading}" :data="payload" :visible.sync="open" @submit="submit" @fieldA="fieldA">
 		<div class="footer" slot="footer">
 			<div class="error-ids" v-if="idsError">{{idsError}}</div>
 		</div>
@@ -46,7 +46,7 @@ export default {
 			this.open = false;
 		},
 
-		save() {
+		submit() {
 			this.loading = true;
 
 			this.$emit("save", {

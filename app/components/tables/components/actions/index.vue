@@ -10,15 +10,13 @@
 			{{item.title}}
 		</Button>
 
-		<transition name="el-fade-in">
-			<modal v-if="active" :active.sync="active" v-bind="action" :endpoints="endpoints" />
-		</transition>
+		<modal v-if="active" :active.sync="active" v-bind="action" :endpoints="endpoints" />
 	</div>
 </template>
 
 <script>
 import {Button} from "element-ui";
-import modal from "./modal/index.vue";
+import modal from "./modal.vue";
 
 export default {
 	components: {Button, modal},
