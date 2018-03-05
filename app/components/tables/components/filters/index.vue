@@ -29,7 +29,7 @@
 		:placeholder="search.placeholder"
 		@input="updateQ({data: {q: $event}})"
 		clearable>
-			<Button slot="append" icon="el-icon-tickets" v-if="fields" v-popover:pop>Add filter</Button>
+			<Button slot="append" icon="el-icon-tickets" v-if="fields && fields.length > 0" v-popover:pop>Add filter</Button>
 		</Input>
 
 	</div>

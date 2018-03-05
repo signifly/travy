@@ -166,7 +166,7 @@ export default {
 		}
 	}
 
-	&.vInputNumber {
+	&.vInputNumber, &.vInput {
 		width: calc(50% - 1em);
 	}
 }

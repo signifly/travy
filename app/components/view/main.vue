@@ -1,15 +1,24 @@
 <template>
 	<div class="view-main" v-if="data">
 		<div class="main">
-			<Row>
+			<Row class="top">
 				<Col class="left" :span="16">
 					<vHeader v-bind="{data, header}" />
-					<vTabs v-bind="{tabs, data, edits, errors, dataU}" @fieldA="fieldA"/>
 				</Col>
 				<Col class="right" :span="8">
 					<vModifiers v-bind="{modifiers}" @getData="getData" />
+					<vActions v-bind="{actions, endpoints}" />
 				</Col>
 			</Row>
+
+			<Row class="mid">
+				<Col class="left" :span="16">
+					<vTabs v-bind="{tabs, data, edits, errors, dataU}" @fieldA="fieldA"/>
+				</Col>
+				<Col class="right" :span="8">
+				</Col>
+			</Row>
+
 		</div>
 
 		<vPanel v-bind="{id, loading, edited, getData, error}" title="some product, thingy" @save="save" />
@@ -22,11 +31,12 @@ import {endpoint} from "@/modules/utils";
 import {Row, Col} from "element-ui";
 import {vHeader, vTabs, vPanel} from "./components";
 import vModifiers from "@/components/modifiers.vue";
+import vActions from "@/components/actions/index.vue";
 
 const edits = () => ({tabs: new Set(), data: new Set()});
 
 export default {
-	components: {Row, Col, vHeader, vTabs, vPanel, vModifiers},
+	components: {Row, Col, vHeader, vTabs, vPanel, vModifiers, vActions},
 	props: {
 		id: {type: String, required: true},
 		meta: {type: Object, required: true}
@@ -47,6 +57,7 @@ export default {
 		endpoints: (t) => t.definitions.endpoints,
 		header: (t) => t.definitions.header,
 		modifiers: (t) => t.definitions.modifiers,
+		actions: (t) => t.definitions.actions,
 		tabs: (t) => t.definitions.tabs,
 		parentId: (t) => t.$route.meta.parent.id,
 		errors: (t) => t.error.errors,
@@ -150,10 +161,19 @@ export default {
 
 <style lang="scss" scoped>
 .view-main {
-	.right {
-		/deep/ {
-			.modifiers {
-				justify-content: flex-end;
+	.main {
+		.top {
+			.right {
+				/deep/ {
+					.modifiers {
+						justify-content: flex-end;
+					}
+					.actions {
+						display: flex;
+						justify-content: flex-end;
+						margin: 1.5em 0;
+					}
+				}
 			}
 		}
 	}
