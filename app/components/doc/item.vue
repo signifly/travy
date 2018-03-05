@@ -29,7 +29,7 @@
 
 			<div class="nodata">
 				<div class="wrap">
-					<Tag type="danger" v-if="nodata">nodata</Tag>
+					<Tag v-if="nodata" type="danger" size="small">nodata</Tag>
 				</div>
 			</div>
 
