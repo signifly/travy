@@ -79,7 +79,6 @@ export default {
 
 		nodata() {
 			const field = get(this.$refs, "field", {});
-
 			if (!this.mounted) return false;
 			if (field.disabled) return false;
 			return field.nodata;

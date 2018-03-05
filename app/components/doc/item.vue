@@ -27,8 +27,15 @@
 				</table>
 			</div>
 
+			<div class="nodata">
+				<div class="wrap">
+					<Tag type="danger" v-if="nodata">nodata</Tag>
+				</div>
+			</div>
+
 			<div class="field">
 				<vField
+					ref="field"
 					:name="id"
 					:fieldType="fieldType"
 					:data="res.data"
@@ -37,7 +44,6 @@
 			</div>
 
 			<div class="info">
-
 				<div class="block props">
 					<div class="title">Props</div>
 					<pre>
@@ -58,7 +64,6 @@
 						<code>{{event}}</code>
 					</pre>
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -67,9 +72,10 @@
 <script>
 import {mapValues, mapKeys, pickBy, get} from "lodash";
 import vField from "@/components/field.vue";
+import {Tag} from "element-ui";
 
 export default {
-	components: {vField},
+	components: {Tag, vField},
 	props: {
 		id: {type: String, required: true},
 		props: {type: Object, required: true},
@@ -79,10 +85,12 @@ export default {
 		return {
 			propsDisplay: this.res.props,
 			dataDisplay: this.res.data,
-			event: null
+			event: null,
+			mounted: false
 		}
 	},
 	computed: {
+		nodata: (t) => t.mounted ? get(t.$refs, "field.nodata", false) : false,
 		fieldType: (t) => ({id: t.id, props: t.res.props}),
 
 		propsTable() {
@@ -109,6 +117,9 @@ export default {
 				console.warn(this.name);
 			}
 		}
+	},
+	mounted() {
+		this.mounted = true;
 	},
 	created() {
 		this.check();
@@ -169,7 +180,20 @@ export default {
 			}
 		}
 
+		.nodata {
+			position: relative;
+			display: flex;
+			align-items: center;
+
+			.wrap {
+				position: absolute;
+				height: 1px;
+				right: 0;
+			}
+		}
+
 		> .field {
+			position: relative;
 			margin: 2em 0;
 			padding: 1em;
 			border-left: 3px solid $blue2;

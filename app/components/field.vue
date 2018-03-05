@@ -11,6 +11,7 @@
 
 		<component
 			v-if="comps[id]"
+			ref="field"
 			:is="id"
 			v-bind="[propsData, propsValue]"
 			:props="props"
@@ -38,6 +39,11 @@ export default {
 		errors: {type: Object, required: false},
 		data: {type: Object, default: () => ({})}
 	},
+	data() {
+		return {
+			mounted: false
+		}
+	},
 	computed: {
 		error: (t) => get(t.errors, `data.${t.name}`, [])[0],
 		comps: (t) => t.$options.components,
@@ -45,8 +51,18 @@ export default {
 
 		props: (t) => t.fieldType.props,
 		propsData: (t) => mapValues(t.props, (val) => get(t.data, val)),
-		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`)
+		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
+
+		nodata() {
+			const field = get(this.$refs, "field", {});
+			if (!this.mounted) return false;
+			if (field.disabled) return false;
+			return field.nodata;
+		}
 	},
+	mounted() {
+		this.mounted = true;
+	}
 };
 </script>
 

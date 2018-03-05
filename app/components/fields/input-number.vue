@@ -17,7 +17,7 @@ export default {
 				value: "inputVal"
 			},
 			data: {
-				inputVal: "ad"
+				inputVal: 3
 			}
 		}
 	},

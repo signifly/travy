@@ -1,6 +1,6 @@
 <template>
 	<div class="select-multi">
-		<Select v-model="data.value" @change="update" v-bind="{size}" filterable multiple>
+		<Select v-model="data.values" @change="update" v-bind="{size}" filterable multiple>
 			<Option v-for="option in listMap" v-bind="option" :key="option.value" />
 		</Select>
 	</div>
@@ -14,7 +14,7 @@ export default {
 	meta: {
 		res: {
 			props: {
-				value: "selectValue",
+				values: "selectValues",
 				list: "selectOptions",
 				options: {
 					label: "name",
@@ -22,7 +22,7 @@ export default {
 				}
 			},
 			data: {
-				selectValue: ["DK"],
+				selectValues: ["DK"],
 				selectOptions: [
 					{
 						name: "Danmark",
@@ -43,14 +43,14 @@ export default {
 	props: {
 		meta: {type: Object, require: false, default: () => ({})},
 		_options: {type: Object, required: true, doc: true},
-		value: {type: Array, required: false, doc: true},
-		_value: {type: String, required: true},
+		values: {type: Array, required: false, doc: true},
+		_values: {type: String, required: true},
 		list: {type: Array, required: true, doc: true}
 	},
 	data() {
 		return {
 			data: {
-				value: []
+				values: []
 			}
 		}
 	},
@@ -74,12 +74,12 @@ export default {
 		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this._value]: val}
+				data: {[this._values]: val}
 			});
 		}
 	},
 	created() {
-		this.data.value = this.listMap.map(x => x.value);
+		this.data.values = this.listMap.map(x => x.value);
 	}
 }
 </script>
