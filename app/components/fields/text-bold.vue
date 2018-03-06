@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import {toString} from "lodash";
+
 export default {
 	meta: {
 		res: {
@@ -20,7 +22,7 @@ export default {
 		_textDefault: {type: [String, Number], required: false, doc: true},
 	},
 	computed: {
-		textFinal: (t) => t.text || t._textDefault
+		textFinal: (t) => toString(t.text) || t._textDefault
 	}
 };
 </script>
