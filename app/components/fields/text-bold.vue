@@ -1,5 +1,5 @@
 <template>
-	<div class="text">{{text}}</div>
+	<div class="text">{{textFinal}}</div>
 </template>
 
 <script>
@@ -7,7 +7,8 @@ export default {
 	meta: {
 		res: {
 			props: {
-				text: "title"
+				text: "title",
+				textDefault: "default text"
 			},
 			data: {
 				title: "some text"
@@ -15,7 +16,11 @@ export default {
 		}
 	},
 	props: {
-		text: {type: [String, Number], required: false, doc: true}
+		text: {type: [String, Number], required: false, doc: true},
+		_textDefault: {type: [String, Number], required: false, doc: true},
+	},
+	computed: {
+		textFinal: (t) => t.text || t._textDefault
 	}
 };
 </script>
