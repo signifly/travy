@@ -2,7 +2,7 @@
 	<div class="pop">
 		<Popover v-model="active" placement="top-end" ref="pop">
 			<div class="content">
-				<div class="text">{{desc}}</div>
+				<div class="text">{{text}}</div>
 				<div class="buttons">
 					<Button size="mini" :disabled="loading" @click="close">Cancel</Button>
 					<Button size="mini" type="primary" :loading="loading" @click="save">Confirm</Button>
@@ -31,7 +31,7 @@ export default {
 	},
 	computed: {
 		data: (t) => get(t.action, "data"),
-		desc: (t) => get(t.action, "description"),
+		text: (t) => get(t.action, "text"),
 
 		active: {
 			get() {

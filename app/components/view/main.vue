@@ -7,7 +7,7 @@
 				</Col>
 				<Col class="right" :span="8">
 					<vModifiers v-bind="{modifiers}" @getData="getData" />
-					<vActions v-bind="{actions, endpoints}" />
+					<vActions v-bind="{actions, endpoints, id}" />
 				</Col>
 			</Row>
 
@@ -61,7 +61,7 @@ export default {
 		modifiers: (t) => t.definitions.modifiers,
 		actions: (t) => t.definitions.actions,
 		tabs: (t) => t.definitions.tabs,
-		parentId: (t) => t.$route.meta.parent.id,
+		parentId: (t) => t.$route.meta.id,
 		errors: (t) => t.error.errors,
 		edited: (t) => t.editsU > 0,
 		dataUpdated() {

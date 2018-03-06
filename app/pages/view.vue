@@ -15,7 +15,7 @@ export default {
 		id: (t) => t.$route.params.id,
 		meta: (t) => t.$route.meta,
 		breadcrumb: (t) => [
-			{to: {name: t.meta.parent.id}, title: t.meta.parent.id},
+			{to: {name: t.meta.id}, title: t.meta.id},
 			{title: t.id}
 		]
 	}

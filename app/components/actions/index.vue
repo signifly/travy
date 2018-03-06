@@ -1,55 +1,27 @@
 <template>
 	<div class="actions">
-		<Button
-		v-for="(item, i) in items"
-		:type="item.status"
-		:key="item.title"
-		:icon="`el-icon-${item.icon}`"
-		size="medium"
-		@click="action = item">
-			{{item.title}}
-		</Button>
-
-		<modal v-if="active" :active.sync="active" v-bind="action" :endpoints="endpoints" />
+		<div class="action">
+			<vAction v-for="action in actions" :key="action.title" v-bind="[action, {endpoints, id}]" />
+		</div>
 	</div>
 </template>
 
 <script>
-import {Button} from "element-ui";
-import modal from "./modal.vue";
+import vAction from "./action.vue";
 
 export default {
-	components: {Button, modal},
+	components: {vAction},
 	props: {
+		id: {type: [String, Number], required: false},
 		actions: {type: Array, required: true},
 		endpoints: {type: Object, required: true}
-	},
-	data() {
-		return {
-			items: this.actions,
-			action: undefined
-		}
-	},
-	computed: {
-		active: {
-			get() {
-				return !!this.action;
-			},
-			set(bool) {
-				if (!bool) this.action = undefined;
-			}
-		}
-	},
-	methods: {
-		activate(i) {
-			this.$set(this.items[i], "active", true);
-		}
 	}
 };
 </script>
 
 <style lang="scss" scoped>
 .actions {
-
+	display: flex;
+	justify-content: flex-end;
 }
 </style>

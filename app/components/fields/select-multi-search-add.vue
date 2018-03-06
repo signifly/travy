@@ -45,7 +45,7 @@ export default {
 		meta: {type: Object, require: false, default: () => ({})},
 		_options: {type: Object, required: true, doc: true},
 		_values: {type: String, required: true},
-		values: {type: Array, required: false, doc: true, note: `
+		values: {type: Array, required: false, default: () => [], doc: true, note: `
 			Can be an array of <i>objects|strings|numbers</i>.<br>
 			if it's strings|numbers, an initial call to <code>options.list</code> will be made to get the label names for the values.
 		`}

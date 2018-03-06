@@ -19,7 +19,7 @@ const routesTables = map(tables, (item, id) => ({
 	path: `/${id}`,
 	name: id,
 	component: table,
-	meta: item
+	meta: {...item, id}
 }));
 
 const routesViews = map(tables, (item, id) => ({
@@ -27,9 +27,7 @@ const routesViews = map(tables, (item, id) => ({
 	name: `${id}-view`,
 	component: view,
 	props: true,
-	meta: {
-		parent: {...item, id}
-	}
+	meta: {...item, id}
 }));
 
 const routes = [

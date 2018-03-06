@@ -87,7 +87,7 @@ export default {
 		closeSave() {
 			this.$parent.$emit("save", {
 				done: async () => {
-					this.$router.push("/" + this.$route.meta.parent.id);
+					this.$router.push("/" + this.$route.meta.id);
 				}
 			});
 		},
