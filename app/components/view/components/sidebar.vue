@@ -20,7 +20,7 @@ export default {
 		data: {type: Object, required: true}
 	},
 	computed: {
-		items: (t) => t.sidebar.items,
+		items: (t) => t.sidebar ? t.sidebar.items : [],
 		itemClasses() {
 			return this.items.map(x => x.fields.map(x => x.fieldType.id));
 		}
