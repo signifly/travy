@@ -1,9 +1,9 @@
 <template>
 	<div class="sidebar">
-		<div class="items">
-			<div class="item" v-if="items" v-for="(item, i) in items" :class="itemClasses[i]">
+		<div class="sections">
+			<div class="section" v-for="(section, i) in sections" :class="sectionClasses[i]">
 				<div class="wrap">
-					<vField v-for="field in item.fields" :key="field.name" v-bind="[field, {data}]" @fieldA="fieldA" />
+					<vField v-for="field in section.fields" :key="field.name" v-bind="[field, {data}]" @fieldA="fieldA" />
 				</div>
 			</div>
 		</div>
@@ -20,9 +20,9 @@ export default {
 		data: {type: Object, required: true}
 	},
 	computed: {
-		items: (t) => t.sidebar ? t.sidebar.items : [],
-		itemClasses() {
-			return this.items.map(x => x.fields.map(x => x.fieldType.id));
+		sections: (t) => t.sidebar ? t.sidebar.sections : [],
+		sectionClasses() {
+			return this.sections.map(x => x.fields.map(x => x.fieldType.id));
 		}
 	},
 	methods: {
@@ -35,10 +35,10 @@ export default {
 
 <style lang="scss" scoped>
 .sidebar {
-	.items {
+	.sections {
 		margin-top: 2.5em;
 
-		.item {
+		.section {
 			background-color: $white1;
 			border: 1px solid $blue2;
 			border-radius: 4px;
