@@ -29,7 +29,7 @@ export default {
 					{
 						title: "Delete",
 						type: "delete",
-						description: "delete this?"
+						text: "delete this?"
 					},
 					{
 						title: "View",
