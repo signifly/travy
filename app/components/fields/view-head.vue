@@ -1,6 +1,6 @@
 <template>
-	<div class="view-head">
-		<div class="image">
+	<div class="view-head" :class="{image: _imageActive}">
+		<div class="image" v-if="_imageActive">
 			<div class="img" :style="{backgroundImage: `url(${image})`}" />
 		</div>
 		<div class="info">
@@ -22,6 +22,7 @@ export default {
 		res: {
 			props: {
 				title: "title",
+				imageActive: true,
 				image: "image",
 				tag: "tag"
 			},
@@ -35,6 +36,9 @@ export default {
 	props: {
 		title: {type: String, required: true, doc: true},
 		image: {type: String, required: false, default: noimage, doc: true},
+		_imageActive: {type: Boolean, required: false, doc: true, note: `
+			Whether an image or placeholder should be shown.
+		`},
 		tag: {type: [String, Number], required: true, doc: true}
 	}
 };
@@ -57,8 +61,11 @@ export default {
 		}
 	}
 
-	.info {
+	&.image .info {
 		margin-left: 2em;
+	}
+
+	.info {
 		margin-top: 1em;
 
 		.title {
