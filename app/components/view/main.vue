@@ -20,6 +20,11 @@
 				</Col>
 			</Row>
 
+			<Row class="bottom" :gutter="20">
+				<Col class="left" :span="24">
+					<vActivity v-if="activity.active" v-bind="{endpoints, data}" />
+				</Col>
+			</Row>
 		</div>
 
 		<vPanel v-bind="{id, loading, edited, getData, error}" title="some product, thingy" @save="save" />
@@ -33,11 +38,12 @@ import {Row, Col} from "element-ui";
 import {vHeader, vSidebar, vTabs, vPanel} from "./components";
 import vModifiers from "@/components/modifiers.vue";
 import vActions from "@/components/actions/index.vue";
+import vActivity from "./components/activity/index.vue";
 
 const edits = () => ({tabs: new Set(), data: new Set()});
 
 export default {
-	components: {Row, Col, vHeader, vSidebar, vTabs, vPanel, vModifiers, vActions},
+	components: {Row, Col, vHeader, vSidebar, vTabs, vPanel, vModifiers, vActions, vActivity},
 	props: {
 		id: {type: String, required: true},
 		meta: {type: Object, required: true}
@@ -59,6 +65,7 @@ export default {
 		header: (t) => t.definitions.header,
 		sidebar: (t) => t.definitions.sidebar,
 		modifiers: (t) => t.definitions.modifiers,
+		activity: (t) => t.definitions.activity,
 		actions: (t) => t.definitions.actions,
 		tabs: (t) => t.definitions.tabs,
 		parentId: (t) => t.$route.meta.id,
