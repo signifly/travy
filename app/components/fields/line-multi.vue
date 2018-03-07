@@ -32,6 +32,13 @@ export default {
 					infoItemKey: "name",
 					switchTitle: "a switch",
 					switchValue: "switchValue",
+					selectValue: "selectValue",
+					selectOptions: {
+						endpoint: "https://sikaline.glitch.me/table-actions/options",
+						key: "",
+						label: "name",
+						value: "id"
+					},
 					actions: [
 						{
 							title: "Delete",
@@ -51,6 +58,7 @@ export default {
 					{
 						titleValue: "modal #1",
 						switchValue: false,
+						selectValue: "",
 						infoItems: [
 							{
 								name: "okesf"
@@ -63,6 +71,7 @@ export default {
 					{
 						titleValue: "modal #2",
 						switchValue: false,
+						selectValue: "",
 						infoItems: [
 							{
 								name: "okesf"

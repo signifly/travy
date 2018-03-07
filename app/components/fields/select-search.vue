@@ -1,6 +1,11 @@
 <template>
 	<div class="select-search">
-		<Select v-model="data.value" @change="update" v-bind="{size, loading}" :remote-method="getListQ" filterable remote reserve-keyword>
+		<Select
+		v-model="data.value"
+		@change="update"
+		v-bind="{size: sizeMap, loading}"
+		:remote-method="getListQ"
+		filterable remote reserve-keyword>
 			<Option v-for="item in listMap" v-bind="item" :key="item.value" />
 		</Select>
 	</div>
@@ -30,6 +35,7 @@ export default {
 	},
 	props: {
 		meta: {type: Object, require: false, default: () => ({})},
+		size: {type: String, default: "medium"},
 		value: {type: [String, Number], required: false, doc: true},
 		_value: {type: String, required: true},
 		options: {type: Object, required: false},
@@ -64,10 +70,10 @@ export default {
 			value: x[t.oValue]
 		})),
 
-		size() {
+		sizeMap() {
 			if (this.meta.location === "table") return "small";
 			if (this.meta.location === "tabs") return "medium";
-			return "medium";
+			return this.size;
 		}
 	},
 	methods: {

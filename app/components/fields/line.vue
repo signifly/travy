@@ -18,6 +18,16 @@
 			</div>
 		</div>
 
+		<div class="select">
+			<vSelectSearch
+				:_options="_selectOptions"
+				:_value="_selectValue"
+				:value="selectValue"
+				size="small"
+				@fieldA="fieldA"
+			/>
+		</div>
+
 		<div class="toggle">
 			<elSwitch v-model="data.switchValue" :inactive-text="`${_switchTitle}:`" @change="switchUpdate"/>
 		</div>
@@ -29,10 +39,11 @@
 <script>
 import {Switch} from "element-ui";
 import vActions from "./actions/index.vue";
+import vSelectSearch from "./select-search.vue";
 import vItemsTooltip from "./items-tooltip.vue";
 
 export default {
-	components: {elSwitch: Switch, vActions, vItemsTooltip},
+	components: {elSwitch: Switch, vActions, vSelectSearch, vItemsTooltip},
 	meta: {
 		res: {
 			props: {
@@ -43,6 +54,13 @@ export default {
 				infoItemKey: "name",
 				switchTitle: "switch",
 				switchValue: "switchValue",
+				selectValue: "selectValue",
+				selectOptions: {
+					endpoint: "https://sikaline.glitch.me/table-actions/options",
+					key: "",
+					label: "name",
+					value: "id"
+				},
 				actions: [
 					{
 						title: "Delete",
@@ -60,6 +78,7 @@ export default {
 				titleValue: "a modal",
 				switchValue: false,
 				switchT: "title",
+				selectValue: "",
 				infoItems: [
 					{
 						name: "model #1"
@@ -79,13 +98,17 @@ export default {
 		_infoItemKey: {type: String, required: true, doc: true},
 		_switchTitle: {type: String, required: true, doc: true},
 		switchValue: {type: Boolean, required: false, doc: true},
+		selectValue: {type: [String, Number], required: false, doc: true},
+		_selectOptions: {type: Object, required: true, doc: true},
+		_actions: {type: Array, required: true, doc: true},
 		_switchValue: {type: String, required: true},
-		_actions: {type: Array, required: true, doc: true}
+		_selectValue: {type: String, required: true}
 	},
 	data() {
 		return {
 			data: {
-				switchValue: this.switchValue
+				switchValue: this.switchValue,
+				selectValue: this.selectValue
 			}
 		}
 	},
@@ -95,6 +118,10 @@ export default {
 				action: "update",
 				data: {[this._switchValue]: val}
 			});
+		},
+
+		fieldA(obj) {
+			this.$emit("fieldA", obj);
 		}
 	}
 }
@@ -146,7 +173,7 @@ export default {
 		}
 	}
 
-	.toggle {
+	.toggle, .select {
 		margin-left: auto;
 	}
 
