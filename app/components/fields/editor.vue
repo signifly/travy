@@ -1,6 +1,6 @@
 <template>
 	<div class="editor">
-		<editor v-model="data.content" v-bind="{configs}" @input="update"/>
+		<editor ref="editor" v-model="data.content" v-bind="{configs}" @input="update"/>
 	</div>
 </template>
 
@@ -42,6 +42,12 @@ export default {
 				action: "update",
 				data: {[this._content]: content}
 			});
+		}
+	},
+	watch: {
+		$route() {
+			// editor bugs out after tab change, refresh it on tab changes to fix
+			this.$refs.editor.simplemde.codemirror.refresh();
 		}
 	}
 };
