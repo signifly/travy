@@ -11,38 +11,55 @@
 				<TableColumn label="changes" prop="changes" />
 			</Table>
 		</div>
+
+		<div class="pagination" v-if="paginationActive">
+			<Pagination
+				small
+				background
+				layout="prev, pager, next"
+				:total="pagination.total"
+				:page-size="pagination.per_page"
+				:current-page.sync="page"
+				@current-change="getItems"
+			/>
+		</div>
 	</div>
 </template>
 
 <script>
-import {get} from "lodash";
 import {endpoint, date} from "@/modules/utils";
-import {Table, TableColumn} from "element-ui";
+import {Table, TableColumn, Pagination} from "element-ui";
 
 export default {
-	components: {Table, TableColumn},
+	components: {Table, TableColumn, Pagination},
 	props: {
 		endpoints: {type: Object, required: true},
 		data: {type: Object, required: true}
 	},
 	data() {
 		return {
-			items: []
+			items: [],
+			page: 1,
+			pageCount: 8,
+			pagination: null
 		}
 	},
 	computed: {
 		itemsMap: (t) => t.items.map(x => ({
-			id: x.id,
+			id: `#${x.id}`,
 			type: x.description,
 			date: date(x.updated_at).sDateTime,
-			user: get(x, "causer.full_name", "System"),
+			user: x.causer ? x.causer.full_name : "System",
 			changes: Object.keys(x.properties.attributes).join(", ")
-		}))
+		})),
+
+		paginationActive: (t) => t.pagination && t.pagination.last_page > 1
 	},
 	methods: {
 		async getItems() {
 			const url = endpoint({type: "activity", item: this.data, endpoints: this.endpoints});
-			const {data} = await this.$http.get(url);
+			const {data} = await this.$http.get(url, {params: {count: this.pageCount, page: this.page}});
+			this.pagination = data.meta;
 			this.items = data.data;
 		}
 	},
@@ -62,6 +79,7 @@ export default {
 		color: $blue4;
 		margin-bottom: 1em;
 	}
+
 	.table {
 		.el-table {
 			background-color: transparent;
@@ -79,6 +97,12 @@ export default {
 				}
 			}
 		}
+	}
+
+	.pagination {
+		margin-top: 1em;
+		display: flex;
+		justify-content: center;
 	}
 }
 </style>

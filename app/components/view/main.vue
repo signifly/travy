@@ -38,7 +38,7 @@ import {Row, Col} from "element-ui";
 import {vHeader, vSidebar, vTabs, vPanel} from "./components";
 import vModifiers from "@/components/modifiers.vue";
 import vActions from "@/components/actions/index.vue";
-import vActivity from "./components/activity/index.vue";
+import vActivity from "./components/activity.vue";
 
 const edits = () => ({tabs: new Set(), data: new Set()});
 
