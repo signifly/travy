@@ -105,8 +105,12 @@ export default {
 		},
 
 		async getDefinitions() {
+			const params = {
+				modifiers: this.query.modifiers
+			};
+
 			if (this.id !== "test") {
-				const {data} = await this.$http.get(`definitions/table/${this.id}`, {params: this.query.modifiers});
+				const {data} = await this.$http.get(`definitions/table/${this.id}`, {params});
 				this.definitions = data;
 			} else {
 				const {data} = await this.$http.get("https://sikaline.glitch.me/table-defs/products");
@@ -118,16 +122,22 @@ export default {
 			if (type === "modifiers") await this.getDefinitions();
 
 			const sort = this.sorting;
+			const _this = this;
 
 			const params = {
 				get sort() {
 					const order = sort.order === "descending" ? "-" : "";
 					return `${order}${sort.prop}`;
 				},
+				get modifiers() {
+					if (_this.query.modifiers) return _this.query.modifiers;
+					return _this.modifiers.reduce((obj, item) => {
+						return {...obj, [item.key]: item.value};
+					}, {});
+				},
 				page: this.query.page,
 				filter: omit(this.query.filters, ["q"]),
 				q: get(this.query.filters, "q"),
-				modifier: this.query.modifiers,
 				include: this.includes.join(",")
 			};
 

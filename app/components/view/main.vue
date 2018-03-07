@@ -102,7 +102,7 @@ export default {
 
 		async getDefinitions() {
 			const params = {
-				modifier: this.query.modifiers
+				modifiers: this.query.modifiers
 			};
 
 			if (this.parentId === "test") {
@@ -116,9 +116,15 @@ export default {
 
 		async getData({type} = {}) {
 			if (type === "modifiers") await this.getDefinitions();
+			const _this = this;
 
 			const params = {
-				modifier: this.query.modifiers
+				get modifiers() {
+					if (_this.query.modifiers) return _this.query.modifiers;
+					return _this.modifiers.reduce((obj, item) => {
+						return {...obj, [item.key]: item.value};
+					}, {});
+				}
 			};
 
 			if (this.parentId === "test") {
