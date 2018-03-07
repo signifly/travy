@@ -173,12 +173,18 @@ export default {
 		}
 	}
 
-	.toggle, .select {
+	.toggle {
+		transform: scale(0.95);
+		margin-left: 2em;
+	}
+
+	.select {
+		width: 10em;
 		margin-left: auto;
 	}
 
 	.actions {
-		width: 10em;
+		width: 6em;
 		text-align: right;
 		font-size: em(12);
 		a {
