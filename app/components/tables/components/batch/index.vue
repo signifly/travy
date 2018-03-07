@@ -6,9 +6,9 @@
 			</div>
 
 			<div class="actions">
-				<Button size="medium" @click="seq">Sequential edit</Button>
+				<Button v-if="sequential" size="medium" @click="seq">Sequential edit</Button>
 
-				<Dropdown trigger="click" :show-timeout="0" :hide-timeout="0" @command="open">
+				<Dropdown v-if="bulk" trigger="click" :show-timeout="0" :hide-timeout="0" @command="open">
 					<Button size="medium">
 						Bulk actions<i class="el-icon-arrow-up el-icon--right"></i>
 					</Button>
@@ -53,7 +53,10 @@ export default {
 		endpoint: (t) => get(t.action, "endpoint", t.endpoints.bulkUpdate),
 		first: (t) => t.endpoints.show.url.replace("{id}", t.ids[0]),
 		ids: (t) => sortBy(t.selected.map(x => x.id)),
+
+		sequential: (t) => t.batch.sequential,
 		actions: (t) => t.batch.actions,
+		bulk: (t) => t.batch.bulk,
 	},
 	methods: {
 		unselect() {

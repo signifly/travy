@@ -46,7 +46,7 @@ export default {
 	},
 	watch: {
 		$route() {
-			// editor bugs out after tab change, refresh it on tab changes to fix
+			// editor bugs out after tab change to editor, refresh it on tab changes to fix
 			this.$refs.editor.simplemde.codemirror.refresh();
 		}
 	}

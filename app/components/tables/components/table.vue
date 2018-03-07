@@ -9,7 +9,7 @@
 		@sort-change="sort"
 		@selection-change="select">
 
-			<TableColumn type="selection" v-if="batch.active" />
+			<TableColumn type="selection" v-if="batchActive" />
 			<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name">
 				<vField slot-scope="scope" v-bind="{scope, column}" @fieldA="$emit('fieldA', $event)"/>
 			</TableColumn>
@@ -32,6 +32,8 @@ export default {
 	computed: {
 		query: (t) => t.$route.query,
 		sorting: (t) => t.query.sort || t.defaults.sort || {},
+
+		batchActive: (t) => t.batch.bulk || t.batch.sequential,
 
 		tableColumns() {
 			return this.columns.map(x => ({...x,
