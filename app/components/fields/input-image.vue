@@ -3,6 +3,7 @@
 		<Upload
 		class="upload"
 		action=""
+		:before-upload="preventAction"
 		:show-file-list="false"
 		:on-change="addFile">
 			<div class="image">
@@ -54,6 +55,8 @@ export default {
 		}
 	},
 	methods: {
+		preventAction: () => false,
+
 		async addFile(file) {
 			this.data.image = file.url;
 			this.update(await base64Encode(file.raw));
