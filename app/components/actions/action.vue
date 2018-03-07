@@ -3,7 +3,7 @@
 		<div class="modal" v-if="modal">
 			<vModalFields
 				v-bind="{fields, error, title, loading}"
-				:data="_data"
+				:data="dataC"
 				:visible.sync="active"
 				@submit="submit"
 				@fieldA="fieldA"
@@ -56,7 +56,7 @@ export default {
 	},
 	data() {
 		return {
-			_data: this.data,
+			dataC: this.data,
 			loading: false,
 			active: false,
 			error: {}
@@ -81,7 +81,7 @@ export default {
 		},
 
 		fieldA({data}) {
-			forEach(data, (val, key) => set(this._data, key, val));
+			forEach(data, (val, key) => set(this.dataC, key, val));
 		},
 
 		submit() {
@@ -91,7 +91,7 @@ export default {
 		async store() {
 			try {
 				this.loading = true;
-				const {data} = await this.$http.post(this.endpoints.store.url, {data: this._data}, {custom: true});
+				const {data} = await this.$http.post(this.endpoints.store.url, {data: this.dataC}, {custom: true});
 				this.$router.push(endpoint({type: "show", item: data.data, endpoints: this.endpoints}));
 			} catch ({response}) {
 				this.error = get(response, "data", {});
