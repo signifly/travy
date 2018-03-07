@@ -10,7 +10,7 @@
 			</DropdownMenu>
 		</Dropdown>
 
-		<component v-if="component" :is="component" v-bind="{item}" @close="item = null" />
+		<component v-if="component" :is="component" v-bind="[item, {item}]" @close="item = null" />
 	</div>
 </template>
 

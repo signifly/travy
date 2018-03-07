@@ -3,7 +3,7 @@
 		<div class="delete">
 			<Popover class="popover" v-model="active" transition="null">
 				<div class="text">
-					{{item.text}}
+					{{text}}
 				</div>
 				<div class="buttons">
 					<Button size="mini" :disabled="loading" @click="close">Cancel</Button>
@@ -20,7 +20,7 @@ import {Popover, Button} from "element-ui";
 export default {
 	components: {Popover, Button},
 	props: {
-		item: {type: Object, required: true}
+		text: {type: String, default: "Are you sure?"}
 	},
 	data() {
 		return {

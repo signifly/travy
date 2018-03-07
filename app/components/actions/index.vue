@@ -13,8 +13,8 @@ export default {
 	components: {vAction},
 	props: {
 		id: {type: [String, Number], required: false},
-		actions: {type: Array, required: true},
-		endpoints: {type: Object, required: true}
+		endpoints: {type: Object, required: true},
+		actions: {type: Array, required: true}
 	}
 };
 </script>
