@@ -38,11 +38,12 @@ import {forEach, get, set} from "lodash";
 import {Button, Popover} from "element-ui";
 import vModalFields from "@/components/modal-fields.vue";
 import vPopover from "@/components/popover.vue";
+import {endpoint} from "@/modules/utils";
 
 export default {
 	components: {Button, Popover, vModalFields, vPopover},
 	props: {
-		id: {type: [String, Number], required: false},
+		itemData: {type: [Object, Array], required: false},
 		type: {type: String, required: true},
 		title: {type: String, required: true},
 		text: {type: String, required: false},
@@ -88,12 +89,10 @@ export default {
 		},
 
 		async store() {
-			const epts = this.endpoints;
-
 			try {
 				this.loading = true;
-				const {data} = await this.$http.post(epts.store.url, {data: this._data}, {custom: true});
-				this.$router.push(epts.show.url.replace("{id}", data.data.id));
+				const {data} = await this.$http.post(this.endpoints.store.url, {data: this._data}, {custom: true});
+				this.$router.push(endpoint({type: "show", item: data.data, endpoints: this.endpoints}));
 			} catch ({response}) {
 				this.error = get(response, "data", {});
 			} finally {
@@ -103,7 +102,7 @@ export default {
 
 		async delete() {
 			const destroy = this.endpoints.destroy;
-			const url = destroy.url.replace("{id}", this.id);
+			const url = endpoint({type: "destroy", item: this.itemData, endpoints: this.endpoints});
 
 			try {
 				this.loading = true;
