@@ -107,9 +107,17 @@ export default {
 			console.log("remove", data);
 		},
 
+		modifierParams({definitions} = {}) {
+			if (this.query.modifiers || definitions) return this.query.modifiers;
+
+			return this.modifiers.reduce((obj, item) => {
+				return {...obj, [item.key]: item.value};
+			}, {});
+		},
+
 		async getDefinitions() {
 			const params = {
-				modifiers: this.query.modifiers
+				modifiers: this.modifierParams({definitions: true})
 			};
 
 			if (this.parentId === "test") {
@@ -123,15 +131,9 @@ export default {
 
 		async getData({type} = {}) {
 			if (type === "modifiers") await this.getDefinitions();
-			const _this = this;
 
 			const params = {
-				get modifiers() {
-					if (_this.query.modifiers) return _this.query.modifiers;
-					return _this.modifiers.reduce((obj, item) => {
-						return {...obj, [item.key]: item.value};
-					}, {});
-				}
+				modifiers: this.modifierParams()
 			};
 
 			if (this.parentId === "test") {
@@ -148,7 +150,9 @@ export default {
 		async save({done} = {}) {
 			try {
 				this.loading = true;
-				const {data} = await this.$http.put(this.endpoint({type: "update"}), {data: this.dataUpdated}, {custom: true});
+				const modifiers = this.modifierParams();
+
+				const {data} = await this.$http.put(this.endpoint({type: "update"}), {data: this.dataUpdated, modifiers}, {custom: true});
 				this.data = data.data;
 
 				// reset edits
