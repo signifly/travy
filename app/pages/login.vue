@@ -66,8 +66,7 @@ export default {
 		async login() {
 			try {
 				this.loading = true;
-				const {data} = await this.$http.post("login", this.form, {custom: true});
-				this.$store.commit("user/login", {data, route: {...this.route}});
+				await this.$store.dispatch("user/login", {form: this.form, route: {...this.route}});
 			} catch ({response}) {
 				this.error = response.data;
 			} finally {

@@ -50,14 +50,14 @@ const router = new VueRouter({
 	}
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
 	if (to.name === "login") return next();
-	const auth = store.getters["user/auth"];
+	const user = store.getters["user/data"] || await store.dispatch("user/data");
 
-	if (!auth) {
-		next({name: "login", replace: true, params: {route: to}});
-	} else {
+	if (user) {
 		next();
+	} else {
+		next({name: "login", replace: true, params: {route: to}});
 	}
 });
 

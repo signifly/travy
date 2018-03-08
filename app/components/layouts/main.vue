@@ -1,5 +1,5 @@
 <template>
-	<div class="main">
+	<div class="main" v-if="user">
 		<Container class="is-vertical">
 			<vHeader/>
 			<Main>
@@ -14,7 +14,10 @@ import {Container, Main} from "element-ui";
 import vHeader from "@/components/header.vue";
 
 export default {
-	components: {Container, Main, vHeader}
+	components: {Container, Main, vHeader},
+	computed: {
+		user: (t) => t.$store.getters["user/data"]
+	}
 };
 </script>
 

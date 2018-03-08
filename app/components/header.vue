@@ -37,12 +37,11 @@
 			<div class="dropdown">
 				<Dropdown trigger="click" :show-timeout="0" :hide-timeout="0" @command="account">
 					<a class="el-dropdown-link">
-						Sikaline<i class="el-icon-arrow-down el-icon--right"></i>
+						{{user.first_name}}<i class="el-icon-arrow-down el-icon--right"></i>
 					</a>
 
-					<DropdownMenu slot="dropdown">
-						<DropdownItem>Settings</DropdownItem>
-						<DropdownItem>Admin</DropdownItem>
+					<DropdownMenu slot="dropdown" @command="$event()">
+						<DropdownItem :command="settings">Settings</DropdownItem>
 						<DropdownItem divided :command="logout">Logout</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
@@ -70,12 +69,18 @@ export default {
 			}
 		}
 	},
+	computed: {
+		user: (t) => t.$store.getters["user/data"]
+	},
 	methods: {
 		account(action = () => {}) {
 			action();
 		},
 		logout() {
-			this.$store.dispatch("user/logout");
+			this.$store.dispatch("user/logout", {post: true});
+		},
+		settings() {
+			this.$router.push({name: "users-view", params: {id: this.user.id.toString()}});
 		}
 	}
 };

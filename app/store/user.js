@@ -5,28 +5,47 @@ export default {
 	namespaced: true,
 
 	state: {
+		data: null,
 		auth: JSON.parse(localStorage.getItem("auth"))
 	},
 
 	mutations: {
-		login(state, {data, route}) {
+		data(state, {data}) {
+			state.data = data;
+		},
+		authSet(state, {data}) {
 			state.auth = data;
 			localStorage.setItem("auth", JSON.stringify(data));
-			router.push(route);
 		},
-		logout(state) {
+		authDelete(state) {
 			state.auth = null;
 			localStorage.removeItem("auth");
-			router.push({name: "login", params: {route: {path: window.location.pathname}}});
 		}
 	},
 
 	actions: {
-		async logout({commit}) {
+		async login({commit, dispatch}, {form, route}) {
+			const {data} = await axios.post("login", form, {custom: true});
+			commit("authSet", {data});
+
+			await dispatch("data");
+			router.push(route);
+		},
+
+		async logout({commit}, {post} = {}) {
 			try {
-				await axios.post("logout");
+				if (post) await axios.post("logout");
 			} catch (err) {} finally {
-				commit("logout");
+				commit("authDelete");
+				router.push({name: "login", params: {route: {path: window.location.pathname}}});
+			}
+		},
+
+		async data({commit, state, getters}) {
+			if (state.auth) {
+				const {data} = await axios.get("account");
+				commit("data", data);
+				return getters.data;
 			}
 		}
 	},
@@ -34,6 +53,9 @@ export default {
 	getters: {
 		auth(state) {
 			return state.auth;
+		},
+		data(state) {
+			return state.data;
 		}
 	}
 };
