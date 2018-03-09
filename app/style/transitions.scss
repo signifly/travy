@@ -1,4 +1,16 @@
 .trans {
+	&-fadeRight {
+		$t: 0.15s;
+
+		&-enter-active, &-leave-active {
+			transition: cubic(opacity, $t), cubic(transform, $t);
+		}
+		&-enter, &-leave-to {
+			opacity: 0 !important;
+			transform: translateX(-10px) scale(0.98);
+		}
+	}
+
 	&-fadeDown {
 		$t: 0.15s;
 
