@@ -23,6 +23,7 @@ export default {
 	},
 	computed: {
 		components: (t) => t.$options.components,
+		query: (t) => t.$route.query,
 		id: (t) => t.column.fieldType.id,
 		item: (t) => t.scope.row,
 		action: (t) => t.column.fieldType.action,
@@ -35,15 +36,15 @@ export default {
 			if (!this.action) return;
 			const split = this.action.split("/");
 
-			return split.map(item => {
+			const url = split.map(item => {
 				const start = item.indexOf("{");
 				const end = item.indexOf("}");
 				if (start === -1 && end === -1) return item;
-
 				const key = item.substring(start + 1, end);
-
 				return get(this.item, key);
 			}).join("/");
+
+			return {path: url, query: {modifiers: this.query.modifiers}};
 		}
 	},
 	methods: {

@@ -81,7 +81,7 @@ export default {
 
 		show({item}) {
 			const url = this.endpoint({type: "show", item});
-			this.$router.push(`/${url}`);
+			this.$router.push({path: `/${url}`, query: {modifiers: this.query.modifiers}});
 		},
 
 		async update({item, data, done}) {
