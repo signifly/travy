@@ -63,8 +63,7 @@ export default {
 		endpoints: (t) => t.definitions.endpoints,
 		filters: (t) => t.definitions.filters,
 		search: (t) => t.definitions.search,
-		includes: (t) => t.definitions.includes,
-		sorting: (t) => t.query.sort || t.defaults.sort
+		includes: (t) => t.definitions.includes
 	},
 	methods: {
 		unselect() {
@@ -121,7 +120,7 @@ export default {
 		async getData({type} = {}) {
 			if (type === "modifiers") await this.getDefinitions();
 
-			const sort = this.sorting;
+			const sort = this.query.sort || this.defaults.sort;
 			const _this = this;
 
 			const params = {
@@ -136,7 +135,7 @@ export default {
 					}, {});
 				},
 				page: this.query.page,
-				filter: omit(this.query.filters, ["q"]),
+				filter: omit(this.query.filters, ["q"]) || this.defaults.filters,
 				q: get(this.query.filters, "q"),
 				include: this.includes.join(",")
 			};
