@@ -10,7 +10,8 @@ import store from "@/store";
 import doc from "@/pages/doc.vue";
 import tables from "./tables";
 import index from "@/pages/index.vue";
-import login from "@/pages/login.vue";
+import login from "@/pages/login/index.vue";
+import loginReset from "@/pages/login/reset.vue";
 import table from "@/pages/table.vue";
 import view from "@/pages/view.vue";
 import _404 from "@/pages/404.vue";
@@ -31,10 +32,11 @@ const routesViews = map(tables, (item, id) => ({
 }));
 
 const routes = [
-	{path: "/", name: "index", component: index},
+	{path: "/", name: "index", component: index, meta: {auth: {}}},
 	{path: "/login", name: "login", component: login, props: true, meta: {layout: "vBase"}},
-	{path: "/doc", name: "doc", component: doc, meta: {layout: "vBase"}},
-	{path: "/*", name: "404", component: _404}
+	{path: "/login/reset/:id", name: "login-reset", component: loginReset, props: true, meta: {layout: "vBase"}},
+	{path: "/doc", name: "doc", component: doc, meta: {layout: "vBase"}, meta: {auth: {}}},
+	{path: "/*", name: "404", component: _404, meta: {auth: {}}}
 ];
 
 const router = new VueRouter({
@@ -51,7 +53,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-	if (to.name === "login") return next();
+	if (!to.meta.auth) return next(); // allow all routes that isn't protected by auth
+
 	const user = store.getters["user/data"] || await store.dispatch("user/data");
 
 	if (user) {
