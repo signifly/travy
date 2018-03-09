@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import {mapKeys} from "lodash";
 import {Button} from "element-ui";
 import vForm from "./form.vue";
 
@@ -83,6 +84,7 @@ export default {
 				this.message = data.message;
 			} catch ({response}) {
 				this.error = response.data;
+				this.error.errors = mapKeys(this.error.errors, (val, key) => `data.${key}`);
 			} finally {
 				this.loading = false;
 			}
