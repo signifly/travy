@@ -1,6 +1,12 @@
 <template>
 	<div class="select-multi-search-add">
-		<Select v-model="data.values" @change="update" v-bind="{size, loading}" :remote-method="getListQ" filterable multiple remote reserve-keyword allow-create>
+		<Select
+		v-model="data.values"
+		v-bind="{size, loading}"
+		:remote-method="getListQ"
+		:clearable="_clearable"
+		@change="update"
+		filterable multiple remote reserve-keyword allow-create>
 			<Option v-for="item in list" v-bind="item" :key="item.value" />
 		</Select>
 	</div>
@@ -43,6 +49,7 @@ export default {
 	},
 	props: {
 		meta: {type: Object, require: false, default: () => ({})},
+		_clearable: {type: Boolean, required: false, default: true, doc: true},
 		_options: {type: Object, required: true, doc: true},
 		_values: {type: String, required: true},
 		values: {type: Array, required: false, default: () => [], doc: true, note: `

@@ -5,6 +5,7 @@
 		@change="update"
 		v-bind="{size: sizeMap, loading}"
 		:remote-method="getListQ"
+		:clearable="_clearable"
 		filterable remote reserve-keyword>
 			<Option v-for="item in listMap" v-bind="item" :key="item.value" />
 		</Select>
@@ -35,6 +36,7 @@ export default {
 	},
 	props: {
 		meta: {type: Object, require: false, default: () => ({})},
+		_clearable: {type: Boolean, required: false, default: true, doc: true},
 		size: {type: String, default: "medium"},
 		value: {type: [String, Number], required: false, doc: true},
 		_value: {type: String, required: true},

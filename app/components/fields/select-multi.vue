@@ -1,6 +1,6 @@
 <template>
 	<div class="select-multi">
-		<Select v-model="data.values" @change="update" v-bind="{size}" filterable multiple>
+		<Select v-model="data.values" @change="update" v-bind="{size}" :clearable="_clearable" filterable multiple>
 			<Option v-for="option in listMap" v-bind="option" :key="option.value" />
 		</Select>
 	</div>
@@ -42,6 +42,7 @@ export default {
 	},
 	props: {
 		meta: {type: Object, require: false, default: () => ({})},
+		_clearable: {type: Boolean, required: false, default: true, doc: true},
 		_options: {type: Object, required: true, doc: true},
 		values: {type: Array, required: false, doc: true},
 		_values: {type: String, required: true},
