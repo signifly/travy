@@ -77,6 +77,12 @@ export default {
 			roles: ["admin"]
 		}
 	},
+	translations: {
+		title: "Translations",
+		auth: {
+			roles: ["admin"]
+		}
+	},
 	"price-lists": {
 		title: "Price lists",
 		auth: {

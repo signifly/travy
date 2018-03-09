@@ -19,7 +19,7 @@
 				<MenuItem index="/files">Files</MenuItem>
 				<MenuItem index="/options">Options</MenuItem>
 			</Submenu>
-			<MenuItem index="/23">Translations</MenuItem>
+			<MenuItem index="/translations">Translations</MenuItem>
 			<MenuItem index="/shops">Shops</MenuItem>
 			<MenuItem index="/orders">Orders</MenuItem>
 			<MenuItem index="/partners">Partners</MenuItem>
