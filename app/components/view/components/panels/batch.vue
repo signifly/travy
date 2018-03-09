@@ -52,6 +52,7 @@ export default {
 		}
 	},
 	computed: {
+		modifiers: (t) => t.$route.query.modifiers,
 		progress: (t) => ((t.index + 1) / t.items.length) * 100,
 		items: (t) => t.seq.items.map(x => x.toString()),
 		id: (t) => t.$route.params.id.toString(),
@@ -67,7 +68,7 @@ export default {
 				done: async () => {
 					this.$router.push({
 						params: {...this.$route.params, id: this.next},
-						query: {seq: {items: this.items}}
+						query: {modifiers: this.modifiers, seq: {items: this.items}}
 					});
 				}
 			});
@@ -78,7 +79,7 @@ export default {
 				done: async () => {
 					this.$router.push({
 						params: {...this.$route.params, id: this.prev},
-						query: {seq: {items: this.items}}
+						query: {modifiers: this.modifiers, seq: {items: this.items}}
 					});
 				}
 			});
@@ -87,7 +88,7 @@ export default {
 		closeSave() {
 			this.$parent.$emit("save", {
 				done: async () => {
-					this.$router.push("/" + this.$route.meta.id);
+					this.$router.push({path: `/${this.$route.meta.id}`, query: {modifiers: this.modifiers}});
 				}
 			});
 		},

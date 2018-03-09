@@ -82,7 +82,8 @@ export default {
 		},
 
 		seq() {
-			this.$router.push({path: this.first, query: {seq: {items: this.ids}}});
+			const modifiers = this.$route.query.modifiers;
+			this.$router.push({path: this.first, query: {modifiers, seq: {items: this.ids}}});
 		}
 	}
 };

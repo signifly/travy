@@ -1,7 +1,7 @@
 <template>
 	<div class="view">
 		<breadcrumb :items="breadcrumb"/>
-		<mainView v-bind="{id, meta}" :key="id" />
+		<mainView v-bind="{id, meta}" :key="key" />
 	</div>
 </template>
 
@@ -17,7 +17,10 @@ export default {
 		breadcrumb: (t) => [
 			{to: {name: t.meta.id}, title: t.meta.id},
 			{title: t.id}
-		]
+		],
+
+		// don't rerender view on sequential batch
+		key: (t) => t.$route.query.seq ? null : t.id
 	}
 };
 </script>
