@@ -24,8 +24,8 @@ export default {
 		}
 	},
 	props: {
-		percentage: {type: Number, required: true, doc: true},
-		status: {type: String, required: true, doc: true}
+		percentage: {type: Number, required: false, default: 0, doc: true},
+		status: {type: String, required: false, default: "danger", doc: true}
 	}
 }
 </script>

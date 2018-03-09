@@ -63,8 +63,8 @@ export default {
 		rows: (t) => chunk(t.itemsMap, 2),
 		itemsMap: (t) => t.items.map(x => ({
 			title: x[t._title],
-			percentage: x[t._percentage],
-			status: x[t._status]
+			percentage: x[t._percentage] || 0,
+			status: x[t._status] || "danger"
 		}))
 	}
 }
