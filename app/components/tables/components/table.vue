@@ -45,7 +45,7 @@ export default {
 	methods: {
 		sort({prop, order}) {
 			const sort = prop && order ? {prop, order} : undefined;
-			if (this.data) this.$router.replace({query: {sort, filter: this.query.filter}}); // don't set query params for default sorting
+			if (this.data) this.$router.replace({query: {...this.query, sort}}); // don't set query params for default sorting
 			this.$emit("getData");
 		},
 
