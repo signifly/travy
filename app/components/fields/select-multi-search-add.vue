@@ -2,7 +2,7 @@
 	<div class="select-multi-search-add">
 		<Select
 		v-model="data.values"
-		v-bind="{size, loading}"
+		v-bind="{size, loading, disabled}"
 		:remote-method="getListQ"
 		:clearable="_clearable"
 		@change="update"
@@ -48,6 +48,7 @@ export default {
 		}
 	},
 	props: {
+		disabled: {type: Boolean, required: false},
 		meta: {type: Object, require: false, default: () => ({})},
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
 		_options: {type: Object, required: true, doc: true},

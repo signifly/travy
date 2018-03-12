@@ -3,7 +3,7 @@
 		<Select
 		v-model="data.value"
 		@change="update"
-		v-bind="{size: sizeMap, loading}"
+		v-bind="{size: sizeMap, loading, disabled}"
 		:remote-method="getListQ"
 		:clearable="_clearable"
 		filterable remote reserve-keyword>
@@ -35,6 +35,7 @@ export default {
 		}
 	},
 	props: {
+		disabled: {type: Boolean, required: false},
 		meta: {type: Object, require: false, default: () => ({})},
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
 		size: {type: String, default: "medium"},

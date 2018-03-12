@@ -1,6 +1,6 @@
 <template>
 	<div class="select">
-		<Select v-model="data.value" @change="update" v-bind="{size}" :clearable="_clearable" filterable>
+		<Select v-model="data.value" @change="update" v-bind="{size, disabled}" :clearable="_clearable" filterable>
 			<Option v-for="option in listMap" v-bind="option" :key="option.value">
 				<div class="option">
 					<div class="icon" v-if="option.icon && icon(option.icon)"><img :src="icon(option.icon)"></div>
@@ -50,6 +50,7 @@ export default {
 		}
 	},
 	props: {
+		disabled: {type: Boolean, required: false},
 		meta: {type: Object, require: false, default: () => ({})},
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
 		_options: {type: Object, required: true, doc: true},
