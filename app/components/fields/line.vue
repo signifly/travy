@@ -1,6 +1,6 @@
 <template>
 	<div class="line">
-		<div class="icon">
+		<div class="icon drag">
 			<i class="el-icon-rank"></i>
 		</div>
 
@@ -32,7 +32,7 @@
 			<elSwitch v-model="data.switchValue" :inactive-text="`${_switchTitle}:`" @change="switchUpdate"/>
 		</div>
 
-		<vActions :_items="_actions" @fieldA="$emit('fieldA', $event)"/>
+		<vActions :_items="_actions" @fieldA="fieldA"/>
 	</div>
 </template>
 
@@ -92,7 +92,7 @@ export default {
 	},
 	props: {
 		_titleKey: {type: String, required: true, doc: true},
-		titleValue: {type: String, required: true, doc: true},
+		titleValue: {type: String, required: false, doc: true},
 		_infoKey: {type: String, required: true, doc: true},
 		infoItems: {type: Array, required: true, doc: true},
 		_infoItemKey: {type: String, required: true, doc: true},
@@ -137,15 +137,17 @@ export default {
 	align-items: center;
 	margin: 0.25em 0;
 	height: em(100);
-	cursor: grab;
 
 	.icon {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		font-size: 1.25em;
-		margin-right: 1.5em;
 		color: $blue4;
+		cursor: grab;
+		padding: 1em;
+		margin-left: -1em;
+		margin-right: 0.5em;
 	}
 
 	.info {

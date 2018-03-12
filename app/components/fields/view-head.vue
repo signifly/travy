@@ -34,7 +34,7 @@ export default {
 		}
 	},
 	props: {
-		title: {type: String, required: true, doc: true},
+		title: {type: String, required: false, doc: true},
 		image: {type: String, required: false, default: noimage, doc: true},
 		_imageActive: {type: Boolean, required: false, doc: true, note: `
 			Whether an image or placeholder should be shown.

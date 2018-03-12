@@ -1,8 +1,8 @@
 <template>
 	<div class="line-multi">
-		<draggable :list="items" @end="listUpdate" v-if="items.length > 0">
+		<draggable :list="items" :options="{handle: '.drag'}" @end="listUpdate" v-if="items.length > 0">
 			<div class="item" v-for="(item, i) in items" :key="item.id">
-				<vLine v-bind="[itemsPropsData[i], itemsPropsValue[i]]" @fieldA="fieldA($event, i)" />
+				<component :is="_line" v-bind="[itemsPropsData[i], itemsPropsValue[i]]" @fieldA="fieldA($event, i)" />
 			</div>
 		</draggable>
 
@@ -15,13 +15,14 @@
 <script>
 import {mapValues, mapKeys, get} from "lodash";
 import draggable from "vuedraggable";
-import {vLine} from "./index";
+import {vLine, vLineImage} from "./index";
 
 export default {
-	components: {draggable, vLine},
+	components: {draggable, vLine, vLineImage},
 	meta: {
 		res: {
 			props: {
+				line: "vLine",
 				items: "models",
 				itemFieldId: "vLine",
 				itemFieldProps: {
@@ -86,6 +87,7 @@ export default {
 		}
 	},
 	props: {
+		_line: {type: String, required: true, doc: true},
 		items: {type: Array, required: true, doc: true},
 		_items: {type: String, required: true},
 		_itemFieldId: {type: String, required: true, doc: true},

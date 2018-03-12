@@ -55,7 +55,7 @@ export default {
 					this.loading = false;
 					if (!error) this.close();
 				}
-			})
+			});
 		}
 	}
 };

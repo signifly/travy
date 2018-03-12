@@ -39,6 +39,16 @@ export const base64Encode = (file) => {
 	});
 };
 
+export const endpointUrl = ({url, data}) => {
+	return url.split("/").map(item => {
+		const start = item.indexOf("{");
+		const end = item.indexOf("}");
+		if (start === -1 && end === -1) return item;
+		const key = item.substring(start + 1, end);
+		return get(data, key);
+	}).join("/");
+};
+
 
 export const endpoint = ({type, item, endpoints}) => {
 	const endpoint = endpoints[type];

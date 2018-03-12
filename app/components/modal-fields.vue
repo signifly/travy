@@ -57,6 +57,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.modal {
+	text-align: left;
+}
+
 /deep/ {
 	.el-dialog__title {
 		font-weight: 600;

@@ -3,7 +3,7 @@
 
 		<div class="header">
 			<vFilters v-bind="[filters, {search, getData}]" />
-			<vActions v-bind="{actions, endpoints, itemData: data}" />
+			<vActions v-bind="{actions, endpoints}" />
 		</div>
 
 		<div class="content">
@@ -36,7 +36,7 @@ import {omit, get} from "lodash";
 import {endpoint} from "@/modules/utils";
 import * as components from "./components";
 import vModifiers from "@/components/modifiers.vue";
-import vActions from "@/components/actions/index.vue";
+import vActions from "./components/actions/index.vue";
 import box from "../box.vue";
 
 export default {

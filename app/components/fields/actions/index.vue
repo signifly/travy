@@ -10,7 +10,7 @@
 			</DropdownMenu>
 		</Dropdown>
 
-		<component v-if="component" :is="component" v-bind="[item, {item}]" @close="item = null" />
+		<component v-if="component" :is="component" v-bind="[item, {item, rootData}]" @close="item = null" />
 	</div>
 </template>
 
@@ -19,9 +19,10 @@ import {get} from "lodash";
 import {Dropdown, DropdownMenu, DropdownItem, Popover, Button} from "element-ui";
 import vDelete from "./delete.vue";
 import vShow from "./show.vue";
+import vModal from "./modal.vue";
 
 export default {
-	components: {Dropdown, DropdownMenu, DropdownItem, vDelete, vShow},
+	components: {Dropdown, DropdownMenu, DropdownItem, vDelete, vShow, vModal},
 	meta: {
 		res: {
 			props: {
@@ -34,6 +35,10 @@ export default {
 					{
 						title: "View",
 						type: "show"
+					},
+					{
+						title: "Edit",
+						type: "edit"
 					}
 				]
 			},
@@ -43,7 +48,8 @@ export default {
 		}
 	},
 	props: {
-		_items: {type: Array, required: true, doc: true}
+		_items: {type: Array, required: true, doc: true},
+		rootData: {type: Object, required: false}
 	},
 	data() {
 		return {
@@ -55,6 +61,7 @@ export default {
 		component() {
 			if (get(this.item, "type") === "delete") return "vDelete";
 			if (get(this.item, "type") === "show") return "vShow";
+			if (get(this.item, "type") === "modal") return "vModal";
 		}
 	},
 	methods: {
