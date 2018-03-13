@@ -34,6 +34,7 @@ export default {
 				actions: [
 					{
 						title: "Delete",
+						endpointId: "destroy",
 						props: {
 							id: "delete",
 							text: "delete this?"
