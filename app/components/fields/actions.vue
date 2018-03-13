@@ -17,6 +17,7 @@
 			:endpoint="endpoint"
 			:rootData="data"
 			@close="action = null"
+			@fieldA="fieldA"
 		/>
 	</div>
 </template>
@@ -72,6 +73,9 @@ export default {
 	methods: {
 		select(action) {
 			this.action = action;
+		},
+		fieldA(obj) {
+			this.$emit("fieldA", obj);
 		}
 	}
 };
