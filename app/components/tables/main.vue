@@ -18,7 +18,7 @@
 
 				<vTable
 					ref="vTable"
-					v-bind="{data, columns, defaults, batch}"
+					v-bind="{data, columns, defaults, batch, endpoints}"
 					@select="selected = $event"
 					@getData="getData"
 					@fieldA="fieldA"
@@ -36,11 +36,10 @@ import {omit, get} from "lodash";
 import {endpoint} from "@/modules/utils";
 import * as components from "./components";
 import vModifiers from "@/components/modifiers.vue";
-import vActions from "./components/actions/index.vue";
 import box from "../box.vue";
 
 export default {
-	components: {...components, vModifiers, vActions, box},
+	components: {...components, vModifiers, box},
 	props: {
 		id: {type: String, required: true},
 		title: {type: String, required: false}

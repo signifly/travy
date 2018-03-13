@@ -1,9 +1,8 @@
 <template>
 	<div class="modal">
 		<vModalFields
-			v-bind="{fields, error, loading}"
+			v-bind="{fields, error, loading, title}"
 			:data="dataComb"
-			:title="modalTitle"
 			:visible.sync="visible"
 			@fieldA="fieldA"
 			@submit="submit"
@@ -19,7 +18,7 @@ import {endpointUrl} from "@/modules/utils";
 export default {
 	components: {vModalFields},
 	props: {
-		modalTitle: {type: String, required: false},
+		title: {type: String, required: false},
 		rootData: {type: Object, required: false},
 		endpoint: {type: Object, required: true},
 		data: {type: Object, required: true},
@@ -60,7 +59,7 @@ export default {
 					{custom: true}
 				);
 
-				this.$emit("submit", {data});
+				this.$emit("submit", {id: "modal", data});
 
 			} catch ({response}) {
 				this.error = get(response, "data", {});

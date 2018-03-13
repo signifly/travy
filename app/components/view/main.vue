@@ -7,7 +7,7 @@
 				</Col>
 				<Col class="right" :span="8">
 					<vModifiers v-bind="{modifiers}" @getData="getData" />
-					<vActions v-bind="{actions, endpoints, itemData: data}" />
+					<vActions v-bind="{actions, endpoints, data}" />
 				</Col>
 			</Row>
 
@@ -22,7 +22,7 @@
 
 			<Row class="bottom" :gutter="20">
 				<Col class="left" :span="24">
-					<vActivity v-if="activity.active" v-bind="{endpoints, data}" />
+					<vActivity v-if="activity.active" v-bind="{endpoints, data}" :key="saveU" />
 				</Col>
 			</Row>
 		</div>
@@ -33,17 +33,15 @@
 
 <script>
 import {mapValues, forEach, set, get} from "lodash";
-import {endpoint} from "@/modules/utils";
+import {endpointUrl} from "@/modules/utils";
 import {Row, Col} from "element-ui";
-import {vHeader, vSidebar, vTabs, vPanel} from "./components";
+import * as components from "./components";
 import vModifiers from "@/components/modifiers.vue";
-import vActions from "@/components/actions/index.vue";
-import vActivity from "./components/activity.vue";
 
 const edits = () => ({tabs: new Set(), data: new Set()});
 
 export default {
-	components: {Row, Col, vHeader, vSidebar, vTabs, vPanel, vModifiers, vActions, vActivity},
+	components: {Row, Col, vModifiers, ...components},
 	props: {
 		id: {type: String, required: true},
 		meta: {type: Object, required: true}
@@ -56,7 +54,8 @@ export default {
 			data: null,
 			dataU: 0,
 			edits: edits(),
-			editsU: 0
+			editsU: 0,
+			saveU: 0
 		}
 	},
 	computed: {
@@ -148,11 +147,13 @@ export default {
 		},
 
 		async save({done} = {}) {
+			const url = endpointUrl({data: this.data, url: this.endpoints.update.url});
+
 			try {
 				this.loading = true;
 				const modifiers = this.modifierParams();
 
-				const {data} = await this.$http.put(this.endpoint({type: "update"}), {data: this.dataUpdated, modifiers}, {custom: true});
+				const {data} = await this.$http.put(url, {data: this.dataUpdated, modifiers}, {custom: true});
 				this.data = data.data;
 
 				// reset edits
@@ -161,6 +162,8 @@ export default {
 
 				// reset errors
 				this.error = {};
+
+				this.saveU++;
 
 				if (done) await done();
 

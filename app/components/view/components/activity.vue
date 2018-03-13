@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import {endpoint, date} from "@/modules/utils";
+import {endpointUrl, date} from "@/modules/utils";
 import {Table, TableColumn, Pagination} from "element-ui";
 
 export default {
@@ -45,20 +45,20 @@ export default {
 		}
 	},
 	computed: {
+		endpointUrl: (t) => endpointUrl({data: t.data, url: t.endpoints.activity.url}),
+		paginationActive: (t) => t.pagination && t.pagination.last_page > 1,
+
 		itemsMap: (t) => t.items.map(x => ({
 			id: `#${x.id}`,
 			type: x.description,
 			date: date(x.updated_at).sDateTime,
 			user: x.causer ? x.causer.full_name : "System",
 			changes: Object.keys(x.properties.attributes).join(", ")
-		})),
-
-		paginationActive: (t) => t.pagination && t.pagination.last_page > 1
+		}))
 	},
 	methods: {
 		async getItems() {
-			const url = endpoint({type: "activity", item: this.data, endpoints: this.endpoints});
-			const {data} = await this.$http.get(url, {params: {count: this.pageCount, page: this.page}});
+			const {data} = await this.$http.get(this.endpointUrl, {params: {count: this.pageCount, page: this.page}});
 			this.pagination = data.meta;
 			this.items = data.data;
 		}

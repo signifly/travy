@@ -4,8 +4,7 @@
 			:meta="{location: 'table'}"
 			v-if="components[id]"
 			:is="id"
-			:props="props"
-			v-bind="[propsData, propsValues]"
+			v-bind="[propsData, propsValues, {props, data, endpoints}]"
 			@fieldA="fieldA"
 		/>
 	</component>
@@ -18,6 +17,7 @@ import * as fields from "@/components/fields";
 export default {
 	components: {...fields},
 	props: {
+		endpoints: {type: Object, required: true},
 		column: {type: Object, required: true},
 		scope: {type: Object, required: true}
 	},
@@ -25,11 +25,11 @@ export default {
 		components: (t) => t.$options.components,
 		query: (t) => t.$route.query,
 		id: (t) => t.column.fieldType.id,
-		item: (t) => t.scope.row,
+		data: (t) => t.scope.row,
 		action: (t) => t.column.fieldType.action,
 
 		props: (t) => t.column.fieldType.props,
-		propsData: (t) => mapValues(t.props, (val) => get(t.item, val)),
+		propsData: (t) => mapValues(t.props, (val) => get(t.data, val)),
 		propsValues: (t) => mapKeys(t.props, (val, key) => `_${key}`),
 
 		link() {
@@ -41,7 +41,7 @@ export default {
 				const end = item.indexOf("}");
 				if (start === -1 && end === -1) return item;
 				const key = item.substring(start + 1, end);
-				return get(this.item, key);
+				return get(this.data, key);
 			}).join("/");
 
 			return {path: url, query: {modifiers: this.query.modifiers}};
@@ -49,7 +49,7 @@ export default {
 	},
 	methods: {
 		fieldA(obj) {
-			this.$emit("fieldA", {...obj, item: this.item});
+			this.$emit("fieldA", {...obj, item: this.data});
 		}
 	}
 };

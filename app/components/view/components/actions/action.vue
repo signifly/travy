@@ -6,7 +6,9 @@
 			v-if="active"
 			:is="comp"
 			v-bind="props"
+			position="bottom-right"
 			:endpoint="endpoint"
+			:rootData="data"
 			@close="toggle"
 			@submit="submit"
 		/>
@@ -21,12 +23,13 @@ export default {
 	components: {Button, ...actions},
 	props: {
 		endpoints: {type: Object, required: true},
+		data: {type: Object, required: true},
 		props: {type: Object, required: true},
 
 		icon: {type: String, required: false},
 		title: {type: String, required: true},
 		status: {type: String, required: false, default: "primary"},
-		endpointId: {type: String, required: true}
+		endpointId: {type: String, required: false, default: "destroy"}
 	},
 	data() {
 		return {
@@ -55,6 +58,6 @@ export default {
 
 <style lang="scss" scoped>
 .action {
-
+	position: relative;
 }
 </style>
