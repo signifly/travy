@@ -1,7 +1,7 @@
 <template>
 	<div class="header">
 		<div class="fields">
-			<vField v-for="field in fields" v-bind="field" :data="data" :key="field.name" />
+			<vField v-for="field in fields" v-bind="field" :data="data" :key="field.name" @fieldA="fieldA" />
 		</div>
 	</div>
 </template>
@@ -17,6 +17,11 @@ export default {
 	},
 	computed: {
 		fields: (t) => t.header.fields
+	},
+	methods: {
+		fieldA(obj) {
+			this.$emit("fieldA", obj);
+		}
 	}
 };
 </script>

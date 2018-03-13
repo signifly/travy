@@ -3,7 +3,7 @@
 		<div class="main">
 			<Row class="top" :gutter="20">
 				<Col class="left" :span="16">
-					<vHeader v-bind="{data, header}" />
+					<vHeader v-bind="{data, header}" @fieldA="fieldA" />
 				</Col>
 				<Col class="right" :span="8">
 					<vModifiers v-bind="{modifiers}" @getData="getData" />

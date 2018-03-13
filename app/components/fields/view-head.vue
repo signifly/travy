@@ -1,8 +1,12 @@
 <template>
 	<div class="view-head" :class="{image: _imageActive}">
-		<div class="image" v-if="_imageActive">
-			<div class="img" :style="{backgroundImage: `url(${image})`}" />
-		</div>
+		<vInputImage
+			v-if="_imageActive"
+			class="view-head"
+			v-bind="{image, _base64}"
+			@fieldA="fieldA"
+		/>
+
 		<div class="info">
 			<div class="title">
 				<div class="text">{{title}}</div>
@@ -14,16 +18,20 @@
 
 <script>
 const noimage = require("!file-loader!@/assets/icons/noimage.svg");
+
+import {base64Encode} from "@/modules/utils";
 import {Tag} from "element-ui";
+import {vInputImage} from "./index";
 
 export default {
-	components: {Tag},
+	components: {Tag, vInputImage},
 	meta: {
 		res: {
 			props: {
 				title: "title",
 				imageActive: true,
 				image: "image",
+				base64: "image_raw",
 				tag: "tag"
 			},
 			data: {
@@ -35,11 +43,17 @@ export default {
 	},
 	props: {
 		title: {type: String, required: false, doc: true},
-		image: {type: String, required: false, default: noimage, doc: true},
+		_base64: {type: String, required: true, doc: true, note: `base64 encoded`},
+		image: {type: String, required: false, default: noimage, doc: true, note: "url"},
 		_imageActive: {type: Boolean, required: false, doc: true, note: `
 			Whether an image or placeholder should be shown.
 		`},
 		tag: {type: [String, Number], required: true, doc: true}
+	},
+	methods: {
+		fieldA(obj) {
+			this.$emit("fieldA", obj);
+		}
 	}
 };
 </script>
@@ -48,25 +62,9 @@ export default {
 .view-head {
 	display: flex;
 
-	.image {
-		.img {
-			background-color: $white1;
-			$s: em(160);
-			width: $s;
-			height: $s;
-			background-repeat: no-repeat;
-			background-position: center;
-			background-size: cover;
-			box-shadow: 0 4px 6px 0 rgba(94,109,130,0.07);
-		}
-	}
-
-	&.image .info {
-		margin-left: 2em;
-	}
-
 	.info {
 		margin-top: 1em;
+		margin-left: 2em;
 
 		.title {
 			display: flex;

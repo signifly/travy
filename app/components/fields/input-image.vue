@@ -1,20 +1,22 @@
 <template>
 	<div class="input-image">
-		<Upload
-		class="upload"
-		action=""
-		:before-upload="preventAction"
-		:show-file-list="false"
-		:on-change="addFile">
-			<div class="image">
-				<div class="img" :style="{backgroundImage: `url(${imageUrl})`}" />
-				<div class="icon"><i class="el-icon-upload"/></div>
-			</div>
-		</Upload>
+		<div class="wrap">
+			<Upload
+			class="upload"
+			action=""
+			:before-upload="preventAction"
+			:show-file-list="false"
+			:on-change="addFile">
+				<div class="image">
+					<div class="img" :style="{backgroundImage: `url(${imageUrl})`}" />
+					<div class="icon"><i class="el-icon-upload"/></div>
+				</div>
+			</Upload>
 
-		<a class="clear" v-if="data.image" @click="removeFile">
-			<i class="el-icon-remove"/>
-		</a>
+			<a class="clear" v-if="data.image" @click="removeFile">
+				<i class="el-icon-remove"/>
+			</a>
+		</div>
 	</div>
 </template>
 
@@ -28,11 +30,10 @@ export default {
 		res: {
 			props: {
 				image: "image",
-				base64: "base"
+				base64: "image_raw"
 			},
 			data: {
-				image: "https://pbs.twimg.com/media/DVnfJkqVAAAqS91.jpg",
-				base: undefined
+				image: "https://pbs.twimg.com/media/DVnfJkqVAAAqS91.jpg"
 			}
 		}
 	},
@@ -83,14 +84,9 @@ $t: 0.2s;
 .input-image {
 	display: inline-block;
 	position: relative;
+}
 
-	&:hover {
-		.image .icon, .clear {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
+.wrap {
 	.image {
 		display: flex;
 		justify-content: center;
@@ -102,6 +98,13 @@ $t: 0.2s;
 		border-radius: 4px;
 		border: 1px dashed $blue3;
 		overflow: hidden;
+
+		.input-image.view-head & {
+			border: 0px;
+			border-radius: 0px;
+			box-shadow: 0 4px 6px 0 rgba(94,109,130,0.07);
+
+		}
 
 		.img {
 			position: absolute;
@@ -132,6 +135,11 @@ $t: 0.2s;
 			transform: translateY(-3px);
 
 			transition: cubic(opacity, $t), cubic(transform, $t);
+
+			.input-image:hover & {
+				opacity: 1;
+				transform: translateY(0);
+			}
 		}
 	}
 
@@ -158,6 +166,11 @@ $t: 0.2s;
 
 		opacity: 0;
 		transition: cubic(opacity, $t);
+
+		.input-image:hover & {
+			opacity: 1;
+			transform: translateY(0);
+		}
 
 		i {
 			font-size: 0.7em;
