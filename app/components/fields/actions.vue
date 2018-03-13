@@ -130,7 +130,8 @@ export default {
 		close() {
 			this.action = null;
 		},
-		submit({id}) {
+		submit() {
+			this.close();
 			this.$emit("fieldA", {action: "getData"});
 		},
 		fieldA(obj) {
