@@ -65,7 +65,7 @@ export default {
 					{
 						title: "Delete",
 						props: {
-							id: "delete",
+							id: "popup",
 							text: "delete this?",
 							endpoint: {
 								url: "url",
@@ -101,7 +101,7 @@ export default {
 		switchValue: {type: Boolean, required: false, doc: true},
 		selectValue: {type: [String, Number], required: false, doc: true},
 		_selectOptions: {type: Object, required: true, doc: true},
-		_actions: {type: Array, required: true, doc: true},
+		_actions: {type: Array, required: true, doc: true, note: `<a href="#vActions">vActions</a>`},
 		_switchValue: {type: String, required: true},
 		_selectValue: {type: String, required: true}
 	},

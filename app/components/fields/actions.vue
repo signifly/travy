@@ -36,7 +36,7 @@ export default {
 						title: "Delete",
 						endpointId: "destroy",
 						props: {
-							id: "delete",
+							id: "popup",
 							text: "delete this?",
 							endpoint: {
 								method: "destroy",
@@ -52,7 +52,11 @@ export default {
 		}
 	},
 	props: {
-		_actions: {type: Array, required: true, doc: true},
+		_actions: {type: Array, required: true, doc: true, note: `
+			Every action needs {endpointId} or {props.endpoint}. <br>
+			if only {endpointId} is supplied,<br>
+			It'll use the endpoint from table/view definition endpoints.
+		`},
 		endpoints: {type: Object, required: false},
 		data: {type: Object, required: false}
 	},

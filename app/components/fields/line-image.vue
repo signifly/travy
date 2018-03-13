@@ -36,7 +36,7 @@ export default {
 					{
 						title: "Delete",
 						props: {
-							id: "delete",
+							id: "popup",
 							text: "delete this?",
 							endpoint: {
 								url: "url",
