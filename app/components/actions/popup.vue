@@ -31,8 +31,7 @@ export default {
 	},
 	computed: {
 		parentId: (t) => t.$route.meta.id,
-		dataComb: (t) => ({...t.rootData, fieldsData: t.data}),
-		endpointUrl: (t) => endpointUrl({data: t.dataComb, url: t.endpoint.url})
+		endpointUrl: (t) => endpointUrl({data: t.rootData, url: t.endpoint.url})
 	},
 	methods: {
 		close() {
@@ -41,7 +40,7 @@ export default {
 		async submit() {
 			try {
 				this.loading = true;
-				await this.$http.delete(this.endpointUrl);
+				await this.$http[this.endpoint.method](this.endpointUrl, {data: this.data});
 				this.$router.push(`/${this.parentId}`);
 			} catch (e) {} finally {
 				this.loading = false;

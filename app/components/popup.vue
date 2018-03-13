@@ -1,6 +1,6 @@
 <template>
-	<transition name="trans-fadeDown">
-		<div class="popup" :class="position" :style="{width}">
+	<transition name="trans-fadeDown" appear>
+		<div class="popup" :class="position.split('-')" :style="{width}">
 			<slot />
 		</div>
 	</transition>
@@ -24,9 +24,20 @@ export default {
 	padding: 1em;
 	z-index: 1;
 
-	&.bottom-right {
+	&.top {
+		bottom: calc(100% + 1em);
+
+		&.right {
+			right: 0;
+		}
+	}
+
+	&.bottom {
 		top: calc(100% + 1em);
-		right: 0;
+
+		&.right {
+			right: 0;
+		}
 	}
 }
 </style>

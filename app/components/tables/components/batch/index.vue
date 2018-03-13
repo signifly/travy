@@ -6,9 +6,9 @@
 			</div>
 
 			<div class="actions">
-				<Button v-if="sequential" size="medium" @click="seq">Sequential edit</Button>
+				<Button v-if="sequential" size="medium" @click="sequentialStart">Sequential edit</Button>
 
-				<Dropdown v-if="bulk" trigger="click" :show-timeout="0" :hide-timeout="0" @command="open">
+				<Dropdown v-if="bulk" trigger="click" :show-timeout="0" :hide-timeout="0" @command="select">
 					<Button size="medium">
 						Bulk actions<i class="el-icon-arrow-up el-icon--right"></i>
 					</Button>
@@ -17,24 +17,24 @@
 						<DropdownItem v-for="action in actions" :key="action.title" :command="action">{{action.title}}</DropdownItem>
 					</DropdownMenu>
 
-					<vPopover :popover.sync="popover" v-bind="{action, endpoints}" @save="save($event, {custom: false})"/>
+					<vAction v-if="action && action.props.id !== 'modal'" v-bind="[action, {ids}]" @close="close" />
 				</Dropdown>
 			</div>
 		</vPanel>
 
-		<vModal v-if="modal" :active.sync="modal" v-bind="action" :endpoints="endpoints" :error="error" @save="save($event, {custom: true})"/>
+		<vAction v-if="action && action.props.id === 'modal'" v-bind="[action, {ids}]" @close="close" />
 	</div>
 </template>
 
 <script>
 import {get, sortBy} from "lodash";
 import {Button, Checkbox, Dropdown, DropdownMenu, DropdownItem} from "element-ui";
+import {endpointUrl} from "@/modules/utils";
 import vPanel from "@/components/panel.vue";
-import vModal from "./modal.vue";
-import vPopover from "./popover.vue";
+import vAction from "./action.vue";
 
 export default {
-	components: {vPanel, vModal, vPopover, Button, Checkbox, Dropdown, DropdownMenu, DropdownItem},
+	components: {Dropdown, DropdownMenu, DropdownItem, vPanel, Button, Checkbox, vAction},
 	props: {
 		endpoints: {type: Object, required: true},
 		selected: {type: Array, required: true},
@@ -50,10 +50,7 @@ export default {
 		}
 	},
 	computed: {
-		endpoint: (t) => get(t.action, "endpoint", t.endpoints.bulkUpdate),
-		first: (t) => t.endpoints.show.url.replace("{id}", t.ids[0]),
 		ids: (t) => sortBy(t.selected.map(x => x.id)),
-
 		sequential: (t) => t.batch.sequential,
 		actions: (t) => t.batch.actions,
 		bulk: (t) => t.batch.bulk,
@@ -63,27 +60,19 @@ export default {
 			this.$emit("unselect");
 		},
 
-		open(action) {
+		close() {
+			this.action = null;
+		},
+
+		select(action) {
 			this.action = action;
-			this.popover = action.type === "popover";
-			this.modal = action.type === "modal";
 		},
 
-		async save({data, done}, {custom}) {
-			const ept = this.endpoint;
-
-			try {
-				await this.$http[ept.method](ept.url, {data, ids: this.ids}, {custom});
-				await done();
-			} catch({response}) {
-				if (custom) this.error = response.data;
-				await done({error: true});
-			}
-		},
-
-		seq() {
+		sequentialStart() {
 			const modifiers = this.$route.query.modifiers;
-			this.$router.push({path: this.first, query: {modifiers, seq: {items: this.ids}}});
+			const url = this.endpoints.show.url.replace("{id}", this.ids[0]);
+
+			this.$router.push({path: url, query: {modifiers, seq: {items: this.ids}}});
 		}
 	}
 };
@@ -91,6 +80,7 @@ export default {
 
 <style lang="scss" scoped>
 .batch {
+	position: relative;
 	.selected {
 		.el-checkbox {
 			font-weight: 400;

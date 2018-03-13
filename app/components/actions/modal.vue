@@ -27,12 +27,12 @@ export default {
 	data() {
 		return {
 			error: {},
-			payload: {},
+			payload: this.data,
 			loading: false
 		}
 	},
 	computed: {
-		dataComb: (t) => ({...t.rootData, fieldsData: t.data}),
+		dataComb: (t) => ({...t.rootData, ...t.data}),
 		endpointUrl: (t) => endpointUrl({data: t.dataComb, url: t.endpoint.url}),
 
 		visible: {
