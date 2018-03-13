@@ -2,7 +2,7 @@
 	<div class="line-multi">
 		<draggable :list="items" :options="{handle: '.drag'}" @end="listUpdate" v-if="items.length > 0">
 			<div class="item" v-for="(item, i) in items" :key="item.id">
-				<component :is="_itemFieldId" v-bind="[itemsPropsData[i], itemsPropsValue[i]]" @fieldA="fieldA($event, i)" />
+				<component :is="_itemFieldId" v-bind="[itemsPropsData[i], itemsPropsValue[i], {data: itemsData[i]}]" @fieldA="fieldA($event, i)" />
 			</div>
 		</draggable>
 
@@ -93,6 +93,9 @@ export default {
 		_itemFieldProps: {type: Object, required: true, doc: true}
 	},
 	computed: {
+		itemsData() {
+			return this.items;
+		},
 		itemsPropsData() {
 			return this.items.map(item => {
 				return mapValues(this._itemFieldProps, (val) => get(item, val));

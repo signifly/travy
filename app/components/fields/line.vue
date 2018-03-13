@@ -29,10 +29,10 @@
 		</div>
 
 		<div class="toggle">
-			<elSwitch v-model="data.switchValue" :inactive-text="`${_switchTitle}:`" @change="switchUpdate"/>
+			<elSwitch v-model="payload.switchValue" :inactive-text="`${_switchTitle}:`" @change="switchUpdate"/>
 		</div>
 
-		<vActions v-bind="{_actions}" @fieldA="fieldA"/>
+		<vActions v-bind="{_actions, data}" @fieldA="fieldA"/>
 	</div>
 </template>
 
@@ -92,6 +92,7 @@ export default {
 		}
 	},
 	props: {
+		data: {type: Object, required: true},
 		_titleKey: {type: String, required: true, doc: true},
 		titleValue: {type: String, required: false, doc: true},
 		_infoKey: {type: String, required: true, doc: true},
@@ -107,9 +108,8 @@ export default {
 	},
 	data() {
 		return {
-			data: {
-				switchValue: this.switchValue,
-				selectValue: this.selectValue
+			payload: {
+				switchValue: this.switchValue
 			}
 		}
 	},

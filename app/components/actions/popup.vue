@@ -21,6 +21,7 @@ export default {
 		position: {type: String, required: false, default: "bottom-right"},
 		text: {type: String, required: false, default: "Are you sure?"},
 		endpoint: {type: Object, required: true},
+		onSubmit: {type: String, required: false},
 		rootData: {type: Object, required: false},
 		data: {type: Object, required: false}
 	},
@@ -41,7 +42,7 @@ export default {
 		submitAfter({data} = {}) {
 			if (this.onSubmit) {
 				const url = endpointUrl({data: data.data || this.dataComb, url: this.onSubmit});
-				this.$router.push(url);
+				this.$router.push(`/${url}`);
 			} else {
 				this.$emit("submit");
 			}

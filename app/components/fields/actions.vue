@@ -15,7 +15,7 @@
 			:is="action.props.id"
 			v-bind="action.props"
 			:endpoint="endpoint"
-			:rootData="data"
+			:data="data"
 			@close="close"
 			@submit="submit"
 			@fieldA="fieldA"
