@@ -32,7 +32,7 @@ export default {
 	},
 	computed: {
 		dataComb: (t) => ({...t.rootData, ...t.data}),
-		endpointUrl: (t) => endpointUrl({data: t.rootData, url: t.endpoint.url})
+		endpointUrl: (t) => endpointUrl({data: t.dataComb, url: t.endpoint.url})
 	},
 	methods: {
 		close() {
