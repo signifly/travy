@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import vActions from "./actions/index.vue";
+import vActions from "./actions.vue";
 
 export default {
 	components: {vActions},

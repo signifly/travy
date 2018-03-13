@@ -24,7 +24,7 @@
 <script>
 import {get} from "lodash";
 import {Dropdown, DropdownMenu, DropdownItem} from "element-ui";
-import * as actions from "@/components/actions2";
+import * as actions from "@/components/actions";
 
 export default {
 	components: {Dropdown, DropdownMenu, DropdownItem, ...actions},

@@ -38,7 +38,7 @@
 
 <script>
 import {Switch} from "element-ui";
-import vActions from "./actions/index.vue";
+import vActions from "./actions.vue";
 import vSelectSearch from "./select-search.vue";
 import vItemsTooltip from "./items-tooltip.vue";
 

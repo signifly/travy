@@ -15,7 +15,7 @@
 
 <script>
 import {Button} from "element-ui";
-import * as actions from "@/components/actions2";
+import * as actions from "@/components/actions";
 
 export default {
 	components: {Button, ...actions},
