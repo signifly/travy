@@ -103,7 +103,6 @@ $t: 0.2s;
 			border: 0px;
 			border-radius: 0px;
 			box-shadow: 0 4px 6px 0 rgba(94,109,130,0.07);
-
 		}
 
 		.img {
@@ -166,6 +165,12 @@ $t: 0.2s;
 
 		opacity: 0;
 		transition: cubic(opacity, $t);
+
+		.input-image.view-head & {
+			border-top-right-radius: 0px;
+			top: 0;
+			right: 0;
+		}
 
 		.input-image:hover & {
 			opacity: 1;
