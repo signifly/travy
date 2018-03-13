@@ -32,7 +32,7 @@ const routesViews = map(tables, (item, id) => ({
 }));
 
 const routes = [
-	{path: "/", name: "index", component: index, meta: {auth: {}}},
+	{path: "/", name: "index", component: index, redirect: "/products", meta: {auth: {}}},
 	{path: "/login", name: "login", component: login, props: true, meta: {layout: "vBase"}},
 	{path: "/login/reset/:id", name: "login-reset", component: loginReset, props: true, meta: {layout: "vBase"}},
 	{path: "/doc", name: "doc", component: doc, meta: {layout: "vBase", auth: {}}},
