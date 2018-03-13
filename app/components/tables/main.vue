@@ -70,7 +70,7 @@ export default {
 		},
 
 		fieldA({action, data, item, done}) {
-			this[action]({data, item, done});
+			if (this[action]) this[action]({data, item, done});
 		},
 
 		endpoint({type, item}) {

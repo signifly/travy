@@ -42,6 +42,7 @@ export default {
 				this.loading = true;
 				await this.$http[this.endpoint.method](this.endpointUrl, {data: this.data});
 				this.$router.push(`/${this.parentId}`);
+				this.$emit("submit", {id: "popup"});
 			} catch (e) {} finally {
 				this.loading = false;
 			}

@@ -16,7 +16,8 @@
 			v-bind="action.props"
 			:endpoint="endpoint"
 			:rootData="data"
-			@close="action = null"
+			@close="close"
+			@submit="submit"
 			@fieldA="fieldA"
 		/>
 	</div>
@@ -122,6 +123,13 @@ export default {
 	methods: {
 		select(action) {
 			this.action = action;
+		},
+
+		close() {
+			this.action = null;
+		},
+		submit({id}) {
+			this.$emit("fieldA", {action: "getData"});
 		},
 		fieldA(obj) {
 			this.$emit("fieldA", obj);
