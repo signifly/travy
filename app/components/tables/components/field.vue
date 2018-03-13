@@ -12,6 +12,7 @@
 
 <script>
 import {mapValues, mapKeys, omit, get} from "lodash";
+import {endpointUrl} from "@/modules/utils";
 import * as fields from "@/components/fields";
 
 export default {
@@ -32,20 +33,7 @@ export default {
 		propsData: (t) => mapValues(t.props, (val) => get(t.data, val)),
 		propsValues: (t) => mapKeys(t.props, (val, key) => `_${key}`),
 
-		link() {
-			if (!this.action) return;
-			const split = this.action.split("/");
-
-			const url = split.map(item => {
-				const start = item.indexOf("{");
-				const end = item.indexOf("}");
-				if (start === -1 && end === -1) return item;
-				const key = item.substring(start + 1, end);
-				return get(this.data, key);
-			}).join("/");
-
-			return {path: url, query: {modifiers: this.query.modifiers}};
-		}
+		link: (t) => endpointUrl({data: t.data, url: t.action})
 	},
 	methods: {
 		fieldA(obj) {
