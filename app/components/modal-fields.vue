@@ -11,7 +11,7 @@
 			<div class="footer" slot="footer">
 				<div class="actions">
 					<Button @click="_visible = false" :disabled="loading">{{buttonCancelText}}</Button>
-					<Button type="primary" @click="$emit('submit')" :loading="loading">{{buttonSubmitText}}</Button>
+					<Button type="primary" @click="submit" :loading="loading">{{buttonSubmitText}}</Button>
 				</div>
 
 				<div class="error" v-if="error.message">{{error.message}}</div>
@@ -49,6 +49,20 @@ export default {
 				this.$emit("update:visible", false);
 			}
 		}
+	},
+	methods: {
+		submit() {
+			this.$emit("submit");
+		},
+		enter({key}) {
+			if (key === "Enter") this.submit();
+		}
+	},
+	mounted() {
+		this.$el.addEventListener("keyup", this.enter);
+	},
+	beforeDestroy() {
+		this.$el.removeEventListener("keyup", this.enter);
 	},
 	beforeCreate() {
 		this.$options.components.vField = vField;
