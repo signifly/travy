@@ -15,6 +15,7 @@
 
 <script>
 import {Button} from "element-ui";
+import {endpointUrl} from "@/modules/utils";
 import vModalFields from "@/components/modal-fields.vue";
 
 export default {
@@ -26,8 +27,6 @@ export default {
 				buttonIcon: "plus",
 				buttonType: "primary",
 				modalTitle: "modal title",
-
-				endpointId: "postid",
 
 				endpoint: {
 					method: "post",
@@ -61,28 +60,20 @@ export default {
 		_buttonIcon: {type: String, required: false, doc: true},
 		_buttonType: {type: String, required: false, doc: true},
 		_modalTitle: {type: String, required: true, doc: true},
-		endpointId: {type: [String, Number], required: true, doc: true},
 		_endpoint: {type: Object, required: true, doc: true},
 		_fields: {type: Array, required: true, doc: true},
-		_fieldsData: {type: Object, required: true, doc: true, note: `
-			if you need to map field props to fieldData you can do:<br>
-			<code>
-				props: {
-					value: fieldsData.value
-				}
-			</code>
-		`},
+		_fieldsData: {type: Object, required: true, doc: true},
 	},
 	data() {
 		return {
 			error: {},
-			payload: {},
+			payload: this._fieldsData,
 			loading: false,
 			modal: false
 		}
 	},
 	computed: {
-		dataComb: (t) => ({...t.rootData, fieldsData: t._fieldsData})
+		dataComb: (t) => ({...t.rootData, ...t._fieldsData})
 	},
 	methods: {
 		fieldA({data}) {
@@ -91,7 +82,7 @@ export default {
 
 		async save() {
 			const ept = this._endpoint;
-			const url = ept.url.replace("{id}", this.endpointId);
+			const url = endpointUrl({data: this.dataComb, url: ept.url});
 
 			try {
 				this.loading = true;

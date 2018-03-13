@@ -58,14 +58,7 @@ export default {
 		titleValue: {type: String, required: false, doc: true},
 		_infoKey: {type: String, required: true, doc: true},
 		infoValue: {type: String, required: false, doc: true},
-		_actions: {type: Array, required: true, doc: true, note: `
-			if you need to map field props to fieldData you can do:<br>
-			<code>
-				props: {
-					value: fieldsData.value
-				}
-			</code>
-		`}
+		_actions: {type: Array, required: true, doc: true, note: `<a href="#vActions">vActions</a>`}
 	},
 	data() {
 		return {
@@ -75,13 +68,6 @@ export default {
 		}
 	},
 	methods: {
-		// switchUpdate(val) {
-		// 	this.$emit("fieldA", {
-		// 		action: "update",
-		// 		data: {[this._switchValue]: val}
-		// 	});
-		// },
-
 		fieldA(obj) {
 			this.$emit("fieldA", obj);
 		}

@@ -71,7 +71,6 @@ export default {
 		sequentialStart() {
 			const modifiers = this.$route.query.modifiers;
 			const url = this.endpoints.show.url.replace("{id}", this.ids[0]);
-
 			this.$router.push({path: url, query: {modifiers, seq: {items: this.ids}}});
 		}
 	}

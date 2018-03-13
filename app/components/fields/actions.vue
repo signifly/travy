@@ -38,10 +38,53 @@ export default {
 						endpointId: "destroy",
 						props: {
 							id: "popup",
-							text: "delete this?",
+							text: "delete this?"
+						}
+					},
+					{
+						title: "View",
+						props: {
+							id: "show",
+							endpoint: {
+								method: "show",
+								url: "#vActions"
+							}
+						}
+					},
+					{
+						title: "Edit",
+						props: {
+							id: "modal",
+							title: "Modal title",
 							endpoint: {
 								method: "destroy",
 								url: "destroy"
+							},
+							fields: [
+								{
+									name: "1",
+									label: "a field",
+									fieldType: {
+										id: "vInput",
+										props: {
+											value: "input"
+										}
+									}
+								},
+								{
+									name: "2",
+									label: "a field",
+									fieldType: {
+										id: "vInput",
+										props: {
+											value: "input2"
+										}
+									}
+								}
+							],
+							data: {
+								input: "32",
+								input2: "34"
 							}
 						}
 					}
@@ -54,8 +97,8 @@ export default {
 	},
 	props: {
 		_actions: {type: Array, required: true, doc: true, note: `
-			Every action needs {endpointId} or {props.endpoint}. <br>
-			if only {endpointId} is supplied,<br>
+			Every action needs endpointId or props.endpoint. <br>
+			if only endpointId is supplied,<br>
 			It'll use the endpoint from table/view definition endpoints.
 		`},
 		endpoints: {type: Object, required: false},
@@ -68,7 +111,7 @@ export default {
 		}
 	},
 	computed: {
-		endpoint: (t) => t.action.props.endpoint || t.endpoints[t.action.endpointId]
+		endpoint: (t) => t.action.props.endpoint || get(t.endpoints, t.action.endpointId)
 	},
 	methods: {
 		select(action) {
