@@ -16,7 +16,7 @@
 			</div>
 		</div>
 
-		<vActions v-bind="{rootData}" :_items="_actions" @fieldA="$emit('fieldA', $event)"/>
+		<vActions v-bind="{_actions, rootData}" @fieldA="fieldA"/>
 	</div>
 </template>
 
@@ -35,37 +35,13 @@ export default {
 				actions: [
 					{
 						title: "Delete",
-						type: "delete",
-						description: "delete this?"
-					},
-					{
-						title: "View",
-						type: "show",
-						endpoint: "doc"
-					},
-					{
-						title: "Edit",
-						type: "modal",
-						modalTitle: "Modal",
-						endpointId: "postid",
-						endpoint: {
-							method: "post",
-							url: "https://api.sikane.signifly.com/v1/stock-item-models/{id}"
-						},
-						fields: [
-							{
-								name: "field",
-								fieldType: {
-									id: "vInput",
-									props: {
-										value: "fieldsData.value"
-									}
-								}
+						props: {
+							id: "delete",
+							text: "delete this?",
+							endpoint: {
+								url: "url",
+								method: "delete"
 							}
-						],
-						fieldsData: {
-							value: "wef",
-							postid: "3"
 						}
 					}
 				]

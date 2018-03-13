@@ -32,7 +32,7 @@
 			<elSwitch v-model="data.switchValue" :inactive-text="`${_switchTitle}:`" @change="switchUpdate"/>
 		</div>
 
-		<vActions :_items="_actions" @fieldA="fieldA"/>
+		<vActions v-bind="{_actions}" @fieldA="fieldA"/>
 	</div>
 </template>
 
@@ -64,13 +64,14 @@ export default {
 				actions: [
 					{
 						title: "Delete",
-						type: "delete",
-						description: "delete this?"
-					},
-					{
-						title: "View",
-						type: "show",
-						endpoint: "doc"
+						props: {
+							id: "delete",
+							text: "delete this?",
+							endpoint: {
+								url: "url",
+								method: "delete"
+							}
+						}
 					}
 				]
 			},

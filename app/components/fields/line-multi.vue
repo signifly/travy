@@ -2,7 +2,7 @@
 	<div class="line-multi">
 		<draggable :list="items" :options="{handle: '.drag'}" @end="listUpdate" v-if="items.length > 0">
 			<div class="item" v-for="(item, i) in items" :key="item.id">
-				<component :is="_line" v-bind="[itemsPropsData[i], itemsPropsValue[i]]" @fieldA="fieldA($event, i)" />
+				<component :is="_itemFieldId" v-bind="[itemsPropsData[i], itemsPropsValue[i]]" @fieldA="fieldA($event, i)" />
 			</div>
 		</draggable>
 
@@ -22,7 +22,6 @@ export default {
 	meta: {
 		res: {
 			props: {
-				line: "vLine",
 				items: "models",
 				itemFieldId: "vLine",
 				itemFieldProps: {
@@ -43,13 +42,14 @@ export default {
 					actions: [
 						{
 							title: "Delete",
-							type: "delete",
-							description: "delete this?"
-						},
-						{
-							title: "View",
-							type: "show",
-							endpoint: "doc"
+							props: {
+								id: "delete",
+								text: "delete this?",
+								endpoint: {
+									url: "url",
+									method: "delete"
+								}
+							}
 						}
 					]
 				}
@@ -87,7 +87,6 @@ export default {
 		}
 	},
 	props: {
-		_line: {type: String, required: true, doc: true},
 		items: {type: Array, required: true, doc: true},
 		_items: {type: String, required: true},
 		_itemFieldId: {type: String, required: true, doc: true},

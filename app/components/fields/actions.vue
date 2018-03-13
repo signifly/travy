@@ -37,7 +37,11 @@ export default {
 						endpointId: "destroy",
 						props: {
 							id: "delete",
-							text: "delete this?"
+							text: "delete this?",
+							endpoint: {
+								method: "destroy",
+								url: "destroy"
+							}
 						}
 					}
 				]
@@ -49,7 +53,7 @@ export default {
 	},
 	props: {
 		_actions: {type: Array, required: true, doc: true},
-		endpoints: {type: Object, required: true},
+		endpoints: {type: Object, required: false},
 		data: {type: Object, required: false}
 	},
 	data() {
@@ -59,7 +63,7 @@ export default {
 		}
 	},
 	computed: {
-		endpoint: (t) => t.endpoints[t.action.endpointId]
+		endpoint: (t) => t.action.props.endpoint || t.endpoints[t.action.endpointId]
 	},
 	methods: {
 		select(action) {

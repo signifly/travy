@@ -57,7 +57,7 @@ export default {
 		word-break: break-word;
 		text-align: left;
 		margin-bottom: 1.25em;
-		font-size: 0.85em;
+		font-size: 13px;
 	}
 	.buttons {
 		display: flex;
