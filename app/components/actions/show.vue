@@ -3,13 +3,20 @@
 </template>
 
 <script>
+import {endpointUrl} from "@/modules/utils";
+
 export default {
 	props: {
-		item: {type: Object, required: true}
+		endpoint: {type: Object, required: true},
+		rootData: {type: Object, required: false},
+		data: {type: Object, required: false}
+	},
+	computed: {
+		dataComb: (t) => ({...t.rootData, fieldsData: t.data}),
+		endpointUrl: (t) => endpointUrl({data: t.dataComb, url: t.endpoint.url})
 	},
 	created() {
-		// this.$emit("close");
-		// this.$parent.$emit("fieldA", {action: "show", data: this.item});
+		this.$router.push(this.endpointUrl);
 	}
 };
 </script>
