@@ -5,6 +5,7 @@
 			v-bind="[props, {data}]"
 			position="top-right"
 			@close="close"
+			@submit="submit"
 		/>
 	</div>
 </template>
@@ -26,6 +27,10 @@ export default {
 	methods: {
 		close() {
 			this.$emit("close");
+		},
+		submit() {
+			this.close();
+			this.$parent.$emit("submit");
 		}
 	}
 };

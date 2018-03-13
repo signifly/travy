@@ -3,7 +3,7 @@
 
 		<div class="header">
 			<vFilters v-bind="[filters, {search, getData}]" />
-			<vActions v-bind="{actions, endpoints}" />
+			<vActions v-bind="{actions, endpoints}" @submit="getData" />
 		</div>
 
 		<div class="content">
@@ -25,7 +25,7 @@
 				/>
 
 				<vPagination v-if="pagination" v-bind="pagination" @getData="getData" />
-				<vBatch v-if="selected.length > 0" v-bind="{endpoints, selected, batch}" @unselect="unselect" />
+				<vBatch v-if="selected.length > 0" v-bind="{endpoints, selected, batch}" @unselect="unselect" @submit="getData" />
 			</box>
 		</div>
 	</div>

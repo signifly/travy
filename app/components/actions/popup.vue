@@ -30,19 +30,28 @@ export default {
 		}
 	},
 	computed: {
-		parentId: (t) => t.$route.meta.id,
+		dataComb: (t) => ({...t.rootData, ...t.data}),
 		endpointUrl: (t) => endpointUrl({data: t.rootData, url: t.endpoint.url})
 	},
 	methods: {
 		close() {
 			this.$emit("close");
 		},
+
+		submitAfter({data} = {}) {
+			if (this.onSubmit) {
+				const url = endpointUrl({data: data.data || this.dataComb, url: this.onSubmit});
+				this.$router.push(url);
+			} else {
+				this.$emit("submit");
+			}
+		},
+
 		async submit() {
 			try {
 				this.loading = true;
-				await this.$http[this.endpoint.method](this.endpointUrl, {data: this.data});
-				this.$router.push(`/${this.parentId}`);
-				this.$emit("submit", {id: "popup"});
+				const {data} = await this.$http[this.endpoint.method](this.endpointUrl, {data: this.data});
+				this.submitAfter({data});
 			} catch (e) {} finally {
 				this.loading = false;
 			}

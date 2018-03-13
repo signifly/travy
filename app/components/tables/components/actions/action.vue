@@ -42,12 +42,9 @@ export default {
 			this.active = !this.active;
 		},
 
-		submit({id, data}) {
-			if (this[id]) this[id]({data});
-		},
-
-		modal({data}) {
-			this.$router.push(`${this.endpoint.url}/${data.data.id}`);
+		submit() {
+			this.active = false;
+			this.$parent.$emit("submit");
 		}
 	}
 };

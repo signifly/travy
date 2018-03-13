@@ -45,7 +45,8 @@ export default {
 						endpointId: "destroy",
 						props: {
 							id: "popup",
-							text: "delete this?"
+							text: "delete this?",
+							onSubmit: "#vActions",
 						}
 					},
 					{
@@ -63,6 +64,7 @@ export default {
 						props: {
 							id: "modal",
 							title: "Modal title",
+							onSubmit: "#vActions",
 							endpoint: {
 								method: "destroy",
 								url: "destroy"

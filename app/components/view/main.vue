@@ -7,7 +7,7 @@
 				</Col>
 				<Col class="right" :span="8">
 					<vModifiers v-bind="{modifiers}" @getData="getData" />
-					<vActions v-bind="{actions, endpoints, data}" />
+					<vActions v-bind="{actions, endpoints, data}" @submit="getData" />
 				</Col>
 			</Row>
 

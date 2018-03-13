@@ -12,8 +12,8 @@
 
 <script>
 import {get} from "lodash";
-import vModalFields from "@/components/modal-fields.vue";
 import {endpointUrl} from "@/modules/utils";
+import vModalFields from "@/components/modal-fields.vue";
 
 export default {
 	components: {vModalFields},
@@ -21,6 +21,7 @@ export default {
 		title: {type: String, required: false},
 		rootData: {type: Object, required: false},
 		endpoint: {type: Object, required: true},
+		onSubmit: {type: String, required: false},
 		data: {type: Object, required: true},
 		fields: {type: Array, required: true}
 	},
@@ -49,6 +50,15 @@ export default {
 			this.payload = {...this.payload, ...data};
 		},
 
+		submitAfter({data} = {}) {
+			if (this.onSubmit) {
+				const url = endpointUrl({data: data.data || this.dataComb, url: this.onSubmit});
+				this.$router.push(url);
+			} else {
+				this.$emit("submit");
+			}
+		},
+
 		async submit() {
 			try {
 				this.loading = true;
@@ -59,8 +69,7 @@ export default {
 					{custom: true}
 				);
 
-				this.$emit("submit", {id: "modal", data});
-
+				this.submitAfter({data});
 			} catch ({response}) {
 				this.error = get(response, "data", {});
 			} finally {

@@ -45,13 +45,10 @@ export default {
 			this.active = !this.active;
 		},
 
-		submit({id, data}) {
-			if (this[id]) this[id]({data});
+		submit() {
+			this.active = false;
+			this.$parent.$emit("submit");
 		},
-
-		modal({data}) {
-			this.$router.push(`${this.endpoint.url}/${data.data.id}`);
-		}
 	}
 };
 </script>
