@@ -43,7 +43,7 @@ export const base64Encode = (file) => {
 
 export const endpointUrl = ({url, data}) => {
 	if (!url) return;
-	
+
 	return url.split("/").map(item => {
 		const start = item.indexOf("{");
 		const end = item.indexOf("}");
@@ -51,18 +51,4 @@ export const endpointUrl = ({url, data}) => {
 		const key = item.substring(start + 1, end);
 		return get(data, key);
 	}).join("/");
-};
-
-
-export const endpoint = ({type, item, endpoints}) => {
-	const endpoint = endpoints[type];
-
-	if (endpoint.url.includes("{id}")) {
-		const id = item[endpoint.id];
-		if (!id) throw new Error(`missing ${endpoint.id} on item ${this.item.id}`);
-
-		return endpoint.url.replace("{id}", id);
-	} else {
-		return endpoint.url;
-	}
 };
