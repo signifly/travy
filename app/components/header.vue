@@ -7,7 +7,6 @@
 			active-text-color="lightblue"
 			:router="true"
 			menu-trigger="click">
-			<MenuItem index="/test">Test</MenuItem>
 			<Submenu index="2">
 				<template slot="title">Catalogue</template>
 				<MenuItem index="/products">Products</MenuItem>
