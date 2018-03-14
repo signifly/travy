@@ -3,7 +3,9 @@
 		<Container class="is-vertical">
 			<vHeader/>
 			<Main>
-				<router-view />
+				<div class="container">
+					<router-view />
+				</div>
 			</Main>
 		</Container>
 	</div>
@@ -22,7 +24,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.clean {
-
+.main {
+	.container {
+		max-width: $width;
+		margin: 0 auto;
+	}
 }
 </style>

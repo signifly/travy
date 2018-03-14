@@ -1,18 +1,20 @@
 @import "~element-ui/packages/theme-chalk/src/common/var";
 
+
 // colors
 $black1: #1E2D3E;
-
 $white1: #ffffff;
 $white2: #F9FAFC;
-
 $blue1: #334056;
 $blue2: #E0E6ED;
 $blue3: #C0CCDA;
 $blue4: #5E6D82;
 $blue5: #20A0FF;
 
+
+// settings
 $width: 1440px;
+
 
 // built-in colors
 $primary: $--color-primary;
@@ -20,6 +22,7 @@ $danger: $--color-danger;
 $warning: $--color-warning;
 $info: $--color-info;
 $success: $--color-success;
+
 
 // utils
 @mixin res($width, $dir: max) {
