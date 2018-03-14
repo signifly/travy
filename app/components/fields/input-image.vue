@@ -1,12 +1,13 @@
 <template>
-	<div class="input-image">
+	<div class="input-image" :class="{disabled: !_upload}">
 		<div class="wrap">
 			<Upload
 			class="upload"
 			action=""
 			:before-upload="preventAction"
 			:show-file-list="false"
-			:on-change="addFile">
+			:on-change="addFile"
+			:disabled="!_upload">
 				<div class="image">
 					<div class="img" :style="{backgroundImage: `url(${imageUrl})`}" />
 					<div class="icon"><i class="el-icon-upload"/></div>
@@ -38,6 +39,7 @@ export default {
 		}
 	},
 	props: {
+		_upload: {type: Boolean, required: false, default: true, doc: true},
 		image: {type: String, required: false, doc: true, note: "url"},
 		base64: {type: String, required: false, doc: true, note: "base64 encoded"},
 		_base64: {type: String, required: true}
@@ -87,6 +89,11 @@ $t: 0.2s;
 }
 
 .wrap {
+	.upload /deep/ .el-upload {
+		.input-image.disabled & {
+			cursor: default;
+		}
+	}
 	.image {
 		display: flex;
 		justify-content: center;
@@ -100,9 +107,16 @@ $t: 0.2s;
 		overflow: hidden;
 
 		.input-image.view-head & {
-			border: 0px;
-			border-radius: 0px;
+			border: 0;
+			border-radius: 0;
 			box-shadow: 0 4px 6px 0 rgba(94,109,130,0.07);
+		}
+
+		.input-image.line & {
+			border: 0;
+			border-radius: 0;
+			width: 3em;
+			height: 4.5em;
 		}
 
 		.img {
@@ -134,6 +148,14 @@ $t: 0.2s;
 			transform: translateY(-3px);
 
 			transition: cubic(opacity, $t), cubic(transform, $t);
+
+			.input-image.line & {
+				font-size: 0.8em;
+			}
+
+			.input-image.disabled & {
+				display: none;
+			}
 
 			.input-image:hover & {
 				opacity: 1;
@@ -170,6 +192,17 @@ $t: 0.2s;
 			border-top-right-radius: 0px;
 			top: 0;
 			right: 0;
+		}
+
+		.input-image.line & {
+			font-size: 0.85em;
+			border-top-right-radius: 0px;
+			top: 0;
+			right: 0;
+		}
+
+		.input-image.disabled & {
+			display: none;
 		}
 
 		.input-image:hover & {

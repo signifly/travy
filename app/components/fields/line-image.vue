@@ -4,6 +4,14 @@
 			<i class="el-icon-rank"></i>
 		</div>
 
+		<div class="image">
+			<vInputImage
+				class="line"
+				v-bind="{image, _base64: _imageBase64, _upload: _imageUpload}"
+				@fieldA="fieldA"
+			/>
+		</div>
+
 		<div class="info">
 			<div class="item">
 				<div class="title">{{_titleKey}}:</div>
@@ -21,13 +29,17 @@
 </template>
 
 <script>
-import vActions from "./actions.vue";
+const noimage = require("!file-loader!@/assets/icons/noimage.svg");
+import {vInputImage, vActions} from "./index";
 
 export default {
-	components: {vActions},
+	components: {vInputImage, vActions},
 	meta: {
 		res: {
 			props: {
+				image: "image",
+				imageUpload: false,
+				imageBase64: "image_raw",
 				titleKey: "Modal",
 				titleValue: "titleValue",
 				infoKey: "Variants",
@@ -47,6 +59,7 @@ export default {
 				]
 			},
 			data: {
+				image: "https://pbs.twimg.com/media/DVnfJkqVAAAqS91.jpg",
 				titleValue: "a modal",
 				infoValue: "variants"
 			}
@@ -54,6 +67,10 @@ export default {
 	},
 	props: {
 		rootData: {type: Object, required: true},
+		image: {type: String, required: false, default: noimage, doc: true},
+		_imageUpload: {type: Boolean, required: false, default: true, doc: true},
+		imageBase64: {type: String, required: false, doc: true, note: "base64 encoded"},
+		_imageBase64: {type: String, required: true},
 		_titleKey: {type: String, required: true, doc: true},
 		titleValue: {type: String, required: false, doc: true},
 		_infoKey: {type: String, required: true, doc: true},
@@ -89,6 +106,10 @@ export default {
 		padding: 1em;
 		margin-left: -1em;
 		margin-right: 0.5em;
+	}
+
+	.image {
+		margin-right: 2em;
 	}
 
 	.info {
