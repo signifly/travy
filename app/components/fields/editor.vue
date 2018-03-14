@@ -29,6 +29,7 @@ export default {
 				content: this.content
 			},
 			configs: {
+				spellChecker: false,
 				hideIcons: ["image", "fullscreen", "side-by-side"]
 			}
 		}
