@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {mapKeys} from "lodash";
+import {mapKeys, get} from "lodash";
 import vTable from "@/components/tables/components/table.vue";
 
 export default {
@@ -81,7 +81,8 @@ export default {
 	watch: {
 		$route() {
 			// table bugs out after tab change, refresh it on tab changes to fix
-			this.$refs.table.$refs.table.doLayout();
+			const table = get(this.$refs, "table.$refs.table");
+			if (table) table.doLayout();
 		}
 	}
 };

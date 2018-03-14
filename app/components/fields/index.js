@@ -24,6 +24,7 @@ export {default as vTextarea} from "./textarea.vue";
 export {default as vEditor} from "./editor.vue";
 export {default as vLine} from "./line.vue";
 export {default as vLineImage} from "./line-image.vue";
+export {default as vLineImageItems} from "./line-image-items.vue";
 export {default as vLineMulti} from "./line-multi.vue";
 export {default as vTable} from "./table.vue";
 export {default as vDate} from "./date.vue";
