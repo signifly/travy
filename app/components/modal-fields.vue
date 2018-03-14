@@ -4,8 +4,8 @@
 			<vField
 			v-for="field in fields"
 			:key="field.name"
-			:errors="error.errors"
-			v-bind="[field, {data}]"
+			:alt="{data, errors}"
+			v-bind="field"
 			@fieldA="$emit('fieldA', $event)"/>
 
 			<div class="footer" slot="footer">
@@ -41,6 +41,8 @@ export default {
 		buttonCancelText: {type: String, default: "Cancel"}
 	},
 	computed: {
+		errors: (t) => t.error.errors,
+
 		_visible: {
 			get() {
 				return this.visible;

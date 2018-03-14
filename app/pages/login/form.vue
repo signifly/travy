@@ -3,7 +3,15 @@
 		<div class="box">
 			<div class="title">{{title}}</div>
 			<Form class="form" title="iskf" :model="data" label-position="top" @keydown.native.enter="$emit('submit')">
-				<vField v-for="field in fields" v-bind="[field, {data}]" :errors="error.errors" :key="field.name" @fieldA="fieldA" />
+
+				<vField
+					v-for="field in fields"
+					:key="field.name"
+					:alt="{data, errors}"
+					v-bind="field"
+					@fieldA="fieldA"
+				/>
+
 				<div class="actions">
 					<slot name="actions" />
 				</div>
@@ -28,6 +36,9 @@ export default {
 		message: {type: String, required: true},
 		fields: {type: Array, required: true},
 		data: {type: Object, required: true}
+	},
+	computed: {
+		errors: (t) => t.error.errors
 	},
 	methods: {
 		fieldA(obj) {

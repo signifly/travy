@@ -1,7 +1,13 @@
 <template>
 	<div class="header">
 		<div class="fields">
-			<vField v-for="field in fields" v-bind="field" :data="data" :key="field.name" @fieldA="fieldA" />
+			<vField
+				v-for="field in fields"
+				:key="field.name"
+				v-bind="field"
+				:alt="{data}"
+				@fieldA="fieldA"
+			/>
 		</div>
 	</div>
 </template>

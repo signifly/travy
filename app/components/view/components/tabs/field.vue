@@ -1,52 +1,23 @@
 <template>
-	<div class="field" :class="[id, {draggable}]">
-		<div class="info" slot="info" v-if="info">
-			<div class="label">
-				{{label}}
-				<transition name="el-fade-in">
-					<span class="dot nodata" v-if="!disabled && nodata"></span>
-				</transition>
-			</div>
-			<div class="tooltip" v-if="tooltip">
-				<Tooltip :content="tooltip" placement="top">
-					<i class="el-icon-info"></i>
-				</Tooltip>
-			</div>
-		</div>
-
-		<component
-			v-if="components[id]"
+	<div class="field" :class="id">
+		<vField
 			ref="field"
-			:is="id"
-			:props="props"
-			:rootData="data"
-			:disabled="disabled"
-			:meta="{location: 'tabs'}"
-			v-bind="[propsData, propsValue]"
-			@fieldA="$emit('fieldA', $event)"
+			v-bind="field"
+			:alt="{data, errors, type: 'view-tab'}"
+			@fieldA="fieldA"
 		/>
-
-		<div class="error" v-if="error">{{error}}</div>
-
-		<div class="reference" v-if="reference">
-			<div class="title">Reference:</div>
-			<div class="text">{{reference}}</div>
-		</div>
-
 	</div>
 </template>
 
 <script>
-import {mapValues, mapKeys, map, get} from "lodash";
-import {Tooltip, Tag} from "element-ui";
-import * as fields from "@/components/fields";
+import {get} from "lodash";
+import vField from "@/components/field.vue";
 
 export default {
-	components: {Tooltip, Tag, ...fields},
+	components: {vField},
 	props: {
 		field: {type: Object, required: true},
 		data: {type: Object, required: true},
-		draggable: {type: String, required: false},
 		errors: {type: Object, required: false}
 	},
 	data() {
@@ -55,31 +26,19 @@ export default {
 		}
 	},
 	computed: {
-		components: (t) => t.$options.components,
 		name: (t) => t.field.name,
-		label: (t) => t.field.label,
 		id: (t) => t.field.fieldType.id,
-		tooltip: (t) => t.field.tooltip,
-		disabled: (t) => t.field.fieldType.readonly,
-		reference: (t) => t.field.fieldType.reference,
-		opts: (t) => t.mounted ? get(t.$refs, "field.opts", {}) : {},
-		error: (t) => get(t.errors, `data.${t.name}`, [])[0],
-
-		props: (t) => t.field.fieldType.props,
-		propsData: (t) => mapValues(t.props, (val) => get(t.data, val)),
-		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
-
-		info() {
-			if (this.draggable) return false;
-			if (this.opts.label === false) return false;
-			return true;
-		},
 
 		nodata() {
 			const field = get(this.$refs, "field", {});
 			if (!this.mounted) return false;
 			if (field.disabled) return false;
 			return field.nodata;
+		}
+	},
+	methods: {
+		fieldA(obj) {
+			this.$emit("fieldA", obj);
 		}
 	},
 	mounted() {
@@ -100,69 +59,6 @@ export default {
 .field {
 	width: 100%;
 	margin-bottom: 1.5em;
-
-	&.draggable {
-		margin-bottom: 0;
-	}
-
-	.info {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-
-		font-size: em(14);
-		color: $blue4;
-		margin-bottom: 0.5em;
-
-		.label {
-			display: flex;
-			align-items: center;
-
-			.dot {
-				display: block;
-				$s: 9px;
-				width: $s;
-				height: $s;
-				border-radius: 50%;
-				margin-left: 0.5em;
-
-				&.outdated {
-					background-color: $warning;
-				}
-				&.nodata {
-					background-color: $danger;
-				}
-			}
-		}
-
-		.tooltip {
-			font-size: 0.8em;
-			color: $blue3;
-		}
-	}
-
-	.error {
-		font-weight: 500;
-		font-size: 0.75em;
-		color: $danger;
-		margin-top: 0.5em;
-	}
-
-	.reference {
-		margin-top: 1em;
-		margin-bottom: 0.5em;
-		font-size: em(13);
-		display: flex;
-
-		.title {
-			font-weight: 500;
-			margin-right: 1em;
-		}
-		.text {
-			font-style: italic;
-			color: $blue4;
-		}
-	}
 
 	&.vInputNumber, &.vInput {
 		width: calc(50% - 1em);

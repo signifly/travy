@@ -3,7 +3,13 @@
 		<div class="sections">
 			<div class="section" v-for="(section, i) in sections" :class="sectionClasses[i]">
 				<div class="wrap">
-					<vField v-for="field in section.fields" :key="field.name" v-bind="[field, {data}]" @fieldA="fieldA" />
+					<vField
+						v-for="field in section.fields"
+						:key="field.name"
+						v-bind="field"
+						:alt="{data}"
+						@fieldA="fieldA"
+					/>
 				</div>
 			</div>
 		</div>

@@ -4,7 +4,13 @@
 		<Popover popper-class="pop" v-model="active" ref="pop" placement="bottom-end" width="300" transition="trans-fadeDown">
 			<div class="pop">
 				<div class="fields" :key="resetU">
-					<field v-for="field in fields" :key="field.name" v-bind="field" :data="dataComb" @fieldA="updateQ" />
+					<vField
+						v-for="field in fields"
+						:key="field.name"
+						v-bind="field"
+						:alt="{data: dataComb}"
+						@fieldA="updateQ"
+					/>
 				</div>
 
 				<div class="reset">
@@ -38,10 +44,10 @@
 <script>
 import {mapValues, mapKeys, debounce, get} from "lodash";
 import {Input, Button, Popover} from "element-ui";
-import field from "@/components/field.vue";
+import vField from "@/components/field.vue";
 
 export default {
-	components: {Input, Button, Popover, field},
+	components: {Input, Button, Popover},
 	props: {
 		data: {type: Object, required: false, default: () => ({})},
 		fields: {type: Array, required: false},
@@ -86,6 +92,9 @@ export default {
 			this.loading = false;
 			this.resetU++;
 		}
+	},
+	beforeCreate() {
+		this.$options.components.vField = vField;
 	}
 };
 </script>

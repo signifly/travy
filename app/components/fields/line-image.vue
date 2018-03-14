@@ -16,7 +16,7 @@
 			</div>
 		</div>
 
-		<vActions v-bind="{_actions, data}" @fieldA="fieldA"/>
+		<vActions v-bind="{_actions, rootData}" @fieldA="fieldA"/>
 	</div>
 </template>
 
@@ -53,7 +53,7 @@ export default {
 		}
 	},
 	props: {
-		data: {type: Object, required: true},
+		rootData: {type: Object, required: true},
 		_titleKey: {type: String, required: true, doc: true},
 		titleValue: {type: String, required: false, doc: true},
 		_infoKey: {type: String, required: true, doc: true},

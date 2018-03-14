@@ -36,9 +36,9 @@
 			<div class="field">
 				<vField
 					ref="field"
+					:alt="{data: res.data}"
 					:name="id"
 					:fieldType="fieldType"
-					:data="res.data"
 					@fieldA="fieldA"
 				/>
 			</div>

@@ -1,7 +1,6 @@
 <template>
 	<div class="table" v-if="mounted">
-		<components
-			:is="vTable"
+		<vTable
 			v-bind="{columns}"
 			:data="columnsData"
 			:defaults="{}"
@@ -16,8 +15,10 @@
 
 <script>
 import {mapKeys} from "lodash";
+import vTable from "@/components/tables/components/table.vue";
 
 export default {
+	components: {vTable},
 	meta: {
 		res: {
 			props: {
@@ -32,29 +33,7 @@ export default {
 								text: "title"
 							}
 						}
-					},
-					// {
-					// 	name: "access",
-					// 	label: "Access",
-					// 	fieldType: {
-					// 		id: "vDateRange",
-					// 		props: {
-					// 			dateStart: "dateStart1",
-					// 			dateEnd: "dateEnd1"
-					// 		}
-					// 	}
-					// },
-					// {
-					// 	name: "salad",
-					// 	label: "Salad",
-					// 	fieldType: {
-					// 		id: "vDateRange",
-					// 		props: {
-					// 			dateStart: "dateStart2",
-					// 			dateEnd: "dateEnd2"
-					// 		}
-					// 	}
-					// }
+					}
 				]
 			},
 			data: {
@@ -78,16 +57,10 @@ export default {
 		_columns: {type: Array, required: true, doc: true},
 		columnsData: {type: Array, required: true, doc: true}
 	},
-	computed: {
-		vTable: (t) => require("@/components/tables/components/table.vue").default // stuff happens
-	},
 	data() {
 		return {
 			columns: this._columns,
-			mounted: false,
-			opts: {
-				label: false
-			}
+			mounted: false
 		}
 	},
 	methods: {

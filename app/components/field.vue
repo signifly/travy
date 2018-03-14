@@ -1,7 +1,15 @@
 <template>
 	<div class="field">
-		<div class="info" slot="info" v-if="label || tooltip">
-			<div class="label" v-if="label">{{label}}</div>
+		<div class="info" slot="info" v-if="rule.info && label">
+			<slot name="label">
+				<div class="label" v-if="label">
+					{{label}}
+
+					<transition name="el-fade-in">
+						<span class="dot nodata" v-if="rule.dot && !disabled && nodata"></span>
+					</transition>
+				</div>
+			</slot>
 			<div class="tooltip" v-if="tooltip">
 				<Tooltip :content="tooltip" placement="top">
 					<i class="el-icon-info"></i>
@@ -11,15 +19,21 @@
 
 		<component
 			v-if="comps[id]"
-			ref="field"
 			:is="id"
+			ref="field"
 			v-bind="[propsData, propsValue]"
+			:endpoints="alt.endpoints"
+			:rootData="alt.data"
 			:props="props"
-			:rootData="data"
 			@fieldA="$emit('fieldA', $event)"
 		/>
 
 		<div class="error" v-if="error">{{error}}</div>
+
+		<div class="reference" v-if="reference">
+			<div class="title">Reference:</div>
+			<div class="text">{{reference}}</div>
+		</div>
 
 	</div>
 </template>
@@ -32,12 +46,11 @@ import * as fields from "@/components/fields";
 export default {
 	components: {...fields, Tooltip},
 	props: {
+		alt: {type: Object, required: true},
 		name: {type: String, required: true},
 		fieldType: {type: Object, required: true},
 		tooltip: {type: String, required: false},
-		label: {type: String, required: false},
-		errors: {type: Object, required: false},
-		data: {type: Object, default: () => ({})}
+		label: {type: String, required: false}
 	},
 	data() {
 		return {
@@ -45,12 +58,16 @@ export default {
 		}
 	},
 	computed: {
-		error: (t) => get(t.errors, `data.${t.name}`, [])[0],
+		error: (t) => get(t.alt.errors, `data.${t.name}`, [])[0],
 		comps: (t) => t.$options.components,
+
+		type: (t) => t.alt.type,
 		id: (t) => t.fieldType.id,
+		disabled: (t) => t.fieldType.readonly,
+		reference: (t) => t.fieldType.reference,
 
 		props: (t) => t.fieldType.props,
-		propsData: (t) => mapValues(t.props, (val) => get(t.data, val)),
+		propsData: (t) => mapValues(t.props, (val) => get(t.alt.data, val)),
 		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
 
 		nodata() {
@@ -58,6 +75,19 @@ export default {
 			if (!this.mounted) return false;
 			if (field.disabled) return false;
 			return field.nodata;
+		},
+
+		rule() {
+			const type = this.type;
+
+			return {
+				get info() {
+					return type !== "table";
+				},
+				get dot() {
+					return type === "view-tab";
+				}
+			}
 		}
 	},
 	mounted() {
@@ -89,6 +119,22 @@ export default {
 		.label {
 			display: flex;
 			align-items: center;
+
+			.dot {
+				display: block;
+				$s: 9px;
+				width: $s;
+				height: $s;
+				border-radius: 50%;
+				margin-left: 0.5em;
+
+				&.outdated {
+					background-color: $warning;
+				}
+				&.nodata {
+					background-color: $danger;
+				}
+			}
 		}
 
 		.tooltip {
@@ -102,6 +148,22 @@ export default {
 		font-size: 0.75em;
 		color: $danger;
 		margin-top: 0.5em;
+	}
+
+	.reference {
+		margin-top: 1em;
+		margin-bottom: 0.5em;
+		font-size: em(13);
+		display: flex;
+
+		.title {
+			font-weight: 500;
+			margin-right: 1em;
+		}
+		.text {
+			font-style: italic;
+			color: $blue4;
+		}
 	}
 }
 </style>
