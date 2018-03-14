@@ -74,7 +74,7 @@ export default {
 		},
 
 		show({item}) {
-			const url = this.endpoint({type: "show", item});
+			const url = endpointUrl({data: item, url: this.endpoints.show.url});
 			this.$router.push({path: `/${url}`, query: {modifiers: this.query.modifiers}});
 		},
 
