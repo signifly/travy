@@ -25,6 +25,7 @@
 			:endpoints="alt.endpoints"
 			:rootData="alt.data"
 			:props="props"
+			:disabled="disabled"
 			@fieldA="$emit('fieldA', $event)"
 		/>
 
