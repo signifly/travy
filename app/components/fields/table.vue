@@ -1,6 +1,7 @@
 <template>
 	<div class="table" v-if="mounted">
 		<vTable
+			ref="table"
 			v-bind="{columns}"
 			:data="columnsData"
 			:defaults="{}"
@@ -76,6 +77,12 @@ export default {
 	},
 	mounted() {
 		this.mounted = true;
+	},
+	watch: {
+		$route() {
+			// table bugs out after tab change, refresh it on tab changes to fix
+			this.$refs.table.$refs.table.doLayout();
+		}
 	}
 };
 </script>

@@ -25,7 +25,6 @@ export default {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	max-width: $width;
 	margin: 0 auto;
 	z-index: 1;
 

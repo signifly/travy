@@ -6,7 +6,7 @@
 			</template>
 
 			<template slot="content" slot-scope="tab">
-				<vTab v-bind="{tab, data, errors}" :key="dataU" @fieldA="$emit('fieldA', $event)" :ref="tab.id"/>
+				<vTab v-bind="{tab, data, errors}" @fieldA="$emit('fieldA', $event)" :ref="tab.id"/>
 			</template>
 		</vTabs>
 	</div>
@@ -23,8 +23,7 @@ export default {
 		tabs: {type: Array, required: true},
 		data: {type: Object, required: true},
 		edits: {type: Object, required: true},
-		errors: {type: Object, required: false},
-		dataU: {type: Number, required: true}
+		errors: {type: Object, required: false}
 	},
 	data() {
 		return {

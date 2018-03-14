@@ -13,7 +13,7 @@
 
 			<Row class="mid" :gutter="20">
 				<Col class="left" :span="16">
-					<vTabs v-bind="{tabs, data, edits, errors, dataU}" @fieldA="fieldA"/>
+					<vTabs v-bind="{tabs, data, edits, errors}" @fieldA="fieldA"/>
 				</Col>
 				<Col class="right" :span="8">
 					<vSidebar v-bind="{sidebar, data}" @fieldA="fieldA" />
@@ -52,7 +52,6 @@ export default {
 			loading: false,
 			definitions: null,
 			data: null,
-			dataU: 0,
 			edits: edits(),
 			editsU: 0,
 			saveU: 0
@@ -142,8 +141,6 @@ export default {
 				const {data} = await this.$http.get(`${this.parentId}/${this.id}`, {params});
 				this.data = data.data;
 			}
-
-			this.dataU++;
 		},
 
 		async save({done} = {}) {
