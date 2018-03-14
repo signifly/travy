@@ -38,7 +38,7 @@ export default {
 		res: {
 			props: {
 				image: "image",
-				imageUpload: false,
+				imageUpload: true,
 				imageBase64: "image_raw",
 				titleKey: "Modal",
 				titleValue: "titleValue",
