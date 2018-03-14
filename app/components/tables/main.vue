@@ -33,7 +33,7 @@
 
 <script>
 import {omit, get} from "lodash";
-import {endpoint} from "@/modules/utils";
+import {endpointUrl} from "@/modules/utils";
 import * as components from "./components";
 import vModifiers from "@/components/modifiers.vue";
 import box from "../box.vue";
@@ -73,10 +73,6 @@ export default {
 			if (this[action]) this[action]({data, item, done});
 		},
 
-		endpoint({type, item}) {
-			return endpoint({type, item, endpoints: this.endpoints});
-		},
-
 		show({item}) {
 			const url = this.endpoint({type: "show", item});
 			this.$router.push({path: `/${url}`, query: {modifiers: this.query.modifiers}});
@@ -85,20 +81,20 @@ export default {
 		async update({item, data, done}) {
 			try {
 				const modifiers = this.modifiers.map(x => omit(x, "options"));
-				const url = this.endpoint({type: "update", item});
+				const url = endpointUrl({data: item, url: this.endpoints.update.url});
 				await this.$http.put(url, {data, modifiers});
 			} catch (err) {} finally {
-				if (done) done();
+				if (done) await done();
 			}
 		},
 
 		async remove({item, done}) {
 			try {
-				const url = this.endpoint({type: "destroy", item});
+				const url = endpointUrl({data: item, url: this.endpoints.destroy.url});
 				await this.$http.delete(url);
 				await this.getData();
 			} catch (err) {} finally {
-				if (done) done();
+				if (done) await done();
 			}
 		},
 
