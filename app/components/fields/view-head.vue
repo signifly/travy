@@ -62,9 +62,14 @@ export default {
 .view-head {
 	display: flex;
 
+	&.image {
+		.info {
+			margin-left: 2em;
+		}
+	}
+
 	.info {
 		margin-top: 1em;
-		margin-left: 2em;
 
 		.title {
 			display: flex;
