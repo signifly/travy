@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {mapKeys} from "lodash";
+import {mapKeys, get} from "lodash";
 import {Button} from "element-ui";
 import vForm from "./form.vue";
 
@@ -82,8 +82,9 @@ export default {
 				this.loading = true;
 				const {data} = await this.$http.post("password/reset", {...this.data, token: this.id}, {custom: true});
 				this.message = data.message;
-			} catch ({response}) {
-				this.error = response.data;
+			} catch (err) {
+				console.log(err);
+				this.error = get(err, "response.data", {});
 				this.error.errors = mapKeys(this.error.errors, (val, key) => `data.${key}`);
 			} finally {
 				this.loading = false;

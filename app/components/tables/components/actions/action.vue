@@ -52,6 +52,6 @@ export default {
 
 <style lang="scss" scoped>
 .action {
-
+	margin-left: 0.75em;
 }
 </style>

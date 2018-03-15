@@ -35,6 +35,14 @@ export default {
 	computed: {
 		dataComb: (t) => ({...t.rootData, ...t.data}),
 		endpointUrl: (t) => endpointUrl({data: t.dataComb, url: t.endpoint.url}),
+		vUpload: (t) => t.fields.map(x => x.fieldType.id === "vUpload").some(x => x),
+
+		payloadFormData() {
+			return Object.keys(this.payload).reduce((formData, key) => {
+				formData.append(key, this.payload[key]);
+				return formData;
+			}, new FormData());
+		},
 
 		visible: {
 			get() {
@@ -63,15 +71,19 @@ export default {
 			try {
 				this.loading = true;
 
-				const {data} = await this.$http[this.endpoint.method](
-					this.endpointUrl,
-					{data: this.payload},
-					{custom: true}
-				);
+				const payload = this.vUpload ? this.payloadFormData : this.payload;
+
+				const {data} = await this.$http({
+					method: this.endpoint.method,
+					url: this.endpointUrl,
+					data: payload,
+					custom: true,
+				});
 
 				this.submitAfter({data});
-			} catch ({response}) {
-				this.error = get(response, "data", {});
+			} catch (err) {
+				console.log(err);
+				this.error = get(err, "response.data", {});
 			} finally {
 				this.loading = false;
 			}

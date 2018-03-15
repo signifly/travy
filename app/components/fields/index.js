@@ -22,6 +22,7 @@ export {default as vInputNumber} from "./input-number.vue";
 export {default as vInputPassword} from "./input-password.vue";
 export {default as vTextarea} from "./textarea.vue";
 export {default as vEditor} from "./editor.vue";
+export {default as vUpload} from "./upload.vue";
 export {default as vLine} from "./line.vue";
 export {default as vLineImage} from "./line-image.vue";
 export {default as vLineImageItems} from "./line-image-items.vue";

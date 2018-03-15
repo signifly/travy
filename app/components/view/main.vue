@@ -170,8 +170,9 @@ export default {
 
 				if (done) await done();
 
-			} catch ({response}) {
-				this.error = get(response, "data", {});
+			} catch (err) {
+				console.log(err);
+				this.error = get(err, "response.data", {});
 			} finally {
 				this.loading = false;
 			}

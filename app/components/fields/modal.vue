@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import {get} from "lodash"
 import {Button} from "element-ui";
 import {endpointUrl} from "@/modules/utils";
 import vModalFields from "@/components/modal-fields.vue";
@@ -89,8 +90,9 @@ export default {
 				await this.$http[ept.method](url, {data: this.payload}, {custom: true});
 				this.$emit("fieldA", {action: "getData"});
 				this.modal = false;
-			} catch({response}) {
-				this.error = response.data;
+			} catch(err) {
+				console.log(err);
+				this.error = get(err, "response.data", {});
 			} finally {
 				this.loading = false;
 			}

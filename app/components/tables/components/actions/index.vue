@@ -18,6 +18,6 @@ export default {
 
 <style lang="scss" scoped>
 .actions {
-
+	display: flex;
 }
 </style>
