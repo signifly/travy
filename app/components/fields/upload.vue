@@ -36,8 +36,7 @@ export default {
 	props: {
 		_note: {type: String, required: false, doc: true},
 		_fileTypes: {type: String, required: false, doc: true},
-		_files: {type: String, required: true, doc: true},
-		_endpoint: {type: Object, required: false, doc: true}
+		_files: {type: String, required: true, doc: true}
 	},
 	data() {
 		return {
@@ -49,7 +48,7 @@ export default {
 			this.files.push(raw);
 			this.update();
 		},
-		
+
 		removeFile({raw}) {
 			const index = this.files.findIndex(x => x === raw);
 			this.files.splice(index, 1);
