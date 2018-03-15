@@ -133,9 +133,8 @@ export default {
 	}
 
 	> .actions {
-		width: 6em;
+		width: 4.5em;
 		text-align: right;
-		font-size: em(12);
 		margin-left: auto;
 
 		a {
