@@ -1,6 +1,6 @@
 <template>
 	<div class="line-image-items">
-		<div class="icon">
+		<div class="icon drag">
 			<i class="el-icon-rank"></i>
 		</div>
 
