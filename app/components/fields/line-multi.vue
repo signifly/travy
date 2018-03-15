@@ -15,10 +15,10 @@
 <script>
 import {mapValues, mapKeys, get} from "lodash";
 import draggable from "vuedraggable";
-import {vLine, vLineImage} from "./index";
+import {vLine, vLineImage, vLineImageItems} from "./index";
 
 export default {
-	components: {draggable, vLine, vLineImage},
+	components: {draggable, vLine, vLineImage, vLineImageItems},
 	meta: {
 		res: {
 			props: {
