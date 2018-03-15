@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {get} from "lodash";
+import {get, isPlainObject} from "lodash";
 import {endpointUrl} from "@/modules/utils";
 import vModalFields from "@/components/modal-fields.vue";
 
@@ -38,10 +38,17 @@ export default {
 		vUpload: (t) => t.fields.map(x => x.fieldType.id === "vUpload").some(x => x),
 
 		payloadFormData() {
-			return Object.keys(this.payload).reduce((formData, key) => {
-				formData.append(key, this.payload[key]);
-				return formData;
-			}, new FormData());
+			const data = {data: this.payload};
+
+			const toFormData = (obj) => {
+				return Object.keys(data).reduce((formData, key) => {
+					const val = isPlainObject(obj[key]) ? toFormData(obj[key]) : obj[key];
+					formData.append(key, val);
+					return formData;
+				}, new FormData());
+			};
+
+			return toFormData(data);
 		},
 
 		visible: {
@@ -70,13 +77,12 @@ export default {
 		async submit() {
 			try {
 				this.loading = true;
-
-				const payload = this.vUpload ? this.payloadFormData : this.payload;
+				const payload = this.vUpload ? this.payloadFormData : {data: this.payload};
 
 				const {data} = await this.$http({
 					method: this.endpoint.method,
 					url: this.endpointUrl,
-					data: {data: payload},
+					data: payload,
 					custom: true,
 				});
 
