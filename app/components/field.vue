@@ -68,8 +68,8 @@ export default {
 		reference: (t) => t.fieldType.reference,
 
 		props: (t) => t.fieldType.props,
-		propsData: (t) => mapValues(t.props, (val) => get(t.alt.data, val)),
 		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
+		propsData: (t) => mapValues(t.props, (val) => get(t.alt.data, val)),
 
 		nodata() {
 			const field = get(this.$refs, "field", {});

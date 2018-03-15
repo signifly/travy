@@ -12,7 +12,7 @@ export default {
 	props: {
 		title: {type: String, required: true},
 		loading: {type: Boolean, required: true},
-		edited: {type: Boolean, required: true},
+		editsU: {type: Number, required: true},
 		getData: {type: Function, required: true},
 		error: {type: Object, required: true}
 	},
@@ -21,7 +21,7 @@ export default {
 		comp: (t) => t.seq ? "vBatch" : "vSave",
 		active() {
 			if (this.comp === "vBatch") return true;
-			if (this.comp === "vSave") return this.edited;
+			if (this.comp === "vSave") return this.editsU;
 		}
 	},
 	methods: {

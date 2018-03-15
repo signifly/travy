@@ -2,11 +2,11 @@
 	<div class="tabs">
 		<vTabs v-bind="{tabs, tab}" @tab="tabClick">
 			<template slot="label" slot-scope="item">
-				<vLabel v-bind="item" :edits="edits" :refs="refs"></vLabel>
+				<vLabel v-bind="[item, {edits, dataU, refs}]"></vLabel>
 			</template>
 
 			<template slot="content" slot-scope="tab">
-				<vTab v-bind="{tab, data, errors}" @fieldA="$emit('fieldA', $event)" :ref="tab.id"/>
+				<vTab :key="dataU" v-bind="{tab, data, errors}" @fieldA="$emit('fieldA', $event)" :ref="tab.id"/>
 			</template>
 		</vTabs>
 	</div>
@@ -22,6 +22,7 @@ export default {
 	props: {
 		tabs: {type: Array, required: true},
 		data: {type: Object, required: true},
+		dataU: {type: Number, required: true},
 		edits: {type: Object, required: true},
 		errors: {type: Object, required: false}
 	},

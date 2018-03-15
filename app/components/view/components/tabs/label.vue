@@ -20,11 +20,13 @@ export default {
 		label: {type: String, required: true},
 		status: {type: String, required: false},
 		edits: {type: Object, required: false},
+		dataU: {type: Number, required: true},
 		refs: {type: Object, required: true}
 	},
 	computed: {
 		edited: (t) => t.edits.tabs.has(t.id),
 		nodata() {
+			const dataU = this.dataU;
 			const ref = this.refs[this.id];
 			return ref.$refs.section.some(x => x.nodata);
 		}

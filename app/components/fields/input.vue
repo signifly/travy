@@ -35,10 +35,10 @@ export default {
 		nodata: (t) => !t.data.value
 	},
 	methods: {
-		update(val) {
+		update(value) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this._value]: val}
+				data: {[this._value]: value}
 			});
 		}
 	}

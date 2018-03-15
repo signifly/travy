@@ -13,7 +13,7 @@
 
 			<Row class="mid" :gutter="20">
 				<Col class="left" :span="16">
-					<vTabs v-bind="{tabs, data, edits, errors}" @fieldA="fieldA"/>
+					<vTabs v-bind="{tabs, data, dataU, edits, errors}" @fieldA="fieldA"/>
 				</Col>
 				<Col class="right" :span="8">
 					<vSidebar v-bind="{sidebar, data}" @fieldA="fieldA" />
@@ -27,7 +27,7 @@
 			</Row>
 		</div>
 
-		<vPanel v-bind="{id, loading, edited, getData, error}" title="some product, thingy" @save="save" />
+		<vPanel v-bind="{id, loading, editsU, getData, error}" title="some product, thingy" @save="save" />
 	</div>
 </template>
 
@@ -52,6 +52,7 @@ export default {
 			loading: false,
 			definitions: null,
 			data: null,
+			dataU: 0,
 			edits: edits(),
 			editsU: 0,
 			saveU: 0
@@ -68,7 +69,6 @@ export default {
 		tabs: (t) => t.definitions.tabs,
 		parentId: (t) => t.$route.meta.id,
 		errors: (t) => t.error.errors,
-		edited: (t) => t.editsU > 0,
 		dataUpdated() {
 			const editsU = this.editsU; // force update, because sets are not reactive
 
@@ -113,6 +113,15 @@ export default {
 			}, {});
 		},
 
+		reset() {
+			// reset edits
+			this.edits = edits();
+			this.editsU = 0;
+
+			// reset errors
+			this.error = {};
+		},
+
 		async getDefinitions() {
 			const params = {
 				modifiers: this.modifierParams({definitions: true})
@@ -141,6 +150,9 @@ export default {
 				const {data} = await this.$http.get(`${this.parentId}/${this.id}`, {params});
 				this.data = data.data;
 			}
+
+			this.reset();
+			this.dataU++;
 		},
 
 		async save({done} = {}) {
@@ -153,13 +165,7 @@ export default {
 				const {data} = await this.$http.put(url, {data: this.dataUpdated, modifiers}, {custom: true});
 				this.data = data.data;
 
-				// reset edits
-				this.edits = edits();
-				this.editsU = 0;
-
-				// reset errors
-				this.error = {};
-
+				this.reset();
 				this.saveU++;
 
 				if (done) await done();
