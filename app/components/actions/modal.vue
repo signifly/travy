@@ -76,7 +76,7 @@ export default {
 				const {data} = await this.$http({
 					method: this.endpoint.method,
 					url: this.endpointUrl,
-					data: payload,
+					data: {data: payload},
 					custom: true,
 				});
 
