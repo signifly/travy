@@ -22,7 +22,10 @@ export default {
 		components: (t) => t.$options.components,
 		data: (t) => t.scope.row,
 		action: (t) => t.column.fieldType.action,
-		link: (t) => endpointUrl({data: t.data, url: t.action})
+		link() {
+			const url = endpointUrl({data: this.data, url: this.action});
+			return url ? {path: `/${url}`, query: {modifiers: this.$route.query.modifiers}} : false;
+		}
 	},
 	methods: {
 		fieldA(obj) {

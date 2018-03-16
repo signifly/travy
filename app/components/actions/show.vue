@@ -16,7 +16,7 @@ export default {
 		endpointUrl: (t) => endpointUrl({data: t.dataComb, url: t.endpoint.url})
 	},
 	created() {
-		this.$router.push(`/${this.endpointUrl}`);
+		this.$router.push({path: `/${this.endpointUrl}`, query: {modifiers: this.$route.query.modifiers}});
 	}
 };
 </script>
