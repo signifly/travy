@@ -42,5 +42,6 @@ export default {
 .field {
 	text-decoration: none;
 	color: $black1;
+	margin: 0;
 }
 </style>

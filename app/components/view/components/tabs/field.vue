@@ -1,12 +1,10 @@
 <template>
-	<div class="field" :class="id">
-		<vField
-			ref="field"
-			v-bind="field"
-			:alt="{data, errors, type: 'view-tab'}"
-			@fieldA="fieldA"
-		/>
-	</div>
+	<vField
+		ref="field"
+		v-bind="field"
+		:alt="{data, errors, type: 'view-tab'}"
+		@fieldA="fieldA"
+	/>
 </template>
 
 <script>
@@ -27,7 +25,6 @@ export default {
 	},
 	computed: {
 		name: (t) => t.field.name,
-		id: (t) => t.field.fieldType.id,
 
 		nodata() {
 			const field = get(this.$refs, "field", {});
@@ -56,12 +53,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.field {
-	width: 100%;
-	margin-bottom: 1.5em;
 
-	&.vInputNumber, &.vInput {
-		width: calc(50% - 1em);
-	}
-}
 </style>

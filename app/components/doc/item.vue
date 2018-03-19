@@ -33,7 +33,7 @@
 				</div>
 			</div>
 
-			<div class="field">
+			<div class="field-wrap">
 				<vField
 					ref="field"
 					:alt="{data: res.data}"
@@ -192,10 +192,10 @@ export default {
 			}
 		}
 
-		> .field {
+		.field-wrap {
 			position: relative;
 			margin: 2em 0;
-			padding: 1em;
+			padding: 0.1em 1em;
 			border-left: 3px solid $blue2;
 		}
 

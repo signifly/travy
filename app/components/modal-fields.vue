@@ -1,12 +1,14 @@
 <template>
 	<div class="modal">
 		<Dialog v-bind="{width, title}" :visible.sync="_visible">
-			<vField
-			v-for="field in fields"
-			:key="field.name"
-			:alt="{data, errors}"
-			v-bind="field"
-			@fieldA="$emit('fieldA', $event)"/>
+			<div class="fields">
+				<vField
+				v-for="field in fields"
+				:key="field.name"
+				:alt="{data, errors}"
+				v-bind="field"
+				@fieldA="$emit('fieldA', $event)"/>
+			</div>
 
 			<div class="footer" slot="footer">
 				<div class="actions">
@@ -35,7 +37,7 @@ export default {
 		title: {type: String, required: false},
 		loading: {type: Boolean, required: false},
 
-		width: {type: String, default: "500px"},
+		width: {type: String, default: "700px"},
 		visible: {type: Boolean, required: false},
 		buttonSubmitText: {type: String, default: "Submit"},
 		buttonCancelText: {type: String, default: "Cancel"}
@@ -81,6 +83,13 @@ export default {
 	.el-dialog__title {
 		font-weight: 600;
 	}
+}
+
+.fields {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: -$fieldMargin 0;
 }
 
 .footer {

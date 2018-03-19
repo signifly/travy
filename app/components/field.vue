@@ -1,5 +1,5 @@
 <template>
-	<div class="field">
+	<div class="field" :style="{width}">
 		<div class="info" slot="info" v-if="rule.info && label">
 			<slot name="label">
 				<div class="label" v-if="label">
@@ -67,6 +67,11 @@ export default {
 		disabled: (t) => t.fieldType.readonly,
 		reference: (t) => t.fieldType.reference,
 
+		width() {
+			const width = this.fieldType.width || 100;
+			return width <= 50 ? `calc(${width}% - 1em)` : `${width}%`;
+		},
+
 		props: (t) => t.fieldType.props,
 		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
 		propsData: (t) => mapValues(t.props, (val) => get(t.alt.data, val)),
@@ -99,15 +104,7 @@ export default {
 
 <style lang="scss" scoped>
 .field {
-	margin: 1.25em 0;
-
-	&:first-child {
-		margin-top: 0;
-	}
-
-	&:last-child {
-		margin-bottom: 0;
-	}
+	margin: $fieldMargin 0;
 
 	.info {
 		display: flex;
