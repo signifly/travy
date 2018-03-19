@@ -54,9 +54,9 @@ export default {
 		}
 	},
 	props: {
-		props: {type: Object, required: true},
 		_columns: {type: Array, required: true, doc: true},
-		columnsData: {type: Array, required: true, doc: true}
+		columnsData: {type: Array, required: true, doc: true},
+		_columnsData: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -67,7 +67,7 @@ export default {
 	methods: {
 		fieldA(obj) {
 			// find index of the item in columnsData by {id}, and change key for every data property
-			const prop = this.props.columnsData;
+			const prop = this._columnsData;
 			const index = this.columnsData.findIndex(x => x.id === obj.item.id);
 			const dataKey = `${prop}[${index}]`;
 			obj.data = mapKeys(obj.data, (val, key) => `${dataKey}.${key}`);

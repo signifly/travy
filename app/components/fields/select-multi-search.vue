@@ -4,7 +4,7 @@
 		v-model="data.values"
 		v-bind="{size, loading, disabled}"
 		:clearable="_clearable"
-		:remote-method="getListQ"
+		:remote-method="getListOptionsQ"
 		filterable multiple remote reserve-keyword
 		@change="update">
 			<Option v-for="item in list" v-bind="item" :key="item.value" />
@@ -107,7 +107,7 @@ export default {
 			this.loading = false;
 		}, 500),
 
-		getListQ(q) {
+		getListOptionsQ(q) {
 			this.getListOptions(q);
 			this.loading = true;
 		},
