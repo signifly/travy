@@ -1,5 +1,5 @@
 <template>
-	<component :is="link ? 'router-link' : 'div'" class="field" :to="link">
+	<component :is="link ? 'router-link' : 'div'" class="field-wrap" :to="link">
 		<vField
 			v-bind="column"
 			:alt="{endpoints, data, type: 'table'}"
@@ -39,9 +39,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.field {
+.field-wrap {
 	text-decoration: none;
 	color: $black1;
-	margin: 0;
+
+	.field {
+		margin: 0;
+	}
 }
 </style>
