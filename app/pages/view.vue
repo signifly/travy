@@ -20,7 +20,7 @@ export default {
 		],
 
 		// don't rerender view on sequential batch
-		key: (t) => t.$route.query.seq ? null : t.id
+		key: (t) => t.$route.query.seq ? null : `${t.meta.id}-${t.id}`
 	}
 };
 </script>
