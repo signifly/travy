@@ -75,7 +75,7 @@ export default {
 	},
 	methods: {
 		select({data}) {
-			const selectValues = data.values;
+			const selectValues = get(data, this._values);
 			const options = get(this.$refs, "select.listOptions", []);
 			this.columnsData = selectValues.map(id => options.find(opt => get(opt, this.oValue) === id));
 			this.update();
