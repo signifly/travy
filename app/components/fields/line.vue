@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="toggle">
-			<elSwitch v-model="data.switchValue" :inactive-text="`${_switchTitle}:`" @change="switchUpdate"/>
+			<elSwitch v-model="data.switchValue" :inactive-text="`${_switchTitle}:`" :disabled="_switchDisabled" @change="switchUpdate"/>
 		</div>
 
 		<vActions v-bind="{_actions, rootData}" @fieldA="fieldA"/>
@@ -54,6 +54,7 @@ export default {
 				infoItemKey: "name",
 				switchTitle: "switch",
 				switchValue: "switchValue",
+				switchDisabled: true,
 				selectValue: "selectValue",
 				selectOptions: {
 					endpoint: "https://sikaline.glitch.me/table-actions/options",
@@ -100,6 +101,7 @@ export default {
 		_infoItemKey: {type: String, required: true, doc: true},
 		_switchTitle: {type: String, required: true, doc: true},
 		switchValue: {type: Boolean, required: false, doc: true},
+		_switchDisabled: {type: Boolean, default: false, doc: true},
 		selectValue: {type: [String, Number], required: false, doc: true},
 		_selectOptions: {type: Object, required: true, doc: true},
 		_actions: {type: Array, required: true, doc: true, note: `<a href="#vActions">vActions</a>`},
@@ -189,7 +191,7 @@ export default {
 	.actions {
 		width: 4.5em;
 		text-align: right;
-		
+
 		a {
 			text-decoration: none;
 			color: $blue5;
