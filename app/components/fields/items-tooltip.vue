@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import {get} from "lodash";
 import {Tooltip} from "element-ui";
 
 export default {
@@ -34,7 +35,7 @@ export default {
 		_itemKey: {type: String, required: true, doc: true}
 	},
 	computed: {
-		tooltip: (t) => t.items.map(x => x[t._itemKey]).join("<br>"),
+		tooltip: (t) => t.items.map(x => get(x, t._itemKey)).join("<br>"),
 		disabled: (t) => t.items.length < 1
 	}
 };
