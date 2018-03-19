@@ -6,9 +6,9 @@
 			<Table size="small" v-bind="{data: itemsMap}">
 				<TableColumn width="100" label="id" prop="id" />
 				<TableColumn width="180" label="date" prop="date" />
-				<TableColumn width="250" label="user" prop="user" />
 				<TableColumn width="150" label="type" prop="type" />
 				<TableColumn width="150" label="subject" prop="subject" />
+				<TableColumn width="250" label="user" prop="user" v-if="viewId !== 'users'" />
 				<TableColumn label="changes" prop="changes" />
 			</Table>
 		</div>
@@ -46,6 +46,7 @@ export default {
 		}
 	},
 	computed: {
+		viewId: (t) => t.$route.meta.id,
 		endpointUrl: (t) => endpointUrl({data: t.data, url: t.endpoints.activity.url}),
 		paginationActive: (t) => t.pagination && t.pagination.last_page > 1,
 
