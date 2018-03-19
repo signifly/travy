@@ -8,6 +8,7 @@
 				<TableColumn width="180" label="date" prop="date" />
 				<TableColumn width="250" label="user" prop="user" />
 				<TableColumn width="150" label="type" prop="type" />
+				<TableColumn width="150" label="subject" prop="subject" />
 				<TableColumn label="changes" prop="changes" />
 			</Table>
 		</div>
@@ -53,7 +54,8 @@ export default {
 			type: x.description,
 			date: date(x.updated_at).sDateTime,
 			user: x.causer ? x.causer.full_name : "System",
-			changes: Object.keys(x.properties.attributes).join(", ")
+			changes: Object.keys(x.properties.attributes).join(", "),
+			subject: x.humanized_subject
 		}))
 	},
 	methods: {

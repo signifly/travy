@@ -16,7 +16,7 @@ $ cd /app && npm run dev
 $ cd /app && npm run dev-staging
 
 # build project
-$ cd /app && npm run build
+$ cd /app && npm run prod
 ```
 
 ### Docker production
