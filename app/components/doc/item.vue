@@ -1,6 +1,6 @@
 <template>
-	<div class="item" :id="id">
-		<div class="wrap">
+	<div class="item">
+		<div class="wrap" :id="id" >
 			<a class="title" :href="`#${id}`">{{id}}</a>
 
 			<div class="props">
@@ -136,7 +136,7 @@ export default {
 	}
 
 	.wrap {
-		padding: 5em 0;
+		margin: 5em 0;
 
 		> .title {
 			display: block;

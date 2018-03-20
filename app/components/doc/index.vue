@@ -21,8 +21,7 @@ export default {
 
 <style lang="scss" scoped>
 .doc {
-	margin: 2em auto 8em;
-	padding: 0 2em;
-	max-width: 70em;
+	margin: 0 auto;
+	max-width: 75em;
 }
 </style>

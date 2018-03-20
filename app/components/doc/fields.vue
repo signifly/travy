@@ -1,31 +1,43 @@
 <template>
 	<div class="fields">
-		<div class="title">Fields</div>
+		<div class="wrap">
+			<div class="title">Fields</div>
 
-		<div class="main">
-			<div class="sidebar">
-				<div class="title">Index</div>
-				<div class="fields">
-					<a v-for="(field, key) in fields" class="link" :href="`#${key}`">{{key}}</a>
-				</div>
-			</div>
+			<Container>
+				<Aside>
+					<Menu class="menu">
+						<MenuItem @click="link(key)" v-for="(field, key) in fields" :key="key" :index="key">{{key}}</MenuItem>
+					</Menu>
+				</Aside>
 
-			<div class="items">
-				<vItem v-for="(field, key) in fields" :key="key" :id="key" :props="field.props" v-bind="field.meta" />
-			</div>
+				<Container>
+					<Main>
+						<div class="items">
+							<vItem v-for="(field, key) in fields" :key="key" :id="key" :props="field.props" v-bind="field.meta" />
+						</div>
+					</Main>
+				</Container>
+			</Container>
 		</div>
 	</div>
 </template>
 
 <script>
+import {Container, Main, Aside, Menu, Submenu, MenuItem, Header} from "element-ui";
 import * as fields from "@/components/fields";
 import vItem from "./item.vue";
 
 export default {
-	components: {vItem},
+	components: {Container, Main, Aside, Menu, Submenu, MenuItem, Header, vItem},
 	data() {
 		return {
 			fields
+		}
+	},
+	methods: {
+		link(key) {
+			location.href = `#${key}`;
+			console.log(key);
 		}
 	}
 };
@@ -33,42 +45,28 @@ export default {
 
 <style lang="scss" scoped>
 .fields {
-	> .title {
-		font-size: 1.8em;
-	}
+	.wrap {
+		padding: 2em 0;
+		max-height: 100%;
 
-	.main {
-		display: flex;
+		.title {
+			font-size: 1.5em;
+			margin-bottom: 2em;
+			margin-left: 0.7em;
+		}
 
-		.sidebar {
-			align-self: flex-start;
-			position: sticky;
-			margin-right: 5em;
-			padding-top: 2em;
-			top: 0;
-			left: 0;
-
-			.title {
-				font-size: 1.25em;
-				margin-bottom: 1em;
-			}
-
-			.fields {
-				overflow: auto;
-				padding-right: 1em;
-
-				.link {
-					font-size: 0.9em;
-					display: block;
-					margin: 0.5em 0;
-					color: $black1;
-					text-decoration: none;
-
-					&:hover {
-						color: $blue5;
-					}
+		.menu {
+			/deep/ {
+				.el-menu-item {
+					height: 2em;
+					line-height: 2em;
 				}
 			}
+		}
+
+		.items {
+			max-height: calc(100vh - 12em);
+			overflow: auto;
 		}
 	}
 }
