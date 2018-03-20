@@ -67,10 +67,12 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
 	if (!to.meta.auth) return next(); // allow all routes that isn't protected by auth
 
-	const {role} = store.getters["user/data"] || await store.dispatch("user/data");
+	const user = store.getters["user/data"] || await store.dispatch("user/data");
 	const roles = get(to.meta, "auth.roles", []);
 
-	const valid = roles === "all" || roles.includes(role);
+	if (!user) return store.dispatch("user/logout");
+
+	const valid = roles === "all" || roles.includes(user.role);
 
 	next(valid || {name: "401", replace: true});
 });

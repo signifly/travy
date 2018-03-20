@@ -45,9 +45,6 @@ export default {
 				const {data} = await axios.get("account");
 				commit("data", data);
 				return getters.data;
-			} else {
-				dispatch("logout");
-				throw "no auth cookie";
 			}
 		}
 	},
