@@ -5,15 +5,15 @@
 				<vField
 				v-for="field in fields"
 				:key="field.name"
-				:alt="{data, errors}"
+				:alt="{data, errors, loading}"
 				v-bind="field"
 				@fieldA="$emit('fieldA', $event)"/>
 			</div>
 
 			<div class="footer" slot="footer">
 				<div class="actions">
-					<Button @click="_visible = false" :disabled="loading">{{buttonCancelText}}</Button>
-					<Button type="primary" @click="submit" :loading="loading">{{buttonSubmitText}}</Button>
+					<Button @click="_visible = false" :disabled="!!loading">{{buttonCancelText}}</Button>
+					<Button type="primary" @click="submit" :loading="!!loading">{{buttonSubmitText}}</Button>
 				</div>
 
 				<div class="error" v-if="error.message">{{error.message}}</div>
@@ -35,7 +35,7 @@ export default {
 		data: {type: Object, required: true},
 		error: {type: Object, required: true},
 		title: {type: String, required: false},
-		loading: {type: Boolean, required: false},
+		loading: {type: [Boolean, Number], required: false},
 
 		width: {type: String, default: "700px"},
 		visible: {type: Boolean, required: false},

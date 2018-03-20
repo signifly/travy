@@ -13,14 +13,19 @@
 			<div class="el-upload__text">Drop file here or <em>click to upload</em></div>
 			<div class="el-upload__tip" slot="tip">{{_note}}</div>
 		</Upload>
+
+		<div class="progress" v-if="Number.isInteger(loading)">
+			<Progress :text-inside="true" :stroke-width="18" :percentage="loading">{{loading}}</Progress>
+		</div>
+
 	</div>
 </template>
 
 <script>
-import {Upload} from "element-ui";
+import {Upload, Progress} from "element-ui";
 
 export default {
-	components: {Upload},
+	components: {Upload, Progress},
 	meta: {
 		res: {
 			props: {
@@ -34,6 +39,7 @@ export default {
 		}
 	},
 	props: {
+		loading: {type: [Boolean, Number], required: true},
 		_note: {type: String, required: false, doc: true},
 		_fileTypes: {type: String, required: false, doc: true},
 		_files: {type: String, required: true, doc: true}
@@ -71,6 +77,13 @@ export default {
 		.el-upload, .el-upload-dragger {
 			width: 100%;
 		}
+
+		.el-progress-bar__inner {
+			transition: width 0.25s linear;
+		}
+	}
+	.progress {
+		margin-top: 1em;
 	}
 }
 </style>

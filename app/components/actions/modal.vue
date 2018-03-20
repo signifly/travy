@@ -72,6 +72,9 @@ export default {
 					url: this.endpointUrl,
 					data: payload,
 					custom: true,
+					onUploadProgress: (e) => {
+						this.loading = Math.round(e.loaded / e.total * 100);
+					}
 				});
 
 				this.submitAfter({data});
