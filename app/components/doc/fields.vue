@@ -2,7 +2,6 @@
 	<div class="fields">
 		<div class="wrap">
 			<div class="title">Fields</div>
-
 			<Container>
 				<Aside>
 					<Menu class="menu">
@@ -37,7 +36,6 @@ export default {
 	methods: {
 		link(key) {
 			location.href = `#${key}`;
-			console.log(key);
 		}
 	}
 };
