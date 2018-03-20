@@ -23,12 +23,12 @@
 </template>
 
 <script>
-import {Container, Main, Aside, Menu, Submenu, MenuItem, Header} from "element-ui";
+import {Container, Main, Aside, Menu, MenuItem} from "element-ui";
 import * as fields from "@/components/fields";
 import vItem from "./item.vue";
 
 export default {
-	components: {Container, Main, Aside, Menu, Submenu, MenuItem, Header, vItem},
+	components: {Container, Main, Aside, Menu, MenuItem, vItem},
 	data() {
 		return {
 			fields
