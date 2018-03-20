@@ -70,7 +70,7 @@ export default {
 		image: {type: String, required: false, default: noimage, doc: true},
 		_imageUpload: {type: Boolean, required: false, default: true, doc: true},
 		imageBase64: {type: String, required: false, doc: true, note: "base64 encoded"},
-		_imageBase64: {type: String, required: true},
+		_imageBase64: {type: String, required: false},
 		_titleKey: {type: String, required: true, doc: true},
 		titleValue: {type: String, required: false, doc: true},
 		_infoKey: {type: String, required: true, doc: true},
