@@ -1,7 +1,7 @@
 <template>
 	<error>
-		<template slot="title">404</template>
-		<template slot="text">Page not found</template>
+		<template slot="title">401</template>
+		<template slot="text">You don't have access to this page</template>
 	</error>
 </template>
 
