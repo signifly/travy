@@ -36,7 +36,7 @@
 			<div class="field-wrap">
 				<vField
 					ref="field"
-					:alt="{data: res.data}"
+					:alt="{data: res.data, loading: false}"
 					:name="id"
 					:fieldType="fieldType"
 					@fieldA="fieldA"
@@ -224,7 +224,7 @@ export default {
 
 				&.event {
 					pre {
-						max-width: 18em;
+						max-width: 25em;
 						overflow: auto;
 					}
 				}

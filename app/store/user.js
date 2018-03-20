@@ -41,11 +41,13 @@ export default {
 			}
 		},
 
-		async data({commit, state, getters}) {
+		async data({commit, dispatch, state, getters}) {
 			if (state.auth) {
 				const {data} = await axios.get("account");
 				commit("data", data);
 				return getters.data;
+			} else {
+				dispatch("logout");
 			}
 		}
 	},
