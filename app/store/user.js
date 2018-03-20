@@ -27,7 +27,6 @@ export default {
 		async login({commit, dispatch}, {form, route}) {
 			const {data} = await axios.post("login", form, {custom: true});
 			commit("authSet", {data});
-
 			await dispatch("data");
 			router.push(route);
 		},
@@ -48,6 +47,7 @@ export default {
 				return getters.data;
 			} else {
 				dispatch("logout");
+				throw "no auth cookie";
 			}
 		}
 	},
