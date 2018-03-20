@@ -28,17 +28,17 @@ api.interceptors.response.use(res => {
 	const res = error.response;
 	console.log(res);
 
-	if (res.config.custom) { // if the request catches the error itself, stop global error handling.
+	if (get(res, "config.custom")) { // if the request catches the error itself, stop global error handling.
 		return Promise.reject(error);
 	}
 
-	if (res.status === 401 && !res.config.url.endsWith("logout")) { // if token is invalid, logout
+	if (get(res, "status") === 401 && !get(res, "config.url").endsWith("logout")) { // if token is invalid, logout
 		store.dispatch("user/logout");
 	}
 
 	Notification({
 		title: "Error",
-		message: res.data.message,
+		message: get(res, "data.message"),
 		type: "error"
 	});
 
