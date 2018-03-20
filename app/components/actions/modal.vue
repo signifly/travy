@@ -12,6 +12,7 @@
 
 <script>
 import {get, isPlainObject} from "lodash";
+import toFormData from "object-to-formdata";
 import {endpointUrl} from "@/modules/utils";
 import vModalFields from "@/components/modal-fields.vue";
 
@@ -36,20 +37,7 @@ export default {
 		dataComb: (t) => ({...t.rootData, ...t.data}),
 		endpointUrl: (t) => endpointUrl({data: t.dataComb, url: t.endpoint.url}),
 		vUpload: (t) => t.fields.map(x => x.fieldType.id === "vUpload").some(x => x),
-
-		payloadFormData() {
-			const data = {data: this.payload};
-
-			const toFormData = (obj) => {
-				return Object.keys(data).reduce((formData, key) => {
-					const val = isPlainObject(obj[key]) ? toFormData(obj[key]) : obj[key];
-					formData.append(key, val);
-					return formData;
-				}, new FormData());
-			};
-
-			return toFormData(data);
-		},
+		payloadFormData: (t) => toFormData({data: t.payload}),
 
 		visible: {
 			get() {
