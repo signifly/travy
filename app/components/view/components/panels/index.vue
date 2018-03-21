@@ -10,13 +10,14 @@ import vBatch from "./batch.vue";
 export default {
 	components: {vSave, vBatch},
 	props: {
-		title: {type: String, required: true},
+		data: {type: Object, required: true},
 		loading: {type: Boolean, required: true},
 		editsU: {type: Number, required: true},
 		getData: {type: Function, required: true},
 		error: {type: Object, required: true}
 	},
 	computed: {
+		title: (t) => `#${t.data.id}`,
 		seq: (t) => t.$route.query.seq,
 		comp: (t) => t.seq ? "vBatch" : "vSave",
 		active() {
