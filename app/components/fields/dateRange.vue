@@ -68,7 +68,7 @@ export default {
 <style lang="scss" scoped>
 .dateRange {
 	.el-date-editor {
-		width: auto;
+		width: 100%;
 	}
 }
 </style>
