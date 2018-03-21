@@ -27,7 +27,7 @@
 			</Row>
 		</div>
 
-		<vPanel v-bind="{id, loading, editsU, getData, error}" title="some product, thingy" @save="save" />
+		<vPanel v-bind="{id, loading, editsU, getData, error}" title="" @save="save" />
 	</div>
 </template>
 

@@ -42,7 +42,7 @@ export default {
 		_upload: {type: Boolean, required: false, default: true, doc: true},
 		image: {type: String, required: false, doc: true, note: "url"},
 		base64: {type: String, required: false, doc: true, note: "base64 encoded"},
-		_base64: {type: String, required: true}
+		_base64: {type: String, required: false}
 
 	},
 	data() {

@@ -4,6 +4,7 @@
 			class="upload-demo"
 			drag
 			action=""
+			:limit="_limit"
 			:auto-upload="false"
 			:accept="_fileTypes"
 			:on-change="addFile"
@@ -31,6 +32,7 @@ export default {
 			props: {
 				note: "jpg/png files with a size less than 500kb",
 				fileTypes: ".jpg, .jpeg, .png",
+				limit: 5,
 				files: "key"
 			},
 			data: {
@@ -42,6 +44,7 @@ export default {
 		loading: {type: [Boolean, Number], required: true},
 		_note: {type: String, required: false, doc: true},
 		_fileTypes: {type: String, required: false, doc: true},
+		_limit: {type: Number, required: false, doc: true},
 		_files: {type: String, required: true, doc: true}
 	},
 	data() {
