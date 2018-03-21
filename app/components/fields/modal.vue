@@ -57,7 +57,7 @@ export default {
 		}
 	},
 	props: {
-		rootData: {type: Object, required: true},
+		alt: {type: Object, required: true},
 		_buttonText: {type: String, required: true, doc: true},
 		_buttonIcon: {type: String, required: false, doc: true},
 		_buttonType: {type: String, required: false, doc: true},
@@ -75,7 +75,7 @@ export default {
 		}
 	},
 	computed: {
-		dataComb: (t) => ({...t.rootData, ...t._fieldsData}),
+		dataComb: (t) => ({...t.alt.data, ...t._fieldsData}),
 		vUpload: (t) => t._fields.map(x => x.fieldType.id === "vUpload").some(x => x),
 		payloadFormData: (t) => toFormData({data: t.payload}),
 	},

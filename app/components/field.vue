@@ -22,10 +22,7 @@
 			:is="id"
 			ref="field"
 			v-bind="[propsData, propsValue]"
-			:endpoints="alt.endpoints"
-			:loading="alt.loading"
-			:rootData="alt.data"
-			:props="props"
+			:alt="alt"
 			:disabled="disabled"
 			@fieldA="$emit('fieldA', $event)"
 		/>

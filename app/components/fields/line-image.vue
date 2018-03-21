@@ -24,7 +24,7 @@
 			</div>
 		</div>
 
-		<vActions v-bind="{_actions, rootData}" @fieldA="fieldA"/>
+		<vActions v-bind="{_actions, alt}" @fieldA="fieldA"/>
 	</div>
 </template>
 
@@ -66,7 +66,7 @@ export default {
 		}
 	},
 	props: {
-		rootData: {type: Object, required: true},
+		alt: {type: Object, required: true},
 		image: {type: String, required: false, default: noimage, doc: true},
 		_imageUpload: {type: Boolean, required: false, default: true, doc: true},
 		imageBase64: {type: String, required: false, doc: true, note: "base64 encoded"},

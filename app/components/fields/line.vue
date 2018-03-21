@@ -32,7 +32,7 @@
 			<elSwitch v-model="data.switchValue" :inactive-text="`${_switchTitle}:`" :disabled="_switchDisabled" @change="switchUpdate"/>
 		</div>
 
-		<vActions v-bind="{_actions, rootData}" @fieldA="fieldA"/>
+		<vActions v-bind="{_actions, alt}" @fieldA="fieldA"/>
 	</div>
 </template>
 
@@ -93,7 +93,7 @@ export default {
 		}
 	},
 	props: {
-		rootData: {type: Object, required: true},
+		alt: {type: Object, required: true},
 		_titleKey: {type: String, required: true, doc: true},
 		titleValue: {type: String, required: false, doc: true},
 		_infoKey: {type: String, required: true, doc: true},

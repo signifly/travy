@@ -15,7 +15,7 @@
 			:is="action.props.id"
 			v-bind="action.props"
 			:endpoint="endpoint"
-			:rootData="rootData"
+			:rootData="alt.data"
 			@close="close"
 			@submit="submit"
 			@fieldA="fieldA"
@@ -111,7 +111,7 @@ export default {
 			It'll use the endpoint from table/view definition endpoints.
 		`},
 		endpoints: {type: Object, required: false},
-		rootData: {type: Object, required: false}
+		alt: {type: Object, required: false}
 	},
 	data() {
 		return {
@@ -130,10 +130,12 @@ export default {
 		close() {
 			this.action = null;
 		},
+
 		submit() {
 			this.close();
 			this.$emit("fieldA", {action: "getData"});
 		},
+
 		fieldA(obj) {
 			this.$emit("fieldA", obj);
 		}

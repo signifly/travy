@@ -2,7 +2,7 @@
 	<div class="line-multi">
 		<draggable :list="items" :options="{handle: '.drag'}" @end="listUpdate" v-if="items.length > 0">
 			<div class="item" v-for="(item, i) in items" :key="item.id">
-				<component :is="_itemFieldId" v-bind="[itemsPropsData[i], itemsPropsValue[i], {rootData: itemsData[i]}]" @fieldA="fieldA($event, i)" />
+				<component :is="_itemFieldId" v-bind="[itemsPropsData[i], itemsPropsValue[i]]" :alt="{data: itemsData[i]}" @fieldA="fieldA($event, i)" />
 			</div>
 		</draggable>
 

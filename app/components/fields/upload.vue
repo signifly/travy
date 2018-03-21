@@ -20,8 +20,8 @@
 		</Upload>
 
 		<transition name="progress">
-			<div class="progress" v-if="Number.isInteger(loading)">
-				<Progress :text-inside="true" :stroke-width="18" :percentage="loading">{{loading}}</Progress>
+			<div class="progress" v-if="Number.isInteger(alt.loading)">
+				<Progress :text-inside="true" :stroke-width="18" :percentage="alt.loading">{{alt.loading}}</Progress>
 			</div>
 		</transition>
 
@@ -48,7 +48,7 @@ export default {
 		}
 	},
 	props: {
-		loading: {type: [Boolean, Number], required: true},
+		alt: {type: Object, required: true},
 		_note: {type: String, required: false, doc: true},
 		_fileTypes: {type: String, required: false, doc: true},
 		_limit: {type: Number, required: false, doc: true},

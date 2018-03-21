@@ -16,6 +16,7 @@ export {default as vSelectMultiSearch} from "./select-multi-search.vue";
 export {default as vSelectMultiSearchAdd} from "./select-multi-search-add.vue";
 export {default as vSelectMultiSearchTable} from "./select-multi-search-table.vue";
 export {default as vActions} from "./actions.vue";
+export {default as vButtonAction} from "./button-action.vue";
 export {default as vInput} from "./input.vue";
 export {default as vInputFile} from "./input-file.vue";
 export {default as vInputImage} from "./input-image.vue";
