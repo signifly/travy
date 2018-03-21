@@ -53,6 +53,7 @@ export default {
 
 			.wrap {
 				transform: scale(0.95);
+				margin: -$fieldMargin 0;
 			}
 
 			&.vStatusSet {
