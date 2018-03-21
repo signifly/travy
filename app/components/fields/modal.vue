@@ -17,6 +17,7 @@
 import {get} from "lodash"
 import {Button} from "element-ui";
 import {endpointUrl} from "@/modules/utils";
+import toFormData from "object-to-formdata";
 import vModalFields from "@/components/modal-fields.vue";
 
 export default {
@@ -74,7 +75,9 @@ export default {
 		}
 	},
 	computed: {
-		dataComb: (t) => ({...t.rootData, ...t._fieldsData})
+		dataComb: (t) => ({...t.rootData, ...t._fieldsData}),
+		vUpload: (t) => t._fields.map(x => x.fieldType.id === "vUpload").some(x => x),
+		payloadFormData: (t) => toFormData({data: t.payload}),
 	},
 	methods: {
 		fieldA({data}) {
@@ -85,9 +88,21 @@ export default {
 			const ept = this._endpoint;
 			const url = endpointUrl({data: this.dataComb, url: ept.url});
 
+			const payload = this.vUpload ? this.payloadFormData : {data: this.payload};
+
 			try {
 				this.loading = true;
-				await this.$http[ept.method](url, {data: this.payload}, {custom: true});
+
+				const {data} = await this.$http({
+					method: ept.method,
+					url: url,
+					data: payload,
+					custom: true,
+					onUploadProgress: (e) => {
+						this.loading = Math.round(e.loaded / e.total * 100);
+					}
+				});
+
 				this.$emit("fieldA", {action: "getData"});
 				this.modal = false;
 			} catch(err) {
