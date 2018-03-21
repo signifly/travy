@@ -1,10 +1,11 @@
 <template>
 	<div class="upload">
 		<Upload
-			class="upload-demo"
+			class="upload-el"
 			drag
 			action=""
 			:limit="_limit"
+			:on-exceed="limitError"
 			:auto-upload="false"
 			:accept="_fileTypes"
 			:on-change="addFile"
@@ -12,12 +13,18 @@
 			multiple>
 			<i class="el-icon-upload"></i>
 			<div class="el-upload__text">Drop file here or <em>click to upload</em></div>
-			<div class="el-upload__tip" slot="tip">{{_note}}</div>
+			<div class="el-upload__tip" slot="tip">
+				{{_note}}<template v-if="_limit">, {{files.length}}/{{_limit}} selected.</template>
+				<span class="limit" v-if="limitNote">{{limitNote}}</span>
+			</div>
 		</Upload>
 
-		<div class="progress" v-if="Number.isInteger(loading)">
-			<Progress :text-inside="true" :stroke-width="18" :percentage="loading">{{loading}}</Progress>
-		</div>
+		<transition name="progress">
+			<div class="progress" v-if="Number.isInteger(loading)">
+				<Progress :text-inside="true" :stroke-width="18" :percentage="loading">{{loading}}</Progress>
+			</div>
+		</transition>
+
 
 	</div>
 </template>
@@ -32,7 +39,7 @@ export default {
 			props: {
 				note: "jpg/png files with a size less than 500kb",
 				fileTypes: ".jpg, .jpeg, .png",
-				limit: 5,
+				limit: 10,
 				files: "key"
 			},
 			data: {
@@ -49,11 +56,13 @@ export default {
 	},
 	data() {
 		return {
+			limitNote: false,
 			files: []
 		}
 	},
 	methods: {
 		addFile({raw}) {
+			this.limitNote = false;
 			this.files.push(raw);
 			this.update();
 		},
@@ -69,6 +78,11 @@ export default {
 				action: "update",
 				data: {[this._files]: this.files}
 			});
+		},
+
+		limitError(files) {
+			const rest = this._limit - this.files.length;
+			this.limitNote = `${files.length} files selected, but only ${rest} more can be added.`;
 		}
 	}
 };
@@ -85,8 +99,30 @@ export default {
 			transition: width 0.25s linear;
 		}
 	}
+	.el-upload__tip {
+		line-height: 1.5em;
+		margin-bottom: 1em;
+
+		.limit {
+			margin-left: 0.5em;
+			color: $danger;
+		}
+	}
+
+	.upload-el {
+		margin-bottom: 1em;
+	}
+
 	.progress {
-		margin-top: 1em;
+		height: 19px;
+		overflow: hidden;
+
+		&-enter-active, &-leave-active {
+			transition: cubic(height 0.4s);
+		}
+		&-enter, &-leave-to /* .fade-leave-active below version 2.1.8 */ {
+			height: 0;
+		}
 	}
 }
 </style>
