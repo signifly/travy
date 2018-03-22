@@ -7,7 +7,6 @@
 					v-bind="[itemsPropsData[i], itemsPropsValue[i]]"
 					:alt="{data: itemsData[i]}"
 					@fieldA="fieldA($event, i)"
-					@submit="submit"
 				/>
 			</div>
 		</draggable>
@@ -118,8 +117,8 @@ export default {
 			if (this[action]) this[action]({data, done, i});
 		},
 
-		submit() {
-			this.$emit("submit");
+		refresh() {
+			this.$emit("fieldA", {action: "refresh"});
 		},
 
 		update({data, done, i}) {

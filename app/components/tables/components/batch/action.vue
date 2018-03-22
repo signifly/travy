@@ -3,9 +3,10 @@
 		<component
 			:is="props.id"
 			v-bind="[props, {data}]"
+			:alt="{}"
 			position="top-right"
 			@close="close"
-			@submit="submit"
+			@fieldA="fieldA"
 		/>
 	</div>
 </template>
@@ -28,9 +29,8 @@ export default {
 		close() {
 			this.$emit("close");
 		},
-		submit() {
-			this.close();
-			this.$parent.$emit("submit");
+		fieldA(obj) {
+			this.$emit("fieldA", obj);
 		}
 	}
 };

@@ -5,6 +5,7 @@
 			:key="action.title"
 			v-bind="action"
 			:alt="{data, endpoints}"
+			@fieldA="fieldA"
 		/>
 	</div>
 </template>
@@ -18,6 +19,11 @@ export default {
 		endpoints: {type: Object, required: true},
 		actions: {type: Array, required: true},
 		data: {type: Object, required: true}
+	},
+	methods: {
+		fieldA(obj) {
+			this.$emit("fieldA", obj);
+		}
 	}
 };
 </script>

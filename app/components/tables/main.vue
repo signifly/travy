@@ -25,7 +25,7 @@
 				/>
 
 				<vPagination v-if="pagination" v-bind="pagination" @getData="getData" />
-				<vBatch v-if="selected.length > 0" v-bind="{endpoints, selected, batch}" @unselect="unselect" @submit="getData" />
+				<vBatch v-if="selected.length > 0" v-bind="{endpoints, selected, batch}" @unselect="unselect" @fieldA="fieldA" />
 			</box>
 		</div>
 	</div>
@@ -71,6 +71,10 @@ export default {
 
 		fieldA({action, data, item, done}) {
 			if (this[action]) this[action]({data, item, done});
+		},
+
+		refresh() {
+			this.getData();
 		},
 
 		show({item}) {

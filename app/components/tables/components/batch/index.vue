@@ -22,7 +22,7 @@
 			</div>
 		</vPanel>
 
-		<vAction v-if="action && action.props.id === 'modal'" v-bind="[action, {ids}]" @close="close" />
+		<vAction v-if="action && action.props.id === 'modal'" v-bind="[action, {ids}]" @close="close" @fieldA="fieldA" />
 	</div>
 </template>
 
@@ -62,6 +62,11 @@ export default {
 
 		close() {
 			this.action = null;
+		},
+
+		fieldA(obj) {
+			this.close();
+			this.$emit("fieldA", obj);
 		},
 
 		select(action) {

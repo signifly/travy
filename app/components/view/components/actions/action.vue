@@ -10,7 +10,7 @@
 			:alt="alt"
 			:endpoint="endpoint"
 			@close="toggle"
-			@submit="submit"
+			@fieldA="fieldA"
 		/>
 	</div>
 </template>
@@ -44,9 +44,9 @@ export default {
 			this.active = !this.active;
 		},
 
-		submit() {
+		fieldA(obj) {
 			this.active = false;
-			this.$parent.$emit("submit");
+			this.$emit("fieldA", obj);
 		},
 	}
 };

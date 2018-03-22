@@ -1,6 +1,13 @@
 <template>
 	<div class="actions">
-		<vAction v-for="action in actions" :key="action.title" v-bind="action" :alt="{endpoints}"/>
+		<vAction
+			v-for="action in actions"
+			:key="action.title"
+			v-bind="action"
+			:alt="{endpoints}"
+			@fieldA="fieldA"
+		/>
+
 	</div>
 </template>
 
@@ -12,6 +19,11 @@ export default {
 	props: {
 		endpoints: {type: Object, required: true},
 		actions: {type: Array, required: true}
+	},
+	methods: {
+		fieldA(obj) {
+			this.$emit("fieldA", obj);
+		}
 	}
 };
 </script>

@@ -17,7 +17,6 @@
 			:endpoint="endpoint"
 			:alt="alt"
 			@close="close"
-			@submit="submit"
 			@fieldA="fieldA"
 		/>
 	</div>
@@ -129,11 +128,6 @@ export default {
 
 		close() {
 			this.action = null;
-		},
-
-		submit() {
-			this.close();
-			this.$emit("submit");
 		},
 
 		fieldA(obj) {

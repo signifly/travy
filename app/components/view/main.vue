@@ -84,6 +84,10 @@ export default {
 			if (this[action]) this[action]({tab, data});
 		},
 
+		refresh() {
+			this.getData();
+		},
+
 		track({tab, data}) { // track tab and data updates
 			const edits = {...this.edits};
 			edits.tabs.add(tab);

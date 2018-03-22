@@ -8,7 +8,6 @@
 			v-bind="_action"
 			:alt="alt"
 			@close="close"
-			@submit="submit"
 			@fieldA="fieldA"
 		/>
 	</div>
