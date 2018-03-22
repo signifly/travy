@@ -110,7 +110,6 @@ export default {
 			if only endpointId is supplied,<br>
 			It'll use the endpoint from table/view definition endpoints.
 		`},
-		endpoints: {type: Object, required: false},
 		alt: {type: Object, required: false}
 	},
 	data() {
@@ -120,7 +119,8 @@ export default {
 		}
 	},
 	computed: {
-		endpoint: (t) => t.action.props.endpoint || get(t.endpoints, t.action.endpointId)
+		endpointId: (t) => get(t.action, "endpointId"),
+		endpoint: (t) => get(t.action, "props.endpoint") || get(t.alt.endpoints, t.endpointId)
 	},
 	methods: {
 		select(action) {
