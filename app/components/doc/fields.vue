@@ -5,14 +5,14 @@
 			<Container>
 				<Aside>
 					<Menu class="menu">
-						<MenuItem @click="link(key)" v-for="(field, key) in fields" :key="key" :index="key">{{key}}</MenuItem>
+						<MenuItem v-for="field in fieldsSorted" :key="field.key" :index="field.key" @click="link(field.key)">{{field.key}}</MenuItem>
 					</Menu>
 				</Aside>
 
 				<Container>
 					<Main>
 						<div class="items">
-							<vItem v-for="(field, key) in fields" :key="key" :id="key" :props="field.props" v-bind="field.meta" />
+							<vItem v-for="field in fieldsSorted" :key="field.key" :id="field.key" :props="field.comp.props" v-bind="field.comp.meta" />
 						</div>
 					</Main>
 				</Container>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import {sortBy} from "lodash";
 import {Container, Main, Aside, Menu, MenuItem} from "element-ui";
 import * as fields from "@/components/fields";
 import vItem from "./item.vue";
@@ -31,6 +32,15 @@ export default {
 	data() {
 		return {
 			fields
+		}
+	},
+	computed: {
+		fieldsSorted() {
+			const fields = Object.keys(this.fields).map(key => {
+				return {key, comp: this.fields[key]};
+			});
+
+			return sortBy(fields, "key");
 		}
 	},
 	methods: {

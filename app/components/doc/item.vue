@@ -1,6 +1,6 @@
 <template>
 	<div class="item">
-		<div class="wrap" :id="id" >
+		<div class="wrap" :id="id">
 			<a class="title" :href="`#${id}`">{{id}}</a>
 
 			<div class="props">
