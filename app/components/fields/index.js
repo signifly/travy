@@ -37,3 +37,4 @@ export {default as vDateTimeRange} from "./dateTimeRange.vue";
 export {default as vItemsTooltip} from "./items-tooltip.vue";
 export {default as vViewHead} from "./view-head.vue";
 export {default as vModal} from "./modal.vue";
+export {default as vReorder} from "./reorder.vue";
