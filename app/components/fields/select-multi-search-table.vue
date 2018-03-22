@@ -45,7 +45,11 @@ export default {
 							}
 						}
 					}
-				]
+				],
+
+				columnsDataOverwrite: {
+					is_mandatory: true
+				}
 			}
 		}
 	},
@@ -62,7 +66,8 @@ export default {
 		`},
 
 		// vTable props
-		_columns: {type: Array, required: true, doc: true}
+		_columns: {type: Array, required: true, doc: true},
+		_columnsDataOverwrite: {type: Object, required: true, doc: true}
 	},
 	data() {
 		return {
@@ -77,7 +82,15 @@ export default {
 		select({data}) {
 			const selectValues = get(data, this._values);
 			const options = get(this.$refs, "select.listOptions", []);
-			this.columnsData = selectValues.map(id => options.find(opt => get(opt, this.oValue) === id));
+
+			// populate table with data from the selected option
+			this.columnsData = selectValues.map(id => {
+				const item = options.find(opt => get(opt, this.oValue) === id);
+
+				// overwrite properties if exists in _columnsDataOverwrite
+				return {...item, ...this._columnsDataOverwrite}
+			});
+
 			this.update();
 		},
 
