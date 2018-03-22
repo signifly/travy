@@ -101,6 +101,7 @@ export default {
 					background-color: $white2;
 				}
 			}
+
 			th, td {
 				text-align: left;
 				padding: 0.8em;
@@ -112,6 +113,7 @@ export default {
 			}
 
 			td {
+				background-color: $white1;
 				cursor: grab;
 			}
 		}
