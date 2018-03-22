@@ -15,7 +15,7 @@
 			:is="action.props.id"
 			v-bind="action.props"
 			:endpoint="endpoint"
-			:rootData="alt.data"
+			:alt="alt"
 			@close="close"
 			@submit="submit"
 			@fieldA="fieldA"
@@ -133,7 +133,7 @@ export default {
 
 		submit() {
 			this.close();
-			this.$emit("fieldA", {action: "getData"});
+			this.$emit("submit");
 		},
 
 		fieldA(obj) {

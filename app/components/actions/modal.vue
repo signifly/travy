@@ -19,8 +19,8 @@ import vModalFields from "@/components/modal-fields.vue";
 export default {
 	components: {vModalFields},
 	props: {
+		alt: {type: Object, required: true},
 		title: {type: String, required: false},
-		rootData: {type: Object, required: false},
 		endpoint: {type: Object, required: true},
 		onSubmit: {type: String, required: false},
 		data: {type: Object, required: true},
@@ -34,7 +34,7 @@ export default {
 		}
 	},
 	computed: {
-		dataComb: (t) => ({...t.rootData, ...t.data}),
+		dataComb: (t) => ({...t.alt.data, ...t.data}),
 		endpointUrl: (t) => endpointUrl({data: t.dataComb, url: t.endpoint.url}),
 		vUpload: (t) => t.fields.map(x => x.fieldType.id === "vUpload").some(x => x),
 		payloadFormData: (t) => toFormData({data: t.payload}),

@@ -45,7 +45,11 @@ export default {
 
 <style lang="scss" scoped>
 .section {
-	margin-bottom: 1.5em;
+	margin-bottom: 4em;
+
+	&:last-child {
+		margin-bottom: 1.5em;
+	}
 
 	.title {
 		font-size: em(14);

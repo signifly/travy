@@ -24,7 +24,7 @@
 			</div>
 		</div>
 
-		<vActions v-bind="{_actions, alt}" @fieldA="fieldA"/>
+		<vActions v-bind="{_actions, alt}" @fieldA="fieldA" @submit="submit"/>
 	</div>
 </template>
 
@@ -80,6 +80,10 @@ export default {
 	methods: {
 		fieldA(obj) {
 			this.$emit("fieldA", obj);
+		},
+
+		submit() {
+			this.$emit("submit");
 		}
 	}
 }

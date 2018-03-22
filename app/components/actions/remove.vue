@@ -13,16 +13,12 @@
 <script>
 import {Button} from "element-ui";
 import vPopup from "@/components/popup.vue";
-import {endpointUrl} from "@/modules/utils";
 
 export default {
 	components: {Button, vPopup},
 	props: {
 		position: {type: String, required: false, default: "bottom-right"},
-		text: {type: String, required: false, default: "Are you sure?"},
-		endpoint: {type: Object, required: true},
-		rootData: {type: Object, required: false},
-		data: {type: Object, required: false}
+		text: {type: String, required: false, default: "Are you sure?"}
 	},
 	data() {
 		return {

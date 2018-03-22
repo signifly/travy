@@ -1,6 +1,11 @@
 <template>
 	<div class="actions">
-		<vAction v-for="action in actions" :key="action.title" v-bind="[action, {endpoints, data}]"/>
+		<vAction
+			v-for="action in actions"
+			:key="action.title"
+			v-bind="action"
+			:alt="{data, endpoints}"
+		/>
 	</div>
 </template>
 

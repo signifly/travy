@@ -7,8 +7,8 @@
 			:is="comp"
 			v-bind="props"
 			position="bottom-right"
+			:alt="alt"
 			:endpoint="endpoint"
-			:rootData="data"
 			@close="toggle"
 			@submit="submit"
 		/>
@@ -22,8 +22,7 @@ import * as actions from "@/components/actions";
 export default {
 	components: {Button, ...actions},
 	props: {
-		endpoints: {type: Object, required: true},
-		data: {type: Object, required: true},
+		alt: {type: Object, required: true},
 		props: {type: Object, required: true},
 
 		icon: {type: String, required: false},
@@ -38,7 +37,7 @@ export default {
 	},
 	computed: {
 		comp: (t) => t.props.id,
-		endpoint: (t) => t.endpoints[t.endpointId]
+		endpoint: (t) => t.alt.endpoints[t.endpointId]
 	},
 	methods: {
 		toggle() {
