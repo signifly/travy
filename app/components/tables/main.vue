@@ -3,7 +3,7 @@
 
 		<div class="header">
 			<vFilters v-bind="[filters, {search, getData}]" />
-			<vActions v-bind="{actions, endpoints}" @submit="getData" />
+			<vActions v-bind="{actions, endpoints}" @fieldA="fieldA" />
 		</div>
 
 		<div class="content">

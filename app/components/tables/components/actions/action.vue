@@ -27,7 +27,7 @@ export default {
 		icon: {type: String, required: false},
 		title: {type: String, required: true},
 		status: {type: String, required: false, default: "primary"},
-		endpointId: {type: String, required: true}
+		endpointId: {type: String, required: false}
 	},
 	data() {
 		return {
@@ -36,7 +36,7 @@ export default {
 	},
 	computed: {
 		comp: (t) => t.props.id,
-		endpoint: (t) => t.alt.endpoints[t.endpointId]
+		endpoint: (t) => t.props.endpoint || t.alt.endpoints[t.endpointId]
 	},
 	methods: {
 		toggle() {

@@ -37,7 +37,7 @@ export default {
 	},
 	computed: {
 		comp: (t) => t.props.id,
-		endpoint: (t) => t.alt.endpoints[t.endpointId]
+		endpoint: (t) => t.props.endpoint || t.alt.endpoints[t.endpointId]
 	},
 	methods: {
 		toggle() {
