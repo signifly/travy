@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {get, isPlainObject} from "lodash";
+import {get} from "lodash";
 import toFormData from "object-to-formdata";
 import {endpointUrl} from "@/modules/utils";
 import vModalFields from "@/components/modal-fields.vue";
@@ -44,7 +44,7 @@ export default {
 				return true;
 			},
 			set() {
-				this.$emit("close");
+				this.close();
 			}
 		}
 	},
@@ -53,12 +53,19 @@ export default {
 			this.payload = {...this.payload, ...data};
 		},
 
+		close() {
+			this.$emit("close");
+		},
+
 		submitAfter({data} = {}) {
 			if (this.onSubmit) {
 				const url = endpointUrl({data: data.data || this.dataComb, url: this.onSubmit});
 				this.$router.push(`/${url}`);
 			} else {
-				this.$emit("fieldA", {action: "refresh"});
+				this.$emit("fieldA", {
+					action: "refresh",
+					done: async () => this.close()
+				});
 			}
 		},
 

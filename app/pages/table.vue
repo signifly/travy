@@ -7,7 +7,7 @@
 
 <script>
 import breadcrumb from "@/components/breadcrumb.vue";
-import mainTable from "@/components/tables/main.vue";
+import mainTable from "@/components/table/main.vue";
 
 export default {
 	components: {breadcrumb, mainTable},

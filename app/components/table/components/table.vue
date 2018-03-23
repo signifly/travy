@@ -56,18 +56,7 @@ export default {
 
 		unselect() {
 			this.$refs.table.clearSelection();
-		},
-
-		sortCheck() {
-			const sortProp = this.sorting.prop;
-			const sortProps = this.columns.map(x => x.sortBy).filter(x => x);
-			if (!sortProps.includes(sortProp)) {
-				console.warn("default sort prop doesn't exist in any of the columns as sortBy. Can't get data");
-			}
 		}
-	},
-	created() {
-		this.sortCheck();
 	}
 };
 </script>

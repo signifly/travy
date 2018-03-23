@@ -16,7 +16,7 @@
 
 <script>
 import {mapKeys, get} from "lodash";
-import vTable from "@/components/tables/components/table.vue";
+import vTable from "@/components/table/components/table.vue";
 
 export default {
 	components: {vTable},

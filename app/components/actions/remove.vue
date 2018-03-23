@@ -32,7 +32,7 @@ export default {
 		async submit() {
 			this.$emit("fieldA", {
 				action: "remove",
-				done: async () => this.$emit("close")
+				done: async () => this.close()
 			});
 		}
 	}

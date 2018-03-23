@@ -1,6 +1,6 @@
 <template>
 	<vPopup v-bind="{position}">
-		<div class="delete">
+		<div class="popup">
 			<div class="text">{{text}}</div>
 			<div class="buttons">
 				<Button size="mini" :disabled="loading" @click="close">Cancel</Button>
@@ -54,7 +54,13 @@ export default {
 		async submit() {
 			try {
 				this.loading = true;
-				const {data} = await this.$http[this.endpoint.method](this.endpointUrl, {data: this.data});
+				
+				const {data} = await this.$http({
+					method: this.endpoint.method,
+					url: this.endpointUrl,
+					data: {data: this.data},
+				});
+
 				this.submitAfter({data});
 			} catch (e) {} finally {
 				this.loading = false;
@@ -65,7 +71,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.delete {
+.popup {
 	.text {
 		word-break: break-word;
 		text-align: left;
