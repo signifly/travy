@@ -1,16 +1,26 @@
 <template>
 	<div class="reorder">
-		<table class="items">
-			<thead>
-				<tr><th v-for="column in _columns">{{column.label}}</th></tr>
-			</thead>
+		<div class="table" v-if="items.length > 0">
+			<table>
+				<thead>
+					<tr>
+						<th />
+						<th v-for="column in _columns">{{column.label}}</th>
+					</tr>
+				</thead>
 
-			<draggable v-model="items" @end="update" element="tbody">
-				<tr v-for="item in items">
-					<td v-for="column in _columns">{{item[column.key]}}</td>
-				</tr>
-			</draggable>
-		</table>
+				<draggable v-model="items" :options="{handle: '.drag'}" @end="update" element="tbody">
+					<tr v-for="item in items">
+						<td class="top" @click="moveTop(item)" title="Move to top"><i class="el-icon-d-arrow-left" /></td>
+						<td v-for="column in _columns" class="drag">{{item[column.key]}}</td>
+					</tr>
+				</draggable>
+			</table>
+		</div>
+
+		<div class="loading" v-else>
+			<i class="el-icon-loading"></i>
+		</div>
 	</div>
 </template>
 
@@ -59,6 +69,12 @@ export default {
 		}
 	},
 	methods: {
+		moveTop(item) {
+			const items = this.items.filter(x => x !== item);
+			items.unshift(item);
+			this.items = items;
+		},
+
 		update() {
 			const ids = this.items.map(x => x[this._itemsValue]);
 
@@ -87,36 +103,57 @@ export default {
 
 <style lang="scss" scoped>
 .reorder {
-	border: 1px solid $blue2;
-	border-radius: 4px;
 
-	.items {
-		width: 100%;
-		border-collapse: collapse;
-		font-size: em(14);
+	.table {
+		border: 1px solid $blue2;
+		border-radius: 4px;
 
-		tr {
-			&:nth-child(even) {
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			font-size: em(12);
+
+			tr {
+				&:nth-child(even) {
+					td {
+						background-color: $white2;
+					}
+				}
+
+				th, td {
+					text-align: left;
+					padding: 0.25em 0.5em;
+				}
+
+				th {
+					font-weight: 500;
+					border-bottom: 1px solid $blue2;
+				}
+
 				td {
-					background-color: $white2;
+					background-color: $white1;
+
+					&.drag {
+						cursor: grab;
+					}
+
+					&.top {
+						width: 1.5em;
+						cursor: pointer;
+
+						i {
+							transform: rotate(90deg);
+						}
+					}
 				}
 			}
-
-			th, td {
-				text-align: left;
-				padding: 0.8em;
-			}
-
-			th {
-				font-weight: 500;
-				border-bottom: 1px solid $blue2;
-			}
-
-			td {
-				background-color: $white1;
-				cursor: grab;
-			}
 		}
+	}
+
+	.loading {
+		font-size: 1.5em;
+		text-align: center;
+		margin: 1em 0;
 	}
 }
 </style>
