@@ -73,6 +73,7 @@ export default {
 			const items = this.items.filter(x => x !== item);
 			items.unshift(item);
 			this.items = items;
+			this.update();
 		},
 
 		update() {
