@@ -51,7 +51,7 @@ export default {
 		&.active {
 			/deep/ svg {
 				path {
-					fill: $blue4;
+					fill: $blue5;
 				}
 			}
 		}
@@ -63,7 +63,7 @@ export default {
 			height: $s;
 
 			path {
-				fill: $blue3;
+				fill: $blue4;
 			}
 		}
 	}
