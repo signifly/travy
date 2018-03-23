@@ -25,7 +25,7 @@ export default {
 		dataU: {type: Number, required: true},
 		edits: {type: Object, required: true},
 		errors: {type: Object, required: false},
-		options: {type: Object, required: true}
+		options: {type: Object, required: false}
 	},
 	data() {
 		return {

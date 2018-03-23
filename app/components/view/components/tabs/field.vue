@@ -16,7 +16,7 @@ export default {
 	props: {
 		field: {type: Object, required: true},
 		data: {type: Object, required: true},
-		options: {type: Object, required: true},
+		options: {type: Object, required: false},
 		errors: {type: Object, required: false}
 	},
 	data() {
