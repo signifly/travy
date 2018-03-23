@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import vField from "@/components/field.vue";
+import vField from "@/components/field/index.vue";
 
 export default {
 	components: {vField},

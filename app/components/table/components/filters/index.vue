@@ -44,7 +44,7 @@
 <script>
 import {mapValues, mapKeys, debounce, get} from "lodash";
 import {Input, Button, Popover} from "element-ui";
-import vField from "@/components/field.vue";
+import vField from "@/components/field/index.vue";
 
 export default {
 	components: {Input, Button, Popover},

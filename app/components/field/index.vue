@@ -5,9 +5,16 @@
 				<div class="label" v-if="label">
 					{{label}}
 
+					<vTranslated v-bind="option" />
+
 					<transition name="el-fade-in">
-						<span class="dot nodata" v-if="rule.dot && !disabled && nodata"></span>
+						<div class="dot outdated" v-if="rule.dot && !disabled && outdated" />
 					</transition>
+
+					<transition name="el-fade-in">
+						<div class="dot nodata" v-if="rule.dot && !disabled && nodata" />
+					</transition>
+
 				</div>
 			</slot>
 			<div class="tooltip" v-if="tooltip">
@@ -41,9 +48,10 @@
 import {mapValues, mapKeys, get} from "lodash";
 import {Tooltip} from "element-ui";
 import * as fields from "@/components/fields";
+import vTranslated from "./translated.vue";
 
 export default {
-	components: {...fields, Tooltip},
+	components: {...fields, vTranslated, Tooltip},
 	props: {
 		alt: {type: Object, required: true},
 		name: {type: String, required: true},
@@ -64,6 +72,7 @@ export default {
 		id: (t) => t.fieldType.id,
 		disabled: (t) => t.fieldType.readonly,
 		reference: (t) => t.fieldType.reference,
+		option: (t) => get(t.alt.options, t.name, {}),
 
 		width() {
 			const width = this.fieldType.width || 100;
@@ -73,6 +82,8 @@ export default {
 		props: (t) => t.fieldType.props,
 		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
 		propsData: (t) => mapValues(t.props, (val) => get(t.alt.data, val)),
+
+		outdated: (t) => t.option.outdated,
 
 		nodata() {
 			const field = get(this.$refs, "field", {});
@@ -116,13 +127,16 @@ export default {
 			display: flex;
 			align-items: center;
 
+			div {
+				margin-left: 0.5em;
+			}
+
 			.dot {
 				display: block;
 				$s: 9px;
 				width: $s;
 				height: $s;
 				border-radius: 50%;
-				margin-left: 0.5em;
 
 				&.outdated {
 					background-color: $warning;

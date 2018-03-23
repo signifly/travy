@@ -3,7 +3,7 @@
 		<div class="title">{{tab.title}}</div>
 
 		<div class="sections">
-			<vSection v-for="section in sections" :key="section.title" v-bind="{section, data, errors}" @fieldA="fieldA" ref="section"/>
+			<vSection v-for="section in sections" :key="section.title" v-bind="{section, data, options, errors}" @fieldA="fieldA" ref="section"/>
 		</div>
 	</div>
 </template>
@@ -16,6 +16,7 @@ export default {
 	props: {
 		tab: {type: Object, required: true},
 		data: {type: Object, required: true},
+		options: {type: Object, required: true},
 		errors: {type: Object, required: false}
 	},
 	computed: {

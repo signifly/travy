@@ -2,16 +2,19 @@
 	<div class="section">
 		<div class="title">
 			{{section.title}}
+
+			<Tag v-if="outdated" size="small" class="status" type="warning">Outdated</Tag>
 			<Tag v-if="nodata" size="small" class="status" type="danger">No data</Tag>
 		</div>
 
 		<div class="fields">
-			<field v-for="field in fields" v-bind="{field, data, errors}" :key="field.name" @fieldA="fieldA" @nodata="fieldsDataSet" ref="field"/>
+			<field v-for="field in fields" v-bind="{field, data, options, errors}" :key="field.name" @fieldA="fieldA" @nodata="fieldsDataSet" ref="field"/>
 		</div>
 	</div>
 </template>
 
 <script>
+import {get} from "lodash";
 import {Tag} from "element-ui";
 import field from "./field.vue";
 
@@ -20,6 +23,7 @@ export default {
 	props: {
 		section: {type: Object, required: true},
 		data: {type: Object, required: true},
+		options: {type: Object, required: true},
 		errors: {type: Object, required: false}
 	},
 	data() {
@@ -30,7 +34,8 @@ export default {
 	computed: {
 		field: (t) => t.section.field,
 		fields: (t) => t.section.fields,
-		nodata: (t) => Object.values(t.fieldsData).some(x => x)
+		nodata: (t) => Object.values(t.fieldsData).some(x => x),
+		outdated: (t) => t.fields.some(x => get(t.options, [x.name, "outdated"]))
 	},
 	methods: {
 		fieldA(obj) {

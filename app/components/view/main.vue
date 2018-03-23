@@ -13,7 +13,7 @@
 
 			<Row class="mid" :gutter="20">
 				<Col class="left" :span="16">
-					<vTabs v-bind="{tabs, data, dataU, edits, errors}" @fieldA="fieldA"/>
+					<vTabs v-bind="{tabs, data, dataU, options, edits, errors}" @fieldA="fieldA"/>
 				</Col>
 				<Col class="right" :span="8">
 					<vSidebar v-bind="{sidebar, data}" @fieldA="fieldA" />
@@ -51,6 +51,7 @@ export default {
 			error: {},
 			loading: false,
 			definitions: null,
+			options: null,
 			data: null,
 			dataU: 0,
 			edits: edits(),
@@ -153,6 +154,7 @@ export default {
 				this.data = data;
 			} else {
 				const {data} = await this.$http.get(`${this.parentId}/${this.id}`, {params});
+				this.options = data.options;
 				this.data = data.data;
 			}
 
@@ -168,6 +170,7 @@ export default {
 				const modifiers = this.modifierParams();
 
 				const {data} = await this.$http.put(url, {data: this.dataUpdated, modifiers}, {custom: true});
+				this.options = data.options;
 				this.data = data.data;
 
 				this.reset();

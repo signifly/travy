@@ -10,7 +10,7 @@
 
 <script>
 import {endpointUrl} from "@/modules/utils";
-import vField from "@/components/field.vue";
+import vField from "@/components/field/index.vue";
 
 export default {
 	props: {
