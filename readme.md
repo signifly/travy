@@ -10,13 +10,13 @@ $ docker-compose up
 $ docker exec -it sikane-app bash
 
 # run developement on localhost:3000
-$ cd /app && npm run dev
+$ npm run dev
 
 # run developement on localhost:3000 and use the staging api
-$ cd /app && npm run dev-staging
+$ npm run dev-staging
 
 # build project
-$ cd /app && npm run prod
+$ npm run prod
 ```
 
 ### Docker production
