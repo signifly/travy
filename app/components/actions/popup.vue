@@ -54,7 +54,7 @@ export default {
 		async submit() {
 			try {
 				this.loading = true;
-				
+
 				const {data} = await this.$http({
 					method: this.endpoint.method,
 					url: this.endpointUrl,
@@ -62,7 +62,7 @@ export default {
 				});
 
 				this.submitAfter({data});
-			} catch (e) {} finally {
+			} catch (err) {
 				this.loading = false;
 			}
 		}

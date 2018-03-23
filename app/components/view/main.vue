@@ -85,7 +85,7 @@ export default {
 		},
 
 		async refresh({done}) {
-			this.getData();
+			await this.getData();
 			if (done) await done();
 		},
 
