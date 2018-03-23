@@ -80,12 +80,13 @@ export default {
 		}
 	},
 	methods: {
-		fieldA({action, tab, data}) {
-			if (this[action]) this[action]({tab, data});
+		fieldA({action, tab, data, done}) {
+			if (this[action]) this[action]({tab, data, done});
 		},
 
-		refresh() {
+		async refresh({done}) {
 			this.getData();
+			if (done) await done();
 		},
 
 		track({tab, data}) { // track tab and data updates

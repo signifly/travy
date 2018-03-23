@@ -73,8 +73,9 @@ export default {
 			if (this[action]) this[action]({data, item, done});
 		},
 
-		refresh() {
+		async refresh({done}) {
 			this.getData();
+			if (done) await done();
 		},
 
 		show({item}) {

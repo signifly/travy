@@ -44,7 +44,10 @@ export default {
 				const url = endpointUrl({data: data.data || this.dataComb, url: this.onSubmit});
 				this.$router.push(`/${url}`);
 			} else {
-				this.$emit("fieldA", {action: "refresh"});
+				this.$emit("fieldA", {
+					action: "refresh",
+					done: async () => this.close()
+				});
 			}
 		},
 
