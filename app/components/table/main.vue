@@ -108,13 +108,8 @@ export default {
 				modifiers: this.query.modifiers
 			};
 
-			if (this.id !== "test") {
-				const {data} = await this.$http.get(`definitions/table/${this.id}`, {params});
-				this.definitions = data;
-			} else {
-				const {data} = await this.$http.get("https://sikaline.glitch.me/table-defs/products");
-				this.definitions = data;
-			}
+			const {data} = await this.$http.get(`definitions/table/${this.id}`, {params});
+			this.definitions = data;
 		},
 
 		async getData({type} = {}) {
@@ -140,15 +135,9 @@ export default {
 				include: this.includes.join(",")
 			};
 
-			if (this.id !== "test") {
-				const {data} = await this.$http.get(this.endpoints.index.url, {params});
-				this.data = data.data;
-				this.pagination = data.meta;
-			} else {
-				const {data} = await this.$http.get("https://sikaline.glitch.me/table-data/products", {params});
-				this.data = data.data;
-				this.pagination = data.meta;
-			}
+			const {data} = await this.$http.get(this.endpoints.index.url, {params});
+			this.data = data.data;
+			this.pagination = data.meta;
 		}
 	},
 	created() {

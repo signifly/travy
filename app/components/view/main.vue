@@ -1,40 +1,45 @@
 <template>
-	<div class="view-main" v-if="data">
-		<div class="main">
-			<Row class="top" :gutter="20">
-				<Col class="left" :span="16">
-					<vHeader v-bind="{data, header}" @fieldA="fieldA" />
-				</Col>
-				<Col class="right" :span="8">
-					<vModifiers v-bind="{modifiers}" @getData="getData" />
-					<vActions v-bind="{actions, endpoints, data}" @submit="getData" />
-				</Col>
-			</Row>
+	<div class="view-main">
 
-			<Row class="mid" :gutter="20">
-				<Col class="left" :span="16">
-					<vTabs v-bind="{tabs, data, dataU, options, edits, errors}" @fieldA="fieldA"/>
-				</Col>
-				<Col class="right" :span="8">
-					<vSidebar v-bind="{sidebar, data}" @fieldA="fieldA" />
-				</Col>
-			</Row>
+		<div class="loading" ref="loading" v-if="!data" />
 
-			<Row class="bottom" :gutter="20">
-				<Col class="left" :span="24">
-					<vActivity v-if="activity.active" v-bind="{endpoints, data}" :key="saveU" />
-				</Col>
-			</Row>
-		</div>
+		<transition name="main">
+			<div class="main" v-if="data">
+				<Row class="top" :gutter="20">
+					<Col class="left" :span="16">
+						<vHeader v-bind="{data, header}" @fieldA="fieldA" />
+					</Col>
+					<Col class="right" :span="8">
+						<vModifiers v-bind="{modifiers}" @getData="getData" />
+						<vActions v-bind="{actions, endpoints, data}" @submit="getData" />
+					</Col>
+				</Row>
 
-		<vPanel v-bind="{loading, data, editsU, getData, error}" @save="save" />
+				<Row class="mid" :gutter="20">
+					<Col class="left" :span="16">
+						<vTabs v-bind="{tabs, data, dataU, options, edits, errors}" @fieldA="fieldA"/>
+					</Col>
+					<Col class="right" :span="8">
+						<vSidebar v-bind="{sidebar, data}" @fieldA="fieldA" />
+					</Col>
+				</Row>
+
+				<Row class="bottom" :gutter="20">
+					<Col class="left" :span="24">
+						<vActivity v-if="activity.active" v-bind="{endpoints, data}" :key="saveU" />
+					</Col>
+				</Row>
+
+				<vPanel v-bind="{loading: loadingSave, data, editsU, getData, error}" @save="save" />
+			</div>
+		</transition>
 	</div>
 </template>
 
 <script>
 import {mapValues, forEach, set, get} from "lodash";
 import {endpointUrl} from "@/modules/utils";
-import {Row, Col} from "element-ui";
+import {Row, Col, Loading} from "element-ui";
 import * as components from "./components";
 import vModifiers from "@/components/modifiers.vue";
 
@@ -49,7 +54,7 @@ export default {
 	data() {
 		return {
 			error: {},
-			loading: false,
+			loadingSave: false,
 			definitions: null,
 			options: null,
 			data: null,
@@ -133,13 +138,8 @@ export default {
 				modifiers: this.modifierParams({definitions: true})
 			};
 
-			if (this.parentId === "test") {
-				const {data} = await this.$http.get("https://sikaline.glitch.me/view-defs/products");
-				this.definitions = data;
-			} else {
-				const {data} = await this.$http.get(`definitions/view/${this.parentId}`, {params});
-				this.definitions = data;
-			}
+			const {data} = await this.$http.get(`definitions/view/${this.parentId}`, {params});
+			this.definitions = data;
 		},
 
 		async getData({type} = {}) {
@@ -149,14 +149,9 @@ export default {
 				modifiers: this.modifierParams()
 			};
 
-			if (this.parentId === "test") {
-				const {data} = await this.$http.get("https://sikaline.glitch.me/view-data/products");
-				this.data = data;
-			} else {
-				const {data} = await this.$http.get(`${this.parentId}/${this.id}`, {params});
-				this.options = data.options;
-				this.data = data.data;
-			}
+			const {data} = await this.$http.get(`${this.parentId}/${this.id}`, {params});
+			this.options = data.options;
+			this.data = data.data;
 
 			this.reset();
 			this.dataU++;
@@ -166,7 +161,7 @@ export default {
 			const url = endpointUrl({data: this.data, url: this.endpoints.update.url});
 
 			try {
-				this.loading = true;
+				this.loadingSave = true;
 				const modifiers = this.modifierParams();
 
 				const {data} = await this.$http.put(url, {data: this.dataUpdated, modifiers}, {custom: true});
@@ -182,13 +177,24 @@ export default {
 				console.log(err);
 				this.error = get(err, "response.data", {});
 			} finally {
-				this.loading = false;
+				this.loadingSave = false;
 			}
 		}
 	},
 	async created() {
-		await this.getDefinitions();
-		await this.getData();
+		const load = Loading.service({
+			target: this.$refs.loading,
+			spinner: "el-icon-loading",
+			background: "transparent",
+			text: "Loading"
+		});
+
+		try {
+			await this.getDefinitions();
+			await this.getData();
+		} catch (err) {} finally {
+			load.close();
+		}
 	}
 };
 </script>
@@ -196,6 +202,15 @@ export default {
 <style lang="scss" scoped>
 .view-main {
 	.main {
+		&-enter-active, &-leave-active {
+			transition: cubic(opacity, 0.3s);
+			transition-delay: 0.1s;
+		}
+
+		&-enter, &-leave-to {
+			opacity: 0;
+		}
+
 		.top {
 			.right {
 				/deep/ {
