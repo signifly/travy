@@ -3,7 +3,7 @@ version: "3"
 services:
   app:
     build: .
-    command: command: bash -c "yarn && echo 'Ready' && tail -f /dev/null"
+    command: bash -c "yarn && echo 'Ready' && tail -f /dev/null"
     ports:
       - "3000-3010:3000-3010"
     volumes:
