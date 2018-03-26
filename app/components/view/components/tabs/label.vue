@@ -1,8 +1,13 @@
 <template>
 	<div class="label">
 		{{label}}
+
 		<transition name="status">
-			<div class="status" :class="{danger: nodata}" v-if="nodata"></div>
+			<div class="status" :class="{warning: outdated}" v-if="outdated"/>
+		</transition>
+
+		<transition name="status">
+			<div class="status" :class="{danger: nodata}" v-if="nodata" />
 		</transition>
 
 		<transition name="el-fade-in">
@@ -14,22 +19,22 @@
 </template>
 
 <script>
+import {get} from "lodash";
+
 export default {
 	props: {
-		id: {type: String, required: true},
-		label: {type: String, required: true},
-		status: {type: String, required: false},
+		tab: {type: Object, required: true},
 		edits: {type: Object, required: false},
 		dataU: {type: Number, required: true},
-		refs: {type: Object, required: true}
+		nodatas: {type: Object, required: true},
+		options: {type: Object, required: true}
 	},
 	computed: {
+		id: (t) => t.tab.id,
+		label: (t) => t.tab.label,
+		nodata: (t) => t.nodatas[t.id],
 		edited: (t) => t.edits.tabs.has(t.id),
-		nodata() {
-			const dataU = this.dataU;
-			const ref = this.refs[this.id];
-			return ref.$refs.section.some(x => x.nodata);
-		}
+		outdated: (t) => t.tab.sections.some(x => x.fields.some(x => get(t.options, [x.name, "outdated"])))
 	}
 };
 </script>

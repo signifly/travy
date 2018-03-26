@@ -8,7 +8,7 @@
 		</div>
 
 		<div class="fields">
-			<field v-for="field in fields" v-bind="{field, data, options, errors}" :key="field.name" @fieldA="fieldA" @nodata="fieldsDataSet" ref="field"/>
+			<field v-for="field in fields" v-bind="{field, data, options, errors}" :key="field.name" @fieldA="fieldA" ref="field"/>
 		</div>
 	</div>
 </template>
@@ -28,22 +28,23 @@ export default {
 	},
 	data() {
 		return {
-			fieldsData: {}
+			mounted: false
 		}
 	},
 	computed: {
 		field: (t) => t.section.field,
 		fields: (t) => t.section.fields,
-		nodata: (t) => Object.values(t.fieldsData).some(x => x),
+		nodata: (t) => (t.mounted ? t.$refs.field : []).some(x => x.nodata),
 		outdated: (t) => t.fields.some(x => get(t.options, [x.name, "outdated"]))
+
 	},
 	methods: {
 		fieldA(obj) {
 			this.$emit("fieldA", {...obj, section: this.section.id});
-		},
-		fieldsDataSet({id, nodata}) {
-			this.$set(this.fieldsData, id, nodata);
 		}
+	},
+	mounted() {
+		this.mounted = true;
 	}
 };
 </script>

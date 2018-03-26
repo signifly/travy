@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import {get} from "lodash";
 import vField from "@/components/field/index.vue";
 
 export default {
@@ -26,13 +25,7 @@ export default {
 	},
 	computed: {
 		name: (t) => t.field.name,
-
-		nodata() {
-			const field = get(this.$refs, "field", {});
-			if (!this.mounted) return false;
-			if (field.disabled) return false;
-			return field.nodata;
-		}
+		nodata: (t) => t.mounted ? t.$refs.field.nodata : false
 	},
 	methods: {
 		fieldA(obj) {
@@ -41,14 +34,6 @@ export default {
 	},
 	mounted() {
 		this.mounted = true;
-	},
-	watch: {
-		nodata(bool) {
-			this.$emit("nodata", {
-				id: this.name,
-				nodata: bool
-			});
-		}
 	}
 };
 </script>

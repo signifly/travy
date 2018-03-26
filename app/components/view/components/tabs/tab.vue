@@ -19,12 +19,26 @@ export default {
 		options: {type: Object, required: false},
 		errors: {type: Object, required: false}
 	},
+	data() {
+		return {
+			mounted: false
+		}
+	},
 	computed: {
-		sections: (t) => t.tab.sections
+		sections: (t) => t.tab.sections,
+		nodata: (t) => (t.mounted ? t.$refs.section : []).some(x => x.nodata)
 	},
 	methods: {
 		fieldA(obj) {
 			this.$emit("fieldA", {...obj, tab: this.tab.id});
+		}
+	},
+	mounted() {
+		this.mounted = true;
+	},
+	watch: {
+		nodata(data) {
+			this.$emit("nodata", {[this.tab.id]: data});
 		}
 	}
 };

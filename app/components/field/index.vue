@@ -86,10 +86,8 @@ export default {
 		outdated: (t) => t.option.outdated,
 
 		nodata() {
-			const field = get(this.$refs, "field", {});
-			if (!this.mounted) return false;
-			if (field.disabled) return false;
-			return field.nodata;
+			const field = this.mounted ? this.$refs.field : {};
+			return field.disabled ? false : field.nodata;
 		},
 
 		rule() {

@@ -1,12 +1,12 @@
 <template>
 	<div class="tabs">
 		<vTabs v-bind="{tabs, tab}" @tab="tabClick">
-			<template slot="label" slot-scope="item">
-				<vLabel v-bind="[item, {edits, dataU, refs}]"></vLabel>
+			<template slot="label" slot-scope="tab">
+				<vLabel v-bind="{tab, options, edits, dataU, nodatas}"></vLabel>
 			</template>
 
 			<template slot="content" slot-scope="tab">
-				<vTab :key="dataU" v-bind="{tab, data, options, errors}" @fieldA="$emit('fieldA', $event)" :ref="tab.id"/>
+				<vTab :key="dataU" v-bind="{tab, data, options, errors}" @fieldA="$emit('fieldA', $event)" @nodata="nodata" />
 			</template>
 		</vTabs>
 	</div>
@@ -29,20 +29,20 @@ export default {
 	},
 	data() {
 		return {
-			mounted: false
+			nodatas: {}
 		}
 	},
 	computed: {
-		tab: (t) => t.$route.params.tab || "basic",
-		refs: (t) => t.mounted ? t.$refs : null
+		tab: (t) => t.$route.params.tab || "basic"
 	},
 	methods: {
 		tabClick(tab) {
 			this.$router.push({...this.$route, params: {tab}});
+		},
+
+		nodata(data) {
+			this.nodatas = {...this.nodatas, ...data};
 		}
-	},
-	mounted() {
-		this.mounted = true;
 	}
 };
 </script>
