@@ -3,10 +3,10 @@
 		<Select
 		v-model="data.values"
 		v-bind="{size, loading, disabled}"
-		:clearable="_clearable"
 		:remote-method="getListOptionsQ"
-		filterable multiple remote reserve-keyword
-		@change="update">
+		:clearable="_clearable"
+		@change="update"
+		filterable multiple remote reserve-keyword>
 			<Option v-for="item in list" v-bind="item" :key="item.value" />
 		</Select>
 	</div>
