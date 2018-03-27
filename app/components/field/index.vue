@@ -1,5 +1,5 @@
 <template>
-	<div class="field" :style="{width}">
+	<div class="field" :style="{width}" v-if="show">
 		<div class="info" slot="info" v-if="rule.info && label">
 			<slot name="label">
 				<div class="label" v-if="label">
@@ -73,6 +73,7 @@ export default {
 		disabled: (t) => t.fieldType.readonly,
 		reference: (t) => t.fieldType.reference,
 		option: (t) => get(t.alt.options, t.name, {}),
+		show: (t) => get(t.alt.data, t.fieldType.show, true),
 
 		width() {
 			const width = this.fieldType.width || 100;
