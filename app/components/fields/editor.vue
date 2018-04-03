@@ -25,6 +25,7 @@ export default {
 	},
 	data() {
 		return {
+			init: false,
 			data: {
 				content: this.content
 			},
@@ -39,16 +40,13 @@ export default {
 	},
 	methods: {
 		update(content) {
+			// fix initial update
+			if (!this.init) return this.init = true;
+
 			this.$emit("fieldA", {
 				action: "update",
 				data: {[this._content]: content}
 			});
-		}
-	},
-	watch: {
-		$route() {
-			// editor bugs out after tab change to editor, refresh it on tab changes to fix
-			this.$refs.editor.simplemde.codemirror.refresh();
 		}
 	}
 };
