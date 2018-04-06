@@ -32,13 +32,12 @@ export default {
 				fileTypes: ".jpg, .jpeg, .png"
 			},
 			data: {
-				base64: "",
 				url: "https://pbs.twimg.com/media/DVnfJkqVAAAqS91.jpg"
 			}
 		}
 	},
 	props: {
-		file: {type: String, required: false, doc: true, note: "base64"},
+		file: {type: Object, required: false, doc: true, note: "base64"},
 		url: {type: String, required: false, doc: true},
 		_file: {type: String, required: true},
 		_note: {type: String, required: false, doc: true},
@@ -74,7 +73,7 @@ export default {
 
 		removeFile() {
 			this.data.fileList = [];
-			this.update();
+			this.update(null);
 		},
 
 		update(obj) {

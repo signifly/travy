@@ -14,7 +14,7 @@
 				</div>
 			</Upload>
 
-			<a class="clear" v-if="data.image" @click="removeFile">
+			<a class="clear" v-if="image" @click="removeFile">
 				<i class="el-icon-remove"/>
 			</a>
 		</div>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import {get} from "lodash";
 import {Upload} from "element-ui";
 import {base64Encode} from "@/modules/utils";
 
@@ -30,8 +31,8 @@ export default {
 	meta: {
 		res: {
 			props: {
-				image: "image",
-				base64: "image_raw"
+				url: "image",
+				file: "image_file"
 			},
 			data: {
 				image: "https://pbs.twimg.com/media/DVnfJkqVAAAqS91.jpg"
@@ -40,40 +41,45 @@ export default {
 	},
 	props: {
 		_upload: {type: Boolean, required: false, default: true, doc: true},
-		image: {type: String, required: false, doc: true, note: "url"},
-		base64: {type: String, required: false, doc: true, note: "base64 encoded"},
-		_base64: {type: String, required: false}
+		url: {type: String, required: false, doc: true},
+		file: {type: Object, required: false, doc: true, note: "base64"},
+		_file: {type: String, required: false}
 
 	},
 	data() {
 		return {
+			image: this.url,
+
 			data: {
-				image: this.image
+				file: this.file
 			}
 		}
 	},
 	computed: {
 		imageUrl() {
-			return this.data.image || require("!file-loader!@/assets/icons/noimage.svg");
+			return this.image || require("!file-loader!@/assets/icons/noimage.svg");
 		}
 	},
 	methods: {
 		preventAction: () => false,
 
 		async addFile(file) {
-			this.data.image = file.url;
-			this.update(await base64Encode(file.raw));
+			const base64 = await base64Encode(file.raw);
+
+			// this.data.file = {file: file.url, title: ""};
+			this.image = file.url;
+			this.update({file: base64, title: file.name});
 		},
 
 		removeFile() {
-			this.data.image = null;
-			this.update("");
+			this.image = null;
+			this.update(null);
 		},
 
-		update(file) {
+		update(res) {
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this._base64]: file}
+				data: {[this._file]: res}
 			});
 		}
 	}
