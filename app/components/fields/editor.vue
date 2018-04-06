@@ -48,6 +48,11 @@ export default {
 				data: {[this._content]: content}
 			});
 		}
+	},
+	watch: {
+		$route() {
+			this.$refs.editor.simplemde.codemirror.refresh();
+		}
 	}
 };
 </script>
