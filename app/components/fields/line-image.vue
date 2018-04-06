@@ -7,7 +7,7 @@
 		<div class="image">
 			<vInputImage
 				class="line"
-				v-bind="{image, _base64: _imageBase64, _upload: _imageUpload}"
+				v-bind="{url: image, _file: _imageBase64, _upload: _imageUpload}"
 				@fieldA="fieldA"
 			/>
 		</div>
@@ -69,7 +69,7 @@ export default {
 		alt: {type: Object, required: true},
 		image: {type: String, required: false, default: noimage, doc: true},
 		_imageUpload: {type: Boolean, required: false, default: true, doc: true},
-		imageBase64: {type: String, required: false, doc: true, note: "base64 encoded"},
+		imageBase64: {type: Object, required: false, doc: true, note: "base64"},
 		_imageBase64: {type: String, required: false},
 		_titleKey: {type: String, required: true, doc: true},
 		titleValue: {type: String, required: false, doc: true},

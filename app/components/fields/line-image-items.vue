@@ -7,7 +7,7 @@
 		<div class="image">
 			<vInputImage
 				class="line"
-				v-bind="{image, _base64: _imageBase64, _upload: _imageUpload}"
+				v-bind="{url: image, _file: _imageBase64, _upload: _imageUpload}"
 				@fieldA="fieldA"
 			/>
 		</div>
