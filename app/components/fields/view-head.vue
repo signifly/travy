@@ -3,7 +3,7 @@
 		<vInputImage
 			v-if="_imageActive"
 			class="view-head"
-			v-bind="{image, _base64}"
+			v-bind="{_file, url: image}"
 			@fieldA="fieldA"
 		/>
 
@@ -31,19 +31,19 @@ export default {
 				title: "title",
 				imageActive: true,
 				image: "image",
-				base64: "image_raw",
+				file: "image_raw",
 				tag: "tag"
 			},
 			data: {
 				title: "a title",
-				image: noimage,
+				image: "https://pbs.twimg.com/media/DVnfJkqVAAAqS91.jpg",
 				tag: "1432"
 			}
 		}
 	},
 	props: {
 		title: {type: String, required: false, doc: true},
-		_base64: {type: String, required: false, doc: true, note: `base64 encoded`},
+		_file: {type: String, required: false, doc: true, note: `base64 encoded`},
 		image: {type: String, required: false, default: noimage, doc: true, note: "url"},
 		_imageActive: {type: Boolean, required: false, doc: true, note: `
 			Whether an image or placeholder should be shown.
