@@ -66,7 +66,6 @@ export default {
 		async addFile(file) {
 			const base64 = await base64Encode(file.raw);
 
-			// this.data.file = {file: file.url, title: ""};
 			this.image = file.url;
 			this.update({file: base64, title: file.name});
 		},
