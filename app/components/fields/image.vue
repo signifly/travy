@@ -1,9 +1,12 @@
 <template>
-	<div class="image" v-if="image">
+	<tran
+	<div class="image" v-if="image" @mouseover="active = true" @mouseleave="active = false">
 		<i class="el-icon-picture"></i>
-		<div class="img">
-			<img :src="image">
-		</div>
+		<transition name="img">
+			<div class="img" v-show="active">
+				<img :src="image">
+			</div>
+		</transition>
 	</div>
 </template>
 
@@ -21,6 +24,11 @@ export default {
 	},
 	props: {
 		image: {type: String, required: false, doc: true}
+	},
+	data() {
+		return {
+			active: false
+		}
 	}
 };
 </script>
@@ -32,14 +40,8 @@ export default {
 	font-size: 1.5em;
 	overflow: visible;
 
-	&:hover {
-		.img {
-			display: flex;
-		}
-	}
-
 	.img {
-		display: none;
+		display: flex;
 		z-index: 2;
 		position: absolute;
 		right: 2em;
@@ -47,6 +49,20 @@ export default {
 		bottom: 0;
 		align-items: center;
 		width: em(165);
+
+		$t: 0.15s;
+
+		&-enter-active, &-leave-active {
+			transition: cubic(opacity, $t), cubic(transform, $t);
+		}
+		&-enter, &-leave-to {
+			opacity: 0;
+			transform: translateX(5px) scale(0.98);
+		}
+
+		img {
+			border-radius: 4px;
+		}
 	}
 }
 </style>

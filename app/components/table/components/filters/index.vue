@@ -101,6 +101,7 @@ export default {
 
 <style lang="scss" scoped>
 .pop {
+	margin-top: -1em;
 	padding: 0.25em;
 	transform: scale(0.95);
 
