@@ -10,7 +10,7 @@
 						<vHeader v-bind="{data, header}" @fieldA="fieldA" />
 					</Col>
 					<Col class="right" :span="8">
-						<vModifiers v-bind="{modifiers}" @getData="getData" />
+						<vModifiers v-bind="{modifiers}" @refreshAll="refreshAll" />
 						<vActions v-bind="{actions, endpoints, data}" @submit="getData" />
 					</Col>
 				</Row>
@@ -90,7 +90,22 @@ export default {
 			if (this[action]) this[action]({tab, data, done});
 		},
 
-		async refresh({done}) {
+		async refresh({done}) { // fieldA action
+			await this.getData();
+			if (done) await done();
+		},
+
+		update({tab, data}) { // fieldA action
+			this.track({tab, data});
+			forEach(data, (val, key) => set(this.data, key, val));
+		},
+
+		remove({data}) { // fieldA action
+			console.log("remove", data);
+		},
+
+		async refreshAll({done}) {
+			await this.getDefinitions();
 			await this.getData();
 			if (done) await done();
 		},
@@ -105,15 +120,6 @@ export default {
 
 		endpoint({type}) {
 			return endpoint({type, item: this.data, endpoints: this.endpoints});
-		},
-
-		update({tab, data}) {
-			this.track({tab, data});
-			forEach(data, (val, key) => set(this.data, key, val));
-		},
-
-		remove({data}) {
-			console.log("remove", data);
 		},
 
 		modifierParams({definitions} = {}) {
@@ -142,9 +148,7 @@ export default {
 			this.definitions = data;
 		},
 
-		async getData({type} = {}) {
-			if (type === "modifiers") await this.getDefinitions();
-
+		async getData() {
 			const params = {
 				modifiers: this.modifierParams()
 			};

@@ -13,7 +13,7 @@
 						<div class="title">{{title}}</div>
 						<div class="total" v-if="pagination">{{pagination.total}}</div>
 					</div>
-					<vModifiers v-bind="{modifiers}" @getData="getData" />
+					<vModifiers v-bind="{modifiers}" @refreshAll="refreshAll" />
 				</div>
 
 				<vTable
@@ -73,17 +73,17 @@ export default {
 			if (this[action]) this[action]({data, item, done});
 		},
 
-		async refresh({done}) {
+		async refresh({done}) { // fieldA action
 			await this.getData();
 			if (done) await done();
 		},
 
-		show({item}) {
+		show({item}) { // fieldA action
 			const url = endpointUrl({data: item, url: this.endpoints.show.url});
 			this.$router.push({path: `/${url}`, query: {modifiers: this.query.modifiers}});
 		},
 
-		async update({item, data, done}) {
+		async update({item, data, done}) { // fieldA action
 			try {
 				const modifiers = this.modifiers.map(x => omit(x, "options"));
 				const url = endpointUrl({data: item, url: this.endpoints.update.url});
@@ -93,7 +93,7 @@ export default {
 			}
 		},
 
-		async remove({item, done}) {
+		async remove({item, done}) { // fieldA action
 			try {
 				const url = endpointUrl({data: item, url: this.endpoints.destroy.url});
 				await this.$http.delete(url);
@@ -101,6 +101,12 @@ export default {
 			} catch (err) {} finally {
 				if (done) await done();
 			}
+		},
+
+		async refreshAll({done}) {
+			await this.getDefinitions();
+			await this.getData();
+			if (done) await done();
 		},
 
 		async getDefinitions() {
@@ -112,9 +118,7 @@ export default {
 			this.definitions = data;
 		},
 
-		async getData({type} = {}) {
-			if (type === "modifiers") await this.getDefinitions();
-
+		async getData() {
 			const sort = this.query.sort || this.defaults.sort;
 			const _this = this;
 

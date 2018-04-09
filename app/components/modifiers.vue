@@ -1,5 +1,5 @@
 <template>
-	<div class="modifiers">
+	<div class="modifiers" :class="{loading}">
 		<div class="item" v-for="(item, index) in itemsMap">
 			<div class="title">{{item.title}}</div>
 			<vSelect v-bind="item" _value="value" :_clearable="false" @fieldA="fieldA({index}, $event)" />
@@ -19,7 +19,8 @@ export default {
 	},
 	data() {
 		return {
-			items: this.modifiers
+			items: this.modifiers,
+			loading: false
 		}
 	},
 	computed: {
@@ -40,9 +41,12 @@ export default {
 			this.update();
 		},
 		update() {
+			this.loading = true;
 			const modifiers = mapValues(keyBy(this.items, "key"), (x) => x.value);
 			this.$router.replace({query: {...this.query, modifiers}});
-			this.$emit("getData", {type: "modifiers"});
+			this.$emit("refreshAll", {
+				done: () => this.loading = false
+			});
 		}
 	}
 };
@@ -51,6 +55,11 @@ export default {
 <style lang="scss" scoped>
 .modifiers {
 	display: flex;
+	transition: cubic(opacity, 0.3s);
+
+	&.loading {
+		opacity: 0.2;
+	}
 
 	.item {
 		display: flex;
