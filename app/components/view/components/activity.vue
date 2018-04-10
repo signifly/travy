@@ -60,8 +60,8 @@ export default {
 		}))
 	},
 	methods: {
-		async getItems() {
-			const {data} = await this.$http.get(this.endpointUrl, {params: {count: this.pageCount, page: this.page}});
+		async getItems(page = 1) {
+			const {data} = await this.$http.get(this.endpointUrl, {params: {count: this.pageCount, page}});
 			this.pagination = data.meta;
 			this.items = data.data;
 		}
