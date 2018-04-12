@@ -3,6 +3,7 @@
 		<div class="wrap">
 			<Upload
 			class="upload"
+			drag
 			action=""
 			:before-upload="preventAction"
 			:show-file-list="false"
@@ -94,11 +95,23 @@ $t: 0.2s;
 }
 
 .wrap {
-	.upload /deep/ .el-upload {
-		.input-image.disabled & {
-			cursor: default;
+	.upload {
+		/deep/ {
+			.el-upload {
+				.el-upload-dragger {
+					width: auto;
+					height: auto;
+					border: 0;
+					border-radius: 0;
+				}
+
+				.input-image.disabled & {
+					cursor: default;
+				}
+			}
 		}
 	}
+
 	.image {
 		display: flex;
 		justify-content: center;
@@ -166,13 +179,20 @@ $t: 0.2s;
 				opacity: 1;
 				transform: translateY(0);
 			}
+
+			.el-icon-upload {
+				line-height: inherit;
+				font-size: inherit;
+				color: inherit;
+				margin: 0;
+			}
 		}
 	}
 
 	.clear {
 		position: absolute;
-		top: 1.2px;
-		right: 1.2px;
+		top: 1px;
+		right: 1px;
 		background-color: $danger;
 		color: $white1;
 		display: flex;
