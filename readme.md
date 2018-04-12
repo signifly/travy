@@ -16,7 +16,7 @@ $ npm run dev
 $ npm run dev-staging
 
 # build project
-$ npm run prod
+$ npm run build
 ```
 
 ### Docker production

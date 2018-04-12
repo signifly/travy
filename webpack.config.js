@@ -8,9 +8,8 @@ const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
-
 const production = process.env.NODE_ENV === "production";
-const config = process.env.config || "default";
+const config = require("./config");
 
 module.exports = {
 	entry: {
@@ -99,7 +98,16 @@ module.exports = {
 		historyApiFallback: true,
 		host: "0.0.0.0",
 		port: 3001,
-		hot: true
+		hot: true,
+		proxy: {
+			"/api": {
+				target: config.api,
+				changeOrigin: true,
+				pathRewrite: {
+					"^/api" : ""
+				}
+			}
+		}
 	},
 	performance: {
 		hints: false
@@ -129,7 +137,7 @@ module.exports = {
 
 		new webpack.DefinePlugin({
 			"process.env": {
-				config: JSON.stringify(config)
+				NODE_ENV: production ? "'production'" : "'development'"
 			}
 		})
 	],
@@ -139,13 +147,6 @@ module.exports = {
 
 if (production) {
 	module.exports.plugins = module.exports.plugins.concat([
-		new webpack.DefinePlugin({
-			"process.env": {
-				config: JSON.stringify(config),
-				NODE_ENV: "'production'"
-			}
-		}),
-
 		new BundleAnalyzerPlugin({
 			analyzerMode: "static",
 			reportFilename: "report.html"

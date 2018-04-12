@@ -4,10 +4,9 @@ import qs from "qs";
 
 import {Notification} from "element-ui";
 import store from "../store";
-import config from "@/config";
 
 const api = axios.create({
-	baseURL: config.api,
+	baseURL: "/api/v1",
 	paramsSerializer: (params) => qs.stringify(params)
 });
 

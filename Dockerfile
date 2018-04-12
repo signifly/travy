@@ -20,6 +20,6 @@ RUN yarn
 
 COPY . .
 
-RUN npm run prod
+RUN npm run build
 
 CMD npm run start
