@@ -2,7 +2,7 @@
 	<div class="login">
 		<div class="box">
 			<div class="title">{{title}}</div>
-			<Form class="form" title="iskf" :model="data" label-position="top" @keydown.native.enter="$emit('submit')">
+			<Form class="form" :model="data" label-position="top" @keydown.native.enter="$emit('submit')">
 
 				<vField
 					v-for="field in fields"
