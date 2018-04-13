@@ -20,6 +20,9 @@ RUN yarn
 
 COPY . .
 
+ARG api=api.sikane.signifly.com
+ENV api=${api}
+
 RUN npm run build
 
 CMD npm run start

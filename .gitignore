@@ -1,5 +1,6 @@
 /docker
 /node_modules
 /dist
+.env
 yarn-error.log
 .DS_Store

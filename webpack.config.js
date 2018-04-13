@@ -9,7 +9,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 const production = process.env.NODE_ENV === "production";
-const config = require("./config");
 
 module.exports = {
 	entry: {
@@ -98,16 +97,7 @@ module.exports = {
 		historyApiFallback: true,
 		host: "0.0.0.0",
 		port: 3001,
-		hot: true,
-		proxy: {
-			"/api": {
-				target: config.api,
-				changeOrigin: true,
-				pathRewrite: {
-					"^/api" : ""
-				}
-			}
-		}
+		hot: true
 	},
 	performance: {
 		hints: false
@@ -138,7 +128,7 @@ module.exports = {
 		new webpack.DefinePlugin({
 			"process.env": {
 				NODE_ENV: production ? "'production'" : "'development'",
-				env: JSON.stringify(process.env.env),
+				api: JSON.stringify(process.env.api)
 			}
 		})
 	],

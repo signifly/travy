@@ -5,7 +5,7 @@ services:
     image: docker-registry.signifly.com/sikane-app:production
     restart: unless-stopped
     labels:
-      virtual.host: "sikane-prod.signifly.com"
+      virtual.host: "caneline-us.signifly.com"
       virtual.port: "80"
       virtual.tls-email: "dev@signifly.com"
 

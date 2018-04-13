@@ -2,9 +2,11 @@ version: "3"
 
 services:
   app:
-    build: .
-    command: bash -c "yarn && echo 'Ready' && tail -f /dev/null"
+    build: ./
+    command: bash -c "yarn && npm run dev"
     ports:
-      - "3000-3010:3000-3010"
+      - "3000-3001:3000-3001"
     volumes:
       - ./:/app
+    environment:
+      api: ${api}
