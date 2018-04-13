@@ -4,9 +4,18 @@ import qs from "qs";
 
 import {Notification} from "element-ui";
 import store from "../store";
+import config from "../../config";
+
+const baseURL = () => {
+	if (process.env.NODE_ENV === "development" && process.env.env === "staging") {
+		return "/api/v1";
+	}
+
+	return config.api + config.path;
+};
 
 const api = axios.create({
-	baseURL: "/api/v1",
+	baseURL: baseURL(),
 	paramsSerializer: (params) => qs.stringify(params)
 });
 
