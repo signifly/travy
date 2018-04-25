@@ -2,7 +2,7 @@
 	<div class="dateRange">
 		<DatePicker
 			v-model="data.dates"
-			size="small"
+			size="medium"
 			align="center"
 			type="datetimerange"
 			:clearable="false"
