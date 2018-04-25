@@ -1,5 +1,6 @@
 import {get} from "lodash";
 import axios from "axios";
+import router from "./router";
 import qs from "qs";
 
 import {Notification} from "element-ui";
@@ -32,6 +33,11 @@ api.interceptors.response.use(res => {
 
 	if (get(res, "status") === 401 && !get(res, "config.url").endsWith("logout")) { // if token is invalid, logout
 		store.dispatch("user/logout");
+	}
+
+	if (!res) {
+		console.log("no server response");
+		return router.replace({name: "error"});
 	}
 
 	Notification({

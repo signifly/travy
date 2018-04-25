@@ -19,6 +19,7 @@ import table from "@/pages/table.vue";
 import view from "@/pages/view.vue";
 import _404 from "@/pages/404.vue";
 import _401 from "@/pages/401.vue";
+import error from "@/pages/error.vue";
 
 
 const routesTables = map(tables, (item, id) => ({
@@ -55,6 +56,7 @@ const routes = [
 
 	{path: "/", name: "index", component: index, redirect: "/products", meta: {auth: {roles: "all"}}},
 	{path: "/401", name: "401", component: _401, meta: {auth: {roles: "all"}}},
+	{path: "/error", name: "error", component: error, meta: {layout: "vBase"}},
 	{path: "/*", name: "404", component: _404, meta: {auth: {roles: "all"}}}
 ];
 
@@ -81,6 +83,7 @@ router.beforeEach(async (to, from, next) => {
 	if (!to.meta.auth) return next(); // allow all routes that isn't protected by auth
 
 	const user = store.getters["user/data"] || await store.dispatch("user/data");
+	
 	const roles = get(to.meta, "auth.roles", []);
 
 	if (!user) return store.dispatch("user/logout");
