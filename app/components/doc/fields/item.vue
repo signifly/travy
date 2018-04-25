@@ -1,6 +1,6 @@
 <template>
-	<div class="item">
-		<div class="wrap" :id="id">
+	<div class="item" :id="id">
+		<div class="wrap">
 			<a class="title" :href="`#${id}`">{{id}}</a>
 
 			<div class="props">
@@ -130,13 +130,14 @@ export default {
 <style lang="scss" scoped>
 .item {
 	border-bottom: 1px solid $blue2;
+	padding: 5em 0;
 
 	&:last-child {
 		border-bottom: 0;
 	}
 
 	.wrap {
-		margin: 5em 0;
+		// margin: 5em 0;
 
 		> .title {
 			display: block;

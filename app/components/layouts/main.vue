@@ -4,7 +4,7 @@
 			<vHeader/>
 			<Main>
 				<div class="container">
-					<router-view />
+					<router-view/>
 				</div>
 			</Main>
 		</Container>

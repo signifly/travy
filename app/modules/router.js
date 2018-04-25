@@ -7,7 +7,10 @@ Vue.use(VueRouter);
 
 import store from "@/store";
 
-import doc from "@/pages/doc.vue";
+const doc = () => import(/* webpackChunkName: "doc" */ "@/pages/doc.vue");
+const docFields = () => import(/* webpackChunkName: "docfields" */ "@/components/doc/fields/index.vue");
+
+
 import tables from "./tables";
 import index from "@/pages/index.vue";
 import login from "@/pages/login/index.vue";
@@ -38,7 +41,17 @@ const routesViews = map(tables, (item, id) => ({
 const routes = [
 	{path: "/login", name: "login", component: login, props: true, meta: {layout: "vBase"}},
 	{path: "/login/reset/:id", name: "login-reset", component: loginReset, props: true, meta: {layout: "vBase"}},
-	{path: "/doc", name: "doc", component: doc, meta: {layout: "vBase", auth: {roles: "all"}}},
+
+	{
+		meta: {layout: "vBase", auth: {roles: "all"}},
+		redirect: "/doc/fields",
+		path: "/doc",
+		name: "doc",
+		component: doc,
+		children: [
+			{path: "fields", name: "doc-fields", component: docFields, meta: {layout: "vBase", auth: {roles: "all"}}}
+		]
+	},
 
 	{path: "/", name: "index", component: index, redirect: "/products", meta: {auth: {roles: "all"}}},
 	{path: "/401", name: "401", component: _401, meta: {auth: {roles: "all"}}},
