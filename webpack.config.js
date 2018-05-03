@@ -10,7 +10,13 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 const production = process.env.NODE_ENV === "production";
 
-module.exports = {
+
+
+
+
+// APP CONFIG
+
+const app = {
 	entry: {
 		vendor: ["babel-polyfill"],
 		app: ["./app/index.js"]
@@ -32,7 +38,7 @@ module.exports = {
 							use: ["css-loader", "sass-loader?data=@import '~style/var';"],
 							fallback: "vue-style-loader"
 						})
-					},
+					}
 				}
 			},
 			{
@@ -122,8 +128,12 @@ module.exports = {
 
 		new BrowserSyncPlugin({
 			open: false,
+			port: 3000,
 			proxy: "http://localhost:3001",
-		}, {reload: false, ws: true}),
+			ui: false
+		}, {
+			reload: false, ws: true
+		}),
 
 		new webpack.DefinePlugin({
 			"process.env": {
@@ -134,13 +144,13 @@ module.exports = {
 	],
 
 	devtool: production ? "#source-map" : "#eval-source-map"
-}
+};
 
 if (production) {
-	module.exports.plugins = module.exports.plugins.concat([
+	app.plugins = app.plugins.concat([
 		new BundleAnalyzerPlugin({
 			analyzerMode: "static",
-			reportFilename: "report.html"
+			reportFilename: "report/app/index.html"
 		}),
 
 		new UglifyJsPlugin({
@@ -154,3 +164,141 @@ if (production) {
 		})
 	]);
 }
+
+
+
+
+
+
+
+// RETAILERS CONFIG
+
+const retailers = {
+	entry: {
+		"retailers": ["babel-polyfill", "./app/components/ext/retailers/index.js"]
+	},
+	output: {
+		path: __dirname + "/dist/ext",
+		publicPath: "/ext/",
+		filename: "[name].js?[hash]"
+	},
+	module: {
+		rules: [
+			{
+				test: /\.vue$/,
+				loader: "vue-loader",
+				options: {
+					loaders: {
+						scss: ExtractTextPlugin.extract({
+							use: ["css-loader", "sass-loader?data=@import '~style/var';"],
+							fallback: "vue-style-loader"
+						})
+					}
+				}
+			},
+			{
+				test: /\.hbs$/,
+				loader: "handlebars-loader"
+			},
+			{
+				test: /\.js$/,
+				loader: "babel-loader",
+				exclude: /node_modules/
+			},
+			{
+				test: /\.svg$/,
+				loader: "svg-inline-loader",
+				options: {
+					removeTags: true,
+					removingTags: ["title", "desc"],
+					classPrefix: true,
+					idPrefix: true,
+					removeSVGTagAttrs: false
+				}
+			},
+			{
+				test: /\.(png|jpg|gif|eps|pdf)$/,
+				oneOf: [
+					{
+						resourceQuery: /name/,
+						loader: "file-loader",
+						options: {
+							name: "[name].[ext]"
+						}
+					},
+					{
+						loader: "file-loader"
+					}
+				]
+			},
+			{
+				test: /\.(css|scss|sass)$/,
+				use: ExtractTextPlugin.extract({
+					use: ["css-loader", "sass-loader", "postcss-loader"],
+					fallback: "style-loader"
+				})
+			},
+			{
+				test: /\.(woff|woff2|eot|ttf)$/,
+				loader: "file-loader",
+				options: {
+					name: "[name].[ext]"
+				}
+			}
+		]
+	},
+	resolve: {
+		alias: {
+			"vue$": "vue/dist/vue.runtime.esm.js",
+			"style": __dirname + "/app/style",
+			"@": __dirname + "/app"
+		}
+	},
+	performance: {
+		hints: false
+	},
+	plugins: [
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NamedModulesPlugin(),
+
+		new HtmlWebpackPlugin({
+			template: "app/components/ext/retailers/index.hbs",
+			filename: "retailers/index.html",
+			hash: production,
+			title: "Sikane"
+		}),
+
+		new ExtractTextPlugin({filename: "[name].css", disable: true, allChunks: true}),
+
+		new webpack.DefinePlugin({
+			"process.env": {
+				NODE_ENV: production ? "'production'" : "'development'",
+				api: JSON.stringify(process.env.api)
+			}
+		})
+	],
+
+	devtool: production ? "#source-map" : "#eval-source-map"
+};
+
+if (production) {
+	retailers.plugins = retailers.plugins.concat([
+		new BundleAnalyzerPlugin({
+			analyzerMode: "static",
+			reportFilename: "retailers/report/index.html"
+		}),
+
+		new UglifyJsPlugin({
+			parallel: true,
+			sourceMap: true
+		}),
+
+		new OptimizeCssAssetsPlugin({
+			cssProcessorOptions: {discardComments: {removeAll: true}},
+			canPrint: true
+		})
+	]);
+}
+
+
+module.exports = [app, retailers];

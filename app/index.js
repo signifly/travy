@@ -12,6 +12,7 @@ import app from "./app.vue";
 Vue.prototype.$http = axios;
 
 new Vue({
+	el: "#app",
 	router, store,
 	render: h => h(app)
-}).$mount("#app");
+});
