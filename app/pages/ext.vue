@@ -23,7 +23,7 @@
 export default {
 	data() {
 		return {
-			host: `${window.location.protocol}//${window.location.host}`
+			host: location.origin
 		}
 	}
 };

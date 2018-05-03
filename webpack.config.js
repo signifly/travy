@@ -265,7 +265,8 @@ const retailers = {
 			template: "app/components/ext/retailers/index.hbs",
 			filename: "retailers/index.html",
 			hash: production,
-			title: "Sikane"
+			title: "Sikane",
+			inject: false
 		}),
 
 		new ExtractTextPlugin({filename: "[name].css", disable: true, allChunks: true}),
