@@ -24,7 +24,6 @@
 			<MenuItem index="/partners">Partners</MenuItem>
 			<Submenu index="/6234234">
 				<template slot="title">Settings</template>
-				<MenuItem index="/shops">Shops</MenuItem>
 				<MenuItem index="/languages">Languages</MenuItem>
 				<MenuItem index="/currencies">Currencies</MenuItem>
 				<MenuItem index="/materials">Materials</MenuItem>
