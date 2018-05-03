@@ -150,7 +150,7 @@ if (production) {
 	app.plugins = app.plugins.concat([
 		new BundleAnalyzerPlugin({
 			analyzerMode: "static",
-			reportFilename: "report/app/index.html"
+			reportFilename: "report/index.html"
 		}),
 
 		new UglifyJsPlugin({

@@ -7,8 +7,8 @@ Vue.use(VueRouter);
 
 import store from "@/store";
 
-const doc = () => import(/* webpackChunkName: "doc" */ "@/pages/doc.vue");
-const docFields = () => import(/* webpackChunkName: "docfields" */ "@/components/doc/fields/index.vue");
+import doc from "@/pages/doc.vue";
+const docFields = () => import(/* webpackChunkName: "doc-fields" */ "@/components/doc/fields/index.vue");
 
 
 import tables from "./tables";

@@ -1,8 +1,7 @@
 <template>
 	<GmapMarker
 		:clickable="true"
-		v-bind="{position}"
-		:icon="require('@/assets/icons/marker.png')"
+		v-bind="{position, icon}"
 		@click="open"
 	>
 
@@ -21,6 +20,11 @@ export default {
 		position: {type: Object, required: true},
 		id: {type: Number, required: true}
 	},
+	data() {
+		return {
+			icon: this.$host + require("../../assets/icons/marker.png")
+		}
+	},
 	methods: {
 		open() {
 			this.$emit("open", this.id);
@@ -31,6 +35,6 @@ export default {
 
 <style lang="scss" scoped>
 .popup {
-	
+
 }
 </style>

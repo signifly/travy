@@ -2,6 +2,7 @@ import Vue from "vue";
 import app from "./index.vue";
 import axios from "./modules/axios";
 
+Vue.prototype.$host = `${window.location.protocol}//${window.location.host}`;
 Vue.prototype.$http = axios;
 
 import "./modules/maps";
