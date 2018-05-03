@@ -15,12 +15,12 @@ import tables from "./tables";
 import index from "@/pages/index.vue";
 import login from "@/pages/login/index.vue";
 import loginReset from "@/pages/login/reset.vue";
+import ext from "@/pages/ext.vue";
 import table from "@/pages/table.vue";
 import view from "@/pages/view.vue";
 import _404 from "@/pages/404.vue";
 import _401 from "@/pages/401.vue";
 import error from "@/pages/error.vue";
-import ext from "@/pages/ext.vue";
 
 
 const routesTables = map(tables, (item, id) => ({
@@ -54,7 +54,7 @@ const routes = [
 
 	{path: "/login", name: "login", component: login, props: true, meta: {layout: "vBase"}},
 	{path: "/login/reset/:id", name: "login-reset", component: loginReset, props: true, meta: {layout: "vBase"}},
-	{path: "/ext", name: "ext", component: ext, meta: {auth: {roles: "all"}}},
+	{path: "/externals", name: "ext", component: ext, meta: {auth: {roles: "all"}}},
 	{path: "/", name: "index", component: index, redirect: "/products", meta: {auth: {roles: "all"}}},
 	{path: "/401", name: "401", component: _401, meta: {auth: {roles: "all"}}},
 	{path: "/error", name: "error", component: error, meta: {layout: "vBase"}},

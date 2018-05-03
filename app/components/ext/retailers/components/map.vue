@@ -1,35 +1,36 @@
 <template>
 <div class="map">
-	<template v-if="items">
-		<GmapMap
-			:center="{lat:55.45834601674558, lng:10.244126916259786}"
-			:zoom="4"
-			map-type-id="roadmap"
-			style="width: 100%; height: 600px"
-			v-bind="{options}"
-		>
+	<GmapMap
+	ref="map"
+	:center="{lat:35, lng:-97.380979}"
+	style="width: 100%; height: 600px"
+	map-type-id="roadmap"
+	v-bind="{options}"
+	:zoom="4">
 
-			<GmapCluster :zoomOnClick="true">
-				<vMarker v-for="item in items" :key="item.id" v-bind="[item, {infoWindow}]" @open="open" />
-			</GmapCluster>
-		</GmapMap>
-	</template>
+		<GmapCluster :zoomOnClick="true">
+			<vMarker v-for="item in items" :key="item.id" v-bind="[item, {popup}]" @toggle="toggle" />
+		</GmapCluster>
+	</GmapMap>
+
+	<vSearch @search="search" v-bind="{loaded}"/>
 </div>
 </template>
 
 <script>
 import GmapCluster from "vue2-google-maps/dist/components/cluster";
 import vMarker from "./marker.vue";
+import vSearch from "./search.vue";
 
 
 export default {
-	components: {GmapCluster, vMarker},
+	components: {GmapCluster, vMarker, vSearch},
 	props: {
 		items: {type: [Array], required: false}
 	},
 	data() {
 		return {
-			infoWindow: null,
+			popup: null,
 
 			options: {
 				styles: [{
@@ -94,9 +95,16 @@ export default {
 			}
 		}
 	},
+	computed: {
+		loaded: (t) => t.items.length > 0
+	},
 	methods: {
-		open(id) {
-			this.infoWindow = id;
+		toggle(id) {
+			this.popup = this.popup === id ? this.popup = null : this.popup = id;
+		},
+		search(place) {
+			if (!place || !place.geometry) return;
+			this.$refs.map.$mapObject.fitBounds(place.geometry.viewport);
 		}
 	}
 };
@@ -104,6 +112,6 @@ export default {
 
 <style lang="scss" scoped>
 .map {
-
+	position: relative;
 }
 </style>

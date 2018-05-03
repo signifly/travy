@@ -11,25 +11,22 @@ export default {
 	components: {vMap},
 	data() {
 		return {
-			items: null
+			items: []
 		}
 	},
 	methods: {
 		async getData() {
 			const {data: {data}} = await this.$http.get("retailers", {params: {sort: "name", count: 1000}});
-			this.items = data;
-		},
 
-		async getTempData() {
-			const {data} = await this.$http.get("https://api.npoint.io/3491cc163a58f4ae600b");
-			this.items = data.map(x => ({
-				id: Number(x.id),
-				position: {lat: Number(x.lat), lng: Number(x.lng)}
+			this.items = data.filter(x => x.longitude && x.latitude)
+			.map(x => ({
+				...x,
+				position: {lat: x.latitude, lng: x.longitude}
 			}));
 		}
 	},
 	async created() {
-		await this.getTempData();
+		await this.getData();
 	}
 };
 </script>
