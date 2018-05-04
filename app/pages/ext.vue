@@ -46,7 +46,12 @@ export default {
 				display: inline-block;
 				color: $blue5;
 				font-size: 1.25em;
+				font-weight: 600;
 				text-decoration: none;
+
+				&:hover {
+					text-decoration: underline;
+				}
 			}
 
 			.script {

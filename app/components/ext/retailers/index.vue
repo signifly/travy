@@ -16,7 +16,7 @@ export default {
 	},
 	methods: {
 		async getData() {
-			const {data: {data}} = await this.$http.get("retailers", {params: {sort: "name", count: 1000}});
+			const {data: {data}} = await this.$http.get("retailers", {params: {count: 10000}});
 
 			this.items = data.filter(x => x.longitude && x.latitude)
 			.map(x => ({

@@ -138,7 +138,8 @@ const app = {
 		new webpack.DefinePlugin({
 			"process.env": {
 				NODE_ENV: production ? "'production'" : "'development'",
-				api: JSON.stringify(process.env.api)
+				GMAPS_KEY: JSON.stringify(process.env.GMAPS_KEY),
+				API: JSON.stringify(process.env.API)
 			}
 		})
 	],
@@ -274,7 +275,8 @@ const retailers = {
 		new webpack.DefinePlugin({
 			"process.env": {
 				NODE_ENV: production ? "'production'" : "'development'",
-				api: JSON.stringify(process.env.api)
+				GMAPS_KEY: JSON.stringify(process.env.GMAPS_KEY),
+				API: JSON.stringify(process.env.API)
 			}
 		})
 	],

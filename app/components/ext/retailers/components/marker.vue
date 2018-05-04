@@ -40,7 +40,7 @@ export default {
 	},
 	data() {
 		return {
-			icon: this.$host + require("../../assets/icons/marker.png")
+			icon: "data:image/svg+xml;utf8," + require("../assets/icons/marker.svg")
 		}
 	},
 	computed: {

@@ -20,8 +20,11 @@ RUN yarn
 
 COPY . .
 
-ARG api=https://api.sikane.signifly.com
-ENV api=${api}
+ARG API=https://api.sikane.signifly.com
+ENV API=${API}
+
+ARG GMAPS_KEY
+ENV GMAPS_KEY=${GMAPS_KEY}
 
 RUN yarn build
 
