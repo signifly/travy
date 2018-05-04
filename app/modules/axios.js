@@ -7,7 +7,7 @@ import {Notification} from "element-ui";
 import store from "../store";
 
 const api = axios.create({
-	baseURL: `${process.env.api}/v1/admin`,
+	baseURL: `${process.env.API}/v1/admin`,
 	paramsSerializer: (params) => qs.stringify(params)
 });
 
