@@ -73,7 +73,7 @@ export default {
 			let filters = {...this.query.filters, ...data};
 			filters = mapValues(filters, (val, key) => val === "" ? undefined : val);
 
-			this.$router.replace({query: {...this.query, filters}});
+			this.$router.replace({query: {...this.query, page: undefined, filters}});
 			await this.getData();
 			this.loading = false;
 		}, 500),
