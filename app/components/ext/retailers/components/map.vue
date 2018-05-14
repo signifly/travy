@@ -9,11 +9,12 @@
 	:zoom="4">
 
 		<GmapCluster :zoomOnClick="true">
-			<vMarker v-for="item in items" :key="item.id" v-bind="[item, {popup}]" @toggle="toggle" />
+			<vMarker v-for="item in itemsFilter" :key="item.id" v-bind="[item, {popup}]" @toggle="toggle" />
 		</GmapCluster>
 	</GmapMap>
 
-	<vSearch @search="search" v-bind="{loaded}"/>
+	<vFilter v-bind="{items, loaded}" :type.sync="type"/>
+	<vSearch v-bind="{loaded}" @search="search"/>
 </div>
 </template>
 
@@ -21,16 +22,17 @@
 import GmapCluster from "vue2-google-maps/dist/components/cluster";
 import vMarker from "./marker.vue";
 import vSearch from "./search.vue";
-
+import vFilter from "./filter.vue";
 
 export default {
-	components: {GmapCluster, vMarker, vSearch},
+	components: {GmapCluster, vMarker, vSearch, vFilter},
 	props: {
-		items: {type: [Array], required: false}
+		items: {type: Array, required: false}
 	},
 	data() {
 		return {
 			popup: null,
+			type: "all",
 
 			options: {
 				styles: [{
@@ -96,7 +98,13 @@ export default {
 		}
 	},
 	computed: {
-		loaded: (t) => t.items.length > 0
+		loaded: (t) => t.items.length > 0,
+
+		itemsFilter() {
+			return this.type === "all" ? this.items : this.items.filter(item => {
+				return item.type.id === this.type;
+			});
+		}
 	},
 	methods: {
 		toggle(id) {

@@ -28,25 +28,28 @@ export default {
 	props: {
 		popup: {type: Number, required: false},
 		id: {type: Number, required: true},
-		position: {type: Object, required: true},
+		latitude: {type: Number, required: true},
+		longitude: {type: Number, required: true},
 		name: {type: String, required: true},
 		email: {type: String, required: true},
 		phone: {type: String, required: true},
 		address: {type: String, required: true},
-		address2: {type: String, required: true},
+		address2: {type: String, required: false},
 		city: {type: String, required: true},
 		zip_code: {type: String, required: true},
 		website: {type: String, required: true}
 	},
 	data() {
 		return {
-			icon: "data:image/svg+xml;utf8," + require("../assets/icons/marker.svg")
+			icon: "data:image/svg+xml;utf8," + encodeURIComponent(require("../assets/icons/marker.svg"))
 		}
 	},
 	computed: {
 		emailLink: (t) => `mailto:${t.email}`,
 		phoneLink: (t) => `tel:${t.phone.split(" ").join("")}`,
 		websiteLink: (t) => t.website.startsWith("http") ? t.website : `http://${t.website}`,
+
+		position: (t) => ({lat: t.latitude, lng: t.longitude}),
 
 		location1() {
 			return [this.address, this.address2].filter(x => x).join(", ");
