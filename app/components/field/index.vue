@@ -168,6 +168,7 @@ export default {
 		.title {
 			font-weight: 500;
 			margin-right: 1em;
+			margin-top: -1px;
 		}
 		.text {
 			font-style: italic;
