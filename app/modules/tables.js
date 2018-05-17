@@ -35,6 +35,12 @@ export default {
 			roles: ["admin"]
 		}
 	},
+	tags: {
+		title: "Tags",
+		auth: {
+			roles: ["admin"]
+		}
+	},
 	languages: {
 		title: "Languages",
 		auth: {
