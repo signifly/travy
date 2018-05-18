@@ -134,6 +134,7 @@ export default {
 					}, {});
 				},
 				page: this.query.page,
+				count: this.query.pagesize,
 				filter: omit(this.query.filters, ["q"]),
 				q: get(this.query.filters, "q"),
 				include: this.includes.join(",")
