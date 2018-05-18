@@ -103,7 +103,8 @@ export default {
 .pop {
 	margin-top: -1em;
 	padding: 0.25em;
-	transform: scale(0.95);
+	transform: scale(0.96);
+	backface-visibility: hidden;
 
 	.reset {
 		margin-top: 1.5em;

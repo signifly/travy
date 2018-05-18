@@ -38,6 +38,7 @@ export default {
 					switchTitle: "a switch",
 					switchValue: "switchValue",
 					selectValue: "selectValue",
+					selectClearable: false,
 					selectOptions: {
 						endpoint: "https://sikaline.glitch.me/table-actions/options",
 						key: "",

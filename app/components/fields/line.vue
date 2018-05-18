@@ -23,6 +23,7 @@
 				:_options="_selectOptions"
 				:_value="_selectValue"
 				:value="selectValue"
+				:_clearable="_selectClearable"
 				size="small"
 				@fieldA="fieldA"
 			/>
@@ -56,6 +57,7 @@ export default {
 				switchValue: "switchValue",
 				switchDisabled: true,
 				selectValue: "selectValue",
+				selectClearable: false,
 				selectOptions: {
 					endpoint: "https://sikaline.glitch.me/table-actions/options",
 					key: "",
@@ -103,6 +105,7 @@ export default {
 		switchValue: {type: Boolean, required: false, doc: true},
 		_switchDisabled: {type: Boolean, default: false, doc: true},
 		selectValue: {type: [String, Number], required: false, doc: true},
+		_selectClearable: {type: Boolean, required: false, doc: true},
 		_selectOptions: {type: Object, required: true, doc: true},
 		_actions: {type: Array, required: true, doc: true, note: `<a href="#vActions">vActions</a>`},
 		_switchValue: {type: String, required: true},
