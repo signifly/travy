@@ -1,6 +1,13 @@
 <template>
 	<div class="pagination">
-		<Pagination background layout="prev, pager, next" v-bind="pagination" @current-change="update" />
+		<Pagination
+			background
+			layout="sizes, prev, pager, next"
+			:page-sizes="[15, 50, 100]"
+			v-bind="pagination"
+			@size-change="size"
+			@current-change="update"
+		/>
 	</div>
 </template>
 
@@ -25,6 +32,13 @@ export default {
 		update(page) {
 			page = page === 1 ? undefined : page;
 			this.$router.replace({query: {...this.query, page}});
+			this.$emit("getData");
+		},
+
+		size(pagesize) {
+			console.log(pagesize);
+			pagesize = pagesize === 15 ? undefined : pagesize;
+			this.$router.replace({query: {...this.query, page: undefined,  pagesize}});
 			this.$emit("getData");
 		}
 	}
