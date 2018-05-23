@@ -36,7 +36,6 @@ export default {
 		},
 
 		size(pagesize) {
-			console.log(pagesize);
 			pagesize = pagesize === 15 ? undefined : pagesize;
 			this.$router.replace({query: {...this.query, page: undefined,  pagesize}});
 			this.$emit("getData");
