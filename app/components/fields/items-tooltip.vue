@@ -11,13 +11,13 @@
 			<div slot="content">
 				<div class="items-tooltip-content">
 					<template v-if="_itemLink">
-						<a v-for="item in itemsMap" :key="item.link" :href="item.link" @click.prevent="go(item)">
+						<a v-for="item in itemsMap" class="item" :key="item.link" :href="item.link" @click.prevent="go(item)">
 							{{item.label}}
 						</a>
 					</template>
 
 					<template v-else>
-						<div v-for="item in itemsMap">
+						<div v-for="item in itemsMap" class="item">
 							{{item.label}}
 						</div>
 					</template>
@@ -89,12 +89,17 @@ export default {
 	}
 
 	&-content {
-		a {
+		max-height: calc(100vh - 4em);
+		overflow: auto;
+
+		.item {
 			display: block;
 			color: $white1;
 			text-decoration: none;
 			margin: 0.1em 0;
+		}
 
+		a {
 			&:hover {
 				text-decoration: underline;
 			}
