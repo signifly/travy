@@ -45,9 +45,12 @@ export const base64Encode = (file) => {
 export const endpointUrl = ({url, data}) => {
 	if (!url) return;
 
+	if (!url.startsWith("http") && !url.startsWith("/")) url = `/${url}`;
+
 	return url.split("/").map(item => {
 		const start = item.indexOf("{");
 		const end = item.indexOf("}");
+
 		if (start === -1 && end === -1) return item;
 		const key = item.substring(start + 1, end);
 		return get(data, key);

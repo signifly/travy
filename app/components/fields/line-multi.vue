@@ -35,6 +35,7 @@ export default {
 					infoKey: "variants",
 					infoItems: "infoItems",
 					infoItemKey: "name",
+					infoItemLink: "/view/{id}",
 					switchTitle: "a switch",
 					switchValue: "switchValue",
 					selectValue: "selectValue",

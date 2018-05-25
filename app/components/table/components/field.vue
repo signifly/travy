@@ -24,7 +24,7 @@ export default {
 		action: (t) => t.column.fieldType.action,
 		link() {
 			const url = endpointUrl({data: this.data, url: this.action});
-			return url ? {path: `/${url}`, query: {modifiers: this.$route.query.modifiers}} : false;
+			return url ? {path: url, query: {modifiers: this.$route.query.modifiers}} : false;
 		}
 	},
 	methods: {

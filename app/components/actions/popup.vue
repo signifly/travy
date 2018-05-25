@@ -42,7 +42,7 @@ export default {
 		submitAfter({data} = {}) {
 			if (this.onSubmit) {
 				const url = endpointUrl({data: data.data || this.dataComb, url: this.onSubmit});
-				this.$router.push(`/${url}`);
+				this.$router.push(url);
 			} else {
 				this.$emit("fieldA", {
 					action: "refresh",

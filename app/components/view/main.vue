@@ -153,9 +153,9 @@ export default {
 				modifiers: this.modifierParams()
 			};
 
-			const {data} = await this.$http.get(`${this.parentId}/${this.id}`, {params});
-			this.options = data.options;
-			this.data = data.data;
+			const {data: {data, options}} = await this.$http.get(`${this.parentId}/${this.id}`, {params});
+			this.options = options;
+			this.data = data;
 
 			this.reset();
 			this.dataU++;
@@ -168,9 +168,9 @@ export default {
 				this.loadingSave = true;
 				const modifiers = this.modifierParams();
 
-				const {data} = await this.$http.put(url, {data: this.dataUpdated, modifiers}, {custom: true});
-				this.options = data.options;
-				this.data = data.data;
+				const {data: {data, options}} = await this.$http.put(url, {data: this.dataUpdated, modifiers}, {custom: true});
+				this.options = options;
+				this.data = data;
 
 				this.reset();
 				this.saveU++;

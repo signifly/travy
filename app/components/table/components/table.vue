@@ -1,15 +1,17 @@
 <template>
 	<div class="table">
 		<Table
-		:default-sort="sorting"
 		ref="table"
+		row-key="id"
 		v-bind="{data}"
+		:default-sort="sorting"
 		header-row-class-name="header-row"
 		header-cell-class-name="header-cell"
 		@sort-change="sort"
 		@selection-change="select">
 
-			<TableColumn type="selection" v-if="batchActive" />
+			<TableColumn type="selection" :reserve-selection="true" v-if="batchActive"/>
+			
 			<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name">
 				<vField slot-scope="scope" v-bind="{scope, column, endpoints}" @fieldA="$emit('fieldA', $event)"/>
 			</TableColumn>

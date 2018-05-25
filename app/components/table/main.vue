@@ -19,7 +19,7 @@
 				<vTable
 					ref="vTable"
 					v-bind="{data, columns, defaults, batch, endpoints}"
-					@select="selected = $event"
+					@select="select"
 					@getData="getData"
 					@fieldA="fieldA"
 				/>
@@ -49,7 +49,7 @@ export default {
 			definitions: null,
 			data: null,
 			pagination: null,
-			selected: [],
+			selected: []
 		}
 	},
 	computed: {
@@ -65,6 +65,10 @@ export default {
 		includes: (t) => t.definitions.includes
 	},
 	methods: {
+		select(items) {
+			this.selected = items;
+		},
+
 		unselect() {
 			this.$refs.vTable.unselect();
 		},
@@ -80,7 +84,7 @@ export default {
 
 		show({item}) { // fieldA action
 			const url = endpointUrl({data: item, url: this.endpoints.show.url});
-			this.$router.push({path: `/${url}`, query: {modifiers: this.query.modifiers}});
+			this.$router.push({path: url, query: {modifiers: this.query.modifiers}});
 		},
 
 		async update({item, data, done}) { // fieldA action
@@ -104,6 +108,7 @@ export default {
 		},
 
 		async refreshAll({done}) {
+			this.unselect();
 			await this.getDefinitions();
 			await this.getData();
 			if (done) await done();
@@ -140,9 +145,9 @@ export default {
 				include: this.includes.join(",")
 			};
 
-			const {data} = await this.$http.get(this.endpoints.index.url, {params});
-			this.data = data.data;
-			this.pagination = data.meta;
+			const {data: {data, meta}} = await this.$http.get(this.endpoints.index.url, {params});
+			this.data = data;
+			this.pagination = meta;
 		}
 	},
 	created() {

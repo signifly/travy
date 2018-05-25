@@ -13,7 +13,7 @@
 			<div class="item">
 				<div class="title">{{_infoKey}}:</div>
 				<div class="text">
-					<vItemsTooltip :items="infoItems" :_itemKey="_infoItemKey" />
+					<vItemsTooltip :items="infoItems" :_itemKey="_infoItemKey" :_itemLink="_infoItemLink" />
 				</div>
 			</div>
 		</div>
@@ -53,6 +53,7 @@ export default {
 				infoKey: "Variants",
 				infoItems: "infoItems",
 				infoItemKey: "name",
+				infoItemLink: "/view/{id}",
 				switchTitle: "switch",
 				switchValue: "switchValue",
 				switchDisabled: true,
@@ -101,6 +102,7 @@ export default {
 		_infoKey: {type: String, required: true, doc: true},
 		infoItems: {type: Array, required: true, doc: true},
 		_infoItemKey: {type: String, required: true, doc: true},
+		_infoItemLink: {type: String, required: false, doc: true},
 		_switchTitle: {type: String, required: true, doc: true},
 		switchValue: {type: Boolean, required: false, doc: true},
 		_switchDisabled: {type: Boolean, default: false, doc: true},
