@@ -59,7 +59,7 @@ export default {
 
 		itemsMap: (t) => t.items.map(item => ({
 			label: get(item, t._itemKey),
-			link: t._itemLink ? endpointUrl({url: t._itemLink, data: item}) : false
+			link: endpointUrl({url: t._itemLink, data: item})
 		}))
 	},
 	methods: {
