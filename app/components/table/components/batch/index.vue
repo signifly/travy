@@ -17,7 +17,7 @@
 						<DropdownItem v-for="action in actions" :key="action.title" :command="action">{{action.title}}</DropdownItem>
 					</DropdownMenu>
 
-					<vAction v-if="action && action.props.id !== 'modal'" v-bind="[action, {ids}]" @close="close" />
+					<vAction v-if="action && action.props.id !== 'modal'" v-bind="[action, {ids}]" @close="close" @fieldA="fieldA" />
 				</Dropdown>
 			</div>
 		</vPanel>
