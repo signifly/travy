@@ -1,9 +1,7 @@
 <template>
 	<div class="batch">
 		<vPanel>
-			<div class="selected">
-				<Checkbox v-model="checked" @change="unselect">{{selected.length}} selected</Checkbox>
-			</div>
+			<vSelected v-bind="{selected, selectedOptions}" @unselect="unselect"/>
 
 			<div class="actions">
 				<Button v-if="sequential" size="medium" @click="sequentialStart">Sequential edit</Button>
@@ -28,13 +26,14 @@
 
 <script>
 import {get, sortBy} from "lodash";
-import {Button, Checkbox, Dropdown, DropdownMenu, DropdownItem} from "element-ui";
+import {Button, Dropdown, DropdownMenu, DropdownItem} from "element-ui";
 import {endpointUrl} from "@/modules/utils";
 import vPanel from "@/components/panel.vue";
+import vSelected from "./selected.vue";
 import vAction from "./action.vue";
 
 export default {
-	components: {Dropdown, DropdownMenu, DropdownItem, vPanel, Button, Checkbox, vAction},
+	components: {Dropdown, DropdownMenu, DropdownItem, vPanel, Button, vSelected, vAction},
 	props: {
 		endpoints: {type: Object, required: true},
 		selected: {type: Array, required: true},
@@ -51,6 +50,7 @@ export default {
 	},
 	computed: {
 		ids: (t) => sortBy(t.selected.map(x => x.id)),
+		selectedOptions: (t) => t.batch.selectedOptions,
 		sequential: (t) => t.batch.sequential,
 		actions: (t) => t.batch.actions,
 		bulk: (t) => t.batch.bulk,
@@ -85,10 +85,5 @@ export default {
 <style lang="scss" scoped>
 .batch {
 	position: relative;
-	.selected {
-		.el-checkbox {
-			font-weight: 400;
-		}
-	}
 }
 </style>
