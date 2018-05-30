@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {get, set, forEach} from "lodash";
+import {get, set, uniq, forEach} from "lodash";
 import {vSelectMultiSearch, vTable} from "./index";
 
 export default {
@@ -71,6 +71,7 @@ export default {
 	},
 	data() {
 		return {
+			listOptions: [],
 			columnsData: [],
 			edits: {},
 		}
@@ -79,13 +80,18 @@ export default {
 		oValue: (t) => t._options.value
 	},
 	methods: {
+		saveListOptions() { // save old list options so each tableColumn still has data from an old select search
+			const newListOptions = get(this.$refs, "select.listOptions", []);
+			this.listOptions = uniq([...this.listOptions, ...newListOptions]);
+		},
+
 		select({data}) {
+			this.saveListOptions();
 			const selectValues = get(data, this._values);
-			const options = get(this.$refs, "select.listOptions", []);
 
 			// populate table with data from the selected option
 			this.columnsData = selectValues.map(id => {
-				const item = options.find(opt => get(opt, this.oValue) === id);
+				const item = this.listOptions.find(opt => get(opt, this.oValue) === id);
 
 				// overwrite properties if exists in _columnsDataOverwrite
 				return {...item, ...this._columnsDataOverwrite}
