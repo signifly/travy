@@ -51,8 +51,7 @@ export default {
 	props: {
 		data: {type: Object, required: false, default: () => ({})},
 		fields: {type: Array, required: false},
-		search: {type: Object, required: true},
-		getData: {type: Function, required: true}
+		search: {type: Object, required: true}
 	},
 	data() {
 		return  {
@@ -74,8 +73,10 @@ export default {
 			filters = mapValues(filters, (val, key) => val === "" ? undefined : val);
 
 			this.$router.replace({query: {...this.query, page: undefined, filters}});
-			await this.getData();
-			this.loading = false;
+
+			this.$emit("filter", {
+				done: async () => this.loading = false
+			});
 		}, 500),
 
 		updateQ({data}) {
@@ -88,9 +89,13 @@ export default {
 			this.active = false;
 			const filters = this.input ? {q: this.input} : undefined;
 			this.$router.replace({query: {...this.query, filters}});
-			await this.getData();
-			this.loading = false;
-			this.resetU++;
+
+			this.$emit("filter", {
+				done: async () => {
+					this.loading = false;
+					this.resetU++;
+				}
+			});
 		}
 	},
 	beforeCreate() {

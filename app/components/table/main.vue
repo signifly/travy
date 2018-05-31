@@ -2,7 +2,7 @@
 	<div class="table-main" v-if="definitions">
 
 		<div class="header">
-			<vFilters v-bind="[filters, {search, getData}]" />
+			<vFilters v-bind="[filters, {search}]" @filter="filter" />
 			<vActions v-bind="{actions, endpoints}" @fieldA="fieldA" />
 		</div>
 
@@ -12,19 +12,24 @@
 					<div class="info">
 						<div class="title">{{title}}</div>
 						<div class="total" v-if="pagination">{{pagination.total}}</div>
+						<transition name="loading">
+							<div class="loading" v-if="loading">
+								<i class="el-icon-loading"/>
+							</div>
+						</transition>
 					</div>
 					<vModifiers v-bind="{modifiers}" @refreshAll="refreshAll" />
 				</div>
 
 				<vTable
 					ref="vTable"
-					v-bind="{data, columns, defaults, batch, endpoints}"
+					v-bind="{data, columns, defaults, batch, endpoints, loading}"
 					@select="select"
 					@getData="getData"
 					@fieldA="fieldA"
 				/>
 
-				<vPagination v-if="pagination" v-bind="pagination" @getData="getData" />
+				<vPagination v-if="pagination" v-bind="[pagination, {loading}]" @getData="getData" />
 				<vBatch v-if="selected.length > 0" v-bind="{endpoints, selected, batch}" @unselect="unselect" @fieldA="fieldA" />
 			</box>
 		</div>
@@ -47,9 +52,11 @@ export default {
 	data() {
 		return {
 			definitions: null,
-			data: null,
 			pagination: null,
-			selected: []
+			data: null,
+			selected: [],
+
+			loading: false
 		}
 	},
 	computed: {
@@ -75,6 +82,11 @@ export default {
 
 		fieldA({action, data, item, done}) {
 			if (this[action]) this[action]({data, item, done});
+		},
+
+		async filter({done}) {
+			await this.getData({loading: false}); // don't show table loading indicator
+			await done();
 		},
 
 		async refresh({done}) { // fieldA action
@@ -123,7 +135,9 @@ export default {
 			this.definitions = data;
 		},
 
-		async getData() {
+		async getData({loading} = {loading: true}) {
+			this.loading = loading;
+
 			const sort = this.query.sort || this.defaults.sort;
 			const _this = this;
 
@@ -148,6 +162,8 @@ export default {
 			const {data: {data, meta}} = await this.$http.get(this.endpoints.index.url, {params});
 			this.data = data;
 			this.pagination = meta;
+
+			this.loading = false;
 		}
 	},
 	created() {
@@ -172,6 +188,7 @@ export default {
 			justify-content: space-between;
 
 			.info {
+				width: 100%;
 				display: flex;
 				align-items: center;
 
@@ -179,6 +196,19 @@ export default {
 					font-size: em(12);
 					margin-left: 0.75em;
 					color: $blue3;
+				}
+
+				.loading {
+					margin-left: auto;
+					font-size: em(16);
+					color: $blue5;
+
+					&-enter-active, &-leave-active {
+						transition: cubic(opacity, 0.1s);
+					}
+					&-enter, &-leave-to {
+						opacity: 0;
+					}
 				}
 			}
 		}

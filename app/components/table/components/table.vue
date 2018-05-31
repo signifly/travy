@@ -1,5 +1,5 @@
 <template>
-	<div class="table">
+	<div class="table" :class="{loading}">
 		<Table
 		ref="table"
 		row-key="id"
@@ -7,11 +7,12 @@
 		:default-sort="sorting"
 		header-row-class-name="header-row"
 		header-cell-class-name="header-cell"
+		:empty-text="emptyText"
 		@sort-change="sort"
 		@selection-change="select">
 
 			<TableColumn type="selection" :reserve-selection="true" v-if="batchActive"/>
-			
+
 			<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name">
 				<vField slot-scope="scope" v-bind="{scope, column, endpoints}" @fieldA="$emit('fieldA', $event)"/>
 			</TableColumn>
@@ -26,6 +27,7 @@ import {vField} from "./index.js";
 export default {
 	components: {Table, TableColumn, vField},
 	props: {
+		loading: {type: Boolean, required: false},
 		data: {type: Array, required: false},
 		columns: {type: Array, required: true},
 		defaults: {type: Object, required: true},
@@ -34,6 +36,7 @@ export default {
 	},
 	computed: {
 		query: (t) => t.$route.query,
+		emptyText: (t) => t.data ? "No data" : "Loading",
 		sorting: (t) => t.query.sort || t.defaults.sort || {},
 
 		batchActive: (t) => t.batch.bulk || t.batch.sequential,
@@ -85,6 +88,12 @@ export default {
 			.header {
 				&-row {
 					background-color: $white2;
+					transition: cubic(opacity, 0.1s);
+
+					@at-root .table.loading /deep/ .el-table .header-row {
+						pointer-events: none;
+						opacity: 0.7;
+					}
 				}
 				&-cell {
 					background-color: transparent;
