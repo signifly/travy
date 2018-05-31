@@ -1,5 +1,5 @@
 <template>
-	<div class="pagination">
+	<div class="pagination" :class="{loading}">
 		<Pagination
 			background
 			layout="sizes, prev, pager, next"
@@ -17,6 +17,7 @@ import {Pagination} from "element-ui";
 export default {
 	components: {Pagination},
 	props: {
+		loading: {type: Boolean, required: true},
 		total: {type: Number, required: true},
 		per_page: {type: Number, required: true}
 	},
@@ -48,5 +49,11 @@ export default {
 .pagination {
 	margin: 2em 0;
 	text-align: center;
+	transition: cubic(opacity, 0.1s);
+
+	&.loading {
+		pointer-events: none;
+		opacity: 0.6;
+	}
 }
 </style>
