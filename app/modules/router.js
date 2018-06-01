@@ -1,15 +1,12 @@
-import Vue from "vue";
-import qs from "qs";
 import {get, map, mapValues, isPlainObject} from "lodash";
 import VueRouter from "vue-router";
+import Vue from "vue";
+import qs from "qs";
 
 Vue.use(VueRouter);
 
 import store from "@/store";
-
-import doc from "@/pages/doc.vue";
-const docFields = () => import(/* webpackChunkName: "doc-fields" */ "@/components/doc/fields/index.vue");
-
+import meta from "./meta";
 
 import tables from "./tables";
 import index from "@/pages/index.vue";
@@ -21,6 +18,8 @@ import view from "@/pages/view.vue";
 import _404 from "@/pages/404.vue";
 import _401 from "@/pages/401.vue";
 import error from "@/pages/error.vue";
+import doc from "@/pages/doc.vue";
+const docFields = () => import(/* webpackChunkName: "doc-fields" */ "@/components/doc/fields/index.vue");
 
 
 const routesTables = map(tables, (item, id) => ({
@@ -42,23 +41,23 @@ const routesViews = map(tables, (item, id) => ({
 
 const routes = [
 	{
-		meta: {layout: "vBase", auth: {roles: "all"}},
+		meta: {title: "Doc", layout: "vBase", auth: {roles: "all"}},
 		redirect: "/doc/fields",
 		path: "/doc",
 		name: "doc",
 		component: doc,
 		children: [
-			{path: "fields", name: "doc-fields", component: docFields, meta: {layout: "vBase", auth: {roles: "all"}}}
+			{path: "fields", name: "doc-fields", component: docFields, meta: {title: "Doc fields", layout: "vBase", auth: {roles: "all"}}}
 		]
 	},
 
-	{path: "/login", name: "login", component: login, props: true, meta: {layout: "vBase"}},
-	{path: "/login/reset/:id", name: "login-reset", component: loginReset, props: true, meta: {layout: "vBase"}},
-	{path: "/ext", name: "ext", component: ext, meta: {auth: {roles: "all"}}},
+	{path: "/login", name: "login", component: login, props: true, meta: {layout: "vBase", title: "Login"}},
+	{path: "/login/reset/:id", name: "login-reset", component: loginReset, props: true, meta: {layout: "vBase", title: "Reset login"}},
+	{path: "/ext", name: "ext", component: ext, meta: {title: "Externals", auth: {roles: "all"}}},
 	{path: "/", name: "index", component: index, redirect: "/products", meta: {auth: {roles: "all"}}},
-	{path: "/401", name: "401", component: _401, meta: {auth: {roles: "all"}}},
-	{path: "/error", name: "error", component: error, meta: {layout: "vBase"}},
-	{path: "/*", name: "404", component: _404, meta: {auth: {roles: "all"}}}
+	{path: "/401", name: "401", component: _401, meta: {title: "401", auth: {roles: "all"}}},
+	{path: "/error", name: "error", component: error, meta: {title: "Error", layout: "vBase"}},
+	{path: "/*", name: "404", component: _404, meta: {title: "404", auth: {roles: "all"}}}
 ];
 
 
@@ -80,8 +79,16 @@ const router = new VueRouter({
 });
 
 
+const go = ({to, next}) => {
+	const id = to.params.id;
+	const title = id ? `${to.meta.title} / ${id}` : to.meta.title;
+	meta({title});
+	next();
+};
+
+
 router.beforeEach(async (to, from, next) => {
-	if (!to.meta.auth) return next(); // allow all routes that isn't protected by auth
+	if (!to.meta.auth) return go({to, next}); // allow all routes that isn't protected by auth
 
 	const user = store.getters["user/data"] || await store.dispatch("user/data");
 
@@ -91,7 +98,11 @@ router.beforeEach(async (to, from, next) => {
 
 	const valid = roles === "all" || roles.includes(user.role);
 
-	next(valid || {name: "401", replace: true});
+	if (valid) {
+		go({to, next});
+	} else {
+		next({name: "401", replace: true});
+	}
 });
 
 

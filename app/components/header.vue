@@ -4,10 +4,11 @@
 
 		<Menu
 			mode="horizontal"
-			active-text-color="lightblue"
+			:default-active="menuActive"
 			:router="true"
 			menu-trigger="click">
-			<Submenu index="2">
+
+			<Submenu index="catalogue">
 				<template slot="title">Catalogue</template>
 				<MenuItem index="/products">Products</MenuItem>
 				<MenuItem index="/collections">Collections</MenuItem>
@@ -19,11 +20,13 @@
 				<MenuItem index="/options">Options</MenuItem>
 				<MenuItem index="/tags">Tags</MenuItem>
 			</Submenu>
+
 			<MenuItem index="/translations">Translations</MenuItem>
 			<MenuItem index="/shops">Shops</MenuItem>
 			<MenuItem index="/orders">Orders</MenuItem>
 			<MenuItem index="/partners">Partners</MenuItem>
-			<Submenu index="/6234234">
+
+			<Submenu index="settings">
 				<template slot="title">Settings</template>
 				<MenuItem index="/ext">Externals</MenuItem>
 				<MenuItem index="/languages">Languages</MenuItem>
@@ -70,21 +73,50 @@ export default {
 		}
 	},
 	computed: {
-		user: (t) => t.$store.getters["user/data"]
+		user: (t) => t.$store.getters["user/data"],
+		menuActive: (t) => "/" + t.$route.path.split("/")[1]
 	},
 	methods: {
 		account(action = () => {}) {
 			action();
 		},
+
 		logout() {
 			this.$store.dispatch("user/logout", {post: true});
 		},
+
 		settings() {
 			this.$router.push({name: "users-view", params: {id: this.user.id.toString()}});
 		}
 	}
 };
 </script>
+
+<style lang="scss">
+.el-menu--horizontal {
+	border-bottom: 0;
+
+	.el-menu-item {
+		&.is-active {
+			border-bottom-color: lightblue !important;
+			color: lightblue !important;
+		}
+	}
+
+	> .el-menu-item {
+		background-color: #334056 !important;
+		color: $white1 !important;
+	}
+
+	.el-submenu {
+		.el-submenu__title {
+			background-color: #334056 !important;
+			color: $white1 !important;
+			border-bottom: 0 !important;
+		}
+	}
+}
+</style>
 
 <style lang="scss" scoped>
 .el-header {
@@ -109,25 +141,6 @@ export default {
 			height: $s;
 			path {
 				fill: $white1;
-			}
-		}
-	}
-
-	.el-menu--horizontal {
-		background-color: #334056;
-		border-bottom: 0;
-
-		> .el-menu-item {
-			background-color: #334056;
-			color: $white1;
-		}
-
-		/deep/ {
-			.el-submenu {
-				.el-submenu__title {
-					background-color: #334056;
-					color: $white1;
-				}
 			}
 		}
 	}
