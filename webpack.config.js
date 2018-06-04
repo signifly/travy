@@ -160,7 +160,10 @@ if (production) {
 		}),
 
 		new OptimizeCssAssetsPlugin({
-			cssProcessorOptions: {discardComments: {removeAll: true}},
+			cssProcessorOptions: {
+				keyframes: true,
+				discardComments: {removeAll: true}
+			},
 			canPrint: true
 		})
 	]);
@@ -297,7 +300,10 @@ if (production) {
 		}),
 
 		new OptimizeCssAssetsPlugin({
-			cssProcessorOptions: {discardComments: {removeAll: true}},
+			cssProcessorOptions: {
+				keyframes: true,
+				discardComments: {removeAll: true}
+			},
 			canPrint: true
 		})
 	]);
