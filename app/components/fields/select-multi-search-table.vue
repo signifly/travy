@@ -1,7 +1,7 @@
 <template>
 	<div class="select-multi-search-table">
 		<div class="select">
-			<vSelectMultiSearch ref="select" v-bind="{_clearable, _options, _values, values, disabled}" @fieldA="select" />
+			<vSelectMultiSearch ref="select" v-bind="{_clearable, _options, _values, values, disabled: _disabled}" @fieldA="select" />
 		</div>
 		<vTable :key="columnsData.length" v-bind="{_columns, columnsData, _columnsData: 'columnsData'}" @fieldA="fieldA" />
 	</div>
@@ -16,6 +16,7 @@ export default {
 	meta: {
 		res: {
 			props: {
+				disabled: false,
 				values: "values",
 				options: {
 					list: "https://api.sikane.signifly.com/v1/stock-item-models",
@@ -54,7 +55,7 @@ export default {
 		}
 	},
 	props: {
-		disabled: {type: Boolean, required: false},
+		_disabled: {type: Boolean, required: false, doc: true},
 		meta: {type: Object, require: false, default: () => ({})},
 
 		// vSelectMultiSearch props

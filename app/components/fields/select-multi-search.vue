@@ -2,8 +2,9 @@
 	<div class="select-multi-search-add">
 		<Select
 		v-model="data.values"
-		v-bind="{size, loading, disabled}"
+		v-bind="{size, loading}"
 		:remote-method="getListOptionsQ"
+		:disabled="_disabled"
 		:clearable="_clearable"
 		@change="update"
 		filterable multiple remote reserve-keyword>
@@ -21,6 +22,7 @@ export default {
 	meta: {
 		res: {
 			props: {
+				disabled: false,
 				values: "values",
 				options: {
 					list: "https://sikaline.glitch.me/table-actions/options",
@@ -48,7 +50,7 @@ export default {
 		}
 	},
 	props: {
-		disabled: {type: Boolean, required: false},
+		_disabled: {type: Boolean, required: false, doc: true},
 		meta: {type: Object, require: false, default: () => ({})},
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
 		_options: {type: Object, required: true, doc: true},

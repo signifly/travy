@@ -1,6 +1,6 @@
 <template>
 	<div class="switch">
-		<elSwitch v-model="data.value" @change="update" />
+		<elSwitch v-model="data.value" :disabled="_disabled" @change="update" />
 	</div>
 </template>
 
@@ -12,7 +12,8 @@ export default {
 	meta: {
 		res: {
 			props: {
-				value: "switchVal"
+				disabled: false,
+				value: "switchVal",
 			},
 			data: {
 				switchVal: false
@@ -20,6 +21,7 @@ export default {
 		}
 	},
 	props: {
+		_disabled: {type: Boolean, required: false, doc: true},
 		value: {type: Boolean, required: false, doc: true},
 		_value: {type: String, required: true}
 	},

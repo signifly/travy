@@ -1,6 +1,6 @@
 <template>
 	<div class="input">
-		<InputNumber v-model="data.value" @change="update" v-bind="{disabled}" :controls="false" size="medium" />
+		<InputNumber v-model="data.value" @change="update" :disabled="_disabled" :controls="false" size="medium" />
 		<div class="unit" v-if="_unit">{{_unit}}</div>
 	</div>
 </template>
@@ -14,6 +14,7 @@ export default {
 	meta: {
 		res: {
 			props: {
+				disabled: false,
 				value: "inputVal",
 				unit: "cm"
 			},
@@ -23,7 +24,7 @@ export default {
 		}
 	},
 	props: {
-		disabled: {type: Boolean, required: false},
+		_disabled: {type: Boolean, required: false, doc: true},
 		_unit: {type: String, required: false, doc: true},
 		value: {type: Number, required: false, doc: true},
 		_value: {type: String, required: true},

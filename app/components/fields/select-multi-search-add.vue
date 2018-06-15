@@ -2,8 +2,9 @@
 	<div class="select-multi-search-add">
 		<Select
 		v-model="data.values"
-		v-bind="{size, loading, disabled}"
+		v-bind="{size, loading}"
 		:remote-method="getListOptionsQ"
+		:disabled="_disabled"
 		:clearable="_clearable"
 		@change="update"
 		filterable multiple remote reserve-keyword allow-create>
