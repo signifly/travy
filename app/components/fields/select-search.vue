@@ -3,8 +3,9 @@
 		<Select
 		v-model="data.value"
 		@change="update"
-		v-bind="{size: sizeMap, loading, disabled}"
+		v-bind="{size: sizeMap, loading}"
 		:remote-method="getListQ"
+		:disabled="_disabled"
 		:clearable="_clearable"
 		filterable remote reserve-keyword>
 			<Option v-for="item in listMap" v-bind="item" :key="item.value" />
@@ -21,6 +22,7 @@ export default {
 	meta: {
 		res: {
 			props: {
+				disabled: false,
 				value: "selectValue",
 				options: {
 					endpoint: "https://sikaline.glitch.me/table-actions/options",
@@ -35,7 +37,7 @@ export default {
 		}
 	},
 	props: {
-		disabled: {type: Boolean, required: false},
+		_disabled: {type: Boolean, required: false, doc: true},
 		meta: {type: Object, require: false, default: () => ({})},
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
 		size: {type: String, default: "medium"},

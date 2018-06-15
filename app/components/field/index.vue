@@ -30,7 +30,6 @@
 			ref="field"
 			v-bind="[propsData, propsValue]"
 			:alt="alt"
-			:disabled="disabled"
 			@fieldA="$emit('fieldA', $event)"
 		/>
 
@@ -70,8 +69,8 @@ export default {
 
 		type: (t) => t.alt.type,
 		id: (t) => t.fieldType.id,
-		disabled: (t) => t.fieldType.readonly,
 		reference: (t) => t.fieldType.reference,
+		disabled: (t) => t.fieldType.props.disabled,
 		option: (t) => get(t.alt.options, t.name, {}),
 		show: (t) => get(t.alt.data, t.fieldType.show, true),
 

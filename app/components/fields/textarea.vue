@@ -1,6 +1,6 @@
 <template>
 	<div class="textarea">
-		<Input v-model="data.text" @input="update" v-bind="{disabled}" type="textarea" :rows="3" :controls="false" size="medium" />
+		<Input v-model="data.text" @input="update" :disabled="_disabled" type="textarea" :rows="3" :controls="false" size="medium" />
 	</div>
 </template>
 
@@ -12,6 +12,7 @@ export default {
 	meta: {
 		res: {
 			props: {
+				disabled: false,
 				text: "content"
 			},
 			data: {
@@ -20,9 +21,9 @@ export default {
 		}
 	},
 	props: {
+		_disabled: {type: Boolean, required: false, doc: true},
 		text: {type: String, required: false, doc: true},
-		_text: {type: String, required: true},
-		disabled: {type: Boolean, required: false}
+		_text: {type: String, required: true}
 	},
 	data() {
 		return {

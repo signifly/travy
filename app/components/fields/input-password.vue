@@ -1,6 +1,6 @@
 <template>
 	<div class="input">
-		<Input type="password" v-model="data.value" @input="update" v-bind="{disabled}" :controls="false" size="medium" />
+		<Input type="password" v-model="data.value" @input="update" :disabled="_disabled" :controls="false" size="medium" />
 	</div>
 </template>
 
@@ -12,6 +12,7 @@ export default {
 	meta: {
 		res: {
 			props: {
+				disabled: false,
 				value: "passord"
 			},
 			data: {
@@ -20,9 +21,9 @@ export default {
 		}
 	},
 	props: {
+		_disabled: {type: Boolean, required: false, doc: true},
 		value: {type: String, required: false, doc: true},
 		_value: {type: String, required: true},
-		disabled: {type: Boolean, required: false}
 	},
 	data() {
 		return {
