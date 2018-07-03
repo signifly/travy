@@ -19,7 +19,7 @@ const production = process.env.NODE_ENV === "production";
 const app = {
 	entry: {
 		vendor: ["babel-polyfill"],
-		app: ["./app/index.js"]
+		app: ["./src/index.js"]
 	},
 	output: {
 		path: __dirname + "/dist",
@@ -95,8 +95,8 @@ const app = {
 	resolve: {
 		alias: {
 			"vue$": "vue/dist/vue.runtime.esm.js",
-			"style": __dirname + "/app/style",
-			"@": __dirname + "/app"
+			"style": __dirname + "/src/style",
+			"@": __dirname + "/src"
 		}
 	},
 	devServer: {
@@ -114,7 +114,7 @@ const app = {
 		new webpack.NamedModulesPlugin(),
 
 		new HtmlWebpackPlugin({
-			template: "app/index.hbs",
+			template: "src/index.hbs",
 			hash: production,
 			title: "Sikane"
 		}),
@@ -179,7 +179,7 @@ if (production) {
 
 const retailers = {
 	entry: {
-		"retailers": ["babel-polyfill", "./app/components/ext/retailers/index.js"]
+		"retailers": ["babel-polyfill", "./src/components/ext/retailers/index.js"]
 	},
 	output: {
 		path: __dirname + "/dist/ext",
@@ -254,8 +254,8 @@ const retailers = {
 	resolve: {
 		alias: {
 			"vue$": "vue/dist/vue.runtime.esm.js",
-			"style": __dirname + "/app/style",
-			"@": __dirname + "/app"
+			"style": __dirname + "/src/style",
+			"@": __dirname + "/src"
 		}
 	},
 	performance: {
@@ -266,7 +266,7 @@ const retailers = {
 		new webpack.NamedModulesPlugin(),
 
 		new HtmlWebpackPlugin({
-			template: "app/components/ext/retailers/index.hbs",
+			template: "src/components/ext/retailers/index.hbs",
 			filename: "retailers/index.html",
 			hash: production,
 			title: "Sikane",

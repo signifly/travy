@@ -1,10 +1,7 @@
-from node:8-alpine
-
-# upgrade packages
-RUN apk update && apk upgrade
+from node:9-alpine
 
 # install packages
-RUN apk add bash git
+RUN apk update && apk add bash
 
 # install global npm packages
 RUN yarn global add npm-check-updates
@@ -20,11 +17,10 @@ RUN yarn
 
 COPY . .
 
-ARG API=https://api.sikane.signifly.com
-ENV API=${API}
-
 ARG GMAPS_KEY
-ENV GMAPS_KEY=${GMAPS_KEY}
+ARG API=https://api.forhandler-stila.stage71.signifly.com
+
+ENV GMAPS_KEY=${GMAPS_KEY} API=${API}
 
 RUN yarn build
 
