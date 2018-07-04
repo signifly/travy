@@ -11,9 +11,14 @@ import store from "./store";
 import app from "./app.vue";
 
 Vue.prototype.$http = axios;
+Vue.prototype.$meta = meta;
 
-new Vue({
-	el: "#app",
-	router, store,
-	render: h => h(app)
-});
+(async() => {
+	await store.dispatch("config/data");
+
+	new Vue({
+		el: "#app",
+		router, store,
+		render: h => h(app)
+	});
+})();

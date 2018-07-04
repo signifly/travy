@@ -8,32 +8,14 @@
 			:router="true"
 			menu-trigger="click">
 
-			<Submenu index="catalogue">
-				<template slot="title">Catalogue</template>
-				<MenuItem index="/products">Products</MenuItem>
-				<MenuItem index="/collections">Collections</MenuItem>
-				<MenuItem index="/stock-items">Stock items</MenuItem>
-				<MenuItem index="/stock-item-models">Stock item models</MenuItem>
-				<MenuItem index="/prices">Prices</MenuItem>
-				<MenuItem index="/price-lists">Price lists</MenuItem>
-				<MenuItem index="/files">Files</MenuItem>
-				<MenuItem index="/options">Options</MenuItem>
-				<MenuItem index="/tags">Tags</MenuItem>
-			</Submenu>
+			<template v-for="item in menu">
+				<MenuItem v-if="!item.items" :index="item.link">{{item.title}}</MenuItem>
 
-			<MenuItem index="/translations">Translations</MenuItem>
-			<MenuItem index="/shops">Shops</MenuItem>
-			<MenuItem index="/orders">Orders</MenuItem>
-			<MenuItem index="/partners">Partners</MenuItem>
-
-			<Submenu index="settings">
-				<template slot="title">Settings</template>
-				<MenuItem index="/ext">Externals</MenuItem>
-				<MenuItem index="/languages">Languages</MenuItem>
-				<MenuItem index="/currencies">Currencies</MenuItem>
-				<MenuItem index="/materials">Materials</MenuItem>
-				<MenuItem index="/users">Users</MenuItem>
-			</Submenu>
+				<Submenu v-else :index="item.title">
+					<template slot="title">{{item.title}}</template>
+					<MenuItem v-for="subitem in item.items" :index="subitem.link" :key="subitem.link">{{subitem.title}}</MenuItem>
+				</Submenu>
+			</template>
 		</Menu>
 
 		<div class="account">
@@ -73,8 +55,9 @@ export default {
 		}
 	},
 	computed: {
+		menu: (t) => t.$store.getters["config/menu"],
 		user: (t) => t.$store.getters["user/data"],
-		menuActive: (t) => "/" + t.$route.path.split("/")[1]
+		menuActive: (t) => t.$route.path
 	},
 	methods: {
 		account(action = () => {}) {

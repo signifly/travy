@@ -64,7 +64,7 @@ export default {
 		}
 	},
 	computed: {
-		error: (t) => get(t.alt.errors, `data.${t.name}`, [])[0],
+		error: (t) => get(t.alt.errors, t.name, [])[0],
 		comps: (t) => t.$options.components,
 
 		type: (t) => t.alt.type,

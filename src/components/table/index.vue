@@ -3,7 +3,7 @@
 
 		<div class="header">
 			<vFilters v-bind="[filters, {search}]" @filter="filter" />
-			<vActions v-bind="{actions, endpoints}" @fieldA="fieldA" />
+			<vActions v-bind="{actions}" @fieldA="fieldA" />
 		</div>
 
 		<div class="content">
@@ -18,7 +18,7 @@
 							</div>
 						</transition>
 					</div>
-					<vModifiers v-bind="{modifiers}" @refreshAll="refreshAll" />
+					<vModifiers v-if="modifiers" v-bind="{modifiers}" @refreshAll="refreshAll" />
 				</div>
 
 				<vTable
@@ -30,7 +30,7 @@
 				/>
 
 				<vPagination v-if="pagination" v-bind="[pagination, {loading}]" @getData="getData" />
-				<vBatch v-if="selected.length > 0" v-bind="{endpoints, selected, batch}" @unselect="unselect" @fieldA="fieldA" />
+				<vBatch v-if="selected.length > 0 && batch" v-bind="{endpoints, selected, batch}" @unselect="unselect" @fieldA="fieldA" />
 			</box>
 		</div>
 	</div>
@@ -61,15 +61,17 @@ export default {
 	},
 	computed: {
 		query: (t) => t.$route.query,
-		columns: (t) => t.definitions.columns,
+		columns: (t) => t.definitions.columns, // required
 		batch: (t) => t.definitions.batch,
 		modifiers: (t) => t.definitions.modifiers,
 		actions: (t) => t.definitions.actions,
-		defaults: (t) => t.definitions.defaults,
-		endpoints: (t) => t.definitions.endpoints,
+		defaults: (t) => t.definitions.defaults, // defaults
+		endpoint: (t) => t.definitions.endpoint,
 		filters: (t) => t.definitions.filters,
 		search: (t) => t.definitions.search,
-		includes: (t) => t.definitions.includes
+		includes: (t) => t.definitions.includes,
+
+		endpoints: (t) => ({}),
 	},
 	methods: {
 		select(items) {
@@ -80,43 +82,43 @@ export default {
 			this.$refs.vTable.unselect();
 		},
 
-		fieldA({action, data, item, done}) {
-			if (this[action]) this[action]({data, item, done});
+		async fieldA({action, data, item, done}) {
+			const actions = {
+				refresh: async ({done}) => {
+					await this.getData();
+				},
+
+				show: ({item}) => { // fieldA action
+					const url = endpointUrl({data: item, url: this.endpoints.show.url});
+					this.$router.push({path: url, query: {modifiers: this.query.modifiers}});
+				},
+
+				update: async ({item, data, done}) => { // fieldA action
+					const modifiers = this.modifiers ? this.modifiers.map(x => omit(x, "options")) : undefined;
+
+					const url = endpointUrl({data: item, url: this.endpoint.url});
+					await this.$http.put(url, {...data, modifiers});
+				},
+
+				remove: async ({item, done}) => { // fieldA action
+					const url = endpointUrl({data: item, url: this.endpoints.destroy.url});
+					await this.$http.delete(url);
+					await this.getData();
+				},
+			};
+
+			try {
+				await actions[action]({data, item, done});
+			} catch (err) {
+				console.log(err);
+			} finally {
+				if (done) await done();
+			}
 		},
 
 		async filter({done}) {
 			await this.getData({loading: false}); // don't show table loading indicator
 			await done();
-		},
-
-		async refresh({done}) { // fieldA action
-			await this.getData();
-			if (done) await done();
-		},
-
-		show({item}) { // fieldA action
-			const url = endpointUrl({data: item, url: this.endpoints.show.url});
-			this.$router.push({path: url, query: {modifiers: this.query.modifiers}});
-		},
-
-		async update({item, data, done}) { // fieldA action
-			try {
-				const modifiers = this.modifiers.map(x => omit(x, "options"));
-				const url = endpointUrl({data: item, url: this.endpoints.update.url});
-				await this.$http.put(url, {data, modifiers});
-			} catch (err) {} finally {
-				if (done) await done();
-			}
-		},
-
-		async remove({item, done}) { // fieldA action
-			try {
-				const url = endpointUrl({data: item, url: this.endpoints.destroy.url});
-				await this.$http.delete(url);
-				await this.getData();
-			} catch (err) {} finally {
-				if (done) await done();
-			}
 		},
 
 		async refreshAll({done}) {
@@ -147,19 +149,23 @@ export default {
 					return `${order}${sort.prop}`;
 				},
 				get modifiers() {
-					if (_this.query.modifiers) return _this.query.modifiers;
-					return _this.modifiers.reduce((obj, item) => {
-						return {...obj, [item.key]: item.value};
-					}, {});
+					if (_this.query.modifiers) {
+						return _this.query.modifiers;
+					}
+
+					if (_this.modifiers) {
+						return _this.modifiers.reduce((obj, item) => {
+							return {...obj, [item.key]: item.value};
+						}, {});
+					}
 				},
 				page: this.query.page,
 				count: this.query.pagesize,
-				filter: omit(this.query.filters, ["q"]),
-				q: get(this.query.filters, "q"),
-				include: this.includes.join(",")
+				filter: this.query.filters,
+				include: this.includes ? this.includes.join(",") : undefined
 			};
 
-			const {data: {data, meta}} = await this.$http.get(this.endpoints.index.url, {params});
+			const {data: {data, meta}} = await this.$http.get(this.endpoint.url, {params});
 			this.data = data;
 			this.pagination = meta;
 

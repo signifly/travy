@@ -25,7 +25,7 @@ api.interceptors.response.use(res => {
 	return res;
 }, (error) => {
 	const res = error.response;
-	console.log(res);
+	console.log(error, res);
 
 	if (get(res, "config.custom")) { // if the request catches the error itself, stop global error handling.
 		return Promise.reject(error);
@@ -41,8 +41,8 @@ api.interceptors.response.use(res => {
 	}
 
 	Notification({
-		title: "Error",
 		message: get(res, "data.message"),
+		title: `Error ${get(res, "status")}`,
 		type: "error"
 	});
 

@@ -19,7 +19,7 @@ import vModalFields from "@/components/modal-fields.vue";
 export default {
 	components: {vModalFields},
 	props: {
-		alt: {type: Object, required: true},
+		alt: {type: Object, default: () => ({})},
 		title: {type: String, required: false},
 		endpoint: {type: Object, required: true},
 		onSubmit: {type: String, required: false},
@@ -37,7 +37,7 @@ export default {
 		dataComb: (t) => ({...t.alt.data, ...t.data}),
 		endpointUrl: (t) => endpointUrl({data: t.dataComb, url: t.endpoint.url}),
 		vUpload: (t) => t.fields.map(x => x.fieldType.id === "vUpload").some(x => x),
-		payloadFormData: (t) => toFormData({data: t.payload}),
+		payloadFormData: (t) => toFormData(t.payload),
 
 		visible: {
 			get() {
@@ -72,7 +72,7 @@ export default {
 		async submit() {
 			try {
 				this.loading = true;
-				const payload = this.vUpload ? this.payloadFormData : {data: this.payload};
+				const payload = this.vUpload ? this.payloadFormData : this.payload;
 
 				const {data} = await this.$http({
 					method: this.endpoint.method,
@@ -88,6 +88,7 @@ export default {
 			} catch (err) {
 				console.log(err);
 				this.loading = false;
+				console.log(err.response);
 				this.error = get(err, "response.data", {});
 			}
 		}

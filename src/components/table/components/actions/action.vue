@@ -6,7 +6,6 @@
 			v-if="active"
 			:is="comp"
 			v-bind="props"
-			:alt="alt"
 			:endpoint="endpoint"
 			@close="toggle"
 			@fieldA="fieldA"
@@ -21,7 +20,6 @@ import * as actions from "@/components/actions";
 export default {
 	components: {Button, ...actions},
 	props: {
-		alt: {type: Object, required: true},
 		props: {type: Object, required: true},
 
 		icon: {type: String, required: false},
@@ -36,7 +34,7 @@ export default {
 	},
 	computed: {
 		comp: (t) => t.props.id,
-		endpoint: (t) => t.props.endpoint || t.alt.endpoints[t.endpointId]
+		endpoint: (t) => t.props.endpoint
 	},
 	methods: {
 		toggle() {

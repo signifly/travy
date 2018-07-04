@@ -10,8 +10,8 @@
 						<vHeader v-bind="{data, header}" @fieldA="fieldA" />
 					</Col>
 					<Col class="right" :span="8">
-						<vModifiers v-bind="{modifiers}" @refreshAll="refreshAll" />
-						<vActions v-bind="{actions, endpoints, data}" @submit="getData" />
+						<vModifiers v-if="modifiers" v-bind="{modifiers}" @refreshAll="refreshAll" />
+						<vActions v-if="actions" v-bind="{actions, data}" @submit="getData" />
 					</Col>
 				</Row>
 
@@ -20,13 +20,13 @@
 						<vTabs v-bind="{tabs, data, dataU, options, edits, errors}" @fieldA="fieldA"/>
 					</Col>
 					<Col class="right" :span="8">
-						<vSidebar v-bind="{sidebar, data}" @fieldA="fieldA" />
+						<vSidebar v-if="sidebar" v-bind="{sidebar, data}" @fieldA="fieldA" />
 					</Col>
 				</Row>
 
 				<Row class="bottom" :gutter="20">
 					<Col class="left" :span="24">
-						<vActivity v-if="activity.active" v-bind="{endpoints, data}" :key="saveU" />
+						<vActivity v-if="activity" v-bind="{data}" :key="saveU" />
 					</Col>
 				</Row>
 
@@ -48,8 +48,8 @@ const edits = () => ({tabs: new Set(), data: new Set()});
 export default {
 	components: {Row, Col, vModifiers, ...components},
 	props: {
-		id: {type: String, required: true},
-		meta: {type: Object, required: true}
+		tableId: {type: String, required: true},
+		viewId: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -66,15 +66,15 @@ export default {
 	},
 	computed: {
 		query: (t) => t.$route.query,
-		endpoints: (t) => t.definitions.endpoints,
+		endpoint: (t) => t.definitions.endpoint,
 		header: (t) => t.definitions.header,
 		sidebar: (t) => t.definitions.sidebar,
 		modifiers: (t) => t.definitions.modifiers,
 		activity: (t) => t.definitions.activity,
 		actions: (t) => t.definitions.actions,
 		tabs: (t) => t.definitions.tabs,
-		parentId: (t) => t.$route.meta.id,
 		errors: (t) => t.error.errors,
+
 		dataUpdated() {
 			const editsU = this.editsU; // force update, because sets are not reactive
 
@@ -87,21 +87,25 @@ export default {
 	},
 	methods: {
 		fieldA({action, tab, data, done}) {
-			if (this[action]) this[action]({tab, data, done});
-		},
+			const actions = {
+				refresh: async ({done}) => {
+					await this.getData();
+					if (done) await done();
+				},
 
-		async refresh({done}) { // fieldA action
-			await this.getData();
-			if (done) await done();
-		},
+				update: ({tab, data}) => {
+					this.track({tab, data});
+					forEach(data, (val, key) => set(this.data, key, val));
+				},
 
-		update({tab, data}) { // fieldA action
-			this.track({tab, data});
-			forEach(data, (val, key) => set(this.data, key, val));
-		},
+				remove: ({data}) => {
+					console.log("remove", data);
+				}
+			};
 
-		remove({data}) { // fieldA action
-			console.log("remove", data);
+			if (actions[action]) {
+				actions[action]({tab, data, done});
+			}
 		},
 
 		async refreshAll({done}) {
@@ -118,16 +122,16 @@ export default {
 			this.editsU++;
 		},
 
-		endpoint({type}) {
-			return endpoint({type, item: this.data, endpoints: this.endpoints});
-		},
-
 		modifierParams({definitions} = {}) {
-			if (this.query.modifiers || definitions) return this.query.modifiers;
+			if (this.query.modifiers || definitions) {
+				return this.query.modifiers;
+			}
 
-			return this.modifiers.reduce((obj, item) => {
-				return {...obj, [item.key]: item.value};
-			}, {});
+			if (this.modifiers) {
+				return this.modifiers.reduce((obj, item) => {
+					return {...obj, [item.key]: item.value};
+				}, {});
+			}
 		},
 
 		reset() {
@@ -144,7 +148,7 @@ export default {
 				modifiers: this.modifierParams({definitions: true})
 			};
 
-			const {data} = await this.$http.get(`definitions/view/${this.parentId}`, {params});
+			const {data} = await this.$http.get(`definitions/view/${this.tableId}`, {params});
 			this.definitions = data;
 		},
 
@@ -153,7 +157,7 @@ export default {
 				modifiers: this.modifierParams()
 			};
 
-			const {data: {data, options}} = await this.$http.get(`${this.parentId}/${this.id}`, {params});
+			const {data: {data, options}} = await this.$http.get(`${this.tableId}/${this.viewId}`, {params});
 			this.options = options;
 			this.data = data;
 
@@ -162,13 +166,13 @@ export default {
 		},
 
 		async save({done} = {}) {
-			const url = endpointUrl({data: this.data, url: this.endpoints.update.url});
+			const url = endpointUrl({data: this.data, url: this.endpoint.url});
 
 			try {
 				this.loadingSave = true;
 				const modifiers = this.modifierParams();
 
-				const {data: {data, options}} = await this.$http.put(url, {data: this.dataUpdated, modifiers}, {custom: true});
+				const {data: {data, options}} = await this.$http.put(url, {...this.dataUpdated, modifiers}, {custom: true});
 				this.options = options;
 				this.data = data;
 
@@ -196,7 +200,9 @@ export default {
 		try {
 			await this.getDefinitions();
 			await this.getData();
-		} catch (err) {} finally {
+		} catch (err) {
+			console.log(err);
+		} finally {
 			load.close();
 		}
 	}

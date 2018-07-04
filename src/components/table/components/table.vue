@@ -31,7 +31,7 @@ export default {
 		data: {type: Array, required: false},
 		columns: {type: Array, required: true},
 		defaults: {type: Object, required: true},
-		batch: {type: Object, required: true},
+		batch: {type: Object, default: () => ({})},
 		endpoints: {type: Object,required: true}
 	},
 	computed: {

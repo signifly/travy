@@ -4,7 +4,6 @@
 			v-for="action in actions"
 			:key="action.title"
 			v-bind="action"
-			:alt="{endpoints}"
 			@fieldA="fieldA"
 		/>
 
@@ -17,7 +16,6 @@ import vAction from "./action.vue";
 export default {
 	components: {vAction},
 	props: {
-		endpoints: {type: Object, required: true},
 		actions: {type: Array, required: true}
 	},
 	methods: {

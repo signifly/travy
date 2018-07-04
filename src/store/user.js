@@ -25,7 +25,7 @@ export default {
 
 	actions: {
 		async login({commit, dispatch}, {form, route}) {
-			const {data} = await axios.post("login", form, {custom: true});
+			const {data} = await axios.post(`${process.env.API}/v1/login`, form, {custom: true});
 			commit("authSet", {data});
 			await dispatch("data");
 			router.push(route);

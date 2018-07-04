@@ -27,7 +27,7 @@ export default {
 		edits: {type: Object, required: false},
 		dataU: {type: Number, required: true},
 		nodatas: {type: Object, required: true},
-		options: {type: Object, required: true}
+		options: {type: Object, required: false}
 	},
 	computed: {
 		id: (t) => t.tab.id,

@@ -116,7 +116,7 @@ const app = {
 		new HtmlWebpackPlugin({
 			template: "src/index.hbs",
 			hash: production,
-			title: "Sikane"
+			title: "Travy"
 		}),
 
 		new webpack.optimize.CommonsChunkPlugin({

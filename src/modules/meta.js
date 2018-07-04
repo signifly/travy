@@ -1,7 +1,6 @@
+import store from "@/store";
+
 export default ({title}) => {
-	if (title) {
-		document.title = `${title} - Sikane`;
-	} else {
-		document.title = "Sikane";
-	}
+	const siteTitle = store.getters["config/title"];
+	document.title = title ? `${title} - ${siteTitle}` : siteTitle;
 };

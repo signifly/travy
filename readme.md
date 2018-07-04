@@ -3,7 +3,6 @@
 ### Docker development
 
 ``` bash
-# api defaults to api.sikane.signifly.com
 # create .env to change api endpoint
 
 # start container(s) and open localhost:3000
