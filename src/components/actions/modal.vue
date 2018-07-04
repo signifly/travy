@@ -37,7 +37,6 @@ export default {
 		dataComb: (t) => ({...t.alt.data, ...t.data}),
 		endpointUrl: (t) => endpointUrl({data: t.dataComb, url: t.endpoint.url}),
 		vUpload: (t) => t.fields.map(x => x.fieldType.id === "vUpload").some(x => x),
-		payloadFormData: (t) => toFormData(t.payload),
 
 		visible: {
 			get() {
@@ -57,27 +56,14 @@ export default {
 			this.$emit("close");
 		},
 
-		submitAfter({data} = {}) {
-			if (this.onSubmit) {
-				const url = endpointUrl({data: data.data || this.dataComb, url: this.onSubmit});
-				this.$router.push(url);
-			} else {
-				this.$emit("fieldA", {
-					action: "refresh",
-					done: async () => this.close()
-				});
-			}
-		},
-
 		async submit() {
 			try {
 				this.loading = true;
-				const payload = this.vUpload ? this.payloadFormData : this.payload;
 
 				const {data} = await this.$http({
+					data: this.vUpload ? toFormData(this.payload) : this.payload,
 					method: this.endpoint.method,
 					url: this.endpointUrl,
-					data: payload,
 					custom: true,
 					onUploadProgress: (e) => {
 						this.loading = Math.round(e.loaded / e.total * 100);
@@ -90,6 +76,18 @@ export default {
 				this.loading = false;
 				console.log(err.response);
 				this.error = get(err, "response.data", {});
+			}
+		},
+
+		submitAfter({data}) {
+			if (this.onSubmit) {
+				const url = endpointUrl({data: data || this.dataComb, url: this.onSubmit});
+				this.$router.push(url);
+			} else {
+				this.$emit("fieldA", {
+					action: "refresh",
+					done: async () => this.close()
+				});
 			}
 		}
 	}

@@ -22,7 +22,7 @@
 			<div class="dropdown">
 				<Dropdown trigger="click" :show-timeout="0" :hide-timeout="0" @command="account">
 					<a class="el-dropdown-link">
-						{{user.first_name}}<i class="el-icon-arrow-down el-icon--right"></i>
+						{{user.name}}<i class="el-icon-arrow-down el-icon--right"></i>
 					</a>
 
 					<DropdownMenu slot="dropdown" @command="$event()">
@@ -60,16 +60,14 @@ export default {
 		menuActive: (t) => t.$route.path
 	},
 	methods: {
-		account(action = () => {}) {
-			action();
-		},
+		account: (action = () => {}) => action(),
 
 		logout() {
 			this.$store.dispatch("user/logout", {post: true});
 		},
 
 		settings() {
-			this.$router.push({name: "users-view", params: {id: this.user.id.toString()}});
+			this.$router.push({name: "account"});
 		}
 	}
 };

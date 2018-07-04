@@ -33,7 +33,7 @@ export default {
 
 		async logout({commit}, {post} = {}) {
 			try {
-				if (post) await axios.post("logout");
+				if (post) await axios.post(`${process.env.API}/v1/logout`);
 			} catch (err) {} finally {
 				commit("authDelete");
 				router.push({name: "login", params: {route: {path: window.location.pathname}}});

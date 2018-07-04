@@ -9,7 +9,7 @@
 						:key="field.name"
 						v-bind="field"
 						:alt="{data: dataComb}"
-						@fieldA="updateQ"
+						@fieldA="update"
 					/>
 				</div>
 
@@ -33,7 +33,7 @@
 		:prefix-icon="searchIcon"
 		v-model="input"
 		:placeholder="search.placeholder"
-		@input="updateQ({data: {q: $event}})"
+		@input="update({data: {search: $event}})"
 		clearable>
 			<Button slot="append" icon="el-icon-tickets" v-if="fields && fields.length > 0" v-popover:pop>Add filter</Button>
 		</Input>
@@ -55,7 +55,7 @@ export default {
 	},
 	data() {
 		return  {
-			input: get(this.$route.query, "filters.q") || "",
+			input: get(this.$route.query, "filters.search") || "",
 			loading: false,
 			active: false,
 			resetU: 0
@@ -68,7 +68,7 @@ export default {
 		query: (t) => t.$route.query
 	},
 	methods: {
-		update: debounce(async function({data}) {
+		updateDebounce: debounce(async function({data}) {
 			let filters = {...this.query.filters, ...data};
 			filters = mapValues(filters, (val, key) => val === "" ? undefined : val);
 
@@ -77,17 +77,17 @@ export default {
 			this.$emit("filter", {
 				done: async () => this.loading = false
 			});
-		}, 500),
+		}, 400),
 
-		updateQ({data}) {
+		update({data}) {
 			this.loading = true;
-			this.update({data});
+			this.updateDebounce({data});
 		},
 
 		async reset() {
 			this.loading = true;
 			this.active = false;
-			const filters = this.input ? {q: this.input} : undefined;
+			const filters = this.input ? {search: this.input} : undefined;
 			this.$router.replace({query: {...this.query, filters}});
 
 			this.$emit("filter", {

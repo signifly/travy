@@ -46,7 +46,7 @@ import box from "../box.vue";
 export default {
 	components: {...components, vModifiers, box},
 	props: {
-		id: {type: String, required: true},
+		tableId: {type: String, required: true},
 		title: {type: String, required: false}
 	},
 	data() {
@@ -88,7 +88,7 @@ export default {
 					await this.getData();
 				},
 
-				show: ({item}) => { // fieldA action
+				show: async ({item}) => { // fieldA action
 					const url = endpointUrl({data: item, url: this.endpoints.show.url});
 					this.$router.push({path: url, query: {modifiers: this.query.modifiers}});
 				},
@@ -133,7 +133,7 @@ export default {
 				modifiers: this.query.modifiers
 			};
 
-			const {data} = await this.$http.get(`definitions/table/${this.id}`, {params});
+			const {data} = await this.$http.get(`definitions/table/${this.tableId}`, {params});
 			this.definitions = data;
 		},
 

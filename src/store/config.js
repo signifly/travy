@@ -37,6 +37,9 @@ export default {
 		},
 		title(state, getters) {
 			return get(getters.settings, "title");
+		},
+		frontpage(state, getters) {
+			return get(getters.settings, "frontpage");
 		}
 	}
 };

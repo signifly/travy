@@ -48,8 +48,7 @@ const edits = () => ({tabs: new Set(), data: new Set()});
 export default {
 	components: {Row, Col, vModifiers, ...components},
 	props: {
-		tableId: {type: String, required: true},
-		viewId: {type: String, required: true}
+		requests: {type: Object, required: true}
 	},
 	data() {
 		return {
@@ -148,7 +147,7 @@ export default {
 				modifiers: this.modifierParams({definitions: true})
 			};
 
-			const {data} = await this.$http.get(`definitions/view/${this.tableId}`, {params});
+			const {data} = await this.$http.get(this.requests.definitions, {params});
 			this.definitions = data;
 		},
 
@@ -157,7 +156,7 @@ export default {
 				modifiers: this.modifierParams()
 			};
 
-			const {data: {data, options}} = await this.$http.get(`${this.tableId}/${this.viewId}`, {params});
+			const {data: {data, options}} = await this.$http.get(this.requests.data, {params});
 			this.options = options;
 			this.data = data;
 
