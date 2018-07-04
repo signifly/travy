@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  app:
+    container_name: travy
+    image: docker-registry.signifly.com/travy:development
+    restart: unless-stopped
+    labels:
+      virtual.host: "travy.signifly.com"
+      virtual.port: "80"
+      virtual.tls-email: "dev@signifly.com"
+
+  proxy:
+    container_name: proxy
+    image: wemakeservices/caddy-gen
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs/acme:/etc/caddy/acme
+      - ./certs/ocsp:/etc/caddy/ocsp
