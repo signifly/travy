@@ -7,32 +7,34 @@ Vue.use(VueRouter);
 
 import store from "@/store";
 
-// import tables from "./tables";
 import index from "@/pages/index.vue";
 import account from "@/pages/account.vue";
+import ext from "@/pages/ext.vue";
+
 import login from "@/pages/login/index.vue";
 import loginReset from "@/pages/login/reset.vue";
-import ext from "@/pages/ext.vue";
+
 import table from "@/pages/table.vue";
 import view from "@/pages/view.vue";
+
 import _404 from "@/pages/404.vue";
 import _401 from "@/pages/401.vue";
 import error from "@/pages/error.vue";
-import doc from "@/pages/doc.vue";
-const docFields = () => import(/* webpackChunkName: "doc-fields" */ "@/components/doc/fields/index.vue");
 
+// import doc from "@/pages/doc.vue";
+import meta from "@/pages/meta.vue";
+import metaFields from "@/components/meta/fields/index.vue";
 
 const routes = [
-	{
-		meta: {title: "Doc", layout: "vBase", auth: {roles: "all"}},
-		redirect: "/doc/fields",
-		path: "/doc",
-		name: "doc",
-		component: doc,
-		children: [
-			{path: "fields", name: "doc-fields", component: docFields, meta: {title: "Doc fields", layout: "vBase", auth: {roles: "all"}}}
-		]
-	},
+	// {
+	// 	path: "/doc",
+	// 	name: "doc",
+	// 	component: doc,
+	// 	meta: {title: "Doc", layout: "vBase", auth: {roles: "all"}}
+	// },
+
+	{path: "/meta", name: "meta", component: meta, meta: {title: "Meta", layout: "vBase", auth: {roles: "all"}}},
+	{path: "/meta/fields", name: "metaFields", component: metaFields, meta: {title: "Fields", layout: "vBase", auth: {roles: "all"}}},
 
 	{path: "/", name: "index", component: index, meta: {auth: {roles: "all"}}},
 	{path: "/account", name: "account", component: account, meta: {auth: {roles: "all"}}},
