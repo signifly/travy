@@ -148,7 +148,15 @@ const app = {
 				GMAPS_KEY: JSON.stringify(process.env.GMAPS_KEY),
 				API: JSON.stringify(process.env.API)
 			}
-		})
+		}),
+
+		new BundleAnalyzerPlugin({
+			analyzerMode: production ? "static" : "server",
+			reportFilename: "report/index.html",
+			openAnalyzer: false,
+			analyzerHost: "0.0.0.0",
+			analyzerPort: 3002
+		}),
 	],
 
 	devtool: production ? "#source-map" : "#eval-source-map"
@@ -156,11 +164,6 @@ const app = {
 
 if (production) {
 	app.plugins = app.plugins.concat([
-		new BundleAnalyzerPlugin({
-			analyzerMode: "static",
-			reportFilename: "report/index.html"
-		}),
-
 		new UglifyJsPlugin({
 			parallel: true,
 			sourceMap: true
@@ -269,10 +272,9 @@ const retailers = {
 		new webpack.NamedModulesPlugin(),
 
 		new HtmlWebpackPlugin({
-			template: "src/components/ext/retailers/index.hbs",
+			template: "src/components/ext/retailers/index.html",
 			filename: "retailers/index.html",
 			hash: production,
-			title: "Sikane",
 			inject: false
 		}),
 
