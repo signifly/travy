@@ -43,8 +43,8 @@ export default {
 			},
 			data: {
 				itemList: [
-					{key: "item1"},
-					{key: "item2"}
+					{key: "item1", id: 1},
+					{key: "item2", id: 2}
 				]
 			}
 		}

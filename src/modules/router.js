@@ -4,9 +4,11 @@ import Vue from "vue";
 import qs from "qs";
 
 Vue.use(VueRouter);
-
 import store from "@/store";
+import setMeta from "./meta";
 
+
+// pages
 import index from "@/pages/index.vue";
 import account from "@/pages/account.vue";
 import ext from "@/pages/ext.vue";
@@ -21,34 +23,34 @@ import _404 from "@/pages/404.vue";
 import _401 from "@/pages/401.vue";
 import error from "@/pages/error.vue";
 
-// import doc from "@/pages/doc.vue";
-import meta from "@/pages/meta.vue";
-import metaFields from "@/components/meta/fields/index.vue";
+const meta = () => import(/* webpackChunkName: "meta" */ "@/pages/meta.vue");
+const metaIndex = () => import(/* webpackChunkName: "meta-index" */ "@/components/meta/index.vue");
+const metaFields = () => import(/* webpackChunkName: "meta-fields" */ "@/components/meta/fields/index.vue");
+
 
 const routes = [
-	// {
-	// 	path: "/doc",
-	// 	name: "doc",
-	// 	component: doc,
-	// 	meta: {title: "Doc", layout: "vBase", auth: {roles: "all"}}
-	// },
+	{
+		path: "/meta",
+		component: meta,
+		children: [
+			{path: "", name: "meta", component: metaIndex, meta: {layout: "vBase", title: "Meta", auth: {roles: "all"}}},
+			{path: "fields", name: "metaFields", component: metaFields, meta: {layout: "vBase", title: "Meta/Fields", auth: {roles: "all"}}},
+		]
+	},
 
-	{path: "/meta", name: "meta", component: meta, meta: {title: "Meta", layout: "vBase", auth: {roles: "all"}}},
-	{path: "/meta/fields", name: "metaFields", component: metaFields, meta: {title: "Fields", layout: "vBase", auth: {roles: "all"}}},
-
-	{path: "/", name: "index", component: index, meta: {auth: {roles: "all"}}},
-	{path: "/account", name: "account", component: account, meta: {auth: {roles: "all"}}},
-	{path: "/ext", name: "ext", component: ext, meta: {title: "Externals", auth: {roles: "all"}}},
+	{path: "/", name: "index", component: index, meta: {layout: "vMain", title: "", auth: {roles: "all"}}},
+	{path: "/account", name: "account", component: account, meta: {layout: "vMain", title: "Account", auth: {roles: "all"}}},
+	{path: "/ext", name: "ext", component: ext, meta: {title: "Externals", layout: "vMain", auth: {roles: "all"}}},
 
 	{path: "/login", name: "login", component: login, props: true, meta: {layout: "vBase", title: "Login"}},
 	{path: "/login/reset/:id", name: "login-reset", component: loginReset, props: true, meta: {layout: "vBase", title: "Reset login"}},
 
-	{path: "/t/:tableId", name: "table", component: table, meta: {auth: {roles: "all"}}},
-	{path: "/t/:tableId/:viewId", name: "tableView", component: view, meta: {auth: {roles: "all"}}},
+	{path: "/t/:tableId", name: "table", component: table, meta: {layout: "vMain", auth: {roles: "all"}}},
+	{path: "/t/:tableId/:viewId", name: "tableView", component: view, meta: {layout: "vMain", auth: {roles: "all"}}},
 
-	{path: "/401", name: "401", component: _401, meta: {title: "401", auth: {roles: "all"}}},
-	{path: "/error", name: "error", component: error, meta: {title: "Error", layout: "vBase"}},
-	{path: "/*", name: "404", component: _404, meta: {title: "404", auth: {roles: "all"}}}
+	{path: "/401", name: "401", component: _401, meta: {title: "401", layout: "vMain", auth: {roles: "all"}}},
+	{path: "/error", name: "error", component: error, meta: {title: "Error", layout: "vMain", layout: "vBase"}},
+	{path: "/*", name: "404", component: _404, meta: {title: "404", layout: "vMain", auth: {roles: "all"}}}
 ];
 
 
@@ -70,8 +72,16 @@ const router = new VueRouter({
 });
 
 
+const go = ({to, from, next}) => {
+	if (to.meta.title) {
+		setMeta({title: to.meta.title});
+	}
+
+	next();
+};
+
 router.beforeEach(async (to, from, next) => {
-	if (!to.meta.auth) return next(); // allow all routes that isn't protected by auth
+	if (!to.meta.auth) return go({to, from, next}); // allow all routes that isn't protected by auth
 
 	const user = store.getters["user/data"] || await store.dispatch("user/data");
 	const roles = get(to.meta, "auth.roles", []);
@@ -80,7 +90,7 @@ router.beforeEach(async (to, from, next) => {
 	if (!user) return store.dispatch("user/logout");
 
 	if (roles === "all" || roles.includes(user.role)) {
-		next();
+		go({to, from, next});
 	} else {
 		next({name: "401", replace: true});
 	}

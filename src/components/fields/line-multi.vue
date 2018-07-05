@@ -68,12 +68,8 @@ export default {
 						switchValue: false,
 						selectValue: "",
 						infoItems: [
-							{
-								name: "okesf"
-							},
-							{
-								name: "wef"
-							}
+							{name: "okesf", id: 1},
+							{name: "wef", id: 2}
 						]
 					},
 					{
@@ -81,12 +77,8 @@ export default {
 						switchValue: false,
 						selectValue: "",
 						infoItems: [
-							{
-								name: "okesf"
-							},
-							{
-								name: "wef"
-							}
+							{name: "okesf", id: 1},
+							{name: "wef", id: 2}
 						]
 					}
 				]

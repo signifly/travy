@@ -42,8 +42,16 @@ const app = {
 				}
 			},
 			{
-				test: /\.hbs$/,
-				loader: "handlebars-loader"
+				test: /\.md$/,
+				use: [
+					{
+						loader: "html-loader"
+					},
+					{
+						loader: "markdown-loader",
+						options: {}
+					}
+				]
 			},
 			{
 				test: /\.js$/,
@@ -114,9 +122,8 @@ const app = {
 		new webpack.NamedModulesPlugin(),
 
 		new HtmlWebpackPlugin({
-			template: "src/index.hbs",
-			hash: production,
-			title: "Travy"
+			template: "src/index.html",
+			hash: production
 		}),
 
 		new webpack.optimize.CommonsChunkPlugin({
@@ -199,10 +206,6 @@ const retailers = {
 						})
 					}
 				}
-			},
-			{
-				test: /\.hbs$/,
-				loader: "handlebars-loader"
 			},
 			{
 				test: /\.js$/,

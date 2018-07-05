@@ -85,12 +85,8 @@ export default {
 				switchT: "title",
 				selectValue: "",
 				infoItems: [
-					{
-						name: "model #1"
-					},
-					{
-						name: "model #2"
-					}
+					{name: "model #1", id: 1},
+					{name: "model #2", id: 2}
 				]
 			}
 		}

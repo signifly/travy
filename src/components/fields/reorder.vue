@@ -38,7 +38,7 @@ export default {
 				itemsValue: "id",
 				endpoint: {
 					method: "get",
-					url: "products"
+					url: ""
 				},
 				columns: [
 					{
@@ -86,18 +86,14 @@ export default {
 		},
 
 		async getItems() {
-			const ept = this._endpoint;
-
-			const {data} = await this.$http({
-				method: ept.method,
-				url: ept.url
-			});
-
+			const {data} = await this.$http(this._endpoint);
 			this.items = get(data, this._itemsKey, data);
 		}
 	},
 	created() {
-		this.getItems();
+		if (this._endpoint.url) {
+			this.getItems();
+		}
 	}
 };
 </script>

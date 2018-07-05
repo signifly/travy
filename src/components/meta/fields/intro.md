@@ -1,9 +1,8 @@
-## Field documentation
+# Introduction
 
-### props
+## props
 
-Every field takes `propsValue` and `propsData` from `@/components/field.vue`,<br>
-and every field have an example response (`meta.res`) documenting the field behavior.
+Every field takes `propsValue` and `propsData` from `@/components/field.vue`, and every field have an example response (`meta.res`) documenting the field behavior.
 
 A simple component could look like this:
 
@@ -24,14 +23,12 @@ props: {
 }
 ```
 
-props without `_` are mapped to the data object, while props with `_` will just give you the prop value.<br>
-So in this case, `value` is `some text` and `_value` is `text`.
+props without `_` are mapped to the data object, while props with `_` will just give you the prop value. So in this case, `value` is `some text` and `_value` is `text`.
 
-if `doc: true` that prop will be documented on the `/doc` page.<br>
-We need to know `_value` so we can update `some text` on the correct key in our parent data object.
+if `doc: true` that prop will be documented on the `/meta/fields` page. We need to know `_value` so we can update `some text` on the correct key in our parent data object.
 
 
-### update
+## update
 
 Here's how we'll update our text on change:
 
@@ -49,7 +46,7 @@ methods: {
 The update method gets a new `value` and emits a new data object which contains the data we want to change.
 
 
-### nodata
+## nodata
 
 on views we need to know on some fields if they're filled out or not. If that's needed, we make a computed property called `nodata`.
 

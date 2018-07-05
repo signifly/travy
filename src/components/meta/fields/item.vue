@@ -1,7 +1,7 @@
 <template>
-	<div class="item" :id="id">
+	<div class="item">
 		<div class="wrap">
-			<a class="title" :href="`#${id}`">{{id}}</a>
+			<h1 class="title" :id="id" :href="`#${id}`">{{id}}</h1>
 
 			<div class="props">
 				<table class="table">
@@ -137,21 +137,10 @@ export default {
 	}
 
 	.wrap {
-		// margin: 5em 0;
-
-		> .title {
-			display: block;
-			font-size: 1.5em;
-			font-weight: 500;
-			margin-bottom: 1em;
-			color: $black1;
-			text-decoration: none;
-
-			&:hover {
-				color: $blue5;
-			}
+		h1.title {
+			border-bottom: 0;
+			padding-bottom: 0;
 		}
-
 		> .props {
 			margin: 1em 0;
 			border: 1px solid $blue2;

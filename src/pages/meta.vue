@@ -1,10 +1,17 @@
 <template>
 	<div class="meta">
 		<div class="header">
-			<div class="title">Meta</div>
+			<div class="wrap">
+				<router-link class="title" :to="{name: 'meta'}">Meta</router-link>
+
+				<div class="menu">
+					<router-link :to="{name: 'metaFields'}">Fields</router-link>
+					<a class="ext" href="/" target="_blank">App</a>
+				</div>
+			</div>
 		</div>
 
-		<div class="page">
+		<div class="router">
 			<router-view/>
 		</div>
 	</div>
@@ -25,20 +32,59 @@ export default {
 		background-color: $white1;
 		border-bottom: 1px solid $blue2;
 		position: fixed;
+		width: 100%;
 		display: flex;
 		align-items: center;
-		width: 100%;
 		height: $h;
 		top: 0;
 		left: 0;
-		padding: 0 2em;
 
-		.title {
-			font-size: 1.5em;
-			font-weight: 600;
+		a {
+			color: $black1;
+			text-decoration: none;
+		}
+
+		.wrap {
+			width: 100%;
+			padding: 0 2em;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			.title {
+				font-size: 1.5em;
+				font-weight: 600;
+			}
+
+			.menu {
+				font-size: 0.9em;
+
+				a {
+					position: relative;
+					font-weight: 500;
+					padding-bottom: 0.1em;
+					margin-left: 1em;
+
+					&.router-link-active, &:hover {
+						border-bottom: 2px solid $blue5;
+					}
+
+					&.ext {
+						border-bottom: 0;
+
+						&:after {
+							content: "↗️";
+							font-size: 0.6em;
+							margin-left: 0.2em;
+							vertical-align: super;
+						}
+					}
+				}
+			}
 		}
 	}
-	.page {
+
+	.router {
 		padding-top: $h;
 	}
 }

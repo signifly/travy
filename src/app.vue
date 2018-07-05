@@ -10,7 +10,7 @@ import * as layouts from "./components/layouts";
 export default {
 	components: {...layouts},
 	computed: {
-		layout: (t) => t.$route.meta.layout || "vMain"
+		layout: (t) => t.$route.meta.layout
 	}
 };
 </script>

@@ -4,7 +4,6 @@
 
 ``` bash
 # create .env to change api endpoint
-
 # start container(s) and open localhost:3000
 $ docker-compose up
 ```
