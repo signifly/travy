@@ -6,7 +6,6 @@
 			:data="columnsData"
 			:defaults="{}"
 			:modifiers="[]"
-			:endpoints="{}"
 			:selected="[]"
 			:batch="{}"
 			@fieldA="fieldA"

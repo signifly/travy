@@ -39,18 +39,6 @@ export default {
 			this.$emit("close");
 		},
 
-		submitAfter({data} = {}) {
-			if (this.onSubmit) {
-				const url = endpointUrl({data: data.data || this.dataComb, url: this.onSubmit});
-				this.$router.push(url);
-			} else {
-				this.$emit("fieldA", {
-					action: "refresh",
-					done: async () => this.close()
-				});
-			}
-		},
-
 		async submit() {
 			try {
 				this.loading = true;
@@ -64,6 +52,18 @@ export default {
 				this.submitAfter({data});
 			} catch (err) {
 				this.loading = false;
+			}
+		},
+
+		submitAfter({data} = {}) {
+			if (this.onSubmit) {
+				const url = endpointUrl({data: data.data || this.dataComb, url: this.onSubmit});
+				this.$router.push(url);
+			} else {
+				this.$emit("fieldA", {
+					action: "refresh",
+					done: async () => this.close()
+				});
 			}
 		}
 	}

@@ -23,9 +23,9 @@ import _404 from "@/pages/404.vue";
 import _401 from "@/pages/401.vue";
 import error from "@/pages/error.vue";
 
-const meta = () => import(/* webpackChunkName: "meta" */ "@/pages/meta.vue");
-const metaIndex = () => import(/* webpackChunkName: "meta-index" */ "@/components/meta/index.vue");
-const metaFields = () => import(/* webpackChunkName: "meta-fields" */ "@/components/meta/fields/index.vue");
+const meta = () => import(/* webpackChunkName: "app.page-meta" */ "@/pages/meta.vue");
+const metaIndex = () => import(/* webpackChunkName: "app.page-metaIndex" */ "@/components/meta/index.vue");
+const metaFields = () => import(/* webpackChunkName: "app.page-metaFields" */ "@/components/meta/fields/index.vue");
 
 
 const routes = [

@@ -2,7 +2,7 @@
 	<component :is="link ? 'router-link' : 'div'" class="field-wrap" :to="link">
 		<vField
 			v-bind="column"
-			:alt="{endpoints, data, type: 'table'}"
+			:alt="{data, type: 'table'}"
 			@fieldA="fieldA"
 		/>
 	</component>
@@ -14,7 +14,6 @@ import vField from "@/components/field/index.vue";
 
 export default {
 	props: {
-		endpoints: {type: Object, required: true},
 		column: {type: Object, required: true},
 		scope: {type: Object, required: true}
 	},

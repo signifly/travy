@@ -4,9 +4,8 @@
 
 		<component
 			v-if="active"
-			:is="comp"
+			:is="props.id"
 			v-bind="props"
-			:endpoint="endpoint"
 			@close="toggle"
 			@fieldA="fieldA"
 		/>
@@ -21,20 +20,14 @@ export default {
 	components: {Button, ...actions},
 	props: {
 		props: {type: Object, required: true},
-
 		icon: {type: String, required: false},
 		title: {type: String, required: true},
-		status: {type: String, required: false, default: "primary"},
-		endpointId: {type: String, required: false}
+		status: {type: String, required: false, default: "primary"}
 	},
 	data() {
 		return {
 			active: false
 		}
-	},
-	computed: {
-		comp: (t) => t.props.id,
-		endpoint: (t) => t.props.endpoint
 	},
 	methods: {
 		toggle() {

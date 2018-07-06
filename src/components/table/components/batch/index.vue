@@ -35,7 +35,6 @@ import vAction from "./action.vue";
 export default {
 	components: {Dropdown, DropdownMenu, DropdownItem, vPanel, Button, vSelected, vAction},
 	props: {
-		endpoints: {type: Object, required: true},
 		selected: {type: Array, required: true},
 		batch: {type: Object, required: true}
 	},
@@ -75,7 +74,7 @@ export default {
 
 		sequentialStart() {
 			const modifiers = this.$route.query.modifiers;
-			const url = this.endpoints.show.url.replace("{id}", this.ids[0]);
+			const url = `${this.$route.path}/${this.ids[0]}`;
 			this.$router.push({path: url, query: {modifiers, seq: {items: this.ids}}});
 		}
 	}

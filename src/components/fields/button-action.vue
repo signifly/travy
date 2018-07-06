@@ -31,8 +31,8 @@ export default {
 					title: "Modal title",
 					onSubmit: "#vActions",
 					endpoint: {
-						method: "destroy",
-						url: "destroy"
+						method: "post",
+						url: "https://example.com"
 					},
 					fields: [
 						{
@@ -78,9 +78,6 @@ export default {
 		return {
 			active: false
 		}
-	},
-	computed: {
-		endpoint: (t) => t._action.endpoint || get(t.alt.endpoints, t._action.endpointId)
 	},
 	methods: {
 		close() {

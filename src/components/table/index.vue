@@ -23,14 +23,14 @@
 
 				<vTable
 					ref="vTable"
-					v-bind="{data, columns, defaults, batch, endpoints, loading}"
+					v-bind="{data, columns, defaults, batch, loading}"
 					@select="select"
 					@getData="getData"
 					@fieldA="fieldA"
 				/>
 
 				<vPagination v-if="pagination" v-bind="[pagination, {loading}]" @getData="getData" />
-				<vBatch v-if="selected.length > 0 && batch" v-bind="{endpoints, selected, batch}" @unselect="unselect" @fieldA="fieldA" />
+				<vBatch v-if="selected.length > 0 && batch" v-bind="{selected, batch}" @unselect="unselect" @fieldA="fieldA" />
 			</box>
 		</div>
 	</div>
@@ -62,16 +62,14 @@ export default {
 	computed: {
 		query: (t) => t.$route.query,
 		columns: (t) => t.definitions.columns, // required
+		defaults: (t) => t.definitions.defaults, // required
+		endpoint: (t) => t.definitions.endpoint, // required
+		actions: (t) => t.definitions.actions,
 		batch: (t) => t.definitions.batch,
 		modifiers: (t) => t.definitions.modifiers,
-		actions: (t) => t.definitions.actions,
-		defaults: (t) => t.definitions.defaults, // defaults
-		endpoint: (t) => t.definitions.endpoint,
 		filters: (t) => t.definitions.filters,
 		search: (t) => t.definitions.search,
-		includes: (t) => t.definitions.includes,
-
-		endpoints: (t) => ({}),
+		includes: (t) => t.definitions.includes
 	},
 	methods: {
 		select(items) {
@@ -88,23 +86,12 @@ export default {
 					await this.getData();
 				},
 
-				show: async ({item}) => { // fieldA action
-					const url = endpointUrl({data: item, url: this.endpoints.show.url});
-					this.$router.push({path: url, query: {modifiers: this.query.modifiers}});
-				},
-
 				update: async ({item, data, done}) => { // fieldA action
 					const modifiers = this.modifiers ? this.modifiers.map(x => omit(x, "options")) : undefined;
 
 					const url = endpointUrl({data: item, url: this.endpoint.url});
 					await this.$http.put(url, {...data, modifiers});
-				},
-
-				remove: async ({item, done}) => { // fieldA action
-					const url = endpointUrl({data: item, url: this.endpoints.destroy.url});
-					await this.$http.delete(url);
-					await this.getData();
-				},
+				}
 			};
 
 			try {

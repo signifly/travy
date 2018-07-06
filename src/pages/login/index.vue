@@ -12,7 +12,7 @@
 <script>
 import {mapKeys, get} from "lodash";
 import {Button} from "element-ui";
-import vForm from "./form.vue";
+import vForm from "@/components/login/form.vue";
 
 export default {
 	components: {vForm, Button},

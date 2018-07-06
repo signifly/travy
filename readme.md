@@ -4,8 +4,12 @@
 
 ``` bash
 # create .env to change api endpoint
-# start container(s) and open localhost:3000
+
+# start app in development mode
 $ docker-compose up
+
+# build app locally
+$ docker-compose run --rm app yarn build
 ```
 
 ### Docker production

@@ -28,13 +28,13 @@
 </template>
 
 <script>
-import {endpointUrl, date} from "@/modules/utils";
+import {date} from "@/modules/utils";
 import {Table, TableColumn, Pagination} from "element-ui";
 
 export default {
 	components: {Table, TableColumn, Pagination},
 	props: {
-		endpoints: {type: Object, required: true},
+		endpoint: {type: Object, required: true},
 		data: {type: Object, required: true}
 	},
 	data() {
@@ -47,7 +47,6 @@ export default {
 	},
 	computed: {
 		viewId: (t) => t.$route.meta.id,
-		endpointUrl: (t) => endpointUrl({data: t.data, url: t.endpoints.activity.url}),
 		paginationActive: (t) => t.pagination && t.pagination.last_page > 1,
 
 		itemsMap: (t) => t.items.map(x => ({
@@ -61,7 +60,7 @@ export default {
 	},
 	methods: {
 		async getItems(page = 1) {
-			const {data} = await this.$http.get(this.endpointUrl, {params: {count: this.pageCount, page}});
+			const {data} = await this.$http.get(`${this.endpoint.url}/activity`, {params: {count: this.pageCount, page}});
 			this.pagination = data.meta;
 			this.items = data.data;
 		}

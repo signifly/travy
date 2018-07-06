@@ -65,13 +65,13 @@ export default {
 	},
 	computed: {
 		query: (t) => t.$route.query,
-		endpoint: (t) => t.definitions.endpoint,
-		header: (t) => t.definitions.header,
+		tabs: (t) => t.definitions.tabs, // required
+		header: (t) => t.definitions.header, // required
+		endpoint: (t) => t.definitions.endpoint, // required
 		sidebar: (t) => t.definitions.sidebar,
 		modifiers: (t) => t.definitions.modifiers,
 		activity: (t) => t.definitions.activity,
 		actions: (t) => t.definitions.actions,
-		tabs: (t) => t.definitions.tabs,
 		errors: (t) => t.error.errors,
 
 		dataUpdated() {
@@ -92,13 +92,9 @@ export default {
 					if (done) await done();
 				},
 
-				update: ({tab, data}) => {
+				update: async ({tab, data}) => {
 					this.track({tab, data});
 					forEach(data, (val, key) => set(this.data, key, val));
-				},
-
-				remove: ({data}) => {
-					console.log("remove", data);
 				}
 			};
 

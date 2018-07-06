@@ -155,7 +155,8 @@ const app = {
 			reportFilename: "report/index.html",
 			openAnalyzer: false,
 			analyzerHost: "0.0.0.0",
-			analyzerPort: 3002
+			analyzerPort: 3002,
+			excludeAssets: name => name.includes("hot-update.js")
 		}),
 	],
 
@@ -291,6 +292,7 @@ const retailers = {
 
 	devtool: production ? "#source-map" : "#eval-source-map"
 };
+
 
 if (production) {
 	retailers.plugins = retailers.plugins.concat([

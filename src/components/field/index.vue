@@ -49,6 +49,7 @@ import {Tooltip} from "element-ui";
 import * as fields from "@/components/fields";
 import vTranslated from "./translated.vue";
 
+
 export default {
 	components: {...fields, vTranslated, Tooltip},
 	props: {

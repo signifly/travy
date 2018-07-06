@@ -14,7 +14,6 @@
 			v-if="action"
 			:is="action.props.id"
 			v-bind="action.props"
-			:endpoint="endpoint"
 			:alt="alt"
 			@close="close"
 			@fieldA="fieldA"
@@ -44,8 +43,12 @@ export default {
 						endpointId: "destroy",
 						props: {
 							id: "popup",
+							endpoint: {
+								method: "delete",
+								url: "https://example.com"
+							},
 							text: "delete this?",
-							onSubmit: "#vActions",
+							onSubmit: "https://example.com",
 						}
 					},
 					{
@@ -53,8 +56,8 @@ export default {
 						props: {
 							id: "show",
 							endpoint: {
-								method: "show",
-								url: "#vActions"
+								method: "get",
+								url: "https://example.com"
 							}
 						}
 					},
@@ -65,8 +68,8 @@ export default {
 							title: "Modal title",
 							onSubmit: "#vActions",
 							endpoint: {
-								method: "destroy",
-								url: "destroy"
+								method: "post",
+								url: "https://example.com"
 							},
 							fields: [
 								{
@@ -104,11 +107,7 @@ export default {
 		}
 	},
 	props: {
-		_actions: {type: Array, required: true, doc: true, note: `
-			Every action needs endpointId or props.endpoint. <br>
-			if only endpointId is supplied,<br>
-			It'll use the endpoint from table/view definition endpoints.
-		`},
+		_actions: {type: Array, required: true, doc: true},
 		alt: {type: Object, required: false}
 	},
 	data() {
@@ -116,10 +115,6 @@ export default {
 			actions: this._actions,
 			action: null
 		}
-	},
-	computed: {
-		endpointId: (t) => get(t.action, "endpointId"),
-		endpoint: (t) => get(t.action, "props.endpoint") || get(t.alt.endpoints, t.endpointId)
 	},
 	methods: {
 		select(action) {
