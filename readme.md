@@ -10,6 +10,8 @@ $ docker-compose up
 
 # build app locally
 $ docker-compose run --rm app yarn build
+
+# documentation on localhost:3000/meta
 ```
 
 ### Docker production
