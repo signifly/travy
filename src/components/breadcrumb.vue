@@ -1,19 +1,8 @@
 <template>
 	<div class="breadcrumb">
 		<Breadcrumb>
-			<BreadcrumbItem :to="{name: 'index'}">home</BreadcrumbItem>
-
-			<template v-if="!items">
-				<BreadcrumbItem v-for="r in matched" v-if="r.name !== 'index'" :key="r.path" :to="r.path">
-					{{r.name}}
-				</BreadcrumbItem>
-			</template>
-
-			<template v-else>
-				<BreadcrumbItem v-for="item in items" :key="item.title" :to="item.to">
-					{{item.title}}
-				</BreadcrumbItem>
-			</template>
+			<BreadcrumbItem :to="{name: 'index'}">Home</BreadcrumbItem>
+			<BreadcrumbItem v-for="item in items" :key="item.to" :to="item.to">{{item.title}}</BreadcrumbItem>
 		</Breadcrumb>
 	</div>
 </template>
@@ -24,10 +13,7 @@ import {Breadcrumb, BreadcrumbItem} from "element-ui";
 export default {
 	components: {Breadcrumb, BreadcrumbItem},
 	props: {
-		items: {type: Array, required: false}
-	},
-	computed: {
-		matched: (t) => t.$route.matched
+		items: {type: Array, required: false} // {title, to}
 	}
 };
 </script>

@@ -1,16 +1,18 @@
 import axios from "@/modules/axios";
-import {get} from "lodash";
+import {forEach, get, set} from "lodash";
 
 export default {
 	namespaced: true,
 
 	state: {
-		data: {}
+		menu: [],
+		tables: {},
+		settings: {}
 	},
 
 	mutations: {
 		data(state, data) {
-			state.data = data;
+			forEach(data, (val, key) => set(state, key, val));
 		}
 	},
 
@@ -27,13 +29,13 @@ export default {
 
 	getters: {
 		menu(state) {
-			return state.data.menu;
+			return state.menu;
 		},
 		settings(state) {
-			return state.data.settings;
+			return state.settings;
 		},
 		tables(state) {
-			return state.data.tables;
+			return state.tables;
 		},
 		title(state, getters) {
 			return get(getters.settings, "title");

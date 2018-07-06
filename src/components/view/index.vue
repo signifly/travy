@@ -152,12 +152,21 @@ export default {
 				modifiers: this.modifierParams()
 			};
 
-			const {data: {data, options}} = await this.$http.get(this.requests.data, {params});
-			this.options = options;
-			this.data = data;
+			try {
+				const {data: {data, options}} = await this.$http.get(this.requests.data, {params}, {custom: true});
+				this.options = options;
+				this.data = data;
 
-			this.reset();
-			this.dataU++;
+				this.reset();
+				this.dataU++;
+			} catch (err) {
+				if (get(err, "response.status") === 404) {
+					this.$router.replace({name: "404"});
+				} else {
+					throw err;
+				}
+			}
+
 		},
 
 		async save({done} = {}) {

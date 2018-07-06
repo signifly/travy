@@ -5,8 +5,6 @@ import qs from "qs";
 
 Vue.use(VueRouter);
 import store from "@/store";
-import setMeta from "./meta";
-
 
 // pages
 import index from "@/pages/index.vue";
@@ -50,7 +48,7 @@ const routes = [
 
 	{path: "/401", name: "401", component: _401, meta: {title: "401", layout: "vMain", auth: {roles: "all"}}},
 	{path: "/error", name: "error", component: error, meta: {title: "Error", layout: "vMain", layout: "vBase"}},
-	{path: "/*", name: "404", component: _404, meta: {title: "404", layout: "vMain", auth: {roles: "all"}}}
+	{path: "/404", alias: "*", name: "404", component: _404, meta: {title: "404", layout: "vMain", auth: {roles: "all"}}}
 ];
 
 
@@ -74,7 +72,7 @@ const router = new VueRouter({
 
 const go = ({to, from, next}) => {
 	if (to.meta.title) {
-		setMeta({title: to.meta.title});
+		store.dispatch("base/meta", {title: to.meta.title});
 	}
 
 	next();

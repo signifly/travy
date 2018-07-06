@@ -1,21 +1,21 @@
 <template>
-	<div class="table">
-		<breadcrumb/>
-		<vTable v-if="table" v-bind="{tableId, title}" :key="tableId"/>
+	<div class="table" v-if="table">
+		<vBreadcrumb :items="[{title, to: $route.path}]"/>
+		<vTable v-bind="{tableId, title}" :key="tableId"/>
 	</div>
 </template>
 
 <script>
-import breadcrumb from "@/components/breadcrumb.vue";
+import vBreadcrumb from "@/components/breadcrumb.vue";
 import vTable from "@/components/table/index.vue";
 import {get} from "lodash";
 
 export default {
-	components: {breadcrumb, vTable},
+	components: {vBreadcrumb, vTable},
 	computed: {
+		table: (t) => t.$store.getters["config/tables"][t.tableId],
 		tableId: (t) => t.$route.params.tableId,
-		title: (t) => get(t.table, "title"),
-		table: (t) => t.$store.getters["config/tables"][t.tableId]
+		title: (t) => get(t.table, "title")
 	},
 	methods: {
 		init() {
@@ -24,7 +24,7 @@ export default {
 			} else {
 				this.$watch(
 					"$route",
-					() => this.$meta({title: this.title}),
+					() => this.$store.dispatch("base/meta", {title: this.title}),
 					{immediate: true}
 				);
 			}
