@@ -1,10 +1,11 @@
 import axios from "@/modules/axios";
-import {forEach, get, set} from "lodash";
+import {forEach, set} from "lodash";
 
 export default {
 	namespaced: true,
 
 	state: {
+		loaded: false,
 		menu: [],
 		tables: {},
 		settings: {}
@@ -12,6 +13,7 @@ export default {
 
 	mutations: {
 		data(state, data) {
+			state.loaded = true;
 			forEach(data, (val, key) => set(state, key, val));
 		}
 	},
@@ -19,7 +21,7 @@ export default {
 	actions: {
 		async data({commit}) {
 			try {
-				const {data} = await axios.get("definitions/config");
+				const {data} = await axios.get("definitions/config", {custom: true});
 				commit("data", data);
 			} catch(err) {
 				console.log(err);
@@ -28,6 +30,9 @@ export default {
 	},
 
 	getters: {
+		loaded(state) {
+			return state.loaded;
+		},
 		menu(state) {
 			return state.menu;
 		},
@@ -38,10 +43,10 @@ export default {
 			return state.tables;
 		},
 		title(state, getters) {
-			return get(getters.settings, "title");
+			return getters.settings.title || "Travy";
 		},
 		frontpage(state, getters) {
-			return get(getters.settings, "frontpage");
+			return getters.settings.frontpage;
 		}
 	}
 };

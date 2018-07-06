@@ -1,6 +1,6 @@
 <template>
 	<div class="account">
-		<vView v-bind="{requests}" />
+		<vView v-bind="{requests}" @save="save" />
 	</div>
 </template>
 
@@ -15,6 +15,11 @@ export default {
 				data: "account",
 				definitions: "definitions/view/account"
 			}
+		}
+	},
+	methods: {
+		save({data}) {
+			this.$store.commit("user/data", {data});
 		}
 	}
 };

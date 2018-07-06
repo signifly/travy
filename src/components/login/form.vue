@@ -1,5 +1,6 @@
 <template>
-	<div class="login">
+	<div class="loginform">
+		<div class="header">{{header}}</div>
 		<div class="box">
 			<div class="title">{{title}}</div>
 			<Form class="form" :model="data" label-position="top" @keydown.native.enter="$emit('submit')">
@@ -38,6 +39,7 @@ export default {
 		data: {type: Object, required: true}
 	},
 	computed: {
+		header: (t) => t.$store.getters["config/title"],
 		errors: (t) => t.error.errors
 	},
 	methods: {
@@ -49,18 +51,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login {
+.loginform {
 	display: flex;
-	height: 80vh;
+	flex-direction: column;
+	height: 72vh;
 	align-items: center;
 	justify-content: center;
+
+	.header {
+		margin-bottom: 1em;
+		color: $blue4;
+	}
 
 	.box {
 		border: 1px solid $blue2;
 		border-radius: 4px;
 		padding: 1.5em 1.5em;
 
-		.title {
+		> .title {
+			font-weight: 500;
 			font-size: 1.4em;
 			margin-bottom: 1em;
 		}

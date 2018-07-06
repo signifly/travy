@@ -185,6 +185,9 @@ export default {
 
 				if (done) await done();
 
+				// for account page
+				this.$emit("save", {data: {...data}});
+
 			} catch (err) {
 				console.log(err);
 				this.error = get(err, "response.data", {});

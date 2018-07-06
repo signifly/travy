@@ -1,7 +1,5 @@
 <template>
 	<vPage title="Fields" :sidebar="sidebar">
-		<!-- <vIntro/> -->
-
 		<section class="intro content" v-html="intro"/>
 
 		<div class="items">

@@ -103,7 +103,7 @@ $sidebar: 18em;
 			padding: 0 2em;
 
 			:target:before {
-				$s: 120px;
+				$s: 140px;
 				content: "";
 				display: block;
 				height: $s;
