@@ -6,7 +6,7 @@ Vue.config.errorHandler = (msg, vm, trace) => {
 
 	store.dispatch("notify/send", {
 		message: msg,
-		title: `Vue error`,
+		title: "Vue error",
 		type: "error"
 	});
 };
@@ -16,7 +16,7 @@ Vue.config.warnHandler = (msg, vm, trace) => {
 
 	store.dispatch("notify/send", {
 		message: msg,
-		title: `Vue warning`,
+		title: "Vue warning",
 		type: "warning"
 	});
 };
