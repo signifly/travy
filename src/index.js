@@ -2,7 +2,7 @@ import Vue from "vue";
 
 import "./assets/favicon.png?name";
 import "./style/index.scss";
-import "./modules/notify";
+import "./modules/errors";
 
 import router from "./modules/router";
 import axios from "./modules/axios";

@@ -5,13 +5,15 @@ Vue.use(Vuex);
 import base from "./base";
 import user from "./user";
 import config from "./config";
+import notify from "./notify";
 
 const store = new Vuex.Store({
 	strict: true,
 	modules: {
 		base,
 		user,
-		config
+		config,
+		notify
 	}
 });
 

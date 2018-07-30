@@ -3,7 +3,6 @@ import axios from "axios";
 import router from "./router";
 import qs from "qs";
 
-import {Notification} from "element-ui";
 import store from "../store";
 
 const api = axios.create({
@@ -40,7 +39,7 @@ api.interceptors.response.use(res => {
 		return router.replace({name: "error"});
 	}
 
-	Notification({
+	store.dispatch("notify/send", {
 		message: get(res, "data.message"),
 		title: `Error ${get(res, "status")}`,
 		type: "error"
