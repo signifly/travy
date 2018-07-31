@@ -89,7 +89,7 @@ export default {
 				update: async ({item, data, done}) => { // fieldA action
 					const modifiers = this.modifiers ? this.modifiers.map(x => omit(x, "options")) : undefined;
 
-					const url = endpointUrl({data: item, url: this.endpoint.url});
+					const url = endpointUrl({data: item, url: `${this.endpoint.url}/{id}`});
 					await this.$http.put(url, {...data, modifiers});
 				}
 			};
