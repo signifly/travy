@@ -17,7 +17,8 @@ const app = (env, argv) => {
 		output: {
 			path: __dirname + "/dist",
 			publicPath: "/",
-			filename: "[name].js?[hash]"
+			filename: "[name].js?[hash]",
+			chunkFilename: "[name].js?[hash]"
 		},
 		module: {
 			rules: [
@@ -108,6 +109,7 @@ const app = (env, argv) => {
 			]
 		},
 		optimization: {
+			namedModules: true,
 			splitChunks: {
 				cacheGroups: {
 					commons: {
@@ -136,11 +138,10 @@ const app = (env, argv) => {
 		},
 		plugins: [
 			new webpack.NormalModuleReplacementPlugin(/element-ui[\/\\]lib[\/\\]locale[\/\\]lang[\/\\]zh-CN/, "element-ui/lib/locale/lang/en"),
-			new webpack.NamedModulesPlugin(),
 			new VueLoaderPlugin(),
 
 			new MiniCssExtractPlugin({
-				filename: "[name]-[hash].css"
+				filename: "[name].css"
 			}),
 
 			new OptimizeCssAssetsPlugin({
