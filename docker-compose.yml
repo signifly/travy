@@ -2,4 +2,13 @@ version: "3"
 
 services:
   app:
+    build: ./
     container_name: travy
+    command: bash -c "yarn && yarn dev"
+    ports:
+      - "3000-3002:3000-3002"
+    volumes:
+      - ./:/app
+    environment:
+      API: ${API}
+      GMAPS_KEY: ${GMAPS_KEY}
