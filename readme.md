@@ -3,11 +3,15 @@
 ### Docker development
 
 ``` bash
-# api defaults to api.sikane.signifly.com
 # create .env to change api endpoint
 
-# start container(s) and open localhost:3000
+# start app in development mode
 $ docker-compose up
+
+# build app locally
+$ docker-compose run --rm app yarn build
+
+# documentation on localhost:3000/meta
 ```
 
 ### Docker production

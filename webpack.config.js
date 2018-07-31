@@ -19,7 +19,7 @@ const production = process.env.NODE_ENV === "production";
 const app = {
 	entry: {
 		vendor: ["babel-polyfill"],
-		app: ["./app/index.js"]
+		app: ["./src/index.js"]
 	},
 	output: {
 		path: __dirname + "/dist",
@@ -42,8 +42,16 @@ const app = {
 				}
 			},
 			{
-				test: /\.hbs$/,
-				loader: "handlebars-loader"
+				test: /\.md$/,
+				use: [
+					{
+						loader: "html-loader"
+					},
+					{
+						loader: "markdown-loader",
+						options: {}
+					}
+				]
 			},
 			{
 				test: /\.js$/,
@@ -95,8 +103,8 @@ const app = {
 	resolve: {
 		alias: {
 			"vue$": "vue/dist/vue.runtime.esm.js",
-			"style": __dirname + "/app/style",
-			"@": __dirname + "/app"
+			"style": __dirname + "/src/style",
+			"@": __dirname + "/src"
 		}
 	},
 	devServer: {
@@ -114,9 +122,8 @@ const app = {
 		new webpack.NamedModulesPlugin(),
 
 		new HtmlWebpackPlugin({
-			template: "app/index.hbs",
-			hash: production,
-			title: "Sikane"
+			template: "src/index.html",
+			hash: production
 		}),
 
 		new webpack.optimize.CommonsChunkPlugin({
@@ -141,7 +148,16 @@ const app = {
 				GMAPS_KEY: JSON.stringify(process.env.GMAPS_KEY),
 				API: JSON.stringify(process.env.API)
 			}
-		})
+		}),
+
+		new BundleAnalyzerPlugin({
+			analyzerMode: production ? "static" : "server",
+			reportFilename: "report/index.html",
+			openAnalyzer: false,
+			analyzerHost: "0.0.0.0",
+			analyzerPort: 3002,
+			excludeAssets: name => name.includes("hot-update.js")
+		}),
 	],
 
 	devtool: production ? "#source-map" : "#eval-source-map"
@@ -149,11 +165,6 @@ const app = {
 
 if (production) {
 	app.plugins = app.plugins.concat([
-		new BundleAnalyzerPlugin({
-			analyzerMode: "static",
-			reportFilename: "report/index.html"
-		}),
-
 		new UglifyJsPlugin({
 			parallel: true,
 			sourceMap: true
@@ -179,7 +190,7 @@ if (production) {
 
 const retailers = {
 	entry: {
-		"retailers": ["babel-polyfill", "./app/components/ext/retailers/index.js"]
+		"retailers": ["babel-polyfill", "./src/components/ext/retailers/index.js"]
 	},
 	output: {
 		path: __dirname + "/dist/ext",
@@ -199,10 +210,6 @@ const retailers = {
 						})
 					}
 				}
-			},
-			{
-				test: /\.hbs$/,
-				loader: "handlebars-loader"
 			},
 			{
 				test: /\.js$/,
@@ -254,8 +261,8 @@ const retailers = {
 	resolve: {
 		alias: {
 			"vue$": "vue/dist/vue.runtime.esm.js",
-			"style": __dirname + "/app/style",
-			"@": __dirname + "/app"
+			"style": __dirname + "/src/style",
+			"@": __dirname + "/src"
 		}
 	},
 	performance: {
@@ -266,10 +273,9 @@ const retailers = {
 		new webpack.NamedModulesPlugin(),
 
 		new HtmlWebpackPlugin({
-			template: "app/components/ext/retailers/index.hbs",
+			template: "src/components/ext/retailers/index.html",
 			filename: "retailers/index.html",
 			hash: production,
-			title: "Sikane",
 			inject: false
 		}),
 
@@ -286,6 +292,7 @@ const retailers = {
 
 	devtool: production ? "#source-map" : "#eval-source-map"
 };
+
 
 if (production) {
 	retailers.plugins = retailers.plugins.concat([

@@ -1,5 +1,5 @@
 {
-	"name": "sikane-app",
+	"name": "travy",
 	"version": "1.0.0",
 	"scripts": {
 		"dev": "cross-env NODE_ENV=development webpack-dev-server",
@@ -38,9 +38,9 @@
 		"css-loader": "0.28.9",
 		"extract-text-webpack-plugin": "3.0.2",
 		"file-loader": "1.1.6",
-		"handlebars": "4.0.11",
-		"handlebars-loader": "1.6.0",
+		"html-loader": "0.5.5",
 		"html-webpack-plugin": "2.30.1",
+		"markdown-loader": "3.0.0",
 		"node-sass": "4.7.2",
 		"optimize-css-assets-webpack-plugin": "3.2.0",
 		"postcss-loader": "2.0.10",
@@ -53,7 +53,7 @@
 		"vue-style-loader": "3.1.1",
 		"vue-template-compiler": "2.5.16",
 		"webpack": "3.10.0",
-		"webpack-bundle-analyzer": "2.9.2",
+		"webpack-bundle-analyzer": "2.13.1",
 		"webpack-dev-server": "2.11.1"
 	}
 }
