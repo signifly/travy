@@ -16,6 +16,10 @@ a {
 	cursor: pointer;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 svg {
 	path {
 		fill: $black1;
