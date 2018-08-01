@@ -1,7 +1,6 @@
 <template>
 	<vPage>
 		<div class="index">
-			test2
 			<div class="title">Travy</div>
 			<div class="desc">Frontend documentation</div>
 		</div>
