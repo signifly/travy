@@ -1,13 +1,13 @@
-const webpack = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const {VueLoaderPlugin} = require("vue-loader");
+const webpack = require("webpack");
 
 
-const app = (env, argv) => {
+module.exports = (env, argv) => {
 	const prod = argv.mode === "production";
 
 	return {
@@ -184,144 +184,3 @@ const app = (env, argv) => {
 		devtool: prod ? "source-map" : "eval-source-map"
 	};
 };
-
-
-//
-//
-//
-//
-//
-//
-// // RETAILERS CONFIG
-//
-// const retailers = {
-// 	entry: {
-// 		"retailers": ["babel-polyfill", "./src/components/ext/retailers/index.js"]
-// 	},
-// 	output: {
-// 		path: __dirname + "/dist/ext",
-// 		publicPath: "/ext/",
-// 		filename: "[name].js?[hash]"
-// 	},
-// 	module: {
-// 		rules: [
-// 			{
-// 				test: /\.vue$/,
-// 				loader: "vue-loader",
-// 				options: {
-// 					loaders: {
-// 						scss: ExtractTextPlugin.extract({
-// 							use: ["css-loader", "sass-loader?data=@import '~style/var';"],
-// 							fallback: "vue-style-loader"
-// 						})
-// 					}
-// 				}
-// 			},
-// 			{
-// 				test: /\.js$/,
-// 				loader: "babel-loader",
-// 				exclude: /node_modules/
-// 			},
-// 			{
-// 				test: /\.svg$/,
-// 				loader: "svg-inline-loader",
-// 				options: {
-// 					removeTags: true,
-// 					removingTags: ["title", "desc"],
-// 					classPrefix: true,
-// 					idPrefix: true,
-// 					removeSVGTagAttrs: false
-// 				}
-// 			},
-// 			{
-// 				test: /\.(png|jpg|gif|eps|pdf)$/,
-// 				oneOf: [
-// 					{
-// 						resourceQuery: /name/,
-// 						loader: "file-loader",
-// 						options: {
-// 							name: "[name].[ext]"
-// 						}
-// 					},
-// 					{
-// 						loader: "file-loader"
-// 					}
-// 				]
-// 			},
-// 			{
-// 				test: /\.(css|scss|sass)$/,
-// 				use: ExtractTextPlugin.extract({
-// 					use: ["css-loader", "sass-loader", "postcss-loader"],
-// 					fallback: "style-loader"
-// 				})
-// 			},
-// 			{
-// 				test: /\.(woff|woff2|eot|ttf)$/,
-// 				loader: "file-loader",
-// 				options: {
-// 					name: "[name].[ext]"
-// 				}
-// 			}
-// 		]
-// 	},
-// 	resolve: {
-// 		alias: {
-// 			"vue$": "vue/dist/vue.runtime.esm.js",
-// 			"style": __dirname + "/src/style",
-// 			"@": __dirname + "/src"
-// 		}
-// 	},
-// 	performance: {
-// 		hints: false
-// 	},
-// 	plugins: [
-// 		new webpack.HotModuleReplacementPlugin(),
-// 		new webpack.NamedModulesPlugin(),
-//
-// 		new HtmlWebpackPlugin({
-// 			template: "src/components/ext/retailers/index.html",
-// 			filename: "retailers/index.html",
-// 			hash: production,
-// 			inject: false
-// 		}),
-//
-// 		new ExtractTextPlugin({filename: "[name].css", disable: true, allChunks: true}),
-//
-// 		new webpack.DefinePlugin({
-// 			"process.env": {
-// 				NODE_ENV: production ? "'production'" : "'development'",
-// 				GMAPS_KEY: JSON.stringify(process.env.GMAPS_KEY),
-// 				API: JSON.stringify(process.env.API)
-// 			}
-// 		})
-// 	],
-//
-// 	devtool: production ? "#source-map" : "#eval-source-map"
-// };
-//
-//
-// if (production) {
-// 	retailers.plugins = retailers.plugins.concat([
-// 		new BundleAnalyzerPlugin({
-// 			analyzerMode: "static",
-// 			reportFilename: "retailers/report/index.html"
-// 		}),
-//
-// 		new UglifyJsPlugin({
-// 			parallel: true,
-// 			sourceMap: true
-// 		}),
-//
-// 		new OptimizeCssAssetsPlugin({
-// 			cssProcessorOptions: {
-// 				keyframes: true,
-// 				discardComments: {removeAll: true}
-// 			},
-// 			canPrint: true
-// 		})
-// 	]);
-// }
-
-
-// module.exports = [app, retailers];
-module.exports = app;
