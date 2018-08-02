@@ -19,8 +19,8 @@ export default {
 		viewKey: (t) => t.$route.query.seq ? null : `${t.tableId}-${t.viewId}`, // don't rerender view on sequential batch
 
 		requests: (t) => ({
-			data: `${t.tableId}/${t.viewId}`,
-			definitions: `definitions/view/${t.tableId}`
+			data: `admin/${t.tableId}/${t.viewId}`,
+			definitions: `admin/definitions/view/${t.tableId}`
 		}),
 
 		breadcrumb: (t) => [

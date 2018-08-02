@@ -120,7 +120,7 @@ export default {
 				modifiers: this.query.modifiers
 			};
 
-			const {data} = await this.$http.get(`definitions/table/${this.tableId}`, {params});
+			const {data} = await this.$http.get(`admin/definitions/table/${this.tableId}`, {params});
 			this.definitions = data;
 		},
 

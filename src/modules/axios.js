@@ -6,7 +6,7 @@ import qs from "qs";
 import store from "../store";
 
 const api = axios.create({
-	baseURL: `${process.env.API}/v1/admin`,
+	baseURL: `${process.env.API}/v1`,
 	paramsSerializer: (params) => qs.stringify(params)
 });
 
