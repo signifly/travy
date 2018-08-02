@@ -46,7 +46,7 @@ export default {
 
 		async data({commit, dispatch, state, getters}) {
 			if (state.auth && getters.configLoaded) {
-				const {data} = await axios.get("admin/account");
+				const {data} = await axios.get("account");
 				commit("data", data);
 				return getters.data;
 			}

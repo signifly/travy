@@ -12,8 +12,8 @@ export default {
 	data() {
 		return {
 			requests: {
-				data: "admin/account",
-				definitions: "admin/definitions/view/account"
+				data: "account",
+				definitions: "definitions/view/account"
 			}
 		}
 	},
