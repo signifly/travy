@@ -103,8 +103,8 @@ export default {
 			});
 		},
 
-		getListOptions: debounce(async function(q) {
-			const {data} = await this.$http.get(this.endpoint, {params: {q, count: 30}});
+		getListOptions: debounce(async function(search) {
+			const {data} = await this.$http.get(this.endpoint, {params: {filter: {search}, count: 30}});
 			this.listOptions = get(data, this.oKey, []);
 			this.loading = false;
 		}, 500),

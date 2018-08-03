@@ -34,7 +34,7 @@ import {Table, TableColumn, Pagination} from "element-ui";
 export default {
 	components: {Table, TableColumn, Pagination},
 	props: {
-		endpoint: {type: Object, required: true},
+		endpointUrl: {type: String, required: true},
 		data: {type: Object, required: true}
 	},
 	data() {
@@ -60,7 +60,7 @@ export default {
 	},
 	methods: {
 		async getItems(page = 1) {
-			const {data} = await this.$http.get(`${this.endpoint.url}/activity`, {params: {count: this.pageCount, page}});
+			const {data} = await this.$http.get(`${this.endpointUrl}/activity`, {params: {count: this.pageCount, page}});
 			this.pagination = data.meta;
 			this.items = data.data;
 		}

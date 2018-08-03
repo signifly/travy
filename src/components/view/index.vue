@@ -26,7 +26,7 @@
 
 				<Row class="bottom" :gutter="20">
 					<Col class="left" :span="24">
-						<vActivity v-if="activity" v-bind="{data}" :key="saveU" />
+						<vActivity v-if="activity" v-bind="{data, endpointUrl}" :key="saveU" />
 					</Col>
 				</Row>
 
@@ -73,6 +73,8 @@ export default {
 		activity: (t) => t.definitions.activity,
 		actions: (t) => t.definitions.actions,
 		errors: (t) => t.error.errors,
+
+		endpointUrl: (t) => endpointUrl({data: t.data, url: t.endpoint.url}),
 
 		dataUpdated() {
 			const editsU = this.editsU; // force update, because sets are not reactive
@@ -170,13 +172,11 @@ export default {
 		},
 
 		async save({done} = {}) {
-			const url = endpointUrl({data: this.data, url: this.endpoint.url});
-
 			try {
 				this.loadingSave = true;
 				const modifiers = this.modifierParams();
 
-				const {data: {data, options}} = await this.$http.put(url, {...this.dataUpdated, modifiers}, {custom: true});
+				const {data: {data, options}} = await this.$http.put(t.endpointUrl, {...this.dataUpdated, modifiers}, {custom: true});
 				this.options = options;
 				this.data = data;
 
