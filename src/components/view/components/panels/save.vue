@@ -3,7 +3,18 @@
 		<div class="text">There are unsaved changes</div>
 		<div class="actions">
 			<div class="error" v-if="error.message">{{error.message}}</div>
-			<Button size="medium" type="primary" v-bind="{loading}" @click="save">Save changes</Button>
+
+			<Button
+			size="medium"
+			type="primary"
+			v-bind="{loading}"
+			@click="save"
+			v-shortkey="{win: ['ctrl', 's'], mac: ['meta', 's']}"
+			@shortkey.native="save"
+			title="CTRL/CMD + S">
+				Save changes
+			</Button>
+
 		</div>
 	</vPanel>
 </template>

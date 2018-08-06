@@ -7340,6 +7340,12 @@ vue-router@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.1.tgz#d9b05ad9c7420ba0f626d6500d693e60092cc1e9"
 
+vue-shortkey@3.1.6:
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/vue-shortkey/-/vue-shortkey-3.1.6.tgz#a8632d4ddab9a07f77deae372cad3a66da85e493"
+  dependencies:
+    vue "^2.1.0"
+
 vue-simplemde@0.4.8:
   version "0.4.8"
   resolved "https://registry.yarnpkg.com/vue-simplemde/-/vue-simplemde-0.4.8.tgz#49e7e317e398d3a229c01d5e43443674da0347c6"
@@ -7375,6 +7381,10 @@ vue2-google-maps@0.9.6:
 vue@2.5.16:
   version "2.5.16"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.16.tgz#07edb75e8412aaeed871ebafa99f4672584a0085"
+
+vue@^2.1.0:
+  version "2.5.17"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
 
 vuedraggable@2.16.0:
   version "2.16.0"
