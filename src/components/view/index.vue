@@ -40,8 +40,8 @@
 import {mapValues, forEach, set, get} from "lodash";
 import {endpointUrl} from "@/modules/utils";
 import {Row, Col, Loading} from "element-ui";
-import * as components from "./components";
 import vModifiers from "@/components/modifiers.vue";
+import * as components from "./components";
 
 const edits = () => ({tabs: new Set(), data: new Set()});
 
@@ -176,7 +176,7 @@ export default {
 				this.loadingSave = true;
 				const modifiers = this.modifierParams();
 
-				const {data: {data, options}} = await this.$http.put(t.endpointUrl, {...this.dataUpdated, modifiers}, {custom: true});
+				const {data: {data, options}} = await this.$http.put(this.endpointUrl, {...this.dataUpdated, modifiers}, {custom: true});
 				this.options = options;
 				this.data = data;
 
