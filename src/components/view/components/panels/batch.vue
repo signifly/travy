@@ -19,7 +19,14 @@
 				Save and back
 			</Button>
 
-			<Button v-if="next" size="medium" type="success" @click="nextSave">
+			<Button
+			v-if="next"
+			size="medium"
+			type="success"
+			@click="nextSave"
+			v-shortkey="{win: ['ctrl', 's'], mac: ['meta', 's']}"
+			@shortkey.native="nextSave"
+			title="CTRL/CMD + S">
 				Save and next
 				<i class="el-icon-arrow-right el-icon-right"></i>
 			</Button>
@@ -28,7 +35,6 @@
 				Save and close
 				<i class="el-icon-check el-icon-right"></i>
 			</Button>
-
 		</div>
 	</vPanel>
 </template>

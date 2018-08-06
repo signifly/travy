@@ -25,8 +25,7 @@
 		</div>
 
 		<component
-			v-if="comps[id]"
-			:is="id"
+			:is="component"
 			ref="field"
 			v-bind="[propsData, propsValue]"
 			:alt="alt"
@@ -51,7 +50,7 @@ import vTranslated from "./translated.vue";
 
 
 export default {
-	components: {...fields, vTranslated, Tooltip},
+	components: {vTranslated, Tooltip},
 	props: {
 		alt: {type: Object, required: true},
 		name: {type: String, required: true},
@@ -66,14 +65,14 @@ export default {
 	},
 	computed: {
 		error: (t) => get(t.alt.errors, t.name, [])[0],
-		comps: (t) => t.$options.components,
+		component: (t) => fields[t.id],
 
 		type: (t) => t.alt.type,
 		id: (t) => t.fieldType.id,
 		reference: (t) => t.fieldType.reference,
 		disabled: (t) => t.fieldType.props.disabled,
 		option: (t) => get(t.alt.options, t.name, {}),
-		show: (t) => get(t.alt.data, t.fieldType.show, true),
+		show: (t) => t.component && get(t.alt.data, t.fieldType.show, true),
 
 		width() {
 			const width = this.fieldType.width || 100;
@@ -87,7 +86,7 @@ export default {
 		outdated: (t) => t.option.outdated,
 
 		nodata() {
-			const field = this.mounted ? this.$refs.field : {};
+			const field = this.mounted ? get(this.$refs, "field", {}) : {};
 			return field.disabled ? false : field.nodata;
 		},
 

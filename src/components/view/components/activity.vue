@@ -53,7 +53,7 @@ export default {
 			id: `#${x.id}`,
 			type: x.description,
 			date: date(x.updated_at).sDateTime,
-			user: x.causer ? x.causer.full_name : "System",
+			user: x.causer ? x.causer.name : "System",
 			changes: Object.keys(x.properties.attributes).join(", "),
 			subject: x.humanized_subject
 		}))

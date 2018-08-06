@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev": "webpack-dev-server --hot --inline --mode development",
 		"build": "rm -rf dist && webpack --mode production",
-		"start": "serve -t -s -p 80 dist"
+		"start": "serve -s -p 80 dist"
 	},
 	"dependencies": {
 		"axios": "0.18.0",
@@ -13,11 +13,12 @@
 		"normalize.css": "8.0.0",
 		"object-to-formdata": "1.4.3",
 		"qs": "6.5.1",
-		"serve": "6.5.5",
+		"serve": "9.4.0",
 		"simplemde-theme-base": "0.2.1",
 		"vue2-google-maps": "0.9.6",
 		"vue": "2.5.16",
 		"vue-router": "3.0.1",
+		"vue-shortkey": "3.1.6",
 		"vue-simplemde": "0.4.8",
 		"vuedraggable": "2.16.0",
 		"vuex": "3.0.1"
