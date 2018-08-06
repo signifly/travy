@@ -4,7 +4,7 @@ from node:9-alpine
 RUN apk update && apk add bash
 
 # install global npm packages
-RUN yarn global add npm-check-updates
+RUN yarn global add npm-check-updates firebase-tools
 
 WORKDIR /app
 
