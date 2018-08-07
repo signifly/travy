@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import {get} from "lodash";
 import {date} from "@/modules/utils";
 import {Table, TableColumn, Pagination} from "element-ui";
 
@@ -54,7 +55,7 @@ export default {
 			type: x.description,
 			date: date(x.updated_at).sDateTime,
 			user: x.causer ? x.causer.name : "System",
-			changes: Object.keys(x.properties.attributes).join(", "),
+			changes: Object.keys(get(x.properties, "attributes", {})).join(", "),
 			subject: x.humanized_subject
 		}))
 	},
