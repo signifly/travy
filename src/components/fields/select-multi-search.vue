@@ -7,6 +7,7 @@
 		:disabled="_disabled"
 		:clearable="_clearable"
 		@change="update"
+		@visible-change="initSearch"
 		filterable multiple remote reserve-keyword>
 			<Option v-for="item in list" v-bind="item" :key="item.value" />
 		</Select>
@@ -62,6 +63,7 @@ export default {
 	},
 	data() {
 		return {
+			opened: false,
 			loading: false,
 			listOptions: [],
 			listSelected: [],
@@ -96,6 +98,13 @@ export default {
 		}
 	},
 	methods: {
+		initSearch(open) {
+			if (!this.opened && open) {
+				this.opened = true;
+				this.getListOptions();
+			}
+		},
+
 		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
@@ -103,15 +112,19 @@ export default {
 			});
 		},
 
-		getListOptions: debounce(async function(search) {
+		async getListOptions(search) {
 			const {data} = await this.$http.get(this.endpoint, {params: {filter: {search}, count: 30}});
 			this.listOptions = get(data, this.oKey, []);
 			this.loading = false;
+		},
+
+		getListOptionsDebounced: debounce(function(search) {
+			this.getListOptions(search);
 		}, 500),
 
-		getListOptionsQ(q) {
-			this.getListOptions(q);
+		getListOptionsQ(search) {
 			this.loading = true;
+			this.getListOptionsDebounced(search);
 		},
 
 		async getListSelected() {

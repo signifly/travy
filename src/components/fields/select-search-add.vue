@@ -7,6 +7,7 @@
 		:remote-method="getListQ"
 		:disabled="_disabled"
 		:clearable="_clearable"
+		@visible-change="initSearch"
 		filterable remote reserve-keyword allow-create>
 			<Option v-for="item in listMap" v-bind="item" :key="item.value" />
 		</Select>
