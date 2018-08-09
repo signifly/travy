@@ -61,7 +61,7 @@ export default {
 		modifiers: (t) => t.$route.query.modifiers,
 		progress: (t) => ((t.index + 1) / t.items.length) * 100,
 		items: (t) => t.seq.items.map(x => x.toString()),
-		id: (t) => t.$route.params.id.toString(),
+		id: (t) => t.$route.params.viewId,
 		index: (t) => t.items.indexOf(t.id),
 		prev: (t) => t.items[t.index - 1],
 		next: (t) => t.items[t.index + 1],
