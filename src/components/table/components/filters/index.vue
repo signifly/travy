@@ -27,11 +27,12 @@
 		</Popover>
 
 		<Input
+		v-if="search"
 		class="search"
 		:class="{active}"
 		size="medium"
-		:prefix-icon="searchIcon"
 		v-model="input"
+		:prefix-icon="searchIcon"
 		:placeholder="search.placeholder"
 		@input="update({data: {search: $event}})"
 		clearable>
@@ -51,7 +52,7 @@ export default {
 	props: {
 		data: {type: Object, required: false, default: () => ({})},
 		fields: {type: Array, required: false},
-		search: {type: Object, required: true}
+		search: {type: Object, required: false}
 	},
 	data() {
 		return  {

@@ -3,7 +3,7 @@
 
 		<div class="header">
 			<vFilters v-bind="[filters, {search}]" @filter="filter" />
-			<vActions v-bind="{actions}" @fieldA="fieldA" />
+			<vActions v-if="actions" v-bind="{actions}" @fieldA="fieldA" />
 		</div>
 
 		<div class="content">
