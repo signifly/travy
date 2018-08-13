@@ -41,6 +41,7 @@ export const base64Encode = (file) => {
 	});
 };
 
+
 export const endpointParams = ({url}) => {
 	if (!url) return;
 
