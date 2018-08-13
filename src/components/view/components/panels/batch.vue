@@ -61,8 +61,9 @@ export default {
 		modifiers: (t) => t.$route.query.modifiers,
 		progress: (t) => ((t.index + 1) / t.items.length) * 100,
 		items: (t) => t.seq.items.map(x => x.toString()),
-		id: (t) => t.$route.params.id.toString(),
-		index: (t) => t.items.indexOf(t.id),
+		tableId: (t) => t.$route.params.tableId,
+		viewId: (t) => t.$route.params.viewId,
+		index: (t) => t.items.indexOf(t.viewId),
 		prev: (t) => t.items[t.index - 1],
 		next: (t) => t.items[t.index + 1],
 
@@ -73,7 +74,7 @@ export default {
 			this.$parent.$emit("save", {
 				done: async () => {
 					this.$router.push({
-						params: {...this.$route.params, id: this.next},
+						params: {...this.$route.params, viewId: this.next},
 						query: {modifiers: this.modifiers, seq: {items: this.items}}
 					});
 				}
@@ -84,7 +85,7 @@ export default {
 			this.$parent.$emit("save", {
 				done: async () => {
 					this.$router.push({
-						params: {...this.$route.params, id: this.prev},
+						params: {...this.$route.params, viewId: this.prev},
 						query: {modifiers: this.modifiers, seq: {items: this.items}}
 					});
 				}
@@ -94,7 +95,7 @@ export default {
 		closeSave() {
 			this.$parent.$emit("save", {
 				done: async () => {
-					this.$router.push({path: `/${this.$route.meta.id}`, query: {modifiers: this.modifiers}});
+					this.$router.push({path: `/t/${this.tableId}`, query: {modifiers: this.modifiers}});
 				}
 			});
 		},
@@ -109,7 +110,7 @@ export default {
 		}
 	},
 	watch: {
-		id() {
+		viewId() {
 			this._getData();
 		}
 	}

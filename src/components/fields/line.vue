@@ -155,12 +155,12 @@ export default {
 	}
 
 	.info {
+		margin-right: 1em;
 		font-size: em(13);
 		color: $blue4;
 
 		.item {
 			display: flex;
-			align-items: center;
 			margin: 0.6em 0;
 
 			.title {
