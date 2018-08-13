@@ -1,6 +1,6 @@
 <template>
 	<div class="tabs">
-		<vTabs v-bind="{tabs, tab}" @tab="tabClick">
+		<vTabsGen v-bind="{tabs, tabId}" @tabClick="tabClick">
 			<template slot="label" slot-scope="tab">
 				<vLabel v-bind="{tab, options, edits, dataU, nodatas}"></vLabel>
 			</template>
@@ -8,17 +8,17 @@
 			<template slot="content" slot-scope="tab">
 				<vTab :key="dataU" v-bind="{tab, data, options, errors}" @fieldA="$emit('fieldA', $event)" @nodata="nodata" />
 			</template>
-		</vTabs>
+		</vTabsGen>
 	</div>
 </template>
 
 <script>
-import vTabs from "@/components/tabs.vue";
+import vTabsGen from "@/components/tabs.vue";
 import vLabel from "./label.vue";
 import vTab from "./tab.vue";
 
 export default {
-	components: {vTabs, vLabel, vTab},
+	components: {vTabsGen, vLabel, vTab},
 	props: {
 		tabs: {type: Array, required: true},
 		data: {type: Object, required: true},
@@ -33,11 +33,11 @@ export default {
 		}
 	},
 	computed: {
-		tab: (t) => t.$route.params.tab || "basic"
+		tabId: (t) => t.$route.params.tabId || "basic"
 	},
 	methods: {
-		tabClick(tab) {
-			this.$router.push({...this.$route, params: {tab}});
+		tabClick({tabId}) {
+			this.$router.push({...this.$route, params: {tabId}});
 		},
 
 		nodata(data) {
