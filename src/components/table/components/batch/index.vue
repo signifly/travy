@@ -1,7 +1,7 @@
 <template>
 	<div class="batch">
 		<vPanel>
-			<vSelected v-bind="{selected, selectedOptions}" @unselect="unselect"/>
+			<vSelected v-bind="{selectedItems, selectedOptions}" @unselect="unselect"/>
 
 			<div class="actions">
 				<Button v-if="sequential" size="medium" @click="sequentialStart">Sequential edit</Button>
@@ -27,7 +27,7 @@
 <script>
 import {get, sortBy} from "lodash";
 import {Button, Dropdown, DropdownMenu, DropdownItem} from "element-ui";
-import {endpointUrl} from "@/modules/utils";
+import {endpointUrl, endpointParams} from "@/modules/utils";
 import vPanel from "@/components/panel.vue";
 import vSelected from "./selected.vue";
 import vAction from "./action.vue";
@@ -35,8 +35,12 @@ import vAction from "./action.vue";
 export default {
 	components: {Dropdown, DropdownMenu, DropdownItem, vPanel, Button, vSelected, vAction},
 	props: {
-		selected: {type: Array, required: true},
-		batch: {type: Object, required: true}
+		selectedItems: {type: Array, required: true},
+
+		selectedOptions: {type: Object, required: true},
+		sequential: {type: Object, required: false},
+		actions: {type: Array, required: true},
+		bulk: {type: Boolean, required: false},
 	},
 	data() {
 		return {
@@ -48,11 +52,10 @@ export default {
 		}
 	},
 	computed: {
-		ids: (t) => sortBy(t.selected.map(x => x.id)),
-		selectedOptions: (t) => t.batch.selectedOptions,
-		sequential: (t) => t.batch.sequential,
-		actions: (t) => t.batch.actions,
-		bulk: (t) => t.batch.bulk,
+		seqParam: (t) => endpointParams({url: get(t.sequential, "url")})[0],
+		ids: (t) => sortBy(t.selectedItems.map(x => x[t.seqParam])),
+
+		sequentialUrl: (t) => get(t.sequential, "url", "").replace(`{${t.seqParam}}`, t.ids[0])
 	},
 	methods: {
 		unselect() {
@@ -74,8 +77,7 @@ export default {
 
 		sequentialStart() {
 			const modifiers = this.$route.query.modifiers;
-			const url = `${this.$route.path}/${this.ids[0]}`;
-			this.$router.push({path: url, query: {modifiers, seq: {items: this.ids}}});
+			this.$router.push({path: this.sequentialUrl, query: {modifiers, seq: {items: this.ids}}});
 		}
 	}
 };

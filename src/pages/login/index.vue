@@ -80,7 +80,8 @@ export default {
 			try {
 				this.reset();
 				this.loading = true;
-				const {data} = await this.$http.post("password/email", this.data, {custom: true});
+				console.log("RESET");
+				const {data} = await this.$store.dispatch("user/resetPassword", {form: this.data});
 				this.message = data.message;
 			} catch (err) {
 				console.log(err);

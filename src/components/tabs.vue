@@ -16,15 +16,15 @@ export default {
 	components: {Tabs, TabPane},
 	props: {
 		tabs: {type: Array, required: true},
-		tab: {type: String, required: false}
+		tabId: {type: String, required: true}
 	},
 	computed: {
 		active: {
 			get() {
-				return this.tab;
+				return this.tabId;
 			},
-			set(tab) {
-				this.$emit("tab", tab);
+			set(tabId) {
+				this.$emit("tabClick", {tabId});
 			}
 		}
 	}

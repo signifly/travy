@@ -44,7 +44,7 @@ const routes = [
 	{path: "/login/reset/:id", name: "login-reset", component: loginReset, props: true, meta: {layout: "vBase", title: "Reset login"}},
 
 	{path: "/t/:tableId", name: "table", component: table, meta: {layout: "vMain", auth: {roles: "all"}}},
-	{path: "/t/:tableId/:viewId", name: "tableView", component: view, meta: {layout: "vMain", auth: {roles: "all"}}},
+	{path: "/t/:tableId/:viewId/:tabId?", name: "tableView", component: view, meta: {layout: "vMain", auth: {roles: "all"}}},
 
 	{path: "/401", name: "401", component: _401, meta: {title: "401", layout: "vMain", auth: {roles: "all"}}},
 	{path: "/error", name: "error", component: error, meta: {title: "Error", layout: "vMain", layout: "vBase"}},

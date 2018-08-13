@@ -1,6 +1,8 @@
 import "babel-polyfill";
 import Vue from "vue";
 
+Vue.use(require("vue-shortkey"));
+
 import "./assets/favicon.png?name";
 import "./style/index.scss";
 import "./modules/errors";

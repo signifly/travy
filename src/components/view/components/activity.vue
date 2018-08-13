@@ -8,7 +8,7 @@
 				<TableColumn width="180" label="date" prop="date" />
 				<TableColumn width="150" label="type" prop="type" />
 				<TableColumn width="150" label="subject" prop="subject" />
-				<TableColumn width="250" label="user" prop="user" v-if="viewId !== 'users'" />
+				<TableColumn width="250" label="user" prop="user" v-if="tableId !== 'users'" />
 				<TableColumn label="changes" prop="changes" />
 			</Table>
 		</div>
@@ -28,13 +28,14 @@
 </template>
 
 <script>
+import {get} from "lodash";
 import {date} from "@/modules/utils";
 import {Table, TableColumn, Pagination} from "element-ui";
 
 export default {
 	components: {Table, TableColumn, Pagination},
 	props: {
-		endpoint: {type: Object, required: true},
+		endpointUrl: {type: String, required: true},
 		data: {type: Object, required: true}
 	},
 	data() {
@@ -46,21 +47,21 @@ export default {
 		}
 	},
 	computed: {
-		viewId: (t) => t.$route.meta.id,
+		tableId: (t) => t.$route.params.tableId,
 		paginationActive: (t) => t.pagination && t.pagination.last_page > 1,
 
 		itemsMap: (t) => t.items.map(x => ({
 			id: `#${x.id}`,
 			type: x.description,
 			date: date(x.updated_at).sDateTime,
-			user: x.causer ? x.causer.full_name : "System",
-			changes: Object.keys(x.properties.attributes).join(", "),
+			user: x.causer ? x.causer.name : "System",
+			changes: Object.keys(get(x.properties, "attributes", {})).join(", "),
 			subject: x.humanized_subject
 		}))
 	},
 	methods: {
 		async getItems(page = 1) {
-			const {data} = await this.$http.get(`${this.endpoint.url}/activity`, {params: {count: this.pageCount, page}});
+			const {data} = await this.$http.get(`${this.endpointUrl}/activity`, {params: {count: this.pageCount, page}});
 			this.pagination = data.meta;
 			this.items = data.data;
 		}

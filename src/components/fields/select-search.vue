@@ -7,6 +7,7 @@
 		:remote-method="getListQ"
 		:disabled="_disabled"
 		:clearable="_clearable"
+		@visible-change="initSearch"
 		filterable remote reserve-keyword>
 			<Option v-for="item in listMap" v-bind="item" :key="item.value" />
 		</Select>
@@ -48,6 +49,7 @@ export default {
 	},
 	data() {
 		return {
+			opened: false,
 			loading: false,
 			item: null,
 			res: null,
@@ -82,6 +84,13 @@ export default {
 		}
 	},
 	methods: {
+		initSearch(open) {
+			if (!this.opened && open) {
+				this.opened = true;
+				this.getList();
+			}
+		},
+
 		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
@@ -89,15 +98,19 @@ export default {
 			});
 		},
 
-		getList: debounce(async function(q) {
-			const {data} = await this.$http.get(this.endpoint, {params: {q, count: 30}});
+		async getList(search) {
+			const {data} = await this.$http.get(this.endpoint, {params: {filter: {search}, count: 30}});
 			this.res = data;
 			this.loading = false;
+		},
+
+		getListDebounced: debounce(function(search) {
+			this.getList(search);
 		}, 500),
 
-		getListQ(q) {
-			this.getList(q);
+		getListQ(search) {
 			this.loading = true;
+			this.getListDebounced(search);
 		},
 
 		async getItem() {
