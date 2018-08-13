@@ -11,4 +11,3 @@ services:
       - ./:/app
     environment:
       API: ${API}
-      GMAPS_KEY: ${GMAPS_KEY}
