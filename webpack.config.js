@@ -159,7 +159,6 @@ module.exports = (env, argv) => {
 
 			new webpack.DefinePlugin({
 				"process.env": {
-					GMAPS_KEY: JSON.stringify(process.env.GMAPS_KEY),
 					API: JSON.stringify(process.env.API)
 				}
 			}),
