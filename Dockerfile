@@ -17,10 +17,8 @@ RUN yarn
 
 COPY . .
 
-ARG GMAPS_KEY
-ARG API=https://api.forhandler-stila.stage71.signifly.com
-
-ENV GMAPS_KEY=${GMAPS_KEY} API=${API}
+ARG API
+ENV API=${API}
 
 RUN yarn build
 
