@@ -52,7 +52,8 @@ export default {
 		}
 	},
 	computed: {
-		seqParam: (t) => endpointParams({url: get(t.sequential, "url")})[0],
+		seqParam: (t) => t.sequential ? endpointParams({url: this.sequential.url})[0] : [],
+
 		ids: (t) => sortBy(t.selectedItems.map(x => x[t.seqParam])),
 
 		sequentialUrl: (t) => get(t.sequential, "url", "").replace(`{${t.seqParam}}`, t.ids[0])
