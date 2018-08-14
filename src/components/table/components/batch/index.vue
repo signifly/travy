@@ -52,7 +52,7 @@ export default {
 		}
 	},
 	computed: {
-		seqParam: (t) => t.sequential ? endpointParams({url: this.sequential.url})[0] : [],
+		seqParam: (t) => t.sequential ? endpointParams({url: t.sequential.url})[0] : [],
 
 		ids: (t) => sortBy(t.selectedItems.map(x => x[t.seqParam])),
 
