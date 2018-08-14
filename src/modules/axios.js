@@ -6,7 +6,7 @@ import qs from "qs";
 import store from "../store";
 
 const api = axios.create({
-	baseURL: `https://api.sika-design.signifly.com/v1/admin`,
+	baseURL: `${process.env.API}/v1/admin`,
 	paramsSerializer: (params) => qs.stringify(params)
 });
 
