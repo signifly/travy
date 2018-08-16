@@ -43,7 +43,6 @@ export default {
 	},
 	data() {
 		return {
-			error: {},
 			checked: true,
 			action: null,
 			popover: false,
