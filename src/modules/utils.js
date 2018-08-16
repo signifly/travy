@@ -56,9 +56,7 @@ export const endpointParams = ({url}) => {
 export const endpointUrl = ({url, data}) => {
 	if (!url) return;
 
-	if (!url.startsWith("http") && !url.startsWith("/")) url = `/${url}`;
-
-	return url.split("/").map(item => {
+	url = url.split("/").map(item => {
 		const start = item.indexOf("{");
 		const end = item.indexOf("}");
 
@@ -66,4 +64,8 @@ export const endpointUrl = ({url, data}) => {
 		const key = item.substring(start + 1, end);
 		return get(data, key);
 	}).join("/");
+
+	if (!url.startsWith("http") && !url.startsWith("/")) url = `/${url}`;
+
+	return url;
 };
