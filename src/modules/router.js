@@ -19,7 +19,6 @@ import view from "@/pages/view.vue";
 
 import _404 from "@/pages/404.vue";
 import _401 from "@/pages/401.vue";
-import error from "@/pages/error.vue";
 
 const meta = () => import(/* webpackChunkName: "app.page-meta" */ "@/pages/meta.vue");
 const metaIndex = () => import(/* webpackChunkName: "app.page-metaIndex" */ "@/components/meta/index.vue");
@@ -47,7 +46,6 @@ const routes = [
 	{path: "/t/:tableId/:viewId/:tabId?", name: "tableView", component: view, meta: {layout: "vMain", auth: {roles: "all"}}},
 
 	{path: "/401", name: "401", component: _401, meta: {title: "401", layout: "vMain", auth: {roles: "all"}}},
-	{path: "/error", name: "error", component: error, meta: {title: "Error", layout: "vMain", layout: "vBase"}},
 	{path: "/404", alias: "*", name: "404", component: _404, meta: {title: "404", layout: "vMain", auth: {roles: "all"}}}
 ];
 
@@ -79,11 +77,14 @@ const go = ({to, from, next}) => {
 };
 
 router.beforeEach(async (to, from, next) => {
-	if (!to.meta.auth) return go({to, from, next}); // allow all routes that isn't protected by auth
+	// if server error, don't disable route
+	if (store.getters["config/serverError"]) return go({to, from, next});
+
+	// allow all routes that isn't protected by auth
+	if (!to.meta.auth) return go({to, from, next});
 
 	const user = store.getters["user/data"] || await store.dispatch("user/data");
 	const roles = get(to.meta, "auth.roles", []);
-
 
 	if (!user) return store.dispatch("user/logout");
 
