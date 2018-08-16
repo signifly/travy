@@ -69,6 +69,7 @@ export default {
 
 		fieldA(obj) {
 			this.close();
+			this.unselect();
 			this.$emit("fieldA", obj);
 		},
 
