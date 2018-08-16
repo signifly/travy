@@ -1,0 +1,10 @@
+[Settings]
+  ID = "7e8628c0-55e9-498e-9e55-df98c9e63cad"
+
+[Build]
+  Publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
