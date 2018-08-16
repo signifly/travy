@@ -30,7 +30,7 @@
 				/>
 
 				<vPagination v-if="pagination" v-bind="[pagination, {loading}]" @getData="getData" />
-				<vBatch v-if="selectedItems.length > 0 && batch" v-bind="[batch, {selectedItems}]" @unselect="unselect" @fieldA="fieldA" />
+				<vBatch v-if="selectedItems.length > 0 && batch" v-bind="[batch, {selectedItems}]" @unselect="unselect" @fieldA="fieldA"/>
 			</box>
 		</div>
 	</div>
