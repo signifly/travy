@@ -3,4 +3,5 @@
 /dist
 .env
 yarn-error.log
+netlifyctl-debug.log
 .DS_Store
