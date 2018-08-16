@@ -1,10 +1,13 @@
 from node:9-alpine
 
 # install packages
-RUN apk update && apk add bash
+RUN apk update && apk add bash ca-certificates wget
+
+# install netlifyctl
+RUN wget -qO- "https://cli.netlify.com/download/latest/linux" | tar xz -C /usr/local/bin
 
 # install global npm packages
-RUN yarn global add npm-check-updates firebase-tools
+RUN yarn global add npm-check-updates
 
 WORKDIR /app
 
