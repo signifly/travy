@@ -1,6 +1,6 @@
 <template>
 	<div class="app">
-		<component v-if="configLoaded" :is="layout" />
+		<component v-if="!serverError" :is="layout"/>
 
 		<vError v-else>
 			<template slot="title">Server is unavailable</template>
@@ -16,8 +16,8 @@ import vError from "./components/error.vue";
 export default {
 	components: {...layouts, vError},
 	computed: {
-		configLoaded: (t) => t.$store.getters["config/loaded"],
-		layout: (t) => t.$route.meta.layout
+		layout: (t) => t.$route.meta.layout,
+		serverError: (t) => t.$store.getters["config/serverError"]
 	}
 };
 </script>

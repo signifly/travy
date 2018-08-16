@@ -45,7 +45,7 @@ export default {
 		},
 
 		async data({commit, dispatch, state, getters}) {
-			if (state.auth && getters.configLoaded) {
+			if (state.auth && !getters.serverError) {
 				const {data} = await axios.get("account");
 				commit("data", data);
 				return getters.data;
@@ -60,8 +60,8 @@ export default {
 		data(state) {
 			return state.data;
 		},
-		configLoaded(state, getters, rootState, rootGetters) {
-			return rootGetters["config/loaded"];
+		serverError(state, getters, rootState, rootGetters) {
+			return rootGetters["config/serverError"];
 		}
 	}
 };

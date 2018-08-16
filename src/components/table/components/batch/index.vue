@@ -36,7 +36,6 @@ export default {
 	components: {Dropdown, DropdownMenu, DropdownItem, vPanel, Button, vSelected, vAction},
 	props: {
 		selectedItems: {type: Array, required: true},
-
 		selectedOptions: {type: Object, required: true},
 		sequential: {type: Object, required: false},
 		actions: {type: Array, required: true},
@@ -44,7 +43,6 @@ export default {
 	},
 	data() {
 		return {
-			error: {},
 			checked: true,
 			action: null,
 			popover: false,
