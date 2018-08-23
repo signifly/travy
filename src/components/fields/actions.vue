@@ -38,6 +38,11 @@ export default {
 						title: "Remove",
 						props: {
 							text: "Remove this item?"
+						},
+						hide: {
+							key: "is_hidden",
+							operator: "eq",
+							value: 12
 						}
 					},
 					{

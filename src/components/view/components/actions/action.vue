@@ -5,9 +5,8 @@
 		<component
 			v-if="active"
 			:is="props.id"
-			v-bind="props"
+			v-bind="[props, {alt}]"
 			position="bottom-right"
-			:alt="alt"
 			@close="toggle"
 			@fieldA="fieldA"
 		/>
