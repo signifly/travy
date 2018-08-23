@@ -23,7 +23,6 @@ export default {
 	props: {
 		alt: {type: Object, required: true},
 		props: {type: Object, required: true},
-
 		icon: {type: String, required: false},
 		title: {type: String, required: true},
 		status: {type: String, required: false, default: "primary"}

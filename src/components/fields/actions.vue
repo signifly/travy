@@ -4,9 +4,11 @@
 			<a class="el-dropdown-link">Actions</a>
 
 			<DropdownMenu slot="dropdown" v-if="!action">
-				<DropdownItem v-for="action in actions" :key="action.title" :command="action">
-					{{action.title}}
-				</DropdownItem>
+				<action v-for="action in actions" :key="action.title" v-bind="[action, {alt}]">
+					<DropdownItem :command="action">
+						{{action.title}}
+					</DropdownItem>
+				</action>
 			</DropdownMenu>
 		</Dropdown>
 
