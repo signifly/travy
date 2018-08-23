@@ -10,10 +10,10 @@ A simple component could look like this:
 meta: {
 	res: {
 		props: {
-			value: "text"
+			value: "value_key"
 		},
 		data: {
-			text: "some text"
+			value_key: "some value"
 		}
 	}
 },
@@ -23,9 +23,11 @@ props: {
 }
 ```
 
-props without `_` are mapped to the data object, while props with `_` will just give you the prop value. So in this case, `value` is `some text` and `_value` is `text`.
+props without `_` are mapped to the data object, while props with `_` will just give you the prop value. So in this case, `value` is `some value` and `_value` is `value_key`.
 
-if `doc: true` that prop will be documented on the `/meta/fields` page. We need to know `_value` so we can update `some text` on the correct key in our parent data object.
+We need to know `_value` so we can update `some value` on the correct property (`value_key`) in our parent data object.
+
+if `{doc: true}` that prop will be documented on the `/meta/fields` page.
 
 
 ## update

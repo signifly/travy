@@ -20,9 +20,10 @@ import view from "@/pages/view.vue";
 import _404 from "@/pages/404.vue";
 import _401 from "@/pages/401.vue";
 
-const meta = () => import(/* webpackChunkName: "app.page-meta" */ "@/pages/meta.vue");
-const metaIndex = () => import(/* webpackChunkName: "app.page-metaIndex" */ "@/components/meta/index.vue");
-const metaFields = () => import(/* webpackChunkName: "app.page-metaFields" */ "@/components/meta/fields/index.vue");
+const meta = () => import(/* webpackChunkName: "app.meta" */ "@/pages/meta.vue");
+const metaIndex = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/index.vue");
+const metaFields = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/fields/index.vue");
+const metaActions = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/actions/index.vue");
 
 
 const routes = [
@@ -32,6 +33,7 @@ const routes = [
 		children: [
 			{path: "", name: "meta", component: metaIndex, meta: {layout: "vBase", title: "Meta", auth: {roles: "all"}}},
 			{path: "fields", name: "metaFields", component: metaFields, meta: {layout: "vBase", title: "Meta/Fields", auth: {roles: "all"}}},
+			{path: "actions", name: "metaActions", component: metaActions, meta: {layout: "vBase", title: "Meta/Actions", auth: {roles: "all"}}},
 		]
 	},
 
