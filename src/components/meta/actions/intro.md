@@ -1,8 +1,9 @@
-# Introduction
+# Introduction WIP
 
 Actions exist on:
-- Tables
-- Views
+- View
+- Table
+- Table batch
 - vActions field
 - vButtonAction field
 
