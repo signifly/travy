@@ -103,10 +103,10 @@ $t: 0.2s;
 					height: auto;
 					border: 0;
 					border-radius: 0;
-				}
 
-				.input-image.disabled & {
-					cursor: default;
+					.input-image.disabled & {
+						cursor: default;
+					}
 				}
 			}
 		}
