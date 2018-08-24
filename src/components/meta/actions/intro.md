@@ -18,7 +18,6 @@ Actions exist on:
 		value: 1
 	}
 }
-
 ```
 
 - **Props**<br>

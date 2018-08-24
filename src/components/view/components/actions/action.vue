@@ -1,26 +1,24 @@
 <template>
-	<div class="action">
-		<Button size="medium" :type="status" :icon="`el-icon-${icon}`" @click="toggle">{{title}}</Button>
+	<action
+	v-bind="{props, active, data}"
+	@close="toggle"
+	@fieldA="fieldA">
 
-		<component
-			v-if="active"
-			:is="props.id"
-			v-bind="[props, {alt}]"
-			position="bottom-right"
-			@close="toggle"
-			@fieldA="fieldA"
-		/>
-	</div>
+		<div class="view-action">
+			<Button size="medium" :type="status" :icon="`el-icon-${icon}`" @click="toggle">{{title}}</Button>
+		</div>
+
+	</action>
 </template>
 
 <script>
 import {Button} from "element-ui";
-import * as actions from "@/components/actions";
+import action from "@/components/actions/index.vue";
 
 export default {
-	components: {Button, ...actions},
+	components: {Button, action},
 	props: {
-		alt: {type: Object, required: true},
+		data: {type: Object, required: true},
 		props: {type: Object, required: true},
 		icon: {type: String, required: false},
 		title: {type: String, required: true},
@@ -45,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.action {
-	position: relative;
+.view-action {
+
 }
 </style>

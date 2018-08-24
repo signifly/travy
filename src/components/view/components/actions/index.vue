@@ -1,17 +1,14 @@
 <template>
 	<div class="actions">
-		<action v-for="action in actions" :key="action.title" v-bind="[action, {alt: {data}}]">
-			<viewAction v-bind="[action, {alt: {data}}]" @fieldA="fieldA"/>
-		</action>
+		<viewAction v-for="action in actions" :key="action.title" v-bind="[action, {data}]" @fieldA="fieldA"/>
 	</div>
 </template>
 
 <script>
 import viewAction from "./action.vue";
-import {action} from "@/components/actions";
 
 export default {
-	components: {viewAction, action},
+	components: {viewAction},
 	props: {
 		actions: {type: Array, required: true},
 		data: {type: Object, required: true}

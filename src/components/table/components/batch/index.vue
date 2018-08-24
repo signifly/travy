@@ -6,34 +6,37 @@
 			<div class="actions">
 				<Button v-if="sequential" size="medium" @click="sequentialStart">Sequential edit</Button>
 
-				<Dropdown v-if="bulk" trigger="click" :show-timeout="0" :hide-timeout="0" @command="select">
+				<Dropdown v-if="bulk" trigger="click" :show-timeout="0" :hide-timeout="0" :hide-on-click="false" @command="select">
 					<Button size="medium">
 						Bulk actions<i class="el-icon-arrow-up el-icon--right"></i>
 					</Button>
 
 					<DropdownMenu slot="dropdown">
-						<DropdownItem v-for="action in actions" :key="action.title" :command="action">{{action.title}}</DropdownItem>
+						<batchAction
+							v-for="action in actions"
+							:active="selectedAction === action"
+							:key="action.title"
+							v-bind="{action, ids}"
+							@close="close"
+							@fieldA="fieldA"
+						/>
 					</DropdownMenu>
-
-					<vAction v-if="action && action.props.id !== 'modal'" v-bind="[action, {ids}]" @close="close" @fieldA="fieldA" />
 				</Dropdown>
 			</div>
 		</vPanel>
-
-		<vAction v-if="action && action.props.id === 'modal'" v-bind="[action, {ids}]" @close="close" @fieldA="fieldA" />
 	</div>
 </template>
 
 <script>
 import {get, sortBy} from "lodash";
-import {Button, Dropdown, DropdownMenu, DropdownItem} from "element-ui";
-import {endpointUrl, endpointParams} from "@/modules/utils";
+import {Button, Dropdown, DropdownMenu} from "element-ui";
+import {endpointParams} from "@/modules/utils";
 import vPanel from "@/components/panel.vue";
 import vSelected from "./selected.vue";
-import vAction from "./action.vue";
+import batchAction from "./action.vue";
 
 export default {
-	components: {Dropdown, DropdownMenu, DropdownItem, vPanel, Button, vSelected, vAction},
+	components: {Dropdown, DropdownMenu, vPanel, Button, vSelected, batchAction},
 	props: {
 		selectedItems: {type: Array, required: true},
 		selectedOptions: {type: Object, required: true},
@@ -43,8 +46,8 @@ export default {
 	},
 	data() {
 		return {
+			selectedAction: null,
 			checked: true,
-			action: null,
 			popover: false,
 			modal: false
 		}
@@ -62,7 +65,7 @@ export default {
 		},
 
 		close() {
-			this.action = null;
+			this.selectedAction = null;
 		},
 
 		fieldA(obj) {
@@ -72,7 +75,7 @@ export default {
 		},
 
 		select(action) {
-			this.action = action;
+			this.selectedAction = action;
 		},
 
 		sequentialStart() {

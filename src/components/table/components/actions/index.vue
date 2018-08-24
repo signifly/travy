@@ -1,17 +1,14 @@
 <template>
 	<div class="actions">
-		<action v-for="action in actions" :key="action.title" v-bind="action">
-			<tableAction v-bind="action" @fieldA="fieldA"/>
-		</action>
+		<tableAction v-for="action in actions" :key="action.title" v-bind="action" @fieldA="fieldA"/>
 	</div>
 </template>
 
 <script>
 import tableAction from "./action.vue";
-import {action} from "@/components/actions";
 
 export default {
-	components: {tableAction, action},
+	components: {tableAction},
 	props: {
 		actions: {type: Array, required: true}
 	},

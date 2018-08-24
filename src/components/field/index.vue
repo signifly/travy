@@ -27,8 +27,7 @@
 		<component
 			:is="component"
 			ref="field"
-			v-bind="[propsData, propsValue]"
-			:alt="alt"
+			v-bind="[propsData, propsValue, {alt}]"
 			@fieldA="$emit('fieldA', $event)"
 		/>
 
