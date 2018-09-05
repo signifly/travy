@@ -1,4 +1,4 @@
-import {get, map, mapValues, isPlainObject} from "lodash";
+import {get, mapValues, isPlainObject} from "lodash";
 import VueRouter from "vue-router";
 import Vue from "vue";
 import qs from "qs";
