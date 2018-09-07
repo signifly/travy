@@ -82,11 +82,11 @@ export default {
 
 		async fieldA({action, data, item, done}) {
 			const actions = {
-				refresh: async ({done}) => {
+				refresh: async () => {
 					await this.getData();
 				},
 
-				update: debounce(async ({item, data, done}) => {
+				update: debounce(async ({item, data}) => {
 					const modifiers = this.modifiers ? this.modifiers.map(x => omit(x, "options")) : undefined;
 
 					const url = endpointUrl({data: item, url: `${this.endpoint.url}/{id}`});
@@ -95,7 +95,7 @@ export default {
 			};
 
 			try {
-				await actions[action]({data, item, done});
+				await actions[action]({data, item});
 			} catch (err) {
 				console.log(err);
 			} finally {

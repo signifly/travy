@@ -1,4 +1,4 @@
-import {get} from "lodash";
+import {get, replace} from "lodash";
 
 export const date = (epoch) => {
 	const d = new Date(epoch * 1000);
@@ -56,14 +56,8 @@ export const endpointParams = ({url}) => {
 export const endpointUrl = ({url, data}) => {
 	if (!url) return;
 
-	url = url.split("/").map(item => {
-		const start = item.indexOf("{");
-		const end = item.indexOf("}");
-
-		if (start === -1 && end === -1) return item;
-		const key = item.substring(start + 1, end);
-		return get(data, key);
-	}).join("/");
+	// find all {KEY} in string and replace with data property
+	url = replace(url, /\{.*?\}/g, (key) => get(data, key.slice(1, -1)));
 
 	if (!url.startsWith("http") && !url.startsWith("/")) url = `/${url}`;
 
