@@ -72,8 +72,8 @@ export default {
 		oValue: (t) => t._options.value,
 
 		listMap: (t) => t.list.map(x => ({
+			value: x[t.oValue].toString(),
 			label: x[t.oLabel],
-			value: x[t.oValue],
 			disabled: x.disabled,
 			icon: x.icon
 		})),
