@@ -91,6 +91,7 @@ export default {
 
 					const url = endpointUrl({data: item, url: `${this.endpoint.url}/{id}`});
 					await this.$http.put(url, {...data, modifiers});
+					await this.getData();
 				}, 800)
 			};
 
