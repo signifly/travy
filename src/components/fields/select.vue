@@ -38,7 +38,7 @@ export default {
 					{
 						name: "England",
 						icon: "flags/gb",
-						value: "UK"
+						id: "UK"
 					},
 					{
 						name: "Murica",
