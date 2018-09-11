@@ -4,7 +4,7 @@
 			<vSelected v-bind="{selectedItems, selectedOptions}" @unselect="unselect"/>
 
 			<div class="actions">
-				<Button v-if="sequential" size="medium" @click="sequentialStart">Sequential edit</Button>
+				<sequential v-if="sequential" v-bind="[sequential, {selectedItems, ids}]"/>
 
 				<Dropdown v-if="bulk" trigger="click" :show-timeout="0" :hide-timeout="0" :hide-on-click="false" @command="select">
 					<Button size="medium">
@@ -28,15 +28,15 @@
 </template>
 
 <script>
-import {get, sortBy} from "lodash";
+import {get} from "lodash";
 import {Button, Dropdown, DropdownMenu} from "element-ui";
-import {endpointParams} from "@/modules/utils";
 import vPanel from "@/components/panel.vue";
 import vSelected from "./selected.vue";
 import batchAction from "./action.vue";
+import sequential from "./sequential.vue";
 
 export default {
-	components: {Dropdown, DropdownMenu, vPanel, Button, vSelected, batchAction},
+	components: {Dropdown, DropdownMenu, vPanel, Button, vSelected, batchAction, sequential},
 	props: {
 		selectedItems: {type: Array, required: true},
 		selectedOptions: {type: Object, required: true},
@@ -53,11 +53,8 @@ export default {
 		}
 	},
 	computed: {
-		seqParam: (t) => t.sequential ? endpointParams({url: t.sequential.url})[0] : [],
-
-		ids: (t) => sortBy(t.selectedItems.map(x => x[t.seqParam])),
-
-		sequentialUrl: (t) => get(t.sequential, "url", "").replace(`{${t.seqParam}}`, t.ids[0])
+		tableId: (t) => t.$route.params.tableId,
+		ids: (t) => t.selectedItems.map(x => x.id)
 	},
 	methods: {
 		unselect() {
@@ -76,11 +73,6 @@ export default {
 
 		select(action) {
 			this.selectedAction = action;
-		},
-
-		sequentialStart() {
-			const modifiers = this.$route.query.modifiers;
-			this.$router.push({path: this.sequentialUrl, query: {modifiers, seq: {items: this.ids}}});
 		}
 	}
 };
