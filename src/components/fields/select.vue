@@ -38,7 +38,7 @@ export default {
 					{
 						name: "England",
 						icon: "flags/gb",
-						value: "UK"
+						id: "UK"
 					},
 					{
 						name: "Murica",
@@ -62,7 +62,7 @@ export default {
 	data() {
 		return {
 			data: {
-				value: this.value.toString()
+				value: this.value ? this.value.toString() : null
 			}
 		}
 	},

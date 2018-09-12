@@ -54,7 +54,7 @@ export default {
 			item: null,
 			res: null,
 			data: {
-				value: this.value.toString()
+				value: this.value ? this.value.toString() : null
 			}
 		}
 	},

@@ -1,6 +1,6 @@
 <template>
 	<div class="modal">
-		<Dialog v-bind="{width, title}" :visible.sync="_visible" :modal-append-to-body="false">
+		<Dialog v-bind="{width, title}" :visible.sync="_visible" :modal-append-to-body="true">
 			<div class="fields">
 				<vField
 				v-for="field in fields"
