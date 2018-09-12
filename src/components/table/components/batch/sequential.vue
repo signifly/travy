@@ -21,10 +21,10 @@ export default {
 	methods: {
 		setSequential() {
 			localStorage.setItem("sequential", JSON.stringify({
-				items: this.ids,
-				url: this.url,
 				firstUrl: this.firstUrl,
-				tableId: this.tableId
+				tableId: this.tableId,
+				items: this.ids,
+				url: this.url
 			}));
 		},
 
