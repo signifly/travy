@@ -1,17 +1,17 @@
 <template>
 	<div class="view-main">
 
-		<div class="loading" ref="loading" v-if="!data" />
+		<div class="loading" ref="loading" v-if="!data"/>
 
 		<transition name="main">
 			<div class="main" v-if="data">
 				<Row class="top" :gutter="20">
 					<Col class="left" :span="16">
-						<vHeader v-bind="{data, header}" @fieldA="fieldA" />
+						<vHeader v-bind="{data, header}" @fieldA="fieldA"/>
 					</Col>
 					<Col class="right" :span="8">
-						<vModifiers v-if="modifiers" v-bind="{modifiers}" @refreshAll="refreshAll" />
-						<vActions v-if="actions" v-bind="{actions, data}" @submit="getData" />
+						<vModifiers v-if="modifiers" v-bind="{modifiers}" @refreshAll="refreshAll"/>
+						<vActions v-if="actions" v-bind="{actions, data}" @submit="getData"/>
 					</Col>
 				</Row>
 
@@ -20,17 +20,17 @@
 						<vTabs v-bind="{tabs, data, dataU, options, edits, errors}" @fieldA="fieldA"/>
 					</Col>
 					<Col class="right" :span="8">
-						<vSidebar v-if="sidebar" v-bind="{sidebar, data}" @fieldA="fieldA" />
+						<vSidebar v-if="sidebar" v-bind="{sidebar, data}" @fieldA="fieldA"/>
 					</Col>
 				</Row>
 
 				<Row class="bottom" :gutter="20">
 					<Col class="left" :span="24">
-						<vActivity v-if="activity" v-bind="{data, endpointUrl}" :key="saveU" />
+						<vActivity v-if="activity" v-bind="{data, endpointUrl}" :key="saveU"/>
 					</Col>
 				</Row>
 
-				<vPanel v-bind="{loading: loadingSave, data, editsU, getData, error}" @save="save" />
+				<vPanel v-bind="{loading: loadingSave, data, editsU, getData, error}" @save="save"/>
 			</div>
 		</transition>
 	</div>

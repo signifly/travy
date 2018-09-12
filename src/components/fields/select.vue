@@ -38,7 +38,7 @@ export default {
 					{
 						name: "England",
 						icon: "flags/gb",
-						value: "UK"
+						id: "UK"
 					},
 					{
 						name: "Murica",
@@ -62,7 +62,7 @@ export default {
 	data() {
 		return {
 			data: {
-				value: this.value
+				value: this.value ? this.value.toString() : null
 			}
 		}
 	},
@@ -72,8 +72,8 @@ export default {
 		oValue: (t) => t._options.value,
 
 		listMap: (t) => t.list.map(x => ({
+			value: x[t.oValue].toString(),
 			label: x[t.oLabel],
-			value: x[t.oValue],
 			disabled: x.disabled,
 			icon: x.icon
 		})),

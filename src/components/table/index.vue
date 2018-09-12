@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import {omit, get} from "lodash";
+import {omit, get, debounce} from "lodash";
 import {endpointUrl} from "@/modules/utils";
 import * as components from "./components";
 import vModifiers from "@/components/modifiers.vue";
@@ -82,20 +82,21 @@ export default {
 
 		async fieldA({action, data, item, done}) {
 			const actions = {
-				refresh: async ({done}) => {
+				refresh: async () => {
 					await this.getData();
 				},
 
-				update: async ({item, data, done}) => { // fieldA action
+				update: debounce(async ({item, data}) => {
 					const modifiers = this.modifiers ? this.modifiers.map(x => omit(x, "options")) : undefined;
 
 					const url = endpointUrl({data: item, url: `${this.endpoint.url}/{id}`});
 					await this.$http.put(url, {...data, modifiers});
-				}
+					await this.getData({loading: false});
+				}, 800)
 			};
 
 			try {
-				await actions[action]({data, item, done});
+				await actions[action]({data, item});
 			} catch (err) {
 				console.log(err);
 			} finally {

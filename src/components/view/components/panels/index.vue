@@ -1,5 +1,5 @@
 <template>
-	<component v-if="active" :is="comp" v-bind="{loading, title, seq, getData, error}" />
+	<component v-if="active" :is="comp" v-bind="{loading, title, getData, error}" />
 </template>
 
 <script>
@@ -18,8 +18,8 @@ export default {
 	},
 	computed: {
 		title: (t) => `#${t.data.id}`,
-		seq: (t) => t.$route.query.seq,
-		comp: (t) => t.seq ? "vBatch" : "vSave",
+		sequential: (t) => t.$route.query.sequential,
+		comp: (t) => t.sequential ? "vBatch" : "vSave",
 		active() {
 			if (this.comp === "vBatch") return true;
 			if (this.comp === "vSave") return this.editsU;

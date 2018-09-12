@@ -1,33 +1,34 @@
 <template>
 	<div class="actions">
-		<Dropdown trigger="click" :show-timeout="0" :hide-timeout="0" size="small" @command="select">
+		<Dropdown ref="dropdown" trigger="click" :show-timeout="0" :hide-timeout="0" :hide-on-click="false" size="small" @command="select">
 			<a class="el-dropdown-link">Actions</a>
 
-			<DropdownMenu slot="dropdown" v-if="!action">
-				<DropdownItem v-for="action in actions" :key="action.title" :command="action">
-					{{action.title}}
-				</DropdownItem>
+			<DropdownMenu slot="dropdown">
+				<action
+				v-bind="[action, {data: alt.data}]"
+				:active="selectedAction === action"
+				v-for="action in actions"
+				@close="close"
+				@fieldA="fieldA"
+				:key="action.title">
+
+					<DropdownItem class="item" :command="action">
+						{{action.title}}
+					</DropdownItem>
+
+				</action>
 			</DropdownMenu>
 		</Dropdown>
-
-		<component
-			v-if="action"
-			:is="action.props.id"
-			v-bind="action.props"
-			:alt="alt"
-			@close="close"
-			@fieldA="fieldA"
-		/>
 	</div>
 </template>
 
 <script>
 import {get} from "lodash";
 import {Dropdown, DropdownMenu, DropdownItem} from "element-ui";
-import * as actions from "@/components/actions";
+import action from "@/components/actions/index.vue";
 
 export default {
-	components: {Dropdown, DropdownMenu, DropdownItem, ...actions},
+	components: {Dropdown, DropdownMenu, DropdownItem, action},
 	meta: {
 		res: {
 			props: {
@@ -36,6 +37,11 @@ export default {
 						title: "Remove",
 						props: {
 							text: "Remove this item?"
+						},
+						hide: {
+							key: "is_hidden",
+							operator: "eq",
+							value: 12
 						}
 					},
 					{
@@ -108,21 +114,25 @@ export default {
 	},
 	props: {
 		_actions: {type: Array, required: true, doc: true},
-		alt: {type: Object, required: false}
+		alt: {type: Object, default: () => ({})}
 	},
 	data() {
 		return {
 			actions: this._actions,
-			action: null
+			selectedAction: null
 		}
 	},
 	methods: {
 		select(action) {
-			this.action = action;
+			this.selectedAction = this.selectedAction ? null : action;
 		},
 
 		close() {
-			this.action = null;
+			this.selectedAction = null;
+
+			setTimeout(() => {
+				if (this.$refs.dropdown) this.$refs.dropdown.hide();
+			}, 100);
 		},
 
 		fieldA(obj) {
@@ -142,5 +152,9 @@ export default {
 		font-size: em(14);
 		color: $blue5;
 	}
+}
+
+.item {
+	user-select: none;
 }
 </style>
