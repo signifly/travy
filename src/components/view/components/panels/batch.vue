@@ -59,7 +59,7 @@ export default {
 		}
 	},
 	computed: {
-		items: (t) => get(t.sequential, `[${t.tableId}].items`, []).map(x => x.toString()),
+		items: (t) => get(t.sequential, "items", []).map(x => x.toString()),
 		progress: (t) => ((t.index + 1) / t.items.length) * 100,
 		modifiers: (t) => t.$route.query.modifiers,
 		tableId: (t) => t.$route.params.tableId,

@@ -19,8 +19,17 @@ export default {
 		firstUrl: (t) => endpointUrl({url: t.url, data: t.selectedItems[0]})
 	},
 	methods: {
+		setSequential() {
+			localStorage.setItem("sequential", JSON.stringify({
+				items: this.ids,
+				url: this.url,
+				firstUrl: this.firstUrl,
+				tableId: this.tableId
+			}));
+		},
+
 		start() {
-			localStorage.setItem("sequential", JSON.stringify({[this.tableId]: {items: this.ids}}));
+			this.setSequential();
 			this.$router.push({path: this.firstUrl, query: {modifiers: this.query.modifiers, sequential: true}});
 		}
 	}
