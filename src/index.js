@@ -5,6 +5,7 @@ Vue.use(require("vue-shortkey"));
 
 import "./assets/favicon.png?name";
 import "./style/index.scss";
+import "./robots.txt?name";
 import "./modules/errors";
 
 import router from "./modules/router";
