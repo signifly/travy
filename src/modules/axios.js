@@ -36,7 +36,7 @@ api.interceptors.response.use(res => {
 
 	if (!res) {
 		console.log("no server response");
-		return store.commit("config/serverError", true);
+		return router.replace({name: "error", params: {status: 500}});
 	}
 
 	store.dispatch("notify/send", {

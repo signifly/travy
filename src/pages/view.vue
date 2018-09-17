@@ -30,7 +30,7 @@ export default {
 	},
 	created() {
 		if (!this.table) {
-			this.$router.replace({name: "404"});
+			this.$router.replace({name: "error"});
 		}
 	}
 };
