@@ -113,7 +113,7 @@ export default {
 		},
 
 		async getListOptions(search) {
-			const {data} = await this.$http.get(this.endpoint, {params: {filter: {search}, count: 30}});
+			const {data} = await this.$axios.get(this.endpoint, {params: {filter: {search}, count: 30}});
 			this.listOptions = get(data, this.oKey, []);
 			this.loading = false;
 		},
@@ -128,7 +128,7 @@ export default {
 		},
 
 		async getListSelected() {
-			const {data} = await this.$http.get(this.endpoint, {params: {filter: this.values}});
+			const {data} = await this.$axios.get(this.endpoint, {params: {filter: this.values}});
 			return get(data, this.oKey, []);
 		},
 
