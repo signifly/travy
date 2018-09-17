@@ -1,28 +1,28 @@
 <template>
-	<div class="action">
-		<component
-			:is="props.id"
-			v-bind="[props, {data}]"
-			:alt="{}"
-			position="top-right"
-			@close="close"
-			@fieldA="fieldA"
-		/>
-	</div>
+	<action
+	v-bind="[action, {data, active}]"
+	position="top-right"
+	@close="close"
+	@fieldA="fieldA">
+
+		<DropdownItem class="item" :command="action">{{action.title}}</DropdownItem>
+	</action>
 </template>
 
 <script>
-import * as actions from "@/components/actions";
+import {DropdownItem} from "element-ui";
+import action from "@/components/actions/index.vue";
 
 export default {
-	components: {...actions},
+	components: {DropdownItem, action},
 	props: {
-		props: {type: Object, required: true},
+		active: {type: Boolean, required: true},
+		action: {type: Object, required: true},
 		ids: {type: Array, required: true}
 	},
 	computed: {
 		data() {
-			return {...this.props.data, ids: this.ids};
+			return {...this.action.props.data, ids: this.ids};
 		}
 	},
 	methods: {
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.action {
-
+.item {
+	user-select: none;
 }
 </style>

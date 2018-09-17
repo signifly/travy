@@ -2,13 +2,16 @@
 	<div class="page" :class="{sidebar}">
 		<div class="sidebar" v-if="sidebar">
 			<div class="wrap">
-				<div class="title" v-text="title"/>
+				<div class="title" v-text="sidebar.title"/>
 
-				<div class="items">
-					<template v-for="item in sidebar">
-						<div class="break" v-if="item.break"/>
-						<a v-else :href="`#${item.value}`" :class="{active: $route.hash === `#${item.value}`}">{{item.label}}</a>
-					</template>
+				<div class="sections">
+					<div class="section" v-for="section in sidebar.sections">
+						<div class="items">
+							<template v-for="item in section">
+								<a :href="`#${item.value}`" :class="{active: $route.hash === `#${item.value}`}">{{item.label}}</a>
+							</template>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -25,7 +28,7 @@
 export default {
 	props: {
 		title: {type: String, required: false},
-		sidebar: {type: Array, required: false}
+		sidebar: {type: Object, required: false}
 	},
 	mounted() {
 		const hash = location.hash;
@@ -64,30 +67,38 @@ $sidebar: 18em;
 				margin-bottom: 1em;
 			}
 
-			.items {
-				display: flex;
-				flex-direction: column;
-				font-size: 0.9em;
-				padding-left: 0.75em;
-
-				a {
-					margin: 0.3em 0;
-					color: $black1;
-					text-decoration: none;
-
-					&.active {
-						color: $blue5;
-						font-weight: 500;
-					}
-					&:hover {
-						color: $blue5;
-					}
-				}
-
-				.break {
+			.sections {
+				.section {
 					border-bottom: 1px solid $blue2;
-					width: 100%;
-					margin: 1em 0;
+					margin-bottom: 1em;
+					padding-bottom: 1em;
+
+					&:last-child {
+						border-bottom: 0;
+						margin-bottom: 0;
+						padding-bottom: 0;
+					}
+
+					.items {
+						display: flex;
+						flex-direction: column;
+						font-size: 0.9em;
+						// padding-left: 0.75em;
+
+						a {
+							margin: 0.3em 0;
+							color: $black1;
+							text-decoration: none;
+
+							&.active {
+								color: $blue5;
+								font-weight: 500;
+							}
+							&:hover {
+								color: $blue5;
+							}
+						}
+					}
 				}
 			}
 		}
@@ -126,9 +137,24 @@ $sidebar: 18em;
 				}
 			}
 
-			.content {
+			.html {
 				line-height: 1.5em;
+
 				/deep/ {
+					ul {
+						padding-left: 1em;
+
+						li {
+							margin-bottom: 0.5em;
+
+							ul {
+								li {
+									margin-bottom: 0.2em;
+								}
+							}
+						}
+					}
+
 					code {
 						background-color: rgba(black, 0.05);
 						border-radius: 2px;

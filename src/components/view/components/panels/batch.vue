@@ -1,5 +1,5 @@
 <template>
-	<vPanel v-bind="{loading: loadingAll}">
+	<vPanel v-bind="{loading: loadingAll}" v-if="items.length">
 		<div class="left">
 			<Tooltip content="Save and close">
 				<a class="close" @click="closeSave"><i class="el-icon-circle-close-outline"></i></a>
@@ -42,31 +42,31 @@
 <script>
 import {Button, Tooltip, Progress} from "element-ui";
 import vPanel from "@/components/panel.vue";
+import {get} from "lodash";
 
 export default {
 	components: {Button, Tooltip, Progress, vPanel},
 	props: {
 		title: {type: String, required: true},
 		loading: {type: Boolean, required: true},
-		seq: {type: Object, required: true},
 		getData: {type: Function, required: true},
 		error: {type: Object, required: true}
 	},
 	data() {
 		return {
+			sequential: JSON.parse(localStorage.getItem("sequential")),
 			loadingData: false
 		}
 	},
 	computed: {
-		modifiers: (t) => t.$route.query.modifiers,
+		items: (t) => get(t.sequential, "items", []).map(x => x.toString()),
 		progress: (t) => ((t.index + 1) / t.items.length) * 100,
-		items: (t) => t.seq.items.map(x => x.toString()),
+		modifiers: (t) => t.$route.query.modifiers,
 		tableId: (t) => t.$route.params.tableId,
 		viewId: (t) => t.$route.params.viewId,
 		index: (t) => t.items.indexOf(t.viewId),
 		prev: (t) => t.items[t.index - 1],
 		next: (t) => t.items[t.index + 1],
-
 		loadingAll: (t) => t.loading || t.loadingData
 	},
 	methods: {
@@ -75,7 +75,7 @@ export default {
 				done: async () => {
 					this.$router.push({
 						params: {...this.$route.params, viewId: this.next},
-						query: {modifiers: this.modifiers, seq: {items: this.items}}
+						query: {modifiers: this.modifiers, sequential: true}
 					});
 				}
 			});
@@ -86,7 +86,7 @@ export default {
 				done: async () => {
 					this.$router.push({
 						params: {...this.$route.params, viewId: this.prev},
-						query: {modifiers: this.modifiers, seq: {items: this.items}}
+						query: {modifiers: this.modifiers, sequential: true}
 					});
 				}
 			});
@@ -95,6 +95,7 @@ export default {
 		closeSave() {
 			this.$parent.$emit("save", {
 				done: async () => {
+					localStorage.removeItem("sequential");
 					this.$router.push({path: `/t/${this.tableId}`, query: {modifiers: this.modifiers}});
 				}
 			});

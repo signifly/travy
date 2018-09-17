@@ -1,6 +1,6 @@
 <template>
 	<div class="modal">
-		<Dialog v-bind="{width, title}" :visible.sync="_visible">
+		<Dialog v-bind="{width, title}" :visible.sync="_visible" :modal-append-to-body="true">
 			<div class="fields">
 				<vField
 				v-for="field in fields"
@@ -18,7 +18,7 @@
 
 				<div class="error" v-if="error.message">{{error.message}}</div>
 
-				<slot name="footer" />
+				<slot name="footer"/>
 			</div>
 		</Dialog>
 	</div>

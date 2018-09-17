@@ -18,7 +18,6 @@ export default {
 		scope: {type: Object, required: true}
 	},
 	computed: {
-		components: (t) => t.$options.components,
 		data: (t) => t.scope.row,
 		action: (t) => t.column.fieldType.action,
 		link() {

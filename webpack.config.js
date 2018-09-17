@@ -73,7 +73,7 @@ module.exports = (env, argv) => {
 					}
 				},
 				{
-					test: /\.(png|jpg|gif|eps|pdf)$/,
+					test: /\.(png|jpg|gif|eps|pdf|txt)$/,
 					oneOf: [
 						{
 							resourceQuery: /name/,

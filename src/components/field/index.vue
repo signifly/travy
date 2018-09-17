@@ -5,21 +5,21 @@
 				<div class="label" v-if="label">
 					{{label}}
 
-					<vTranslated v-bind="option" />
+					<vTranslated v-bind="option"/>
 
 					<transition name="el-fade-in">
-						<div class="dot outdated" v-if="rule.dot && !disabled && outdated" />
+						<div class="dot outdated" v-if="rule.dot && !disabled && outdated"/>
 					</transition>
 
 					<transition name="el-fade-in">
-						<div class="dot nodata" v-if="rule.dot && !disabled && nodata" />
+						<div class="dot nodata" v-if="rule.dot && !disabled && nodata"/>
 					</transition>
 
 				</div>
 			</slot>
 			<div class="tooltip" v-if="tooltip">
 				<Tooltip :content="tooltip" placement="top">
-					<i class="el-icon-info"></i>
+					<i class="el-icon-info"/>
 				</Tooltip>
 			</div>
 		</div>
@@ -27,8 +27,7 @@
 		<component
 			:is="component"
 			ref="field"
-			v-bind="[propsData, propsValue]"
-			:alt="alt"
+			v-bind="[propsData, propsValue, {alt}]"
 			@fieldA="$emit('fieldA', $event)"
 		/>
 
