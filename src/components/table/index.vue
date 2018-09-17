@@ -90,7 +90,7 @@ export default {
 					const modifiers = this.modifiers ? this.modifiers.map(x => omit(x, "options")) : undefined;
 
 					const url = endpointUrl({data: item, url: `${this.endpoint.url}/{id}`});
-					await this.$http.put(url, {...data, modifiers});
+					await this.$axios.put(url, {...data, modifiers});
 					await this.getData({loading: false});
 				}, 800)
 			};
@@ -121,7 +121,7 @@ export default {
 				modifiers: this.query.modifiers
 			};
 
-			const {data} = await this.$http.get(`definitions/table/${this.tableId}`, {params});
+			const {data} = await this.$axios.get(`definitions/table/${this.tableId}`, {params});
 			this.definitions = data;
 		},
 
@@ -153,7 +153,7 @@ export default {
 				include: this.includes ? this.includes.join(",") : undefined
 			};
 
-			const {data: {data, meta}} = await this.$http.get(this.endpoint.url, {params});
+			const {data: {data, meta}} = await this.$axios.get(this.endpoint.url, {params});
 			this.data = data;
 			this.pagination = meta;
 

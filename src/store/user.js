@@ -25,9 +25,9 @@ export default {
 
 	actions: {
 		async login({commit, dispatch}, {form, route}) {
-			const {data} = await axios.post("login", form, {custom: true});
+			const {data} = await axios.post("login", form, {customErr: true});
 			commit("authSet", {data});
-			await dispatch("data");
+			await dispatch("data", {customErr: true});
 			router.push(route);
 		},
 
@@ -41,12 +41,12 @@ export default {
 		},
 
 		async resetPassword(ctx, {form}) {
-			return await axios.post("password/email", form, {custom: true});
+			return await axios.post("password/email", form, {customErr: true});
 		},
 
-		async data({commit, dispatch, state, getters}) {
+		async data({commit, dispatch, state, getters}, {customErr} = {}) {
 			if (state.auth && !getters.serverError) {
-				const {data} = await axios.get("account");
+				const {data} = await axios.get("account", {customErr});
 				commit("data", data);
 				return getters.data;
 			}

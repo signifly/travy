@@ -93,11 +93,11 @@ export default {
 			try {
 				this.loading = true;
 
-				const {data} = await this.$http({
+				const {data} = await this.$axios({
 					method: ept.method,
 					url: url,
 					data: payload,
-					custom: true,
+					customErr: true,
 					onUploadProgress: (e) => {
 						this.loading = Math.round(e.loaded / e.total * 100);
 					}

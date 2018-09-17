@@ -86,7 +86,7 @@ export default {
 		},
 
 		async getItems() {
-			const {data} = await this.$http(this._endpoint);
+			const {data} = await this.$axios(this._endpoint);
 			this.items = get(data, this._itemsKey, data);
 		}
 	},

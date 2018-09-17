@@ -26,7 +26,7 @@ api.interceptors.response.use(res => {
 	const res = error.response;
 	console.log(error, res);
 
-	if (get(res, "config.custom")) { // if the request catches the error itself, stop global error handling.
+	if (get(res, "config.customErr")) { // if the request catches the error itself, stop global error handling.
 		return Promise.reject(error);
 	}
 

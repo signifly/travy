@@ -61,7 +61,7 @@ export default {
 	},
 	methods: {
 		async getItems(page = 1) {
-			const {data} = await this.$http.get(`${this.endpointUrl}/activity`, {params: {count: this.pageCount, page}});
+			const {data} = await this.$axios.get(`${this.endpointUrl}/activity`, {params: {count: this.pageCount, page}});
 			this.pagination = data.meta;
 			this.items = data.data;
 		}

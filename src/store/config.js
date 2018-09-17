@@ -24,7 +24,7 @@ export default {
 	actions: {
 		async data({commit}) {
 			try {
-				const {data} = await axios.get("definitions/config", {custom: true});
+				const {data} = await axios.get("definitions/config", {customErr: true});
 				commit("data", data);
 			} catch(err) {
 				console.log(err);
