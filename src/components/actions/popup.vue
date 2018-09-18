@@ -38,7 +38,7 @@ export default {
 			try {
 				this.loading = true;
 
-				const {data} = await this.$http({
+				const {data} = await this.$axios({
 					method: this.endpoint.method,
 					url: this.endpoint.url,
 					data: {data: this.data},

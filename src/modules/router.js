@@ -17,8 +17,7 @@ import loginReset from "@/pages/login/reset.vue";
 import table from "@/pages/table.vue";
 import view from "@/pages/view.vue";
 
-import _404 from "@/pages/404.vue";
-import _401 from "@/pages/401.vue";
+import error from "@/pages/error.vue";
 
 const meta = () => import(/* webpackChunkName: "app.meta" */ "@/pages/meta.vue");
 const metaIndex = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/index.vue");
@@ -47,8 +46,7 @@ const routes = [
 	{path: "/t/:tableId", name: "table", component: table, meta: {layout: "vMain", auth: {roles: "all"}}},
 	{path: "/t/:tableId/:viewId/:tabId?", name: "tableView", component: view, meta: {layout: "vMain", auth: {roles: "all"}}},
 
-	{path: "/401", name: "401", component: _401, meta: {title: "401", layout: "vMain", auth: {roles: "all"}}},
-	{path: "/404", alias: "*", name: "404", component: _404, meta: {title: "404", layout: "vMain", auth: {roles: "all"}}}
+	{path: "/error", alias: "*", name: "error", props: true, component: error, meta: {layout: "vBase", title: "Error"}}
 ];
 
 
@@ -70,7 +68,7 @@ const router = new VueRouter({
 });
 
 
-const go = ({to, from, next}) => {
+const go = ({to, next}) => {
 	if (to.meta.title) {
 		store.dispatch("base/meta", {title: to.meta.title});
 	}
@@ -79,11 +77,8 @@ const go = ({to, from, next}) => {
 };
 
 router.beforeEach(async (to, from, next) => {
-	// if server error, don't disable route
-	if (store.getters["config/serverError"]) return go({to, from, next});
-
 	// allow all routes that isn't protected by auth
-	if (!to.meta.auth) return go({to, from, next});
+	if (!to.meta.auth) return go({to, next});
 
 	const user = store.getters["user/data"] || await store.dispatch("user/data");
 	const roles = get(to.meta, "auth.roles", []);
@@ -91,9 +86,9 @@ router.beforeEach(async (to, from, next) => {
 	if (!user) return store.dispatch("user/logout");
 
 	if (roles === "all" || roles.includes(user.role)) {
-		go({to, from, next});
+		go({to, next});
 	} else {
-		next({name: "401", replace: true});
+		next({name: "error", replace: true, params: {status: 403}});
 	}
 });
 

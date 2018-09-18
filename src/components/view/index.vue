@@ -145,7 +145,7 @@ export default {
 				modifiers: this.modifierParams({definitions: true})
 			};
 
-			const {data} = await this.$http.get(this.requests.definitions, {params});
+			const {data} = await this.$axios.get(this.requests.definitions, {params});
 			this.definitions = data;
 		},
 
@@ -155,7 +155,7 @@ export default {
 			};
 
 			try {
-				const {data: {data, options}} = await this.$http.get(this.requests.data, {params}, {custom: true});
+				const {data: {data, options}} = await this.$axios.get(this.requests.data, {params}, {customErr: true});
 				this.options = options;
 				this.data = data;
 
@@ -176,7 +176,7 @@ export default {
 				this.loadingSave = true;
 				const modifiers = this.modifierParams();
 
-				const {data: {data, options}} = await this.$http.put(this.endpointUrl, {...this.dataUpdated, modifiers}, {custom: true});
+				const {data: {data, options}} = await this.$axios.put(this.endpointUrl, {...this.dataUpdated, modifiers}, {customErr: true});
 				this.options = options;
 				this.data = data;
 

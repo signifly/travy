@@ -25,10 +25,16 @@ export default {
 
 	actions: {
 		async login({commit, dispatch}, {form, route}) {
-			const {data} = await axios.post("login", form, {custom: true});
-			commit("authSet", {data});
-			await dispatch("data");
-			router.push(route);
+			try {
+				const {data} = await axios.post("login", form, {customErr: true});
+				commit("authSet", {data});
+
+				await dispatch("data", {customErr: true});
+				router.push(route);
+			} catch (err) {
+				commit("authDelete");
+				return Promise.reject(err);
+			}
 		},
 
 		async logout({commit}, {post} = {}) {
@@ -41,12 +47,12 @@ export default {
 		},
 
 		async resetPassword(ctx, {form}) {
-			return await axios.post("password/email", form, {custom: true});
+			return await axios.post("password/email", form, {customErr: true});
 		},
 
-		async data({commit, dispatch, state, getters}) {
-			if (state.auth && !getters.serverError) {
-				const {data} = await axios.get("account");
+		async data({commit, dispatch, state, getters}, {customErr} = {}) {
+			if (state.auth) {
+				const {data} = await axios.get("account", {customErr});
 				commit("data", data);
 				return getters.data;
 			}
@@ -59,9 +65,6 @@ export default {
 		},
 		data(state) {
 			return state.data;
-		},
-		serverError(state, getters, rootState, rootGetters) {
-			return rootGetters["config/serverError"];
 		}
 	}
 };

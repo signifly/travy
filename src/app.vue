@@ -1,23 +1,16 @@
 <template>
 	<div class="app">
-		<component v-if="!serverError" :is="layout"/>
-
-		<vError v-else>
-			<template slot="title">Server is unavailable</template>
-			<template slot="text">Oh no!</template>
-		</vError>
+		<component :is="layout"/>
 	</div>
 </template>
 
 <script>
 import * as layouts from "./components/layouts";
-import vError from "./components/error.vue";
 
 export default {
-	components: {...layouts, vError},
+	components: {...layouts},
 	computed: {
-		layout: (t) => t.$route.meta.layout,
-		serverError: (t) => t.$store.getters["config/serverError"]
+		layout: (t) => t.$route.meta.layout
 	}
 };
 </script>

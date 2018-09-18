@@ -5,7 +5,6 @@ export default {
 	namespaced: true,
 
 	state: {
-		serverError: false,
 		menu: [],
 		tables: {},
 		settings: {}
@@ -15,28 +14,21 @@ export default {
 		data(state, data) {
 			state.loaded = true;
 			forEach(data, (val, key) => set(state, key, val));
-		},
-		serverError(state, bool) {
-			state.serverError = bool;
 		}
 	},
 
 	actions: {
 		async data({commit}) {
 			try {
-				const {data} = await axios.get("definitions/config", {custom: true});
+				const {data} = await axios.get("definitions/config", {customErr: true});
 				commit("data", data);
 			} catch(err) {
 				console.log(err);
-				commit("serverError", true);
 			}
 		}
 	},
 
 	getters: {
-		serverError(state) {
-			return state.serverError;
-		},
 		menu(state) {
 			return state.menu;
 		},
