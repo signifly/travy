@@ -71,7 +71,6 @@ export default {
 		disabled: (t) => t.fieldType.props.disabled,
 
 		component: (t) => fields[t.id],
-		key: (t) => JSON.stringify(t.propsData),
 		option: (t) => get(t.alt.options, t.name, {}),
 		error: (t) => get(t.alt.errors, t.name, [])[0],
 		show: (t) => t.component && get(t.alt.data, t.fieldType.show, true),
@@ -90,12 +89,14 @@ export default {
 		},
 
 		rule() {
+			const type = this.type;
+
 			return {
 				get info() {
-					return this.type !== "table";
+					return type !== "table";
 				},
 				get dot() {
-					return this.type === "view-tab";
+					return type === "view-tab";
 				}
 			}
 		}
