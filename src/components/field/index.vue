@@ -26,7 +26,6 @@
 
 		<component
 			:is="component"
-			:key="key"
 			ref="field"
 			v-bind="[propsData, propsValue, {alt}]"
 			@fieldA="$emit('fieldA', $event)"
