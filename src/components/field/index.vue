@@ -26,6 +26,7 @@
 
 		<component
 			:is="component"
+			:key="key"
 			ref="field"
 			v-bind="[propsData, propsValue, {alt}]"
 			@fieldA="$emit('fieldA', $event)"
@@ -63,26 +64,26 @@ export default {
 		}
 	},
 	computed: {
-		error: (t) => get(t.alt.errors, t.name, [])[0],
-		component: (t) => fields[t.id],
-
 		type: (t) => t.alt.type,
 		id: (t) => t.fieldType.id,
+		props: (t) => t.fieldType.props,
+		outdated: (t) => t.option.outdated,
 		reference: (t) => t.fieldType.reference,
 		disabled: (t) => t.fieldType.props.disabled,
+
+		component: (t) => fields[t.id],
+		key: (t) => JSON.stringify(t.propsData),
 		option: (t) => get(t.alt.options, t.name, {}),
+		error: (t) => get(t.alt.errors, t.name, [])[0],
 		show: (t) => t.component && get(t.alt.data, t.fieldType.show, true),
+
+		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
+		propsData: (t) => mapValues(t.props, (val) => get(t.alt.data, val)),
 
 		width() {
 			const width = this.fieldType.width || 100;
 			return width <= 50 ? `calc(${width}% - 1em)` : `${width}%`;
 		},
-
-		props: (t) => t.fieldType.props,
-		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
-		propsData: (t) => mapValues(t.props, (val) => get(t.alt.data, val)),
-
-		outdated: (t) => t.option.outdated,
 
 		nodata() {
 			const field = this.mounted ? get(this.$refs, "field", {}) : {};
@@ -90,14 +91,12 @@ export default {
 		},
 
 		rule() {
-			const type = this.type;
-
 			return {
 				get info() {
-					return type !== "table";
+					return this.type !== "table";
 				},
 				get dot() {
-					return type === "view-tab";
+					return this.type === "view-tab";
 				}
 			}
 		}
