@@ -23,7 +23,7 @@
 
 				<vTable
 					ref="vTable"
-					v-bind="{data, columns, defaults, batch, loading}"
+					v-bind="{data, updateC, columns, defaults, batch, loading}"
 					@select="select"
 					@getData="getData"
 					@fieldA="fieldA"
@@ -37,11 +37,15 @@
 </template>
 
 <script>
+import Semaphore from "semaphore-async-await";
 import {omit, get, debounce} from "lodash";
 import {endpointUrl} from "@/modules/utils";
+
 import * as components from "./components";
 import vModifiers from "@/components/modifiers.vue";
 import box from "../box.vue";
+
+const s = new Semaphore(1);
 
 export default {
 	components: {...components, vModifiers, box},
@@ -51,12 +55,12 @@ export default {
 	},
 	data() {
 		return {
-			definitions: null,
-			pagination: null,
 			data: null,
-			selectedItems: [],
-
-			loading: false
+			updateC: 0,
+			loading: false,
+			pagination: null,
+			definitions: null,
+			selectedItems: []
 		}
 	},
 	computed: {
@@ -87,12 +91,14 @@ export default {
 				},
 
 				update: debounce(async ({item, data}) => {
+					await s.acquire();
 					const modifiers = this.modifiers ? this.modifiers.map(x => omit(x, "options")) : undefined;
-
 					const url = endpointUrl({data: item, url: `${this.endpoint.url}/{id}`});
 					await this.$axios.put(url, {...data, modifiers});
 					await this.getData({loading: false});
-				}, 800)
+					this.updateC++;
+					s.release();
+				}, 500)
 			};
 
 			try {
