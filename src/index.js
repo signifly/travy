@@ -13,7 +13,7 @@ import axios from "./modules/axios";
 import store from "./store";
 import app from "./app.vue";
 
-Vue.prototype.$http = axios;
+Vue.prototype.$axios = axios;
 
 (async() => {
 	await store.dispatch("config/data");

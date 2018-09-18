@@ -57,11 +57,11 @@ export default {
 			try {
 				this.loading = true;
 
-				const {data} = await this.$http({
+				const {data} = await this.$axios({
 					data: this.vUpload ? toFormData(this.payload) : this.payload,
 					method: this.endpoint.method,
 					url: this.endpoint.url,
-					custom: true,
+					customErr: true,
 					onUploadProgress: (e) => {
 						this.loading = Math.round(e.loaded / e.total * 100);
 					}

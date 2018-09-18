@@ -99,7 +99,7 @@ export default {
 		},
 
 		async getList(search) {
-			const {data} = await this.$http.get(this.endpoint, {params: {filter: {search}, count: 30}});
+			const {data} = await this.$axios.get(this.endpoint, {params: {filter: {search}, count: 30}});
 			this.res = data;
 			this.loading = false;
 		},
@@ -114,7 +114,7 @@ export default {
 		},
 
 		async getItem() {
-			const {data} = await this.$http.get(`${this.endpoint}/${this.value}`);
+			const {data} = await this.$axios.get(`${this.endpoint}/${this.value}`);
 			this.item = this.oKey ? data[this.oKey] : data;
 		}
 	},

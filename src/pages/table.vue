@@ -20,7 +20,7 @@ export default {
 	methods: {
 		init() {
 			if (!this.table) {
-				this.$router.replace({name: "404"});
+				this.$router.replace({name: "error"});
 			} else {
 				this.$watch(
 					"$route",
