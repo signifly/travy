@@ -42,6 +42,7 @@ export default {
 	methods: {
 		update(val) {
 			this.$emit("fieldA", {
+				wait: 500,
 				action: "update",
 				data: {[this._value]: val}
 			});
