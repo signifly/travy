@@ -84,7 +84,7 @@ export default {
 			this.$refs.vTable.unselect();
 		},
 
-		async fieldA({action, data, item, done}) {
+		async fieldA({action, wait, data, item, done}) {
 			const actions = {
 				refresh: async () => {
 					await this.getData();
@@ -98,7 +98,7 @@ export default {
 					await this.getData({loading: false});
 					this.updateC++;
 					s.release();
-				}, 500)
+				}, wait || 0)
 			};
 
 			try {
