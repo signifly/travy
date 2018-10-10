@@ -74,12 +74,12 @@ export default {
 		}
 	},
 	computed: {
-		nodata: (t) => t.data.values.length === 0,
 		valuesObj: (t) => t.values.map(x => isObjectLike(x)).every(x => x),
+		nodata: (t) => t.data.values.length === 0,
 		endpoint: (t) => t._options.list,
-		oKey: (t) => t._options.key,
 		oLabel: (t) => t._options.label,
 		oValue: (t) => t._options.value,
+		oKey: (t) => t._options.key,
 
 		list() {
 			let list = [...this.listSelected, ...this.listOptions];
