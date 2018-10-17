@@ -1,6 +1,6 @@
 <template>
 	<div class="switch">
-		<elSwitch v-model="data.value" :disabled="_disabled" @change="update" />
+		<elSwitch :value="value" :disabled="_disabled" @change="update"/>
 	</div>
 </template>
 
@@ -24,13 +24,6 @@ export default {
 		_disabled: {type: Boolean, required: false, doc: true},
 		value: {type: Boolean, required: false, doc: true},
 		_value: {type: String, required: true}
-	},
-	data() {
-		return {
-			data: {
-				value: this.value
-			}
-		}
 	},
 	methods: {
 		update(val) {
