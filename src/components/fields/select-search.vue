@@ -74,8 +74,8 @@ export default {
 		},
 
 		listMap: (t) => t.list.map(x => ({
-			value: x[t.oValue].toString(),
-			label: x[t.oLabel]
+			value: get(x, t.oValue).toString(),
+			label: get(x, t.oLabel)
 		})),
 
 		sizeMap() {
