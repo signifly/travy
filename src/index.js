@@ -18,9 +18,12 @@ Vue.prototype.$axios = axios;
 (async() => {
 	await store.dispatch("config/data");
 
-	window.Vue = new Vue({
+	const instance = new Vue({
 		el: "#app",
 		router, store,
 		render: h => h(app)
 	});
+
+	window.Vue = Vue;
+	window.travy = instance;
 })();
