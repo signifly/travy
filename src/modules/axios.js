@@ -31,7 +31,7 @@ api.interceptors.response.use(res => {
 	}
 
 	if (get(res, "status") === 401 && !get(res, "config.url").endsWith("logout")) { // if token is invalid, logout
-		store.dispatch("user/logout");
+		return store.dispatch("user/logout");
 	}
 
 	if (!res) {
