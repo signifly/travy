@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import {get} from "lodash";
 import {Button} from "element-ui";
 import action from "@/components/actions/index.vue";
 

@@ -11,13 +11,13 @@
 			<div slot="content">
 				<div class="items-tooltip-content">
 					<template v-if="_itemLink">
-						<a v-for="item in itemsMap" class="item" :key="item.link" :href="item.link" @click.prevent="go(item)">
+						<a v-for="item in itemsMap" class="item" :key="item.id" :href="item.link" @click.prevent="go(item)">
 							{{item.label}}
 						</a>
 					</template>
 
 					<template v-else>
-						<div v-for="item in itemsMap" class="item">
+						<div v-for="item in itemsMap" class="item" :key="item.id">
 							{{item.label}}
 						</div>
 					</template>
@@ -58,6 +58,7 @@ export default {
 		disabled: (t) => t.items.length < 1,
 
 		itemsMap: (t) => t.items.map(item => ({
+			id: item.id,
 			label: get(item, t._itemKey),
 			link: endpointUrl({url: t._itemLink, data: item})
 		}))

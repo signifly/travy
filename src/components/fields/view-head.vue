@@ -18,10 +18,8 @@
 
 <script>
 const noimage = require("!file-loader!@/assets/icons/noimage.svg");
-
-import {base64Encode} from "@/modules/utils";
-import {Tag} from "element-ui";
 import {vInputImage} from "./index";
+import {Tag} from "element-ui";
 
 export default {
 	components: {Tag, vInputImage},

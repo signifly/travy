@@ -5,10 +5,10 @@
 				<div class="title" v-text="sidebar.title"/>
 
 				<div class="sections">
-					<div class="section" v-for="section in sidebar.sections">
+					<div class="section" v-for="(section, i) in sidebar.sections" :key="i">
 						<div class="items">
 							<template v-for="item in section">
-								<a :href="`#${item.value}`" :class="{active: $route.hash === `#${item.value}`}">{{item.label}}</a>
+								<a :key="item.value" :href="`#${item.value}`" :class="{active: $route.hash === `#${item.value}`}">{{item.label}}</a>
 							</template>
 						</div>
 					</div>

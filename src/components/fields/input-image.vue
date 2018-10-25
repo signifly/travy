@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import {get} from "lodash";
 import {Upload} from "element-ui";
 import {base64Encode} from "@/modules/utils";
 

@@ -38,7 +38,7 @@
 
 <script>
 import Semaphore from "semaphore-async-await";
-import {omit, get, debounce} from "lodash";
+import {omit, debounce} from "lodash";
 import {endpointUrl} from "@/modules/utils";
 
 import * as components from "./components";
@@ -101,8 +101,8 @@ export default {
 
 			try {
 				await actions[action]({data, item});
-			} catch (err) {
-				console.log(err);
+			} catch(err) {
+				// error
 			} finally {
 				if (done) await done();
 			}

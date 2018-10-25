@@ -9,9 +9,3 @@ export default {
 
 };
 </script>
-
-<style lang="scss" scoped>
-.base {
-	
-}
-</style>

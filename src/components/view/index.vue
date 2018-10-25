@@ -1,6 +1,5 @@
 <template>
 	<div class="view-main">
-
 		<div class="loading" ref="loading" v-if="!data"/>
 
 		<transition name="main">
@@ -37,7 +36,7 @@
 </template>
 
 <script>
-import {mapValues, forEach, set, get} from "lodash";
+import {forEach, set, get} from "lodash";
 import {endpointUrl} from "@/modules/utils";
 import {Row, Col, Loading} from "element-ui";
 import vModifiers from "@/components/modifiers.vue";
@@ -46,7 +45,7 @@ import * as components from "./components";
 const edits = () => ({tabs: new Set(), data: new Set()});
 
 export default {
-	components: {Row, Col, vModifiers, ...components},
+	components: {Col, Row, vModifiers, ...components},
 	props: {
 		requests: {type: Object, required: true}
 	},
@@ -77,6 +76,7 @@ export default {
 		endpointUrl: (t) => endpointUrl({data: t.data, url: t.endpoint.url}),
 
 		dataUpdated() {
+			// eslint-disable-next-line
 			const editsU = this.editsU; // force update, because sets are not reactive
 
 			return [...this.edits.data].reduce((sum, key) => {
@@ -155,15 +155,15 @@ export default {
 			};
 
 			try {
-				const {data: {data, options}} = await this.$axios.get(this.requests.data, {params}, {customErr: true});
+				const {data: {data, options}} = await this.$axios.get(this.requests.data, {params, customErr: true});
 				this.options = options;
 				this.data = data;
 
 				this.reset();
 				this.dataU++;
-			} catch (err) {
-				if (get(err, "response.status") === 404) {
-					this.$router.replace({name: "404"});
+			} catch(err) {
+				if (err.status === 404) {
+					this.$router.replace({name: "error", params: {status: 404}});
 				} else {
 					throw err;
 				}
@@ -188,9 +188,8 @@ export default {
 				// for account page
 				this.$emit("save", {data: {...data}});
 
-			} catch (err) {
-				console.log(err);
-				this.error = get(err, "response.data", {});
+			} catch(err) {
+				this.error = err;
 			} finally {
 				this.loadingSave = false;
 			}
@@ -207,7 +206,7 @@ export default {
 		try {
 			await this.getDefinitions();
 			await this.getData();
-		} catch (err) {
+		} catch(err) {
 			console.log(err);
 		} finally {
 			load.close();

@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import {map} from "lodash";
 import vSave from "./save.vue";
 import vBatch from "./batch.vue";
 

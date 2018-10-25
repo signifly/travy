@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import {get} from "lodash"
 import {Button} from "element-ui";
 import {endpointUrl} from "@/modules/utils";
 import toFormData from "object-to-formdata";
@@ -93,7 +92,7 @@ export default {
 			try {
 				this.loading = true;
 
-				const {data} = await this.$axios({
+				await this.$axios({
 					method: ept.method,
 					url: url,
 					data: payload,
@@ -106,8 +105,7 @@ export default {
 				this.$emit("fieldA", {action: "getData"});
 				this.modal = false;
 			} catch(err) {
-				console.log(err);
-				this.error = get(err, "response.data", {});
+				this.error = err;
 			} finally {
 				this.loading = false;
 			}

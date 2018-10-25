@@ -6,7 +6,7 @@ services:
     container_name: travy
     command: bash -c "yarn && yarn dev"
     ports:
-      - "3000-3002:3000-3002"
+      - "3000:3000"
     volumes:
       - ./:/app
     environment:

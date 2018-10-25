@@ -4,7 +4,7 @@
 			<div class="icon" :class="{active: languages}" v-html="globe" />
 
 			<div slot="content">
-				<div class="item" v-for="item in translated">
+				<div class="item" v-for="item in translated" :key="item.label">
 					<div class="icon"><img :src="icon(item.icon)"></div>
 					{{item.label}}
 					<div class="outdated" v-if="item.outdated" />
