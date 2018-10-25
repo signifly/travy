@@ -155,15 +155,15 @@ export default {
 			};
 
 			try {
-				const {data: {data, options}} = await this.$axios.get(this.requests.data, {params}, {customErr: true});
+				const {data: {data, options}} = await this.$axios.get(this.requests.data, {params, customErr: true});
 				this.options = options;
 				this.data = data;
 
 				this.reset();
 				this.dataU++;
-			} catch (err) {
-				if (get(err, "response.status") === 404) {
-					this.$router.replace({name: "404"});
+			} catch ({status}) {
+				if (status === 404) {
+					this.$router.replace({name: "error", params: {status: 404}});
 				} else {
 					throw err;
 				}
@@ -189,8 +189,7 @@ export default {
 				this.$emit("save", {data: {...data}});
 
 			} catch (err) {
-				console.log(err);
-				this.error = get(err, "response.data", {});
+				this.error = err;
 			} finally {
 				this.loadingSave = false;
 			}

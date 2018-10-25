@@ -70,7 +70,7 @@ export default {
 				this.loading = true;
 				await this.$store.dispatch("user/login", {form: this.data, route: {...this.route}});
 			} catch (err) {
-				this.error = get(err, "response.data", {});
+				this.error = err;
 			} finally {
 				this.loading = false;
 			}
@@ -80,13 +80,10 @@ export default {
 			try {
 				this.reset();
 				this.loading = true;
-				console.log("RESET");
 				const {data} = await this.$store.dispatch("user/resetPassword", {form: this.data});
 				this.message = data.message;
 			} catch (err) {
-				console.log(err);
-				this.error = get(err, "response.data", {});
-				this.error.errors = mapKeys(this.error.errors, (val, key) => `data.${key}`);
+				this.error = err;
 			} finally {
 				this.loading = false;
 			}

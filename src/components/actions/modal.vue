@@ -69,10 +69,8 @@ export default {
 
 				this.submitAfter({data});
 			} catch (err) {
-				console.log(err);
+				this.error = err;
 				this.loading = false;
-				console.log(err.response);
-				this.error = get(err, "response.data", {});
 			}
 		},
 

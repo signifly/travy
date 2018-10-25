@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import {mapKeys, get} from "lodash";
 import {Button} from "element-ui";
 import vForm from "@/components/login/form.vue";
 
@@ -83,9 +82,7 @@ export default {
 				const {data} = await this.$axios.post("password/reset", {...this.data, token: this.id}, {customErr: true});
 				this.message = data.message;
 			} catch (err) {
-				console.log(err);
-				this.error = get(err, "response.data", {});
-				this.error.errors = mapKeys(this.error.errors, (val, key) => `data.${key}`);
+				this.error = err;
 			} finally {
 				this.loading = false;
 			}
@@ -93,7 +90,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>

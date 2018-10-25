@@ -30,6 +30,7 @@ export default {
 				commit("authSet", {data});
 
 				await dispatch("data", {customErr: true});
+
 				router.push(route);
 			} catch (err) {
 				commit("authDelete");
