@@ -23,7 +23,7 @@
 
 				<vTable
 					ref="vTable"
-					v-bind="{data, updateC, columns, defaults, batch, loading}"
+					v-bind="{data, columns, defaults, batch, loading}"
 					@select="select"
 					@getData="getData"
 					@fieldA="fieldA"
@@ -38,7 +38,7 @@
 
 <script>
 import Semaphore from "semaphore-async-await";
-import {omit, get, debounce} from "lodash";
+import {omit, debounce} from "lodash";
 import {endpointUrl} from "@/modules/utils";
 
 import * as components from "./components";
@@ -56,7 +56,6 @@ export default {
 	data() {
 		return {
 			data: null,
-			updateC: 0,
 			loading: false,
 			pagination: null,
 			definitions: null,
@@ -96,15 +95,14 @@ export default {
 					const url = endpointUrl({data: item, url: `${this.endpoint.url}/{id}`});
 					await this.$axios.put(url, {...data, modifiers});
 					await this.getData({loading: false});
-					this.updateC++;
 					s.release();
 				}, wait || 0)
 			};
 
 			try {
 				await actions[action]({data, item});
-			} catch (err) {
-				console.log(err);
+			} catch(err) {
+				// error
 			} finally {
 				if (done) await done();
 			}

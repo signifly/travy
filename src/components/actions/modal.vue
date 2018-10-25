@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import {get} from "lodash";
 import toFormData from "object-to-formdata";
 import {endpointUrl} from "@/modules/utils";
 import vModalFields from "@/components/modal-fields.vue";
@@ -68,11 +67,9 @@ export default {
 				});
 
 				this.submitAfter({data});
-			} catch (err) {
-				console.log(err);
+			} catch(err) {
+				this.error = err;
 				this.loading = false;
-				console.log(err.response);
-				this.error = get(err, "response.data", {});
 			}
 		},
 

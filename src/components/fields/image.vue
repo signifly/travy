@@ -1,5 +1,4 @@
 <template>
-	<tran
 	<div class="image" v-if="image" @mouseover="active = true" @mouseleave="active = false">
 		<i class="el-icon-picture"></i>
 		<transition name="img">

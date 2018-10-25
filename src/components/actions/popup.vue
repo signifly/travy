@@ -45,7 +45,7 @@ export default {
 				});
 
 				this.submitAfter({data});
-			} catch (err) {
+			} catch(err) {
 				this.loading = false;
 			}
 		},

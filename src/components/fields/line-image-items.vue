@@ -13,7 +13,7 @@
 		</div>
 
 		<div class="info">
-			<div class="item" v-for="item in itemsMap">
+			<div class="item" v-for="item in itemsMap" :key="item.value">
 				<div class="title">{{item.key}}:</div>
 				<div class="text">{{item.value}}</div>
 			</div>

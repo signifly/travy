@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import {get} from "lodash";
 import {Button, Dropdown, DropdownMenu} from "element-ui";
 import vPanel from "@/components/panel.vue";
 import vSelected from "./selected.vue";

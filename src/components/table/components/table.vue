@@ -14,7 +14,7 @@
 			<TableColumn type="selection" :reserve-selection="true" v-if="batchActive"/>
 
 			<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name">
-				<vField slot-scope="scope" v-bind="{scope, column}" @fieldA="$emit('fieldA', $event)" :key="updateC"/>
+				<vField slot-scope="scope" v-bind="{scope, column}" @fieldA="$emit('fieldA', $event)"/>
 			</TableColumn>
 		</Table>
 	</div>
@@ -31,7 +31,6 @@ export default {
 		data: {type: Array, required: false},
 		columns: {type: Array, required: true},
 		defaults: {type: Object, required: true},
-		updateC: {type: Number, required: true},
 		batch: {type: Object, default: () => ({})}
 	},
 	computed: {
