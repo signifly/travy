@@ -22,7 +22,9 @@ export default {
 			try {
 				const {data} = await axios.get("definitions/config", {customErr: true});
 				commit("data", data);
-			} catch(err) {}
+			} catch(err) {
+				// error
+			}
 		}
 	},
 

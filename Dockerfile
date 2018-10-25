@@ -1,23 +1,18 @@
-from node:9-alpine
+from node:10-alpine
 
-# install packages
-RUN apk update && apk add bash ca-certificates wget
-
-# install netlifyctl
-RUN wget -qO- "https://cli.netlify.com/download/latest/linux" | tar xz -C /usr/local/bin
+RUN apk update && apk add bash
 
 # install global npm packages
-RUN yarn global add npm-check-updates
+RUN yarn global add npm-check-updates @vue/cli netlify-cli
 
 WORKDIR /app
 
 # install dependencies
 COPY package.json ./
 COPY yarn.lock ./
-
-# install app
 RUN yarn
 
+# install app
 COPY . .
 
 ARG API

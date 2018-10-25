@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import {get} from "lodash";
 import {Dropdown, DropdownMenu, DropdownItem} from "element-ui";
 import action from "@/components/actions/index.vue";
 

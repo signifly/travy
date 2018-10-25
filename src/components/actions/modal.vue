@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import {get} from "lodash";
 import toFormData from "object-to-formdata";
 import {endpointUrl} from "@/modules/utils";
 import vModalFields from "@/components/modal-fields.vue";

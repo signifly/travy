@@ -15,7 +15,7 @@
 						<th>Validator</th>
 					</tr>
 
-					<tr v-for="(prop, name) in propsTable">
+					<tr v-for="(prop, name) in propsTable" :key="name">
 						<td>{{name}}</td>
 						<td>{{prop.type}}</td>
 						<td>{{prop.required}}</td>

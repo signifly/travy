@@ -9,13 +9,15 @@ import vPage from "../page.vue";
 
 export default {
 	components: {vPage},
-	computed: {
-		sidebar: (t) => ({
-			title: "Actions",
-			sections: [
-				[{value: "introduction", label: "Introduction"}]
-			]
-		})
+	data() {
+		return {
+			sidebar: {
+				title: "Actions",
+				sections: [
+					[{value: "introduction", label: "Introduction"}]
+				]
+			}
+		}
 	}
 };
 </script>

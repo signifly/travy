@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import {mapValues, mapKeys, debounce, get} from "lodash";
+import {mapValues, debounce, get} from "lodash";
 import {Input, Button, Popover} from "element-ui";
 import vField from "@/components/field/index.vue";
 
@@ -71,7 +71,7 @@ export default {
 	methods: {
 		updateDebounce: debounce(async function({data}) {
 			let filters = {...this.query.filters, ...data};
-			filters = mapValues(filters, (val, key) => val === "" ? undefined : val);
+			filters = mapValues(filters, (val) => val === "" ? undefined : val);
 
 			this.$router.replace({query: {...this.query, page: undefined, filters}});
 

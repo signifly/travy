@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import {mapKeys, get} from "lodash";
 import {Button} from "element-ui";
 import vForm from "@/components/login/form.vue";
 

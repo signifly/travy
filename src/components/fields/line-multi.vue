@@ -101,7 +101,7 @@ export default {
 			});
 		},
 		itemsPropsValue() {
-			return this.items.map(item => {
+			return this.items.map(() => {
 				return mapKeys(this._itemFieldProps, (val, key) => `_${key}`);
 			});
 		}

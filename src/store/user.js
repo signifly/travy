@@ -41,7 +41,9 @@ export default {
 		async logout({commit}, {post} = {}) {
 			try {
 				if (post) await axios.post("logout");
-			} catch(err) {} finally {
+			} catch(err) {
+				// error
+			} finally {
 				commit("authDelete");
 				router.push({name: "login", params: {route: {path: window.location.pathname}}});
 			}
@@ -51,7 +53,7 @@ export default {
 			return await axios.post("password/email", form, {customErr: true});
 		},
 
-		async data({commit, dispatch, state, getters}, {customErr} = {}) {
+		async data({commit, state, getters}, {customErr} = {}) {
 			if (state.auth) {
 				const {data} = await axios.get("account", {customErr});
 				commit("data", data);

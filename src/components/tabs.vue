@@ -5,7 +5,7 @@
 				<slot name="label" slot="label" v-bind="tab">{{tab.label}}</slot>
 				<slot name="content" v-bind="tab">content</slot>
 			</TabPane>
- 		</Tabs>
+		</Tabs>
 	</div>
 </template>
 

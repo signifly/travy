@@ -1,6 +1,5 @@
 <template>
 	<div class="view-main">
-
 		<div class="loading" ref="loading" v-if="!data"/>
 
 		<transition name="main">
@@ -37,7 +36,7 @@
 </template>
 
 <script>
-import {mapValues, forEach, set, get} from "lodash";
+import {forEach, set, get} from "lodash";
 import {endpointUrl} from "@/modules/utils";
 import {Row, Col, Loading} from "element-ui";
 import vModifiers from "@/components/modifiers.vue";
@@ -46,7 +45,7 @@ import * as components from "./components";
 const edits = () => ({tabs: new Set(), data: new Set()});
 
 export default {
-	components: {Row, Col, vModifiers, ...components},
+	components: {Col, Row, vModifiers, ...components},
 	props: {
 		requests: {type: Object, required: true}
 	},
@@ -77,6 +76,7 @@ export default {
 		endpointUrl: (t) => endpointUrl({data: t.data, url: t.endpoint.url}),
 
 		dataUpdated() {
+			// eslint-disable-next-line
 			const editsU = this.editsU; // force update, because sets are not reactive
 
 			return [...this.edits.data].reduce((sum, key) => {
@@ -161,8 +161,8 @@ export default {
 
 				this.reset();
 				this.dataU++;
-			} catch({status}) {
-				if (status === 404) {
+			} catch(err) {
+				if (err.status === 404) {
 					this.$router.replace({name: "error", params: {status: 404}});
 				} else {
 					throw err;
