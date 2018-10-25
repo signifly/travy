@@ -19,5 +19,3 @@ ARG API
 ENV API=${API}
 
 RUN yarn build
-
-CMD yarn start
