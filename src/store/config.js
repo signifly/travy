@@ -7,12 +7,12 @@ export default {
 	state: {
 		menu: [],
 		tables: {},
+		customs: {},
 		settings: {}
 	},
 
 	mutations: {
 		data(state, data) {
-			state.loaded = true;
 			forEach(data, (val, key) => set(state, key, val));
 		}
 	},
@@ -23,7 +23,7 @@ export default {
 				const {data} = await axios.get("definitions/config", {customErr: true});
 				commit("data", data);
 			} catch(err) {
-				console.log(err);
+				// error
 			}
 		}
 	},
@@ -32,17 +32,20 @@ export default {
 		menu(state) {
 			return state.menu;
 		},
-		settings(state) {
-			return state.settings;
-		},
 		tables(state) {
 			return state.tables;
 		},
-		title(state, getters) {
-			return getters.settings.title || "Travy";
+		customs(state) {
+			return state.customs;
+		},
+		settings(state) {
+			return state.settings;
 		},
 		frontpage(state, getters) {
 			return getters.settings.frontpage;
+		},
+		title(state, getters) {
+			return getters.settings.title || "Travy";
 		}
 	}
 };

@@ -1,8 +1,8 @@
 <template>
 	<div class="status-set">
 		<div class="rows">
-			<div class="row" v-for="row in rows">
-				<div class="item" v-for="item in row">
+			<div class="row" v-for="(row, i) in rows" :key="i">
+				<div class="item" v-for="item in row" :key="item.title">
 					<div class="title">{{item.title}}</div>
 					<Tag size="small" :type="item.status">{{item.text}}</Tag>
 				</div>

@@ -9,11 +9,11 @@ import store from "@/store";
 // pages
 import index from "@/pages/index.vue";
 import account from "@/pages/account.vue";
-import ext from "@/pages/ext.vue";
 
 import login from "@/pages/login/index.vue";
 import loginReset from "@/pages/login/reset.vue";
 
+import custom from "@/pages/custom.vue";
 import table from "@/pages/table.vue";
 import view from "@/pages/view.vue";
 
@@ -30,23 +30,24 @@ const routes = [
 		path: "/meta",
 		component: meta,
 		children: [
-			{path: "", name: "meta", component: metaIndex, meta: {layout: "vBase", title: "Meta", auth: {roles: "all"}}},
-			{path: "fields", name: "metaFields", component: metaFields, meta: {layout: "vBase", title: "Meta/Fields", auth: {roles: "all"}}},
-			{path: "actions", name: "metaActions", component: metaActions, meta: {layout: "vBase", title: "Meta/Actions", auth: {roles: "all"}}},
+			{path: "", name: "meta", component: metaIndex, meta: {layout: "base", title: "Meta", auth: {roles: "all"}}},
+			{path: "fields", name: "metaFields", component: metaFields, meta: {layout: "base", title: "Meta/Fields", auth: {roles: "all"}}},
+			{path: "actions", name: "metaActions", component: metaActions, meta: {layout: "base", title: "Meta/Actions", auth: {roles: "all"}}},
 		]
 	},
 
-	{path: "/", name: "index", component: index, meta: {layout: "vMain", title: "", auth: {roles: "all"}}},
-	{path: "/account", name: "account", component: account, meta: {layout: "vMain", title: "Account", auth: {roles: "all"}}},
-	{path: "/ext", name: "ext", component: ext, meta: {title: "Externals", layout: "vMain", auth: {roles: "all"}}},
+	{path: "/", name: "index", component: index, meta: {layout: "main", title: "", auth: {roles: "all"}}},
+	{path: "/account", name: "account", component: account, meta: {layout: "main", title: "Account", auth: {roles: "all"}}},
 
-	{path: "/login", name: "login", component: login, props: true, meta: {layout: "vBase", title: "Login"}},
-	{path: "/login/reset/:id", name: "login-reset", component: loginReset, props: true, meta: {layout: "vBase", title: "Reset login"}},
+	{path: "/login", name: "login", component: login, props: true, meta: {layout: "base", title: "Login"}},
+	{path: "/login/reset/:id", name: "login-reset", component: loginReset, props: true, meta: {layout: "base", title: "Reset login"}},
 
-	{path: "/t/:tableId", name: "table", component: table, meta: {layout: "vMain", auth: {roles: "all"}}},
-	{path: "/t/:tableId/:viewId/:tabId?", name: "tableView", component: view, meta: {layout: "vMain", auth: {roles: "all"}}},
+	{path: "/t/:tableId", name: "table", component: table, meta: {layout: "main", auth: {roles: "all"}}},
+	{path: "/t/:tableId/:viewId/:tabId?", name: "tableView", component: view, meta: {layout: "main", auth: {roles: "all"}}},
 
-	{path: "/error", alias: "*", name: "error", props: true, component: error, meta: {layout: "vBase", title: "Error"}}
+	{path: "/c/:id", name: "custom", component: custom, meta: {layout: "main", auth: {roles: "all"}}},
+
+	{path: "/error", alias: "*", name: "error", props: true, component: error, meta: {layout: "error", title: "Error"}}
 ];
 
 
