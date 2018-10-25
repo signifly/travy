@@ -161,7 +161,7 @@ export default {
 
 				this.reset();
 				this.dataU++;
-			} catch ({status}) {
+			} catch({status}) {
 				if (status === 404) {
 					this.$router.replace({name: "error", params: {status: 404}});
 				} else {
@@ -188,7 +188,7 @@ export default {
 				// for account page
 				this.$emit("save", {data: {...data}});
 
-			} catch (err) {
+			} catch(err) {
 				this.error = err;
 			} finally {
 				this.loadingSave = false;
@@ -206,7 +206,7 @@ export default {
 		try {
 			await this.getDefinitions();
 			await this.getData();
-		} catch (err) {
+		} catch(err) {
 			console.log(err);
 		} finally {
 			load.close();

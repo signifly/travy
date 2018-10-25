@@ -101,7 +101,7 @@ export default {
 
 			try {
 				await actions[action]({data, item});
-			} catch (err) {} finally {
+			} catch(err) {} finally {
 				if (done) await done();
 			}
 		},

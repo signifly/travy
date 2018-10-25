@@ -68,7 +68,7 @@ export default {
 				});
 
 				this.submitAfter({data});
-			} catch (err) {
+			} catch(err) {
 				this.error = err;
 				this.loading = false;
 			}

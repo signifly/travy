@@ -105,7 +105,7 @@ export default {
 			try {
 				this.loadingData = true;
 				await this.getData();
-			} catch (err) {} finally {
+			} catch(err) {} finally {
 				this.loadingData = false;
 			}
 		}

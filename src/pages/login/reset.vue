@@ -81,7 +81,7 @@ export default {
 				this.loading = true;
 				const {data} = await this.$axios.post("password/reset", {...this.data, token: this.id}, {customErr: true});
 				this.message = data.message;
-			} catch (err) {
+			} catch(err) {
 				this.error = err;
 			} finally {
 				this.loading = false;

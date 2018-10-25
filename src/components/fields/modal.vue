@@ -105,7 +105,7 @@ export default {
 
 				this.$emit("fieldA", {action: "getData"});
 				this.modal = false;
-			} catch (err) {
+			} catch(err) {
 				this.error = err;
 			} finally {
 				this.loading = false;

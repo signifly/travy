@@ -32,7 +32,7 @@ export default {
 				await dispatch("data", {customErr: true});
 
 				router.push(route);
-			} catch (err) {
+			} catch(err) {
 				commit("authDelete");
 				return Promise.reject(err);
 			}
@@ -41,7 +41,7 @@ export default {
 		async logout({commit}, {post} = {}) {
 			try {
 				if (post) await axios.post("logout");
-			} catch (err) {} finally {
+			} catch(err) {} finally {
 				commit("authDelete");
 				router.push({name: "login", params: {route: {path: window.location.pathname}}});
 			}

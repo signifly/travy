@@ -69,7 +69,7 @@ export default {
 				this.reset();
 				this.loading = true;
 				await this.$store.dispatch("user/login", {form: this.data, route: {...this.route}});
-			} catch (err) {
+			} catch(err) {
 				this.error = err;
 			} finally {
 				this.loading = false;
@@ -82,7 +82,7 @@ export default {
 				this.loading = true;
 				const {data} = await this.$store.dispatch("user/resetPassword", {form: this.data});
 				this.message = data.message;
-			} catch (err) {
+			} catch(err) {
 				this.error = err;
 			} finally {
 				this.loading = false;

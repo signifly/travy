@@ -88,7 +88,7 @@ export default {
 		icon(file) {
 			try {
 				return require(`!file-loader!@/assets/icons/${file}.svg`);
-			} catch (err) {
+			} catch(err) {
 				console.log(err);
 			}
 		},
