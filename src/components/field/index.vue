@@ -43,9 +43,9 @@
 
 <script>
 import {mapValues, mapKeys, get} from "lodash";
-import {Tooltip} from "element-ui";
 import * as fields from "@/components/fields";
 import vTranslated from "./translated.vue";
+import {Tooltip} from "element-ui";
 
 
 export default {
@@ -80,7 +80,7 @@ export default {
 
 		width() {
 			const width = this.fieldType.width || 100;
-			return width <= 50 ? `calc(${width}% - 1em)` : `${width}%`;
+			return width !== 100 ? `calc(${width}% - 1em)` : `${width}%`;
 		},
 
 		nodata() {
