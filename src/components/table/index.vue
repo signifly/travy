@@ -41,8 +41,8 @@ import Semaphore from "semaphore-async-await";
 import {endpointUrl} from "@/modules/utils";
 import {omit} from "lodash";
 
-import * as components from "./components";
 import vModifiers from "@/components/modifiers.vue";
+import * as components from "./components";
 import box from "../box.vue";
 
 const s = new Semaphore(1);
