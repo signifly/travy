@@ -3,7 +3,7 @@
 		<vModalFields
 			v-bind="{fields, error, loading, title}"
 			:visible.sync="visible"
-			:data="dataComb"
+			:data="payload"
 			@fieldA="fieldA"
 			@submit="submit"
 		/>
