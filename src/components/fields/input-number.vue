@@ -1,16 +1,16 @@
 <template>
-	<div class="input">
-		<InputNumber v-model="data.value" @change="update" :disabled="_disabled" :controls="false" size="medium" />
+	<div class="input" @keypress="validate">
+		<Input v-model="valueC" @input="update" :disabled="_disabled" :controls="false" size="medium"/>
 		<div class="unit" v-if="_unit">{{_unit}}</div>
 	</div>
 </template>
 
 <script>
-import {isNumber} from "lodash";
-import {InputNumber} from "element-ui";
+import {isNumber, toNumber, debounce} from "lodash";
+import {Input} from "element-ui";
 
 export default {
-	components: {InputNumber},
+	components: {Input},
 	meta: {
 		res: {
 			props: {
@@ -31,22 +31,24 @@ export default {
 	},
 	data() {
 		return {
-			data: {
-				value: this.value
-			}
+			valueC: this.value
 		}
 	},
 	computed: {
-		nodata: (t) => !isNumber(t.data.value)
+		nodata: (t) => !isNumber(t.value)
 	},
 	methods: {
-		update(val) {
+		validate(e) {
+			if (isNaN(toNumber(e.key))) e.preventDefault();
+		},
+		update: debounce(function(value) {
+			value = parseInt(value) || 0;
+
 			this.$emit("fieldA", {
-				wait: 500,
 				action: "update",
-				data: {[this._value]: val}
+				data: {[this._value]: value}
 			});
-		}
+		}, 500)
 	}
 };
 </script>

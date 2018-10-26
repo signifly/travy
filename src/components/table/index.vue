@@ -38,8 +38,8 @@
 
 <script>
 import Semaphore from "semaphore-async-await";
-import {omit, debounce} from "lodash";
 import {endpointUrl} from "@/modules/utils";
+import {omit} from "lodash";
 
 import * as components from "./components";
 import vModifiers from "@/components/modifiers.vue";
@@ -83,20 +83,20 @@ export default {
 			this.$refs.vTable.unselect();
 		},
 
-		async fieldA({action, wait, data, item, done}) {
+		async fieldA({action, data, item, done}) {
 			const actions = {
 				refresh: async () => {
 					await this.getData();
 				},
 
-				update: debounce(async ({item, data}) => {
+				update: async ({item, data}) => {
 					await s.acquire();
 					const modifiers = this.modifiers ? this.modifiers.map(x => omit(x, "options")) : undefined;
 					const url = endpointUrl({data: item, url: `${this.endpoint.url}/{id}`});
 					await this.$axios.put(url, {...data, modifiers});
 					await this.getData({loading: false});
 					s.release();
-				}, wait || 0)
+				}
 			};
 
 			try {
