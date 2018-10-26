@@ -16,10 +16,14 @@ export default {
 	},
 	methods: {
 		load() {
-			Vue.config.ignoredElements = [this.component];
-			const script = document.createElement("script");
-			script.src = this.src;
-			document.head.appendChild(script);
+			const exists = document.querySelector(`script[src='${this.src}']`);
+
+			if (!exists) {
+				Vue.config.ignoredElements = [this.component];
+				const script = document.createElement("script");
+				script.src = this.src;
+				document.head.appendChild(script);
+			}
 		}
 	},
 	created() {
