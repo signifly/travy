@@ -4,7 +4,6 @@
 			:value="dateC"
 			size="medium"
 			align="center"
-			:editable="false"
 			:clearable="false"
 			:picker-options="pickerOpts"
 			format="yyyy-MM-dd"

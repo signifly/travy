@@ -5,7 +5,6 @@
 			size="medium"
 			align="center"
 			type="daterange"
-			:editable="false"
 			:clearable="false"
 			:picker-options="pickerOpts"
 			start-placeholder="Start Date"
