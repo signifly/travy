@@ -24,6 +24,7 @@ export default {
 		}
 	},
 	props: {
+		alt: {type: Object, required: true},
 		_disabled: {type: Boolean, required: false, doc: true},
 		_unit: {type: String, required: false, doc: true},
 		value: {type: Number, required: false, doc: true},
@@ -35,20 +36,24 @@ export default {
 		}
 	},
 	computed: {
+		wait: (t) => t.alt.type === "table" ? 500 : 0,
 		nodata: (t) => !isNumber(t.value)
 	},
 	methods: {
 		validate(e) {
 			if (isNaN(toNumber(e.key))) e.preventDefault();
 		},
-		update: debounce(function(value) {
+		update(value) {
 			value = parseInt(value) || 0;
 
 			this.$emit("fieldA", {
 				action: "update",
 				data: {[this._value]: value}
 			});
-		}, 500)
+		}
+	},
+	created() {
+		this.update = debounce(this.update, this.wait);
 	}
 };
 </script>

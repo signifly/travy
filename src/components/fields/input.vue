@@ -21,6 +21,7 @@ export default {
 		}
 	},
 	props: {
+		alt: {type: Object, required: true},
 		_disabled: {type: Boolean, required: false, doc: true},
 		value: {type: [String, Number], required: false, doc: true},
 		_value: {type: String, required: true}
@@ -31,15 +32,19 @@ export default {
 		}
 	},
 	computed: {
+		wait: (t) => t.alt.type === "table" ? 500 : 0,
 		nodata: (t) => !t.value
 	},
 	methods: {
-		update: debounce(function(value) {
+		update(value) {
 			this.$emit("fieldA", {
 				action: "update",
 				data: {[this._value]: value}
 			});
-		}, 500)
+		}
+	},
+	created() {
+		this.update = debounce(this.update, this.wait);
 	}
 };
 </script>
