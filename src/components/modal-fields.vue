@@ -3,11 +3,12 @@
 		<Dialog v-bind="{width, title}" :visible.sync="_visible" :append-to-body="true" :modal-append-to-body="true">
 			<div class="fields">
 				<vField
-				v-for="field in fields"
-				:key="field.name"
-				:alt="{data, errors, loading}"
-				v-bind="field"
-				@fieldA="$emit('fieldA', $event)"/>
+					v-for="field in fields"
+					:key="field.name"
+					v-bind="field"
+					:alt="{data, errors, loading}"
+					@fieldA="$emit('fieldA', $event)"
+				/>
 			</div>
 
 			<div class="footer" slot="footer">

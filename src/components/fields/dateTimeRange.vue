@@ -5,6 +5,7 @@
 			size="medium"
 			align="center"
 			type="datetimerange"
+			:editable="false"
 			:clearable="false"
 			:picker-options="pickerOpts"
 			start-placeholder="Start Date"
@@ -34,8 +35,8 @@ export default {
 		}
 	},
 	props: {
-		dateStart: {type: Number, required: false, doc: true},
-		dateEnd: {type: Number, required: false, doc: true},
+		dateStart: {type: [Number, String], required: false, doc: true},
+		dateEnd: {type: [Number, String], required: false, doc: true},
 		_dateStart: {type: String, required: true},
 		_dateEnd: {type: String, required: true}
 	},
