@@ -2,8 +2,8 @@
 	<div class="modal">
 		<vModalFields
 			v-bind="{fields, error, loading, title}"
-			:data="dataComb"
 			:visible.sync="visible"
+			:data="payload"
 			@fieldA="fieldA"
 			@submit="submit"
 		/>
