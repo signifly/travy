@@ -86,8 +86,8 @@ export default {
 			list = uniqBy(list, this.oValue);
 
 			return list.map(x => ({
-				label: get(x, this.oLabel),
-				value: get(x, this.oValue)
+				value: get(x, this.oValue).toString(),
+				label: get(x, this.oLabel)
 			}));
 		},
 
@@ -128,7 +128,7 @@ export default {
 		},
 
 		async getListSelected() {
-			const {data} = await this.$axios.get(this.endpoint, {params: {filter: this.values}});
+			const {data} = await this.$axios.get(this.endpoint, {params: {filter: {[this.oValue]: this.values}}});
 			return get(data, this.oKey, []);
 		},
 
