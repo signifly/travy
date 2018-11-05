@@ -86,7 +86,7 @@ export default {
 			list = uniqBy(list, this.oValue);
 
 			return list.map(x => ({
-				value: get(x, this.oValue).toString(),
+				value: get(x, this.oValue),
 				label: get(x, this.oLabel)
 			}));
 		},

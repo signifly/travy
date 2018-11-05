@@ -62,7 +62,7 @@ export default {
 	data() {
 		return {
 			data: {
-				value: this.value ? this.value.toString() : null
+				value: this.value
 			}
 		}
 	},
@@ -72,7 +72,7 @@ export default {
 		oValue: (t) => t._options.value,
 
 		listMap: (t) => t.list.map(x => ({
-			value: x[t.oValue].toString(),
+			value: x[t.oValue],
 			label: x[t.oLabel],
 			disabled: x.disabled,
 			icon: x.icon
