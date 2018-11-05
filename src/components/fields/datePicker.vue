@@ -6,8 +6,8 @@
 			align="center"
 			:clearable="false"
 			:picker-options="pickerOpts"
-			format="yyyy-MM-dd"
-			value-format="timestamp"
+			:format="_format"
+			:value-format="_formatValue"
 			@input="update"
 		/>
 	</div>
@@ -21,7 +21,9 @@ export default {
 	meta: {
 		res: {
 			props: {
-				date: "somedate"
+				date: "somedate",
+				format: "dd-MM-yyyy",
+				formatValue: "timestamp"
 			},
 			data: {
 				somedate: 1325376000
@@ -31,9 +33,12 @@ export default {
 	props: {
 		date: {type: [Number, String], required: false, doc: true},
 		_date: {type: String, required: false},
+		_format: {type: String, default: "dd-MM-yyyy"},
+		_formatValue: {type: String, default: "timestamp"}
 	},
 	computed: {
-		dateC: (t) => t.date ? t.date * 1000 : undefined
+		timestamp: (t) => t.formatValue === "timestamp",
+		dateC: (t) => t.timestamp && t.date ? t.date * 1000 : t.date
 	},
 	data() {
 		return {
@@ -44,7 +49,7 @@ export default {
 	},
 	methods: {
 		update(date) {
-			date = date / 1000;
+			date = this.timestamp ? date / 1000 : date;
 
 			this.$emit("fieldA", {
 				action: "update",
