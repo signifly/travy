@@ -1,4 +1,4 @@
-import {get, mapValues, isPlainObject} from "lodash";
+import {get, transform, isObject, isFinite} from "lodash";
 import VueRouter from "vue-router";
 import Vue from "vue";
 import qs from "qs";
@@ -55,12 +55,24 @@ const router = new VueRouter({
 	routes,
 	mode: "history",
 	parseQuery(query) {
-		const types = {false: false, true: true, null: null, undefined: undefined};
-		return mapValues(qs.parse(query), (val1) => {
-			return !isPlainObject(val1) ? val1 : mapValues(val1, (val2) => {
-				return val2 in types ? types[val2] : val2;
-			});
+		const parse = (item) => transform(item, (res, val, key) => {
+			const types = {false: false, true: true, null: null, undefined: undefined};
+
+			if (isObject(val)) {
+				res[key] = parse(val);
+
+			} else if (val in types) {
+				res[key] = types[val];
+
+			} else if (isFinite(parseInt(val))) {
+				res[key] = parseInt(val);
+
+			} else {
+				res[key] = val;
+			}
 		});
+
+		return parse(qs.parse(query));
 	},
 	stringifyQuery(query) {
 		const res = qs.stringify(query);
