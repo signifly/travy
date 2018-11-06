@@ -7,7 +7,7 @@
 
 <script>
 import vBreadcrumb from "@/components/breadcrumb.vue";
-import vTable from "@/components/table/index.vue";
+import vTable from "@/components/table";
 import {get} from "lodash";
 
 export default {

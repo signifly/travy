@@ -11,7 +11,7 @@
 
 <script>
 import {DropdownItem} from "element-ui";
-import action from "@/components/actions/index.vue";
+import action from "@/components/actions";
 
 export default {
 	components: {DropdownItem, action},

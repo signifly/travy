@@ -12,7 +12,7 @@
 
 <script>
 import {Button} from "element-ui";
-import action from "@/components/actions/index.vue";
+import action from "@/components/actions";
 
 export default {
 	components: {Button, action},

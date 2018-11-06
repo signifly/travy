@@ -27,7 +27,7 @@
 
 <script>
 import {Dialog, Button} from "element-ui";
-import vField from "./field/index.vue";
+import vField from "./field";
 
 export default {
 	components: {Dialog, Button},
