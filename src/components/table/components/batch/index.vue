@@ -4,24 +4,28 @@
 			<vSelected v-bind="{selectedItems, selectedOptions}" @unselect="unselect"/>
 
 			<div class="actions">
-				<sequential v-if="sequential" v-bind="[sequential, {selectedItems, ids}]"/>
+				<div class="item">
+					<sequential v-if="sequential" v-bind="[sequential, {selectedItems, ids}]"/>
+				</div>
 
-				<Dropdown v-if="bulk" trigger="click" :show-timeout="0" :hide-timeout="0" :hide-on-click="false" @command="select">
-					<Button size="medium">
-						Bulk actions<i class="el-icon-arrow-up el-icon--right"></i>
-					</Button>
+				<div class="item">
+					<Dropdown v-if="bulk" trigger="click" :show-timeout="0" :hide-timeout="0" :hide-on-click="false" @command="select">
+						<Button size="medium">
+							Bulk actions<i class="el-icon-arrow-up el-icon--right"></i>
+						</Button>
 
-					<DropdownMenu slot="dropdown">
-						<batchAction
-							v-for="action in actions"
-							:active="selectedAction === action"
-							:key="action.title"
-							v-bind="{action, ids}"
-							@close="close"
-							@fieldA="fieldA"
-						/>
-					</DropdownMenu>
-				</Dropdown>
+						<DropdownMenu slot="dropdown">
+							<batchAction
+								v-for="action in actions"
+								:active="selectedAction === action"
+								:key="action.title"
+								v-bind="{action, ids}"
+								@close="close"
+								@fieldA="fieldA"
+							/>
+						</DropdownMenu>
+					</Dropdown>
+				</div>
 			</div>
 		</vPanel>
 	</div>
@@ -80,5 +84,12 @@ export default {
 <style lang="scss" scoped>
 .batch {
 	position: relative;
+
+	.actions {
+		display: flex;
+		.item {
+			margin-left: 0.5em;
+		}
+	}
 }
 </style>
