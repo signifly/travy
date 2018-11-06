@@ -75,7 +75,7 @@ export default {
 		},
 
 		select(action) {
-			this.selectedAction = action;
+			this.selectedAction = this.selectedAction === action ? null : action;
 		}
 	}
 };

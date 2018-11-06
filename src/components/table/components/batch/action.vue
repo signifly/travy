@@ -1,7 +1,7 @@
 <template>
 	<action
 	v-bind="[action, {data, active}]"
-	position="top-right"
+	:actionProps="{position: 'top-right'}"
 	@close="close"
 	@fieldA="fieldA">
 
