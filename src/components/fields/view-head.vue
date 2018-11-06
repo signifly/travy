@@ -1,7 +1,7 @@
 <template>
-	<div class="view-head" :class="{image: _imageActive}">
+	<div class="view-head" :class="{imageActive}">
 		<vInputImage
-			v-if="_imageActive"
+			v-if="imageActive"
 			class="view-head"
 			v-bind="{_file, url: image}"
 			@fieldA="fieldA"
@@ -17,7 +17,6 @@
 </template>
 
 <script>
-const noimage = require("!file-loader!@/assets/icons/noimage.svg");
 import {vInputImage} from "./index";
 import {Tag} from "element-ui";
 
@@ -42,11 +41,14 @@ export default {
 	props: {
 		title: {type: String, required: false, doc: true},
 		_file: {type: String, required: false, doc: true, note: `base64 encoded`},
-		image: {type: String, required: false, default: noimage, doc: true, note: "url"},
+		image: {type: String, required: false, doc: true, note: "url"},
 		_imageActive: {type: Boolean, required: false, doc: true, note: `
 			Whether an image or placeholder should be shown.
 		`},
 		tag: {type: [String, Number], required: true, doc: true}
+	},
+	computed: {
+		imageActive: (t) => t._imageActive
 	},
 	methods: {
 		fieldA(obj) {
@@ -60,7 +62,7 @@ export default {
 .view-head {
 	display: flex;
 
-	&.image {
+	&.imageActive {
 		.info {
 			margin-left: 2em;
 		}
