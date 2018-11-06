@@ -48,7 +48,7 @@ export default {
 	},
 	data() {
 		return {
-			image: this.url,
+			image: null,
 
 			data: {
 				file: this.file
@@ -81,6 +81,9 @@ export default {
 				data: {[this._file]: res}
 			});
 		}
+	},
+	created() {
+		this.$watch("url", (url) => this.image = url, {immediate: true});
 	}
 };
 </script>
