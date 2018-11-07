@@ -27,7 +27,7 @@
 
 <script>
 import {Dialog, Button} from "element-ui";
-import vField from "./field/index.vue";
+import vField from "./field";
 
 export default {
 	components: {Dialog, Button},
@@ -78,12 +78,6 @@ export default {
 <style lang="scss" scoped>
 .modal {
 	text-align: left;
-}
-
-/deep/ {
-	.el-dialog__title {
-		font-weight: 600;
-	}
 }
 
 .fields {

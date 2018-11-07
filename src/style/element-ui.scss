@@ -5,6 +5,10 @@ body {
 
 	.el-dialog {
 		padding: 0.5em;
+
+		&__title {
+			font-weight: 600;
+		}
 	}
 
 	.el-select .el-tag {

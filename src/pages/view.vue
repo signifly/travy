@@ -7,7 +7,7 @@
 
 <script>
 import vBreadcrumb from "@/components/breadcrumb.vue";
-import vView from "@/components/view/index.vue";
+import vView from "@/components/view";
 
 export default {
 	components: {vBreadcrumb, vView},

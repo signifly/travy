@@ -71,7 +71,7 @@
 
 <script>
 import {mapValues, mapKeys, pickBy, get} from "lodash";
-import vField from "@/components/field/index.vue";
+import vField from "@/components/field";
 import {Tag} from "element-ui";
 
 export default {

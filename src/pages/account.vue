@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import vView from "@/components/view/index.vue";
+import vView from "@/components/view";
 
 export default {
 	components: {vView},

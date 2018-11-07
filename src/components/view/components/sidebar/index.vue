@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import vField from "@/components/field/index.vue";
+import vField from "@/components/field";
 import vSection from "./section.vue";
 
 export default {

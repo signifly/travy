@@ -7,10 +7,10 @@ Vue.use(VueRouter);
 import store from "@/store";
 
 // pages
-import index from "@/pages/index.vue";
+import index from "@/pages";
 import account from "@/pages/account.vue";
 
-import login from "@/pages/login/index.vue";
+import login from "@/pages/login";
 import loginReset from "@/pages/login/reset.vue";
 
 import custom from "@/pages/custom.vue";
@@ -20,9 +20,9 @@ import view from "@/pages/view.vue";
 import error from "@/pages/error.vue";
 
 const meta = () => import(/* webpackChunkName: "app.meta" */ "@/pages/meta.vue");
-const metaIndex = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/index.vue");
-const metaFields = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/fields/index.vue");
-const metaActions = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/actions/index.vue");
+const metaIndex = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta");
+const metaFields = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/fields");
+const metaActions = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/actions");
 
 
 const routes = [

@@ -5,7 +5,7 @@
 		<component
 			v-if="active"
 			:is="props.id"
-			v-bind="[props, {dataComb, endpoint}]"
+			v-bind="[actionProps, props, {dataComb, endpoint}]"
 			@close="close"
 			@fieldA="fieldA"
 		/>
@@ -22,6 +22,7 @@ import show from "./show.vue";
 export default {
 	components: {modal, popup, show},
 	props: {
+		actionProps: {type: Object, required: false},
 		active: {type: Boolean, required: true},
 		props: {type: Object, required: true},
 		data: {type: Object, required: false},
