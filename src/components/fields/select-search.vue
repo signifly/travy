@@ -54,7 +54,7 @@ export default {
 			item: null,
 			res: null,
 			data: {
-				value: this.value ? this.value.toString() : null
+				value: this.value
 			}
 		}
 	},
@@ -74,7 +74,7 @@ export default {
 		},
 
 		listMap: (t) => t.list.map(x => ({
-			value: get(x, t.oValue).toString(),
+			value: get(x, t.oValue),
 			label: get(x, t.oLabel)
 		})),
 

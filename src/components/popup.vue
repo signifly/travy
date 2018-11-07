@@ -1,7 +1,7 @@
 <template>
 	<transition name="trans-fadeDown" appear>
 		<div class="popup" :class="position.split('-')" :style="{width}">
-			<slot />
+			<slot/>
 		</div>
 	</transition>
 </template>

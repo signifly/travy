@@ -64,7 +64,7 @@ export default {
 		oValue: (t) => t._options.value,
 
 		listMap: (t) => t.list.map(x => ({
-			value: get(x, t.oValue).toString(),
+			value: get(x, t.oValue),
 			label: get(x, t.oLabel)
 		})),
 

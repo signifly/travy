@@ -1,4 +1,4 @@
-import {get, mapValues, isPlainObject} from "lodash";
+import {get, transform, isObject, isFinite} from "lodash";
 import VueRouter from "vue-router";
 import Vue from "vue";
 import qs from "qs";
@@ -7,10 +7,10 @@ Vue.use(VueRouter);
 import store from "@/store";
 
 // pages
-import index from "@/pages/index.vue";
+import index from "@/pages";
 import account from "@/pages/account.vue";
 
-import login from "@/pages/login/index.vue";
+import login from "@/pages/login";
 import loginReset from "@/pages/login/reset.vue";
 
 import custom from "@/pages/custom.vue";
@@ -20,9 +20,9 @@ import view from "@/pages/view.vue";
 import error from "@/pages/error.vue";
 
 const meta = () => import(/* webpackChunkName: "app.meta" */ "@/pages/meta.vue");
-const metaIndex = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/index.vue");
-const metaFields = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/fields/index.vue");
-const metaActions = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/actions/index.vue");
+const metaIndex = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta");
+const metaFields = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/fields");
+const metaActions = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/actions");
 
 
 const routes = [
@@ -55,12 +55,24 @@ const router = new VueRouter({
 	routes,
 	mode: "history",
 	parseQuery(query) {
-		const types = {false: false, true: true, null: null, undefined: undefined};
-		return mapValues(qs.parse(query), (val1) => {
-			return !isPlainObject(val1) ? val1 : mapValues(val1, (val2) => {
-				return val2 in types ? types[val2] : val2;
-			});
+		const parse = (item) => transform(item, (res, val, key) => {
+			const types = {false: false, true: true, null: null, undefined: undefined};
+
+			if (isObject(val)) {
+				res[key] = parse(val);
+
+			} else if (val in types) {
+				res[key] = types[val];
+
+			} else if (isFinite(parseInt(val))) {
+				res[key] = parseInt(val);
+
+			} else {
+				res[key] = val;
+			}
 		});
+
+		return parse(qs.parse(query));
 	},
 	stringifyQuery(query) {
 		const res = qs.stringify(query);

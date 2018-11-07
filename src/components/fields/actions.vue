@@ -24,7 +24,7 @@
 
 <script>
 import {Dropdown, DropdownMenu, DropdownItem} from "element-ui";
-import action from "@/components/actions/index.vue";
+import action from "@/components/actions";
 
 export default {
 	components: {Dropdown, DropdownMenu, DropdownItem, action},
