@@ -22,6 +22,7 @@ export {default as vInput} from "./input.vue";
 export {default as vInputFile} from "./input-file.vue";
 export {default as vInputImage} from "./input-image.vue";
 export {default as vInputNumber} from "./input-number.vue";
+export {default as vInputSearch} from "./input-search.vue";
 export {default as vInputPassword} from "./input-password.vue";
 export {default as vTextarea} from "./textarea.vue";
 export {default as vEditor} from "./editor.vue";
