@@ -80,12 +80,6 @@ export default {
 	text-align: left;
 }
 
-/deep/ {
-	.el-dialog__title {
-		font-weight: 600;
-	}
-}
-
 .fields {
 	display: flex;
 	flex-wrap: wrap;
