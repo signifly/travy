@@ -63,8 +63,8 @@ export default {
 			cb(this.items); // keep showing old items while fetching new items
 
 			const {data: {data}} = await this.$axios.get(url, {params: {
-				filter: {...params.filter, search},
-				...params
+				...params,
+				filter: {...params.filter, search}
 			}});
 
 			const items = get(data, key, data).map(x => {
@@ -90,15 +90,8 @@ export default {
 
 <style lang="scss" scoped>
 .input {
-	position: relative;
-	.el-input {
+	.el-autocomplete {
 		width: 100%;
-
-		/deep/ {
-			.el-input__inner {
-				text-align: left;
-			}
-		}
 	}
 }
 </style>
