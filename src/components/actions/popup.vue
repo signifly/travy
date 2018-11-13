@@ -41,7 +41,7 @@ export default {
 				const {data} = await this.$axios({
 					method: this.endpoint.method,
 					url: this.endpoint.url,
-					data: {data: this.data},
+					data: this.dataComb,
 				});
 
 				this.submitAfter({data});
