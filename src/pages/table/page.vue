@@ -43,7 +43,7 @@ import {omit} from "lodash";
 
 import vModifiers from "@/components/modifiers.vue";
 import * as components from "./components";
-import box from "../box.vue";
+import box from "@/components/box.vue";
 
 const s = new Semaphore(1);
 

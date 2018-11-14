@@ -1,17 +1,17 @@
 <template>
 	<div class="table" v-if="table">
-		<vBreadcrumb :items="[{title, to: $route.path}]"/>
-		<vTable v-bind="{tableId, title}" :key="tableId"/>
+		<breadcrumb :items="[{title, to: $route.path}]"/>
+		<page v-bind="{tableId, title}" :key="tableId"/>
 	</div>
 </template>
 
 <script>
-import vBreadcrumb from "@/components/breadcrumb.vue";
-import vTable from "@/components/table";
+import breadcrumb from "@/components/breadcrumb.vue";
+import page from "./page.vue";
 import {get} from "lodash";
 
 export default {
-	components: {vBreadcrumb, vTable},
+	components: {breadcrumb, page},
 	computed: {
 		table: (t) => t.$store.getters["config/tables"][t.tableId],
 		tableId: (t) => t.$route.params.tableId,

@@ -37,10 +37,10 @@
 
 <script>
 import {forEach, set, get} from "lodash";
+import * as components from "./components";
 import {endpointUrl} from "@/modules/utils";
 import {Row, Col, Loading} from "element-ui";
 import vModifiers from "@/components/modifiers.vue";
-import * as components from "./components";
 
 const edits = () => ({tabs: new Set(), data: new Set()});
 

@@ -1,16 +1,16 @@
 <template>
 	<div class="view" v-if="table">
 		<vBreadcrumb :items="breadcrumb"/>
-		<vView v-bind="{requests}" :key="viewKey" />
+		<page v-bind="{requests}" :key="viewKey"/>
 	</div>
 </template>
 
 <script>
 import vBreadcrumb from "@/components/breadcrumb.vue";
-import vView from "@/components/view";
+import page from "./page.vue";
 
 export default {
-	components: {vBreadcrumb, vView},
+	components: {vBreadcrumb, page},
 	computed: {
 		tableId: (t) => t.$route.params.tableId,
 		table: (t) => t.$store.getters["config/tables"][t.tableId],

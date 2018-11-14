@@ -14,8 +14,8 @@ import login from "@/pages/login";
 import loginReset from "@/pages/login/reset.vue";
 
 import custom from "@/pages/custom.vue";
-import table from "@/pages/table.vue";
-import view from "@/pages/view.vue";
+import table from "@/pages/table";
+import view from "@/pages/view";
 
 import error from "@/pages/error.vue";
 
