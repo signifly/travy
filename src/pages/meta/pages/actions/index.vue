@@ -1,14 +1,14 @@
 <template>
-	<vPage v-bind="{sidebar}">
+	<layout v-bind="{sidebar}">
 		<section class="intro html" v-html="require('./intro.md')"/>
-	</vPage>
+	</layout>
 </template>
 
 <script>
-import vPage from "../page.vue";
+import layout from "@/pages/meta/layout.vue";
 
 export default {
-	components: {vPage},
+	components: {layout},
 	data() {
 		return {
 			sidebar: {

@@ -1,17 +1,17 @@
 <template>
-	<vPage>
+	<layout>
 		<div class="index">
 			<div class="title">Travy</div>
 			<div class="desc">Frontend documentation</div>
 		</div>
-	</vPage>
+	</layout>
 </template>
 
 <script>
-import vPage from "./page.vue";
+import layout from "@/pages/meta/layout.vue";
 
 export default {
-	components: {vPage}
+	components: {layout}
 };
 </script>
 

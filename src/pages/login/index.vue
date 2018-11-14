@@ -11,7 +11,7 @@
 
 <script>
 import {Button} from "element-ui";
-import vForm from "@/components/login/form.vue";
+import vForm from "./form.vue";
 
 export default {
 	components: {vForm, Button},

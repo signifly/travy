@@ -19,10 +19,10 @@ import view from "@/pages/view";
 
 import error from "@/pages/error.vue";
 
-const meta = () => import(/* webpackChunkName: "app.meta" */ "@/pages/meta.vue");
-const metaIndex = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta");
-const metaFields = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/fields");
-const metaActions = () => import(/* webpackChunkName: "app.meta" */ "@/components/meta/actions");
+const meta = () => import(/* webpackChunkName: "app.meta" */ "@/pages/meta");
+const metaHome = () => import(/* webpackChunkName: "app.meta" */ "@/pages/meta/pages/home");
+const metaFields = () => import(/* webpackChunkName: "app.meta" */ "@/pages/meta/pages/fields");
+const metaActions = () => import(/* webpackChunkName: "app.meta" */ "@/pages/meta/pages/actions");
 
 
 const routes = [
@@ -30,9 +30,9 @@ const routes = [
 		path: "/meta",
 		component: meta,
 		children: [
-			{path: "", name: "meta", component: metaIndex, meta: {layout: "base", title: "Meta", auth: {roles: "all"}}},
-			{path: "fields", name: "metaFields", component: metaFields, meta: {layout: "base", title: "Meta/Fields", auth: {roles: "all"}}},
-			{path: "actions", name: "metaActions", component: metaActions, meta: {layout: "base", title: "Meta/Actions", auth: {roles: "all"}}},
+			{path: "", name: "meta", component: metaHome, meta: {layout: "base", title: "Meta", auth: {roles: "all"}}},
+			{path: "fields", name: "meta-fields", component: metaFields, meta: {layout: "base", title: "Meta/Fields", auth: {roles: "all"}}},
+			{path: "actions", name: "meta-actions", component: metaActions, meta: {layout: "base", title: "Meta/Actions", auth: {roles: "all"}}},
 		]
 	},
 

@@ -5,8 +5,8 @@
 				<router-link class="title" :to="{name: 'meta'}">Meta</router-link>
 
 				<div class="menu">
-					<router-link :to="{name: 'metaActions'}">Actions</router-link>
-					<router-link :to="{name: 'metaFields'}">Fields</router-link>
+					<router-link :to="{name: 'meta-actions'}">Actions</router-link>
+					<router-link :to="{name: 'meta-fields'}">Fields</router-link>
 					<a class="ext" href="/" target="_blank">App</a>
 				</div>
 			</div>
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-	
+
 };
 </script>
 
