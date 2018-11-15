@@ -13,6 +13,7 @@ import * as fields from "@/components/fields";
 import layout from "@/pages/meta/layout.vue";
 import vItem from "./item.vue";
 import {sortBy} from "lodash";
+import "./api";
 
 export default {
 	components: {layout, vItem},

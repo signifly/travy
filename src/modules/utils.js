@@ -52,3 +52,7 @@ export const endpointUrl = ({url, data}) => {
 
 	return url;
 };
+
+export const meta = {
+	items: `${window.location.origin}/meta/fields/api/items`
+};

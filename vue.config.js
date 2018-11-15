@@ -36,5 +36,12 @@ module.exports = {
 			.use("markdown-loader")
 			.loader("markdown-loader")
 			.end();
+
+		config.module.rule("json")
+			.type("javascript/auto")
+			.test(/\.json$/)
+			.use("file-loader")
+			.loader("file-loader")
+			.end();
 	}
 };

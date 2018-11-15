@@ -17,6 +17,7 @@
 <script>
 import {get, debounce, uniqBy} from "lodash";
 import {Select, Option} from "element-ui";
+import {meta} from "@/modules/utils";
 
 export default {
 	components: {Select, Option},
@@ -26,14 +27,15 @@ export default {
 				disabled: false,
 				value: "selectValue",
 				options: {
-					endpoint: "https://sikaline.glitch.me/table-actions/options",
+					endpoint: meta.items,
 					key: "",
+					itemKey: "",
 					label: "name",
 					value: "id"
 				}
 			},
 			data: {
-				selectValue: "1"
+				selectValue: 1
 			}
 		}
 	},
@@ -65,6 +67,7 @@ export default {
 		oKey: (t) => t._options.key,
 		oLabel: (t) => t._options.label,
 		oValue: (t) => t._options.value,
+		oItemKey: (t) => t._options.itemKey,
 
 		list() {
 			const resList = this.oKey ? get(this.res, this.oKey, []) : this.res || [];
@@ -116,7 +119,7 @@ export default {
 
 		async getItem() {
 			const {data} = await this.$axios.get(`${this.endpointClean}/${this.value}`);
-			this.item = this.oKey ? data[this.oKey] : data;
+			this.item = this.oItemKey ? data[this.oItemKey] : data;
 		}
 	},
 	created() {
