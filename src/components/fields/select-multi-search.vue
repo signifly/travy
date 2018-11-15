@@ -17,6 +17,7 @@
 <script>
 import {get, debounce, uniqBy, isObjectLike} from "lodash";
 import {Select, Option} from "element-ui";
+import {meta} from "@/modules/utils";
 
 export default {
 	components: {Select, Option},
@@ -26,24 +27,22 @@ export default {
 				disabled: false,
 				values: "values",
 				options: {
-					list: "https://sikaline.glitch.me/table-actions/options",
+					list: meta.items,
 					key: "",
 					label: "name",
 					value: "id"
 				}
 			},
 			data: {
-				values: ["1", "2"],
-				values_strings: ["1", "2"],
-				values_numbers: [1 ,2],
+				values: [1],
 
-				valuesss: [
+				_values: [
 					{
-						id: "1",
+						id: 1,
 						name: "stol"
 					},
 					{
-						id: "2",
+						id: 2,
 						name: "taske"
 					}
 				]
@@ -114,7 +113,7 @@ export default {
 
 		async getListOptions(search) {
 			const {data} = await this.$axios.get(this.endpoint, {params: {filter: {search}, count: 30}});
-			this.listOptions = get(data, this.oKey, []);
+			this.listOptions = get(data, this.oKey, data);
 			this.loading = false;
 		},
 
@@ -129,7 +128,7 @@ export default {
 
 		async getListSelected() {
 			const {data} = await this.$axios.get(this.endpoint, {params: {filter: {[this.oValue]: this.values}}});
-			return get(data, this.oKey, []);
+			return get(data, this.oKey, data);
 		},
 
 		async init() {

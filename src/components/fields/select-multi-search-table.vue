@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import {meta} from "@/modules/utils";
 import {get, set, uniq, forEach} from "lodash";
 import {vSelectMultiSearch, vTable} from "./index";
 
@@ -19,8 +20,8 @@ export default {
 				disabled: false,
 				values: "values",
 				options: {
-					list: "https://api.sikane.signifly.com/v1/stock-item-models",
-					key: "data",
+					list: meta.items,
+					key: "",
 					label: "name",
 					value: "id"
 				},
@@ -42,7 +43,7 @@ export default {
 						fieldType: {
 							id: "vSwitch",
 							props: {
-								value: "dd"
+								value: "bool"
 							}
 						}
 					}

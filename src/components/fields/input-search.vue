@@ -14,6 +14,7 @@
 <script>
 import {Autocomplete} from "element-ui";
 import {debounce, get} from "lodash";
+import {meta} from "@/modules/utils";
 
 export default {
 	components: {Autocomplete},
@@ -23,14 +24,14 @@ export default {
 				value: "inputVal",
 				options: {
 					endpoint: {
-						url: "https://api.sikane.signifly.com/v1/admin/text-fields",
+						url: meta.items,
 						params: {
 							filter: {namespace: "price_list.special_features"},
 							modifiers: {language_id: 1},
 							sort: "value"
 						}
 					},
-					value: "value",
+					value: "name",
 					key: ""
 				}
 			},
@@ -62,7 +63,7 @@ export default {
 
 			cb(this.items); // keep showing old items while fetching new items
 
-			const {data: {data}} = await this.$axios.get(url, {params: {
+			const {data} = await this.$axios.get(url, {params: {
 				...params,
 				filter: {...params.filter, search}
 			}});

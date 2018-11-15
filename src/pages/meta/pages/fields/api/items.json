@@ -1,26 +1,32 @@
 [
 	{
 		"id": 1,
-		"name": "item1"
+		"name": "item1",
+		"bool": false
 	},
 	{
 		"id": 2,
-		"name": "item2"
+		"name": "item2",
+		"bool": false
 	},
 	{
 		"id": 3,
-		"name": "item3"
+		"name": "item3",
+		"bool": false
 	},
 	{
 		"id": 4,
-		"name": "item4"
+		"name": "item4",
+		"bool": false
 	},
 	{
 		"id": 5,
-		"name": "item5"
+		"name": "item5",
+		"bool": false
 	},
 	{
 		"id": 6,
-		"name": "item6"
+		"name": "item6",
+		"bool": false
 	}
 ]

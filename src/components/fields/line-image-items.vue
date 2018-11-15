@@ -57,15 +57,15 @@ export default {
 				items: [
 					{
 						id: "Modal",
-						title: "value"
+						title: "value1"
 					},
 					{
 						id: "Variants",
-						title: "value"
+						title: "value2"
 					},
 					{
 						id: "Pizzas",
-						title: "value"
+						title: "value3"
 					}
 				]
 			}
