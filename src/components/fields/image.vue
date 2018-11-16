@@ -17,7 +17,7 @@ export default {
 				image: "imageUrl"
 			},
 			data: {
-				imageUrl: "http://via.placeholder.com/200x200"
+				imageUrl: "https://picsum.photos/200/200"
 			}
 		}
 	},
