@@ -51,6 +51,7 @@
 <script>
 import {Dialog, Input, Button} from "element-ui";
 import {get, debounce} from "lodash";
+import {meta} from "@/modules/utils";
 
 export default {
 	components: {Dialog, Input, Button},
@@ -61,11 +62,11 @@ export default {
 				url: "image_url",
 				options: {
 					endpoint: {
-						url: "https://api.sikane.signifly.com/v1/admin/files",
+						url: meta.items,
 						params: {sort: "name"}
 					},
 					key: "",
-					url: "url",
+					url: "image",
 					value: "id",
 					label: "name"
 				}
@@ -128,17 +129,17 @@ export default {
 		async getItems({search, page = 1} = {}) {
 			const {key, endpoint: {params, url}} = this._options;
 
-			const {data: {data, meta}} = await this.$axios.get(url, {params: {
+			const {data} = await this.$axios.get(url, {params: {
 				...params, page, count: 25, filter: {
 					type: "image",
 					search
 				}
 			}});
 
-			const items = key ? get(data, key, []) : data;
+			const items = get(data, key, data);
 
 			this.modal.items = page > 1 ? [...this.modal.items, ...items] : items;
-			this.modal.meta = meta;
+			this.modal.meta = data.meta || {};
 			this.modal.loading = false;
 		},
 
