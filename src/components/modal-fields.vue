@@ -1,13 +1,14 @@
 <template>
 	<div class="modal">
-		<Dialog v-bind="{width, title}" :visible.sync="_visible">
+		<Dialog v-bind="{width, title}" :visible.sync="_visible" :append-to-body="true" :modal-append-to-body="true">
 			<div class="fields">
 				<vField
-				v-for="field in fields"
-				:key="field.name"
-				:alt="{data, errors, loading}"
-				v-bind="field"
-				@fieldA="$emit('fieldA', $event)"/>
+					v-for="field in fields"
+					:key="field.name"
+					v-bind="field"
+					:alt="{data, errors, loading}"
+					@fieldA="$emit('fieldA', $event)"
+				/>
 			</div>
 
 			<div class="footer" slot="footer">
@@ -18,7 +19,7 @@
 
 				<div class="error" v-if="error.message">{{error.message}}</div>
 
-				<slot name="footer" />
+				<slot name="footer"/>
 			</div>
 		</Dialog>
 	</div>
@@ -26,7 +27,7 @@
 
 <script>
 import {Dialog, Button} from "element-ui";
-import vField from "./field/index.vue";
+import vField from "./field";
 
 export default {
 	components: {Dialog, Button},
@@ -77,12 +78,6 @@ export default {
 <style lang="scss" scoped>
 .modal {
 	text-align: left;
-}
-
-/deep/ {
-	.el-dialog__title {
-		font-weight: 600;
-	}
 }
 
 .fields {

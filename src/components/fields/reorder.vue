@@ -5,14 +5,14 @@
 				<thead>
 					<tr>
 						<th />
-						<th v-for="column in _columns">{{column.label}}</th>
+						<th v-for="column in _columns" :key="column.label">{{column.label}}</th>
 					</tr>
 				</thead>
 
 				<draggable v-model="items" :options="{handle: '.drag'}" @end="update" element="tbody">
-					<tr v-for="item in items">
+					<tr v-for="item in items" :key="item.id">
 						<td class="top" @click="moveTop(item)" title="Move to top"><i class="el-icon-d-arrow-left" /></td>
-						<td v-for="column in _columns" class="drag">{{item[column.key]}}</td>
+						<td v-for="column in _columns" :key="column.key" class="drag">{{item[column.key]}}</td>
 					</tr>
 				</draggable>
 			</table>
@@ -86,7 +86,7 @@ export default {
 		},
 
 		async getItems() {
-			const {data} = await this.$http(this._endpoint);
+			const {data} = await this.$axios(this._endpoint);
 			this.items = get(data, this._itemsKey, data);
 		}
 	},

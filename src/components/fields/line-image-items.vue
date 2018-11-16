@@ -13,7 +13,7 @@
 		</div>
 
 		<div class="info">
-			<div class="item" v-for="item in itemsMap">
+			<div class="item" v-for="item in itemsMap" :key="item.value">
 				<div class="title">{{item.key}}:</div>
 				<div class="text">{{item.value}}</div>
 			</div>
@@ -57,15 +57,15 @@ export default {
 				items: [
 					{
 						id: "Modal",
-						title: "value"
+						title: "value1"
 					},
 					{
 						id: "Variants",
-						title: "value"
+						title: "value2"
 					},
 					{
 						id: "Pizzas",
-						title: "value"
+						title: "value3"
 					}
 				]
 			}

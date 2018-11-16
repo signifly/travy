@@ -1,4 +1,4 @@
-import {get} from "lodash";
+import {get, replace} from "lodash";
 
 export const date = (epoch) => {
 	const d = new Date(epoch * 1000);
@@ -42,28 +42,17 @@ export const base64Encode = (file) => {
 };
 
 
-export const endpointParams = ({url}) => {
-	if (!url) return;
-
-	return url.split("/").map(item => {
-		const start = item.indexOf("{");
-		const end = item.indexOf("}");
-		return item.substring(start + 1, end);
-	}).filter(x => x);
-};
-
-
 export const endpointUrl = ({url, data}) => {
 	if (!url) return;
 
+	// find all {KEY} in string and replace with data property
+	url = replace(url, /\{.*?\}/g, (key) => get(data, key.slice(1, -1)));
+
 	if (!url.startsWith("http") && !url.startsWith("/")) url = `/${url}`;
 
-	return url.split("/").map(item => {
-		const start = item.indexOf("{");
-		const end = item.indexOf("}");
+	return url;
+};
 
-		if (start === -1 && end === -1) return item;
-		const key = item.substring(start + 1, end);
-		return get(data, key);
-	}).join("/");
+export const meta = {
+	items: `${window.location.origin}/meta/fields/api/items`
 };

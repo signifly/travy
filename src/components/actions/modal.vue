@@ -2,8 +2,8 @@
 	<div class="modal">
 		<vModalFields
 			v-bind="{fields, error, loading, title}"
-			:data="dataComb"
 			:visible.sync="visible"
+			:data="payload"
 			@fieldA="fieldA"
 			@submit="submit"
 		/>
@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import {get} from "lodash";
 import toFormData from "object-to-formdata";
 import {endpointUrl} from "@/modules/utils";
 import vModalFields from "@/components/modal-fields.vue";
@@ -19,23 +18,20 @@ import vModalFields from "@/components/modal-fields.vue";
 export default {
 	components: {vModalFields},
 	props: {
-		alt: {type: Object, default: () => ({})},
 		title: {type: String, required: false},
 		endpoint: {type: Object, required: true},
 		onSubmit: {type: String, required: false},
-		data: {type: Object, required: true},
+		dataComb: {type: Object, required: true},
 		fields: {type: Array, required: true}
 	},
 	data() {
 		return {
 			error: {},
-			payload: this.data,
+			payload: this.dataComb,
 			loading: false
 		}
 	},
 	computed: {
-		dataComb: (t) => ({...t.alt.data, ...t.data}),
-		endpointUrl: (t) => endpointUrl({data: t.dataComb, url: t.endpoint.url}),
 		vUpload: (t) => t.fields.map(x => x.fieldType.id === "vUpload").some(x => x),
 
 		visible: {
@@ -60,22 +56,20 @@ export default {
 			try {
 				this.loading = true;
 
-				const {data} = await this.$http({
+				const {data} = await this.$axios({
 					data: this.vUpload ? toFormData(this.payload) : this.payload,
 					method: this.endpoint.method,
-					url: this.endpointUrl,
-					custom: true,
+					url: this.endpoint.url,
+					customErr: true,
 					onUploadProgress: (e) => {
 						this.loading = Math.round(e.loaded / e.total * 100);
 					}
 				});
 
 				this.submitAfter({data});
-			} catch (err) {
-				console.log(err);
+			} catch(err) {
+				this.error = err;
 				this.loading = false;
-				console.log(err.response);
-				this.error = get(err, "response.data", {});
 			}
 		},
 

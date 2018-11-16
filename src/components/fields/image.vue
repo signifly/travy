@@ -1,9 +1,8 @@
 <template>
-	<tran
 	<div class="image" v-if="image" @mouseover="active = true" @mouseleave="active = false">
-		<i class="el-icon-picture"></i>
+		<i class="el-icon-picture"/>
 		<transition name="img">
-			<div class="img" v-show="active">
+			<div class="img" v-if="active">
 				<img :src="image">
 			</div>
 		</transition>
@@ -18,7 +17,7 @@ export default {
 				image: "imageUrl"
 			},
 			data: {
-				imageUrl: "http://via.placeholder.com/100x100"
+				imageUrl: "http://via.placeholder.com/200x200"
 			}
 		}
 	},
@@ -44,11 +43,11 @@ export default {
 		display: flex;
 		z-index: 2;
 		position: absolute;
-		right: 0;
+		right: 60px;
 		top: 0;
 		bottom: 0;
 		align-items: center;
-		width: em(165);
+		width: 120px;
 
 		$t: 0.15s;
 

@@ -18,8 +18,9 @@
 </template>
 
 <script>
-import {mapValues, mapKeys, get} from "lodash";
+import {meta} from "@/modules/utils";
 import draggable from "vuedraggable";
+import {mapValues, mapKeys, get} from "lodash";
 import {vLine, vLineImage, vLineImageItems} from "./index";
 
 export default {
@@ -41,7 +42,7 @@ export default {
 					selectValue: "selectValue",
 					selectClearable: false,
 					selectOptions: {
-						endpoint: "https://sikaline.glitch.me/table-actions/options",
+						endpoint: meta.items,
 						key: "",
 						label: "name",
 						value: "id"
@@ -101,7 +102,7 @@ export default {
 			});
 		},
 		itemsPropsValue() {
-			return this.items.map(item => {
+			return this.items.map(() => {
 				return mapKeys(this._itemFieldProps, (val, key) => `_${key}`);
 			});
 		}

@@ -1,16 +1,16 @@
 <template>
-	<div class="input">
-		<InputNumber v-model="data.value" @change="update" :disabled="_disabled" :controls="false" size="medium" />
+	<div class="input" @keypress="validate">
+		<Input v-model="valueC" @input="update" :disabled="_disabled" :controls="false" size="medium"/>
 		<div class="unit" v-if="_unit">{{_unit}}</div>
 	</div>
 </template>
 
 <script>
-import {isNumber} from "lodash";
-import {InputNumber} from "element-ui";
+import {isNumber, toNumber, debounce} from "lodash";
+import {Input} from "element-ui";
 
 export default {
-	components: {InputNumber},
+	components: {Input},
 	meta: {
 		res: {
 			props: {
@@ -24,6 +24,7 @@ export default {
 		}
 	},
 	props: {
+		alt: {type: Object, required: true},
 		_disabled: {type: Boolean, required: false, doc: true},
 		_unit: {type: String, required: false, doc: true},
 		value: {type: Number, required: false, doc: true},
@@ -31,21 +32,28 @@ export default {
 	},
 	data() {
 		return {
-			data: {
-				value: this.value
-			}
+			valueC: this.value
 		}
 	},
 	computed: {
-		nodata: (t) => !isNumber(t.data.value)
+		wait: (t) => t.alt.type === "table" ? 500 : 0,
+		nodata: (t) => !isNumber(t.value)
 	},
 	methods: {
-		update(val) {
+		validate(e) {
+			if (isNaN(toNumber(e.key))) e.preventDefault();
+		},
+		update(value) {
+			value = parseInt(value) || 0;
+
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this._value]: val}
+				data: {[this._value]: value}
 			});
 		}
+	},
+	created() {
+		this.update = debounce(this.update, this.wait);
 	}
 };
 </script>

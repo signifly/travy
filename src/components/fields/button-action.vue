@@ -1,25 +1,21 @@
 <template>
-	<div class="button-action">
-		<Button size="medium" :type="_type" :icon="`el-icon-${_icon}`" @click="active = true">{{_title}}</Button>
+	<action
+	v-bind="{props: _action, data: alt.data, active}"
+	@close="close"
+	@fieldA="fieldA">
 
-		<component
-			v-if="active"
-			:is="_action.id"
-			v-bind="_action"
-			:alt="alt"
-			@close="close"
-			@fieldA="fieldA"
-		/>
-	</div>
+		<div class="button-action">
+			<Button size="medium" :type="_type" :icon="`el-icon-${_icon}`" @click="active = true">{{_title}}</Button>
+		</div>
+	</action>
 </template>
 
 <script>
-import {get} from "lodash";
 import {Button} from "element-ui";
-import * as actions from "@/components/actions";
+import action from "@/components/actions";
 
 export default {
-	components: {Button, ...actions},
+	components: {Button, action},
 	meta: {
 		res: {
 			props: {
@@ -68,7 +64,7 @@ export default {
 		}
 	},
 	props: {
-		alt: {type: Object, required: true},
+		alt: {type: Object, default: () => ({})},
 		_title: {type: String, required: true, doc: true},
 		_icon: {type: String, required: false, doc: true},
 		_type: {type: String, required: false, doc: true},
@@ -98,6 +94,6 @@ export default {
 
 <style lang="scss" scoped>
 .button-action {
-	position: relative;
+
 }
 </style>

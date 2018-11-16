@@ -10,9 +10,8 @@
 </template>
 
 <script>
-import {mapKeys, get} from "lodash";
 import {Button} from "element-ui";
-import vForm from "@/components/login/form.vue";
+import vForm from "./form.vue";
 
 export default {
 	components: {vForm, Button},
@@ -69,8 +68,8 @@ export default {
 				this.reset();
 				this.loading = true;
 				await this.$store.dispatch("user/login", {form: this.data, route: {...this.route}});
-			} catch (err) {
-				this.error = get(err, "response.data", {});
+			} catch(err) {
+				this.error = err;
 			} finally {
 				this.loading = false;
 			}
@@ -80,13 +79,10 @@ export default {
 			try {
 				this.reset();
 				this.loading = true;
-				console.log("RESET");
 				const {data} = await this.$store.dispatch("user/resetPassword", {form: this.data});
 				this.message = data.message;
-			} catch (err) {
-				console.log(err);
-				this.error = get(err, "response.data", {});
-				this.error.errors = mapKeys(this.error.errors, (val, key) => `data.${key}`);
+			} catch(err) {
+				this.error = err;
 			} finally {
 				this.loading = false;
 			}

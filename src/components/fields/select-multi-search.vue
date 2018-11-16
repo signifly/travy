@@ -17,6 +17,7 @@
 <script>
 import {get, debounce, uniqBy, isObjectLike} from "lodash";
 import {Select, Option} from "element-ui";
+import {meta} from "@/modules/utils";
 
 export default {
 	components: {Select, Option},
@@ -26,24 +27,22 @@ export default {
 				disabled: false,
 				values: "values",
 				options: {
-					list: "https://sikaline.glitch.me/table-actions/options",
+					list: meta.items,
 					key: "",
 					label: "name",
 					value: "id"
 				}
 			},
 			data: {
-				values: ["1", "2"],
-				values_strings: ["1", "2"],
-				values_numbers: [1 ,2],
+				values: [1],
 
-				valuesss: [
+				_values: [
 					{
-						id: "1",
+						id: 1,
 						name: "stol"
 					},
 					{
-						id: "2",
+						id: 2,
 						name: "taske"
 					}
 				]
@@ -74,20 +73,20 @@ export default {
 		}
 	},
 	computed: {
-		nodata: (t) => t.data.values.length === 0,
 		valuesObj: (t) => t.values.map(x => isObjectLike(x)).every(x => x),
+		nodata: (t) => t.data.values.length === 0,
 		endpoint: (t) => t._options.list,
-		oKey: (t) => t._options.key,
 		oLabel: (t) => t._options.label,
 		oValue: (t) => t._options.value,
+		oKey: (t) => t._options.key,
 
 		list() {
 			let list = [...this.listSelected, ...this.listOptions];
 			list = uniqBy(list, this.oValue);
 
 			return list.map(x => ({
-				label: x[this.oLabel],
-				value: x[this.oValue]
+				value: get(x, this.oValue),
+				label: get(x, this.oLabel)
 			}));
 		},
 
@@ -113,8 +112,8 @@ export default {
 		},
 
 		async getListOptions(search) {
-			const {data} = await this.$http.get(this.endpoint, {params: {filter: {search}, count: 30}});
-			this.listOptions = get(data, this.oKey, []);
+			const {data} = await this.$axios.get(this.endpoint, {params: {filter: {search}, count: 30}});
+			this.listOptions = get(data, this.oKey, data);
 			this.loading = false;
 		},
 
@@ -128,8 +127,8 @@ export default {
 		},
 
 		async getListSelected() {
-			const {data} = await this.$http.get(this.endpoint, {params: {filter: this.values}});
-			return get(data, this.oKey, []);
+			const {data} = await this.$axios.get(this.endpoint, {params: {filter: {[this.oValue]: this.values}}});
+			return get(data, this.oKey, data);
 		},
 
 		async init() {

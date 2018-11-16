@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import {get} from "lodash";
 import {Select, Option} from "element-ui";
 
 export default {
@@ -63,8 +64,8 @@ export default {
 		oValue: (t) => t._options.value,
 
 		listMap: (t) => t.list.map(x => ({
-			label: x[t.oLabel],
-			value: x[t.oValue]
+			value: get(x, t.oValue),
+			label: get(x, t.oLabel)
 		})),
 
 		size() {

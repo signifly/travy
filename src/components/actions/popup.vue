@@ -18,21 +18,16 @@ import {endpointUrl} from "@/modules/utils";
 export default {
 	components: {Button, vPopup},
 	props: {
-		alt: {type: Object, required: true},
 		position: {type: String, required: false, default: "bottom-right"},
 		text: {type: String, required: false, default: "Are you sure?"},
 		endpoint: {type: Object, required: true},
 		onSubmit: {type: String, required: false},
-		data: {type: Object, required: false}
+		dataComb: {type: Object, required: true}
 	},
 	data() {
 		return {
 			loading: false
 		}
-	},
-	computed: {
-		dataComb: (t) => ({...t.alt.data, ...t.data}),
-		endpointUrl: (t) => endpointUrl({data: t.dataComb, url: t.endpoint.url})
 	},
 	methods: {
 		close() {
@@ -43,14 +38,14 @@ export default {
 			try {
 				this.loading = true;
 
-				const {data} = await this.$http({
+				const {data} = await this.$axios({
 					method: this.endpoint.method,
-					url: this.endpointUrl,
-					data: {data: this.data},
+					url: this.endpoint.url,
+					data: this.dataComb,
 				});
 
 				this.submitAfter({data});
-			} catch (err) {
+			} catch(err) {
 				this.loading = false;
 			}
 		},

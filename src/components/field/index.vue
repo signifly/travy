@@ -5,21 +5,21 @@
 				<div class="label" v-if="label">
 					{{label}}
 
-					<vTranslated v-bind="option" />
+					<vTranslated v-bind="option"/>
 
 					<transition name="el-fade-in">
-						<div class="dot outdated" v-if="rule.dot && !disabled && outdated" />
+						<div class="dot outdated" v-if="rule.dot && !disabled && outdated"/>
 					</transition>
 
 					<transition name="el-fade-in">
-						<div class="dot nodata" v-if="rule.dot && !disabled && nodata" />
+						<div class="dot nodata" v-if="rule.dot && !disabled && nodata"/>
 					</transition>
 
 				</div>
 			</slot>
 			<div class="tooltip" v-if="tooltip">
 				<Tooltip :content="tooltip" placement="top">
-					<i class="el-icon-info"></i>
+					<i class="el-icon-info"/>
 				</Tooltip>
 			</div>
 		</div>
@@ -27,8 +27,7 @@
 		<component
 			:is="component"
 			ref="field"
-			v-bind="[propsData, propsValue]"
-			:alt="alt"
+			v-bind="[propsData, propsValue, {alt}]"
 			@fieldA="$emit('fieldA', $event)"
 		/>
 
@@ -44,9 +43,9 @@
 
 <script>
 import {mapValues, mapKeys, get} from "lodash";
-import {Tooltip} from "element-ui";
 import * as fields from "@/components/fields";
 import vTranslated from "./translated.vue";
+import {Tooltip} from "element-ui";
 
 
 export default {
@@ -64,26 +63,25 @@ export default {
 		}
 	},
 	computed: {
-		error: (t) => get(t.alt.errors, t.name, [])[0],
-		component: (t) => fields[t.id],
-
 		type: (t) => t.alt.type,
 		id: (t) => t.fieldType.id,
+		props: (t) => t.fieldType.props,
+		outdated: (t) => t.option.outdated,
 		reference: (t) => t.fieldType.reference,
 		disabled: (t) => t.fieldType.props.disabled,
+
+		component: (t) => fields[t.id],
 		option: (t) => get(t.alt.options, t.name, {}),
+		error: (t) => get(t.alt.errors, t.name, [])[0],
 		show: (t) => t.component && get(t.alt.data, t.fieldType.show, true),
 
-		width() {
-			const width = this.fieldType.width || 100;
-			return width <= 50 ? `calc(${width}% - 1em)` : `${width}%`;
-		},
-
-		props: (t) => t.fieldType.props,
 		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
 		propsData: (t) => mapValues(t.props, (val) => get(t.alt.data, val)),
 
-		outdated: (t) => t.option.outdated,
+		width() {
+			const width = this.fieldType.width || 100;
+			return width !== 100 ? `calc(${width}% - 1em)` : `${width}%`;
+		},
 
 		nodata() {
 			const field = this.mounted ? get(this.$refs, "field", {}) : {};

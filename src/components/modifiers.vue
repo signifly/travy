@@ -1,9 +1,8 @@
 <template>
 	<div class="modifiers" :class="{loading}">
-		<div class="item" v-for="(item, index) in itemsMap">
+		<div class="item" v-for="(item, index) in itemsMap" :key="item.key">
 			<div class="title">{{item.title}}</div>
 			<vSelect v-bind="item" _value="value" :_clearable="false" @fieldA="fieldA({index}, $event)" />
-		</div>
 		</div>
 	</div>
 </template>

@@ -1,11 +1,12 @@
 <template>
 	<div class="input">
-		<Input v-model="data.value" @input="update" :disabled="_disabled" :controls="false" size="medium" />
+		<Input v-model="valueC" @input="update" :disabled="_disabled" :controls="false" size="medium"/>
 	</div>
 </template>
 
 <script>
 import {Input} from "element-ui";
+import {debounce} from "lodash";
 
 export default {
 	components: {Input},
@@ -20,19 +21,19 @@ export default {
 		}
 	},
 	props: {
+		alt: {type: Object, required: true},
 		_disabled: {type: Boolean, required: false, doc: true},
 		value: {type: [String, Number], required: false, doc: true},
 		_value: {type: String, required: true}
 	},
 	data() {
 		return {
-			data: {
-				value: this.value
-			}
+			valueC: this.value
 		}
 	},
 	computed: {
-		nodata: (t) => !t.data.value
+		wait: (t) => t.alt.type === "table" ? 500 : 0,
+		nodata: (t) => !t.value
 	},
 	methods: {
 		update(value) {
@@ -41,6 +42,9 @@ export default {
 				data: {[this._value]: value}
 			});
 		}
+	},
+	created() {
+		this.update = debounce(this.update, this.wait);
 	}
 };
 </script>

@@ -1,22 +1,26 @@
-<template>
-	<div class="show"></div>
-</template>
-
 <script>
-import {endpointUrl} from "@/modules/utils";
-
 export default {
 	props: {
-		alt: {type: Object, required: true},
+		dataComb: {type: Object, required: true},
 		endpoint: {type: Object, required: true},
-		data: {type: Object, required: false}
+		download: {type: Boolean, required: false}
 	},
-	computed: {
-		dataComb: (t) => ({...t.alt.data, ...t.data}),
-		endpointUrl: (t) => endpointUrl({data: t.dataComb, url: t.endpoint.url})
+	render: () => ({}),
+	methods: {
+		downloadFile() {
+			const link = document.createElement("a");
+			link.href = this.endpoint.url;
+			link.download = true;
+			link.click();
+		},
+
+		go() {
+			this.$router.push({path: this.endpoint.url, query: {modifiers: this.$route.query.modifiers}});
+		}
 	},
 	created() {
-		this.$router.push({path: this.endpointUrl, query: {modifiers: this.$route.query.modifiers}});
+		this.$emit("close");
+		this.download ? this.downloadFile() : this.go();
 	}
 };
 </script>

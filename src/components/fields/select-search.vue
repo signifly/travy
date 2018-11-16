@@ -17,6 +17,7 @@
 <script>
 import {get, debounce, uniqBy} from "lodash";
 import {Select, Option} from "element-ui";
+import {meta} from "@/modules/utils";
 
 export default {
 	components: {Select, Option},
@@ -26,14 +27,15 @@ export default {
 				disabled: false,
 				value: "selectValue",
 				options: {
-					endpoint: "https://sikaline.glitch.me/table-actions/options",
+					endpoint: meta.items,
 					key: "",
+					itemKey: "",
 					label: "name",
 					value: "id"
 				}
 			},
 			data: {
-				selectValue: "1"
+				selectValue: 1
 			}
 		}
 	},
@@ -59,11 +61,13 @@ export default {
 		}
 	},
 	computed: {
-		nodata: (t) => !t.data.value,
+		endpointClean: (t) => t.endpoint.split("?")[0], // without query
 		endpoint: (t) => t._options.endpoint,
+		nodata: (t) => !t.data.value,
 		oKey: (t) => t._options.key,
 		oLabel: (t) => t._options.label,
 		oValue: (t) => t._options.value,
+		oItemKey: (t) => t._options.itemKey,
 
 		list() {
 			const resList = this.oKey ? get(this.res, this.oKey, []) : this.res || [];
@@ -73,8 +77,8 @@ export default {
 		},
 
 		listMap: (t) => t.list.map(x => ({
-			label: x[t.oLabel],
-			value: x[t.oValue]
+			value: get(x, t.oValue),
+			label: get(x, t.oLabel)
 		})),
 
 		sizeMap() {
@@ -99,7 +103,7 @@ export default {
 		},
 
 		async getList(search) {
-			const {data} = await this.$http.get(this.endpoint, {params: {filter: {search}, count: 30}});
+			const {data} = await this.$axios.get(this.endpoint, {params: {filter: {search}, count: 30}});
 			this.res = data;
 			this.loading = false;
 		},
@@ -114,8 +118,8 @@ export default {
 		},
 
 		async getItem() {
-			const {data} = await this.$http.get(`${this.endpoint}/${this.value}`);
-			this.item = this.oKey ? data[this.oKey] : data;
+			const {data} = await this.$axios.get(`${this.endpointClean}/${this.value}`);
+			this.item = this.oItemKey ? data[this.oItemKey] : data;
 		}
 	},
 	created() {

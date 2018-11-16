@@ -6,6 +6,7 @@
 
 <script>
 import editor from "vue-simplemde/src/markdown-editor.vue";
+import "simplemde-theme-base/dist/simplemde-theme-base.min.css";
 
 export default {
 	components: {editor},
@@ -58,8 +59,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~simplemde-theme-base/dist/simplemde-theme-base.min.css";
-
 .editor {
 	/deep/ {
 		.editor-toolbar {

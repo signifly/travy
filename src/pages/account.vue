@@ -1,14 +1,14 @@
 <template>
 	<div class="account">
-		<vView v-bind="{requests}" @save="save" />
+		<viewPage v-bind="{requests}" @save="save"/>
 	</div>
 </template>
 
 <script>
-import vView from "@/components/view/index.vue";
+import viewPage from "@/pages/view/page.vue";
 
 export default {
-	components: {vView},
+	components: {viewPage},
 	data() {
 		return {
 			requests: {

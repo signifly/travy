@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import {get} from "lodash";
 import {Upload} from "element-ui";
 import {base64Encode} from "@/modules/utils";
 
@@ -49,7 +48,7 @@ export default {
 	},
 	data() {
 		return {
-			image: this.url,
+			image: null,
 
 			data: {
 				file: this.file
@@ -82,6 +81,9 @@ export default {
 				data: {[this._file]: res}
 			});
 		}
+	},
+	created() {
+		this.$watch("url", (url) => this.image = url, {immediate: true});
 	}
 };
 </script>
@@ -103,10 +105,10 @@ $t: 0.2s;
 					height: auto;
 					border: 0;
 					border-radius: 0;
-				}
 
-				.input-image.disabled & {
-					cursor: default;
+					.input-image.disabled & {
+						cursor: default;
+					}
 				}
 			}
 		}
