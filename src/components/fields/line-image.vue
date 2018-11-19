@@ -5,7 +5,7 @@
 		</div>
 
 		<div class="image">
-			<vInputImage
+			<inputImage
 				class="line"
 				v-bind="{url: image, _file: _imageBase64, _upload: _imageUpload}"
 				@fieldA="fieldA"
@@ -24,16 +24,17 @@
 			</div>
 		</div>
 
-		<vActions v-bind="{_actions, alt}" @fieldA="fieldA"/>
+		<actions v-bind="{_actions, alt}" @fieldA="fieldA"/>
 	</div>
 </template>
 
 <script>
 const noimage = require("!file-loader!@/assets/icons/noimage.svg");
-import {vInputImage, vActions} from "./index";
+import inputImage from "./input-image.vue";
+import actions from "./actions.vue";
 
 export default {
-	components: {vInputImage, vActions},
+	components: {inputImage, actions},
 	meta: {
 		res: {
 			props: {

@@ -7,6 +7,6 @@
 </template>
 
 <script>
-import {vSelectMulti} from "./index";
-export default {...vSelectMulti};
+import selectMulti from "./input-select-multi.vue";
+export default {...selectMulti};
 </script>

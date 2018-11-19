@@ -1,19 +1,20 @@
 <template>
 	<div class="select-multi-search-table">
 		<div class="select">
-			<vSelectMultiSearch ref="select" v-bind="{_clearable, _options, _values, values, disabled: _disabled}" @fieldA="select" />
+			<selectMultiSearch ref="select" v-bind="{_clearable, _options, _values, values, disabled: _disabled}" @fieldA="select"/>
 		</div>
-		<vTable :key="columnsData.length" v-bind="{_columns, columnsData, _columnsData: 'columnsData'}" @fieldA="fieldA" />
+		<vTable :key="columnsData.length" v-bind="{_columns, columnsData, _columnsData: 'columnsData'}" @fieldA="fieldA"/>
 	</div>
 </template>
 
 <script>
 import {meta} from "@/modules/utils";
 import {get, set, uniq, forEach} from "lodash";
-import {vSelectMultiSearch, vTable} from "./index";
+import selectMultiSearch from "./input-select-multi-search.vue";
+import vTable from "./table.vue";
 
 export default {
-	components: {vSelectMultiSearch},
+	components: {selectMultiSearch},
 	meta: {
 		res: {
 			props: {

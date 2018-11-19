@@ -41,7 +41,6 @@
 
 <script>
 import {mapValues, mapKeys, get} from "lodash";
-import * as fields from "@/components/fields";
 import vTranslated from "./translated.vue";
 import {Tooltip} from "element-ui";
 
@@ -68,7 +67,10 @@ export default {
 		reference: (t) => t.fieldType.reference,
 		disabled: (t) => t.fieldType.props.disabled,
 
-		component: (t) => fields[t.id],
+		component() {
+			return () => import(/* webpackMode: "eager" */ `@/components/fields/${this.id}.vue`);
+		},
+
 		option: (t) => get(t.alt.options, t.name, {}),
 		error: (t) => get(t.alt.errors, t.name, [])[0],
 		show: (t) => t.component && get(t.alt.data, t.fieldType.show, true),
