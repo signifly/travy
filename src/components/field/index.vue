@@ -1,22 +1,20 @@
 <template>
 	<div class="field" :style="{width}" v-if="show">
 		<div class="info" slot="info" v-if="rule.info && label">
-			<slot name="label">
-				<div class="label" v-if="label">
-					{{label}}
+			<div class="label" v-if="label">
+				{{label}}
 
-					<vTranslated v-bind="option"/>
+				<vTranslated v-bind="option"/>
 
-					<transition name="el-fade-in">
-						<div class="dot outdated" v-if="rule.dot && !disabled && outdated"/>
-					</transition>
+				<transition name="el-fade-in">
+					<div class="dot outdated" v-if="rule.dot && !disabled && outdated"/>
+				</transition>
 
-					<transition name="el-fade-in">
-						<div class="dot nodata" v-if="rule.dot && !disabled && nodata"/>
-					</transition>
+				<transition name="el-fade-in">
+					<div class="dot nodata" v-if="rule.dot && !disabled && nodata"/>
+				</transition>
 
-				</div>
-			</slot>
+			</div>
 			<div class="tooltip" v-if="tooltip">
 				<Tooltip :content="tooltip" placement="top">
 					<i class="el-icon-info"/>

@@ -5,7 +5,7 @@
 		<component
 			v-if="active"
 			:is="props.id"
-			v-bind="[actionProps, props, {dataComb, endpoint}]"
+			v-bind="[actionProps, props, {payload, endpoint}]"
 			@close="close"
 			@fieldA="fieldA"
 		/>
@@ -29,7 +29,10 @@ export default {
 		hide: {type: Object, required: false} // {key, operator, value}
 	},
 	computed: {
-		dataComb: (t) => ({...t.data, ...t.props.data}), // parent data and action data combined
+		payload: ({data, props}) => ({
+			type: props.payload.type,
+			data: {...data, ...props.payload.data} // parent data and action data combined
+		}),
 
 		endpoint: (t) => ({
 			method: get(t.props, "endpoint.method"),

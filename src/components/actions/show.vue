@@ -1,7 +1,6 @@
 <script>
 export default {
 	props: {
-		dataComb: {type: Object, required: true},
 		endpoint: {type: Object, required: true},
 		download: {type: Boolean, required: false}
 	},
