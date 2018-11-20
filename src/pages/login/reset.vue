@@ -30,7 +30,7 @@ export default {
 					name: "email",
 					label: "Email",
 					fieldType: {
-						id: "vInput",
+						id: "input-text",
 						props: {
 							value: "email"
 						}
@@ -40,7 +40,7 @@ export default {
 					name: "password",
 					label: "New password",
 					fieldType: {
-						id: "vInputPassword",
+						id: "input-password",
 						props: {
 							value: "password"
 						}
@@ -50,7 +50,7 @@ export default {
 					name: "password-confirmation",
 					label: "Confirm password",
 					fieldType: {
-						id: "vInputPassword",
+						id: "input-password",
 						props: {
 							value: "password_confirmation"
 						}
