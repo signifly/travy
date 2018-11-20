@@ -18,18 +18,18 @@
 					<Col class="left" :span="16">
 						<vTabs v-bind="{tabs, data, dataU, options, edits, errors}" @fieldA="fieldA"/>
 					</Col>
-					<Col class="right" :span="8">
+					<!-- <Col class="right" :span="8">
 						<vSidebar v-if="sidebar" v-bind="{sidebar, data}" @fieldA="fieldA"/>
-					</Col>
+					</Col> -->
 				</Row>
 
-				<Row class="bottom" :gutter="20">
+				<!-- <Row class="bottom" :gutter="20">
 					<Col class="left" :span="24">
 						<vActivity v-if="activity" v-bind="{data, endpointUrl}" :key="saveU"/>
 					</Col>
-				</Row>
+				</Row> -->
 
-				<vPanel v-bind="{loading: loadingSave, data, editsU, getData, error}" @save="save"/>
+				<!-- <vPanel v-bind="{loading: loadingSave, data, editsU, getData, error}" @save="save"/> -->
 			</div>
 		</transition>
 	</div>
@@ -47,15 +47,21 @@ const edits = () => ({tabs: new Set(), data: new Set()});
 export default {
 	components: {Col, Row, vModifiers, ...components},
 	props: {
-		requests: {type: Object, required: true}
+		tabs: {type: Array, required: false},
+		data: {type: Object, required: false},
+		header: {type: Object, required: false},
+		actions: {type: Array, required: false},
+		sidebar: {type: Array, required: false},
+		activity: {type: Array, required: false},
+		options: {type: Object, required: false},
+		endpoint: {type: Object, required: false},
+		modifiers: {type: Array, required: false}
 	},
 	data() {
 		return {
 			error: {},
 			loadingSave: false,
 			definitions: null,
-			options: null,
-			data: null,
 			dataU: 0,
 			edits: edits(),
 			editsU: 0,
@@ -64,13 +70,6 @@ export default {
 	},
 	computed: {
 		query: (t) => t.$route.query,
-		tabs: (t) => t.definitions.tabs, // required
-		header: (t) => t.definitions.header, // required
-		endpoint: (t) => t.definitions.endpoint, // required
-		sidebar: (t) => t.definitions.sidebar,
-		modifiers: (t) => t.definitions.modifiers,
-		activity: (t) => t.definitions.activity,
-		actions: (t) => t.definitions.actions,
 		errors: (t) => t.error.errors,
 
 		endpointUrl: (t) => endpointUrl({data: t.data, url: t.endpoint.url}),
@@ -124,7 +123,9 @@ export default {
 				return this.query.modifiers;
 			}
 
+
 			if (this.modifiers) {
+				console.log(this.modifiers);
 				return this.modifiers.reduce((obj, item) => {
 					return {...obj, [item.key]: item.value};
 				}, {});
@@ -145,11 +146,14 @@ export default {
 				modifiers: this.modifierParams({definitions: true})
 			};
 
+			// const temp = "https://api.jsonbin.io/b/5bf28cdbd5de952fc52ac69c";
+
 			const {data} = await this.$axios.get(this.requests.definitions, {params});
 			this.definitions = data;
 		},
 
 		async getData() {
+			console.log("getdata");
 			const params = {
 				modifiers: this.modifierParams()
 			};
@@ -168,7 +172,6 @@ export default {
 					throw err;
 				}
 			}
-
 		},
 
 		async save({done} = {}) {
@@ -196,21 +199,21 @@ export default {
 		}
 	},
 	async created() {
-		const load = Loading.service({
-			target: this.$refs.loading,
-			spinner: "el-icon-loading",
-			background: "transparent",
-			text: "Loading"
-		});
-
-		try {
-			await this.getDefinitions();
-			await this.getData();
-		} catch(err) {
-			console.log(err);
-		} finally {
-			load.close();
-		}
+		// const load = Loading.service({
+		// 	target: this.$refs.loading,
+		// 	spinner: "el-icon-loading",
+		// 	background: "transparent",
+		// 	text: "Loading"
+		// });
+		//
+		// try {
+		// 	await this.getDefinitions();
+		// 	await this.getData();
+		// } catch(err) {
+		// 	console.log(err);
+		// } finally {
+		// 	load.close();
+		// }
 	}
 };
 </script>

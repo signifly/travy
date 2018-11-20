@@ -5,7 +5,7 @@
 			<div class="title">{{title}}</div>
 			<Form class="form" :model="data" label-position="top" @keydown.native.enter="$emit('submit')">
 
-				<vField
+				<field
 					v-for="field in fields"
 					:key="field.name"
 					:alt="{data, errors}"
@@ -26,10 +26,10 @@
 
 <script>
 import {Form, Button} from "element-ui";
-import vField from "@/components/field";
+import field from "@/components/field";
 
 export default {
-	components: {Form, Button, vField},
+	components: {Form, Button, field},
 	props: {
 		title: {type: String, required: true},
 		loading: {type: Boolean, required: false},

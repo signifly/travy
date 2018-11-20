@@ -15,6 +15,7 @@
 </template>
 
 <script>
-import {vSelectMultiSearch} from "./index";
-export default {...vSelectMultiSearch};
+import selectMultiSearch from "./input-select-search.vue";
+
+export default {...selectMultiSearch};
 </script>

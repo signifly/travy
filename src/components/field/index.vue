@@ -1,22 +1,20 @@
 <template>
 	<div class="field" :style="{width}" v-if="show">
 		<div class="info" slot="info" v-if="rule.info && label">
-			<slot name="label">
-				<div class="label" v-if="label">
-					{{label}}
+			<div class="label" v-if="label">
+				{{label}}
 
-					<vTranslated v-bind="option"/>
+				<vTranslated v-bind="option"/>
 
-					<transition name="el-fade-in">
-						<div class="dot outdated" v-if="rule.dot && !disabled && outdated"/>
-					</transition>
+				<transition name="el-fade-in">
+					<div class="dot outdated" v-if="rule.dot && !disabled && outdated"/>
+				</transition>
 
-					<transition name="el-fade-in">
-						<div class="dot nodata" v-if="rule.dot && !disabled && nodata"/>
-					</transition>
+				<transition name="el-fade-in">
+					<div class="dot nodata" v-if="rule.dot && !disabled && nodata"/>
+				</transition>
 
-				</div>
-			</slot>
+			</div>
 			<div class="tooltip" v-if="tooltip">
 				<Tooltip :content="tooltip" placement="top">
 					<i class="el-icon-info"/>
@@ -43,7 +41,6 @@
 
 <script>
 import {mapValues, mapKeys, get} from "lodash";
-import * as fields from "@/components/fields";
 import vTranslated from "./translated.vue";
 import {Tooltip} from "element-ui";
 
@@ -70,7 +67,10 @@ export default {
 		reference: (t) => t.fieldType.reference,
 		disabled: (t) => t.fieldType.props.disabled,
 
-		component: (t) => fields[t.id],
+		component() {
+			return () => import(/* webpackMode: "eager" */ `@/components/fields/${this.id}.vue`);
+		},
+
 		option: (t) => get(t.alt.options, t.name, {}),
 		error: (t) => get(t.alt.errors, t.name, [])[0],
 		show: (t) => t.component && get(t.alt.data, t.fieldType.show, true),

@@ -1,45 +1,43 @@
 <template>
 	<div class="tab">
-		<div class="title">{{tab.title}}</div>
-
-		<div class="sections">
-			<vSection v-for="section in sections" :key="section.title" v-bind="{section, data, options, errors}" @fieldA="fieldA" ref="section"/>
+		<div class="fields" v-if="tabData">
+			<field v-for="field in fields" v-bind="[field, {alt: {data}}]" :key="field.name"/>
 		</div>
 	</div>
 </template>
 
 <script>
-import vSection from "./section.vue";
+import {endpointUrl} from "@/modules/utils";
+import field from "@/components/field";
 
 export default {
-	components: {vSection},
+	components: {field},
 	props: {
-		tab: {type: Object, required: true},
-		data: {type: Object, required: true},
-		options: {type: Object, required: false},
-		errors: {type: Object, required: false}
+		endpoint: {type: Object, required: true},
+		fields: {type: Array, required: true},
+		title: {type: String, required: true},
+		data: {type: Object, required: true}
 	},
 	data() {
 		return {
-			mounted: false
+			tabData: null
 		}
 	},
 	computed: {
-		sections: (t) => t.tab.sections,
-		nodata: (t) => (t.mounted ? t.$refs.section : []).some(x => x.nodata)
+		endpointUrl: (t) => endpointUrl({data: t.data, url: t.endpoint.url})
 	},
 	methods: {
-		fieldA(obj) {
-			this.$emit("fieldA", {...obj, tab: this.tab.id});
+		fieldA() {
+
+		},
+
+		async getData() {
+			const {data} = await this.$axios.get(this.endpointUrl, {params: this.endpoint.params});
+			console.log(data);
 		}
 	},
-	mounted() {
-		this.mounted = true;
-	},
-	watch: {
-		nodata(data) {
-			this.$emit("nodata", {[this.tab.id]: data});
-		}
+	created() {
+		this.getData();
 	}
 };
 </script>

@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.view-action {
-
+.view-action {
+	margin-left: 0.5em;
 }
 </style>

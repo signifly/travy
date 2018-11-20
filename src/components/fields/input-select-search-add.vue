@@ -15,6 +15,6 @@
 </template>
 
 <script>
-import {vSelectSearch} from "./index";
-export default {...vSelectSearch};
+import selectSearch from "./input-select-search.vue";
+export default {...selectSearch};
 </script>

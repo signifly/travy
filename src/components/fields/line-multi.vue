@@ -21,7 +21,9 @@
 import {meta} from "@/modules/utils";
 import draggable from "vuedraggable";
 import {mapValues, mapKeys, get} from "lodash";
-import {vLine, vLineImage, vLineImageItems} from "./index";
+import vLine from "./line.vue";
+import vLineImage from "./line-image.vue";
+import vLineImageItems from "./line-image-items.vue";
 
 export default {
 	components: {draggable, vLine, vLineImage, vLineImageItems},

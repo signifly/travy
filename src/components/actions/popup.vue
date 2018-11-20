@@ -22,7 +22,7 @@ export default {
 		text: {type: String, required: false, default: "Are you sure?"},
 		endpoint: {type: Object, required: true},
 		onSubmit: {type: String, required: false},
-		dataComb: {type: Object, required: true}
+		payload: {type: Object, required: true}
 	},
 	data() {
 		return {
@@ -38,10 +38,10 @@ export default {
 			try {
 				this.loading = true;
 
-				const {data} = await this.$axios({
+				const {data: {data}} = await this.$axios({
 					method: this.endpoint.method,
 					url: this.endpoint.url,
-					data: this.dataComb,
+					data: this.payload,
 				});
 
 				this.submitAfter({data});
@@ -52,7 +52,7 @@ export default {
 
 		submitAfter({data} = {}) {
 			if (this.onSubmit) {
-				const url = endpointUrl({data: data.data || this.dataComb, url: this.onSubmit});
+				const url = endpointUrl({data: {...this.payload.data, ...data}, url: this.onSubmit});
 				this.$router.push(url);
 			} else {
 				this.$emit("fieldA", {
