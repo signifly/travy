@@ -29,14 +29,16 @@ export default {
 		hide: {type: Object, required: false} // {key, operator, value}
 	},
 	computed: {
-		payload: ({data, props}) => ({
+		dataComb: (t) => ({...t.data, ...t.props.payload.data}), // parent data and action data combined
+
+		payload: ({dataComb, props}) => ({
 			type: props.payload.type,
-			data: {...data, ...props.payload.data} // parent data and action data combined
+			data: dataComb
 		}),
 
-		endpoint: (t) => ({
-			method: get(t.props, "endpoint.method"),
-			url: endpointUrl({data: t.dataComb, url: get(t.props, "endpoint.url")})
+		endpoint: ({dataComb, props}) => ({
+			method: get(props, "endpoint.method"),
+			url: endpointUrl({data: dataComb, url: get(props, "endpoint.url")})
 		}),
 
 		disabled() {
