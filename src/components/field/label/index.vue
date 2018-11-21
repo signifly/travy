@@ -1,5 +1,5 @@
 <template>
-	<div class="label" v-if="label && rule.show">
+	<div class="label" v-if="label">
 		{{label}}
 
 		<translate v-bind="option"/>
@@ -30,20 +30,7 @@ export default {
 		tooltip: {type: String, required: false}
 	},
 	computed: {
-		option: (t) => get(t.alt.options, t.name, {}),
-
-		rule() {
-			const type = this.alt.type;
-
-			return {
-				get show() {
-					return type !== "table";
-				},
-				get dot() {
-					return type === "view-tab";
-				}
-			}
-		}
+		option: (t) => get(t.alt.options, t.name, {})
 	}
 };
 </script>
@@ -56,6 +43,12 @@ export default {
 	margin-bottom: 0.5em;
 	font-size: 0.875em;
 	color: $blue4;
+	white-space: nowrap;
+
+	.field.modifier & {
+		margin-bottom: 0;
+		margin-right: 1em;
+	}
 
 	.dot {
 		display: block;

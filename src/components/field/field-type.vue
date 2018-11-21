@@ -1,15 +1,19 @@
 <template>
-	<component
-		:is="comp"
-		v-bind="[propsData, propsValue, {alt}]"
-		@fieldA="$emit('fieldA', $event)"
-	/>
+	<div class="fieldType">
+		<component
+			:is="comp"
+			v-bind="[propsData, propsValue, {alt}]"
+			@fieldA="$emit('fieldA', $event)"
+		/>
+	</div>
 </template>
 
 <script>
 import {get, mapKeys, mapValues} from "lodash";
+import {FormItem} from "element-ui";
 
 export default {
+	components: {FormItem},
 	props: {
 		id: {type: String, required: true},
 		alt: {type: Object, required: false},
@@ -31,6 +35,6 @@ export default {
 
 <style lang="scss" scoped>
 .fieldType {
-
+	width: 100%;
 }
 </style>

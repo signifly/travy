@@ -1,13 +1,11 @@
 <template>
 	<div class="modifiers">
-		<div class="fields">
-			<field
-				v-for="field in modifiers"
-				:key="field.name"
-				v-bind="[field, {alt: {data: queryData}}]"
-				@fieldA="fieldA"
-			/>
-		</div>
+		<field
+			v-for="field in modifiers"
+			:key="field.name"
+			v-bind="[field, {alt: {data: queryData, modifier: true}}]"
+			@fieldA="fieldA"
+		/>
 	</div>
 </template>
 
@@ -36,22 +34,10 @@ export default {
 
 <style lang="scss" scoped>
 .modifiers {
+	width: 100%;
+	max-width: 600px;
 	display: flex;
-	transition: cubic(opacity, 0.3s);
-
-	&.loading {
-		opacity: 0.2;
-	}
-
-	.item {
-		display: flex;
-		align-items: center;
-		margin-left: 2em;
-
-		.title {
-			margin-right: 1em;
-			font-size: em(14);
-		}
-	}
+	justify-content: space-between;
+	// transition: cubic(opacity, 0.3s);
 }
 </style>

@@ -1,15 +1,15 @@
 <template>
-	<div class="field" :style="{width: widthCalc}">
+	<div class="field" :class="{modifier: alt.modifier}" :style="{width: widthCalc}">
 
-		<div class="wrap">
-			<vlabel v-bind="{alt, name, label, tooltip}"/>
+		<div class="content">
+			<vlabel v-bind="{alt, name, label, tooltip}" v-if="rules.label"/>
 			<fieldType v-bind="[fieldType, {alt}]" @fieldA="$emit('fieldA', $event)"/>
 		</div>
 
 
 		<div class="error" v-if="error">{{error}}</div>
 
-		<div class="description" v-if="description">
+		<div class="description" v-if="description && rules.description">
 			<div class="title">Description:</div>
 			<div class="text">{{description}}</div>
 		</div>
@@ -36,10 +36,26 @@ export default {
 		alt: {type: Object, required: true}
 	},
 	computed: {
-		type: (t) => t.alt.type,
 		option: (t) => get(t.alt.options, t.name, {}),
 		error: (t) => get(t.alt.errors, t.name, [])[0],
-		widthCalc: (t) => t.width !== 100 ? `calc(${t.width}% - 1em)` : `${t.width}%`
+		
+		widthCalc() {
+			if (this.alt.modifier) {
+				return this.width === 100 ? `calc(50% - 1em)` : `calc(${this.width}% - 1em)`;
+			} else {
+				return this.width === 100 ? `${this.width}%` : `calc(${this.width}% - 1em)`;
+			}
+		},
+
+		rules() {
+			const type = this.alt.type;
+
+			return {
+				label: type !== "table",
+				dot: type === "view-tab",
+				description: type === "view-tab"
+			}
+		}
 	}
 };
 </script>
@@ -48,8 +64,17 @@ export default {
 .field {
 	margin: $fieldMargin 0;
 
-	.wrap {
+	&.modifier {
+		margin: 0;
 
+		&:only-child {
+			margin-left: auto;
+		}
+
+		.content {
+			display: flex;
+			align-items: center;
+		}
 	}
 
 	.error {
@@ -70,6 +95,7 @@ export default {
 			margin-right: 1em;
 			margin-top: -1px;
 		}
+
 		.text {
 			font-style: italic;
 			color: $blue4;
