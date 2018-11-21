@@ -1,7 +1,7 @@
 <template>
-	<div class="translated" v-if="translated">
+	<div class="translate" v-if="translated">
 		<Tooltip placement="right" effect="light" :disabled="!languages">
-			<div class="icon" :class="{active: languages}" v-html="globe" />
+			<div class="icon" :class="{active: languages}" v-html="require('@/assets/icons/globe.svg')" />
 
 			<div slot="content">
 				<div class="item" v-for="item in translated" :key="item.label">
@@ -22,11 +22,6 @@ export default {
 	props: {
 		translated: {type: Array, required: false}
 	},
-	data() {
-		return {
-			globe: require("@/assets/icons/globe.svg")
-		}
-	},
 	computed: {
 		languages: (t) => t.translated.length
 	},
@@ -43,7 +38,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.translated {
+.translate {
 	.icon {
 		display: flex;
 		align-items: center;
