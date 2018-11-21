@@ -41,8 +41,6 @@ export default {
 				// modifiers: this.modifierParams({definitions: true})
 			};
 
-			// const temp = "https://travy.glitch.me/view/defs";
-
 			const {data} = await this.$axios.get(this.requests.definitions, {params});
 			this.definitions = data;
 		},
