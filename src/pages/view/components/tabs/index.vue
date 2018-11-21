@@ -2,11 +2,8 @@
 	<div class="tabs">
 		<Tabs type="card" v-model="activeTab">
 			<TabPane v-for="tab in tabs" :label="tab.title" :name="tab.id" :key="tab.id" :lazy="true">
-
-				<tabLabel slot="label" v-bind="[tab, {tabsState}]"/>
-
-				<tabContent ref="tabContent" v-bind="[tab, {data}]" :key="tab.id" :state.sync="tabsState[tab.id]"/>
-
+				<tabLabel slot="label" v-bind="[tab, {tabState, options}]"/>
+				<tabContent ref="tabContent" v-bind="[tab, {data}]" :state.sync="tabState[tab.id]"/>
 			</TabPane>
 		</Tabs>
 	</div>
@@ -27,11 +24,11 @@ export default {
 	data() {
 		return {
 			activeTab: this.$route.params.tabId || this.tabs[0].id,
-			tabsState: this.tabs.reduce((obj, tab) => ({...obj, [tab.id]: {}}), {})
+			tabState: this.tabs.reduce((obj, tab) => ({...obj, [tab.id]: {}}), {})
 		}
 	},
 	computed: {
-		edit: (t) => Object.values(t.tabsState).some(val => val.edit)
+		edit: (t) => Object.values(t.tabState).some(val => val.edit)
 	},
 	methods: {
 		async save() {

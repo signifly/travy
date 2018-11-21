@@ -1,7 +1,12 @@
 <template>
 	<div class="tab">
 		<div class="fields" v-if="tab.data">
-			<field v-for="field in fields" v-bind="[field, {alt: tab}]" :key="field.name" @fieldA="fieldA"/>
+			<field
+				v-for="field in fields"
+				v-bind="[field, {alt: {data: tab.data, options: tab.options, type: 'view-tab'}}]"
+				:key="field.name"
+				@fieldA="fieldA"
+			/>
 		</div>
 	</div>
 </template>

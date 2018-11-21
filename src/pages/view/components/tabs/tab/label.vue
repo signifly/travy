@@ -17,11 +17,11 @@ export default {
 	props: {
 		id: {type: String, required: true},
 		title: {type: String, required: true},
-		tabsState: {type: Object, required: true}
-		// options: {type: Object, required: false}
+		options: {type: Object, required: false},
+		tabState: {type: Object, required: true}
 	},
 	computed: {
-		editing: (t) => Object.keys(t.tabsState[t.id]).length
+		editing: (t) => Object.keys(t.tabState[t.id]).length
 		// outdated: (t) => t.tab.sections.some(x => x.fields.some(x => get(t.options, [x.name, "outdated"])))
 	}
 };

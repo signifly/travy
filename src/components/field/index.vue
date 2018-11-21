@@ -38,7 +38,7 @@ export default {
 	computed: {
 		option: (t) => get(t.alt.options, t.name, {}),
 		error: (t) => get(t.alt.errors, t.name, [])[0],
-		
+
 		widthCalc() {
 			if (this.alt.modifier) {
 				return this.width === 100 ? `calc(50% - 1em)` : `calc(${this.width}% - 1em)`;
@@ -52,7 +52,6 @@ export default {
 
 			return {
 				label: type !== "table",
-				dot: type === "view-tab",
 				description: type === "view-tab"
 			}
 		}

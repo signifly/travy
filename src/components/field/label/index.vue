@@ -4,9 +4,12 @@
 
 		<translate v-bind="option"/>
 
-		<!-- <transition name="el-fade-in">
-			<div class="dot outdated" v-if="rule.dot && !disabled && outdated"/>
-		</transition> -->
+		<template v-if="dots">
+			<transition name="el-fade-in">
+				<div class="dot outdated" v-if="option.outdated"/>
+			</transition>
+		</template>
+
 
 		<div class="tooltip" v-if="tooltip">
 			<Tooltip :content="tooltip" placement="top">
@@ -30,7 +33,8 @@ export default {
 		tooltip: {type: String, required: false}
 	},
 	computed: {
-		option: (t) => get(t.alt.options, t.name, {})
+		option: (t) => get(t.alt.options, t.name, {}),
+		dots: (t) => t.alt.type === "view-tab"
 	}
 };
 </script>
