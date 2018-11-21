@@ -1,27 +1,25 @@
 <template>
-	<component v-if="active" :is="comp" v-bind="{loading, title, getData, error}" />
+	<component v-if="active" :is="comp" v-bind="{loading, title}"/>
 </template>
 
 <script>
-import vSave from "./save.vue";
-import vBatch from "./batch.vue";
+import save from "./save.vue";
+import batch from "./batch.vue";
 
 export default {
-	components: {vSave, vBatch},
+	components: {save, batch},
 	props: {
 		data: {type: Object, required: true},
-		loading: {type: Boolean, required: true},
-		editsU: {type: Number, required: true},
-		getData: {type: Function, required: true},
-		error: {type: Object, required: true}
+		edit: {type: Boolean, required: true},
+		loading: {type: Boolean, required: true}
 	},
 	computed: {
 		title: (t) => `#${t.data.id}`,
 		sequential: (t) => t.$route.query.sequential,
-		comp: (t) => t.sequential ? "vBatch" : "vSave",
+		comp: (t) => t.sequential ? "batch" : "save",
 		active() {
-			if (this.comp === "vBatch") return true;
-			if (this.comp === "vSave") return this.editsU;
+			if (this.comp === "batch") return true;
+			if (this.comp === "save") return this.edit;
 		}
 	},
 	methods: {

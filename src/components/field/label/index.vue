@@ -39,7 +39,6 @@ export default {
 .label {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
 	margin-bottom: 0.5em;
 	font-size: 0.875em;
 	color: $blue4;
@@ -48,6 +47,10 @@ export default {
 	.field.modifier & {
 		margin-bottom: 0;
 		margin-right: 1em;
+	}
+
+	> div {
+		margin-left: 0.5em;
 	}
 
 	.dot {

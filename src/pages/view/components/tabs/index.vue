@@ -1,19 +1,12 @@
 <template>
 	<div class="tabs">
-		<!-- <vTabsGen v-bind="{tabs, tabId}" @tabClick="tabClick">
-			<template slot="label" slot-scope="tab">
-				<vLabel v-bind="{tab, options, edits, dataU, nodatas}"></vLabel>
-			</template>
-
-			<template slot="content" slot-scope="tab">
-				<vTab :key="dataU" v-bind="{tab, data, options, errors}" @fieldA="$emit('fieldA', $event)" @nodata="nodata" />
-			</template>
-		</vTabsGen> -->
-
-
 		<Tabs type="card" v-model="activeTab">
-			<TabPane v-for="tab in tabs" :label="tab.title" :name="tab.id" :key="tab.id">
-				<tab v-bind="[tab, {data}]" :key="tab.id" v-if="activeTab === tab.id"/>
+			<TabPane v-for="tab in tabs" :label="tab.title" :name="tab.id" :key="tab.id" :lazy="true">
+
+				<tabLabel slot="label" v-bind="[tab, {tabsState}]"/>
+
+				<tabContent ref="tabContent" v-bind="[tab, {data}]" :key="tab.id" :state.sync="tabsState[tab.id]"/>
+
 			</TabPane>
 		</Tabs>
 	</div>
@@ -21,25 +14,40 @@
 
 <script>
 import {Tabs, TabPane} from "element-ui";
-import tab from "./tab.vue";
-
-// import vTabsGen from "@/components/tabs.vue";
-// import vLabel from "./label.vue";
-// import vTab from "./tab.vue";
+import tabContent from "./tab/content.vue";
+import tabLabel from "./tab/label.vue";
 
 export default {
-	components: {Tabs, TabPane, tab},
+	components: {Tabs, TabPane, tabContent, tabLabel},
 	props: {
 		tabs: {type: Array, required: true},
 		data: {type: Object, required: true},
-		dataU: {type: Number, required: true},
-		edits: {type: Object, required: true},
-		errors: {type: Object, required: false},
 		options: {type: Object, required: false}
 	},
 	data() {
 		return {
-			activeTab: this.$route.params.tabId || this.tabs[0].id
+			activeTab: this.$route.params.tabId || this.tabs[0].id,
+			tabsState: this.tabs.reduce((obj, tab) => ({...obj, [tab.id]: {}}), {})
+		}
+	},
+	computed: {
+		edit: (t) => Object.values(t.tabsState).some(val => val.edit)
+	},
+	methods: {
+		async save() {
+			const tabs = this.$refs.tabContent;
+
+			for (const tab of tabs) {
+				await tab.save();
+			}
+		}
+	},
+	watch: {
+		activeTab(tabId) {
+			this.$router.replace({...this.$route, params: {tabId}});
+		},
+		edit(edit) {
+			this.$emit("edit", edit);
 		}
 	}
 };
@@ -53,6 +61,7 @@ export default {
 			margin: 0;
 
 			.el-tabs__item {
+				user-select: none;
 				color: $blue4;
 				font-weight: 400;
 				background-color: $white1;

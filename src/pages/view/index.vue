@@ -1,7 +1,7 @@
 <template>
 	<div class="view" v-if="table">
 		<vBreadcrumb :items="breadcrumb"/>
-		<page v-bind="[definitions, {options, data}]" :key="viewKey"/>
+		<page v-bind="[definitions, {options, data}]" :key="viewKey" v-if="data"/>
 	</div>
 </template>
 

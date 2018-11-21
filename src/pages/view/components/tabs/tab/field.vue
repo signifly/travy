@@ -18,22 +18,13 @@ export default {
 		options: {type: Object, required: false},
 		errors: {type: Object, required: false}
 	},
-	data() {
-		return {
-			mounted: false
-		}
-	},
 	computed: {
-		name: (t) => t.field.name,
-		nodata: (t) => t.mounted ? t.$refs.field.nodata : false
+		name: (t) => t.field.name
 	},
 	methods: {
 		fieldA(obj) {
 			this.$emit("fieldA", obj);
 		}
-	},
-	mounted() {
-		this.mounted = true;
 	}
 };
 </script>

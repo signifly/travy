@@ -2,7 +2,7 @@
 	<vPanel>
 		<div class="text">There are unsaved changes</div>
 		<div class="actions">
-			<div class="error" v-if="error.message">{{error.message}}</div>
+			<!-- <div class="error" v-if="error.message">{{error.message}}</div> -->
 
 			<Button
 			size="medium"
@@ -26,8 +26,7 @@ import vPanel from "@/components/panel.vue";
 export default {
 	components: {Button, vPanel},
 	props: {
-		loading: {type: Boolean, required: true},
-		error: {type: Object, required: true}
+		loading: {type: Boolean, required: true}
 	},
 	methods: {
 		save() {

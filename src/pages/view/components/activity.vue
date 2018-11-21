@@ -18,8 +18,8 @@
 				small
 				background
 				layout="prev, pager, next"
-				:total="pagination.total"
-				:page-size="pagination.per_page"
+				:total="meta.total"
+				:page-size="meta.per_page"
 				:current-page.sync="page"
 				@current-change="getItems"
 			/>
@@ -29,26 +29,27 @@
 
 <script>
 import {get} from "lodash";
-import {date} from "@/modules/utils";
+import {date, endpointUrl} from "@/modules/utils";
 import {Table, TableColumn, Pagination} from "element-ui";
 
 export default {
 	components: {Table, TableColumn, Pagination},
 	props: {
-		endpointUrl: {type: String, required: true},
+		endpoint: {type: Object, required: true},
 		data: {type: Object, required: true}
 	},
 	data() {
 		return {
 			items: [],
 			page: 1,
-			pageCount: 8,
-			pagination: null
+			meta: null,
+			pageCount: 8
 		}
 	},
 	computed: {
 		tableId: (t) => t.$route.params.tableId,
-		paginationActive: (t) => t.pagination && t.pagination.last_page > 1,
+		paginationActive: (t) => t.meta && t.meta.last_page > 1,
+		endpointUrl: (t) => endpointUrl({data: t.data, url: t.endpoint.url}),
 
 		itemsMap: (t) => t.items.map(x => ({
 			id: `#${x.id}`,
@@ -61,9 +62,9 @@ export default {
 	},
 	methods: {
 		async getItems(page = 1) {
-			const {data} = await this.$axios.get(`${this.endpointUrl}/activity`, {params: {count: this.pageCount, page}});
-			this.pagination = data.meta;
-			this.items = data.data;
+			const {data: {data, meta}} = await this.$axios.get(`${this.endpointUrl}/activity`, {params: {count: this.pageCount, page}});
+			this.meta = meta;
+			this.items = data;
 		}
 	},
 	created() {
