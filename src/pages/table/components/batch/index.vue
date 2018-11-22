@@ -44,7 +44,7 @@ export default {
 		selectedItems: {type: Array, required: true},
 		selectedOptions: {type: Object, required: true},
 		sequential: {type: Object, required: false},
-		actions: {type: Array, required: true},
+		actions: {type: Array, required: false},
 		bulk: {type: Boolean, required: false},
 	},
 	data() {

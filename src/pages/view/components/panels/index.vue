@@ -1,5 +1,5 @@
 <template>
-	<component v-if="active" :is="comp" v-bind="{loading, title}"/>
+	<component v-if="comp" :is="comp" v-bind="{loading, title}" @refreshData="refreshData" @save="save"/>
 </template>
 
 <script>
@@ -14,17 +14,19 @@ export default {
 		loading: {type: Boolean, required: true}
 	},
 	computed: {
-		title: (t) => `#${t.data.id}`,
 		sequential: (t) => t.$route.query.sequential,
-		comp: (t) => t.sequential ? "batch" : "save",
-		active() {
-			if (this.comp === "batch") return true;
-			if (this.comp === "save") return this.edit;
+		title: (t) => `#${t.data.id}`,
+		comp() {
+			if (this.sequential) return batch;
+			if (this.edit) return save;
 		}
 	},
 	methods: {
-		save() {
-			this.$parent.$emit("save");
+		save(obj) {
+			this.$emit("save", obj);
+		},
+		refreshData(obj) {
+			this.$emit("refreshData", obj);
 		}
 	}
 };
