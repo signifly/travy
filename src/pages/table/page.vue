@@ -49,8 +49,8 @@ export default {
 	data() {
 		return {
 			data: null,
-			loading: false,
 			meta: null,
+			loading: false,
 			definitions: null,
 			selectedItems: []
 		}
@@ -76,6 +76,7 @@ export default {
 		},
 
 		async refresh({done} = {}) {
+			this.unselect();
 			await this.getDefinitions();
 			await this.getData();
 			if (done) await done()
@@ -84,11 +85,11 @@ export default {
 		async fieldA({action, data, item, done}) {
 			const actions = {
 				refresh: async () => {
-					await this.getData();
+					await this.refresh();
 				},
 
 				refreshData: async () => {
-
+					await this.getData();
 				},
 
 				update: async ({item, data}) => {
@@ -115,13 +116,6 @@ export default {
 			await done();
 		},
 
-		async refreshAll({done}) {
-			this.unselect();
-			await this.getDefinitions();
-			await this.getData();
-			if (done) await done();
-		},
-
 		async getDefinitions() {
 			const params = {modifiers: this.query.modifiers};
 
@@ -132,9 +126,6 @@ export default {
 		async getData({loading} = {loading: true}) {
 			this.loading = loading;
 
-			const sort = this.query.sort || this.defaults.sort;
-			const _this = this;
-
 			const params = {
 				...this.endpoint.params,
 				page: this.query.page,
@@ -142,6 +133,7 @@ export default {
 				filter: this.query.filters,
 				modifiers: this.query.modifiers,
 				sort: (() => {
+					const sort = this.query.sort || this.defaults.sort;
 					const order = sort.order === "descending" ? "-" : "";
 					return `${order}${sort.prop}`;
 				})()

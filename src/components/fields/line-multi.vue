@@ -115,7 +115,7 @@ export default {
 		},
 
 		refresh() {
-			this.$emit("fieldA", {action: "refresh"});
+			this.$emit("fieldA", {action: "refreshData"});
 		},
 
 		update({data, done, i}) {
