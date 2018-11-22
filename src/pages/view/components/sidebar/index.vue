@@ -1,23 +1,24 @@
 <template>
 	<div class="sidebar">
 		<div class="sections">
-			<vSection v-for="section in sections" :key="section.id" v-bind="[section, {data}]" @fieldA="fieldA" />
+			<group
+				v-for="group in sidebar"
+				:key="group.id"
+				v-bind="[group, {data}]"
+				@fieldA="fieldA"
+			/>
 		</div>
 	</div>
 </template>
 
 <script>
-import vField from "@/components/field";
-import vSection from "./section.vue";
+import group from "./group";
 
 export default {
-	components: {vField, vSection},
+	components: {group},
 	props: {
-		sidebar: {type: Object, required: true},
+		sidebar: {type: Array, required: true},
 		data: {type: Object, required: true}
-	},
-	computed: {
-		sections: (t) => t.sidebar ? t.sidebar.sections : []
 	},
 	methods: {
 		fieldA(obj) {

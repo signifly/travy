@@ -16,7 +16,7 @@
 					<tabs ref="tabs" v-bind="{tabs, data, options}" @edit="edit = $event"/>
 				</Col>
 				<Col class="right" :span="8">
-					<vSidebar v-if="sidebar" v-bind="{sidebar, data}"/>
+					<sidebar v-if="sidebar" v-bind="{sidebar, data}"/>
 				</Col>
 			</Row>
 
@@ -44,6 +44,9 @@ import modifiers from "@/components/modifiers";
 
 export default {
 	components: {Col, Row, tabs, panels, vHeader, sidebar, actions, activity, modifiers},
+	props: {
+		requests: {type: Object, required: true}
+	},
 	data() {
 		return {
 			definitions: null,

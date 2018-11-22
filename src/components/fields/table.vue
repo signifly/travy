@@ -28,7 +28,7 @@ export default {
 						name: "title",
 						label: "Title",
 						fieldType: {
-							id: "vText",
+							id: "text",
 							props: {
 								text: "title"
 							}
