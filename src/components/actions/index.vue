@@ -29,10 +29,10 @@ export default {
 		hide: {type: Object, required: false} // {key, operator, value}
 	},
 	computed: {
-		dataComb: (t) => ({...t.data, ...t.props.payload.data}), // parent data and action data combined
+		dataComb: (t) => ({...t.data, ...get(t.props, "payload.data")}), // parent data and action data combined
 
 		payload: ({dataComb, props}) => ({
-			type: props.payload.type,
+			type: get(props, "payload.type"),
 			data: dataComb
 		}),
 
