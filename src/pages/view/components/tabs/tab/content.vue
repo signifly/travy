@@ -76,7 +76,7 @@ export default {
 			try {
 				const {data: {data, options}} = await this.$axios.put(this.endpointUrl, {
 					modifier: this.modifiers,
-					data: {...this.tab.payload}
+					data: this.tab.payload
 				}, {customErr: true});
 
 				this.$emit("update:state", {});

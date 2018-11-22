@@ -4,10 +4,10 @@
 			<div class="icon" :class="{active: languages}" v-html="require('@/assets/icons/globe.svg')" />
 
 			<div slot="content">
-				<div class="item" v-for="item in translated" :key="item.label">
+				<div class="item" v-for="(item, i) in translated" :key="i">
 					<div class="icon"><img :src="icon(item.icon)"></div>
 					{{item.label}}
-					<div class="outdated" v-if="item.outdated" />
+					<div class="outdated" v-if="item.outdated"/>
 				</div>
 			</div>
 		</Tooltip>
@@ -67,7 +67,7 @@ export default {
 .item {
 	display: flex;
 	align-items: center;
-	margin-bottom: 0.2em;
+	margin-bottom: 0.25em;
 
 	&:last-child {
 		margin-bottom: 0;

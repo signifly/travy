@@ -32,7 +32,7 @@ export default {
 <style lang="scss" scoped>
 .header {
 	display: flex;
-	margin: 1em 0 2em;
+	margin-bottom: 2em;
 
 	.image {
 		$s: 140px;

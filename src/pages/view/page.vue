@@ -118,6 +118,8 @@ export default {
 
 <style lang="scss" scoped>
 .view-page {
+	margin-top: 2em;
+
 	&-enter-active, &-leave-active {
 		transition: cubic(opacity, 0.3s);
 		transition-delay: 0.1s;
