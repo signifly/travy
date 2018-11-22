@@ -1,5 +1,5 @@
 <template>
-	<transition name="view-page">
+	<transition name="view-page" v-if="data">
 		<div class="view-page">
 			<Row class="top" :gutter="20">
 				<Col class="left" :span="16">
@@ -44,37 +44,68 @@ import modifiers from "@/components/modifiers";
 
 export default {
 	components: {Col, Row, tabs, panels, vHeader, sidebar, actions, activity, modifiers},
-	props: {
-		tabs: {type: Array, required: false},
-		data: {type: Object, required: false},
-		header: {type: Object, required: false},
-		actions: {type: Array, required: false},
-		sidebar: {type: Array, required: false},
-		activity: {type: Object, required: false},
-		options: {type: Object, required: false},
-		endpoint: {type: Object, required: false},
-		modifiers: {type: Array, required: false}
-	},
 	data() {
 		return {
+			definitions: null,
+			options: null,
+			data: null,
 			edit: false,
 			saving: false
 		}
 	},
 	computed: {
-		query: (t) => t.$route.query
+		query: (t) => t.$route.query,
+		tabs: (t) => t.definitions.tabs,
+		header: (t) => t.definitions.header,
+		actions: (t) => t.definitions.actions,
+		sidebar: (t) => t.definitions.sidebar,
+		activity: (t) => t.definitions.activity,
+		endpoint: (t) => t.definitions.endpoint,
+		modifiers: (t) => t.definitions.modifiers
 	},
 	methods: {
-		refresh() {
-			console.log("ref");
-			this.$emit("refresh");
+		async refresh({done} = {}) {
+			await this.getDefinitions();
+			await this.getData();
+			if (done) await done();
 		},
 
 		async save() {
 			this.saving = true;
 			await this.$refs.tabs.save();
 			this.saving = false;
+		},
+
+		async getDefinitions() {
+			const params = {
+				// modifiers: this.modifierParams({definitions: true})
+			};
+
+			const {data} = await this.$axios.get(this.requests.definitions, {params});
+			this.definitions = data;
+		},
+
+		async getData() {
+			const params = {
+				// modifiers: this.modifierParams()
+			};
+
+			try {
+				const {data: {data, options}} = await this.$axios.get(this.requests.data, {params, customErr: true});
+				this.options = options;
+				this.data = data;
+
+			} catch(err) {
+				if (err.status === 404) {
+					this.$router.replace({name: "error", params: {status: 404}});
+				} else {
+					throw err;
+				}
+			}
 		}
+	},
+	created() {
+		this.refresh();
 	}
 };
 </script>

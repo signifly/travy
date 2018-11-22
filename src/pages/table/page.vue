@@ -62,7 +62,6 @@ export default {
 		actions: (t) => t.definitions.actions,
 		filters: (t) => t.definitions.filters,
 		columns: (t) => t.definitions.columns,
-		includes: (t) => t.definitions.includes,
 		defaults: (t) => t.definitions.defaults,
 		endpoint: (t) => t.definitions.endpoint,
 		modifiers: (t) => t.definitions.modifiers
@@ -137,25 +136,15 @@ export default {
 			const _this = this;
 
 			const params = {
-				get sort() {
-					const order = sort.order === "descending" ? "-" : "";
-					return `${order}${sort.prop}`;
-				},
-				get modifiers() {
-					if (_this.query.modifiers) {
-						return _this.query.modifiers;
-					}
-
-					if (_this.modifiers) {
-						return _this.modifiers.reduce((obj, item) => {
-							return {...obj, [item.key]: item.value};
-						}, {});
-					}
-				},
+				...this.endpoint.params,
 				page: this.query.page,
 				count: this.query.pagesize,
 				filter: this.query.filters,
-				include: this.includes ? this.includes.join(",") : undefined
+				modifiers: this.query.modifiers,
+				sort: (() => {
+					const order = sort.order === "descending" ? "-" : "";
+					return `${order}${sort.prop}`;
+				})()
 			};
 
 			const {data: {data, meta}} = await this.$axios.get(this.endpoint.url, {params});

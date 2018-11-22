@@ -21,7 +21,7 @@ import modifiers from "@/components/modifiers";
 export default {
 	components: {modifiers},
 	props: {
-		modifiers: {type: Array, required: false},
+		modifiers: {type: Object, required: false},
 		loading: {type: Boolean, required: true},
 		title: {type: String, required: true},
 		meta: {type: Object, required: false}

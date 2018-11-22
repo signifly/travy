@@ -1,7 +1,7 @@
 <template>
 	<div class="modifiers">
 		<field
-			v-for="field in modifiers"
+			v-for="field in fields"
 			:key="field.name"
 			v-bind="[field, {alt: {data: dataComb, modifier: true}}]"
 			@fieldA="fieldA"
