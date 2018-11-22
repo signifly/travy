@@ -1,6 +1,6 @@
 <template>
 	<div class="tabs">
-		<Tabs type="card" v-model="activeTab">
+		<Tabs type="card" v-model="activeTab" :key="modifiersKey">
 			<TabPane v-for="tab in tabs" :label="tab.title" :name="tab.id" :key="tab.id" :lazy="true">
 				<tabLabel slot="label" v-bind="[tab, {tabState, options}]"/>
 				<tabContent ref="tabContent" v-bind="[tab, {data}]" :state.sync="tabState[tab.id]"/>
@@ -28,7 +28,8 @@ export default {
 		}
 	},
 	computed: {
-		edit: (t) => Object.values(t.tabState).some(val => val.edit)
+		edit: (t) => Object.values(t.tabState).some(val => val.edit),
+		modifiersKey: (t) => Object.values(t.$route.query.modifiers || {}).join(",")
 	},
 	methods: {
 		async save() {

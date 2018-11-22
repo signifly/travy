@@ -1,5 +1,5 @@
 <template>
-	<div class="field" :class="{modifier: alt.modifier}" :style="{width: widthCalc}">
+	<div class="field" :class="{modifiers: alt.modifiers}" :style="{width: widthCalc}">
 
 		<div class="content">
 			<vlabel v-bind="{alt, name, label, tooltip}" v-if="rules.label"/>
@@ -40,7 +40,7 @@ export default {
 		error: (t) => get(t.alt.errors, t.name, [])[0],
 
 		widthCalc() {
-			if (this.alt.modifier) {
+			if (this.alt.modifiers) {
 				return this.width === 100 ? `calc(50% - 1em)` : `calc(${this.width}% - 1em)`;
 			} else {
 				return this.width === 100 ? `${this.width}%` : `calc(${this.width}% - 1em)`;
@@ -63,7 +63,7 @@ export default {
 .field {
 	margin: $fieldMargin 0;
 
-	&.modifier {
+	&.modifiers {
 		margin: 0;
 
 		&:only-child {

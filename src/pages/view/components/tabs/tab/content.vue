@@ -41,6 +41,7 @@ export default {
 	},
 	computed: {
 		endpointUrl: (t) => endpointUrl({data: t.data, url: t.endpoint.url}),
+		modifiers: (t) => t.$route.query.modifiers,
 
 		actions: (t) => ({
 			refresh: async ({done}) => {
@@ -61,7 +62,10 @@ export default {
 		},
 
 		async getData() {
-			const {data: {data, options}} = await this.$axios.get(this.endpointUrl, {params: this.endpoint.params});
+			const {data: {data, options}} = await this.$axios.get(this.endpointUrl, {
+				params: {...this.endpoint.params, modifier: this.modifiers}
+			});
+
 			this.tab.options = options;
 			this.tab.data = data;
 		},
@@ -70,7 +74,11 @@ export default {
 			this.saving = true;
 
 			try {
-				const {data: {data, options}} = await this.$axios.put(this.endpointUrl, {data: {...this.tab.payload}}, {customErr: true});
+				const {data: {data, options}} = await this.$axios.put(this.endpointUrl, {
+					modifier: this.modifiers,
+					data: {...this.tab.payload}
+				}, {customErr: true});
+
 				this.$emit("update:state", {});
 				this.tab.options = options;
 				this.tab.data = data;

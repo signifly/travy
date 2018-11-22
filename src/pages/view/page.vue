@@ -1,6 +1,7 @@
 <template>
 	<transition name="view-page" v-if="data">
 		<div class="view-page">
+
 			<Row class="top" :gutter="20">
 				<Col class="left" :span="16">
 					<vHeader v-bind="{data, header}"/>
@@ -86,18 +87,14 @@ export default {
 		},
 
 		async getDefinitions() {
-			const params = {
-				// modifiers: this.modifierParams({definitions: true})
-			};
+			const params = {modifier: this.query.modifiers};
 
 			const {data} = await this.$axios.get(this.requests.definitions, {params});
 			this.definitions = data;
 		},
 
 		async getData() {
-			const params = {
-				// modifiers: this.modifierParams()
-			};
+			const params = {modifier: this.query.modifiers};
 
 			try {
 				const {data: {data, options}} = await this.$axios.get(this.requests.data, {params, customErr: true});

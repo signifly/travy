@@ -48,7 +48,7 @@ export default {
 	color: $blue4;
 	white-space: nowrap;
 
-	.field.modifier & {
+	.field.modifiers & {
 		margin-bottom: 0;
 		margin-right: 1em;
 	}

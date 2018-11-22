@@ -3,7 +3,7 @@
 		<field
 			v-for="field in fields"
 			:key="field.name"
-			v-bind="[field, {alt: {data: dataComb, modifier: true}}]"
+			v-bind="[field, {alt: {data: dataComb, modifiers: true}}]"
 			@fieldA="fieldA"
 		/>
 	</div>
