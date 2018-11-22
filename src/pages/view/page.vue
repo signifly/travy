@@ -6,7 +6,7 @@
 					<vHeader v-bind="{data, header}"/>
 				</Col>
 				<Col class="right" :span="8">
-					<modifiers v-if="modifiers" v-bind="{modifiers}" @refreshAll="refreshAll"/>
+					<modifiers v-if="modifiers" v-bind="modifiers" @refresh="refresh"/>
 					<actions v-if="actions" v-bind="{actions, data}" @submit="getData"/>
 				</Col>
 			</Row>
@@ -33,7 +33,6 @@
 
 <script>
 import {Row, Col} from "element-ui";
-import {endpointUrl} from "@/modules/utils";
 
 import tabs from "./components/tabs";
 import panels from "./components/panels";
@@ -66,10 +65,9 @@ export default {
 		query: (t) => t.$route.query
 	},
 	methods: {
-		async refreshAll({done}) {
-			// await this.getDefinitions();
-			// await this.getData();
-			if (done) await done();
+		refresh() {
+			console.log("ref");
+			this.$emit("refresh");
 		},
 
 		async save() {
@@ -91,20 +89,5 @@ export default {
 	&-enter, &-leave-to {
 		opacity: 0;
 	}
-
-	// .top {
-	// 	.right {
-	// 		/deep/ {
-	// 			.modifiers {
-	// 				justify-content: flex-end;
-	// 			}
-	// 			.actions {
-	// 				display: flex;
-	// 				justify-content: flex-end;
-	// 				margin: 1.5em 0;
-	// 			}
-	// 		}
-	// 	}
-	// }
 }
 </style>

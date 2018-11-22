@@ -2,24 +2,13 @@
 	<div class="table-main" v-if="definitions">
 
 		<div class="header">
-			<vFilters v-bind="[filters, {search}]" @filter="filter" />
-			<vActions v-if="actions" v-bind="{actions}" @fieldA="fieldA" />
+			<filters v-bind="[filters, {search}]" @filter="filter"/>
+			<actions v-if="actions" v-bind="{actions}" @fieldA="fieldA"/>
 		</div>
 
 		<div class="content">
 			<box>
-				<div class="top">
-					<div class="info">
-						<div class="title">{{title}}</div>
-						<div class="total" v-if="pagination">{{pagination.total}}</div>
-						<transition name="loading">
-							<div class="loading" v-if="loading">
-								<i class="el-icon-loading"/>
-							</div>
-						</transition>
-					</div>
-					<vModifiers v-if="modifiers" v-bind="{modifiers}" @refreshAll="refreshAll" />
-				</div>
+				<top v-bind="{modifiers, loading, title, meta}" @refresh="refresh"/>
 
 				<vTable
 					ref="vTable"
@@ -29,8 +18,8 @@
 					@fieldA="fieldA"
 				/>
 
-				<vPagination v-if="pagination" v-bind="[pagination, {loading}]" @getData="getData" />
-				<vBatch v-if="selectedItems.length > 0 && batch" v-bind="[batch, {selectedItems}]" @unselect="unselect" @fieldA="fieldA"/>
+				<pagination v-if="meta" v-bind="[meta, {loading}]" @getData="getData"/>
+				<batch v-if="selectedItems.length > 0 && batch" v-bind="[batch, {selectedItems}]" @unselect="unselect" @fieldA="fieldA"/>
 			</box>
 		</div>
 	</div>
@@ -41,14 +30,18 @@ import Semaphore from "semaphore-async-await";
 import {endpointUrl} from "@/modules/utils";
 import {omit} from "lodash";
 
-import vModifiers from "@/components/modifiers.vue";
-import * as components from "./components";
 import box from "@/components/box.vue";
+import pagination from "./components/pagination"
+import filters from "./components/filters";
+import actions from "./components/actions";
+import vTable from "./components/table";
+import batch from "./components/batch";
+import top from "./components/top";
 
 const s = new Semaphore(1);
 
 export default {
-	components: {...components, vModifiers, box},
+	components: {box, vTable, filters, actions, pagination, batch, top},
 	props: {
 		tableId: {type: String, required: true},
 		title: {type: String, required: false}
@@ -57,22 +50,22 @@ export default {
 		return {
 			data: null,
 			loading: false,
-			pagination: null,
+			meta: null,
 			definitions: null,
 			selectedItems: []
 		}
 	},
 	computed: {
 		query: (t) => t.$route.query,
-		columns: (t) => t.definitions.columns, // required
-		defaults: (t) => t.definitions.defaults, // required
-		endpoint: (t) => t.definitions.endpoint, // required
-		actions: (t) => t.definitions.actions,
 		batch: (t) => t.definitions.batch,
-		modifiers: (t) => t.definitions.modifiers,
-		filters: (t) => t.definitions.filters,
 		search: (t) => t.definitions.search,
-		includes: (t) => t.definitions.includes
+		actions: (t) => t.definitions.actions,
+		filters: (t) => t.definitions.filters,
+		columns: (t) => t.definitions.columns,
+		includes: (t) => t.definitions.includes,
+		defaults: (t) => t.definitions.defaults,
+		endpoint: (t) => t.definitions.endpoint,
+		modifiers: (t) => t.definitions.modifiers
 	},
 	methods: {
 		select(items) {
@@ -83,10 +76,20 @@ export default {
 			this.$refs.vTable.unselect();
 		},
 
+		async refresh({done} = {}) {
+			await this.getDefinitions();
+			await this.getData();
+			if (done) await done()
+		},
+
 		async fieldA({action, data, item, done}) {
 			const actions = {
 				refresh: async () => {
 					await this.getData();
+				},
+
+				refreshData: async () => {
+
 				},
 
 				update: async ({item, data}) => {
@@ -121,9 +124,7 @@ export default {
 		},
 
 		async getDefinitions() {
-			const params = {
-				modifiers: this.query.modifiers
-			};
+			const params = {modifiers: this.query.modifiers};
 
 			const {data} = await this.$axios.get(`definitions/table/${this.tableId}`, {params});
 			this.definitions = data;
@@ -159,7 +160,7 @@ export default {
 
 			const {data: {data, meta}} = await this.$axios.get(this.endpoint.url, {params});
 			this.data = data;
-			this.pagination = meta;
+			this.meta = meta;
 
 			this.loading = false;
 		}
@@ -178,39 +179,5 @@ export default {
 		align-items: center;
 		justify-content: space-between;
 	}
-	.content {
-		.top {
-			padding: 1.5em 1.5em;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-
-			.info {
-				width: 100%;
-				display: flex;
-				align-items: center;
-
-				.total {
-					font-size: em(12);
-					margin-left: 0.75em;
-					color: $blue3;
-				}
-
-				.loading {
-					margin-left: auto;
-					font-size: em(16);
-					color: $blue5;
-
-					&-enter-active, &-leave-active {
-						transition: cubic(opacity, 0.1s);
-					}
-					&-enter, &-leave-to {
-						opacity: 0;
-					}
-				}
-			}
-		}
-	}
-
 }
 </style>

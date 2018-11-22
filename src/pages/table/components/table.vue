@@ -14,7 +14,7 @@
 			<TableColumn type="selection" :reserve-selection="true" v-if="batchActive"/>
 
 			<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name">
-				<vField slot-scope="scope" v-bind="{scope, column}" @fieldA="$emit('fieldA', $event)"/>
+				<field slot-scope="scope" v-bind="{scope, column}" @fieldA="$emit('fieldA', $event)"/>
 			</TableColumn>
 		</Table>
 	</div>
@@ -22,10 +22,10 @@
 
 <script>
 import {Table, TableColumn} from "element-ui";
-import {vField} from "./index.js";
+import field from "./field";
 
 export default {
-	components: {Table, TableColumn, vField},
+	components: {Table, TableColumn, field},
 	props: {
 		loading: {type: Boolean, required: false},
 		data: {type: Array, required: false},

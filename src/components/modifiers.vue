@@ -3,7 +3,7 @@
 		<field
 			v-for="field in modifiers"
 			:key="field.name"
-			v-bind="[field, {alt: {data: queryData, modifier: true}}]"
+			v-bind="[field, {alt: {data: dataComb, modifier: true}}]"
 			@fieldA="fieldA"
 		/>
 	</div>
@@ -15,11 +15,13 @@ import field from "./field";
 export default {
 	components: {field},
 	props: {
-		modifiers: {type: Array, required: true}
+		data: {type: Object, required: true},
+		fields: {type: Array, required: true}
 	},
 	computed: {
 		query: (t) => t.$route.query,
-		queryData: (t) => t.query.modifiers
+		queryData: (t) => t.query.modifiers,
+		dataComb: (t) => ({...t.data, ...t.queryData})
 	},
 	methods: {
 		fieldA({data}) {
@@ -27,6 +29,7 @@ export default {
 		},
 		update(modifiers) {
 			this.$router.replace({query: {...this.query, modifiers}});
+			this.$emit("refresh");
 		}
 	}
 };

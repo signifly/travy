@@ -1,7 +1,7 @@
 <template>
 	<div class="view" v-if="table">
 		<vBreadcrumb :items="breadcrumb"/>
-		<page v-bind="[definitions, {options, data}]" :key="viewKey" v-if="data"/>
+		<page v-bind="[definitions, {options, data}]" :key="viewKey" v-if="data" @refresh="refresh"/>
 	</div>
 </template>
 
@@ -36,6 +36,12 @@ export default {
 		]
 	},
 	methods: {
+		async refresh({done}) {
+			await this.getDefinitions();
+			await this.getData();
+			if (done) await done();
+		},
+
 		async getDefinitions() {
 			const params = {
 				// modifiers: this.modifierParams({definitions: true})
