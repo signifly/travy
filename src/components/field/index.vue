@@ -97,14 +97,14 @@ export default {
 	}
 
 	.description {
-		margin-top: 1em;
+		margin-top: 0.75em;
 		margin-bottom: 0.5em;
 		font-size: em(13);
 		display: flex;
 
 		.title {
 			font-weight: 500;
-			margin-right: 1em;
+			margin-right: 0.5em;
 			margin-top: -1px;
 		}
 
