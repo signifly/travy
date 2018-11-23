@@ -5,7 +5,7 @@
 	@fieldA="fieldA">
 
 		<div class="button-action">
-			<Button size="medium" :type="_type" :icon="`el-icon-${_icon}`" @click="active = true">{{_title}}</Button>
+			<Button size="medium" :type="_status" :icon="`el-icon-${_icon}`" @click="active = true">{{_title}}</Button>
 		</div>
 	</action>
 </template>
@@ -21,7 +21,7 @@ export default {
 			props: {
 				title: "button",
 				icon: "plus",
-				type: "primary",
+				status: "primary",
 				action: {
 					id: "modal",
 					title: "Modal title",
@@ -67,7 +67,7 @@ export default {
 		alt: {type: Object, default: () => ({})},
 		_title: {type: String, required: true, doc: true},
 		_icon: {type: String, required: false, doc: true},
-		_type: {type: String, required: false, doc: true},
+		_status: {type: String, required: false, doc: true},
 		_action: {type: Object, required: true, doc: true}
 	},
 	data() {
