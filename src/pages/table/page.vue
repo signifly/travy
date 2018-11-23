@@ -131,7 +131,7 @@ export default {
 				page: this.query.page,
 				count: this.query.pagesize,
 				filter: this.query.filters,
-				modifiers: this.query.modifiers,
+				modifier: this.query.modifiers,
 				sort: (() => {
 					const sort = this.query.sort || this.defaults.sort;
 					const order = sort.order === "descending" ? "-" : "";
