@@ -52,7 +52,7 @@ export default {
 
 			update: async ({data}) => {
 				t.payload = {...t.payload, ...data};
-				t.$emit("update:state", {data: {...t.state.data, ...data}, edit: true});
+				t.updateState({data: {...t.state.data, ...data}, edit: true});
 			}
 		})
 	},

@@ -6,8 +6,10 @@
 			<fieldType v-bind="[fieldType, {alt}]" @fieldA="$emit('fieldA', $event)"/>
 		</div>
 
+		<transition name="error">
+			<div class="error" v-if="error">{{error}}</div>
+		</transition>
 
-		<div class="error" v-if="error">{{error}}</div>
 
 		<div class="description" v-if="description && rules.description">
 			<div class="title">Description:</div>
@@ -81,6 +83,17 @@ export default {
 		font-size: 0.75em;
 		color: $danger;
 		margin-top: 0.5em;
+		height: 13px;
+
+		&-enter-active, &-leave-active {
+			$t: 0.4s;
+			transition: cubic(opacity, $t), cubic(height, $t), cubic(margin, $t);
+		}
+		&-enter, &-leave-to {
+			opacity: 0;
+			height: 0;
+			margin: 0;
+		}
 	}
 
 	.description {
