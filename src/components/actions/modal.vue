@@ -31,7 +31,7 @@ export default {
 		}
 	},
 	computed: {
-		vUpload: (t) => t.fields.map(x => x.fieldType.id === "vUpload").some(x => x),
+		upload: (t) => t.fields.map(x => x.fieldType.id === "input-upload").some(x => x),
 		payloadC: (t) => ({...t.payload, data: t.data}),
 
 		visible: {
@@ -57,7 +57,7 @@ export default {
 				this.loading = true;
 
 				const {data: {data}} = await this.$axios({
-					data: this.vUpload ? toFormData(this.payloadC) : this.payloadC,
+					data: this.upload ? toFormData(this.payloadC) : this.payloadC,
 					method: this.endpoint.method,
 					url: this.endpoint.url,
 					customErr: true,
