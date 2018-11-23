@@ -3,26 +3,39 @@
 		{{title}}
 
 		<transition name="status">
-			<div class="status primary" v-if="editing"/>
+			<Tooltip content="Edited" placement="top" v-if="edit">
+				<div class="status primary"/>
+			</Tooltip>
 		</transition>
 
 		<transition name="status">
-			<!-- <div class="status warning" v-if="outdated"/> -->
+			<Tooltip content="Outdated" placement="top" v-if="outdated">
+				<div class="status warning"/>
+			</Tooltip>
+		</transition>
+
+		<transition name="status">
+			<Tooltip content="Error" placement="top" v-if="error">
+				<div class="status danger"/>
+			</Tooltip>
 		</transition>
 	</div>
 </template>
 
 <script>
+import {Tooltip} from "element-ui";
+
 export default {
+	components: {Tooltip},
 	props: {
 		id: {type: String, required: true},
 		title: {type: String, required: true},
-		options: {type: Object, required: false},
-		tabState: {type: Object, required: true}
+		state: {type: Object, required: true}
 	},
 	computed: {
-		editing: (t) => Object.keys(t.tabState[t.id]).length
-		// outdated: (t) => t.tab.sections.some(x => x.fields.some(x => get(t.options, [x.name, "outdated"])))
+		edit: (t) => t.state.edit,
+		error: (t) => t.state.error,
+		outdated: (t) => Object.values(t.state.options || {}).some(obj => obj.outdated)
 	}
 };
 </script>

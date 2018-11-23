@@ -1,9 +1,9 @@
 <template>
 	<div class="tabs">
-		<Tabs type="card" v-model="activeTab" :key="modifiersKey">
-			<TabPane v-for="tab in tabs" :label="tab.title" :name="tab.id" :key="tab.id" :lazy="true">
-				<tabLabel slot="label" v-bind="[tab, {tabState, options}]"/>
-				<tabContent ref="tabContent" v-bind="[tab, {data}]" :state.sync="tabState[tab.id]"/>
+		<Tabs type="card" v-model="activeTab">
+			<TabPane v-for="tab in tabs" :name="tab.id" :key="tab.id" :lazy="true" ref="pane">
+				<tabLabel slot="label" v-bind="[tab]" :state="state[tab.id]"/>
+				<tabContent ref="tabContent" v-bind="[tab, {parentData: data}]" :state.sync="state[tab.id]"/>
 			</TabPane>
 		</Tabs>
 	</div>
@@ -11,25 +11,23 @@
 
 <script>
 import {Tabs, TabPane} from "element-ui";
-import tabContent from "./tab/content.vue";
-import tabLabel from "./tab/label.vue";
+import tabContent from "./tab/content";
+import tabLabel from "./tab/label";
 
 export default {
 	components: {Tabs, TabPane, tabContent, tabLabel},
 	props: {
 		tabs: {type: Array, required: true},
-		data: {type: Object, required: true},
-		options: {type: Object, required: false}
+		data: {type: Object, required: true}
 	},
 	data() {
 		return {
 			activeTab: this.$route.params.tabId || this.tabs[0].id,
-			tabState: this.tabs.reduce((obj, tab) => ({...obj, [tab.id]: {}}), {})
+			state: this.tabs.reduce((obj, tab) => ({...obj, [tab.id]: {}}), {}) // {tabId: {}}
 		}
 	},
 	computed: {
-		edit: (t) => Object.values(t.tabState).some(val => val.edit),
-		modifiersKey: (t) => Object.values(t.$route.query.modifiers || {}).join(",")
+		edit: (t) => Object.values(t.state).some(val => val.edit)
 	},
 	methods: {
 		async save() {

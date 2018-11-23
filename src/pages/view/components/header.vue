@@ -1,6 +1,6 @@
 <template>
 	<div class="header">
-		<div class="image" :style="{backgroundImage: `url('${image}')`}"/>
+		<div class="image" :style="{backgroundImage: `url('${propsData.image}')`}" v-if="propsData.image"/>
 
 		<div class="info">
 			<div class="title">
@@ -23,8 +23,7 @@ export default {
 	},
 	computed: {
 		props: (t) => t.header.props,
-		propsData: (t) => mapValues(t.props, (val) => get(t.data, val)),
-		image: (t) => t.propsData.image || require("!file-loader!@/assets/icons/noimage.svg")
+		propsData: (t) => mapValues(t.props, (val) => get(t.data, val))
 	}
 };
 </script>

@@ -14,7 +14,7 @@
 
 			<Row class="mid" :gutter="20">
 				<Col class="left" :span="16">
-					<tabs ref="tabs" v-bind="{tabs, data, options}" @edit="edit = $event"/>
+					<tabs ref="tabs" :key="modifiersKey" v-bind="{tabs, data}" @edit="edit = $event"/>
 				</Col>
 				<Col class="right" :span="8">
 					<sidebar v-if="sidebar" v-bind="{sidebar, data}"/>
@@ -51,7 +51,6 @@ export default {
 	data() {
 		return {
 			definitions: null,
-			options: null,
 			data: null,
 			edit: false,
 			loading: false
@@ -65,7 +64,8 @@ export default {
 		sidebar: (t) => t.definitions.sidebar,
 		activity: (t) => t.definitions.activity,
 		endpoint: (t) => t.definitions.endpoint,
-		modifiers: (t) => t.definitions.modifiers
+		modifiers: (t) => t.definitions.modifiers,
+		modifiersKey: (t) => Object.values(t.query.modifiers || {}).join(",")
 	},
 	methods: {
 		async refresh({done} = {}) {
@@ -97,8 +97,7 @@ export default {
 			const params = {modifier: this.query.modifiers};
 
 			try {
-				const {data: {data, options}} = await this.$axios.get(this.requests.data, {params, customErr: true});
-				this.options = options;
+				const {data: {data}} = await this.$axios.get(this.requests.data, {params, customErr: true});
 				this.data = data;
 
 			} catch(err) {
