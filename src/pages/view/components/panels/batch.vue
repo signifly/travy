@@ -13,7 +13,7 @@
 		</div>
 
 		<div class="actions">
-			<!-- <div class="error" v-if="error.message">{{error.message}}</div> -->
+			<div class="error" v-if="error" v-text="error"/>
 
 			<Button v-if="prev" size="medium" type="success" icon="el-icon-arrow-left" @click="prevSave">
 				Save and back
@@ -48,6 +48,7 @@ export default {
 	components: {Button, Tooltip, Progress, vPanel},
 	props: {
 		title: {type: String, required: true},
+		error: {type: String, required: true},
 		loading: {type: Boolean, required: true}
 	},
 	data() {
@@ -161,11 +162,11 @@ export default {
 	display: flex;
 	align-items: center;
 
-	// .error {
-	// 	font-size: em(12);
-	// 	font-weight: 500;
-	// 	margin-right: 1em;
-	// 	color: $danger;
-	// }
+	.error {
+		font-size: em(12);
+		font-weight: 500;
+		margin-right: 1em;
+		color: $danger;
+	}
 }
 </style>

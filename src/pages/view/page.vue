@@ -27,7 +27,7 @@
 				</Col>
 			</Row>
 
-			<panels v-bind="{loading, data, edit}" @save="save" @refreshData="refreshData"/>
+			<panels v-bind="{loading, error, data, edit}" @save="save" @refreshData="refreshData"/>
 		</div>
 	</transition>
 </template>
@@ -51,6 +51,7 @@ export default {
 	data() {
 		return {
 			definitions: null,
+			error: "",
 			data: null,
 			edit: false,
 			loading: false
@@ -81,8 +82,15 @@ export default {
 
 		async save({done} = {}) {
 			this.loading = true;
-			await this.$refs.tabs.save();
-			if (done) await done();
+
+			try {
+				await this.$refs.tabs.save();
+				if (done) await done();
+				this.error = "";
+			} catch(err) {
+				this.error = err;
+			}
+
 			this.loading = false;
 		},
 

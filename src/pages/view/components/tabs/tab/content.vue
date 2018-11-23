@@ -14,7 +14,7 @@
 <script>
 import {endpointUrl} from "@/modules/utils";
 import field from "@/components/field";
-import {forEach, get, set} from "lodash";
+import {get} from "lodash";
 
 export default {
 	components: {field},
@@ -51,9 +51,8 @@ export default {
 			},
 
 			update: async ({data}) => {
-				t.$emit("update:state", {...t.state, edit: true});
-				forEach(data, (val, key) => set(t.state.data, key, val));
-				forEach(data, (val, key) => set(t.payload, key, val));
+				t.payload = {...t.payload, ...data};
+				t.$emit("update:state", {data: {...t.state.data, ...data}, edit: true});
 			}
 		})
 	},
@@ -88,6 +87,7 @@ export default {
 				if (done) await done();
 			} catch(error) {
 				this.updateState({error});
+				throw error.message;
 			} finally {
 				this.saving = false;
 			}

@@ -1,5 +1,7 @@
 <template>
-	<component v-if="comp" :is="comp" v-bind="{loading, title}" @refreshData="refreshData" @save="save"/>
+	<transition name="el-zoom-in-bottom" appear>
+		<component v-if="comp" :is="comp" v-bind="{loading, error, title}" @refreshData="refreshData" @save="save"/>
+	</transition>
 </template>
 
 <script>
@@ -11,6 +13,7 @@ export default {
 	props: {
 		data: {type: Object, required: true},
 		edit: {type: Boolean, required: true},
+		error: {type: String, required: true},
 		loading: {type: Boolean, required: true}
 	},
 	computed: {
