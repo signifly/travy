@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {endpointUrl} from "@/modules/utils";
+import {rStringProps} from "@/modules/utils";
 import field from "@/components/field";
 import {get} from "lodash";
 
@@ -34,7 +34,7 @@ export default {
 		}
 	},
 	computed: {
-		endpointUrl: (t) => endpointUrl({data: t.parentData, url: t.endpoint.url}),
+		endpointUrl: (t) => rStringProps({data: t.parentData, string: t.endpoint.url}),
 		modifiers: (t) => t.$route.query.modifiers,
 
 		fieldAlt: (t) => ({

@@ -29,7 +29,7 @@
 
 <script>
 import {get} from "lodash";
-import {date, endpointUrl} from "@/modules/utils";
+import {date, rStringProps} from "@/modules/utils";
 import {Table, TableColumn, Pagination} from "element-ui";
 
 export default {
@@ -49,7 +49,7 @@ export default {
 	computed: {
 		tableId: (t) => t.$route.params.tableId,
 		paginationActive: (t) => t.meta && t.meta.last_page > 1,
-		endpointUrl: (t) => endpointUrl({data: t.data, url: t.endpoint.url}),
+		endpointUrl: (t) => rStringProps({data: t.data, string: t.endpoint.url}),
 
 		itemsMap: (t) => t.items.map(x => ({
 			id: `#${x.id}`,

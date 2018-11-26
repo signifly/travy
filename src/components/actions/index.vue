@@ -14,7 +14,7 @@
 
 <script>
 import {get, eq, gt, gte, lt, lte, mapValues} from "lodash";
-import {endpointUrl} from "@/modules/utils";
+import {rStringProps} from "@/modules/utils";
 import modal from "./modal.vue";
 import popup from "./popup.vue";
 import show from "./show.vue";
@@ -34,16 +34,16 @@ export default {
 		payload: ({props, data}) => ({
 			type: get(props, "payload.type"),
 			data: mapValues(get(props, "payload.data"), (val) => {
-				return endpointUrl({data, url: val});
+				return rStringProps({data, string: val});
 			})
 		}),
 
 		endpoint: ({props, dataComb}) => ({
 			method: get(props, "endpoint.method"),
-			url: endpointUrl({data: dataComb, url: get(props, "endpoint.url")})
+			url: rStringProps({data: dataComb, string: get(props, "endpoint.url")})
 		}),
 
-		onSubmit: ({dataComb, props}) => endpointUrl({data: dataComb, url: props.onSubmit}),
+		onSubmit: ({dataComb, props}) => rStringProps({data: dataComb, string: props.onSubmit}),
 
 		propsC: ({props, payload, endpoint, onSubmit}) => ({
 			...props,

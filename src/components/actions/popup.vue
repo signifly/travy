@@ -13,7 +13,7 @@
 <script>
 import {Button} from "element-ui";
 import vPopup from "@/components/popup.vue";
-import {endpointUrl} from "@/modules/utils";
+import {rStringProps} from "@/modules/utils";
 
 export default {
 	components: {Button, vPopup},
@@ -52,7 +52,7 @@ export default {
 
 		submitAfter({data}) {
 			if (this.onSubmit) {
-				this.$router.push(endpointUrl({data, url: this.onSubmit}));
+				this.$router.push(rStringProps({data, string: this.onSubmit}));
 			} else {
 				this.$emit("fieldA", {
 					action: "refresh",

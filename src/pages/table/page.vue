@@ -27,7 +27,7 @@
 
 <script>
 import Semaphore from "semaphore-async-await";
-import {endpointUrl} from "@/modules/utils";
+import {rStringProps} from "@/modules/utils";
 import {omit} from "lodash";
 
 import box from "@/components/box.vue";
@@ -96,7 +96,7 @@ export default {
 				update: async ({item, data}) => {
 					await s.acquire();
 					const modifiers = this.modifiers ? this.modifiers.map(x => omit(x, "options")) : undefined;
-					const url = endpointUrl({data: item, url: `${this.endpoint.url}/{id}`});
+					const url = rStringProps({data: item, string: `${this.endpoint.url}/{id}`});
 					await this.$axios.put(url, {...data, modifiers});
 					await this.getData({loading: false});
 					s.release();

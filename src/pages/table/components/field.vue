@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import {endpointUrl} from "@/modules/utils";
+import {rStringProps} from "@/modules/utils";
 import vField from "@/components/field";
 
 export default {
@@ -21,7 +21,7 @@ export default {
 		data: (t) => t.scope.row,
 		onClick: (t) => t.column.onClick,
 		link() {
-			const url = endpointUrl({data: this.data, url: this.onClick});
+			const url = rStringProps({data: this.data, string: this.onClick});
 			return url ? {path: url, query: {modifiers: this.$route.query.modifiers}} : false;
 		}
 	},

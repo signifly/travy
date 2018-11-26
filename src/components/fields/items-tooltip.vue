@@ -30,7 +30,7 @@
 <script>
 import {get} from "lodash";
 import {Tooltip} from "element-ui";
-import {endpointUrl} from "@/modules/utils";
+import {rStringProps} from "@/modules/utils";
 
 export default {
 	components: {Tooltip},
@@ -60,7 +60,7 @@ export default {
 		itemsMap: (t) => t.items.map(item => ({
 			id: item.id,
 			label: get(item, t._itemKey),
-			link: endpointUrl({url: t._itemLink, data: item})
+			link: rStringProps({string: t._itemLink, data: item})
 		}))
 	},
 	methods: {

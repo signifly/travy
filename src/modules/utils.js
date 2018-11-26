@@ -42,11 +42,11 @@ export const base64Encode = (file) => {
 };
 
 
-export const endpointUrl = ({url, data}) => {
-	if (!url) return;
+export const rStringProps = ({data, string}) => {
+	if (!string) return;
 
 	// find all {KEY} in string and replace with data value
-	return replace(url, /\{.*?\}/g, (key) => get(data, key.slice(1, -1)));
+	return replace(string, /\{.*?\}/g, (key) => get(data, key.slice(1, -1)));
 };
 
 export const meta = {
