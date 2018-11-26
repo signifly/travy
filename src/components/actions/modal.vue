@@ -75,7 +75,7 @@ export default {
 
 		submitAfter({data}) {
 			if (this.onSubmit) {
-				this.$router.push(this.onSubmit);
+				this.$router.push(endpointUrl({data, url: this.onSubmit}));
 			} else {
 				this.$emit("fieldA", {
 					action: "refresh",
