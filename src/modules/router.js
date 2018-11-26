@@ -82,6 +82,8 @@ const router = new VueRouter({
 
 
 const go = ({to, next}) => {
+	store.commit("router/query", to.query);
+	
 	if (to.meta.title) {
 		store.dispatch("base/meta", {title: to.meta.title});
 	}

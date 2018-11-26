@@ -5,7 +5,7 @@
 		<component
 			v-if="active"
 			:is="props.id"
-			v-bind="[actionProps, props, {payload, endpoint}]"
+			v-bind="[actionProps, propsC]"
 			@close="close"
 			@fieldA="fieldA"
 		/>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import {get, eq, gt, gte, lt, lte} from "lodash";
+import {get, eq, gt, gte, lt, lte, mapValues} from "lodash";
 import {endpointUrl} from "@/modules/utils";
 import modal from "./modal.vue";
 import popup from "./popup.vue";
@@ -29,16 +29,27 @@ export default {
 		hide: {type: Object, required: false} // {key, operator, value}
 	},
 	computed: {
-		dataComb: (t) => ({...t.data, ...get(t.props, "payload.data")}), // parent data and action data combined
+		dataComb: (t) => ({...t.data, ...t.payload.data}), // parent data and action data combined
 
-		payload: ({dataComb, props}) => ({
+		payload: ({props, data}) => ({
 			type: get(props, "payload.type"),
-			data: dataComb
+			data: mapValues(get(props, "payload.data"), (val) => {
+				return endpointUrl({data, url: val});
+			})
 		}),
 
-		endpoint: ({dataComb, props}) => ({
+		endpoint: ({props, dataComb}) => ({
 			method: get(props, "endpoint.method"),
 			url: endpointUrl({data: dataComb, url: get(props, "endpoint.url")})
+		}),
+
+		onSubmit: ({dataComb, props}) => endpointUrl({data: dataComb, url: props.onSubmit}),
+
+		propsC: ({props, payload, endpoint, onSubmit}) => ({
+			...props,
+			payload,
+			endpoint,
+			onSubmit
 		}),
 
 		disabled() {

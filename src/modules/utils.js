@@ -45,12 +45,8 @@ export const base64Encode = (file) => {
 export const endpointUrl = ({url, data}) => {
 	if (!url) return;
 
-	// find all {KEY} in string and replace with data property
-	url = replace(url, /\{.*?\}/g, (key) => get(data, key.slice(1, -1)));
-
-	if (!url.startsWith("http") && !url.startsWith("/")) url = `/${url}`;
-
-	return url;
+	// find all {KEY} in string and replace with data value
+	return replace(url, /\{.*?\}/g, (key) => get(data, key.slice(1, -1)));
 };
 
 export const meta = {

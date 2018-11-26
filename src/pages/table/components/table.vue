@@ -34,7 +34,7 @@ export default {
 		batch: {type: Object, default: () => ({})}
 	},
 	computed: {
-		query: (t) => t.$route.query,
+		query: (t) => t.$store.getters["router/query"],
 		emptyText: (t) => t.data ? "No data" : "Loading",
 		sorting: (t) => t.query.sort || t.defaults.sort || {},
 
@@ -50,7 +50,14 @@ export default {
 	methods: {
 		sort({prop, order}) {
 			const sort = prop && order ? {prop, order} : undefined;
-			if (this.data) this.$router.replace({query: {...this.query, page: undefined, sort}}); // don't set query params for default sorting
+
+			// don't set query params for default sorting
+			if (this.data) this.$store.dispatch("table/query", {type: "replace", query: {
+				...this.query,
+				page: undefined,
+				sort
+			}});
+			
 			this.$emit("getData");
 		},
 

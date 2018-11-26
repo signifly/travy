@@ -22,7 +22,7 @@ export default {
 		per_page: {type: Number, required: true}
 	},
 	computed: {
-		query: (t) => t.$route.query,
+		query: (t) => t.$store.getters["router/query"],
 		pagination: (t) => ({
 			total: t.total,
 			"page-size": t.per_page,
@@ -32,13 +32,24 @@ export default {
 	methods: {
 		update(page) {
 			page = page === 1 ? undefined : page;
-			this.$router.replace({query: {...this.query, page}});
+
+			this.$store.dispatch("table/query", {type: "replace", query: {
+				...this.query,
+				page
+			}});
+
 			this.$emit("getData");
 		},
 
 		size(pagesize) {
 			pagesize = pagesize === 15 ? undefined : pagesize;
-			this.$router.replace({query: {...this.query, page: undefined, pagesize}});
+
+			this.$store.dispatch("table/query", {type: "replace", query: {
+				...this.query,
+				page: undefined,
+				pagesize
+			}});
+			
 			this.$emit("getData");
 		}
 	}

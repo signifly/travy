@@ -1,6 +1,6 @@
 <template>
 	<action
-	v-bind="{props, active}"
+	v-bind="{props, active, data: parentData}"
 	@close="toggle"
 	@fieldA="fieldA">
 
@@ -21,7 +21,8 @@ export default {
 		props: {type: Object, required: true},
 		icon: {type: String, required: false},
 		title: {type: String, required: true},
-		status: {type: String, required: false, default: "primary"}
+		status: {type: String, required: false, default: "primary"},
+		parentData: {type: Object, required: false}
 	},
 	data() {
 		return {

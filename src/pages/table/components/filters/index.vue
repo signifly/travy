@@ -65,15 +65,19 @@ export default {
 	computed: {
 		searchIcon: (t) => t.loading ? "el-icon-loading": "el-icon-search",
 		dataComb: (t) => ({...t.data, ...t.query.filters}),
-		components: (t) => t.$options.components,
-		query: (t) => t.$route.query
+		query: (t) => t.$store.getters["router/query"],
+		components: (t) => t.$options.components
 	},
 	methods: {
 		updateDebounce: debounce(async function({data}) {
 			let filters = {...this.query.filters, ...data};
 			filters = mapValues(filters, (val) => val === "" ? undefined : val);
 
-			this.$router.replace({query: {...this.query, page: undefined, filters}});
+			this.$store.dispatch("table/query", {type: "replace", query: {
+				...this.query,
+				page: undefined,
+				filters,
+			}});
 
 			this.$emit("filter", {
 				done: async () => this.loading = false
@@ -89,7 +93,11 @@ export default {
 			this.loading = true;
 			this.active = false;
 			const filters = this.input ? {search: this.input} : undefined;
-			this.$router.replace({query: {...this.query, filters}});
+
+			this.$store.dispatch("table/query", {type: "replace", query: {
+				...this.query,
+				filters
+			}});
 
 			this.$emit("filter", {
 				done: async () => {

@@ -3,7 +3,7 @@
 
 		<div class="header">
 			<filters v-bind="[filters, {search}]" @filter="filter"/>
-			<actions v-if="actions" v-bind="{actions}" @fieldA="fieldA"/>
+			<actions v-if="actions" v-bind="{actions, parentData}" @fieldA="fieldA"/>
 		</div>
 
 		<div class="content">
@@ -43,7 +43,8 @@ const s = new Semaphore(1);
 export default {
 	components: {box, vTable, filters, actions, pagination, batch, top},
 	props: {
-		tableId: {type: String, required: true},
+		defsEndpoint: {type: Object, required: true},
+		parentData: {type: Object, required: false},
 		title: {type: String, required: false}
 	},
 	data() {
@@ -56,7 +57,7 @@ export default {
 		}
 	},
 	computed: {
-		query: (t) => t.$route.query,
+		query: (t) => t.$store.getters["router/query"],
 		batch: (t) => t.definitions.batch,
 		search: (t) => t.definitions.search,
 		actions: (t) => t.definitions.actions,
@@ -117,9 +118,9 @@ export default {
 		},
 
 		async getDefinitions() {
-			const params = {modifiers: this.query.modifiers};
+			const params = {...this.defsEndpoint.params, modifiers: this.query.modifiers};
 
-			const {data} = await this.$axios.get(`definitions/table/${this.tableId}`, {params});
+			const {data} = await this.$axios.get(this.defsEndpoint.url, {params});
 			this.definitions = data;
 		},
 

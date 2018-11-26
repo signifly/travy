@@ -19,7 +19,7 @@ export default {
 		fields: {type: Array, required: true}
 	},
 	computed: {
-		query: (t) => t.$route.query,
+		query: (t) => t.$store.getters["router/query"],
 		queryData: (t) => t.query.modifiers,
 		dataComb: (t) => ({...t.data, ...t.queryData})
 	},
@@ -28,7 +28,11 @@ export default {
 			this.update({...this.queryData, ...data});
 		},
 		update(modifiers) {
-			this.$router.replace({query: {...this.query, modifiers}});
+			this.$store.dispatch("table/query", {type: "replace", query: {
+				...this.$query,
+				modifiers
+			}});
+			
 			this.$emit("refresh");
 		}
 	}

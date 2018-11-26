@@ -27,7 +27,9 @@ export default {
 				disabled: false,
 				value: "selectValue",
 				options: {
-					endpoint: meta.items,
+					endpoint: {
+						url: meta.items
+					},
 					key: "",
 					itemKey: "",
 					label: "name",
@@ -61,7 +63,6 @@ export default {
 		}
 	},
 	computed: {
-		endpointClean: (t) => t.endpoint.split("?")[0], // without query
 		endpoint: (t) => t._options.endpoint,
 		nodata: (t) => !t.data.value,
 		oKey: (t) => t._options.key,
@@ -103,7 +104,10 @@ export default {
 		},
 
 		async getList(search) {
-			const {data} = await this.$axios.get(this.endpoint, {params: {filter: {search}, count: 30}});
+			const {data} = await this.$axios.get(this.endpoint.url, {params: {
+				...this.endpoint.params,
+				filter: {search}, count: 30}
+			});
 			this.res = data;
 			this.loading = false;
 		},
@@ -118,7 +122,7 @@ export default {
 		},
 
 		async getItem() {
-			const {data} = await this.$axios.get(`${this.endpointClean}/${this.value}`);
+			const {data} = await this.$axios.get(`${this.endpoint.url}/${this.value}`);
 			this.item = this.oItemKey ? data[this.oItemKey] : data;
 		}
 	},
