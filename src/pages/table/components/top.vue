@@ -11,7 +11,7 @@
 			</transition>
 		</div>
 
-		<modifiers v-if="modifiers" v-bind="modifiers" @refresh="refresh"/>
+		<modifiers v-if="modifiers" v-bind="modifiers" @update="updateModifiers"/>
 	</div>
 </template>
 
@@ -26,8 +26,16 @@ export default {
 		title: {type: String, required: true},
 		meta: {type: Object, required: false}
 	},
+	computed: {
+		query: (t) => t.$store.getters["router/query"]
+	},
 	methods: {
-		refresh() {
+		updateModifiers({modifiers}) {
+			this.$store.dispatch("table/query", {type: "replace", query: {
+				...this.query,
+				modifiers
+			}});
+
 			this.$emit("refresh");
 		}
 	}

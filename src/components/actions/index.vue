@@ -7,7 +7,7 @@
 			:is="props.id"
 			v-bind="[actionProps, propsC]"
 			@close="close"
-			@fieldA="fieldA"
+			@submit="submit"
 		/>
 	</div>
 </template>
@@ -62,11 +62,19 @@ export default {
 		}
 	},
 	methods: {
+		submit({data}) {
+			if (this.onSubmit) {
+				this.$router.push(rStringProps({data, string: this.onSubmit}));
+			} else {
+				this.$emit("fieldA", {
+					action: "refreshData",
+					done: async () => this.close()
+				});
+			}
+		},
+
 		close() {
 			this.$emit("close");
-		},
-		fieldA(obj) {
-			this.$emit("fieldA", obj);
 		}
 	}
 };

@@ -46,7 +46,7 @@ export const rStringProps = ({data, string}) => {
 	if (!string) return;
 
 	// find all {KEY} in string and replace with data value
-	return replace(string, /\{.*?\}/g, (key) => get(data, key.slice(1, -1)));
+	return replace(string, /\{.*?\}/g, (key) => get(data, key.slice(1, -1), key));
 };
 
 export const meta = {

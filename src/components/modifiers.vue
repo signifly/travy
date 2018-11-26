@@ -20,20 +20,12 @@ export default {
 	},
 	computed: {
 		query: (t) => t.$store.getters["router/query"],
+		dataComb: (t) => ({...t.data, ...t.queryData}),
 		queryData: (t) => t.query.modifiers,
-		dataComb: (t) => ({...t.data, ...t.queryData})
 	},
 	methods: {
 		fieldA({data}) {
-			this.update({...this.queryData, ...data});
-		},
-		update(modifiers) {
-			this.$store.dispatch("table/query", {type: "replace", query: {
-				...this.$query,
-				modifiers
-			}});
-			
-			this.$emit("refresh");
+			this.$emit("update", {modifiers: {...this.queryData, ...data}});
 		}
 	}
 };

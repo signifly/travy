@@ -21,7 +21,6 @@ export default {
 		position: {type: String, required: false, default: "bottom-right"},
 		text: {type: String, required: false, default: "Are you sure?"},
 		endpoint: {type: Object, required: true},
-		onSubmit: {type: String, required: false},
 		payload: {type: Object, required: true}
 	},
 	data() {
@@ -44,20 +43,9 @@ export default {
 					data: this.payload,
 				});
 
-				this.submitAfter({data});
+				this.$emit("submit", {data});
 			} catch(err) {
 				this.loading = false;
-			}
-		},
-
-		submitAfter({data}) {
-			if (this.onSubmit) {
-				this.$router.push(rStringProps({data, string: this.onSubmit}));
-			} else {
-				this.$emit("fieldA", {
-					action: "refresh",
-					done: async () => this.close()
-				});
 			}
 		}
 	}

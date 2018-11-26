@@ -35,7 +35,6 @@ export default {
 		},
 
 		fieldA(obj) {
-			this.active = false;
 			this.$emit("fieldA", obj);
 		}
 	}

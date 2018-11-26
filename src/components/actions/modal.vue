@@ -19,7 +19,6 @@ export default {
 	props: {
 		title: {type: String, required: false},
 		endpoint: {type: Object, required: true},
-		onSubmit: {type: String, required: false},
 		payload: {type: Object, required: true},
 		fields: {type: Array, required: true}
 	},
@@ -66,21 +65,10 @@ export default {
 					}
 				});
 
-				this.submitAfter({data});
+				this.$emit("submit", {data});
 			} catch(err) {
 				this.error = err;
 				this.loading = false;
-			}
-		},
-
-		submitAfter({data}) {
-			if (this.onSubmit) {
-				this.$router.push(rStringProps({data, string: this.onSubmit}));
-			} else {
-				this.$emit("fieldA", {
-					action: "refresh",
-					done: async () => this.close()
-				});
 			}
 		}
 	}

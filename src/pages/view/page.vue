@@ -7,7 +7,7 @@
 					<vHeader v-bind="{data, header}"/>
 				</Col>
 				<Col class="right" :span="8">
-					<modifiers v-if="modifiers" v-bind="modifiers" @refresh="refresh"/>
+					<modifiers v-if="modifiers" v-bind="{modifiers}" @refresh="refresh"/>
 					<actions v-if="actions" v-bind="{actions, data}" @submit="getData"/>
 				</Col>
 			</Row>
@@ -41,7 +41,7 @@ import vHeader from "./components/header";
 import sidebar from "./components/sidebar";
 import actions from "./components/actions";
 import activity from "./components/activity";
-import modifiers from "@/components/modifiers";
+import modifiers from "./components/modifiers";
 
 export default {
 	components: {Col, Row, tabs, panels, vHeader, sidebar, actions, activity, modifiers},
