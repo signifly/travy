@@ -5,7 +5,7 @@
 			<div class="total" v-if="meta" v-text="meta.total"/>
 
 			<transition name="loading">
-				<div class="loading" v-if="!loading">
+				<div class="loading" v-if="loading">
 					<i class="el-icon-loading"/>
 				</div>
 			</transition>
