@@ -5,7 +5,7 @@
 			<div class="total" v-if="meta" v-text="meta.total"/>
 
 			<transition name="loading">
-				<div class="loading" v-if="loading">
+				<div class="loading" v-if="!loading">
 					<i class="el-icon-loading"/>
 				</div>
 			</transition>
@@ -53,7 +53,7 @@ export default {
 		}
 
 		.loading {
-			margin-left: auto;
+			margin-left: 1em;
 			font-size: em(16);
 			color: $blue5;
 
