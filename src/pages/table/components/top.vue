@@ -17,6 +17,7 @@
 
 <script>
 import modifiers from "@/components/modifiers";
+import state from "../state";
 
 export default {
 	components: {modifiers},
@@ -27,11 +28,11 @@ export default {
 		meta: {type: Object, required: false}
 	},
 	computed: {
-		query: (t) => t.$store.getters["router/query"]
+		query: (t) => state.query
 	},
 	methods: {
 		updateModifiers({modifiers}) {
-			this.$store.dispatch("table/query", {type: "replace", query: {
+			state.setQuery({type: "replace", query: {
 				...this.query,
 				modifiers
 			}});

@@ -13,6 +13,7 @@
 
 <script>
 import {Pagination} from "element-ui";
+import state from "../state";
 
 export default {
 	components: {Pagination},
@@ -22,7 +23,7 @@ export default {
 		per_page: {type: Number, required: true}
 	},
 	computed: {
-		query: (t) => t.$store.getters["router/query"],
+		query: (t) => state.query,
 		pagination: (t) => ({
 			total: t.total,
 			"page-size": t.per_page,
@@ -33,7 +34,7 @@ export default {
 		update(page) {
 			page = page === 1 ? undefined : page;
 
-			this.$store.dispatch("table/query", {type: "replace", query: {
+			state.setQuery({type: "replace", query: {
 				...this.query,
 				page
 			}});
@@ -44,12 +45,12 @@ export default {
 		size(pagesize) {
 			pagesize = pagesize === 15 ? undefined : pagesize;
 
-			this.$store.dispatch("table/query", {type: "replace", query: {
+			state.setQuery({type: "replace", query: {
 				...this.query,
 				page: undefined,
 				pagesize
 			}});
-			
+
 			this.$emit("getData");
 		}
 	}

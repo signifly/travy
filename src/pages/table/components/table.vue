@@ -22,6 +22,7 @@
 
 <script>
 import {Table, TableColumn} from "element-ui";
+import state from "../state";
 import field from "./field";
 
 export default {
@@ -34,7 +35,7 @@ export default {
 		batch: {type: Object, default: () => ({})}
 	},
 	computed: {
-		query: (t) => t.$store.getters["router/query"],
+		query: (t) => state.query,
 		emptyText: (t) => t.data ? "No data" : "Loading",
 		sorting: (t) => t.query.sort || t.defaults.sort || {},
 
@@ -52,12 +53,12 @@ export default {
 			const sort = prop && order ? {prop, order} : undefined;
 
 			// don't set query params for default sorting
-			if (this.data) this.$store.dispatch("table/query", {type: "replace", query: {
+			if (this.data) state.setQuery({type: "replace", query: {
 				...this.query,
 				page: undefined,
 				sort
 			}});
-			
+
 			this.$emit("getData");
 		},
 

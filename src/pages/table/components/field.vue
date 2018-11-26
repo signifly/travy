@@ -11,6 +11,7 @@
 <script>
 import {rStringProps} from "@/modules/utils";
 import vField from "@/components/field";
+import state from "../state";
 
 export default {
 	props: {
@@ -20,7 +21,7 @@ export default {
 	computed: {
 		data: (t) => t.scope.row,
 		onClick: (t) => t.column.onClick,
-		query: (t) => t.$store.getters["router/query"],
+		query: (t) => state.query,
 		link() {
 			const url = rStringProps({data: this.data, string: this.onClick});
 			return url ? {path: url, query: {modifiers: this.query.modifiers}} : false;

@@ -30,6 +30,8 @@ import Semaphore from "semaphore-async-await";
 import {rStringProps} from "@/modules/utils";
 import {omit} from "lodash";
 
+import state from "./state";
+
 import box from "@/components/box.vue";
 import pagination from "./components/pagination"
 import filters from "./components/filters";
@@ -49,6 +51,7 @@ export default {
 	},
 	data() {
 		return {
+			state, // make reactive
 			data: null,
 			meta: null,
 			loading: false,
@@ -57,7 +60,7 @@ export default {
 		}
 	},
 	computed: {
-		query: (t) => t.$store.getters["router/query"],
+		query: (t) => t.state.query,
 		batch: (t) => t.definitions.batch,
 		search: (t) => t.definitions.search,
 		actions: (t) => t.definitions.actions,
@@ -148,6 +151,7 @@ export default {
 		}
 	},
 	created() {
+		this.state.query = this.$route.query;
 		this.getDefinitions();
 	}
 };
