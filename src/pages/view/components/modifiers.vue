@@ -1,5 +1,5 @@
 <template>
-	<modifiers v-bind="modifiers" @update="update"/>
+	<modifiers v-bind="[modifiers, {query}]" @update="update"/>
 </template>
 
 <script>

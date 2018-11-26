@@ -20,9 +20,10 @@ export default {
 	computed: {
 		data: (t) => t.scope.row,
 		onClick: (t) => t.column.onClick,
+		query: (t) => t.$store.getters["router/query"],
 		link() {
 			const url = rStringProps({data: this.data, string: this.onClick});
-			return url ? {path: url, query: {modifiers: this.$route.query.modifiers}} : false;
+			return url ? {path: url, query: {modifiers: this.query.modifiers}} : false;
 		}
 	},
 	methods: {

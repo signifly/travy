@@ -16,10 +16,10 @@ export default {
 	components: {field},
 	props: {
 		data: {type: Object, required: true},
-		fields: {type: Array, required: true}
+		fields: {type: Array, required: true},
+		query: {type: Object, required: true}
 	},
 	computed: {
-		query: (t) => t.$store.getters["router/query"],
 		dataComb: (t) => ({...t.data, ...t.queryData}),
 		queryData: (t) => t.query.modifiers,
 	},

@@ -11,7 +11,7 @@
 			</transition>
 		</div>
 
-		<modifiers v-if="modifiers" v-bind="modifiers" @update="updateModifiers"/>
+		<modifiers v-if="modifiers" v-bind="[modifiers, {query}]" @update="updateModifiers"/>
 	</div>
 </template>
 
