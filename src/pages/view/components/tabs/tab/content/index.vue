@@ -24,7 +24,9 @@ export default {
 	},
 	methods: {
 		async save() {
-			await this.$refs.comp.save();
+			if (this.$refs.comp.save) {
+				await this.$refs.comp.save();
+			}
 		}
 	}
 };

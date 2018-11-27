@@ -28,9 +28,7 @@ export default {
 	},
 	data() {
 		return {
-			payload: {},
-			loading: false,
-			saving: false
+			payload: {}
 		}
 	},
 	computed: {
@@ -74,8 +72,6 @@ export default {
 		},
 
 		async save({done} = {}) {
-			this.saving = true;
-
 			try {
 				const {data: {data, options}} = await this.$axios.put(this.endpointUrl, {
 					modifier: this.modifiers,
@@ -88,8 +84,6 @@ export default {
 			} catch(error) {
 				this.updateState({error});
 				throw error.message;
-			} finally {
-				this.saving = false;
 			}
 		}
 	},
