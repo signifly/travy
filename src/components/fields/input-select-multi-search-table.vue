@@ -14,14 +14,17 @@ import selectMultiSearch from "./input-select-multi-search.vue";
 import vTable from "./table.vue";
 
 export default {
-	components: {selectMultiSearch},
+	components: {selectMultiSearch, vTable},
 	meta: {
 		res: {
 			props: {
 				disabled: false,
 				values: "values",
 				options: {
-					list: meta.items,
+					endpoint: {
+						url: meta.items,
+						params: {filter: {test: "test"}}
+					},
 					key: "",
 					label: "name",
 					value: "id"
@@ -42,7 +45,7 @@ export default {
 						name: "switch",
 						label: "Switch",
 						fieldType: {
-							id: "vSwitch",
+							id: "input-switch",
 							props: {
 								value: "bool"
 							}
@@ -74,8 +77,8 @@ export default {
 	},
 	data() {
 		return {
-			listOptions: [],
 			columnsData: [],
+			items: [],
 			edits: {},
 		}
 	},
@@ -83,18 +86,18 @@ export default {
 		oValue: (t) => t._options.value
 	},
 	methods: {
-		saveListOptions() { // save old list options so each tableColumn still has data from an old select search
-			const newListOptions = get(this.$refs, "select.listOptions", []);
-			this.listOptions = uniq([...this.listOptions, ...newListOptions]);
+		saveItems() { // save old items so each tableColumn still has data from an old select search
+			const newItems = get(this.$refs, "select.items", []);
+			this.items = uniq([...this.items, ...newItems]);
 		},
 
 		select({data}) {
-			this.saveListOptions();
+			this.saveItems();
 			const selectValues = get(data, this._values);
 
 			// populate table with data from the selected option
 			this.columnsData = selectValues.map(id => {
-				const item = this.listOptions.find(opt => get(opt, this.oValue) === id);
+				const item = this.items.find(opt => get(opt, this.oValue) === id);
 
 				// overwrite properties if exists in _columnsDataOverwrite
 				return {...item, ...this._columnsDataOverwrite}
@@ -114,9 +117,6 @@ export default {
 				data: {[this._values]: this.columnsData}
 			});
 		}
-	},
-	beforeCreate() {
-		this.$options.components.vTable = vTable;
 	}
 };
 </script>
