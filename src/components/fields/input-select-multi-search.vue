@@ -5,6 +5,7 @@
 		:value="valuesC"
 		:disabled="_disabled"
 		:clearable="_clearable"
+		:allow-create="_addable"
 		:filterable="true"
 		:multiple="true"
 		:remote="true"
@@ -30,6 +31,7 @@ export default {
 		res: {
 			props: {
 				disabled: false,
+				addable: true,
 				values: "values",
 				options: {
 					endpoint: {
@@ -61,6 +63,7 @@ export default {
 		_disabled: {type: Boolean, required: false, doc: true},
 		meta: {type: Object, require: false, default: () => ({})},
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
+		_addable: {type: Boolean, required: false, doc: true},
 		_options: {type: Object, required: true, doc: true},
 		_values: {type: String, required: true},
 		values: {type: Array, required: false, default: () => [], doc: true, note: `
