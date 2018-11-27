@@ -4,12 +4,13 @@
 			v-model="data.dates"
 			size="medium"
 			align="center"
-			type="daterange"
+			:type="_type"
+			:format="format"
+			:editable="false"
 			:clearable="false"
 			:picker-options="pickerOpts"
 			start-placeholder="Start Date"
 			end-placeholder="End Date"
-			format="yyyy-MM-dd"
 			value-format="timestamp"
 			@change="update"
 		/>
@@ -24,6 +25,7 @@ export default {
 	meta: {
 		res: {
 			props: {
+				type: "datetimerange",
 				dateStart: "dateStart",
 				dateEnd: "dateEnd"
 			},
@@ -37,7 +39,11 @@ export default {
 		dateStart: {type: [Number, String], required: false, doc: true},
 		dateEnd: {type: [Number, String], required: false, doc: true},
 		_dateStart: {type: String, required: true},
-		_dateEnd: {type: String, required: true}
+		_dateEnd: {type: String, required: true},
+		_format: {type: String, required: false, doc: true},
+		_type: {type: String, required: false, default: "daterange", doc: true, note: `
+			<i>daterange/datetimerange</i>
+		`}
 	},
 	data() {
 		return {
@@ -48,6 +54,12 @@ export default {
 				dates: [this.dateStart, this.dateEnd].map(x => x ? x * 1000 : undefined)
 			}
 		}
+	},
+	computed: {
+		format: (t) => t._format || {
+			daterange: "dd-MM-yyyy",
+			datetimerange: "yyyy-MM-dd HH:mm:ss"
+		}[t._type]
 	},
 	methods: {
 		update(dates) {

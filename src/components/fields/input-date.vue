@@ -4,9 +4,11 @@
 			:value="dateC"
 			size="medium"
 			align="center"
+			:type="_type"
+			:editable="false"
 			:clearable="false"
 			:picker-options="pickerOpts"
-			:format="_format"
+			:format="format"
 			:value-format="_formatValue"
 			@input="update"
 		/>
@@ -21,8 +23,8 @@ export default {
 	meta: {
 		res: {
 			props: {
+				type: "month",
 				date: "somedate",
-				format: "dd-MM-yyyy",
 				formatValue: "timestamp"
 			},
 			data: {
@@ -33,12 +35,22 @@ export default {
 	props: {
 		date: {type: [Number, String], required: false, doc: true},
 		_date: {type: String, required: false},
-		_format: {type: String, default: "dd-MM-yyyy"},
-		_formatValue: {type: String, default: "timestamp"}
+		_format: {type: String, required: false, doc: true},
+		_formatValue: {type: String, default: "timestamp", doc: true},
+		_type: {type: String, required: false, default: "date", doc: true, note: `
+			<i>year/month/date/datetime</i>
+		`}
 	},
 	computed: {
-		timestamp: (t) => t.formatValue === "timestamp",
-		dateC: (t) => t.timestamp && t.date ? t.date * 1000 : t.date
+		format: (t) => t._format || {
+			year: "yyyy",
+			month: "MM-yyyy",
+			date: "dd-MM-yyyy",
+			datetime: "yyyy-MM-dd HH:mm:ss"
+		}[t._type],
+
+		timestamp: (t) => t._formatValue === "timestamp",
+		dateC: (t) => (t.timestamp && t.date) ? t.date * 1000 : t.date
 	},
 	data() {
 		return {
