@@ -31,7 +31,6 @@ export default {
 		res: {
 			props: {
 				disabled: false,
-				addable: true,
 				values: "values",
 				options: {
 					endpoint: {
