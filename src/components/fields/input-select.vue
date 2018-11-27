@@ -1,9 +1,16 @@
 <template>
 	<div class="select">
-		<Select v-model="data.value" @change="update" v-bind="{size}" :disabled="_disabled" :clearable="_clearable" filterable>
-			<Option v-for="option in listMap" v-bind="option" :key="option.value">
+		<Select
+			:value="value"
+			v-bind="{size, clearable, disabled}"
+			@change="update"
+			filterable
+		>
+			<Option v-for="option in itemsMap" v-bind="option" :key="option.value">
 				<div class="option">
-					<div class="icon" v-if="option.icon && icon(option.icon)"><img :src="icon(option.icon)"></div>
+					<div class="icon" v-if="icon(option.icon)">
+						<img :src="icon(option.icon)">
+					</div>
 					{{option.label}}
 				</div>
 			</Option>
@@ -21,7 +28,7 @@ export default {
 			props: {
 				disabled: false,
 				value: "selectValue",
-				list: "selectOptions",
+				items: "selectOptions",
 				options: {
 					label: "name",
 					value: "id"
@@ -57,25 +64,15 @@ export default {
 		_options: {type: Object, required: true, doc: true},
 		value: {type: [String, Number], required: false, doc: true},
 		_value: {type: String, required: true},
-		list: {type: Array, required: true, doc: true},
-	},
-	data() {
-		return {
-			data: {
-				value: this.value
-			}
-		}
+		items: {type: Array, required: true, doc: true},
 	},
 	computed: {
-		nodata: (t) => !t.data.value,
-		oLabel: (t) => t._options.label,
-		oValue: (t) => t._options.value,
+		clearable: (t) => t._clearable,
+		disabled: (t) => t._disabled,
 
-		listMap: (t) => t.list.map(x => ({
-			value: x[t.oValue],
-			label: x[t.oLabel],
-			disabled: x.disabled,
-			icon: x.icon
+		itemsMap: (t) => t.items.map(x => ({...x,
+			value: x[t._options.value],
+			label: x[t._options.label]
 		})),
 
 		size() {
@@ -86,10 +83,12 @@ export default {
 	},
 	methods: {
 		icon(file) {
-			try {
-				return require(`!file-loader!@/assets/icons/${file}.svg`);
-			} catch(err) {
-				console.log(err);
+			if (file) {
+				try {
+					return require(`!file-loader!@/assets/icons/${file}.svg`);
+				} catch(err) {
+					console.log(err);
+				}
 			}
 		},
 
@@ -107,12 +106,6 @@ export default {
 .select {
 	.el-select {
 		width: 100%;
-
-		/deep/ {
-			.el-input__inner {
-				// border: 0;
-			}
-		}
 	}
 }
 
