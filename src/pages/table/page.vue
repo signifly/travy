@@ -26,18 +26,17 @@
 </template>
 
 <script>
+import {rStringProps, rStringPropsDeep} from "@/modules/utils";
 import Semaphore from "semaphore-async-await";
-import {rStringProps} from "@/modules/utils";
-import {omit} from "lodash";
-
+import {merge, omit} from "lodash";
 import state from "./state";
 
-import box from "@/components/box.vue";
 import pagination from "./components/pagination"
 import filters from "./components/filters";
 import actions from "./components/actions";
 import vTable from "./components/table";
 import batch from "./components/batch";
+import box from "@/components/box.vue";
 import top from "./components/top";
 
 const s = new Semaphore(1);
@@ -67,8 +66,11 @@ export default {
 		filters: (t) => t.definitions.filters,
 		columns: (t) => t.definitions.columns,
 		defaults: (t) => t.definitions.defaults,
-		endpoint: (t) => t.definitions.endpoint,
-		modifiers: (t) => t.definitions.modifiers
+		modifiers: (t) => t.definitions.modifiers,
+		endpoint: (t) => ({
+			url: t.definitions.endpoint.url,
+			params: rStringPropsDeep({obj: t.definitions.endpoint.params, data: t.parentData})
+		})
 	},
 	methods: {
 		select(items) {
@@ -130,8 +132,7 @@ export default {
 		async getData({loading} = {loading: true}) {
 			this.loading = loading;
 
-			const params = {
-				...this.endpoint.params,
+			const params = merge({}, this.endpoint.params, {
 				page: this.query.page,
 				count: this.query.pagesize,
 				filter: this.query.filters,
@@ -141,7 +142,7 @@ export default {
 					const order = sort.order === "descending" ? "-" : "";
 					return `${order}${sort.prop}`;
 				})()
-			};
+			});
 
 			const {data: {data, meta}} = await this.$axios.get(this.endpoint.url, {params});
 			this.data = data;

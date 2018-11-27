@@ -1,4 +1,4 @@
-import {get, replace} from "lodash";
+import {get, replace, transform, isObject} from "lodash";
 
 export const date = (epoch) => {
 	const d = new Date(epoch * 1000);
@@ -48,6 +48,24 @@ export const rStringProps = ({data, string}) => {
 	// find all {KEY} in string and replace with data value
 	return replace(string, /\{.*?\}/g, (key) => get(data, key.slice(1, -1), key));
 };
+
+
+export const rStringPropsDeep = ({data, obj}) => {
+	if (!obj) return;
+
+	return (() => {
+		const parse = (item) => transform(item, (res, val, key) => {
+			if (isObject(val)) {
+				res[key] = parse(val);
+			} else {
+				res[key] = rStringProps({data, string: val});
+			}
+		});
+
+		return parse(obj);
+	})();
+};
+
 
 export const meta = {
 	items: `${window.location.origin}/meta/fields/api/items`
