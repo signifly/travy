@@ -1,14 +1,15 @@
 <template>
 	<div class="select-search">
 		<Select
-		@change="update"
 		v-bind="{value, size}"
 		:remote-method="getItems"
 		:disabled="_disabled"
 		:clearable="_clearable"
-		@visible-change="open"
+		:allow-create="_addable"
 		:filterable="true"
-		:remote="true">
+		:remote="true"
+		@change="update"
+		@visible-change="open">
 
 			<Option v-for="item in itemsC" :key="item.value" v-bind="item"/>
 
@@ -27,6 +28,7 @@ export default {
 		res: {
 			props: {
 				disabled: false,
+				addable: false,
 				value: "selectValue",
 				options: {
 					endpoint: {
@@ -48,6 +50,7 @@ export default {
 		_disabled: {type: Boolean, required: false, doc: true},
 		meta: {type: Object, require: false, default: () => ({})},
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
+		_addable: {type: Boolean, required: false, doc: true},
 		value: {type: [String, Number], required: false, doc: true},
 		_value: {type: String, required: true},
 		options: {type: Object, required: false},

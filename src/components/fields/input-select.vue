@@ -1,19 +1,21 @@
 <template>
 	<div class="select">
 		<Select
-			:value="value"
-			v-bind="{size, clearable, disabled}"
-			@change="update"
-			filterable
-		>
-			<Option v-for="option in itemsMap" v-bind="option" :key="option.value">
+		v-bind="{size, value}"
+		:disabled="_disabled"
+		:clearable="_clearable"
+		:filterable="true"
+		@change="update">
+
+			<Option v-for="item in itemsMap" v-bind="item" :key="item.value">
 				<div class="option">
-					<div class="icon" v-if="icon(option.icon)">
-						<img :src="icon(option.icon)">
+					<div class="icon" v-if="icon(item.icon)">
+						<img :src="icon(item.icon)">
 					</div>
-					{{option.label}}
+					{{item.label}}
 				</div>
 			</Option>
+
 		</Select>
 	</div>
 </template>
@@ -67,9 +69,6 @@ export default {
 		items: {type: Array, required: true, doc: true},
 	},
 	computed: {
-		clearable: (t) => t._clearable,
-		disabled: (t) => t._disabled,
-
 		itemsMap: (t) => t.items.map(x => ({...x,
 			value: x[t._options.value],
 			label: x[t._options.label]

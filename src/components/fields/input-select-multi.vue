@@ -1,7 +1,17 @@
 <template>
 	<div class="select-multi">
-		<Select v-model="data.values" @change="update" v-bind="{size}" :disabled="_disabled" :clearable="_clearable" filterable multiple>
-			<Option v-for="option in listMap" v-bind="option" :key="option.value" />
+		<Select
+			v-bind="{size}"
+			:value="values"
+			:disabled="_disabled"
+			:clearable="_clearable"
+			:allow-create="_addable"
+			:filterable="true"
+			:multiple="true"
+			@change="update">
+
+			<Option v-for="item in itemsMap" v-bind="item" :key="item.value"/>
+
 		</Select>
 	</div>
 </template>
@@ -17,7 +27,7 @@ export default {
 			props: {
 				disabled: false,
 				values: "selectValues",
-				list: "selectOptions",
+				items: "selectOptions",
 				options: {
 					label: "name",
 					value: "id"
@@ -46,26 +56,16 @@ export default {
 		_disabled: {type: Boolean, required: false, doc: true},
 		meta: {type: Object, require: false, default: () => ({})},
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
+		_addable: {type: Boolean, required: false, doc: true},
 		_options: {type: Object, required: true, doc: true},
 		values: {type: Array, required: false, doc: true},
 		_values: {type: String, required: true},
-		list: {type: Array, required: true, doc: true}
-	},
-	data() {
-		return {
-			data: {
-				values: []
-			}
-		}
+		items: {type: Array, required: true, doc: true}
 	},
 	computed: {
-		nodata: (t) => t.data.values.length === 0,
-		oLabel: (t) => t._options.label,
-		oValue: (t) => t._options.value,
-
-		listMap: (t) => t.list.map(x => ({
-			value: get(x, t.oValue),
-			label: get(x, t.oLabel)
+		itemsMap: (t) => t.items.map(x => ({
+			value: get(x, t._options.value),
+			label: get(x, t._options.label)
 		})),
 
 		size() {
@@ -81,11 +81,8 @@ export default {
 				data: {[this._values]: val}
 			});
 		}
-	},
-	created() {
-		this.data.values = this.listMap.map(x => x.value);
 	}
-}
+};
 </script>
 
 <style lang="scss" scoped>
