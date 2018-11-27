@@ -9,7 +9,7 @@
 	},
 	"dependencies": {
 		"axios": "0.18.0",
-		"element-ui": "2.4.10",
+		"element-ui": "2.4.11",
 		"lodash": "4.17.11",
 		"normalize.css": "8.0.1",
 		"object-to-formdata": "1.5.2",
