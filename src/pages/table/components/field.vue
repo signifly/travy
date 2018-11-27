@@ -19,9 +19,9 @@ export default {
 		scope: {type: Object, required: true}
 	},
 	computed: {
+		query: () => state.query,
 		data: (t) => t.scope.row,
 		onClick: (t) => t.column.onClick,
-		query: (t) => state.query,
 		link() {
 			const url = rStringProps({data: this.data, string: this.onClick});
 			return url ? {path: url, query: {modifiers: this.query.modifiers}} : false;

@@ -23,7 +23,7 @@ export default {
 		per_page: {type: Number, required: true}
 	},
 	computed: {
-		query: (t) => state.query,
+		query: () => state.query,
 		pagination: (t) => ({
 			total: t.total,
 			"page-size": t.per_page,

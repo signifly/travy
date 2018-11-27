@@ -67,7 +67,7 @@ export default {
 		searchIcon: (t) => t.loading ? "el-icon-loading": "el-icon-search",
 		dataComb: (t) => ({...t.data, ...t.query.filters}),
 		components: (t) => t.$options.components,
-		query: (t) => state.query
+		query: () => state.query
 	},
 	methods: {
 		updateDebounce: debounce(async function({data}) {

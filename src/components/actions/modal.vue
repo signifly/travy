@@ -11,7 +11,6 @@
 
 <script>
 import toFormData from "object-to-formdata";
-import {rStringProps} from "@/modules/utils";
 import vModalFields from "@/components/modal-fields.vue";
 
 export default {

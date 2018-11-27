@@ -13,7 +13,6 @@
 <script>
 import {Button} from "element-ui";
 import vPopup from "@/components/popup.vue";
-import {rStringProps} from "@/modules/utils";
 
 export default {
 	components: {Button, vPopup},

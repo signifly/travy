@@ -28,7 +28,7 @@ export default {
 		meta: {type: Object, required: false}
 	},
 	computed: {
-		query: (t) => state.query
+		query: () => state.query
 	},
 	methods: {
 		updateModifiers({modifiers}) {

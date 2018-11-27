@@ -35,7 +35,7 @@ export default {
 		batch: {type: Object, default: () => ({})}
 	},
 	computed: {
-		query: (t) => state.query,
+		query: () => state.query,
 		emptyText: (t) => t.data ? "No data" : "Loading",
 		sorting: (t) => t.query.sort || t.defaults.sort || {},
 
