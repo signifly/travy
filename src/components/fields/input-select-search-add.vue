@@ -1,15 +1,18 @@
 <template>
 	<div class="select-search">
 		<Select
-		v-model="data.value"
 		@change="update"
-		v-bind="{size: sizeMap, loading}"
-		:remote-method="getListQ"
+		v-bind="{value, size}"
+		:remote-method="getItems"
 		:disabled="_disabled"
 		:clearable="_clearable"
-		@visible-change="initSearch"
-		filterable remote reserve-keyword allow-create>
-			<Option v-for="item in listMap" v-bind="item" :key="item.value" />
+		@visible-change="open"
+		:filterable="true"
+		:remote="true"
+		:allow-create="true">
+
+			<Option v-for="item in itemsC" :key="item.value" v-bind="item"/>
+
 		</Select>
 	</div>
 </template>

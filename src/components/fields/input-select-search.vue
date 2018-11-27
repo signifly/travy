@@ -1,23 +1,25 @@
 <template>
 	<div class="select-search">
 		<Select
-		v-model="data.value"
 		@change="update"
-		v-bind="{size: sizeMap, loading}"
-		:remote-method="getListQ"
+		v-bind="{value, size}"
+		:remote-method="getItems"
 		:disabled="_disabled"
 		:clearable="_clearable"
-		@visible-change="initSearch"
-		filterable remote reserve-keyword>
-			<Option v-for="item in listMap" v-bind="item" :key="item.value" />
+		@visible-change="open"
+		:filterable="true"
+		:remote="true">
+
+			<Option v-for="item in itemsC" :key="item.value" v-bind="item"/>
+
 		</Select>
 	</div>
 </template>
 
 <script>
-import {get, debounce, uniqBy} from "lodash";
 import {Select, Option} from "element-ui";
 import {meta} from "@/modules/utils";
+import {merge, get} from "lodash";
 
 export default {
 	components: {Select, Option},
@@ -28,10 +30,11 @@ export default {
 				value: "selectValue",
 				options: {
 					endpoint: {
-						url: meta.items
+						url: meta.items,
+						params: {filter: {test: "test"}}
 					},
-					key: "",
 					itemKey: "",
+					key: "",
 					label: "name",
 					value: "id"
 				}
@@ -45,7 +48,6 @@ export default {
 		_disabled: {type: Boolean, required: false, doc: true},
 		meta: {type: Object, require: false, default: () => ({})},
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
-		size: {type: String, default: "medium"},
 		value: {type: [String, Number], required: false, doc: true},
 		_value: {type: String, required: true},
 		options: {type: Object, required: false},
@@ -53,47 +55,53 @@ export default {
 	},
 	data() {
 		return {
+			selectedItem: null,
 			opened: false,
-			loading: false,
-			item: null,
-			res: null,
-			data: {
-				value: this.value
-			}
+			items: []
 		}
 	},
 	computed: {
 		endpoint: (t) => t._options.endpoint,
-		nodata: (t) => !t.data.value,
-		oKey: (t) => t._options.key,
-		oLabel: (t) => t._options.label,
-		oValue: (t) => t._options.value,
-		oItemKey: (t) => t._options.itemKey,
 
-		list() {
-			const resList = this.oKey ? get(this.res, this.oKey, []) : this.res || [];
-			const itemList = this.item ? [this.item] : [];
-			const list = [...itemList, ...resList];
-			return uniqBy(list, this.oValue);
-		},
-
-		listMap: (t) => t.list.map(x => ({
-			value: get(x, t.oValue),
-			label: get(x, t.oLabel)
-		})),
-
-		sizeMap() {
+		size() {
 			if (this.meta.location === "table") return "small";
 			if (this.meta.location === "tabs") return "medium";
-			return this.size;
-		}
+			return "medium";
+		},
+
+		itemsC: (t) => [t.selectedItem, ...t.items].filter(x => x).map(x => ({
+			value: get(x, t._options.value),
+			label: get(x, t._options.label)
+		}))
 	},
 	methods: {
-		initSearch(open) {
-			if (!this.opened && open) {
+		open() {
+			if (!this.opened) {
 				this.opened = true;
-				this.getList();
+				this.getItems();
 			}
+		},
+
+		async getItems(search) {
+			const key = this._options.key;
+
+			const {data} = await this.$axios.get(this.endpoint.url, {
+				params: merge({}, this.endpoint.params, {
+					filter: {search},
+					count: 30
+				})
+			});
+
+			this.items = key ? get(data, key) : data;
+		},
+
+		async getSelectedItem() {
+			const key = this._options.itemKey;
+			const {data} = await this.$axios.get(`${this.endpoint.url}/${this.value}`);
+			this.selectedItem = key ? get(data, key) : data;
+
+			// remove selectedItem after Select caches it
+			this.$nextTick(() => this.selectedItem = null);
 		},
 
 		update(val) {
@@ -101,33 +109,12 @@ export default {
 				action: "update",
 				data: {[this._value]: val}
 			});
-		},
-
-		async getList(search) {
-			const {data} = await this.$axios.get(this.endpoint.url, {params: {
-				...this.endpoint.params,
-				filter: {search}, count: 30}
-			});
-			this.res = data;
-			this.loading = false;
-		},
-
-		getListDebounced: debounce(function(search) {
-			this.getList(search);
-		}, 500),
-
-		getListQ(search) {
-			this.loading = true;
-			this.getListDebounced(search);
-		},
-
-		async getItem() {
-			const {data} = await this.$axios.get(`${this.endpoint.url}/${this.value}`);
-			this.item = this.oItemKey ? data[this.oItemKey] : data;
 		}
 	},
 	created() {
-		if (this.value) this.getItem();
+		if (this.value) {
+			this.getSelectedItem();
+		}
 	}
 };
 </script>
