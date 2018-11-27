@@ -1,21 +1,26 @@
 <template>
-	<div class="select-multi-search-add">
+	<div class="select-multi-search">
 		<Select
-		v-model="data.values"
-		v-bind="{size, loading}"
-		:remote-method="getListOptionsQ"
+		v-bind="{size}"
+		:value="valuesC"
 		:disabled="_disabled"
 		:clearable="_clearable"
+		:filterable="true"
+		:multiple="true"
+		:remote="true"
+		:reserve-keyword="true"
+		:remote-method="getItems"
 		@change="update"
-		@visible-change="initSearch"
-		filterable multiple remote reserve-keyword>
-			<Option v-for="item in list" v-bind="item" :key="item.value" />
+		@visible-change="initSearch">
+
+			<Option v-for="item in itemsC" v-bind="item" :key="item.value"/>
+
 		</Select>
 	</div>
 </template>
 
 <script>
-import {get, debounce, uniqBy, isObjectLike} from "lodash";
+import {get, merge, isObjectLike} from "lodash";
 import {Select, Option} from "element-ui";
 import {meta} from "@/modules/utils";
 
@@ -27,23 +32,26 @@ export default {
 				disabled: false,
 				values: "values",
 				options: {
-					list: meta.items,
+					endpoint: {
+						url: meta.items,
+						params: {filter: {test: "test"}}
+					},
 					key: "",
 					label: "name",
 					value: "id"
 				}
 			},
 			data: {
-				values: [1],
+				values: [1, 2, 3],
 
-				_values: [
+				valuesObjs: [
 					{
 						id: 1,
-						name: "stol"
+						name: "item1"
 					},
 					{
 						id: 2,
-						name: "taske"
+						name: "item2"
 					}
 				]
 			}
@@ -62,93 +70,82 @@ export default {
 	},
 	data() {
 		return {
+			selectedItems: this.values,
 			opened: false,
-			loading: false,
-			listOptions: [],
-			listSelected: [],
-			res: null,
-			data: {
-				values: []
-			}
+			items: []
 		}
 	},
 	computed: {
-		valuesObj: (t) => t.values.map(x => isObjectLike(x)).every(x => x),
-		nodata: (t) => t.data.values.length === 0,
-		endpoint: (t) => t._options.list,
-		oLabel: (t) => t._options.label,
-		oValue: (t) => t._options.value,
-		oKey: (t) => t._options.key,
-
-		list() {
-			let list = [...this.listSelected, ...this.listOptions];
-			list = uniqBy(list, this.oValue);
-
-			return list.map(x => ({
-				value: get(x, this.oValue),
-				label: get(x, this.oLabel)
-			}));
-		},
+		objArray: (t) => t.values.map(x => isObjectLike(x)).every(x => x),
+		endpoint: (t) => t._options.endpoint,
 
 		size() {
 			if (this.meta.location === "table") return "small";
 			if (this.meta.location === "tabs") return "medium";
 			return "medium";
-		}
+		},
+
+		valuesC: (t) => !t.objArray ? t.values : t.values.map(x => {
+			return get(x, t._options.value)
+		}),
+
+		itemsC: (t) => [...t.selectedItems, ...t.items].map(x => ({
+			value: get(x, t._options.value),
+			label: get(x, t._options.label)
+		}))
 	},
 	methods: {
-		initSearch(open) {
-			if (!this.opened && open) {
+		initSearch() {
+			if (!this.opened) {
 				this.opened = true;
-				this.getListOptions();
+				this.getItems();
 			}
 		},
+
+		async getItems(search) {
+			const key = this._options.key;
+
+			const {data} = await this.$axios.get(this.endpoint.url, {
+				params: merge({}, this.endpoint.params, {
+					filter: {search},
+					count: 30
+				})
+			});
+
+			this.items = key ? get(data, key) : data;
+		},
+
+		async getSelectedItems() {
+			const key = this._options.key;
+			const val = this._options.value;
+
+			if (!this.objArray) {
+				const {data} = await this.$axios.get(this.endpoint.url, {params: {
+					filter: {[val]: this.values}
+				}});
+				this.selectedItems = key ? get(data, key) : data;
+			}
+
+			// remove selectedItem after Select caches it
+			this.$nextTick(() => this.selectedItems = []);
+		},
+
 
 		update(val) {
 			this.$emit("fieldA", {
 				action: "update",
 				data: {[this._values]: val}
 			});
-		},
-
-		async getListOptions(search) {
-			const {data} = await this.$axios.get(this.endpoint, {params: {filter: {search}, count: 30}});
-			this.listOptions = get(data, this.oKey, data);
-			this.loading = false;
-		},
-
-		getListOptionsDebounced: debounce(function(search) {
-			this.getListOptions(search);
-		}, 500),
-
-		getListOptionsQ(search) {
-			this.loading = true;
-			this.getListOptionsDebounced(search);
-		},
-
-		async getListSelected() {
-			const {data} = await this.$axios.get(this.endpoint, {params: {filter: {[this.oValue]: this.values}}});
-			return get(data, this.oKey, data);
-		},
-
-		async init() {
-			if (this.valuesObj) {
-				this.listSelected = this.values;
-				this.data.values = this.values.map(x => x[this.oValue]);
-			} else {
-				this.listSelected = await this.getListSelected();
-				this.data.values = this.values;
-			}
 		}
 	},
 	created() {
-		this.init();
+		this.getSelectedItems();
 	}
 };
 </script>
 
 <style lang="scss" scoped>
-.select-multi-search-add {
+.select-multi-search {
 	.el-select {
 		width: 100%;
 	}
