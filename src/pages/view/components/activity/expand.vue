@@ -4,8 +4,8 @@
 			<TableColumn label="key" prop="key" width="250">
 				<b class="key" slot-scope="{row}" v-text="row.key"/>
 			</TableColumn>
-			<TableColumn :label="old ? 'from' : 'data'" prop="from"/>
-			<TableColumn label="to" prop="to" v-if="old"/>
+			<TableColumn label="from" prop="from" v-if="old"/>
+			<TableColumn :label="old ? 'to' : 'data'" prop="to"/>
 		</Table>
 	</div>
 </template>
@@ -23,8 +23,8 @@ export default {
 	computed: {
 		data: (t) => Object.entries(t.attributes).map(([key, val]) => ({
 			key,
-			from: val,
-			to: get(t.old, key)
+			to: val,
+			from: get(t.old, key)
 		}))
 	}
 };
