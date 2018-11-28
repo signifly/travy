@@ -32,7 +32,7 @@ export default {
 		}
 	},
 	computed: {
-		endpointUrl: (t) => rStringProps({data: t.parentData, string: t.endpoint.url}),
+		endpointUrl: (t) => rStringProps({data: t.parentData, val: t.endpoint.url}),
 		modifiers: (t) => t.$route.query.modifiers,
 
 		fieldAlt: (t) => ({

@@ -23,7 +23,7 @@ export default {
 		data: (t) => t.scope.row,
 		onClick: (t) => t.column.onClick,
 		link() {
-			const url = rStringProps({data: this.data, string: this.onClick});
+			const url = rStringProps({data: this.data, val: this.onClick});
 			return url ? {path: url, query: {modifiers: this.query.modifiers}} : false;
 		}
 	},

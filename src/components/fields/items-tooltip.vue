@@ -60,7 +60,7 @@ export default {
 		itemsMap: (t) => t.items.map(item => ({
 			id: item.id,
 			label: get(item, t._itemKey),
-			link: rStringProps({string: t._itemLink, data: item})
+			link: rStringProps({val: t._itemLink, data: item})
 		}))
 	},
 	methods: {

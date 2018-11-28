@@ -16,7 +16,7 @@ export default {
 	computed: {
 		query: (t) => t.$route.query,
 		tableId: (t) => t.$route.params.tableId,
-		firstUrl: (t) => rStringProps({string: t.url, data: t.selectedItems[0]})
+		firstUrl: (t) => rStringProps({val: t.url, data: t.selectedItems[0]})
 	},
 	methods: {
 		setSequential() {

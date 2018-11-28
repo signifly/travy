@@ -42,28 +42,24 @@ export const base64Encode = (file) => {
 };
 
 
-export const rStringProps = ({data, string}) => {
-	if (!string) return;
-
+export const rStringProps = ({data, val = ""}) => {
 	// find all {KEY} in string and replace with data value
-	return replace(string, /\{.*?\}/g, (key) => get(data, key.slice(1, -1), key));
+	return replace(val, /\{.*?\}/g, (key) => get(data, key.slice(1, -1), key));
 };
 
 
 export const rStringPropsDeep = ({data, obj}) => {
 	if (!obj) return;
 
-	return (() => {
-		const parse = (item) => transform(item, (res, val, key) => {
-			if (isObject(val)) {
-				res[key] = parse(val);
-			} else {
-				res[key] = rStringProps({data, string: val});
-			}
-		});
+	const parse = (item) => transform(item, (res, val, key) => {
+		if (isObject(val)) {
+			res[key] = parse(val);
+		} else {
+			res[key] = rStringProps({data, val});
+		}
+	});
 
-		return parse(obj);
-	})();
+	return parse(obj);
 };
 
 

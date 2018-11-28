@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import {get, eq, gt, gte, lt, lte, mapValues} from "lodash";
-import {rStringProps} from "@/modules/utils";
+import {get, eq, gt, gte, lt, lte} from "lodash";
+import {rStringProps, rStringPropsDeep} from "@/modules/utils";
 import modal from "./modal.vue";
 import popup from "./popup.vue";
 import show from "./show.vue";
@@ -33,17 +33,15 @@ export default {
 
 		payload: ({props, data}) => ({
 			type: get(props, "payload.type"),
-			data: mapValues(get(props, "payload.data"), (val) => {
-				return rStringProps({data, string: val});
-			})
+			data: rStringPropsDeep({data, obj: get(props, "payload.data")})
 		}),
 
 		endpoint: ({props, dataComb}) => ({
 			method: get(props, "endpoint.method"),
-			url: rStringProps({data: dataComb, string: get(props, "endpoint.url")})
+			url: rStringProps({data: dataComb, val: get(props, "endpoint.url")})
 		}),
 
-		onSubmit: ({dataComb, props}) => rStringProps({data: dataComb, string: props.onSubmit}),
+		onSubmit: ({dataComb, props}) => rStringProps({data: dataComb, val: props.onSubmit}),
 
 		propsC: ({props, payload, endpoint, onSubmit}) => ({
 			...props,
@@ -64,7 +62,7 @@ export default {
 	methods: {
 		submit({data}) {
 			if (this.onSubmit) {
-				this.$router.push(rStringProps({data, string: this.onSubmit}));
+				this.$router.push(rStringProps({data, val: this.onSubmit}));
 			} else {
 				this.$emit("fieldA", {
 					action: "refreshData",
