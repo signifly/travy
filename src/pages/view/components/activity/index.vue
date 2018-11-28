@@ -3,7 +3,10 @@
 		<div class="title">Change history</div>
 
 		<div class="table">
-			<Table size="small" v-bind="{data: itemsMap}">
+			<Table size="small" class="activity-table" v-bind="{data: itemsMap}">
+				<TableColumn type="expand">
+					<expand slot-scope="{row}" v-bind="row.properties"/>
+				</TableColumn>
 				<TableColumn width="100" label="id" prop="id"/>
 				<TableColumn width="180" label="date" prop="date"/>
 				<TableColumn width="150" label="type" prop="type"/>
@@ -13,7 +16,7 @@
 			</Table>
 		</div>
 
-		<pagination v-bind="meta" v-if="meta" @update="getItems"/>
+		<pagination v-if="meta" v-bind="meta" @update="getItems"/>
 	</div>
 </template>
 
@@ -21,10 +24,11 @@
 import {date, rStringProps} from "@/modules/utils";
 import {Table, TableColumn} from "element-ui";
 import pagination from "./pagination";
+import expand from "./expand";
 import {get} from "lodash";
 
 export default {
-	components: {Table, TableColumn, pagination},
+	components: {Table, TableColumn, expand, pagination},
 	props: {
 		endpoint: {type: Object, required: true},
 		data: {type: Object, required: true}
@@ -43,6 +47,7 @@ export default {
 		itemsMap: (t) => t.items.map(x => ({
 			id: `#${x.id}`,
 			type: x.description,
+			properties: x.properties,
 			subject: x.humanized_subject,
 			date: date(x.updated_at).sDateTime,
 			user: x.causer ? x.causer.name : "System",
@@ -52,7 +57,7 @@ export default {
 	methods: {
 		async getItems(page = 1) {
 			const {data: {data, meta}} = await this.$axios.get(`${this.endpointUrl}/activity`, {
-				params: {count: this.pageCount, page}
+				params: {page, count: this.pageCount}
 			});
 			this.meta = meta;
 			this.items = data;
@@ -76,13 +81,14 @@ export default {
 	}
 
 	.table {
-		.el-table {
+		.activity-table {
 			background-color: transparent;
 
 			/deep/ {
 				thead {
 					color: $blue4;
 				}
+
 				tr, th {
 					background-color: transparent;
 				}
