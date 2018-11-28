@@ -1,6 +1,6 @@
 <template>
 	<action
-	v-bind="[action, {data, active}]"
+	v-bind="[actionC, {active}]"
 	:actionProps="{position: 'top-right'}"
 	@close="close"
 	@fieldA="fieldA">
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import {merge} from "lodash";
 import {DropdownItem} from "element-ui";
 import action from "@/components/actions";
 
@@ -21,9 +22,9 @@ export default {
 		ids: {type: Array, required: true}
 	},
 	computed: {
-		data() {
-			return {...this.action.props.data, ids: this.ids};
-		}
+		actionC: (t) => merge({}, t.action, {
+			props: {payload: {data: {ids: t.ids}}}
+		})
 	},
 	methods: {
 		close() {
