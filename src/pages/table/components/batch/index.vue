@@ -1,18 +1,20 @@
 <template>
 	<div class="batch">
-		<panel>
-			<selected v-bind="{selectedItems, selectedOptions}" @unselect="unselect"/>
+		<transition name="el-zoom-in-bottom">
+			<panel v-if="selectedItems.length > 0">
+				<selected v-bind="{selectedItems, selectedOptions}" @unselect="unselect"/>
 
-			<div class="actions">
-				<div class="item">
-					<sequential v-if="sequential" v-bind="[sequential, {selectedItems, ids}]"/>
-				</div>
+				<div class="actions">
+					<div class="item">
+						<sequential v-if="sequential" v-bind="[sequential, {selectedItems, ids}]"/>
+					</div>
 
-				<div class="item">
-					<bulk v-if="bulk" v-bind="[bulk, {ids}]" @fieldA="fieldA"/>
+					<div class="item">
+						<bulk v-if="bulk" v-bind="[bulk, {ids}]" @fieldA="fieldA"/>
+					</div>
 				</div>
-			</div>
-		</panel>
+			</panel>
+		</transition>
 	</div>
 </template>
 

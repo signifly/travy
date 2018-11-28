@@ -19,7 +19,7 @@
 				/>
 
 				<pagination v-if="meta" v-bind="[meta, {loading}]" @getData="getData"/>
-				<batch v-if="selectedItems.length > 0 && batch" v-bind="[batch, {selectedItems}]" @unselect="unselect" @fieldA="fieldA"/>
+				<batch v-bind="[batch, {selectedItems}]" @unselect="unselect" @fieldA="fieldA"/>
 			</box>
 		</div>
 	</div>

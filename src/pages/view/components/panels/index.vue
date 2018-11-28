@@ -1,5 +1,5 @@
 <template>
-	<transition name="el-zoom-in-bottom" appear>
+	<transition name="el-zoom-in-bottom">
 		<component v-if="comp" :is="comp" v-bind="{loading, error, title}" @refreshData="refreshData" @save="save"/>
 	</transition>
 </template>

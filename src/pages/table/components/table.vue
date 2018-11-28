@@ -38,7 +38,6 @@ export default {
 		query: () => state.query,
 		emptyText: (t) => t.data ? "No data" : "Loading",
 		sorting: (t) => t.query.sort || t.defaults.sort || {},
-
 		batchActive: (t) => t.batch.bulk || t.batch.sequential,
 
 		tableColumns() {

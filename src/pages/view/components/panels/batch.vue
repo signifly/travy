@@ -1,5 +1,5 @@
 <template>
-	<vPanel v-bind="{loading: loadingAll}" v-if="items.length">
+	<panel v-bind="{loading: loadingAll}" v-if="items.length">
 		<div class="left">
 			<Tooltip content="Save and close">
 				<a class="close" @click="closeSave"><i class="el-icon-circle-close-outline"/></a>
@@ -36,16 +36,16 @@
 				<i class="el-icon-check el-icon-right"/>
 			</Button>
 		</div>
-	</vPanel>
+	</panel>
 </template>
 
 <script>
 import {Button, Tooltip, Progress} from "element-ui";
-import vPanel from "@/components/panel.vue";
+import panel from "@/components/panel";
 import {get} from "lodash";
 
 export default {
-	components: {Button, Tooltip, Progress, vPanel},
+	components: {Button, Tooltip, Progress, panel},
 	props: {
 		title: {type: String, required: true},
 		error: {type: String, required: true},
