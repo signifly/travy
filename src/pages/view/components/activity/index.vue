@@ -13,27 +13,18 @@
 			</Table>
 		</div>
 
-		<div class="pagination" v-if="paginationActive">
-			<Pagination
-				small
-				background
-				layout="prev, pager, next"
-				:total="meta.total"
-				:page-size="meta.per_page"
-				:current-page.sync="page"
-				@current-change="getItems"
-			/>
-		</div>
+		<pagination v-bind="meta" v-if="meta" @update="getItems"/>
 	</div>
 </template>
 
 <script>
-import {get} from "lodash";
 import {date, rStringProps} from "@/modules/utils";
-import {Table, TableColumn, Pagination} from "element-ui";
+import {Table, TableColumn} from "element-ui";
+import pagination from "./pagination";
+import {get} from "lodash";
 
 export default {
-	components: {Table, TableColumn, Pagination},
+	components: {Table, TableColumn, pagination},
 	props: {
 		endpoint: {type: Object, required: true},
 		data: {type: Object, required: true}
@@ -41,28 +32,28 @@ export default {
 	data() {
 		return {
 			items: [],
-			page: 1,
 			meta: null,
-			pageCount: 8
+			pageCount: 10
 		}
 	},
 	computed: {
 		tableId: (t) => t.$route.params.tableId,
-		paginationActive: (t) => t.meta && t.meta.last_page > 1,
-		endpointUrl: (t) => rStringProps({data: t.data, string: t.endpoint.url}),
+		endpointUrl: (t) => rStringProps({data: t.data, val: t.endpoint.url}),
 
 		itemsMap: (t) => t.items.map(x => ({
 			id: `#${x.id}`,
 			type: x.description,
+			subject: x.humanized_subject,
 			date: date(x.updated_at).sDateTime,
 			user: x.causer ? x.causer.name : "System",
-			changes: Object.keys(get(x.properties, "attributes", {})).join(", "),
-			subject: x.humanized_subject
+			changes: Object.keys(get(x.properties, "attributes", {})).join(", ")
 		}))
 	},
 	methods: {
 		async getItems(page = 1) {
-			const {data: {data, meta}} = await this.$axios.get(`${this.endpointUrl}/activity`, {params: {count: this.pageCount, page}});
+			const {data: {data, meta}} = await this.$axios.get(`${this.endpointUrl}/activity`, {
+				params: {count: this.pageCount, page}
+			});
 			this.meta = meta;
 			this.items = data;
 		}
@@ -101,12 +92,6 @@ export default {
 				}
 			}
 		}
-	}
-
-	.pagination {
-		margin-top: 1em;
-		display: flex;
-		justify-content: center;
 	}
 }
 </style>
