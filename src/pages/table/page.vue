@@ -99,16 +99,16 @@ export default {
 				},
 
 				update: async ({item, data}) => {
-					await s.acquire();
 					const url = rStringProps({data: item, val: `${this.endpoint.url}/{id}`});
 					await this.$axios.put(url, {...data, modifier: this.modifiers});
 					await this.getData({loading: false});
-					s.release();
 				}
 			};
 
 			try {
+				await s.acquire();
 				await actions[action]({data, item});
+				s.release();
 			} catch(err) {
 				// error
 			} finally {

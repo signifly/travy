@@ -60,11 +60,12 @@ export default {
 		}
 	},
 	methods: {
-		submit({data}) {
+		submit(res) {
 			if (this.onSubmit) {
-				this.$router.push(rStringProps({data, val: this.onSubmit}));
+				this.$router.push(rStringProps({data: res.data, val: this.onSubmit}));
 			} else {
 				this.$emit("fieldA", {
+					res,
 					action: "refreshData",
 					done: async () => this.close()
 				});

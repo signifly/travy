@@ -54,7 +54,7 @@ export default {
 			try {
 				this.loading = true;
 
-				const {data: {data}} = await this.$axios({
+				const {data} = await this.$axios({
 					data: this.upload ? toFormData(this.payloadC) : this.payloadC,
 					method: this.endpoint.method,
 					url: this.endpoint.url,
@@ -64,7 +64,7 @@ export default {
 					}
 				});
 
-				this.$emit("submit", {data});
+				this.$emit("submit", data);
 			} catch(err) {
 				this.error = err;
 				this.loading = false;

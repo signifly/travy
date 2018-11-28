@@ -36,13 +36,13 @@ export default {
 			try {
 				this.loading = true;
 
-				const {data: {data}} = await this.$axios({
+				const {data} = await this.$axios({
 					method: this.endpoint.method,
 					url: this.endpoint.url,
 					data: this.payload,
 				});
 
-				this.$emit("submit", {data});
+				this.$emit("submit", data);
 			} catch(err) {
 				this.loading = false;
 			}
