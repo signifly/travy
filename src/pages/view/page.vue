@@ -3,10 +3,10 @@
 		<div class="view-page">
 
 			<Row class="top" :gutter="20">
-				<Col class="left" :span="16">
+				<Col class="left" :span="12">
 					<vHeader v-bind="{data, header}"/>
 				</Col>
-				<Col class="right" :span="8">
+				<Col class="right" :span="12">
 					<modifiers v-if="modifiers" v-bind="{modifiers}" @refresh="refresh"/>
 					<actions v-if="actions" v-bind="{actions, data}" @submit="getData"/>
 				</Col>
@@ -34,7 +34,6 @@
 
 <script>
 import {Row, Col} from "element-ui";
-
 import tabs from "./components/tabs";
 import panels from "./components/panels";
 import vHeader from "./components/header";
@@ -134,6 +133,14 @@ export default {
 
 	&-enter, &-leave-to {
 		opacity: 0;
+	}
+
+	.top {
+		.right {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+		}
 	}
 }
 </style>

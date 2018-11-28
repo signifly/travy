@@ -1,5 +1,5 @@
 <template>
-	<div class="field" :class="{modifiers: alt.modifiers}" :style="{width: widthCalc}">
+	<div class="field" :style="{width: widthCalc}">
 
 		<div class="content">
 			<vlabel v-bind="{alt, name, label, tooltip}" v-if="rules.label"/>
@@ -12,8 +12,7 @@
 
 
 		<div class="description" v-if="description && rules.description">
-			<div class="title">Description:</div>
-			<div class="text">{{description}}</div>
+			{{description}}
 		</div>
 
 	</div>
@@ -40,14 +39,7 @@ export default {
 	computed: {
 		option: (t) => get(t.alt.options, t.name, {}),
 		error: (t) => get(t.alt.errors, t.name, [])[0],
-
-		widthCalc() {
-			if (this.alt.modifiers) {
-				return this.width === 100 ? `calc(50% - 1em)` : `calc(${this.width}% - 1em)`;
-			} else {
-				return this.width === 100 ? `${this.width}%` : `calc(${this.width}% - 1em)`;
-			}
-		},
+		widthCalc: (t) => t.width === 100 ? `${t.width}%` : `calc(${t.width}% - 1em)`,
 
 		rules() {
 			const type = this.alt.type;
@@ -65,17 +57,8 @@ export default {
 .field {
 	margin: $fieldMargin 0;
 
-	&.modifiers {
-		margin: 0;
-
-		&:only-child {
-			margin-left: auto;
-		}
-
-		.content {
-			display: flex;
-			align-items: center;
-		}
+	.content {
+		width: 100%;
 	}
 
 	.error {
@@ -97,21 +80,11 @@ export default {
 	}
 
 	.description {
-		margin-top: 0.75em;
+		margin-top: 0.6em;
 		margin-bottom: 0.5em;
-		font-size: em(13);
-		display: flex;
-
-		.title {
-			font-weight: 500;
-			margin-right: 0.5em;
-			margin-top: -1px;
-		}
-
-		.text {
-			font-style: italic;
-			color: $blue4;
-		}
+		font-size: em(12);
+		font-style: italic;
+		color: $blue4;
 	}
 }
 </style>

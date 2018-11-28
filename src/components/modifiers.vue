@@ -1,11 +1,13 @@
 <template>
 	<div class="modifiers">
-		<field
-			v-for="field in fields"
-			:key="field.name"
-			v-bind="[field, {alt: {data: dataComb, modifiers: true}}]"
-			@fieldA="fieldA"
-		/>
+		<div class="modifiers-field" v-for="field in fields" :key="field.name">
+			<div class="label" v-text="field.label"/>
+			<field
+				label=""
+				v-bind="[field, {alt: {data: dataComb}}]"
+				@fieldA="fieldA"
+			/>
+		</div>
 	</div>
 </template>
 
@@ -34,9 +36,21 @@ export default {
 <style lang="scss" scoped>
 .modifiers {
 	width: 100%;
-	max-width: 600px;
+	max-width: 550px;
 	display: flex;
-	justify-content: space-between;
-	// transition: cubic(opacity, 0.3s);
+	justify-content: flex-end;
+
+	&-field {
+		display: flex;
+		align-items: center;
+		margin: -$fieldMargin 0;
+		margin-left: 1em;
+
+		.label {
+			margin-right: 1em;
+			font-size: 0.875em;
+			color: $blue4;
+		}
+	}
 }
 </style>
