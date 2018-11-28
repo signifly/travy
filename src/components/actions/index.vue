@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import {get, eq, gt, gte, lt, lte} from "lodash";
-import {rStringProps, rStringPropsDeep} from "@/modules/utils";
+import {get, eq, gt, gte, lt, lte, mapValues} from "lodash";
+import {rStringProps} from "@/modules/utils";
 import modal from "./modal.vue";
 import popup from "./popup.vue";
 import show from "./show.vue";
@@ -25,7 +25,7 @@ export default {
 		actionProps: {type: Object, required: false},
 		active: {type: Boolean, required: true},
 		props: {type: Object, required: true},
-		data: {type: Object, required: false},
+		data: {type: Object, required: false}, // parent data
 		hide: {type: Object, required: false} // {key, operator, value}
 	},
 	computed: {
@@ -33,7 +33,7 @@ export default {
 
 		payload: ({props, data}) => ({
 			type: get(props, "payload.type"),
-			data: rStringPropsDeep({data, obj: get(props, "payload.data")})
+			data: mapValues(get(props, "payload.data"), (val) => get(data, val, val))
 		}),
 
 		endpoint: ({props, dataComb}) => ({
