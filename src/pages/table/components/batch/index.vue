@@ -27,8 +27,8 @@ import bulk from "./bulk";
 export default {
 	components: {panel, sequential, selected, bulk},
 	props: {
+		selectedOptions: {type: Object, required: false},
 		selectedItems: {type: Array, required: true},
-		selectedOptions: {type: Object, required: true},
 		sequential: {type: Object, required: false},
 		bulk: {type: Object, required: false},
 	},
