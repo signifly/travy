@@ -15,7 +15,7 @@
 <script>
 import vBreadcrumb from "../breadcrumb.vue"
 import {Container, Main} from "element-ui";
-import vHeader from "@/components/header.vue";
+import vHeader from "@/components/header";
 
 export default {
 	components: {vBreadcrumb, Container, Main, vHeader},
@@ -31,7 +31,7 @@ export default {
 .main {
 	background-color: $white2;
 	min-height: 100vh;
-	
+
 	.container {
 		max-width: $width;
 		margin: 0 auto;

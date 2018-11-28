@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import vHeader from "@/components/header.vue";
+import vHeader from "@/components/header";
 import vbase from "./base.vue";
 
 export default {
