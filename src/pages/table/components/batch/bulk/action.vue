@@ -35,9 +35,9 @@ export default {
 
 			this.$store.dispatch("notify/send", {
 				type: "info",
-				message: res.message,
-				title: `Bulk: ${this.action.title}`
-			})
+				title: res.title,
+				message: res.message
+			});
 		}
 	}
 };

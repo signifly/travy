@@ -29,7 +29,8 @@ export default {
 					onSubmit: "#vActions",
 					endpoint: {
 						method: "post",
-						url: "https://example.com"
+						url: "https://example.com",
+						params: {}
 					},
 					fields: [
 						{
@@ -66,7 +67,7 @@ export default {
 	},
 	props: {
 		alt: {type: Object, default: () => ({})},
-		_size: {type: String, default: "medium", note: `medium/small/mini`},
+		_size: {type: String, default: "medium", doc: true, note: `medium/small/mini`},
 		_title: {type: String, required: true, doc: true},
 		_icon: {type: String, required: false, doc: true},
 		_status: {type: String, required: false, doc: true},
@@ -78,7 +79,7 @@ export default {
 		}
 	},
 	computed: {
-		icon: (t) => t._icon ? `el-icon-${_icon}` : ""
+		icon: (t) => t._icon ? `el-icon-${t._icon}` : ""
 	},
 	methods: {
 		close() {
