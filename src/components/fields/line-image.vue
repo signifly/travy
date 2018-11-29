@@ -31,7 +31,7 @@
 <script>
 const noimage = require("!file-loader!@/assets/icons/noimage.svg");
 import inputImage from "./input-image.vue";
-import actions from "./actions.vue";
+import actions from "./button-actions.vue";
 
 export default {
 	components: {inputImage, actions},

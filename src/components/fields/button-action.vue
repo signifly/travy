@@ -5,7 +5,7 @@
 	@fieldA="fieldA">
 
 		<div class="button-action">
-			<Button :size="_size" :type="_status" :icon="icon" @click="active = true">{{_title}}</Button>
+			<Button :size="_size" :type="_status" :icon="icon" @click="active = true" plain>{{_title}}</Button>
 		</div>
 	</action>
 </template>
@@ -26,7 +26,7 @@ export default {
 				action: {
 					id: "modal",
 					title: "Modal title",
-					onSubmit: "#vActions",
+					onSubmit: "#button-action",
 					endpoint: {
 						method: "post",
 						url: "https://example.com",
@@ -37,7 +37,7 @@ export default {
 							name: "1",
 							label: "a field",
 							fieldType: {
-								id: "vInput",
+								id: "input-text",
 								props: {
 									value: "input"
 								}
@@ -47,7 +47,7 @@ export default {
 							name: "2",
 							label: "a field",
 							fieldType: {
-								id: "vInput",
+								id: "input-text",
 								props: {
 									value: "input2"
 								}

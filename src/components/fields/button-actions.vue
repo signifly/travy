@@ -1,7 +1,7 @@
 <template>
 	<div class="actions">
 		<Dropdown ref="dropdown" trigger="click" :show-timeout="0" :hide-timeout="0" :hide-on-click="false" size="small" @command="select">
-			<a class="el-dropdown-link">Actions</a>
+			<Button :size="_size" type="primary" plain>Actions <i class="el-icon-arrow-down el-icon--right"/></Button>
 
 			<DropdownMenu slot="dropdown">
 				<action
@@ -23,14 +23,16 @@
 </template>
 
 <script>
-import {Dropdown, DropdownMenu, DropdownItem} from "element-ui";
+import {Dropdown, DropdownMenu, DropdownItem, Button} from "element-ui";
 import action from "@/components/actions";
 
 export default {
-	components: {Dropdown, DropdownMenu, DropdownItem, action},
+	components: {Dropdown, DropdownMenu, DropdownItem, Button, action},
 	meta: {
 		res: {
 			props: {
+				size: "mini",
+
 				actions: [
 					{
 						title: "Remove",
@@ -81,7 +83,7 @@ export default {
 									name: "1",
 									label: "a field",
 									fieldType: {
-										id: "vInput",
+										id: "input-text",
 										props: {
 											value: "input"
 										}
@@ -91,7 +93,7 @@ export default {
 									name: "2",
 									label: "a field",
 									fieldType: {
-										id: "vInput",
+										id: "input-text",
 										props: {
 											value: "input2"
 										}
@@ -113,6 +115,7 @@ export default {
 	},
 	props: {
 		_actions: {type: Array, required: true, doc: true},
+		_size: {type: String, default: "mini", doc: true, note: `medium/small/mini`},
 		alt: {type: Object, default: () => ({})}
 	},
 	data() {
