@@ -30,14 +30,8 @@ export default {
 		close() {
 			this.$emit("close");
 		},
-		fieldA({res, ...obj}) {
+		fieldA(obj) {
 			this.$emit("fieldA", obj);
-
-			this.$store.dispatch("notify/send", {
-				type: "info",
-				title: res.title,
-				message: res.message
-			});
 		}
 	}
 };

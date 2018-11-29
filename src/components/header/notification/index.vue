@@ -1,24 +1,39 @@
 <template>
-	<div class="notification">
-		<a class="badge">
+	<div class="notification" @focus="active = true" @blur="active = false" tabindex="0">
+		<a class="badge" @mousedown="toggle">
 			<Badge is-dot>
 				<div class="icon" v-html="require('@/assets/icons/bell.svg')"/>
 			</Badge>
 		</a>
+
+		<list v-show="active"/>
 	</div>
 </template>
 
 <script>
 import {Badge} from "element-ui";
+import list from "./list";
 
 export default {
-	components: {Badge}
+	components: {Badge, list},
+	data() {
+		return {
+			active: false
+		}
+	},
+	methods: {
+		toggle() {
+			this.active = !this.active;
+		}
+	}
 };
 </script>
 
 <style lang="scss" scoped>
 .notification {
 	position: relative;
+	outline: none;
+	color: $black1;
 
 	.badge {
 		display: inline-flex;
@@ -26,10 +41,13 @@ export default {
 		align-items: center;
 		justify-content: center;
 		width: 60px;
+		margin-top: 4px;
 
 		.icon {
+			display: inline-flex;
+
 			/deep/ svg {
-				$s: 1.7em;
+				$s: 1.5em;
 				width: $s;
 				height: $s;
 				path {
@@ -41,7 +59,7 @@ export default {
 		.el-badge {
 			/deep/ .is-dot {
 				border: 0px;
-				right: 1em;
+				right: 0.9em;
 				top: 0.4em;
 			}
 		}

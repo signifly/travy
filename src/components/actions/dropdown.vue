@@ -1,12 +1,13 @@
 <template>
-	<popup :list="true">
+	<popup type="list">
 		<action
 		v-for="action in actions"
-		v-bind="action"
+		v-bind="[action, {data}]"
 		:active="selected === action"
 		:key="action.title"
-		@close="close"
-		@fieldA="fieldA">
+		@fieldA="$emit('fieldA', $event)"
+		@submit="$emit('submit', $event)"
+		@close="$emit('close')">
 
 			<a class="item" @click="select(action)">
 				{{action.title}}
@@ -23,6 +24,7 @@ import action from "./index.vue";
 export default {
 	components: {popup},
 	props: {
+		data: {type: Object, required: false},
 		actions: {type: Array, required: true}
 	},
 	data() {
@@ -33,14 +35,6 @@ export default {
 	methods: {
 		select(action) {
 			this.selected = this.selected ? null : action;
-		},
-
-		fieldA(obj) {
-			this.$emit("fieldA", obj);
-		},
-
-		close() {
-			this.selected = null;
 		}
 	},
 	beforeCreate() {

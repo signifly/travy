@@ -5,7 +5,8 @@
 		<component
 			v-if="active"
 			:is="props.id"
-			v-bind="[actionProps, propsC]"
+			v-bind="[actionProps, propsC, {data}]"
+			@fieldA="$emit('fieldA', $event)"
 			@close="close"
 			@submit="submit"
 		/>
@@ -61,12 +62,15 @@ export default {
 		}
 	},
 	methods: {
-		submit(res) {
+		submit({data, title, message}) {
+			if (title && message) {
+				this.$store.dispatch("notify/send", {type: "info", title, message});
+			}
+
 			if (this.onSubmit) {
-				this.$router.push(rStringProps({data: res.data, val: this.onSubmit}));
+				this.$router.push(rStringProps({data, val: this.onSubmit}));
 			} else {
 				this.$emit("fieldA", {
-					res,
 					action: "refreshData",
 					done: async () => this.close()
 				});

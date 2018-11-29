@@ -9,8 +9,8 @@
 		<vMenu/>
 
 		<div class="account">
-			<user/>
 			<notification/>
+			<user/>
 		</div>
 	</Header>
 </template>

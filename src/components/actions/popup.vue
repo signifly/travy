@@ -1,5 +1,5 @@
 <template>
-	<popup v-bind="{position}">
+	<popup v-bind="{position, type: 'action'}">
 		<div class="popup">
 			<div class="text">{{text}}</div>
 			<div class="buttons">
