@@ -25,5 +25,6 @@ export default {
 .actions {
 	text-align: right;
 	margin-top: 1em;
+	display: flex;
 }
 </style>
