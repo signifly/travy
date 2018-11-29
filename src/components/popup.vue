@@ -1,6 +1,6 @@
 <template>
 	<transition name="trans-fadeDown" appear>
-		<div class="popup" :class="position.split('-')" :style="{width}">
+		<div class="popup" :class="[position.split('-'), {list}]">
 			<slot/>
 		</div>
 	</transition>
@@ -10,7 +10,7 @@
 export default {
 	props: {
 		position: {type: String, required: false, default: "bottom-right"},
-		width: {type: String, required: false, default: "200px"}
+		list: {type: Boolean, required: false}
 	}
 };
 </script>
@@ -21,8 +21,9 @@ export default {
 	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 	background-color: $white1;
 	border-radius: 4px;
+	z-index: 2;
+	width: 200px;
 	padding: 1em;
-	z-index: 1;
 
 	&.top {
 		bottom: calc(100% + 1em);
@@ -37,6 +38,24 @@ export default {
 
 		&.right {
 			right: 0;
+		}
+	}
+
+	&.list {
+		padding: 0;
+		width: auto;
+
+		/deep/ .item {
+			display: block;
+			font-size: 0.8em;
+			white-space: nowrap;
+			user-select: none;
+			padding: 1em;
+
+			&:hover {
+				background-color: $--dropdown-menuItem-hover-fill;
+				color: $--dropdown-menuItem-hover-color;
+			}
 		}
 	}
 }

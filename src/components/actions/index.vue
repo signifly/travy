@@ -15,12 +15,13 @@
 <script>
 import {get, eq, gt, gte, lt, lte, mapValues} from "lodash";
 import {rStringProps} from "@/modules/utils";
+import dropdown from "./dropdown.vue";
 import modal from "./modal.vue";
 import popup from "./popup.vue";
 import show from "./show.vue";
 
 export default {
-	components: {modal, popup, show},
+	components: {dropdown, modal, popup, show},
 	props: {
 		actionProps: {type: Object, required: false},
 		active: {type: Boolean, required: true},

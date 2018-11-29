@@ -5,7 +5,7 @@
 	@fieldA="fieldA">
 
 		<div class="button-action">
-			<Button :size="_size" :type="_status" :icon="icon" @click="active = true" plain>{{_title}}</Button>
+			<Button :size="_size" :type="_status" :icon="icon" @click="toggle" plain>{{_title}}</Button>
 		</div>
 	</action>
 </template>
@@ -68,9 +68,9 @@ export default {
 	props: {
 		alt: {type: Object, default: () => ({})},
 		_size: {type: String, default: "medium", doc: true, note: `medium/small/mini`},
+		_status: {type: String, default: "primary", doc: true},
 		_title: {type: String, required: true, doc: true},
 		_icon: {type: String, required: false, doc: true},
-		_status: {type: String, required: false, doc: true},
 		_action: {type: Object, required: true, doc: true}
 	},
 	data() {
@@ -82,13 +82,12 @@ export default {
 		icon: (t) => t._icon ? `el-icon-${t._icon}` : ""
 	},
 	methods: {
-		close() {
-			this.active = false;
+		toggle() {
+			this.active = !this.active;
 		},
 
-		submit() {
-			this.close();
-			this.$emit("fieldA", {action: "getData"});
+		close() {
+			this.active = false;
 		},
 
 		fieldA(obj) {

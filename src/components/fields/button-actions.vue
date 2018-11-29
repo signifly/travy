@@ -5,12 +5,12 @@
 
 			<DropdownMenu slot="dropdown">
 				<action
+				v-for="action in actions"
 				v-bind="[action, {data: alt.data}]"
 				:active="selectedAction === action"
-				v-for="action in actions"
+				:key="action.title"
 				@close="close"
-				@fieldA="fieldA"
-				:key="action.title">
+				@fieldA="fieldA">
 
 					<DropdownItem class="item" :command="action">
 						{{action.title}}
