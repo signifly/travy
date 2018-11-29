@@ -1,5 +1,5 @@
 <template>
-	<vPopup v-bind="{position}">
+	<popup v-bind="{position}">
 		<div class="popup">
 			<div class="text">{{text}}</div>
 			<div class="buttons">
@@ -7,15 +7,15 @@
 				<Button size="mini" type="primary" :loading="loading" @click="submit">Submit</Button>
 			</div>
 		</div>
-	</vPopup>
+	</popup>
 </template>
 
 <script>
 import {Button} from "element-ui";
-import vPopup from "@/components/popup.vue";
+import popup from "@/components/popup";
 
 export default {
-	components: {Button, vPopup},
+	components: {Button, popup},
 	props: {
 		position: {type: String, required: false, default: "bottom-right"},
 		text: {type: String, required: false, default: "Are you sure?"},
