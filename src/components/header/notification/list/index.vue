@@ -33,7 +33,7 @@ export default {
 
 <style lang="scss" scoped>
 .list {
-	width: 200px;
+	width: 300px;
 	overflow: auto;
 	max-height: calc(100vh - 15em;)
 }
