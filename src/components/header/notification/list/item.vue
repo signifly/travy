@@ -20,7 +20,7 @@ export default {
 	props: {
 		id: {type: String, required: true},
 		title: {type: String, default: "a title"},
-		status: {type: String, required: true},
+		status: {type: String, default: "primary"},
 		message: {type: String, required: true},
 		is_read: {type: Boolean, required: true}
 	}

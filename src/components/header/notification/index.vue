@@ -1,12 +1,12 @@
 <template>
-	<div class="notification" @focus="active = true" @blur="active = false" tabindex="0">
+	<div class="notification">
 		<a class="badge" @mousedown="toggle">
 			<Badge is-dot>
 				<div class="icon" v-html="require('@/assets/icons/bell.svg')"/>
 			</Badge>
 		</a>
 
-		<list v-show="active"/>
+		<list v-if="active"/>
 	</div>
 </template>
 
