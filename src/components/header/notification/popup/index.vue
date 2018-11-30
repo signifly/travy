@@ -1,8 +1,8 @@
 <template>
 	<popup>
-		<div class="notificaion-popup">
+		<div class="notification-popup">
 			<vHeader v-bind="{loading}" @updateItems="updateItems"/>
-			<items v-bind="{items, meta}" @updateItem="updateItem" @getItems="getItems"/>
+			<items v-if="items" v-bind="{items, meta}" @updateItem="updateItem" @getItems="getItems"/>
 		</div>
 	</popup>
 </template>
@@ -16,8 +16,8 @@ export default {
 	components: {popup, vHeader, items},
 	data() {
 		return {
-			items: [],
 			meta: null,
+			items: null,
 			loading: false
 		}
 	},
@@ -28,7 +28,7 @@ export default {
 
 			try {
 				const {data: {data, meta}} = await this.$axios.get("account/notifications", {params: {page, count: 20}});
-				this.items = [...this.items, ...data];
+				this.items = [...this.items || [], ...data];
 				this.meta = meta;
 			} catch(err) {
 				// error
@@ -54,8 +54,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.notificaion-popup {
+.notification-popup {
+	overflow: hidden;
+	border-radius: 6px;
 	font-size: 0.8em;
 	width: 300px;
+	display: flex;
+	flex-direction: column;
+	max-height: 650px;
 }
 </style>

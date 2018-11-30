@@ -1,6 +1,12 @@
 <template>
 	<div class="items">
-		<item v-for="item in items" v-bind="item" :key="item.id" @updateItem="$emit('updateItem', $event)"/>
+		<template v-if="items.length">
+			<item v-if="items" v-for="item in items" v-bind="item" :key="item.id" @updateItem="$emit('updateItem', $event)"/>
+		</template>
+
+		<div class="noitems" v-else>
+			No notifications
+		</div>
 	</div>
 </template>
 
@@ -34,7 +40,13 @@ export default {
 <style lang="scss" scoped>
 .items {
 	overflow: auto;
-	height: 600px;
-	max-height: calc(100vh - 15em);
+
+	.noitems {
+		display: flex;
+		justify-content: center;
+		margin: 2em 0;
+		font-size: 1em;
+		font-weight: 500;
+	}
 }
 </style>

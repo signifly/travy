@@ -29,6 +29,7 @@ export default {
 	border-bottom: 2px solid $blue5;
 	justify-content: space-between;
 	align-items: center;
+	flex-shrink: 0;
 
 	.loading {
 		color: $blue5;
