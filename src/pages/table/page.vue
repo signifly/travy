@@ -50,7 +50,7 @@ export default {
 	},
 	data() {
 		return {
-			state, // make reactive
+			state,
 			data: null,
 			meta: null,
 			loading: false,

@@ -23,7 +23,7 @@
 
 			<Row class="bottom" :gutter="20">
 				<Col class="left" :span="24">
-					<activity v-if="activity" v-bind="{data, endpoint}"/>
+					<activity :key="data.updated_at" v-if="activity" v-bind="{data, endpoint}"/>
 				</Col>
 			</Row>
 
@@ -49,11 +49,11 @@ export default {
 	},
 	data() {
 		return {
-			definitions: null,
 			error: "",
 			data: null,
 			edit: false,
-			loading: false
+			loading: false,
+			definitions: null
 		}
 	},
 	computed: {
@@ -84,12 +84,12 @@ export default {
 
 			try {
 				await this.$refs.tabs.save();
+				await this.refreshData();
 				if (done) await done();
 				this.error = "";
 			} catch(err) {
 				this.error = err;
 			}
-
 			this.loading = false;
 		},
 
