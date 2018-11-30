@@ -1,30 +1,39 @@
 <template>
 	<div class="notification">
 		<a class="badge" @mousedown="toggle">
-			<Badge is-dot>
+			<Badge :value="unread" :max="99" type="primary">
 				<div class="icon" v-html="require('@/assets/icons/bell.svg')"/>
 			</Badge>
 		</a>
 
-		<list v-if="active"/>
+		<popup v-if="active"/>
 	</div>
 </template>
 
 <script>
 import {Badge} from "element-ui";
-import list from "./list";
+import popup from "./popup";
 
 export default {
-	components: {Badge, list},
+	components: {Badge, popup},
 	data() {
 		return {
-			active: false
+			active: false,
+			unread: 0
 		}
 	},
 	methods: {
 		toggle() {
 			this.active = !this.active;
+		},
+		async getUnread() {
+			const {data: {meta}} = await this.$axios.get("account/notifications", {params: {count: 1, filter: {read: false}}});
+			this.unread = meta.total;
 		}
+	},
+	created() {
+		this.getUnread();
+		setInterval(this.getUnread, 5000);
 	}
 };
 </script>
@@ -57,10 +66,17 @@ export default {
 		}
 
 		.el-badge {
-			/deep/ .is-dot {
-				border: 0px;
-				right: 0.9em;
-				top: 0.4em;
+			/deep/ {
+				.is-dot {
+					border: 0px;
+					right: 0.9em;
+					top: 0.4em;
+				}
+				.el-badge__content {
+					font-weight: bold;
+					font-size: 0.7em;
+					border: 0px;
+				}
 			}
 		}
 	}
