@@ -1,8 +1,8 @@
 <template>
 	<popup>
-		<div class="notificaion-popup" ref="notificaion-popup">
+		<div class="notificaion-popup">
 			<vHeader v-bind="{loading}" @updateItems="updateItems"/>
-			<items v-bind="{items}" @updateItem="updateItem"/>
+			<items v-bind="{items, meta}" @updateItem="updateItem" @getItems="getItems"/>
 		</div>
 	</popup>
 </template>
@@ -27,7 +27,7 @@ export default {
 			this.loading = true;
 
 			try {
-				const {data: {data, meta}} = await this.$axios.get("account/notifications", {params: {page}});
+				const {data: {data, meta}} = await this.$axios.get("account/notifications", {params: {page, count: 20}});
 				this.items = [...this.items, ...data];
 				this.meta = meta;
 			} catch(err) {
@@ -39,28 +39,16 @@ export default {
 
 		updateItem({id, ...data}) {
 			Object.assign(this.items.find(x => x.id === id), data);
+			this.$emit("getUnread");
 		},
 
 		updateItems(data) {
 			this.items = this.items.map(x => ({...x, ...data}));
-		},
-
-		scroll({target}) {
-			if (target.scrollTop + 200 >= (target.scrollHeight - target.offsetHeight)) {
-				if (this.meta.current_page < this.meta.last_page) {
-					this.getItems({page: this.meta.current_page + 1})
-				}
-			}
+			this.$emit("getUnread");
 		}
 	},
 	created() {
 		this.getItems();
-	},
-	mounted() {
-		this.$refs["notificaion-popup"].addEventListener("scroll", this.scroll);
-	},
-	beforeDestroy() {
-		this.$refs["notificaion-popup"].removeEventListener("scroll", this.scroll);
 	}
 };
 </script>

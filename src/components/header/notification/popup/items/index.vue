@@ -10,7 +10,23 @@ import item from "./item";
 export default {
 	components: {item},
 	props: {
-		items: {type: Array, required: true}
+		items: {type: Array, required: true},
+		meta: {type: Object, required: false}
+	},
+	methods: {
+		scroll({target}) {
+			if (target.scrollTop + 200 >= (target.scrollHeight - target.offsetHeight)) {
+				if (this.meta.current_page < this.meta.last_page) {
+					this.$emit("getItems", {page: this.meta.current_page + 1});
+				}
+			}
+		}
+	},
+	mounted() {
+		this.$el.addEventListener("scroll", this.scroll);
+	},
+	beforeDestroy() {
+		this.$el.removeEventListener("scroll", this.scroll);
 	}
 };
 </script>

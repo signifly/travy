@@ -6,7 +6,7 @@
 			</Badge>
 		</a>
 
-		<popup v-if="active"/>
+		<popup @getUnread="getUnread" :key="popupKey" v-if="active"/>
 	</div>
 </template>
 
@@ -19,6 +19,7 @@ export default {
 	data() {
 		return {
 			active: false,
+			popupKey: 0,
 			unread: 0
 		}
 	},
@@ -28,6 +29,7 @@ export default {
 		},
 		async getUnread() {
 			const {data: {meta}} = await this.$axios.get("account/notifications", {params: {count: 1, filter: {read: false}}});
+			if (meta.total > this.unread) this.popupKey++; // rerender popup if more unread items
 			this.unread = meta.total;
 		}
 	},
