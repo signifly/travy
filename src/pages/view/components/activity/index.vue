@@ -13,6 +13,11 @@
 				<TableColumn width="150" label="subject" prop="subject" />
 				<TableColumn width="250" label="user" prop="user" v-if="tableId !== 'users'"/>
 				<TableColumn label="changes" prop="changes"/>
+				<TableColumn label="revert" prop="revert">
+					<template slot-scope="{row}">
+						<Button size="mini" v-if="row.revertable">Revert</Button>
+					</template>
+				</TableColumn>
 			</Table>
 		</div>
 
@@ -21,14 +26,14 @@
 </template>
 
 <script>
+import {Table, TableColumn, Button} from "element-ui";
 import {date, rStringProps} from "@/modules/utils";
-import {Table, TableColumn} from "element-ui";
 import pagination from "./pagination";
 import expand from "./expand";
 import {get} from "lodash";
 
 export default {
-	components: {Table, TableColumn, expand, pagination},
+	components: {Table, TableColumn, Button, expand, pagination},
 	props: {
 		endpoint: {type: Object, required: true},
 		data: {type: Object, required: true}
