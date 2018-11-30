@@ -23,7 +23,7 @@
 
 			<Row class="bottom" :gutter="20">
 				<Col class="left" :span="24">
-					<activity :key="data.updated_at" v-if="activity" v-bind="{data, endpoint}"/>
+					<activity v-if="activity" :key="data.updated_at" v-bind="{data, endpoint}"/>
 				</Col>
 			</Row>
 
