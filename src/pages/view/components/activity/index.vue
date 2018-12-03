@@ -14,17 +14,17 @@
 				<TableColumn width="250" label="user" prop="user" v-if="tableId !== 'users'"/>
 				<TableColumn label="changes" prop="changes"/>
 				<TableColumn label="revert" prop="revert">
-					<template slot-scope="{row}">
+					<div class="revert" slot-scope="{row}">
 						<Button
 						v-if="row.revertable"
 						size="mini"
-						:plain="true"
 						type="info"
+						:plain="true"
 						icon="el-icon-refresh"
 						@click="revert(row)">
-							Revert
+							REVERT
 						</Button>
-					</template>
+					</div>
 				</TableColumn>
 			</Table>
 		</div>
@@ -50,7 +50,7 @@ export default {
 		return {
 			items: [],
 			meta: null,
-			pageCount: 10
+			pageCount: 15
 		}
 	},
 	computed: {
@@ -115,6 +115,14 @@ export default {
 
 				.el-table__expanded-cell {
 					background-color: transparent;
+				}
+			}
+
+			.revert {
+				zoom: 0.8;
+
+				.el-button {
+					font-weight: 600;
 				}
 			}
 		}
