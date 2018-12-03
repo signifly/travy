@@ -11,7 +11,7 @@
 				<top v-bind="{modifiers, loading, title, meta}" @refresh="refresh"/>
 
 				<vTable
-					ref="vTable"
+					ref="table"
 					v-bind="{data, columns, subtable, defaults, batch, loading}"
 					@select="select"
 					@getData="getData"
@@ -79,7 +79,7 @@ export default {
 		},
 
 		unselect() {
-			this.$refs.vTable.unselect();
+			this.$refs.table.unselect();
 		},
 
 		async refresh({done} = {}) {

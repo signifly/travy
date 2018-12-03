@@ -41,6 +41,13 @@ export default {
 			<i>year/month/date/datetime</i>
 		`}
 	},
+	data() {
+		return {
+			pickerOpts: {
+				firstDayOfWeek: 1
+			}
+		}
+	},
 	computed: {
 		format: (t) => t._format || {
 			year: "yyyy",
@@ -51,13 +58,6 @@ export default {
 
 		timestamp: (t) => t._formatValue === "timestamp",
 		dateC: (t) => (t.timestamp && t.date) ? t.date * 1000 : t.date
-	},
-	data() {
-		return {
-			pickerOpts: {
-				firstDayOfWeek: 1
-			}
-		}
 	},
 	methods: {
 		update(date) {

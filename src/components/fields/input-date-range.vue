@@ -1,7 +1,7 @@
 <template>
 	<div class="dateRange">
 		<DatePicker
-			v-model="data.dates"
+			:value="dates"
 			size="medium"
 			align="center"
 			:type="_type"
@@ -9,10 +9,10 @@
 			:editable="false"
 			:clearable="false"
 			:picker-options="pickerOpts"
+			:value-format="_formatValue"
 			start-placeholder="Start Date"
 			end-placeholder="End Date"
-			value-format="timestamp"
-			@change="update"
+			@input="update"
 		/>
 	</div>
 </template>
@@ -25,13 +25,13 @@ export default {
 	meta: {
 		res: {
 			props: {
-				type: "datetimerange",
+				type: "daterange",
 				dateStart: "dateStart",
 				dateEnd: "dateEnd"
 			},
 			data: {
-				dateStart: 1325376000,
-				dateEnd: null
+				dateStart: 1543878000,
+				dateEnd: 1545346800
 			}
 		}
 	},
@@ -41,6 +41,7 @@ export default {
 		_dateStart: {type: String, required: true},
 		_dateEnd: {type: String, required: true},
 		_format: {type: String, required: false, doc: true},
+		_formatValue: {type: String, default: "timestamp", doc: true},
 		_type: {type: String, required: false, default: "daterange", doc: true, note: `
 			<i>daterange/datetimerange</i>
 		`}
@@ -49,13 +50,16 @@ export default {
 		return {
 			pickerOpts: {
 				firstDayOfWeek: 1
-			},
-			data: {
-				dates: [this.dateStart, this.dateEnd].map(x => x ? x * 1000 : undefined)
 			}
 		}
 	},
 	computed: {
+		timestamp: (t) => t._formatValue === "timestamp",
+
+		dates: (t) => [t.dateStart, t.dateEnd].filter(x => x).map(date => {
+			return (t.timestamp && date) ? date * 1000 : date;
+		}),
+
 		format: (t) => t._format || {
 			daterange: "dd-MM-yyyy",
 			datetimerange: "yyyy-MM-dd HH:mm:ss"
@@ -63,7 +67,7 @@ export default {
 	},
 	methods: {
 		update(dates) {
-			dates = dates.map(x => x / 1000);
+			dates = dates.map(x => this.timestamp ? x / 1000 : x);
 
 			this.$emit("fieldA", {
 				action: "update",
