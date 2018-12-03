@@ -133,7 +133,7 @@ export default {
 
 			const params = merge({}, this.endpoint.params, {
 				page: this.query.page,
-				count: this.query.pagesize,
+				count: this.query.pagesize || 15,
 				filter: this.query.filters,
 				modifier: this.query.modifiers,
 				sort: (() => {

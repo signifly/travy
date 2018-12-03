@@ -5,8 +5,8 @@
 			layout="sizes, prev, pager, next"
 			:page-sizes="[15, 50, 100]"
 			v-bind="pagination"
-			@size-change="size"
-			@current-change="update"
+			@size-change="updateSize"
+			@current-change="updatePage"
 		/>
 	</div>
 </template>
@@ -18,8 +18,8 @@ import state from "../state";
 export default {
 	components: {Pagination},
 	props: {
-		loading: {type: Boolean, required: true},
 		total: {type: Number, required: true},
+		loading: {type: Boolean, required: true},
 		per_page: {type: Number, required: true}
 	},
 	computed: {
@@ -31,7 +31,7 @@ export default {
 		})
 	},
 	methods: {
-		update(page) {
+		updatePage(page) {
 			page = page === 1 ? undefined : page;
 
 			state.setQuery({type: "replace", query: {
@@ -42,7 +42,7 @@ export default {
 			this.$emit("getData");
 		},
 
-		size(pagesize) {
+		updateSize(pagesize) {
 			pagesize = pagesize === 15 ? undefined : pagesize;
 
 			state.setQuery({type: "replace", query: {
