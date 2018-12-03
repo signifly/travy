@@ -1,5 +1,5 @@
 <template>
-	<transition name="trans-fadeDown" appear>
+	<transition :name="transition" appear>
 		<div class="popup" :class="[`position-${position}`, `type-${type}`]">
 			<slot/>
 		</div>
@@ -12,6 +12,12 @@ export default {
 	props: {
 		position: {type: String, required: false, default: "bottom-right"},
 		type: {type: String, required: false}
+	},
+	computed: {
+		transition() {
+			if (this.position.includes("top")) return "trans-fadeUp";
+			if (this.position.includes("bottom")) return "trans-fadeDown";
+		}
 	}
 };
 </script>
