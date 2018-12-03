@@ -26,8 +26,8 @@
 
 <script>
 import {get} from "lodash";
-import draggable from "vuedraggable";
 import {meta} from "@/modules/utils";
+import draggable from "vuedraggable";
 
 export default {
 	components: {draggable},
