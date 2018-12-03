@@ -13,7 +13,7 @@
 				<TableColumn width="150" label="subject" prop="subject" />
 				<TableColumn width="250" label="user" prop="user" v-if="tableId !== 'users'"/>
 				<TableColumn label="changes" prop="changes"/>
-				<TableColumn label="revert" prop="revert">
+				<TableColumn label="actions" prop="revert">
 					<div class="revert" slot-scope="{row}">
 						<Button
 						v-if="row.revertable"
