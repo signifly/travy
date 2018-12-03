@@ -1,8 +1,10 @@
 <template>
 	<popup>
 		<div class="notification-popup">
-			<vHeader v-bind="{loading}" @updateItems="updateItems"/>
-			<items v-if="items" v-bind="{items, meta}" @updateItem="updateItem" @getItems="getItems"/>
+			<div class="wrap">
+				<vHeader v-bind="{loading}" @updateItems="updateItems"/>
+				<items v-if="items" v-bind="{items, meta}" @updateItem="updateItem" @getItems="getItems"/>
+			</div>
 		</div>
 	</popup>
 </template>
@@ -59,8 +61,12 @@ export default {
 	border-radius: 6px;
 	font-size: 0.8em;
 	width: 300px;
-	display: flex;
-	flex-direction: column;
-	max-height: 650px;
+	max-height: calc(100vh - 15em);
+
+	.wrap {
+		max-height: 600px;
+		display: flex;
+		flex-direction: column;
+	}
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
 	<div class="notification">
 		<a class="badge" @mousedown="toggle">
-			<Badge :value="unread" :max="99" type="primary">
+			<Badge :hidden="!unread" :value="unread || 1" :max="99" type="primary">
 				<div class="icon" v-html="require('@/assets/icons/bell.svg')"/>
 			</Badge>
 		</a>
 
-		<popup @getUnread="getUnread" :key="popupKey" v-if="active"/>
+		<popup @getUnread="getUnread" :key="popupKey" v-show="active"/>
 	</div>
 </template>
 
@@ -29,7 +29,7 @@ export default {
 		},
 		async getUnread() {
 			const {data: {meta}} = await this.$axios.get("account/notifications", {params: {count: 1, filter: {read: false}}});
-			if (meta.total > this.unread) this.popupKey++; // rerender popup if more unread items
+			if (meta.total > this.unread) this.popupKey++; // rerender popup if there's more unread items
 			this.unread = meta.total;
 		}
 	},
