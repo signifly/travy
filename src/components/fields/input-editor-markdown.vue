@@ -75,6 +75,10 @@ export default {
 				}
 			}
 		}
+
+		.CodeMirror {
+			font-size: 14px;
+		}
 	}
 }
 </style>
