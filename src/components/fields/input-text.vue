@@ -32,8 +32,7 @@ export default {
 		}
 	},
 	computed: {
-		wait: (t) => t.alt.type === "table" ? 500 : 0,
-		nodata: (t) => !t.value
+		wait: (t) => t.alt.type === "table" ? 500 : 0
 	},
 	methods: {
 		update(value) {
