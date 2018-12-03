@@ -7,7 +7,7 @@
 				<TableColumn type="expand">
 					<expand slot-scope="{row}" v-bind="row.properties"/>
 				</TableColumn>
-				<TableColumn width="100" label="id" prop="id"/>
+				<TableColumn width="100" label="id" prop="hashId"/>
 				<TableColumn width="180" label="date" prop="date"/>
 				<TableColumn width="150" label="type" prop="type"/>
 				<TableColumn width="150" label="subject" prop="subject" />
@@ -15,7 +15,15 @@
 				<TableColumn label="changes" prop="changes"/>
 				<TableColumn label="revert" prop="revert">
 					<template slot-scope="{row}">
-						<Button size="mini" v-if="row.revertable">Revert</Button>
+						<Button
+						v-if="row.revertable"
+						size="mini"
+						:plain="true"
+						type="info"
+						icon="el-icon-refresh"
+						@click="revert(row)">
+							Revert
+						</Button>
 					</template>
 				</TableColumn>
 			</Table>
@@ -50,9 +58,11 @@ export default {
 		endpointUrl: (t) => rStringProps({data: t.data, val: t.endpoint.url}),
 
 		itemsMap: (t) => t.items.map(x => ({
-			id: `#${x.id}`,
+			id: x.id,
+			hashId: `#${x.id}`,
 			type: x.description,
 			properties: x.properties,
+			revertable: x.revertable,
 			subject: x.humanized_subject,
 			date: date(x.updated_at).sDateTime,
 			user: x.causer ? x.causer.name : "System",
@@ -66,6 +76,11 @@ export default {
 			});
 			this.meta = meta;
 			this.items = data;
+		},
+
+		async revert({id}) {
+			await this.$axios.post(`${this.endpointUrl}/activity/${id}/revert`);
+			this.$emit("refreshDataTabs");
 		}
 	},
 	created() {

@@ -14,7 +14,7 @@
 
 			<Row class="mid" :gutter="20">
 				<Col class="left" :span="16">
-					<tabs ref="tabs" :key="modifiersKey" v-bind="{tabs, data}" @edit="edit = $event"/>
+					<tabs ref="tabs" :key="tabsKey" v-bind="{tabs, data}" @edit="edit = $event"/>
 				</Col>
 				<Col class="right" :span="8">
 					<sidebar v-if="sidebar" v-bind="{sidebar, data}"/>
@@ -23,7 +23,7 @@
 
 			<Row class="bottom" :gutter="20">
 				<Col class="left" :span="24">
-					<activity v-if="activity" :key="data.updated_at" v-bind="{data, endpoint}"/>
+					<activity v-if="activity" :key="data.updated_at" v-bind="{data, endpoint}" @refreshDataTabs="refreshDataTabs"/>
 				</Col>
 			</Row>
 
@@ -53,7 +53,8 @@ export default {
 			data: null,
 			edit: false,
 			loading: false,
-			definitions: null
+			definitions: null,
+			tabsUpdateKey: 0
 		}
 	},
 	computed: {
@@ -65,6 +66,7 @@ export default {
 		activity: (t) => t.definitions.activity,
 		endpoint: (t) => t.definitions.endpoint,
 		modifiers: (t) => t.definitions.modifiers,
+		tabsKey: (t) => `${t.modifiersKey}-${t.tabsUpdateKey}`,
 		modifiersKey: (t) => Object.values(t.query.modifiers || {}).join(",")
 	},
 	methods: {
@@ -76,6 +78,12 @@ export default {
 
 		async refreshData({done} = {}) {
 			await this.getData();
+			if (done) await done();
+		},
+
+		async refreshDataTabs({done} = {}) {
+			await this.getData();
+			this.tabsUpdateKey++;
 			if (done) await done();
 		},
 

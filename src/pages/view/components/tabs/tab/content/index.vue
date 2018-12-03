@@ -1,5 +1,7 @@
 <template>
-	<component :is="comp" ref="comp" v-bind="[tab, {parentData: data}]" :state.sync="stateC"/>
+	<transition name="el-fade-in" appear>
+		<component :is="comp" ref="comp" v-bind="[tab, {parentData: data}]" :state.sync="stateC"/>
+	</transition>
 </template>
 
 <script>
