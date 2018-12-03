@@ -26,7 +26,9 @@
 					/>
 				</div>
 
-				<Button size="medium" type="danger" @click="remove">Delete</Button>
+				<div class="button">
+					<Button size="small" type="danger" @click="remove">Delete</Button>
+				</div>
 			</div>
 
 			<div class="items">
@@ -220,6 +222,7 @@ export default {
 		.header {
 			display: flex;
 			justify-content: space-between;
+			align-items: center;
 
 			.search {
 				width: 250px;

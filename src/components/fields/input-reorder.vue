@@ -4,22 +4,22 @@
 			<table>
 				<thead>
 					<tr>
-						<th />
-						<th v-for="column in _columns" :key="column.label">{{column.label}}</th>
+						<th/>
+						<th v-for="column in _columns" :key="column.label" v-text="column.label"/>
 					</tr>
 				</thead>
 
 				<draggable v-model="items" :options="{handle: '.drag'}" @end="update" element="tbody">
 					<tr v-for="item in items" :key="item.id">
-						<td class="top" @click="moveTop(item)" title="Move to top"><i class="el-icon-d-arrow-left" /></td>
-						<td v-for="column in _columns" :key="column.key" class="drag">{{item[column.key]}}</td>
+						<td class="top" @click="moveTop(item)" title="Move to top"><i class="el-icon-d-arrow-left"/>
+						<td v-for="column in _columns" :key="column.key" class="drag" v-text="item[column.key]"/>
 					</tr>
 				</draggable>
 			</table>
 		</div>
 
 		<div class="loading" v-else>
-			<i class="el-icon-loading"></i>
+			<i class="el-icon-loading"/>
 		</div>
 	</div>
 </template>
@@ -27,18 +27,21 @@
 <script>
 import {get} from "lodash";
 import draggable from "vuedraggable";
+import {meta} from "@/modules/utils";
 
 export default {
 	components: {draggable},
 	meta: {
 		res: {
 			props: {
-				items: "items",
-				itemsKey: "data",
-				itemsValue: "id",
-				endpoint: {
-					method: "get",
-					url: ""
+				prop: "propKey",
+				options: {
+					key: "",
+					value: "id",
+					endpoint: {
+						url: meta.items,
+						params: {test: "test"}
+					}
 				},
 				columns: [
 					{
@@ -46,7 +49,7 @@ export default {
 						label: "Id"
 					},
 					{
-						key: "title",
+						key: "name",
 						label: "Name"
 					}
 				]
@@ -57,11 +60,9 @@ export default {
 		}
 	},
 	props: {
-		_items: {type: String, required: true},
-		_itemsKey: {type: String, required: false, doc: true},
-		_itemsValue: {type: String, required: true, doc: true},
+		_prop: {type: String, required: true, doc: true},
 		_columns: {type: Array, required: true, doc: true},
-		_endpoint: {type: Object, required: true, doc: true}
+		_options: {type: Object, required: true, doc: true}
 	},
 	data() {
 		return {
@@ -77,30 +78,28 @@ export default {
 		},
 
 		update() {
-			const ids = this.items.map(x => x[this._itemsValue]);
+			const ids = this.items.map(x => x[this._options.value]);
 
 			this.$emit("fieldA", {
 				action: "update",
-				data: {[this._items]: ids}
+				data: {[this._prop]: ids}
 			});
 		},
 
 		async getItems() {
-			const {data} = await this.$axios(this._endpoint);
-			this.items = get(data, this._itemsKey, data);
+			const {endpoint: {url, params}} = this._options;
+			const {data} = await this.$axios.get(url, {params});
+			this.items = get(data, this._options.key, data);
 		}
 	},
 	created() {
-		if (this._endpoint.url) {
-			this.getItems();
-		}
+		this.getItems();
 	}
 };
 </script>
 
 <style lang="scss" scoped>
 .reorder {
-
 	.table {
 		border: 1px solid $blue2;
 		border-radius: 4px;
