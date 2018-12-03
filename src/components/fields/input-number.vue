@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import {isNumber, toNumber, debounce} from "lodash";
+import {toNumber, debounce} from "lodash";
 import {Input} from "element-ui";
 
 export default {
