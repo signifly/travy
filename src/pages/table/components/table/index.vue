@@ -3,13 +3,16 @@
 		<Table
 		ref="table"
 		row-key="id"
-		v-bind="{data}"
 		:default-sort="sorting"
+		v-bind="{data, emptyText}"
 		header-row-class-name="header-row"
 		header-cell-class-name="header-cell"
-		:empty-text="emptyText"
 		@sort-change="sort"
 		@selection-change="select">
+
+			<tableColumn type="expand" v-if="subtable">
+				<subtable slot-scope="{row}" v-bind="[subtable, {data, item: row}]" @fieldA="$emit('fieldA', $event)"/>
+			</tableColumn>
 
 			<TableColumn type="selection" :reserve-selection="true" v-if="batchActive"/>
 
@@ -22,16 +25,18 @@
 
 <script>
 import {Table, TableColumn} from "element-ui";
-import state from "../state";
-import field from "./field";
+import subtable from "./subtable";
+import state from "../../state";
+import field from "../field";
 
 export default {
-	components: {Table, TableColumn, field},
+	components: {Table, TableColumn, subtable, field},
 	props: {
-		loading: {type: Boolean, required: false},
 		data: {type: Array, required: false},
 		columns: {type: Array, required: true},
 		defaults: {type: Object, required: true},
+		subtable: {type: Object, required: false},
+		loading: {type: Boolean, required: false},
 		batch: {type: Object, default: () => ({})}
 	},
 	computed: {
@@ -106,6 +111,10 @@ export default {
 					border-top: 1px solid #ebeef5;
 					color: $blue4;
 				}
+			}
+
+			.el-table__expanded-cell {
+				padding: 0;
 			}
 
 			.cell {

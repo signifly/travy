@@ -12,7 +12,7 @@
 
 				<vTable
 					ref="vTable"
-					v-bind="{data, columns, defaults, batch, loading}"
+					v-bind="{data, columns, subtable, defaults, batch, loading}"
 					@select="select"
 					@getData="getData"
 					@fieldA="fieldA"
@@ -65,6 +65,7 @@ export default {
 		actions: (t) => t.definitions.actions,
 		filters: (t) => t.definitions.filters,
 		columns: (t) => t.definitions.columns,
+		subtable: (t) => t.definitions.subtable,
 		defaults: (t) => t.definitions.defaults,
 		modifiers: (t) => t.definitions.modifiers,
 		endpoint: (t) => ({
