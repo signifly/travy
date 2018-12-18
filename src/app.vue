@@ -5,13 +5,15 @@
 </template>
 
 <script>
+import layouts from "./components/layouts";
+
 export default {
 	computed: {
 		layout() {
-			const layout = this.$route.meta.layout;
+			const name = this.$route.meta.layout;
 
-			if (layout) {
-				return () => import(/* webpackMode: "eager" */ `@/components/layouts/${layout}`);
+			if (name) {
+				return layouts[name];
 			}
 		}
 	}

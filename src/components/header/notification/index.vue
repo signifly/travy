@@ -36,6 +36,9 @@ export default {
 	created() {
 		this.getUnread();
 		setInterval(this.getUnread, 5000);
+	},
+	beforeDestroy() {
+		clearInterval(this.getUnread);
 	}
 };
 </script>
