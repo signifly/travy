@@ -27,7 +27,13 @@ export default {
 		propsData: (t) => mapValues(t.props, (val) => get(t.data, val)),
 
 		comp() {
-			return () => import(/* webpackMode: "eager" */ `@/components/fields/${this.id}.vue`);
+			const pluginField = this.$plugin.fields[this.id];
+
+			if (pluginField) {
+				return pluginField;
+			} else {
+				return () => import(/* webpackMode: "eager" */ `@/components/fields/${this.id}.vue`);
+			}
 		}
 	}
 };

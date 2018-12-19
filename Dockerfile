@@ -16,4 +16,4 @@ COPY . .
 ARG API
 ENV API=${API}
 
-RUN yarn build
+RUN yarn build-app

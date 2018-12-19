@@ -1,13 +1,11 @@
-import Vue from "vue";
 import Vuex from "vuex";
-Vue.use(Vuex);
 
 import base from "./base";
 import user from "./user";
 import config from "./config";
 import notify from "./notify";
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
 	strict: true,
 	modules: {
 		base,
@@ -16,5 +14,3 @@ const store = new Vuex.Store({
 		notify
 	}
 });
-
-export default store;
