@@ -2,7 +2,7 @@
 
 > Dynamic CMS, WIP
 
-## Docker development
+## Build
 
 ```bash
 # create .env to change environment variables
