@@ -3,10 +3,11 @@ import store from "@/store";
 import {get} from "lodash";
 import axios from "axios";
 import qs from "qs";
+import Vue from "vue";
 
 
 const api = axios.create({
-	baseURL: `${process.env.API}/v1/admin`,
+	baseURL: `${Vue.prototype.$plugin.api}/v1/admin`,
 	paramsSerializer: (params) => qs.stringify(params)
 });
 
