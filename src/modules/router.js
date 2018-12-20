@@ -17,23 +17,13 @@ import view from "@/pages/view";
 
 import error from "@/pages/error.vue";
 
-const meta = () => import(/* webpackChunkName: "app.meta" */ "@/pages/meta");
-const metaHome = () => import(/* webpackChunkName: "app.meta" */ "@/pages/meta/pages/home");
-const metaFields = () => import(/* webpackChunkName: "app.meta" */ "@/pages/meta/pages/fields");
-const metaActions = () => import(/* webpackChunkName: "app.meta" */ "@/pages/meta/pages/actions");
+import meta from "@/pages/meta";
+import metaHome from "@/pages/meta/pages/home";
+import metaFields from "@/pages/meta/pages/fields";
+import metaActions from "@/pages/meta/pages/actions";
 
 
 const routes = [
-	{
-		path: "/meta",
-		component: meta,
-		children: [
-			{path: "", name: "meta", component: metaHome, meta: {layout: "base", title: "Meta", auth: {roles: "all"}}},
-			{path: "fields", name: "meta-fields", component: metaFields, meta: {layout: "base", title: "Meta/Fields", auth: {roles: "all"}}},
-			{path: "actions", name: "meta-actions", component: metaActions, meta: {layout: "base", title: "Meta/Actions", auth: {roles: "all"}}},
-		]
-	},
-
 	{path: "/", name: "index", component: index, meta: {layout: "main", title: "", auth: {roles: "all"}}},
 	{path: "/account", name: "account", component: account, meta: {layout: "main", title: "Account", auth: {roles: "all"}}},
 
@@ -45,7 +35,17 @@ const routes = [
 
 	{path: "/c/:id", name: "custom", component: custom, meta: {layout: "main", auth: {roles: "all"}}},
 
-	{path: "/error", alias: "*", name: "error", props: true, component: error, meta: {layout: "error", title: "Error"}}
+	{path: "/error", alias: "*", name: "error", props: true, component: error, meta: {layout: "error", title: "Error"}},
+
+	{
+		path: "/meta",
+		component: meta,
+		children: [
+			{path: "", name: "meta", component: metaHome, meta: {layout: "base", title: "Meta", auth: {roles: "all"}}},
+			{path: "fields", name: "meta-fields", component: metaFields, meta: {layout: "base", title: "Meta/Fields", auth: {roles: "all"}}},
+			{path: "actions", name: "meta-actions", component: metaActions, meta: {layout: "base", title: "Meta/Actions", auth: {roles: "all"}}},
+		]
+	}
 ];
 
 
