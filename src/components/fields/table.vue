@@ -15,7 +15,7 @@
 
 <script>
 import {mapKeys, get} from "lodash";
-import vTable from "@/pages/table/components/table.vue";
+import vTable from "@/pages/table/components/table";
 
 export default {
 	components: {vTable},
@@ -28,7 +28,7 @@ export default {
 						name: "title",
 						label: "Title",
 						fieldType: {
-							id: "vText",
+							id: "text",
 							props: {
 								text: "title"
 							}

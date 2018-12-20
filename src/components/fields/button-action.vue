@@ -5,7 +5,7 @@
 	@fieldA="fieldA">
 
 		<div class="button-action">
-			<Button size="medium" :type="_type" :icon="`el-icon-${_icon}`" @click="active = true">{{_title}}</Button>
+			<Button :size="_size" :type="_status" :icon="icon" @click="toggle" plain>{{_title}}</Button>
 		</div>
 	</action>
 </template>
@@ -21,21 +21,23 @@ export default {
 			props: {
 				title: "button",
 				icon: "plus",
-				type: "primary",
+				size: "mini",
+				status: "primary",
 				action: {
 					id: "modal",
 					title: "Modal title",
-					onSubmit: "#vActions",
+					onSubmit: "#button-action",
 					endpoint: {
 						method: "post",
-						url: "https://example.com"
+						url: "https://example.com",
+						params: {}
 					},
 					fields: [
 						{
 							name: "1",
 							label: "a field",
 							fieldType: {
-								id: "vInput",
+								id: "input-text",
 								props: {
 									value: "input"
 								}
@@ -45,7 +47,7 @@ export default {
 							name: "2",
 							label: "a field",
 							fieldType: {
-								id: "vInput",
+								id: "input-text",
 								props: {
 									value: "input2"
 								}
@@ -65,9 +67,10 @@ export default {
 	},
 	props: {
 		alt: {type: Object, default: () => ({})},
+		_size: {type: String, default: "medium", doc: true, note: `medium/small/mini`},
+		_status: {type: String, default: "primary", doc: true},
 		_title: {type: String, required: true, doc: true},
 		_icon: {type: String, required: false, doc: true},
-		_type: {type: String, required: false, doc: true},
 		_action: {type: Object, required: true, doc: true}
 	},
 	data() {
@@ -75,14 +78,16 @@ export default {
 			active: false
 		}
 	},
+	computed: {
+		icon: (t) => t._icon ? `el-icon-${t._icon}` : ""
+	},
 	methods: {
-		close() {
-			this.active = false;
+		toggle() {
+			this.active = !this.active;
 		},
 
-		submit() {
-			this.close();
-			this.$emit("fieldA", {action: "getData"});
+		close() {
+			this.active = false;
 		},
 
 		fieldA(obj) {

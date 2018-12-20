@@ -1,108 +1,54 @@
 <template>
-	<div class="field" :style="{width}" v-if="show">
-		<div class="info" slot="info" v-if="rule.info && label">
-			<slot name="label">
-				<div class="label" v-if="label">
-					{{label}}
+	<div class="field" :style="{width: widthCalc}">
 
-					<vTranslated v-bind="option"/>
-
-					<transition name="el-fade-in">
-						<div class="dot outdated" v-if="rule.dot && !disabled && outdated"/>
-					</transition>
-
-					<transition name="el-fade-in">
-						<div class="dot nodata" v-if="rule.dot && !disabled && nodata"/>
-					</transition>
-
-				</div>
-			</slot>
-			<div class="tooltip" v-if="tooltip">
-				<Tooltip :content="tooltip" placement="top">
-					<i class="el-icon-info"/>
-				</Tooltip>
-			</div>
+		<div class="content">
+			<vlabel v-bind="{alt, name, label, tooltip}" v-if="rules.label"/>
+			<fieldType v-bind="[fieldType, {alt}]" @fieldA="$emit('fieldA', $event)"/>
 		</div>
 
-		<component
-			:is="component"
-			ref="field"
-			v-bind="[propsData, propsValue, {alt}]"
-			@fieldA="$emit('fieldA', $event)"
-		/>
+		<transition name="error">
+			<div class="error" v-if="error">{{error}}</div>
+		</transition>
 
-		<div class="error" v-if="error">{{error}}</div>
 
-		<div class="reference" v-if="reference">
-			<div class="title">Reference:</div>
-			<div class="text">{{reference}}</div>
+		<div class="description" v-if="description && rules.description">
+			{{description}}
 		</div>
 
 	</div>
 </template>
 
 <script>
-import {mapValues, mapKeys, get} from "lodash";
-import * as fields from "@/components/fields";
-import vTranslated from "./translated.vue";
-import {Tooltip} from "element-ui";
+import {get} from "lodash";
+import fieldType from "./field-type";
+import vlabel from "./label";
 
 
 export default {
-	components: {vTranslated, Tooltip},
+	components: {vlabel, fieldType},
 	props: {
-		alt: {type: Object, required: true},
-		name: {type: String, required: true},
+		description: {type: String, required: false},
 		fieldType: {type: Object, required: true},
 		tooltip: {type: String, required: false},
-		label: {type: String, required: false}
-	},
-	data() {
-		return {
-			mounted: false
-		}
+		onClick: {type: String, required: false},
+		label: {type: String, required: false},
+		name: {type: String, required: true},
+		width: {type: Number, default: 100},
+		alt: {type: Object, required: true}
 	},
 	computed: {
-		type: (t) => t.alt.type,
-		id: (t) => t.fieldType.id,
-		props: (t) => t.fieldType.props,
-		outdated: (t) => t.option.outdated,
-		reference: (t) => t.fieldType.reference,
-		disabled: (t) => t.fieldType.props.disabled,
-
-		component: (t) => fields[t.id],
 		option: (t) => get(t.alt.options, t.name, {}),
 		error: (t) => get(t.alt.errors, t.name, [])[0],
-		show: (t) => t.component && get(t.alt.data, t.fieldType.show, true),
+		widthCalc: (t) => t.width === 100 ? `${t.width}%` : `calc(${t.width}% - 1em)`,
 
-		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
-		propsData: (t) => mapValues(t.props, (val) => get(t.alt.data, val)),
-
-		width() {
-			const width = this.fieldType.width || 100;
-			return width !== 100 ? `calc(${width}% - 1em)` : `${width}%`;
-		},
-
-		nodata() {
-			const field = this.mounted ? get(this.$refs, "field", {}) : {};
-			return field.disabled ? false : field.nodata;
-		},
-
-		rule() {
-			const type = this.type;
+		rules() {
+			const type = this.alt.type;
 
 			return {
-				get info() {
-					return type !== "table";
-				},
-				get dot() {
-					return type === "view-tab";
-				}
+				label: type !== "table",
+				description: type === "view-tab"
 			}
 		}
-	},
-	mounted() {
-		this.mounted = true;
 	}
 };
 </script>
@@ -111,42 +57,8 @@ export default {
 .field {
 	margin: $fieldMargin 0;
 
-	.info {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: 0.5em;
-		font-size: 0.875em;
-		color: $blue4;
-
-		.label {
-			display: flex;
-			align-items: center;
-
-			div {
-				margin-left: 0.5em;
-			}
-
-			.dot {
-				display: block;
-				$s: 9px;
-				width: $s;
-				height: $s;
-				border-radius: 50%;
-
-				&.outdated {
-					background-color: $warning;
-				}
-				&.nodata {
-					background-color: $danger;
-				}
-			}
-		}
-
-		.tooltip {
-			font-size: 0.8em;
-			color: $blue3;
-		}
+	.content {
+		width: 100%;
 	}
 
 	.error {
@@ -154,23 +66,25 @@ export default {
 		font-size: 0.75em;
 		color: $danger;
 		margin-top: 0.5em;
+		height: 13px;
+
+		&-enter-active, &-leave-active {
+			$t: 0.4s;
+			transition: cubic(opacity, $t), cubic(height, $t), cubic(margin, $t);
+		}
+		&-enter, &-leave-to {
+			opacity: 0;
+			height: 0;
+			margin: 0;
+		}
 	}
 
-	.reference {
-		margin-top: 1em;
+	.description {
+		margin-top: 0.6em;
 		margin-bottom: 0.5em;
-		font-size: em(13);
-		display: flex;
-
-		.title {
-			font-weight: 500;
-			margin-right: 1em;
-			margin-top: -1px;
-		}
-		.text {
-			font-style: italic;
-			color: $blue4;
-		}
+		font-size: em(12);
+		font-style: italic;
+		color: $blue4;
 	}
 }
 </style>

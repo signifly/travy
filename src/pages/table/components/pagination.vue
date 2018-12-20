@@ -5,24 +5,25 @@
 			layout="sizes, prev, pager, next"
 			:page-sizes="[15, 50, 100]"
 			v-bind="pagination"
-			@size-change="size"
-			@current-change="update"
+			@size-change="updateSize"
+			@current-change="updatePage"
 		/>
 	</div>
 </template>
 
 <script>
 import {Pagination} from "element-ui";
+import state from "../state";
 
 export default {
 	components: {Pagination},
 	props: {
-		loading: {type: Boolean, required: true},
 		total: {type: Number, required: true},
+		loading: {type: Boolean, required: true},
 		per_page: {type: Number, required: true}
 	},
 	computed: {
-		query: (t) => t.$route.query,
+		query: () => state.query,
 		pagination: (t) => ({
 			total: t.total,
 			"page-size": t.per_page,
@@ -30,15 +31,26 @@ export default {
 		})
 	},
 	methods: {
-		update(page) {
+		updatePage(page) {
 			page = page === 1 ? undefined : page;
-			this.$router.replace({query: {...this.query, page}});
+
+			state.setQuery({type: "replace", query: {
+				...this.query,
+				page
+			}});
+
 			this.$emit("getData");
 		},
 
-		size(pagesize) {
+		updateSize(pagesize) {
 			pagesize = pagesize === 15 ? undefined : pagesize;
-			this.$router.replace({query: {...this.query, page: undefined, pagesize}});
+
+			state.setQuery({type: "replace", query: {
+				...this.query,
+				page: undefined,
+				pagesize
+			}});
+
 			this.$emit("getData");
 		}
 	}

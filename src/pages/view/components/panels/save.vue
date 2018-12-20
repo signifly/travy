@@ -2,7 +2,7 @@
 	<vPanel>
 		<div class="text">There are unsaved changes</div>
 		<div class="actions">
-			<div class="error" v-if="error.message">{{error.message}}</div>
+			<div class="error" v-if="error" v-text="error"/>
 
 			<Button
 			size="medium"
@@ -27,11 +27,11 @@ export default {
 	components: {Button, vPanel},
 	props: {
 		loading: {type: Boolean, required: true},
-		error: {type: Object, required: true}
+		error: {type: String, required: true}
 	},
 	methods: {
 		save() {
-			this.$parent.$emit("save");
+			this.$emit("save");
 		}
 	}
 };

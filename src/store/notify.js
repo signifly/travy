@@ -8,11 +8,11 @@ export default {
 	namespaced: true,
 
 	actions: {
-		send(ctx, obj) {
+		send(ctx, {message, title, type}) {
 			(async () => {
 				// make notification work on first load
 				await new Promise(resolve => setTimeout(resolve, 1));
-				notify(obj);
+				notify({message, title, type});
 			})();
 		}
 	}

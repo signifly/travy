@@ -1,10 +1,10 @@
 <template>
-	<vPanel v-bind="{loading: loadingAll}" v-if="items.length">
+	<panel v-bind="{loading: loadingAll}" v-if="items.length">
 		<div class="left">
 			<Tooltip content="Save and close">
-				<a class="close" @click="closeSave"><i class="el-icon-circle-close-outline"></i></a>
+				<a class="close" @click="closeSave"><i class="el-icon-circle-close-outline"/></a>
 			</Tooltip>
-			<div class="text">{{title}}</div>
+			<div class="text" v-text="title"/>
 		</div>
 
 		<div class="progress">
@@ -13,7 +13,7 @@
 		</div>
 
 		<div class="actions">
-			<div class="error" v-if="error.message">{{error.message}}</div>
+			<div class="error" v-if="error" v-text="error"/>
 
 			<Button v-if="prev" size="medium" type="success" icon="el-icon-arrow-left" @click="prevSave">
 				Save and back
@@ -28,29 +28,28 @@
 			@shortkey.native="nextSave"
 			title="CTRL/CMD + S">
 				Save and next
-				<i class="el-icon-arrow-right el-icon-right"></i>
+				<i class="el-icon-arrow-right el-icon-right"/>
 			</Button>
 
 			<Button v-if="!next" size="medium" type="success" @click="closeSave">
 				Save and close
-				<i class="el-icon-check el-icon-right"></i>
+				<i class="el-icon-check el-icon-right"/>
 			</Button>
 		</div>
-	</vPanel>
+	</panel>
 </template>
 
 <script>
 import {Button, Tooltip, Progress} from "element-ui";
-import vPanel from "@/components/panel.vue";
+import panel from "@/components/panel";
 import {get} from "lodash";
 
 export default {
-	components: {Button, Tooltip, Progress, vPanel},
+	components: {Button, Tooltip, Progress, panel},
 	props: {
 		title: {type: String, required: true},
-		loading: {type: Boolean, required: true},
-		getData: {type: Function, required: true},
-		error: {type: Object, required: true}
+		error: {type: String, required: true},
+		loading: {type: Boolean, required: true}
 	},
 	data() {
 		return {
@@ -61,13 +60,13 @@ export default {
 	computed: {
 		items: (t) => get(t.sequential, "items", []).map(x => x.toString()),
 		progress: (t) => ((t.index + 1) / t.items.length) * 100,
+		loadingAll: (t) => t.loading || t.loadingData,
 		modifiers: (t) => t.$route.query.modifiers,
 		tableId: (t) => t.$route.params.tableId,
 		viewId: (t) => t.$route.params.viewId,
 		index: (t) => t.items.indexOf(t.viewId),
 		prev: (t) => t.items[t.index - 1],
 		next: (t) => t.items[t.index + 1],
-		loadingAll: (t) => t.loading || t.loadingData
 	},
 	methods: {
 		nextSave() {
@@ -93,7 +92,7 @@ export default {
 		},
 
 		closeSave() {
-			this.$parent.$emit("save", {
+			this.$emit("save", {
 				done: async () => {
 					localStorage.removeItem("sequential");
 					this.$router.push({path: `/t/${this.tableId}`, query: {modifiers: this.modifiers}});
@@ -101,20 +100,17 @@ export default {
 			});
 		},
 
-		async _getData() {
-			try {
-				this.loadingData = true;
-				await this.getData();
-			} catch(err) {
-				// error
-			} finally {
-				this.loadingData = false;
-			}
+		refreshData() {
+			this.loadingData = true;
+
+			this.$emit("refreshData", {
+				done: () => this.loadingData = false
+			});
 		}
 	},
 	watch: {
 		viewId() {
-			this._getData();
+			this.refreshData();
 		}
 	}
 };

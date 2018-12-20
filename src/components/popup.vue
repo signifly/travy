@@ -1,6 +1,6 @@
 <template>
-	<transition name="trans-fadeDown" appear>
-		<div class="popup" :class="position.split('-')" :style="{width}">
+	<transition :name="transition" appear>
+		<div class="popup" :class="[`position-${position}`, `type-${type}`]">
 			<slot/>
 		</div>
 	</transition>
@@ -8,9 +8,16 @@
 
 <script>
 export default {
+	name: "popup-comp",
 	props: {
 		position: {type: String, required: false, default: "bottom-right"},
-		width: {type: String, required: false, default: "200px"}
+		type: {type: String, required: false}
+	},
+	computed: {
+		transition() {
+			if (this.position.includes("top")) return "trans-fadeUp";
+			if (this.position.includes("bottom")) return "trans-fadeDown";
+		}
 	}
 };
 </script>
@@ -21,22 +28,42 @@ export default {
 	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 	background-color: $white1;
 	border-radius: 4px;
-	padding: 1em;
-	z-index: 1;
+	z-index: 2;
 
-	&.top {
-		bottom: calc(100% + 1em);
-
-		&.right {
-			right: 0;
+	&.position {
+		&-top {
+			&-right {
+				bottom: calc(100% + 1em);
+				right: 0;
+			}
+		}
+		&-bottom {
+			&-right {
+				top: calc(100% + 0.5em);
+				right: 0;
+			}
 		}
 	}
 
-	&.bottom {
-		top: calc(100% + 1em);
+	&.type {
+		&-action {
+			width: 200px;
+			padding: 1em;
+		}
 
-		&.right {
-			right: 0;
+		&-list {
+			/deep/ .item {
+				display: block;
+				font-size: 0.8em;
+				white-space: nowrap;
+				user-select: none;
+				padding: 1em;
+
+				&:hover {
+					background-color: $--dropdown-menuItem-hover-fill;
+					color: $--dropdown-menuItem-hover-color;
+				}
+			}
 		}
 	}
 }

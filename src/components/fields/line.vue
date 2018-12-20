@@ -39,9 +39,9 @@
 
 <script>
 import {Switch} from "element-ui";
-import vActions from "./actions.vue";
+import vActions from "./button-actions.vue";
 import {meta} from "@/modules/utils";
-import vSelectSearch from "./select-search.vue";
+import vSelectSearch from "./input-select-search.vue";
 import vItemsTooltip from "./items-tooltip.vue";
 
 export default {

@@ -1,5 +1,5 @@
 <template>
-	<vPopup v-bind="{position}">
+	<popup v-bind="{position, type: 'action'}">
 		<div class="popup">
 			<div class="text">{{text}}</div>
 			<div class="buttons">
@@ -7,22 +7,20 @@
 				<Button size="mini" type="primary" :loading="loading" @click="submit">Submit</Button>
 			</div>
 		</div>
-	</vPopup>
+	</popup>
 </template>
 
 <script>
 import {Button} from "element-ui";
-import vPopup from "@/components/popup.vue";
-import {endpointUrl} from "@/modules/utils";
+import popup from "@/components/popup";
 
 export default {
-	components: {Button, vPopup},
+	components: {Button, popup},
 	props: {
 		position: {type: String, required: false, default: "bottom-right"},
 		text: {type: String, required: false, default: "Are you sure?"},
 		endpoint: {type: Object, required: true},
-		onSubmit: {type: String, required: false},
-		dataComb: {type: Object, required: true}
+		payload: {type: Object, required: true}
 	},
 	data() {
 		return {
@@ -41,24 +39,12 @@ export default {
 				const {data} = await this.$axios({
 					method: this.endpoint.method,
 					url: this.endpoint.url,
-					data: this.dataComb,
+					data: this.payload,
 				});
 
-				this.submitAfter({data});
+				this.$emit("submit", data);
 			} catch(err) {
 				this.loading = false;
-			}
-		},
-
-		submitAfter({data} = {}) {
-			if (this.onSubmit) {
-				const url = endpointUrl({data: data.data || this.dataComb, url: this.onSubmit});
-				this.$router.push(url);
-			} else {
-				this.$emit("fieldA", {
-					action: "refresh",
-					done: async () => this.close()
-				});
 			}
 		}
 	}

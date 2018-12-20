@@ -1,14 +1,12 @@
 <template>
-	<transition name="el-zoom-in-bottom" appear>
-		<div class="panel">
-			<div class="wrap loading">
-				<slot/>
-				<transition name="overlay">
-					<div class="overlay" v-if="loading" />
-				</transition>
-			</div>
+	<div class="panel">
+		<div class="wrap loading">
+			<slot/>
+			<transition name="overlay">
+				<div class="overlay" v-if="loading"/>
+			</transition>
 		</div>
-	</transition>
+	</div>
 </template>
 
 <script>

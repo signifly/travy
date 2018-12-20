@@ -1,5 +1,5 @@
 <template>
-	<component :is="link ? 'router-link' : 'div'" class="field-wrap" :to="link">
+	<component :is="link ? 'router-link' : 'div'" class="table-field" :to="link">
 		<vField
 			v-bind="column"
 			:alt="{data, type: 'table'}"
@@ -9,8 +9,9 @@
 </template>
 
 <script>
-import {endpointUrl} from "@/modules/utils";
+import {rStringProps} from "@/modules/utils";
 import vField from "@/components/field";
+import state from "../state";
 
 export default {
 	props: {
@@ -18,11 +19,12 @@ export default {
 		scope: {type: Object, required: true}
 	},
 	computed: {
+		query: () => state.query,
 		data: (t) => t.scope.row,
-		action: (t) => t.column.fieldType.action,
+		onClick: (t) => t.column.onClick,
 		link() {
-			const url = endpointUrl({data: this.data, url: this.action});
-			return url ? {path: url, query: {modifiers: this.$route.query.modifiers}} : false;
+			const url = rStringProps({data: this.data, val: this.onClick});
+			return url ? {path: url, query: {modifiers: this.query.modifiers}} : false;
 		}
 	},
 	methods: {
@@ -37,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.field-wrap {
+.table-field {
 	text-decoration: none;
 	color: $black1;
 

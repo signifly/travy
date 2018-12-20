@@ -4,7 +4,7 @@
 
 <script>
 import {Button} from "element-ui";
-import {endpointUrl} from "@/modules/utils";
+import {rStringProps} from "@/modules/utils";
 
 export default {
 	components: {Button},
@@ -16,7 +16,7 @@ export default {
 	computed: {
 		query: (t) => t.$route.query,
 		tableId: (t) => t.$route.params.tableId,
-		firstUrl: (t) => endpointUrl({url: t.url, data: t.selectedItems[0]})
+		firstUrl: (t) => rStringProps({val: t.url, data: t.selectedItems[0]})
 	},
 	methods: {
 		setSequential() {

@@ -1,51 +1,33 @@
 <template>
-	<div class="modifiers" :class="{loading}">
-		<div class="item" v-for="(item, index) in itemsMap" :key="item.key">
-			<div class="title">{{item.title}}</div>
-			<vSelect v-bind="item" _value="value" :_clearable="false" @fieldA="fieldA({index}, $event)" />
+	<div class="modifiers">
+		<div class="modifiers-field" v-for="field in fields" :key="field.name">
+			<div class="label" v-text="field.label"/>
+			<field
+				label=""
+				v-bind="[field, {alt: {data: dataComb}}]"
+				@fieldA="fieldA"
+			/>
 		</div>
 	</div>
 </template>
 
 <script>
-import {mapValues, keyBy, get} from "lodash";
-import {vSelect} from "@/components/fields";
+import field from "./field";
 
 export default {
-	components: {vSelect},
+	components: {field},
 	props: {
-		modifiers: {type: Array, required: true}
-	},
-	data() {
-		return {
-			items: this.modifiers,
-			loading: false
-		}
+		data: {type: Object, required: true},
+		fields: {type: Array, required: true},
+		query: {type: Object, required: true}
 	},
 	computed: {
-		query: (t) => t.$route.query,
-
-		itemsMap: (t) => t.items.map(x => ({...x,
-			value: get(t.query, `modifiers.${x.key}`) || x.value,
-			list: x.options,
-			_options: {
-				label: "label",
-				value: "value"
-			}
-		}))
+		dataComb: (t) => ({...t.data, ...t.queryData}),
+		queryData: (t) => t.query.modifiers,
 	},
 	methods: {
-		fieldA({index}, {data}) {
-			this.$set(this.items[index], "value", data.value);
-			this.update();
-		},
-		update() {
-			this.loading = true;
-			const modifiers = mapValues(keyBy(this.items, "key"), (x) => x.value);
-			this.$router.replace({query: {...this.query, modifiers}});
-			this.$emit("refreshAll", {
-				done: () => this.loading = false
-			});
+		fieldA({data}) {
+			this.$emit("update", {modifiers: {...this.queryData, ...data}});
 		}
 	}
 };
@@ -53,21 +35,21 @@ export default {
 
 <style lang="scss" scoped>
 .modifiers {
+	width: 100%;
+	max-width: 550px;
 	display: flex;
-	transition: cubic(opacity, 0.3s);
+	justify-content: flex-end;
 
-	&.loading {
-		opacity: 0.2;
-	}
-
-	.item {
+	&-field {
 		display: flex;
 		align-items: center;
-		margin-left: 2em;
+		margin: -$fieldMargin 0;
+		margin-left: 1em;
 
-		.title {
+		.label {
 			margin-right: 1em;
-			font-size: em(14);
+			font-size: 0.875em;
+			color: $blue4;
 		}
 	}
 }

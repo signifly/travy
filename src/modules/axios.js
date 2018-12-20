@@ -1,9 +1,9 @@
+import router from "./router";
+import store from "@/store";
 import {get} from "lodash";
 import axios from "axios";
-import router from "./router";
 import qs from "qs";
 
-import store from "../store";
 
 const api = axios.create({
 	baseURL: `${process.env.API}/v1/admin`,

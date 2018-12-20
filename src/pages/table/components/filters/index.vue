@@ -46,6 +46,7 @@
 import {mapValues, debounce, get} from "lodash";
 import {Input, Button, Popover} from "element-ui";
 import vField from "@/components/field";
+import state from "../../state";
 
 export default {
 	components: {Input, Button, Popover},
@@ -66,14 +67,18 @@ export default {
 		searchIcon: (t) => t.loading ? "el-icon-loading": "el-icon-search",
 		dataComb: (t) => ({...t.data, ...t.query.filters}),
 		components: (t) => t.$options.components,
-		query: (t) => t.$route.query
+		query: () => state.query
 	},
 	methods: {
 		updateDebounce: debounce(async function({data}) {
 			let filters = {...this.query.filters, ...data};
 			filters = mapValues(filters, (val) => val === "" ? undefined : val);
 
-			this.$router.replace({query: {...this.query, page: undefined, filters}});
+			state.setQuery({type: "replace", query: {
+				...this.query,
+				page: undefined,
+				filters,
+			}});
 
 			this.$emit("filter", {
 				done: async () => this.loading = false
@@ -89,7 +94,11 @@ export default {
 			this.loading = true;
 			this.active = false;
 			const filters = this.input ? {search: this.input} : undefined;
-			this.$router.replace({query: {...this.query, filters}});
+
+			state.setQuery({type: "replace", query: {
+				...this.query,
+				filters
+			}});
 
 			this.$emit("filter", {
 				done: async () => {

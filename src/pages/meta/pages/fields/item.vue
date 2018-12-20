@@ -27,16 +27,10 @@
 				</table>
 			</div>
 
-			<div class="nodata">
-				<div class="wrap">
-					<Tag v-if="nodata" type="danger" size="small">nodata</Tag>
-				</div>
-			</div>
-
 			<div class="field-wrap">
-				<vField
+				<field
 					ref="field"
-					:alt="{data: res.data, loading: false}"
+					:alt="{data, loading: false}"
 					:name="id"
 					:fieldType="fieldType"
 					@fieldA="fieldA"
@@ -71,11 +65,11 @@
 
 <script>
 import {mapValues, mapKeys, pickBy, get} from "lodash";
-import vField from "@/components/field";
+import field from "@/components/field";
 import {Tag} from "element-ui";
 
 export default {
-	components: {Tag, vField},
+	components: {Tag, field},
 	props: {
 		id: {type: String, required: true},
 		props: {type: Object, required: true},
@@ -85,12 +79,11 @@ export default {
 		return {
 			propsDisplay: this.res.props,
 			dataDisplay: this.res.data,
-			event: null,
-			mounted: false
+			data: this.res.data,
+			event: null
 		}
 	},
 	computed: {
-		nodata: (t) => t.mounted ? get(t.$refs, "field.nodata", false) : false,
 		fieldType: (t) => ({id: t.id, props: t.res.props}),
 
 		propsTable() {
@@ -108,6 +101,7 @@ export default {
 	},
 	methods: {
 		async fieldA({data, done}) {
+			this.data = {...this.data, ...data};
 			this.event = data;
 			if (done) await done();
 		},
@@ -117,9 +111,6 @@ export default {
 				console.warn(this.name);
 			}
 		}
-	},
-	mounted() {
-		this.mounted = true;
 	},
 	created() {
 		this.check();
@@ -149,7 +140,7 @@ export default {
 			.table {
 				width: 100%;
 				border-collapse: collapse;
-				font-size: em(14);
+				font-size: em(13);
 
 				tr {
 					&:nth-child(even) {
@@ -167,18 +158,6 @@ export default {
 						border-bottom: 1px solid $blue2;
 					}
 				}
-			}
-		}
-
-		.nodata {
-			position: relative;
-			display: flex;
-			align-items: center;
-
-			.wrap {
-				position: absolute;
-				height: 1px;
-				right: 0;
 			}
 		}
 

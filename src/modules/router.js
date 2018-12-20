@@ -1,10 +1,8 @@
 import {get, transform, isObject, isFinite} from "lodash";
 import VueRouter from "vue-router";
-import Vue from "vue";
+import store from "@/store";
 import qs from "qs";
 
-Vue.use(VueRouter);
-import store from "@/store";
 
 // pages
 import index from "@/pages";
@@ -51,6 +49,7 @@ const routes = [
 ];
 
 
+
 const router = new VueRouter({
 	routes,
 	mode: "history",
@@ -89,7 +88,11 @@ const go = ({to, next}) => {
 	next();
 };
 
+
 router.beforeEach(async (to, from, next) => {
+	// get config if not fetched
+	store.getters["config/data"] || await store.dispatch("config/data");
+
 	// allow all routes that isn't protected by auth
 	if (!to.meta.auth) return go({to, next});
 

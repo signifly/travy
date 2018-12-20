@@ -1,166 +1,120 @@
 <template>
-	<div class="view-main">
-		<div class="loading" ref="loading" v-if="!data"/>
+	<transition name="view-page" v-if="data">
+		<div class="view-page">
 
-		<transition name="main">
-			<div class="main" v-if="data">
-				<Row class="top" :gutter="20">
-					<Col class="left" :span="16">
-						<vHeader v-bind="{data, header}" @fieldA="fieldA"/>
-					</Col>
-					<Col class="right" :span="8">
-						<vModifiers v-if="modifiers" v-bind="{modifiers}" @refreshAll="refreshAll"/>
-						<vActions v-if="actions" v-bind="{actions, data}" @submit="getData"/>
-					</Col>
-				</Row>
+			<Row class="top" :gutter="20">
+				<Col class="left" :span="12">
+					<vHeader v-bind="{data, header}"/>
+				</Col>
+				<Col class="right" :span="12">
+					<modifiers v-if="modifiers" v-bind="{modifiers}" @refresh="refresh"/>
+					<actions v-if="actions" v-bind="{actions, data}" @submit="getData"/>
+				</Col>
+			</Row>
 
-				<Row class="mid" :gutter="20">
-					<Col class="left" :span="16">
-						<vTabs v-bind="{tabs, data, dataU, options, edits, errors}" @fieldA="fieldA"/>
-					</Col>
-					<Col class="right" :span="8">
-						<vSidebar v-if="sidebar" v-bind="{sidebar, data}" @fieldA="fieldA"/>
-					</Col>
-				</Row>
+			<Row class="mid" :gutter="20">
+				<Col class="left" :span="16">
+					<tabs ref="tabs" :key="tabsKey" v-bind="{tabs, data}" @edit="edit = $event"/>
+				</Col>
+				<Col class="right" :span="8">
+					<sidebar v-if="sidebar" v-bind="{sidebar, data}"/>
+				</Col>
+			</Row>
 
-				<Row class="bottom" :gutter="20">
-					<Col class="left" :span="24">
-						<vActivity v-if="activity" v-bind="{data, endpointUrl}" :key="saveU"/>
-					</Col>
-				</Row>
+			<Row class="bottom" :gutter="20">
+				<Col class="left" :span="24">
+					<activity v-if="activity" :key="data.updated_at" v-bind="{data, endpoint}" @refreshDataTabs="refreshDataTabs"/>
+				</Col>
+			</Row>
 
-				<vPanel v-bind="{loading: loadingSave, data, editsU, getData, error}" @save="save"/>
-			</div>
-		</transition>
-	</div>
+			<panels v-bind="{loading, error, data, edit}" @save="save" @refreshData="refreshData"/>
+		</div>
+	</transition>
 </template>
 
 <script>
-import {forEach, set, get} from "lodash";
-import * as components from "./components";
-import {endpointUrl} from "@/modules/utils";
-import {Row, Col, Loading} from "element-ui";
-import vModifiers from "@/components/modifiers.vue";
-
-const edits = () => ({tabs: new Set(), data: new Set()});
+import {Row, Col} from "element-ui";
+import tabs from "./components/tabs";
+import panels from "./components/panels";
+import vHeader from "./components/header";
+import sidebar from "./components/sidebar";
+import actions from "./components/actions";
+import activity from "./components/activity";
+import modifiers from "./components/modifiers";
 
 export default {
-	components: {Col, Row, vModifiers, ...components},
+	components: {Col, Row, tabs, panels, vHeader, sidebar, actions, activity, modifiers},
 	props: {
 		requests: {type: Object, required: true}
 	},
 	data() {
 		return {
-			error: {},
-			loadingSave: false,
-			definitions: null,
-			options: null,
+			error: "",
 			data: null,
-			dataU: 0,
-			edits: edits(),
-			editsU: 0,
-			saveU: 0
+			edit: false,
+			loading: false,
+			definitions: null,
+			tabsUpdateKey: 0
 		}
 	},
 	computed: {
 		query: (t) => t.$route.query,
-		tabs: (t) => t.definitions.tabs, // required
-		header: (t) => t.definitions.header, // required
-		endpoint: (t) => t.definitions.endpoint, // required
-		sidebar: (t) => t.definitions.sidebar,
-		modifiers: (t) => t.definitions.modifiers,
-		activity: (t) => t.definitions.activity,
+		tabs: (t) => t.definitions.tabs,
+		header: (t) => t.definitions.header,
 		actions: (t) => t.definitions.actions,
-		errors: (t) => t.error.errors,
-
-		endpointUrl: (t) => endpointUrl({data: t.data, url: t.endpoint.url}),
-
-		dataUpdated() {
-			// eslint-disable-next-line
-			const editsU = this.editsU; // force update, because sets are not reactive
-
-			return [...this.edits.data].reduce((sum, key) => {
-				key = key.split(".")[0].split("[")[0]; // use the root key to update the field if it's nested
-				sum[key] = get(this.data, key);
-				return sum;
-			}, {});
-		}
+		sidebar: (t) => t.definitions.sidebar,
+		activity: (t) => t.definitions.activity,
+		endpoint: (t) => t.definitions.endpoint,
+		modifiers: (t) => t.definitions.modifiers,
+		tabsKey: (t) => `${t.modifiersKey}-${t.tabsUpdateKey}`,
+		modifiersKey: (t) => Object.values(t.query.modifiers || {}).join(",")
 	},
 	methods: {
-		fieldA({action, tab, data, done}) {
-			const actions = {
-				refresh: async ({done}) => {
-					await this.getData();
-					if (done) await done();
-				},
-
-				update: async ({tab, data}) => {
-					this.track({tab, data});
-					forEach(data, (val, key) => set(this.data, key, val));
-				}
-			};
-
-			if (actions[action]) {
-				actions[action]({tab, data, done});
-			}
-		},
-
-		async refreshAll({done}) {
+		async refresh({done} = {}) {
 			await this.getDefinitions();
 			await this.getData();
 			if (done) await done();
 		},
 
-		track({tab, data}) { // track tab and data updates
-			const edits = {...this.edits};
-			edits.tabs.add(tab);
-			Object.keys(data).forEach(key => edits.data.add(key));
-			this.edits = edits;
-			this.editsU++;
+		async refreshData({done} = {}) {
+			await this.getData();
+			if (done) await done();
 		},
 
-		modifierParams({definitions} = {}) {
-			if (this.query.modifiers || definitions) {
-				return this.query.modifiers;
-			}
-
-			if (this.modifiers) {
-				return this.modifiers.reduce((obj, item) => {
-					return {...obj, [item.key]: item.value};
-				}, {});
-			}
+		async refreshDataTabs({done} = {}) {
+			await this.getData();
+			this.tabsUpdateKey++;
+			if (done) await done();
 		},
 
-		reset() {
-			// reset edits
-			this.edits = edits();
-			this.editsU = 0;
+		async save({done} = {}) {
+			this.loading = true;
 
-			// reset errors
-			this.error = {};
+			try {
+				await this.$refs.tabs.save();
+				await this.refreshData();
+				if (done) await done();
+				this.error = "";
+			} catch(err) {
+				this.error = err;
+			}
+			this.loading = false;
 		},
 
 		async getDefinitions() {
-			const params = {
-				modifiers: this.modifierParams({definitions: true})
-			};
+			const params = {modifier: this.query.modifiers};
 
 			const {data} = await this.$axios.get(this.requests.definitions, {params});
 			this.definitions = data;
 		},
 
 		async getData() {
-			const params = {
-				modifiers: this.modifierParams()
-			};
+			const params = {modifier: this.query.modifiers};
 
 			try {
-				const {data: {data, options}} = await this.$axios.get(this.requests.data, {params, customErr: true});
-				this.options = options;
+				const {data: {data}} = await this.$axios.get(this.requests.data, {params, customErr: true});
 				this.data = data;
 
-				this.reset();
-				this.dataU++;
 			} catch(err) {
 				if (err.status === 404) {
 					this.$router.replace({name: "error", params: {status: 404}});
@@ -168,78 +122,32 @@ export default {
 					throw err;
 				}
 			}
-
-		},
-
-		async save({done} = {}) {
-			try {
-				this.loadingSave = true;
-				const modifiers = this.modifierParams();
-
-				const {data: {data, options}} = await this.$axios.put(this.endpointUrl, {...this.dataUpdated, modifiers}, {customErr: true});
-				this.options = options;
-				this.data = data;
-
-				this.reset();
-				this.saveU++;
-
-				if (done) await done();
-
-				// for account page
-				this.$emit("save", {data: {...data}});
-
-			} catch(err) {
-				this.error = err;
-			} finally {
-				this.loadingSave = false;
-			}
 		}
 	},
-	async created() {
-		const load = Loading.service({
-			target: this.$refs.loading,
-			spinner: "el-icon-loading",
-			background: "transparent",
-			text: "Loading"
-		});
-
-		try {
-			await this.getDefinitions();
-			await this.getData();
-		} catch(err) {
-			console.log(err);
-		} finally {
-			load.close();
-		}
+	created() {
+		this.refresh();
 	}
 };
 </script>
 
 <style lang="scss" scoped>
-.view-main {
-	.main {
-		&-enter-active, &-leave-active {
-			transition: cubic(opacity, 0.3s);
-			transition-delay: 0.1s;
-		}
+.view-page {
+	margin-top: 2em;
 
-		&-enter, &-leave-to {
-			opacity: 0;
-		}
+	&-enter-active, &-leave-active {
+		transition: cubic(opacity, 0.3s);
+		transition-delay: 0.1s;
+	}
 
-		.top {
-			.right {
-				/deep/ {
-					.modifiers {
-						justify-content: flex-end;
-					}
-					.actions {
-						display: flex;
-						justify-content: flex-end;
-						margin: 1.5em 0;
-					}
-				}
-			}
+	&-enter, &-leave-to {
+		opacity: 0;
+	}
+
+	.top {
+		.right {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
 		}
 	}
 }

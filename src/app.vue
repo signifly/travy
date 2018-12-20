@@ -1,19 +1,21 @@
 <template>
 	<div class="app">
-		<component :is="layoutComp" v-if="layout"/>
+		<component :is="layout" v-if="layout"/>
 	</div>
 </template>
 
 <script>
-import vmain from "./components/layouts/main.vue";
-import vbase from "./components/layouts/base.vue";
-import verror from "./components/layouts/error.vue";
+import layouts from "./components/layouts";
 
 export default {
-	components: {vmain, vbase, verror},
 	computed: {
-		layout: (t) => t.$route.meta.layout,
-		layoutComp: (t) => `v${t.layout}`
+		layout() {
+			const name = this.$route.meta.layout;
+
+			if (name) {
+				return layouts[name];
+			}
+		}
 	}
 };
 </script>

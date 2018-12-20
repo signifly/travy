@@ -1,7 +1,7 @@
 <template>
 	<div class="view" v-if="table">
 		<vBreadcrumb :items="breadcrumb"/>
-		<page v-bind="{requests}" :key="viewKey"/>
+		<page v-bind="[{tableId, requests}]" :key="viewKey"/>
 	</div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
 		table: (t) => t.$store.getters["config/tables"][t.tableId],
 
 		viewId: (t) => t.$route.params.viewId,
-		viewKey: (t) => t.$route.query.sequential ? null : `${t.tableId}-${t.viewId}`, // don't rerender view on sequential batch
+		viewKey: (t) => `${t.tableId}-${t.viewId}`,
 
 		requests: (t) => ({
 			data: `${t.tableId}/${t.viewId}`,

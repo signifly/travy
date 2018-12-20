@@ -29,7 +29,7 @@ export default {
 					name: "email",
 					label: "Email",
 					fieldType: {
-						id: "vInput",
+						id: "input-text",
 						props: {
 							value: "email"
 						}
@@ -39,7 +39,7 @@ export default {
 					name: "password",
 					label: "Password",
 					fieldType: {
-						id: "vInputPassword",
+						id: "input-password",
 						props: {
 							value: "password"
 						}

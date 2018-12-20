@@ -12,8 +12,8 @@
 </template>
 
 <script>
+import {debounce, merge, get} from "lodash";
 import {Autocomplete} from "element-ui";
-import {debounce, get} from "lodash";
 import {meta} from "@/modules/utils";
 
 export default {
@@ -26,7 +26,7 @@ export default {
 					endpoint: {
 						url: meta.items,
 						params: {
-							filter: {namespace: "price_list.special_features"},
+							filter: {test: "test"},
 							modifiers: {language_id: 1},
 							sort: "value"
 						}
@@ -54,19 +54,19 @@ export default {
 		}
 	},
 	computed: {
-		wait: (t) => t.alt.type === "table" ? 500 : 0,
-		nodata: (t) => !t.value
+		wait: (t) => t.alt.type === "table" ? 500 : 0
 	},
 	methods: {
 		async getOptions(search, cb) {
-			const {key, value, endpoint: {url, params = {}}} = this._options;
+			const {key, value, endpoint: {url, params}} = this._options;
 
 			cb(this.items); // keep showing old items while fetching new items
 
-			const {data} = await this.$axios.get(url, {params: {
-				...params,
-				filter: {...params.filter, search}
-			}});
+			const {data} = await this.$axios.get(url, {
+				params: merge({}, params, {
+					filter: {search}
+				})
+			});
 
 			const items = get(data, key, data).map(x => {
 				return typeof x === "string" ? {value: x} : {value: get(x, value)};

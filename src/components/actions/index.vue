@@ -5,35 +5,51 @@
 		<component
 			v-if="active"
 			:is="props.id"
-			v-bind="[actionProps, props, {dataComb, endpoint}]"
+			v-bind="[actionProps, propsC, {data}]"
+			@fieldA="$emit('fieldA', $event)"
 			@close="close"
-			@fieldA="fieldA"
+			@submit="submit"
 		/>
 	</div>
 </template>
 
 <script>
-import {get, eq, gt, gte, lt, lte} from "lodash";
-import {endpointUrl} from "@/modules/utils";
+import {get, eq, gt, gte, lt, lte, mapValues} from "lodash";
+import {rStringProps} from "@/modules/utils";
+import dropdown from "./dropdown.vue";
 import modal from "./modal.vue";
 import popup from "./popup.vue";
 import show from "./show.vue";
 
 export default {
-	components: {modal, popup, show},
+	components: {dropdown, modal, popup, show},
 	props: {
 		actionProps: {type: Object, required: false},
 		active: {type: Boolean, required: true},
 		props: {type: Object, required: true},
-		data: {type: Object, required: false},
+		data: {type: Object, required: false}, // parent data
 		hide: {type: Object, required: false} // {key, operator, value}
 	},
 	computed: {
-		dataComb: (t) => ({...t.data, ...t.props.data}), // parent data and action data combined
+		dataComb: (t) => ({...t.data, ...t.payload.data}), // parent data and action data combined
 
-		endpoint: (t) => ({
-			method: get(t.props, "endpoint.method"),
-			url: endpointUrl({data: t.dataComb, url: get(t.props, "endpoint.url")})
+		payload: ({props, data}) => ({
+			type: get(props, "payload.type"),
+			data: mapValues(get(props, "payload.data"), (val) => get(data, val, val))
+		}),
+
+		endpoint: ({props, dataComb}) => ({
+			method: get(props, "endpoint.method"),
+			url: rStringProps({data: dataComb, val: get(props, "endpoint.url")})
+		}),
+
+		onSubmit: ({dataComb, props}) => rStringProps({data: dataComb, val: props.onSubmit}),
+
+		propsC: ({props, payload, endpoint, onSubmit}) => ({
+			...props,
+			payload,
+			endpoint,
+			onSubmit
 		}),
 
 		disabled() {
@@ -46,11 +62,23 @@ export default {
 		}
 	},
 	methods: {
+		submit({data, title, message}) {
+			if (title && message) {
+				this.$store.dispatch("notify/send", {type: "info", title, message});
+			}
+
+			if (this.onSubmit) {
+				this.$router.push(rStringProps({data, val: this.onSubmit}));
+			} else {
+				this.$emit("fieldA", {
+					action: "refreshData",
+					done: async () => this.close()
+				});
+			}
+		},
+
 		close() {
 			this.$emit("close");
-		},
-		fieldA(obj) {
-			this.$emit("fieldA", obj);
 		}
 	}
 };

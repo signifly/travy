@@ -1,6 +1,11 @@
 <template>
 	<div class="modal">
-		<Dialog v-bind="{width, title}" :visible.sync="_visible" :append-to-body="true" :modal-append-to-body="true">
+		<Dialog
+		v-bind="{width, title}"
+		:visible.sync="visibleC"
+		:append-to-body="true"
+		:modal-append-to-body="true">
+
 			<div class="fields">
 				<vField
 					v-for="field in fields"
@@ -13,7 +18,7 @@
 
 			<div class="footer" slot="footer">
 				<div class="actions">
-					<Button @click="_visible = false" :disabled="!!loading">{{buttonCancelText}}</Button>
+					<Button @click="visibleC = false" :disabled="!!loading">{{buttonCancelText}}</Button>
 					<Button type="primary" @click="submit" :loading="!!loading">{{buttonSubmitText}}</Button>
 				</div>
 
@@ -21,6 +26,7 @@
 
 				<slot name="footer"/>
 			</div>
+
 		</Dialog>
 	</div>
 </template>
@@ -46,7 +52,7 @@ export default {
 	computed: {
 		errors: (t) => t.error.errors,
 
-		_visible: {
+		visibleC: {
 			get() {
 				return this.visible;
 			},

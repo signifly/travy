@@ -1,9 +1,8 @@
 <template>
 	<div class="modal">
 		<vModalFields
-			v-bind="{fields, error, loading, title}"
+			v-bind="{fields, error, loading, title, data}"
 			:visible.sync="visible"
-			:data="payload"
 			@fieldA="fieldA"
 			@submit="submit"
 		/>
@@ -12,7 +11,6 @@
 
 <script>
 import toFormData from "object-to-formdata";
-import {endpointUrl} from "@/modules/utils";
 import vModalFields from "@/components/modal-fields.vue";
 
 export default {
@@ -20,19 +18,19 @@ export default {
 	props: {
 		title: {type: String, required: false},
 		endpoint: {type: Object, required: true},
-		onSubmit: {type: String, required: false},
-		dataComb: {type: Object, required: true},
+		payload: {type: Object, required: true},
 		fields: {type: Array, required: true}
 	},
 	data() {
 		return {
-			error: {},
-			payload: this.dataComb,
-			loading: false
+			data: this.payload.data,
+			loading: false,
+			error: {}
 		}
 	},
 	computed: {
-		vUpload: (t) => t.fields.map(x => x.fieldType.id === "vUpload").some(x => x),
+		upload: (t) => t.fields.map(x => x.fieldType.id === "input-upload").some(x => x),
+		payloadC: (t) => ({...t.payload, data: t.data}),
 
 		visible: {
 			get() {
@@ -45,7 +43,7 @@ export default {
 	},
 	methods: {
 		fieldA({data}) {
-			this.payload = {...this.payload, ...data};
+			this.data = {...this.data, ...data};
 		},
 
 		close() {
@@ -57,7 +55,7 @@ export default {
 				this.loading = true;
 
 				const {data} = await this.$axios({
-					data: this.vUpload ? toFormData(this.payload) : this.payload,
+					data: this.upload ? toFormData(this.payloadC) : this.payloadC,
 					method: this.endpoint.method,
 					url: this.endpoint.url,
 					customErr: true,
@@ -66,22 +64,10 @@ export default {
 					}
 				});
 
-				this.submitAfter({data});
+				this.$emit("submit", data);
 			} catch(err) {
 				this.error = err;
 				this.loading = false;
-			}
-		},
-
-		submitAfter({data}) {
-			if (this.onSubmit) {
-				const url = endpointUrl({data: data.data || this.dataComb, url: this.onSubmit});
-				this.$router.push(url);
-			} else {
-				this.$emit("fieldA", {
-					action: "refresh",
-					done: async () => this.close()
-				});
 			}
 		}
 	}

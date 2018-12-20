@@ -1,7 +1,5 @@
 from node:10-alpine
 
-RUN apk update && apk add bash
-
 # install global npm packages
 RUN yarn global add npm-check-updates @vue/cli netlify-cli
 
@@ -18,4 +16,4 @@ COPY . .
 ARG API
 ENV API=${API}
 
-RUN yarn build
+RUN yarn build-app

@@ -9,7 +9,7 @@ export default {
 	meta: {
 		res: {
 			props: {
-				epoch: "dateTime"
+				timestamp: "dateTime"
 			},
 			data: {
 				dateTime: 1517529600
@@ -17,11 +17,11 @@ export default {
 		}
 	},
 	props: {
-		epoch: {type: Number, required: false, doc: true}
+		timestamp: {type: Number, required: false, doc: true}
 	},
 	computed: {
-		date: (t) => date(t.epoch),
-		dateTime: (t) => t.epoch ? t.date.sDateTime : ""
+		date: (t) => date(t.timestamp),
+		dateTime: (t) => t.timestamp ? t.date.sDateTime : ""
 	}
 };
 </script>

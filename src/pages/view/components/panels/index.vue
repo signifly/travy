@@ -1,32 +1,35 @@
 <template>
-	<component v-if="active" :is="comp" v-bind="{loading, title, getData, error}" />
+	<transition name="el-zoom-in-bottom">
+		<component v-if="comp" :is="comp" v-bind="{loading, error, title}" @refreshData="refreshData" @save="save"/>
+	</transition>
 </template>
 
 <script>
-import vSave from "./save.vue";
-import vBatch from "./batch.vue";
+import save from "./save.vue";
+import batch from "./batch.vue";
 
 export default {
-	components: {vSave, vBatch},
+	components: {save, batch},
 	props: {
 		data: {type: Object, required: true},
-		loading: {type: Boolean, required: true},
-		editsU: {type: Number, required: true},
-		getData: {type: Function, required: true},
-		error: {type: Object, required: true}
+		edit: {type: Boolean, required: true},
+		error: {type: String, required: true},
+		loading: {type: Boolean, required: true}
 	},
 	computed: {
-		title: (t) => `#${t.data.id}`,
 		sequential: (t) => t.$route.query.sequential,
-		comp: (t) => t.sequential ? "vBatch" : "vSave",
-		active() {
-			if (this.comp === "vBatch") return true;
-			if (this.comp === "vSave") return this.editsU;
+		title: (t) => `#${t.data.id}`,
+		comp() {
+			if (this.sequential) return batch;
+			if (this.edit) return save;
 		}
 	},
 	methods: {
-		save() {
-			this.$parent.$emit("save");
+		save(obj) {
+			this.$emit("save", obj);
+		},
+		refreshData(obj) {
+			this.$emit("refreshData", obj);
 		}
 	}
 };
