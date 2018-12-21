@@ -1,6 +1,7 @@
 import {get, transform, isObject, isFinite} from "lodash";
 import VueRouter from "vue-router";
 import store from "@/store";
+import Vue from "vue";
 import qs from "qs";
 
 
@@ -51,7 +52,7 @@ const routes = [
 
 
 const router = new VueRouter({
-	routes,
+	routes: [...routes, ...Vue.prototype.$plugin.routes],
 	mode: "history",
 	parseQuery(query) {
 		const parse = (item) => transform(item, (res, val, key) => {

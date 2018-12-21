@@ -2,6 +2,8 @@ import VueRouter from "vue-router";
 import Vuex from "vuex";
 
 import "./modules/element";
+import "./style/index.scss";
+import "normalize.css/normalize.css";
 
 import errors from "./modules/errors";
 import app from "./app.vue";
@@ -16,6 +18,7 @@ export const plugin = {
 
 		// set plugin options
 		Vue.prototype.$plugin = Object.assign({
+			routes: [],
 			fields: {},
 			api: ""
 		}, options);
@@ -33,10 +36,6 @@ export const plugin = {
 		Vue.options.store = require("./store").default;
 		Vue.options.render = (h) => h(app);
 
-
-		// styles
-		require("normalize.css/normalize.css");
-		require("./style/index.scss");
 
 		errors({Vue});
 	}

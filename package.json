@@ -1,9 +1,8 @@
 {
   "name": "@signifly/travy",
-  "version": "0.0.0",
-  "main": "src/lib.js",
-  "repository": "github:signifly/travy",
+  "version": "0.0.0-rc.1",
   "license": "MIT",
+  "repository": "github:signifly/travy",
   "main": "dist/lib.common.js",
   "scripts": {
     "build-lib": "vue-cli-service build --target lib --name lib src/lib.js",

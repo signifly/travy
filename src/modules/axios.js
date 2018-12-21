@@ -2,8 +2,8 @@ import router from "./router";
 import store from "@/store";
 import {get} from "lodash";
 import axios from "axios";
-import qs from "qs";
 import Vue from "vue";
+import qs from "qs";
 
 
 const api = axios.create({
