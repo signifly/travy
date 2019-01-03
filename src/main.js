@@ -8,6 +8,3 @@ Vue.use(plugin, {
 const instance = new Vue({
 	el: "#app"
 });
-
-window.travy = instance;
-window.Vue = Vue;
