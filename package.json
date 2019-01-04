@@ -1,6 +1,6 @@
 {
   "name": "@signifly/travy",
-  "version": "0.0.0-rc.4",
+  "version": "0.0.0-rc.6",
   "license": "MIT",
   "repository": "github:signifly/travy",
   "main": "dist/lib.common.js",
@@ -10,7 +10,8 @@
     "dev": "vue-cli-service serve --port 3000",
     "inspect": "vue-cli-service inspect",
     "lint": "vue-cli-service lint",
-    "release": "np --yolo"
+    "test": "echo test",
+    "release": "np",
   },
   "files": [
     "src",
