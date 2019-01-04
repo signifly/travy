@@ -11,7 +11,7 @@
     "inspect": "vue-cli-service inspect",
     "lint": "vue-cli-service lint",
     "test": "echo test",
-    "release": "np",
+    "release": "np"
   },
   "files": [
     "src",
