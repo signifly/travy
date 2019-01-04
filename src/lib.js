@@ -1,42 +1,49 @@
 import VueRouter from "vue-router";
 import Vuex from "vuex";
+import Vue from "vue";
 
-import "./modules/element";
-import "./style/index.scss";
+
 import "normalize.css/normalize.css";
+import "./style/index.scss";
+import "./modules/element";
+import "./modules/favicon";
 
+
+import * as utils from "./modules/utils";
 import errors from "./modules/errors";
 import app from "./app.vue";
 
 
-export const utils = require("./modules/utils");
+const start = (options) => {
+	Vue.use(require("vue-shortkey"));
+	Vue.use(VueRouter);
+	Vue.use(Vuex);
+
+	Vue.prototype.$settings = Object.assign({
+		routes: [],
+		fields: {},
+		api: ""
+	}, options);
+
+	const {default: router} = require("./modules/router");
+	const {default: axios} = require("./modules/axios");
+	const {default: store} = require("./store");
+
+	Vue.prototype.$axios = axios;
+	errors();
+
+	const instance = new Vue({
+		el: "#app",
+		router, store,
+		render: (h) => h(app)
+	});
+
+	return {instance, Vue};
+};
 
 
-export const plugin = {
-	install(Vue, options) {
-		Vue.config.productionTip = false;
-
-		// set plugin options
-		Vue.prototype.$plugin = Object.assign({
-			routes: [],
-			fields: {},
-			api: ""
-		}, options);
-
-
-		// use
-		Vue.use(require("vue-shortkey"));
-		Vue.use(VueRouter);
-		Vue.use(Vuex);
-
-
-		// modules
-		Vue.prototype.$axios = require("./modules/axios").default;
-		Vue.options.router = require("./modules/router").default;
-		Vue.options.store = require("./store").default;
-		Vue.options.render = (h) => h(app);
-
-
-		errors({Vue});
-	}
+export {
+	start as app,
+	utils,
+	Vue
 };

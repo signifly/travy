@@ -1,6 +1,8 @@
 const webpack = require("webpack");
 
 module.exports = {
+	parallel: false,
+
 	css: {
 		loaderOptions: {
 			sass: {
@@ -8,6 +10,7 @@ module.exports = {
 			}
 		}
 	},
+
 	configureWebpack: {
 		plugins: [
 			new webpack.DefinePlugin({
@@ -17,6 +20,7 @@ module.exports = {
 			})
 		]
 	},
+
 	chainWebpack: config => {
 		const svgRule = config.module.rule("svg");
 		svgRule.uses.clear();
@@ -35,13 +39,6 @@ module.exports = {
 			.end()
 			.use("markdown-loader")
 			.loader("markdown-loader")
-			.end();
-
-		config.module.rule("json")
-			.type("javascript/auto")
-			.test(/\.json$/)
-			.use("file-loader")
-			.loader("file-loader")
 			.end();
 	}
 };

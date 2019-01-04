@@ -50,9 +50,8 @@ const routes = [
 ];
 
 
-
 const router = new VueRouter({
-	routes: [...routes, ...Vue.prototype.$plugin.routes],
+	routes: [...routes, ...Vue.prototype.$settings.routes],
 	mode: "history",
 	parseQuery(query) {
 		const parse = (item) => transform(item, (res, val, key) => {

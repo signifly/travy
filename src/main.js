@@ -1,10 +1,5 @@
-import {plugin} from "./lib";
-import Vue from "vue";
+import {app} from "./lib";
 
-Vue.use(plugin, {
+app({
 	api: process.env.API
-});
-
-const instance = new Vue({
-	el: "#app"
 });

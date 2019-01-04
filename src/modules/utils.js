@@ -64,5 +64,5 @@ export const rStringPropsDeep = ({data, obj}) => {
 
 
 export const meta = {
-	items: `${window.location.origin}/meta/fields/api/items`
+	items: "$meta/items"
 };

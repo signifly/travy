@@ -28,7 +28,8 @@ export default {
 	methods: {
 		icon(file) {
 			try {
-				return require(`!file-loader!@/assets/icons/${file}.svg`);
+				const icon = encodeURIComponent(require(`@/assets/icons/${file}.svg`));
+				return `data:image/svg+xml;utf8,${icon}`;
 			} catch(err) {
 				console.log(err);
 			}

@@ -10,7 +10,7 @@
 			:on-change="addFile"
 			:disabled="!_upload">
 				<div class="image">
-					<div class="img" :style="{backgroundImage: `url(${imageUrl})`}" />
+					<div class="img" :style="{backgroundImage: `url('${imageUrl}')`}" />
 					<div class="icon"><i class="el-icon-upload"/></div>
 				</div>
 			</Upload>
@@ -57,7 +57,7 @@ export default {
 	},
 	computed: {
 		imageUrl() {
-			return this.image || require("!file-loader!@/assets/icons/noimage.svg");
+			return this.image || `data:image/svg+xml;utf8,${encodeURIComponent(require("@/assets/icons/noimage.svg"))}`;
 		}
 	},
 	methods: {

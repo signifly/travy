@@ -12,21 +12,24 @@
 import layout from "@/pages/meta/layout.vue";
 import vItem from "./item.vue";
 import {sortBy} from "lodash";
-import "./api";
 
 const fields = (() => {
-	const ctx = require.context('@/components/fields', false, /\.vue$/);
-	return ctx.keys().map((file) => ({
-		name: file.replace("./", "").replace(".vue", ""),
-		comp: ctx(file).default
-	}));
+	const ctx = require.context("@/components/fields", false, /\.vue$/);
+
+	return ctx.keys().reduce((obj, file) => {
+		const name = file.replace("./", "").replace(".vue", "");
+		const comp = ctx(file).default;
+		return {...obj, [name]: comp};
+	}, {});
 })();
+
 
 export default {
 	components: {layout, vItem},
 	computed: {
 		fieldsSorted() {
-			return sortBy(fields, "name");
+			const array = Object.entries({...fields, ...this.$settings.fields}).map(([name, comp]) => ({name, comp}));
+			return sortBy(array, "name");
 		},
 
 		sidebar: (t) => ({

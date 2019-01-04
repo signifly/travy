@@ -27,10 +27,10 @@ export default {
 		propsData: (t) => mapValues(t.props, (val) => get(t.data, val)),
 
 		comp() {
-			const pluginField = this.$plugin.fields[this.id];
+			const customField = this.$settings.fields[this.id];
 
-			if (pluginField) {
-				return pluginField;
+			if (customField) {
+				return customField;
 			} else {
 				return () => import(/* webpackMode: "eager" */ `@/components/fields/${this.id}.vue`);
 			}
