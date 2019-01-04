@@ -1,4 +1,6 @@
-export default ({Vue}) => {
+import Vue from "vue";
+
+export default () => {
 	const {default: store} = require("@/store");
 
 	Vue.config.errorHandler = (msg, vm = {}, trace) => {

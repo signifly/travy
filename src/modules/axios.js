@@ -1,23 +1,32 @@
+import * as meta from "./meta";
 import router from "./router";
 import store from "@/store";
 import {get} from "lodash";
 import axios from "axios";
+import Vue from "vue";
 import qs from "qs";
 
 
 const api = axios.create({
-	baseURL: `${process.env.API}/v1/admin`,
+	baseURL: `${Vue.prototype.$settings.api}/v1/admin`,
 	paramsSerializer: (params) => qs.stringify(params)
 });
 
 api.interceptors.request.use(config => {
 	const auth = store.getters["user/auth"];
 	if (auth) config.headers.common["Authorization"] = `${auth.token_type} ${auth.access_token}`;
+
+	// if $meta/* endpoint throw error
+	if (config.url.includes("$meta")) throw {meta: "items"};
+
 	return config;
 });
 
 
 api.interceptors.response.use(res => res, (err) => {
+	// return meta data if meta error was thrown
+	if (err.meta) return {data: meta[err.meta]};
+
 	const res = err.response;
 	console.log("err", err);
 	console.log("res", res);

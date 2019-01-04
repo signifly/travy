@@ -101,7 +101,7 @@ export default {
 		more: (t) => t.modal.meta.current_page !== t.modal.meta.last_page,
 
 		imageUrl() {
-			return this.image || require("!file-loader!@/assets/icons/noimage.svg");
+			return this.image || `data:image/svg+xml;utf8,${encodeURIComponent(require("@/assets/icons/noimage.svg"))}`;
 		},
 
 		modalItemsMap: (t) => t.modal.items.map(x => ({

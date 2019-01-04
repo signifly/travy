@@ -29,7 +29,6 @@
 </template>
 
 <script>
-const noimage = require("!file-loader!@/assets/icons/noimage.svg");
 import inputImage from "./input-image.vue";
 import actions from "./button-actions.vue";
 
@@ -68,7 +67,7 @@ export default {
 	},
 	props: {
 		alt: {type: Object, required: true},
-		image: {type: String, required: false, default: noimage, doc: true},
+		image: {type: String, required: false, doc: true},
 		_imageUpload: {type: Boolean, required: false, default: true, doc: true},
 		imageBase64: {type: Object, required: false, doc: true, note: "base64"},
 		_imageBase64: {type: String, required: false},

@@ -1,10 +1,5 @@
-import {plugin} from "./lib";
-import Vue from "vue";
-Vue.use(plugin);
+import {app} from "./lib";
 
-const instance = new Vue({
-	el: "#app"
+app({
+	api: process.env.API
 });
-
-window.travy = instance;
-window.Vue = Vue;
