@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import {assign, set} from "lodash";
 import toFormData from "object-to-formdata";
 import vModalFields from "@/components/modal-fields.vue";
 
@@ -43,7 +44,11 @@ export default {
 	},
 	methods: {
 		fieldA({data}) {
-			this.data = {...this.data, ...data};
+			// {"key1.key2": 1} ===> {key1: {key2: 1}}
+			data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
+			
+			// update state
+			this.data = assign(this.data, data);
 		},
 
 		close() {
