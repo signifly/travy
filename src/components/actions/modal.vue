@@ -46,9 +46,9 @@ export default {
 		fieldA({data}) {
 			// {"key1.key2": 1} ===> {key1: {key2: 1}}
 			data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
-			
+
 			// update state
-			this.data = assign(this.data, data);
+			this.data = assign({}, this.data, data);
 		},
 
 		close() {
