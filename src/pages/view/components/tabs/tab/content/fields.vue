@@ -14,7 +14,7 @@
 <script>
 import {rStringProps} from "@/modules/utils";
 import field from "@/components/field";
-import {get} from "lodash";
+import {get, set, assign} from "lodash";
 
 export default {
 	components: {field},
@@ -49,8 +49,17 @@ export default {
 			},
 
 			update: async ({data}) => {
-				t.payload = {...t.payload, ...data};
-				t.updateState({data: {...t.state.data, ...data}, edit: true});
+				// {"key1.key2": 1} ===> {key1: {key2: 1}}
+				data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
+
+				// merge payload with data
+				t.payload = assign({}, t.payload, data);
+
+				// merge state data with data
+				const stateData = assign({}, t.state.data, data);
+
+				// update state
+				t.updateState({data: stateData, edit: true});
 			}
 		})
 	},
@@ -79,6 +88,7 @@ export default {
 				}, {customErr: true});
 
 				this.updateState({data, options, edit: false, error: null});
+				this.payload = {};
 
 				if (done) await done();
 			} catch(error) {
