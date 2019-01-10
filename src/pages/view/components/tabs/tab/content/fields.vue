@@ -14,7 +14,7 @@
 <script>
 import {rStringProps} from "@/modules/utils";
 import field from "@/components/field";
-import {get, set, assign} from "lodash";
+import {get, set, merge} from "lodash";
 
 export default {
 	components: {field},
@@ -53,10 +53,10 @@ export default {
 				data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
 
 				// merge payload with data
-				t.payload = assign({}, t.payload, data);
+				t.payload = merge({}, t.payload, data);
 
 				// merge state data with data
-				const stateData = assign({}, t.state.data, data);
+				const stateData = merge({}, t.state.data, data);
 
 				// update state
 				t.updateState({data: stateData, edit: true});
