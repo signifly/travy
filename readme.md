@@ -1,8 +1,30 @@
-# Travy [![buddy pipeline](https://app.buddy.works/signifly/travy/pipelines/pipeline/143029/badge.svg?token=23d80701bf3a68c5ee6853b6115acfcd4f1a8809f8cb9c765882761869fa94bf "buddy pipeline")](https://app.buddy.works/signifly/travy/pipelines/pipeline/143029)
+# Travy
 
-> Dynamic CMS, WIP
+Dynamic CMS, WIP
 
-## Build
+
+## Install
+
+```
+$ npm install @signifly/travy
+```
+
+
+## Usage
+
+```js
+import {Vue, app, utils} from "@signifly/travy";
+import "@signifly/travy/dist/lib.css";
+
+const instance = app({
+	api: "https://domain", // required
+	routes: [],
+	fields: {}
+});
+```
+
+
+## Development
 
 ```bash
 # create .env to change environment variables
@@ -12,6 +34,9 @@ $ docker-compose up
 
 # build
 $ docker-compose run --rm app yarn build-{app/lib}
+
+# release
+$ npm run release
 
 # documentation on localhost:3000/meta
 ```

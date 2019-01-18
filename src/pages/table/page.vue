@@ -28,7 +28,7 @@
 <script>
 import {rStringProps, rStringPropsDeep} from "@/modules/utils";
 import Semaphore from "semaphore-async-await";
-import {merge} from "lodash";
+import {merge, set} from "lodash";
 import state from "./state";
 
 import pagination from "./components/pagination"
@@ -100,6 +100,9 @@ export default {
 				},
 
 				update: async ({item, data}) => {
+					// {"key1.key2": 1} ===> {key1: {key2: 1}}
+					data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
+
 					const url = rStringProps({data: item, val: `${this.endpoint.url}/{id}`});
 					await this.$axios.put(url, {...data, modifier: this.modifiers});
 					await this.getData({loading: false});

@@ -32,13 +32,11 @@ const start = (options) => {
 	Vue.prototype.$axios = axios;
 	errors();
 
-	const instance = new Vue({
+	return new Vue({
 		el: "#app",
 		router, store,
 		render: (h) => h(app)
 	});
-
-	return {instance, Vue};
 };
 
 

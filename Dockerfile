@@ -1,4 +1,4 @@
-from node:10-alpine
+from node:11-alpine
 
 # install global npm packages
 RUN yarn global add npm-check-updates @vue/cli netlify-cli
