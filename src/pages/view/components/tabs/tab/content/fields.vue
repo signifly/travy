@@ -105,6 +105,10 @@ export default {
 
 <style lang="scss" scoped>
 .tab {
-
+	.fields {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
 }
 </style>
