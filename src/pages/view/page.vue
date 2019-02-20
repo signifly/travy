@@ -103,7 +103,6 @@ export default {
 
 		async getDefinitions() {
 			const params = {modifier: this.query.modifiers};
-
 			const {data} = await this.$axios.get(this.requests.definitions, {params});
 			this.definitions = data;
 		},

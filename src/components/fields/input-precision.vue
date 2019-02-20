@@ -44,7 +44,8 @@ export default {
 	},
 	data() {
 		return {
-			valueC: this.value
+			valueC: this.value,
+			ready: false
 		}
 	},
 	computed: {
@@ -56,6 +57,8 @@ export default {
 			if (isNaN(toNumber(e.key))) e.preventDefault();
 		},
 		update(value) {
+			if (!this.ready) return;
+
 			this.$emit("fieldA", {
 				action: "update",
 				data: {[this._value]: value}
@@ -64,6 +67,10 @@ export default {
 	},
 	created() {
 		this.update = debounce(this.update, this.wait);
+	},
+	mounted() {
+		// prevent update emit on init
+		setTimeout(() => {this.ready = true}, 100);
 	}
 };
 </script>
