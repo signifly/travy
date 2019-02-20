@@ -1,6 +1,6 @@
 <template>
 	<action
-	v-bind="{props, active, data}"
+	v-bind="{props, active, hide, data}"
 	@close="toggle"
 	@fieldA="fieldA">
 
@@ -19,6 +19,7 @@ export default {
 	components: {Button, action},
 	props: {
 		data: {type: Object, required: true},
+		hide: {type: Object, required: false},
 		props: {type: Object, required: true},
 		icon: {type: String, required: false},
 		title: {type: String, required: true},
