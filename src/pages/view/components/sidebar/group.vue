@@ -60,6 +60,9 @@ export default {
 	.fields {
 		transform: scale(0.95);
 		margin: -$fieldMargin 0;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
 	}
 }
 </style>
