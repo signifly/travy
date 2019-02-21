@@ -55,9 +55,14 @@ export default {
 
 		async data({commit, state, getters}, {customErr} = {}) {
 			if (state.auth) {
-				const {data} = await axios.get("account", {customErr});
-				commit("data", data);
-				return getters.data;
+				try {
+					const {data} = await axios.get("account", {customErr});
+					commit("data", data);
+					return getters.data;
+				} catch(err) {
+					// error
+				}
+
 			}
 		}
 	},
