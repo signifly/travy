@@ -7,8 +7,8 @@
 				ref="field"
 				v-for="field in fields"
 				:key="field.name"
-				v-bind="field"
-				:alt="{data}"
+				v-bind="[field, {alt: fieldAlt}]"
+				@fieldA="fieldA"
 			/>
 		</div>
 	</div>
@@ -20,13 +20,23 @@ import field from "@/components/field";
 export default {
 	components: {field},
 	props: {
+		fieldAlt: {type: Object, required: true},
 		fields: {type: Array, required: true},
 		title: {type: String, required: true},
-		data: {type: Object, required: true},
 		id: {type: String, required: true}
+	},
+	data() {
+		return {
+			payload: {}
+		}
 	},
 	computed: {
 		fieldIds: (t) => t.fields.map(x => x.fieldType.id)
+	},
+	methods: {
+		fieldA($event) {
+			this.$emit("fieldA", $event);
+		}
 	}
 };
 </script>

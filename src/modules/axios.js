@@ -7,10 +7,20 @@ import Vue from "vue";
 import qs from "qs";
 
 
+const error = ({status, message}) => {
+	store.dispatch("notify/send", {
+		title: `Error ${status}`,
+		type: "error",
+		message
+	});
+};
+
+
 const api = axios.create({
 	baseURL: `${Vue.prototype.$settings.api}/v1/admin`,
 	paramsSerializer: (params) => qs.stringify(params)
 });
+
 
 api.interceptors.request.use(config => {
 	const auth = store.getters["user/auth"];
@@ -42,6 +52,8 @@ api.interceptors.response.use(res => res, (err) => {
 
 
 	if (customErr) { // if the request catches the error itself, stop global error handling.
+		if (status === 500) error({status, message});
+
 		return Promise.reject({
 			...res.data,
 			status
@@ -52,11 +64,7 @@ api.interceptors.response.use(res => res, (err) => {
 		return store.dispatch("user/logout");
 	}
 
-	store.dispatch("notify/send", {
-		title: `Error ${status}`,
-		type: "error",
-		message
-	});
+	error({status, message});
 
 	return Promise.reject(err);
 });
