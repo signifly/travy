@@ -2,14 +2,15 @@
   "name": "@signifly/travy",
   "version": "0.0.0-rc.6",
   "license": "MIT",
-  "repository": "github:signifly/travy",
   "main": "dist/lib.common.js",
+  "repository": "github:signifly/travy",
   "scripts": {
     "release": "docker-compose run --rm app sh -c 'yarn && yarn build-lib' && np --yolo",
     "build-lib": "vue-cli-service build --target lib --name lib src/lib.js",
     "build-app": "vue-cli-service build --modern --report",
     "dev": "vue-cli-service serve --port 3000",
     "inspect": "vue-cli-service inspect",
+    "test": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
   "files": [
@@ -36,7 +37,11 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "3.4.1",
     "@vue/cli-plugin-eslint": "3.4.1",
+    "@vue/cli-plugin-unit-jest": "3.4.1",
     "@vue/cli-service": "3.4.1",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "24.1.0",
     "babel-plugin-component": "1.1.1",
     "babel-plugin-lodash": "3.3.4",
     "html-loader": "0.5.5",
