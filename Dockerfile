@@ -1,7 +1,7 @@
 from node:11-alpine
 
 # install global npm packages
-RUN yarn global add npm-check-updates @vue/cli netlify-cli
+RUN yarn global add @vue/cli
 
 WORKDIR /app
 
