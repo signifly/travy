@@ -9,9 +9,7 @@
 
 			<Option v-for="item in itemsMap" v-bind="item" :key="item.value">
 				<div class="option">
-					<div class="icon" v-if="icon(item.icon)">
-						<img :src="icon(item.icon)">
-					</div>
+					<div class="emoji" v-if="item.emoji" v-html="emoji(item.emoji)"/>
 					{{item.label}}
 				</div>
 			</Option>
@@ -22,6 +20,7 @@
 
 <script>
 import {Select, Option} from "element-ui";
+import emoji from "emojilib";
 
 export default {
 	components: {Select, Option},
@@ -41,18 +40,18 @@ export default {
 				selectOptions: [
 					{
 						name: "Danmark",
-						icon: "flags/dk",
+						emoji: "denmark",
 						id: "DK"
 					},
 					{
 						name: "England",
-						icon: "flags/gb",
+						emoji: "uk",
 						id: "UK"
 					},
 					{
 						name: "Murica",
-						icon: "flags/us",
 						disabled: true,
+						emoji: "us",
 						id: "US",
 					}
 				]
@@ -81,15 +80,8 @@ export default {
 		}
 	},
 	methods: {
-		icon(file) {
-			if (file) {
-				try {
-					const icon = encodeURIComponent(require(`@/assets/icons/${file}.svg`));
-					return `data:image/svg+xml;utf8,${icon}`;
-				} catch(err) {
-					console.log(err);
-				}
-			}
+		emoji(name) {
+			return emoji.lib[name] && emoji.lib[name].char;
 		},
 
 		update(value) {
@@ -113,11 +105,9 @@ export default {
 	display: flex;
 	align-content: center;
 
-	.icon {
-		display: flex;
-		align-items: center;
-		width: 1.2em;
+	.emoji {
 		margin-right: 0.75em;
+		margin-top: 0.1em;
 	}
 }
 </style>

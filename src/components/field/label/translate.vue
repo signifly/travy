@@ -5,7 +5,7 @@
 
 			<div slot="content">
 				<div class="item" v-for="(item, i) in translated" :key="i">
-					<div class="icon"><img :src="icon(item.icon)"></div>
+					<div class="emoji" v-text="emoji(item.emoji)"/>
 					{{item.label}}
 					<div class="outdated" v-if="item.outdated"/>
 				</div>
@@ -16,6 +16,7 @@
 
 <script>
 import {Tooltip} from "element-ui";
+import emoji from "emojilib";
 
 export default {
 	components: {Tooltip},
@@ -26,13 +27,8 @@ export default {
 		languages: (t) => t.translated.length
 	},
 	methods: {
-		icon(file) {
-			try {
-				const icon = encodeURIComponent(require(`@/assets/icons/${file}.svg`));
-				return `data:image/svg+xml;utf8,${icon}`;
-			} catch(err) {
-				console.log(err);
-			}
+		emoji(name) {
+			return emoji.lib[name] && emoji.lib[name].char;
 		}
 	}
 };
@@ -74,11 +70,9 @@ export default {
 		margin-bottom: 0;
 	}
 
-	.icon {
+	.emoji {
 		margin-right: 0.5em;
-		img {
-			width: 1.1em;
-		}
+		margin-top: 0.1em;
 	}
 
 	.outdated {

@@ -19,6 +19,7 @@
   "dependencies": {
     "axios": "0.18.0",
     "element-ui": "2.5.4",
+    "emojilib": "2.4.0",
     "lodash": "4.17.11",
     "normalize.css": "8.0.1",
     "object-to-formdata": "1.6.3",
