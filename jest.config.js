@@ -7,7 +7,7 @@ module.exports = {
 		"^.+\\.vue$": "vue-jest"
 	},
 	moduleNameMapper: {
-		 "^.+.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
+		"^.+.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
 		"^@/(.*)$": "<rootDir>/src/$1"
 	}
 }

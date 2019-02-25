@@ -35,6 +35,9 @@ $ docker-compose up
 # build
 $ docker-compose run --rm app yarn build-{app/lib}
 
+# test
+$ docker-compose run --rm app yarn test
+
 # release
 $ npm run release
 

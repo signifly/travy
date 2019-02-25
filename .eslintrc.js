@@ -4,6 +4,7 @@ module.exports = {
 		node: true
 	},
 	extends: [
+		"plugin:jest/recommended",
 		"plugin:vue/essential",
 		"eslint:recommended"
 	],
