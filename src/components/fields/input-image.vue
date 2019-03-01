@@ -98,7 +98,7 @@ $t: 0.2s;
 
 .wrap {
 	.upload {
-		/deep/ {
+		::v-deep {
 			.el-upload {
 				.el-upload-dragger {
 					width: auto;

@@ -64,7 +64,7 @@ $header: darken($white2, 4%);
 	margin-right: -1px;
 	overflow: hidden;
 
-	/deep/ {
+	::v-deep {
 		.el-table {
 			body & {
 				border-left: $header solid 1px;

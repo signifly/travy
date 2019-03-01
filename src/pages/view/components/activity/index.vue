@@ -104,7 +104,7 @@ export default {
 		.activity-table {
 			background-color: transparent;
 
-			/deep/ {
+			::v-deep {
 				thead {
 					color: $blue4;
 				}

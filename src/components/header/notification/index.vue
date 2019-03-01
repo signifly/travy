@@ -60,7 +60,7 @@ export default {
 		.icon {
 			display: inline-flex;
 
-			/deep/ svg {
+			::v-deep svg {
 				$s: 1.5em;
 				width: $s;
 				height: $s;
@@ -71,7 +71,7 @@ export default {
 		}
 
 		.el-badge {
-			/deep/ {
+			::v-deep {
 				.is-dot {
 					border: 0px;
 					right: 0.9em;

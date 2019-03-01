@@ -128,7 +128,7 @@ export default {
 	position: relative;
 
 	.search {
-		/deep/ {
+		::v-deep {
 			.el-input__inner {
 				width: em(284);
 			}
@@ -146,7 +146,7 @@ export default {
 		}
 
 		&.active {
-			/deep/ {
+			::v-deep {
 				.el-input-group__append {
 					background-color: $blue4;
 					color: $white1;

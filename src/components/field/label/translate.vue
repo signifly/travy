@@ -41,14 +41,14 @@ export default {
 		align-items: center;
 
 		&.active {
-			/deep/ svg {
+			::v-deep svg {
 				path {
 					fill: $blue5;
 				}
 			}
 		}
 
-		/deep/ svg {
+		::v-deep svg {
 			$s: 12px;
 			display: block;
 			width: $s;

@@ -122,7 +122,7 @@ $sidebar: 18em;
 			}
 
 
-			/deep/ {
+			::v-deep {
 				h1 {
 					font-size: 1.9em;
 					font-weight: 500;
@@ -140,7 +140,7 @@ $sidebar: 18em;
 			.html {
 				line-height: 1.5em;
 
-				/deep/ {
+				::v-deep {
 					ul {
 						padding-left: 1em;
 

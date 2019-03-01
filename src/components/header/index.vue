@@ -43,7 +43,7 @@ export default {
 		justify-content: center;
 		width: 60px;
 
-		/deep/ svg {
+		::v-deep svg {
 			$s: 1.9em;
 			width: $s;
 			height: $s;

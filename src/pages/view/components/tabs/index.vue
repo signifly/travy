@@ -51,7 +51,7 @@ export default {
 
 <style lang="scss" scoped>
 .tabs {
-	/deep/{
+	::v-deep{
 		.el-tabs__header {
 			display: flex;
 			margin: 0;
