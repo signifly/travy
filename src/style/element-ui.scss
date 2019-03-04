@@ -26,4 +26,9 @@ body {
 		background-color: transparent;
 		color: $black1;
 	}
+
+	// fix popup insude dropdown menu
+	.el-dropdown-menu {
+		overflow: visible;
+	}
 }

@@ -148,10 +148,9 @@ export default {
 			});
 
 			const {data: {data, meta}} = await this.$axios.get(this.endpoint.url, {params});
+			this.loading = false;
 			this.data = data;
 			this.meta = meta;
-
-			this.loading = false;
 		}
 	},
 	created() {
