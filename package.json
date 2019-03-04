@@ -8,9 +8,9 @@
     "release": "docker-compose run --rm app sh -c 'yarn && yarn test && yarn build-lib' && np --yolo",
     "build-lib": "vue-cli-service build --target lib --name lib src/lib.js",
     "build-app": "vue-cli-service build --modern --report",
+    "jest": "vue-cli-service test:unit --verbose",
     "dev": "vue-cli-service serve --port 3000",
     "inspect": "vue-cli-service inspect",
-    "jest": "vue-cli-service test:unit",
     "test": "yarn lint && yarn jest",
     "lint": "vue-cli-service lint"
   },
