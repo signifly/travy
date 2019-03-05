@@ -12,6 +12,7 @@ import account from "@/pages/account.vue";
 import login from "@/pages/login";
 import loginReset from "@/pages/login/reset.vue";
 
+import dashboard from "@/pages/dashboard";
 import custom from "@/pages/custom.vue";
 import table from "@/pages/table";
 import view from "@/pages/view";
@@ -33,6 +34,8 @@ const routes = [
 
 	{path: "/t/:tableId", name: "table", component: table, meta: {layout: "main", auth: {roles: "all"}}},
 	{path: "/t/:tableId/:viewId/:tabId?", name: "tableView", component: view, meta: {layout: "main", auth: {roles: "all"}}},
+
+	{path: "/d/:id", name: "dashboard", component: dashboard, meta: {layout: "main", auth: {roles: "all"}}},
 
 	{path: "/c/:id", name: "custom", component: custom, meta: {layout: "main", auth: {roles: "all"}}},
 
@@ -96,6 +99,7 @@ router.beforeEach(async (to, from, next) => {
 	// allow all routes that isn't protected by auth
 	if (!to.meta.auth) return go({to, next});
 
+	// get user if not fetched
 	const user = store.getters["user/data"] || await store.dispatch("user/data");
 	const roles = get(to.meta, "auth.roles", []);
 

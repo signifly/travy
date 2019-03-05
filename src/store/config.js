@@ -11,6 +11,12 @@ export default {
 	mutations: {
 		data(state, data) {
 			state.data = data;
+			state.data.dashboards = {
+				stuff: {
+					title: "Stuff",
+					auth: {roles: ["admin"]}
+				}
+			}
 		}
 	},
 
@@ -34,6 +40,9 @@ export default {
 		},
 		tables(state) {
 			return get(state.data, "tables", {});
+		},
+		dashboards(state) {
+			return get(state.data, "dashboards", {});
 		},
 		customs(state) {
 			return get(state.data, "customs", {});
