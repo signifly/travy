@@ -25,7 +25,7 @@ export default {
 	components: {Header, notification, vMenu, user},
 	computed: {
 		settings: (t) => t.$store.getters["config/settings"],
-		notifications: (t) => t.settings.notifications === false ? false : true
+		notifications: (t) => t.settings.notifications !== false
 	}
 };
 </script>

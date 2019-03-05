@@ -18,6 +18,7 @@ export default {
 	components: {Badge, popup},
 	data() {
 		return {
+			interval: false,
 			active: false,
 			popupKey: 0,
 			unread: 0
@@ -35,10 +36,10 @@ export default {
 	},
 	created() {
 		this.getUnread();
-		setInterval(this.getUnread, 5000);
+		this.interval = setInterval(this.getUnread, 5000);
 	},
 	beforeDestroy() {
-		clearInterval(this.getUnread);
+		clearInterval(this.interval);
 	}
 };
 </script>
