@@ -13,28 +13,23 @@ import {get} from "lodash";
 export default {
 	components: {breadcrumb, page},
 	computed: {
+		defsEndpoint: (t) => ({url: `definitions/table/${t.tableId}`}),
 		table: (t) => t.$store.getters["config/tables"][t.tableId],
 		tableId: (t) => t.$route.params.tableId,
-		title: (t) => get(t.table, "title"),
-		defsEndpoint: (t) => ({
-			url: `definitions/table/${t.tableId}`
-		})
+		title: (t) => get(t.table, "title")
 	},
-	methods: {
-		init() {
-			if (!this.table) {
-				this.$router.replace({name: "error"});
-			} else {
-				this.$watch(
-					"$route",
-					() => this.$store.dispatch("base/meta", {title: this.title}),
-					{immediate: true}
-				);
+	watch: {
+		$route: {
+			immediate: true,
+			handler() {
+				this.$store.dispatch("base/meta", {title: this.title});
 			}
 		}
 	},
 	created() {
-		this.init();
+		if (!this.table) {
+			this.$router.replace({name: "error"});
+		}
 	}
 };
 </script>
