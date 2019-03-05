@@ -100,7 +100,7 @@ export default {
 
 			try {
 				await Promise.all([
-					this.$refs.sidebar.save(),
+					(this.sidebar && this.$refs.sidebar.save()),
 					this.$refs.tabs.save()
 				]);
 				await this.refreshData();
