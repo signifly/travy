@@ -1,6 +1,7 @@
 module.exports = {
 	roots: ["./src"],
 	moduleFileExtensions: ["js","jsx", "json", "vue"],
+	setupFiles: ["./src/test/setup.js"],
 	transform: {
 		".+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
 		"^.+\\.jsx?$": "babel-jest",
