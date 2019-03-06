@@ -43,8 +43,8 @@ export default {
 		dashboards({data}) {
 			return data && data.dashboards;
 		},
-		frontpage(state, getters) {
-			return getters.settings.frontpage;
+		frontpage(state, {settings}) {
+			return settings && settings.frontpage;
 		},
 		title(state, getters) {
 			return getters.settings.title || "Travy";
