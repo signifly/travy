@@ -46,8 +46,8 @@ export default {
 		frontpage(state, {settings}) {
 			return settings && settings.frontpage;
 		},
-		title(state, getters) {
-			return getters.settings.title || "Travy";
+		title(state, {settings}) {
+			return (settings && settings.title) || "Travy";
 		}
 	}
 };
