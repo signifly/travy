@@ -18,7 +18,7 @@ beforeEach(async () => {
 		router,
 		propsData: {
 			defsEndpoint: {url: "/definitions"},
-			title: "Projects"
+			title: {text: "Projects"}
 		},
 		stubs: { // element-ui fix
 			transition: false
@@ -42,7 +42,7 @@ beforeEach(async () => {
 });
 
 
-describe("table page", () => {
+describe("table", () => {
 	test("get definitions", () => {
 		expect(wrapper.vm.definitions).toBe(table.definitions);
 	});

@@ -21,7 +21,7 @@ import box from "@/components/box";
 export default {
 	components: {field, box},
 	props: {
-		title: {type: String, required: true},
+		title: {type: Object, required: true},
 		fields: {type: Array, required: true},
 		endpoint: {type: Object, required: true}
 	},

@@ -10,8 +10,7 @@ import sections from "./sections";
 export default {
 	components: {sections},
 	props: {
-		defsEndpoint: {type: Object, required: true},
-		title: {type: String, required: false}
+		defsEndpoint: {type: Object, required: true}
 	},
 	data() {
 		return {

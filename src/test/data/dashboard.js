@@ -4,6 +4,7 @@ export default {
 			{
 				id: "issues",
 				type: "table",
+				title: {text: "Issues"},
 				endpoint: {
 					url: "/definitions/table",
 					params: {
@@ -11,16 +12,15 @@ export default {
 						actionable: "App\\Models\\Project"
 					}
 				},
-				title: "Issues",
 				fields: []
 			},
 			{
 				id: "details",
 				type: "fields",
+				title: {text: "Details"},
 				endpoint: {
 					url: "/data/fields"
 				},
-				title: "Details",
 				fields: [
 					{
 						name: "client_id",

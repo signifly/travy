@@ -46,7 +46,7 @@ beforeEach(async () => {
 });
 
 
-describe("dashboard page", () => {
+describe("dashboard", () => {
 	test("sections", () => {
 		const sections = wrapper.findAll(compSection);
 		expect(sections).toHaveLength(2);

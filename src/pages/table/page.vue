@@ -127,7 +127,6 @@ export default {
 
 		async getDefinitions() {
 			const params = {...this.defsEndpoint.params, modifiers: this.query.modifiers};
-
 			const {data} = await this.$axios.get(this.defsEndpoint.url, {params});
 			this.definitions = data;
 		},
