@@ -1,5 +1,5 @@
 <template>
-	<div class="radio-group">
+	<div class="input-radio-group">
 		<RadioGroup :value="value" size="medium" @input="update">
 			<RadioButton
 			v-for="item in _items"
@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.radio-group {
+.input-radio-group {
 
 }
 </style>
