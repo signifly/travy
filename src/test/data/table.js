@@ -4,29 +4,29 @@ export default {
 			{
 				order: 1,
 				sortable: true,
-				sortBy: 'name',
-				name: 'name',
-				label: 'Name',
+				sortBy: "name",
+				name: "name",
+				label: "Name",
 				fieldType: {
-					id: 'text',
+					id: "text",
 					props: {
-						text: 'name'
+						text: "name"
 					}
 				},
-				onClick: '/t/projects/{id}'
+				onClick: "/t/projects/{id}"
 			},
 			{
 				order: 2,
 				sortable: false,
 				sortBy: null,
-				name: 'tags',
-				label: 'Tags',
+				name: "tags",
+				label: "Tags",
 				fieldType: {
-					id: 'items-tooltip',
+					id: "items-tooltip",
 					props: {
-						itemKey: 'name',
-						itemLink: '/t/tags/{id}',
-						items: 'tags'
+						itemKey: "name",
+						itemLink: "/t/tags/{id}",
+						items: "tags"
 					}
 				}
 			},
@@ -34,59 +34,59 @@ export default {
 				order: 3,
 				sortable: false,
 				sortBy: null,
-				name: 'actions',
-				label: 'Actions',
+				name: "actions",
+				label: "Actions",
 				fieldType: {
-					id: 'button-actions',
+					id: "button-actions",
 					props: {
 						actions: [
 							{
-								title: 'View',
+								title: "View",
 								props: {
-									title: 'View',
-									id: 'show',
+									title: "View",
+									id: "show",
 									endpoint: {
-										url: '/t/projects/{id}',
-										method: 'get'
+										url: "/t/projects/{id}",
+										method: "get"
 									}
 								},
 								hide: {
-									key: 'is_deleted',
-									operator: 'eq',
+									key: "is_deleted",
+									operator: "eq",
 									value: true
 								}
 							},
 							{
-								title: 'Delete',
+								title: "Delete",
 								props: {
-									title: 'Delete',
-									id: 'popup',
-									text: 'Are you sure? Please confirm this action.',
+									title: "Delete",
+									id: "popup",
+									text: "Are you sure? Please confirm this action.",
 									endpoint: {
-										url: 'http://localhost/admin/projects/{id}',
-										method: 'delete'
+										url: "http://localhost/admin/projects/{id}",
+										method: "delete"
 									}
 								},
 								hide: {
-									key: 'is_deleted',
-									operator: 'eq',
+									key: "is_deleted",
+									operator: "eq",
 									value: true
 								}
 							},
 							{
-								title: 'Restore',
+								title: "Restore",
 								props: {
-									title: 'Restore',
-									id: 'popup',
-									text: 'Are you sure? Please confirm this action.',
+									title: "Restore",
+									id: "popup",
+									text: "Are you sure? Please confirm this action.",
 									endpoint: {
-										url: 'http://localhost/admin/projects/{id}/restore',
-										method: 'post'
+										url: "http://localhost/admin/projects/{id}/restore",
+										method: "post"
 									}
 								},
 								hide: {
-									key: 'is_deleted',
-									operator: 'eq',
+									key: "is_deleted",
+									operator: "eq",
 									value: false
 								}
 							}
@@ -97,34 +97,34 @@ export default {
 			}
 		],
 		endpoint: {
-			url: '/data',
+			url: "/data/table",
 			params: {
 				include: [
-					'tags'
+					"tags"
 				]
 			}
 		},
 		defaults: {
 			sort: {
-				prop: 'name',
-				order: 'ascending'
+				prop: "name",
+				order: "ascending"
 			}
 		},
 		actions: [
 			{
-				title: 'Add project',
+				title: "Add project",
 				props: {
-					title: 'Add project',
-					id: 'modal',
-					onSubmit: '/t/projects/{id}',
+					title: "Add project",
+					id: "modal",
+					onSubmit: "/t/projects/{id}",
 					fields: [
 						{
-							name: 'name',
-							label: 'Name',
+							name: "name",
+							label: "Name",
 							fieldType: {
-								id: 'input-text',
+								id: "input-text",
 								props: {
-									value: 'name'
+									value: "name"
 								}
 							}
 						}
@@ -133,24 +133,24 @@ export default {
 						data: {}
 					},
 					endpoint: {
-						url: 'https://localhost/projects',
-						method: 'post'
+						url: "https://localhost/projects",
+						method: "post"
 					}
 				},
-				icon: 'plus',
-				status: 'primary'
+				icon: "plus",
+				status: "primary"
 			}
 		],
 		search: {
-			placeholder: 'Search for Name'
+			placeholder: "Search for Name"
 		},
 		batch: {
 			selectedOptions: {
-				label: 'name',
-				link: '/t/projects/{id}'
+				label: "name",
+				link: "/t/projects/{id}"
 			},
 			sequential: {
-				url: '/t/projects/{id}'
+				url: "/t/projects/{id}"
 			}
 		}
 	},

@@ -1,5 +1,4 @@
 import axios from "@/modules/axios";
-import {get} from "lodash";
 
 export default {
 	namespaced: true,
@@ -11,12 +10,6 @@ export default {
 	mutations: {
 		data(state, data) {
 			state.data = data;
-			state.data.dashboards = {
-				stuff: {
-					title: "Stuff",
-					auth: {roles: ["admin"]}
-				}
-			}
 		}
 	},
 
@@ -35,20 +28,20 @@ export default {
 		data(state) {
 			return state.data;
 		},
-		menu(state) {
-			return get(state.data, "menu", []);
+		menu({data}) {
+			return data && data.menu;
 		},
-		tables(state) {
-			return get(state.data, "tables", {});
+		tables({data}) {
+			return data && data.tables;
 		},
-		dashboards(state) {
-			return get(state.data, "dashboards", {});
+		customs({data}) {
+			return data && data.customs;
 		},
-		customs(state) {
-			return get(state.data, "customs", {});
+		settings({data}) {
+			return data && data.settings;
 		},
-		settings(state) {
-			return get(state.data, "settings", {});
+		dashboards({data}) {
+			return data && data.dashboards;
 		},
 		frontpage(state, getters) {
 			return getters.settings.frontpage;

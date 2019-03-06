@@ -1,5 +1,5 @@
 import {mount} from "@vue/test-utils";
-import popup from "./popup";
+import compPopup from "./popup";
 import comp from "./index";
 
 const propsData = {
@@ -26,7 +26,7 @@ const propsData = {
 describe("action", () => {
 	test("active", () => {
 		const wrapper = mount(comp, {propsData});
-		expect(wrapper.contains(popup)).toBe(true);
+		expect(wrapper.contains(compPopup)).toBe(true);
 	});
 
 
@@ -40,7 +40,7 @@ describe("action", () => {
 		}});
 
 		expect(wrapper.vm.disabled).toBe(true);
-		expect(wrapper.contains(popup)).toBe(false);
+		expect(wrapper.contains(compPopup)).toBe(false);
 	});
 
 

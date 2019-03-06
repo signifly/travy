@@ -1,8 +1,8 @@
 <template>
 	<div class="table-main" v-if="definitions">
 
-		<div class="header">
-			<filters v-bind="[filters, {search}]" @filter="filter"/>
+		<div class="header" v-if="filters && actions">
+			<filters v-if="filters" v-bind="[filters, {search}]" @filter="filter"/>
 			<actions v-if="actions" v-bind="{actions, parentData}" @fieldA="fieldA"/>
 		</div>
 

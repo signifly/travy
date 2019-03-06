@@ -1,6 +1,6 @@
-import tableData from "@/test/data/table";
 import {mount} from "@vue/test-utils";
 import VueRouter from "vue-router";
+import {table} from "@/test/data";
 const router = new VueRouter();
 import {app} from "@/lib";
 
@@ -27,11 +27,11 @@ beforeEach(async () => {
 			$axios: {
 				get: (url) => {
 					if (url === "/definitions") return Promise.resolve({
-						data: tableData.definitions
+						data: table.definitions
 					});
 
-					if (url === "/data") return Promise.resolve({
-						data: tableData.data
+					if (url === "/data/table") return Promise.resolve({
+						data: table.data
 					});
 				}
 			}
@@ -44,10 +44,10 @@ beforeEach(async () => {
 
 describe("table page", () => {
 	test("get definitions", () => {
-		expect(wrapper.vm.definitions).toBe(tableData.definitions);
+		expect(wrapper.vm.definitions).toBe(table.definitions);
 	});
 	test("get data", async () => {
-		expect(wrapper.vm.data).toBe(tableData.data.data);
-		expect(wrapper.vm.meta).toBe(tableData.data.meta);
+		expect(wrapper.vm.data).toBe(table.data.data);
+		expect(wrapper.vm.meta).toBe(table.data.meta);
 	});
 });

@@ -1,8 +1,6 @@
 <template>
 	<div class="section" :style="{width: widthCalc}">
-		<div class="wrap">
-			<component :is="comp" v-bind="section"/>
-		</div>
+		<component :is="comp" v-bind="section"/>
 	</div>
 </template>
 
@@ -24,11 +22,6 @@ export default {
 
 <style lang="scss" scoped>
 .section {
-	padding: 24px;
-
-	.wrap {
-		background-color: $white1;
-		padding: 1em;
-	}
+	padding: 1em 0;
 }
 </style>
