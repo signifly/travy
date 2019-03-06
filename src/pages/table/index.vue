@@ -1,6 +1,6 @@
 <template>
 	<div class="table" v-if="table">
-		<breadcrumb :items="[{title, to: $route.path}]"/>
+		<breadcrumb :items="[{title: title.text, to: $route.path}]"/>
 		<page v-bind="{defsEndpoint, title}" :key="tableId"/>
 	</div>
 </template>
@@ -15,8 +15,8 @@ export default {
 	computed: {
 		defsEndpoint: (t) => ({url: `definitions/table/${t.tableId}`}),
 		table: (t) => t.$store.getters["config/tables"][t.tableId],
-		tableId: (t) => t.$route.params.tableId,
-		title: (t) => get(t.table, "title")
+		title: (t) => ({text: get(t.table, "title")}),
+		tableId: (t) => t.$route.params.tableId
 	},
 	watch: {
 		$route: {

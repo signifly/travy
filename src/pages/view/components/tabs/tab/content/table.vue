@@ -10,7 +10,7 @@ export default {
 	props: {
 		parentData: {type: Object, required: true},
 		endpoint: {type: Object, required: true},
-		title: {type: String, required: true}
+		title: {type: Object, required: true}
 	}
 };
 </script>

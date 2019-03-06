@@ -46,7 +46,7 @@ export default {
 	props: {
 		defsEndpoint: {type: Object, required: true},
 		parentData: {type: Object, required: false},
-		title: {type: String, required: false}
+		title: {type: Object, required: true}
 	},
 	data() {
 		return {
