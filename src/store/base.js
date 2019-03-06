@@ -2,7 +2,9 @@ export default {
 	namespaced: true,
 
 	state: {
-		meta: {title: "Travy"}
+		meta: {
+			title: "Travy"
+		}
 	},
 
 	mutations: {

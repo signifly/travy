@@ -15,14 +15,14 @@ export default {
 	computed: {
 		defsEndpoint: (t) => ({url: `definitions/table/${t.tableId}`}),
 		table: (t) => t.$store.getters["config/tables"][t.tableId],
-		title: (t) => ({text: get(t.table, "title")}),
+		title: (t) => ({text: get(t.table, "title", {})}),
 		tableId: (t) => t.$route.params.tableId
 	},
 	watch: {
 		$route: {
 			immediate: true,
 			handler() {
-				this.$store.dispatch("base/meta", {title: this.title});
+				this.$store.dispatch("base/meta", {title: this.title.text});
 			}
 		}
 	},

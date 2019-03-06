@@ -15,14 +15,14 @@ export default {
 	computed: {
 		defsEndpoint: (t) => ({url: `definitions/dashboard/${t.id}`}),
 		dashboard: (t) => t.$store.getters["config/dashboards"][t.id],
-		title: (t) => get(t.dashboard, "title"),
+		title: (t) => get(t.dashboard, "title", {}),
 		id: (t) => t.$route.params.id
 	},
 	watch: {
 		$route: {
 			immediate: true,
 			handler() {
-				this.$store.dispatch("base/meta", {title: this.title});
+				this.$store.dispatch("base/meta", {title: this.title.text});
 			}
 		}
 	},
