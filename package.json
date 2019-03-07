@@ -6,7 +6,7 @@
   "repository": "github:signifly/travy",
   "scripts": {
     "release": "docker-compose run --rm app sh -c 'yarn && yarn test && yarn build-lib' && np --yolo",
-    "build-lib": "vue-cli-service build --target lib --name lib src/lib.js",
+    "build-lib": "vue-cli-service build --target lib --formats commonjs --name lib src/lib.js",
     "build-app": "vue-cli-service build --modern",
     "jest": "vue-cli-service test:unit --verbose",
     "dev": "vue-cli-service serve --port 3000",
