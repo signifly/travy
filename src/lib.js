@@ -37,7 +37,6 @@ const start = (options) => {
 		errors();
 	}
 
-
 	return new Vue({
 		el: !settings.test && "#app",
 		router, store,
