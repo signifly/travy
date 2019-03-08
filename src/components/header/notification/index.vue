@@ -6,7 +6,13 @@
 			</Badge>
 		</a>
 
-		<popup @getUnread="getUnread" :key="popupKey" v-show="active"/>
+		<popup
+			v-bind="{loading, meta}"
+			:items.sync="items"
+			v-show="active"
+			@updateItems="updateItems"
+			@updateItem="updateItem"
+		/>
 	</div>
 </template>
 
@@ -18,28 +24,56 @@ export default {
 	components: {Badge, popup},
 	data() {
 		return {
-			interval: false,
+			loading: false,
 			active: false,
-			popupKey: 0,
-			unread: 0
+			items: [],
+			unread: 0,
+			meta: {}
 		}
 	},
 	methods: {
 		toggle() {
 			this.active = !this.active;
 		},
+
+		updateItem({id, ...data}) {
+			this.getUnread();
+			Object.assign(this.items.find(x => x.id === id), data);
+		},
+
+		updateItems(data) {
+			this.getUnread();
+			this.items = this.items.map(x => ({...x, ...data}));
+		},
+
 		async getUnread() {
 			const {data: {meta}} = await this.$axios.get("account/notifications", {params: {count: 1, filter: {read: false}}});
-			if (meta.total > this.unread) this.popupKey++; // rerender popup if there's more unread items
 			this.unread = meta.total;
+		},
+
+		async getItems({page} = {page: 1}) {
+			if (this.loading) return;
+			this.loading = true;
+
+			try {
+				const {data: {data, meta}} = await this.$axios.get("account/notifications", {params: {page, count: 20}});
+				this.items = page > 1 ? [...this.items, ...data] : data;
+				this.meta = meta;
+			} catch(err) {
+				// error
+			} finally {
+				this.loading = false;
+			}
 		}
 	},
 	created() {
+		this.getItems();
 		this.getUnread();
-		this.interval = setInterval(this.getUnread, 5000);
-	},
-	beforeDestroy() {
-		clearInterval(this.interval);
+
+		this.$ws.on("private-user.2", () => {
+			this.getUnread();
+			this.getItems();
+		});
 	}
 };
 </script>
