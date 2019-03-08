@@ -1,4 +1,4 @@
-from node:11-alpine
+from node:11.10-alpine
 
 # install global npm packages
 RUN yarn global add @vue/cli
