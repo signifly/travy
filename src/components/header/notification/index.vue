@@ -31,6 +31,9 @@ export default {
 			meta: {}
 		}
 	},
+	computed: {
+		user: (t) => t.$store.getters["user/data"]
+	},
 	methods: {
 		toggle() {
 			this.active = !this.active;
@@ -70,7 +73,7 @@ export default {
 		this.getItems();
 		this.getUnread();
 
-		this.$ws.on("private-user.2", () => {
+		this.$ws.on(`private-user.${this.user.id}`, () => {
 			this.getItems();
 			this.getUnread();
 		});
