@@ -71,8 +71,8 @@ export default {
 		this.getUnread();
 
 		this.$ws.on("private-user.2", () => {
-			this.getUnread();
 			this.getItems();
+			this.getUnread();
 		});
 	}
 };
