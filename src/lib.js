@@ -28,9 +28,10 @@ const start = (options) => {
 
 	const {default: router} = require("./modules/router");
 	const {default: axios} = require("./modules/axios");
+	const {default: ws} = require("./modules/ws");
 	const {default: store} = require("./store");
-
 	Vue.prototype.$axios = axios;
+	Vue.prototype.$ws = ws;
 
 	if (!settings.test) {
 		favicon();
