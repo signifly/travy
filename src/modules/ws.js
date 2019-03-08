@@ -60,8 +60,7 @@ const connect = () => {
 		start(time) {
 			this.interval = setInterval(() => {
 				state.ws.send(JSON.stringify({
-					event: "pusher:ping",
-					data: {}
+					event: "pusher:ping"
 				}));
 			}, (time - 1) * 1000);
 		},
