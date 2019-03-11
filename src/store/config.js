@@ -28,23 +28,26 @@ export default {
 		data(state) {
 			return state.data;
 		},
-		menu({data}) {
+		menu(state, {data}) {
 			return data && data.menu;
 		},
-		tables({data}) {
+		tables(state, {data}) {
 			return data && data.tables;
 		},
-		customs({data}) {
+		customs(state, {data}) {
 			return data && data.customs;
 		},
-		settings({data}) {
+		settings(state, {data}) {
 			return data && data.settings;
 		},
-		dashboards({data}) {
+		dashboards(state, {data}) {
 			return data && data.dashboards;
 		},
 		frontpage(state, {settings}) {
 			return settings && settings.frontpage;
+		},
+		wsKey(state, {settings}) {
+			return settings && settings.websockets_key;
 		},
 		title(state, {settings}) {
 			return (settings && settings.title) || "Travy";
