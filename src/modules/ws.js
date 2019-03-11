@@ -92,7 +92,6 @@ const reset = () => {
 
 
 const connect = () => {
-	console.log("connect");
 	const key = store.getters["config/wsKey"];
 	state.ws = new WebSocket(`wss://${domain}:6002/app/${key}`);
 
@@ -129,7 +128,7 @@ const connect = () => {
 
 	state.ws.addEventListener("close", (e) => {
 		const user = store.getters["user/data"];
-		console.log("ws close", e);
+		if (dev) console.log("ws close", e);
 
 		reset();
 
