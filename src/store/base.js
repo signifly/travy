@@ -20,11 +20,5 @@ export default {
 			const newTitle = title ? `${title} - ${siteTitle}` : siteTitle;
 			commit("meta", {title: newTitle});
 		}
-	},
-
-	getters: {
-		title(state) {
-			return state.title;
-		}
 	}
 };
