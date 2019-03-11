@@ -23,7 +23,7 @@ const api = axios.create({
 
 
 api.interceptors.request.use(config => {
-	const auth = store.getters["user/auth"];
+	const auth = JSON.parse(localStorage.getItem("auth"));
 	if (auth) config.headers.common["Authorization"] = `${auth.token_type} ${auth.access_token}`;
 
 	// if $meta/* endpoint throw error

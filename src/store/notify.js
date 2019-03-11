@@ -12,7 +12,7 @@ export default {
 			(async () => {
 				// make notification work on first load
 				await new Promise(resolve => setTimeout(resolve, 1));
-				notify({message, title, type, offset: 50});
+				notify({message, title, type, offset: 40});
 			})();
 		}
 	}
