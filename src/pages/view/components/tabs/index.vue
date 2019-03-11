@@ -1,8 +1,8 @@
 <template>
 	<div class="tabs">
 		<Tabs type="card" v-model="activeTab">
-			<TabPane v-for="tab in tabs" :name="tab.id" :key="tab.id" :lazy="true" ref="pane">
-				<tabLabel slot="label" v-bind="[tab]" :state="state[tab.id]"/>
+			<TabPane v-for="tab in tabs" :name="tab.id" :key="tab.id" :lazy="true">
+				<tabLabel slot="label" v-bind="tab" :state="state[tab.id]"/>
 				<tabContent ref="tabContent" v-bind="{tab, data}" :state.sync="state[tab.id]"/>
 			</TabPane>
 		</Tabs>
@@ -51,7 +51,7 @@ export default {
 
 <style lang="scss" scoped>
 .tabs {
-	/deep/{
+	::v-deep{
 		.el-tabs__header {
 			display: flex;
 			margin: 0;

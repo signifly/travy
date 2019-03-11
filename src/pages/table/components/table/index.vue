@@ -79,7 +79,7 @@ export default {
 
 <style lang="scss" scoped>
 .table {
-	/deep/ {
+	::v-deep {
 		.el-table {
 			overflow: visible;
 
@@ -101,7 +101,7 @@ export default {
 					background-color: $white2;
 					transition: cubic(opacity, 0.1s);
 
-					@at-root .table.loading /deep/ .el-table .header-row {
+					@at-root .table.loading ::v-deep .el-table .header-row {
 						pointer-events: none;
 						opacity: 0.7;
 					}

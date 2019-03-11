@@ -1,7 +1,7 @@
 <template>
-	<div class="top">
+	<div class="top" title="">
 		<div class="info">
-			<div class="title" v-text="title"/>
+			<component :is="title.url ? 'router-link' : 'div'" class="title" v-text="title.text" :to="title.url"/>
 			<div class="total" v-if="meta" v-text="meta.total"/>
 
 			<transition name="loading">
@@ -24,7 +24,7 @@ export default {
 	props: {
 		modifiers: {type: Object, required: false},
 		loading: {type: Boolean, required: true},
-		title: {type: String, required: true},
+		title: {type: Object, required: true},
 		meta: {type: Object, required: false}
 	},
 	computed: {
@@ -54,6 +54,15 @@ export default {
 		width: 100%;
 		display: flex;
 		align-items: center;
+
+		a.title {
+			text-decoration: none;
+			color: $black1;
+
+			&:hover {
+				color: $blue5;
+			}
+		}
 
 		.total {
 			font-size: em(12);

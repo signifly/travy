@@ -54,7 +54,7 @@ export default {
 	.el-input {
 		width: 100%;
 
-		/deep/ {
+		::v-deep {
 			.el-input__inner {
 				text-align: left;
 			}

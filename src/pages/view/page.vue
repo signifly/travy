@@ -14,16 +14,24 @@
 
 			<Row class="mid" :gutter="20">
 				<Col class="left" :span="16">
-					<tabs ref="tabs" :key="tabsKey" v-bind="{tabs, data}" @edit="edit = $event"/>
+					<tabs ref="tabs" :key="compKey" v-bind="{tabs, data}" @edit="edit = $event"/>
 				</Col>
 				<Col class="right" :span="8">
-					<sidebar v-if="sidebar" v-bind="{sidebar, data}"/>
+					<sidebar
+						v-if="sidebar"
+						ref="sidebar"
+						:key="compKey"
+						v-bind="{sidebar, endpoint, data}"
+						@edit="edit = $event"
+						@refresh="refresh"
+						@refreshData="refreshData"
+					/>
 				</Col>
 			</Row>
 
 			<Row class="bottom" :gutter="20">
 				<Col class="left" :span="24">
-					<activity v-if="activity" :key="data.updated_at" v-bind="{data, endpoint}" @refreshDataTabs="refreshDataTabs"/>
+					<activity v-if="activity" :key="data.updated_at" v-bind="{data, endpoint}" @refreshDataComp="refreshDataComp"/>
 				</Col>
 			</Row>
 
@@ -54,7 +62,7 @@ export default {
 			edit: false,
 			loading: false,
 			definitions: null,
-			tabsUpdateKey: 0
+			compUpdateKey: 0
 		}
 	},
 	computed: {
@@ -66,7 +74,7 @@ export default {
 		activity: (t) => t.definitions.activity,
 		endpoint: (t) => t.definitions.endpoint,
 		modifiers: (t) => t.definitions.modifiers,
-		tabsKey: (t) => `${t.modifiersKey}-${t.tabsUpdateKey}`,
+		compKey: (t) => `${t.modifiersKey}-${t.compUpdateKey}`,
 		modifiersKey: (t) => Object.values(t.query.modifiers || {}).join(",")
 	},
 	methods: {
@@ -81,9 +89,9 @@ export default {
 			if (done) await done();
 		},
 
-		async refreshDataTabs({done} = {}) {
+		async refreshDataComp({done} = {}) {
 			await this.getData();
-			this.tabsUpdateKey++;
+			this.compUpdateKey++;
 			if (done) await done();
 		},
 
@@ -91,7 +99,10 @@ export default {
 			this.loading = true;
 
 			try {
-				await this.$refs.tabs.save();
+				await Promise.all([
+					(this.sidebar && this.$refs.sidebar.save()),
+					this.$refs.tabs.save()
+				]);
 				await this.refreshData();
 				if (done) await done();
 				this.error = "";
@@ -103,7 +114,6 @@ export default {
 
 		async getDefinitions() {
 			const params = {modifier: this.query.modifiers};
-
 			const {data} = await this.$axios.get(this.requests.definitions, {params});
 			this.definitions = data;
 		},

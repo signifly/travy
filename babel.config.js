@@ -4,12 +4,9 @@ module.exports = {
 	],
 	"plugins": [
 		"lodash",
-		[
-			"component",
-			{
-				"libraryName": "element-ui",
-				"styleLibraryName": "theme-chalk"
-			}
-		]
+		["component", {
+			libraryName: "element-ui",
+			styleLibraryName: "theme-chalk"
+		}]
 	]
 };

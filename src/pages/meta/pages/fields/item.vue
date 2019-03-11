@@ -18,7 +18,7 @@
 					<tr v-for="(prop, name) in propsTable" :key="name">
 						<td>{{name}}</td>
 						<td>{{prop.type}}</td>
-						<td>{{prop.required}}</td>
+						<td>{{prop.required || false}}</td>
 						<td>{{prop.map}}</td>
 						<td>{{prop.default}}</td>
 						<td v-html="prop.note"></td>

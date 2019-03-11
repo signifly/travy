@@ -80,7 +80,7 @@ export default {
 
 		async revert({id}) {
 			await this.$axios.post(`${this.endpointUrl}/activity/${id}/revert`);
-			this.$emit("refreshDataTabs");
+			this.$emit("refreshDataComp");
 		}
 	},
 	created() {
@@ -104,7 +104,7 @@ export default {
 		.activity-table {
 			background-color: transparent;
 
-			/deep/ {
+			::v-deep {
 				thead {
 					color: $blue4;
 				}

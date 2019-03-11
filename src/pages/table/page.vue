@@ -1,8 +1,8 @@
 <template>
 	<div class="table-main" v-if="definitions">
 
-		<div class="header">
-			<filters v-bind="[filters, {search}]" @filter="filter"/>
+		<div class="header" v-if="filters && actions">
+			<filters v-if="filters" v-bind="[filters, {search}]" @filter="filter"/>
 			<actions v-if="actions" v-bind="{actions, parentData}" @fieldA="fieldA"/>
 		</div>
 
@@ -46,7 +46,7 @@ export default {
 	props: {
 		defsEndpoint: {type: Object, required: true},
 		parentData: {type: Object, required: false},
-		title: {type: String, required: false}
+		title: {type: Object, required: true}
 	},
 	data() {
 		return {
@@ -127,7 +127,6 @@ export default {
 
 		async getDefinitions() {
 			const params = {...this.defsEndpoint.params, modifiers: this.query.modifiers};
-
 			const {data} = await this.$axios.get(this.defsEndpoint.url, {params});
 			this.definitions = data;
 		},
@@ -148,10 +147,9 @@ export default {
 			});
 
 			const {data: {data, meta}} = await this.$axios.get(this.endpoint.url, {params});
+			this.loading = false;
 			this.data = data;
 			this.meta = meta;
-
-			this.loading = false;
 		}
 	},
 	created() {

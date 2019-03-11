@@ -52,7 +52,7 @@ export default {
 		}
 
 		&-list {
-			/deep/ .item {
+			::v-deep .item {
 				display: block;
 				font-size: 0.8em;
 				white-space: nowrap;

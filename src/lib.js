@@ -6,10 +6,10 @@ import Vue from "vue";
 import "normalize.css/normalize.css";
 import "./style/index.scss";
 import "./modules/element";
-import "./modules/favicon";
 
 
 import * as utils from "./modules/utils";
+import favicon from "./modules/favicon";
 import errors from "./modules/errors";
 import app from "./app.vue";
 
@@ -19,7 +19,8 @@ const start = (options) => {
 	Vue.use(VueRouter);
 	Vue.use(Vuex);
 
-	Vue.prototype.$settings = Object.assign({
+	const settings = Vue.prototype.$settings = Object.assign({
+		test: false,
 		routes: [],
 		fields: {},
 		api: ""
@@ -27,13 +28,18 @@ const start = (options) => {
 
 	const {default: router} = require("./modules/router");
 	const {default: axios} = require("./modules/axios");
+	const {default: ws} = require("./modules/ws");
 	const {default: store} = require("./store");
-
 	Vue.prototype.$axios = axios;
-	errors();
+	Vue.prototype.$ws = ws;
+
+	if (!settings.test) {
+		favicon();
+		errors();
+	}
 
 	return new Vue({
-		el: "#app",
+		el: !settings.test && "#app",
 		router, store,
 		render: (h) => h(app)
 	});

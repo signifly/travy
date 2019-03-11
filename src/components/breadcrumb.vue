@@ -26,7 +26,7 @@ export default {
 		font-size: 16px;
 
 		&__item {
-			/deep/ {
+			::v-deep {
 				.el-breadcrumb__inner {
 					font-size: em(13);
 					font-weight: 400;

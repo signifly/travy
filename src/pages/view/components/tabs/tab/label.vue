@@ -1,6 +1,6 @@
 <template>
 	<div class="label">
-		{{title}}
+		{{title.text}}
 
 		<transition name="status">
 			<Tooltip content="Edited" placement="top" v-if="edit">
@@ -29,7 +29,7 @@ export default {
 	components: {Tooltip},
 	props: {
 		id: {type: String, required: true},
-		title: {type: String, required: true},
+		title: {type: Object, required: true},
 		state: {type: Object, required: true}
 	},
 	computed: {

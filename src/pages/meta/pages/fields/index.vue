@@ -12,8 +12,10 @@
 import layout from "@/pages/meta/layout.vue";
 import vItem from "./item.vue";
 import {sortBy} from "lodash";
+import Vue from "vue";
 
 const fields = (() => {
+	if (Vue.prototype.$settings.test) return {};
 	const ctx = require.context("@/components/fields", false, /\.vue$/);
 
 	return ctx.keys().reduce((obj, file) => {

@@ -32,7 +32,7 @@ export default {
 
 <style lang="scss" scoped>
 .bar {
-	/deep/ {
+	::v-deep {
 		.el-progress-bar__inner {
 			.danger & {
 				background-color: $danger;

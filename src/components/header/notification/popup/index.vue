@@ -2,7 +2,7 @@
 	<popup>
 		<div class="notification-popup">
 			<vHeader v-bind="{loading}" @updateItems="updateItems"/>
-			<items v-if="items" v-bind="{items, meta}" @updateItem="updateItem" @getItems="getItems"/>
+			<items v-if="items" v-bind="{items, meta}" @updateItem="updateItem"/>
 		</div>
 	</popup>
 </template>
@@ -14,41 +14,19 @@ import items from "./items";
 
 export default {
 	components: {popup, vHeader, items},
-	data() {
-		return {
-			meta: null,
-			items: null,
-			loading: false
-		}
+	props: {
+		loading: {type: Boolean, required: true},
+		items: {type: Array, required: true},
+		meta: {type: Object, required: true}
 	},
 	methods: {
-		async getItems({page} = {page: 1}) {
-			if (this.loading) return;
-			this.loading = true;
-
-			try {
-				const {data: {data, meta}} = await this.$axios.get("account/notifications", {params: {page, count: 20}});
-				this.items = [...this.items || [], ...data];
-				this.meta = meta;
-			} catch(err) {
-				// error
-			} finally {
-				this.loading = false;
-			}
-		},
-
-		updateItem({id, ...data}) {
-			Object.assign(this.items.find(x => x.id === id), data);
-			this.$emit("getUnread");
+		updateItem(obj) {
+			this.$emit("updateItem", obj);
 		},
 
 		updateItems(data) {
-			this.items = this.items.map(x => ({...x, ...data}));
-			this.$emit("getUnread");
+			this.$emit("updateItems", data);
 		}
-	},
-	created() {
-		this.getItems();
 	}
 };
 </script>

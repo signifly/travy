@@ -92,7 +92,7 @@ export default {
 
 				.bar {
 					.progressbar {
-						/deep/ .el-progress__text {
+						::v-deep .el-progress__text {
 							font-size: 0.8em !important;
 							margin-left: 1.25em;
 						}
@@ -104,7 +104,7 @@ export default {
 }
 
 .bar {
-	/deep/ {
+	::v-deep {
 		.el-progress-bar__inner {
 			.danger & {
 				background-color: $danger;

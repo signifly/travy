@@ -1,12 +1,13 @@
-import axios from "@/modules/axios";
 import router from "@/modules/router";
+import axios from "@/modules/axios";
+import ws from "@/modules/ws";
+
 
 export default {
 	namespaced: true,
 
 	state: {
-		data: null,
-		auth: JSON.parse(localStorage.getItem("auth"))
+		data: null
 	},
 
 	mutations: {
@@ -14,12 +15,11 @@ export default {
 			state.data = data;
 		},
 		authSet(state, {data}) {
-			state.auth = data;
 			localStorage.setItem("auth", JSON.stringify(data));
 		},
-		authDelete(state) {
-			state.auth = null;
+		logout(state) {
 			localStorage.removeItem("auth");
+			state.data = null;
 		}
 	},
 
@@ -33,7 +33,7 @@ export default {
 
 				router.push(route);
 			} catch(err) {
-				commit("authDelete");
+				commit("logout");
 				return Promise.reject(err);
 			}
 		},
@@ -44,7 +44,8 @@ export default {
 			} catch(err) {
 				// error
 			} finally {
-				commit("authDelete");
+				ws.close();
+				commit("logout");
 				router.push({name: "login", params: {route: {path: window.location.pathname}}});
 			}
 		},
@@ -53,19 +54,21 @@ export default {
 			return await axios.post("password/email", form, {customErr: true});
 		},
 
-		async data({commit, state, getters}, {customErr} = {}) {
-			if (state.auth) {
-				const {data} = await axios.get("account", {customErr});
-				commit("data", data);
-				return getters.data;
+		async data({commit, getters}, {customErr} = {}) {
+			if (localStorage.getItem("auth")) {
+				try {
+					const {data} = await axios.get("account", {customErr});
+					commit("data", data);
+					return getters.data;
+				} catch(err) {
+					// error
+				}
+
 			}
 		}
 	},
 
 	getters: {
-		auth(state) {
-			return state.auth;
-		},
 		data(state) {
 			return state.data;
 		}

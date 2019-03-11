@@ -1,5 +1,4 @@
 import axios from "@/modules/axios";
-import {get} from "lodash";
 
 export default {
 	namespaced: true,
@@ -29,23 +28,29 @@ export default {
 		data(state) {
 			return state.data;
 		},
-		menu(state) {
-			return get(state.data, "menu", []);
+		menu(state, {data}) {
+			return data && data.menu;
 		},
-		tables(state) {
-			return get(state.data, "tables", {});
+		tables(state, {data}) {
+			return data && data.tables;
 		},
-		customs(state) {
-			return get(state.data, "customs", {});
+		customs(state, {data}) {
+			return data && data.customs;
 		},
-		settings(state) {
-			return get(state.data, "settings", {});
+		settings(state, {data}) {
+			return data && data.settings;
 		},
-		frontpage(state, getters) {
-			return getters.settings.frontpage;
+		dashboards(state, {data}) {
+			return data && data.dashboards;
 		},
-		title(state, getters) {
-			return getters.settings.title || "Travy";
+		frontpage(state, {settings}) {
+			return settings && settings.frontpage;
+		},
+		wsKey(state, {settings}) {
+			return settings && settings.websockets_key;
+		},
+		title(state, {settings}) {
+			return (settings && settings.title) || "Travy";
 		}
 	}
 };

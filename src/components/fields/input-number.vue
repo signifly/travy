@@ -63,7 +63,7 @@ export default {
 	.el-input-number {
 		width: 100%;
 
-		/deep/ {
+		::v-deep {
 			.el-input__inner {
 				text-align: left;
 			}

@@ -22,7 +22,6 @@ export default {
 		parentData: {type: Object, required: true},
 		endpoint: {type: Object, required: true},
 		fields: {type: Array, required: true},
-		title: {type: String, required: true},
 		state: {type: Object, required: true},
 		id: {type: String, required: true}
 	},

@@ -56,6 +56,9 @@ export default {
 			if (isNaN(toNumber(e.key))) e.preventDefault();
 		},
 		update(value) {
+			// prevent update emit on init
+			if (value === this.value) return;
+
 			this.$emit("fieldA", {
 				action: "update",
 				data: {[this._value]: value}

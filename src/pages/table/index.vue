@@ -1,6 +1,6 @@
 <template>
 	<div class="table" v-if="table">
-		<breadcrumb :items="[{title, to: $route.path}]"/>
+		<breadcrumb :items="[{title: title.text, to: $route.path}]"/>
 		<page v-bind="{defsEndpoint, title}" :key="tableId"/>
 	</div>
 </template>
@@ -13,28 +13,23 @@ import {get} from "lodash";
 export default {
 	components: {breadcrumb, page},
 	computed: {
+		defsEndpoint: (t) => ({url: `definitions/table/${t.tableId}`}),
 		table: (t) => t.$store.getters["config/tables"][t.tableId],
-		tableId: (t) => t.$route.params.tableId,
-		title: (t) => get(t.table, "title"),
-		defsEndpoint: (t) => ({
-			url: `definitions/table/${t.tableId}`
-		})
+		title: (t) => ({text: get(t.table, "title", {})}),
+		tableId: (t) => t.$route.params.tableId
 	},
-	methods: {
-		init() {
-			if (!this.table) {
-				this.$router.replace({name: "error"});
-			} else {
-				this.$watch(
-					"$route",
-					() => this.$store.dispatch("base/meta", {title: this.title}),
-					{immediate: true}
-				);
+	watch: {
+		$route: {
+			immediate: true,
+			handler() {
+				this.$store.dispatch("base/meta", {title: this.title.text});
 			}
 		}
 	},
 	created() {
-		this.init();
+		if (!this.table) {
+			this.$router.replace({name: "error"});
+		}
 	}
 };
 </script>

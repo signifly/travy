@@ -1,7 +1,7 @@
 <template>
 	<div class="actions">
 		<Dropdown ref="dropdown" trigger="click" :show-timeout="0" :hide-timeout="0" :hide-on-click="false" size="small" @command="select">
-			<Button :size="_size" :type="_status" plain>Actions <i class="el-icon-arrow-down el-icon--right"/></Button>
+			<Button :size="_size" :type="_status" plain>{{_title}} <i class="el-icon-arrow-down el-icon--right"/></Button>
 
 			<DropdownMenu slot="dropdown">
 				<action
@@ -32,6 +32,7 @@ export default {
 		res: {
 			props: {
 				size: "mini",
+				title: "Stuff",
 
 				actions: [
 					{
@@ -116,6 +117,7 @@ export default {
 	props: {
 		_size: {type: String, default: "mini", doc: true, note: `medium/small/mini`},
 		_status: {type: String, default: "primary", doc: true},
+		_title: {type: String, default: "Actions", doc: true},
 		_actions: {type: Array, required: true, doc: true},
 		alt: {type: Object, default: () => ({})}
 	},

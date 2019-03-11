@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import {Button} from "element-ui";
 import {rStringProps} from "@/modules/utils";
+import {Button} from "element-ui";
 
 export default {
 	components: {Button},

@@ -2,7 +2,9 @@ export default {
 	namespaced: true,
 
 	state: {
-		meta: {title: "Travy"}
+		meta: {
+			title: "Travy"
+		}
 	},
 
 	mutations: {
@@ -17,12 +19,6 @@ export default {
 			const siteTitle = rootGetters["config/title"];
 			const newTitle = title ? `${title} - ${siteTitle}` : siteTitle;
 			commit("meta", {title: newTitle});
-		}
-	},
-
-	getters: {
-		title(state) {
-			return state.title;
 		}
 	}
 };

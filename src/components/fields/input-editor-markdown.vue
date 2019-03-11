@@ -57,7 +57,7 @@ export default {
 
 <style lang="scss" scoped>
 .editor {
-	/deep/ {
+	::v-deep {
 		.editor-toolbar {
 			background-color: $white2;
 

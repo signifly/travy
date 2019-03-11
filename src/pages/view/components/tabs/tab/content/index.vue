@@ -12,6 +12,7 @@ export default {
 		state: {type: Object, required: true}
 	},
 	computed: {
+		edit: (t) => t.state.edit,
 		stateC: {
 			get() {
 				return this.state;
@@ -26,7 +27,7 @@ export default {
 	},
 	methods: {
 		async save() {
-			if (this.$refs.comp.save) {
+			if (this.$refs.comp.save && this.edit) {
 				await this.$refs.comp.save();
 			}
 		}

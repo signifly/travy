@@ -9,7 +9,7 @@
 		<vMenu/>
 
 		<div class="account">
-			<notification/>
+			<notification v-if="notifications"/>
 			<user/>
 		</div>
 	</Header>
@@ -22,7 +22,11 @@ import vMenu from "./menu";
 import user from "./user";
 
 export default {
-	components: {Header, notification, vMenu, user}
+	components: {Header, notification, vMenu, user},
+	computed: {
+		settings: (t) => t.$store.getters["config/settings"],
+		notifications: (t) => t.settings.notifications !== false
+	}
 };
 </script>
 
@@ -43,7 +47,7 @@ export default {
 		justify-content: center;
 		width: 60px;
 
-		/deep/ svg {
+		::v-deep svg {
 			$s: 1.9em;
 			width: $s;
 			height: $s;

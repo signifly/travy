@@ -90,7 +90,7 @@ export default {
 
 <style lang="scss" scoped>
 .upload {
-	/deep/ {
+	::v-deep {
 		.el-upload, .el-upload-dragger {
 			width: 100%;
 		}
