@@ -1,7 +1,7 @@
 <template>
 	<div class="table-main" v-if="definitions">
 
-		<div class="header" v-if="filters && actions">
+		<div class="header" v-if="filters || actions">
 			<filters v-if="filters" v-bind="[filters, {search}]" @filter="filter"/>
 			<actions v-if="actions" v-bind="{actions, parentData}" @fieldA="fieldA"/>
 		</div>
