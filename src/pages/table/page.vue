@@ -1,8 +1,8 @@
 <template>
 	<div class="table-main" v-if="definitions">
 
-		<div class="header" v-if="filters && actions">
-			<filters v-if="filters" v-bind="[filters, {search}]" @filter="filter"/>
+		<div class="header" v-if="filters || search || actions">
+			<filters v-if="filters || search" v-bind="[filters, {search}]" @filter="filter"/>
 			<actions v-if="actions" v-bind="{actions, parentData}" @fieldA="fieldA"/>
 		</div>
 
@@ -104,7 +104,7 @@ export default {
 					data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
 
 					const url = rStringProps({data: item, val: `${this.endpoint.url}/{id}`});
-					await this.$axios.put(url, {...data, modifier: this.modifiers});
+					await this.$axios.put(url, {data, modifier: this.modifiers});
 					await this.getData({loading: false});
 				}
 			};
