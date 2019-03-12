@@ -104,7 +104,7 @@ export default {
 					data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
 
 					const url = rStringProps({data: item, val: `${this.endpoint.url}/{id}`});
-					await this.$axios.put(url, {...data, modifier: this.modifiers});
+					await this.$axios.put(url, {data, modifier: this.modifiers});
 					await this.getData({loading: false});
 				}
 			};
