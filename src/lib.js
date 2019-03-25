@@ -14,7 +14,7 @@ import errors from "./modules/errors";
 import app from "./app.vue";
 
 
-const start = async (options) => {
+const start = (options) => {
 	Vue.use(require("vue-shortkey"));
 	Vue.use(VueRouter);
 	Vue.use(Vuex);
@@ -37,8 +37,6 @@ const start = async (options) => {
 		favicon();
 		errors();
 	}
-
-	await store.dispatch("config/data");
 
 	return new Vue({
 		el: !settings.test && "#app",

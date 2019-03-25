@@ -10,8 +10,6 @@ const instance = app({
 	test: true
 });
 
-let wrapper;
-
 
 instance.$axios.get = (url) => {
 	if (url === "/definitions") return Promise.resolve({
@@ -27,6 +25,9 @@ instance.$axios.get = (url) => {
 		data: {client_id: 1, name: "Pete"}
 	});
 };
+
+
+let wrapper;
 
 
 beforeEach(async () => {
