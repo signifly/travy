@@ -3,12 +3,14 @@
 </template>
 
 <script>
-import store from "@/store";
-
 export default {
-	beforeRouteEnter (to, from, next) {
-		const redirect = store.getters["config/frontpage"];
-		next(redirect === "/" ? true : redirect);
+	computed: {
+		frontpage() {
+			return this.$store.getters["config/frontpage"];
+		}
+	},
+	created() {
+		this.$router.replace(this.frontpage);
 	}
 };
 </script>

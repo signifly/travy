@@ -7,7 +7,6 @@ const url = () => {
 	const domain = process.env.API.replace(/^https?:\/\//i, "");
 	const ssl = process.env.API.includes("https");
 	const key = store.getters["config/wsKey"];
-
 	return `${ssl ? 'wss' : 'ws'}://${domain}/ws/app/${key}`;
 };
 
