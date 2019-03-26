@@ -4,7 +4,7 @@ import store from "@/store";
 
 
 const url = () => {
-	const domain = process.env.API.replace(/^https?\:\/\//i, "");
+	const domain = process.env.API.replace(/^https?:\/\//i, "");
 	const ssl = process.env.API.includes("https");
 	const key = store.getters["config/wsKey"];
 
