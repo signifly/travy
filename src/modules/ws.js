@@ -1,7 +1,15 @@
-const domain = process.env.API.replace("https://", "");
 const dev = process.env.NODE_ENV === "development";
 import axios from "@/modules/axios";
 import store from "@/store";
+
+
+const url = () => {
+	const domain = process.env.API.replace(/^https?\:\/\//i, "");
+	const ssl = process.env.API.includes("https");
+	const key = store.getters["config/wsKey"];
+
+	return `${ssl ? 'wss' : 'ws'}://${domain}/ws/app/${key}`;
+};
 
 
 const state = {
@@ -92,8 +100,7 @@ const reset = () => {
 
 
 const connect = () => {
-	const key = store.getters["config/wsKey"];
-	state.ws = new WebSocket(`wss://${domain}:6002/app/${key}`);
+	state.ws = new WebSocket(url());
 
 
 	state.ws.addEventListener("open", (e) => {
