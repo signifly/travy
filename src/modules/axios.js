@@ -17,7 +17,7 @@ const error = ({status, message}) => {
 
 
 const api = axios.create({
-	baseURL: `${Vue.prototype.$settings.api}/v1/admin`,
+	baseURL: `http://192.168.1.114:8080/v1/admin`,
 	paramsSerializer: (params) => qs.stringify(params)
 });
 
