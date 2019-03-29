@@ -65,7 +65,7 @@ export default {
 		_addable: {type: Boolean, required: false, doc: true},
 		_options: {type: Object, required: true, doc: true},
 		_values: {type: String, required: true},
-		values: {type: Array, required: false, default: () => [], doc: true, note: `
+		values: {required: true, default: () => [], doc: true, note: `
 			Can be an array of <i>objects|strings|numbers</i>.<br>
 			if it's strings|numbers, an initial call to <code>options.list</code> will be made to get the label names for the values.
 		`}
