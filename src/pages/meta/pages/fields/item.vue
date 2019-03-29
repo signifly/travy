@@ -90,7 +90,7 @@ export default {
 			let props = pickBy(this.props, (x) => x.doc); // find props where {doc: true}
 
 			props = mapValues(props, (prop, key) => ({...prop,
-				type: get(prop.type, "name") || prop.type.map(x => x.name).join("|"),
+				type: get(prop.type, "name") || (prop.type || []).map(x => x.name).join("|"),
 				default: typeof prop.default === "function" ? prop.default() : prop.default,
 				map: key.charAt(0) !== "_"
 			}));

@@ -93,9 +93,6 @@ const go = ({to, next}) => {
 
 
 router.beforeEach(async (to, from, next) => {
-	// get config if not fetched
-	store.getters["config/data"] || await store.dispatch("config/data");
-
 	// allow all routes that isn't protected by auth
 	if (!to.meta.auth) return go({to, next});
 

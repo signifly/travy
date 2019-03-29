@@ -4,8 +4,8 @@ export default () => {
 	canvas.width = 64;
 
 	const ctx = canvas.getContext("2d");
-	ctx.font = "64px serif";
-	ctx.fillText("🔹", 0, 64);
+	ctx.font = "60px serif"; // size
+	ctx.fillText("💠", 0, 58); // align y
 
 	const favicon = document.createElement("link");
 	favicon.setAttribute("type", "image/png");
