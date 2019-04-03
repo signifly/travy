@@ -7,8 +7,8 @@
 		<div class="info">
 			<div class="title" v-text="title"/>
 			<div class="msg" v-text="message"/>
-			<div class="link">
-
+			<div class="link" v-if="link">
+				<Button size="mini" @click="goToLink">{{link_text}}</Button>
 			</div>
 
 			<div class="bottom">
@@ -21,14 +21,16 @@
 
 <script>
 import {date} from "@/modules/utils";
-import {Tag} from "element-ui";
+import {Button} from "element-ui";
 
 export default {
-	components: {Tag},
+	components: {Button},
 	props: {
 		id: {type: String, required: true},
 		title: {type: String, required: true},
 		message: {type: String, required: true},
+		link: {type: String, required: false},
+		link_text: {type: String, required: false},
 		is_read: {type: Boolean, required: true},
 		status: {type: String, default: "primary"},
 		created_at: {type: Number, required: true}
@@ -42,6 +44,10 @@ export default {
 				await this.$axios.post("account/read-notifications", {data: {ids: [this.id]}});
 				this.$emit("updateItem", {id: this.id, is_read: true});
 			}
+		},
+		async goToLink() {
+			await this.markRead();
+			this.$router.push(this.link);
 		}
 	}
 };
@@ -89,6 +95,10 @@ export default {
 		.msg {
 			margin: 0.5em 0;
 			line-height: 1.25em;
+		}
+
+		.link {
+			margin-bottom: 0.5em;
 		}
 
 		.bottom {
