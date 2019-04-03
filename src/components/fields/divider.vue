@@ -17,7 +17,7 @@ export default {
 		}
 	},
 	props: {
-		_text: {type: String, required: false, doc: true}
+		_text: {type: String, required: false, doc: true, note: `Don't use field label with the divider`}
 	}
 };
 </script>
