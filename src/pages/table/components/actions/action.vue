@@ -5,7 +5,10 @@
 	@fieldA="fieldA">
 
 		<div class="table-action">
-			<Button size="medium" :type="status" :icon="`el-icon-${icon}`" @click="toggle">{{title}}</Button>
+			<Button size="medium" :type="status" @click="toggle">
+				{{title}}
+				<i class="el-icon-arrow-right el-icon-right" :class="`el-icon-${icon} el-icon-right`" v-if="icon"/>
+			</Button>
 		</div>
 
 	</action>
