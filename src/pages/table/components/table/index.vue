@@ -1,6 +1,7 @@
 <template>
 	<div class="table" :class="{loading}">
 		<Table
+		stripe
 		ref="table"
 		row-key="id"
 		:default-sort="sorting"
