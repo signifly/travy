@@ -1,6 +1,13 @@
 <template>
 	<div class="input">
-		<Input v-model="valueC" @input="update" :disabled="_disabled" :controls="false" size="medium"/>
+		<Input
+			v-model="valueC"
+			:disabled="_disabled"
+			:type="_type"
+			:controls="false"
+			size="medium"
+			@input="update"
+		/>
 		<div class="unit" v-if="_unit">{{_unit}}</div>
 	</div>
 </template>
@@ -15,6 +22,7 @@ export default {
 		res: {
 			props: {
 				value: "inputVal",
+				type: "text",
 				unit: "cm"
 			},
 			data: {
@@ -27,6 +35,7 @@ export default {
 		_disabled: {type: Boolean, required: false, doc: true},
 		value: {type: [String, Number], required: false, doc: true},
 		_unit: {type: String, required: false, doc: true},
+		_type: {type: String, default: "text", doc: true},
 		_value: {type: String, required: true}
 	},
 	data() {
