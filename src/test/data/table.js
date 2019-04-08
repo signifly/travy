@@ -96,6 +96,9 @@ export default {
 				width: 120
 			}
 		],
+		ws: {
+			channel: "tables.buy"
+		},
 		endpoint: {
 			url: "/data/table",
 			params: {
@@ -152,7 +155,8 @@ export default {
 			sequential: {
 				url: "/t/projects/{id}"
 			}
-		}
+		},
+		pagination: {}
 	},
 	data: {
 		meta: {total: 1, per_page: 15},

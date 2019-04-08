@@ -18,7 +18,7 @@
 					@fieldA="fieldA"
 				/>
 
-				<pagination v-if="meta" v-bind="[meta, {loading}]" @getData="getData"/>
+				<pagination v-if="meta && pagination" v-bind="[meta, {loading}]" @getData="getData"/>
 				<batch v-bind="[batch, {selectedItems}]" @unselect="unselect" @fieldA="fieldA"/>
 			</box>
 		</div>
@@ -31,7 +31,7 @@ import Semaphore from "semaphore-async-await";
 import {merge, set} from "lodash";
 import state from "./state";
 
-import pagination from "./components/pagination"
+import pagination from "./components/pagination";
 import filters from "./components/filters";
 import actions from "./components/actions";
 import vTable from "./components/table";
@@ -68,6 +68,7 @@ export default {
 		subtable: (t) => t.definitions.subtable,
 		defaults: (t) => t.definitions.defaults,
 		modifiers: (t) => t.definitions.modifiers,
+		pagination: (t) => t.definitions.pagination,
 		endpoint: (t) => ({
 			url: t.definitions.endpoint.url,
 			params: rStringPropsDeep({obj: t.definitions.endpoint.params, data: t.parentData})
