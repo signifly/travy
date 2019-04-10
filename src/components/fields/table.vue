@@ -64,14 +64,18 @@ export default {
 		}
 	},
 	methods: {
-		event(obj) {
+		event({actions}) {
+			let {data, item} = actions.update;
+
 			// find index of the item in columnsData by {id}, and change key for every data property
 			const prop = this._columnsData;
-			const index = this.columnsData.findIndex(x => x.id === obj.item.id);
+			const index = this.columnsData.findIndex(x => x.id === item.id);
 			const dataKey = `${prop}[${index}]`;
-			obj.data = mapKeys(obj.data, (val, key) => `${dataKey}.${key}`);
+			data = mapKeys(data, (val, key) => `${dataKey}.${key}`);
 
-			this.$emit("event", obj);
+			this.$emit("event", {actions: {
+				update: {data, item}
+			}});
 		}
 	},
 	mounted() {
