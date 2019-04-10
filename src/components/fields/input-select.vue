@@ -7,7 +7,7 @@
 		:filterable="true"
 		@change="update">
 
-			<Option v-for="item in itemsMap" v-bind="item" :key="item.value">
+			<Option v-for="item in _options" v-bind="item" :key="item.value">
 				<div class="option">
 					<div class="emoji" v-if="item.emoji" v-html="emoji(item.emoji)"/>
 					{{item.label}}
@@ -29,32 +29,15 @@ export default {
 			props: {
 				disabled: false,
 				value: "selectValue",
-				items: "selectOptions",
-				options: {
-					label: "name",
-					value: "id"
-				}
+
+				options: [
+					{label: "Danmark", emoji: "denmark", value: "dk"},
+					{label: "England", emoji: "uk", value: "uk"},
+					{label: "Murica", emoji: "us", value: "us", disabled: true},
+				]
 			},
 			data: {
-				selectValue: "DK",
-				selectOptions: [
-					{
-						name: "Danmark",
-						emoji: "denmark",
-						id: "DK"
-					},
-					{
-						name: "England",
-						emoji: "uk",
-						id: "UK"
-					},
-					{
-						name: "Murica",
-						disabled: true,
-						emoji: "us",
-						id: "US",
-					}
-				]
+				selectValue: "uk"
 			}
 		}
 	},
@@ -62,17 +45,11 @@ export default {
 		_disabled: {type: Boolean, required: false, doc: true},
 		meta: {type: Object, require: false, default: () => ({})},
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
-		_options: {type: Object, required: true, doc: true},
+		_options: {type: Array, required: true, doc: true},
 		value: {type: [String, Number], required: false, doc: true},
-		_value: {type: String, required: true},
-		items: {type: Array, required: true, doc: true},
+		_value: {type: String, required: true}
 	},
 	computed: {
-		itemsMap: (t) => t.items.map(x => ({...x,
-			value: x[t._options.value],
-			label: x[t._options.label]
-		})),
-
 		size() {
 			if (this.meta.location === "table") return "small";
 			if (this.meta.location === "tabs") return "medium";
