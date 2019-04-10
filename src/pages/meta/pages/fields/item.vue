@@ -33,7 +33,7 @@
 					:alt="{data, loading: false}"
 					:name="id"
 					:fieldType="fieldType"
-					@fieldA="fieldA"
+					@event="event"
 				/>
 			</div>
 
@@ -52,10 +52,10 @@
 					</pre>
 				</div>
 
-				<div class="block event" v-if="event">
+				<div class="block event" v-if="ev">
 					<div class="title">Event</div>
 					<pre>
-						<code>{{event}}</code>
+						<code>{{ev}}</code>
 					</pre>
 				</div>
 			</div>
@@ -80,7 +80,7 @@ export default {
 			propsDisplay: this.res.props,
 			dataDisplay: this.res.data,
 			data: this.res.data,
-			event: null
+			ev: null
 		}
 	},
 	computed: {
@@ -100,10 +100,10 @@ export default {
 		}
 	},
 	methods: {
-		async fieldA({actions, done}) {
+		async event({actions, done}) {
 			const {data} = actions.update;
 			this.data = {...this.data, ...data};
-			this.event = data;
+			this.ev = data;
 			if (done) await done();
 		},
 

@@ -3,7 +3,7 @@
 		<vModalFields
 			v-bind="{fields, error, loading, title, data}"
 			:visible.sync="visible"
-			@fieldA="fieldA"
+			@event="event"
 			@submit="submit"
 		/>
 	</div>
@@ -43,7 +43,7 @@ export default {
 		}
 	},
 	methods: {
-		fieldA({actions}) {
+		event({actions}) {
 			if (actions.update) {
 				let {data} = actions.update;
 

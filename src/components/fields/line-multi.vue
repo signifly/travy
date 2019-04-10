@@ -6,7 +6,7 @@
 					:is="_itemFieldId"
 					v-bind="[itemsPropsData[i], itemsPropsValue[i]]"
 					:alt="{data: itemsData[i]}"
-					@fieldA="fieldA($event, i)"
+					@event="event($event, i)"
 				/>
 			</div>
 		</draggable>
@@ -111,12 +111,12 @@ export default {
 	},
 	methods: {
 
-		fieldA({actions, done}, i) {
+		event({actions, done}, i) {
 			if (actions.update) {
 				let {data} = actions.update;
 				data = mapKeys(data, (val, key) => `${this._items}[${i}].${key}`);
 
-				this.$emit("fieldA", {
+				this.$emit("event", {
 					done,
 					actions: {
 						update: {data}
@@ -125,7 +125,7 @@ export default {
 			}
 
 			if (actions.refresh) {
-				this.$emit("fieldA", {actions});
+				this.$emit("event", {actions});
 			}
 		},
 
@@ -136,7 +136,7 @@ export default {
 		},
 
 		listUpdate() {
-			this.$emit("fieldA", {
+			this.$emit("event", {
 				actions: {
 					update: {data: {[this._items]: this.items}}
 				}

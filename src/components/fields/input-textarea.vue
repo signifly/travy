@@ -34,7 +34,7 @@ export default {
 	},
 	methods: {
 		update(text) {
-			this.$emit("fieldA", {
+			this.$emit("event", {
 				actions: {
 					update: {data: {[this._text]: text}}
 				}

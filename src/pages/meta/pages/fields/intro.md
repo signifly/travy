@@ -37,7 +37,7 @@ Here's how we'll update our text on change:
 ``` js
 methods: {
 	update(value) {
-		this.$emit("fieldA", {
+		this.$emit("event", {
 			action: "update",
 			data: {[this._value]: value}
 		});

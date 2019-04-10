@@ -2,7 +2,7 @@
 	<action
 	v-bind="{props, active, hide, data: parentData}"
 	@close="toggle"
-	@fieldA="$emit('fieldA', $event)">
+	@event="$emit('event', $event)">
 
 		<div class="table-action">
 			<Button size="medium" :type="status" @click="toggle">

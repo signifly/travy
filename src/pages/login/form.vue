@@ -10,7 +10,7 @@
 					:key="field.name"
 					:alt="{data, errors}"
 					v-bind="field"
-					@fieldA="$emit('fieldA', $event)"
+					@event="$emit('event', $event)"
 				/>
 
 				<div class="actions">

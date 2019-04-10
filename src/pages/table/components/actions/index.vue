@@ -4,7 +4,7 @@
 			v-for="action in actions"
 			:key="action.title"
 			v-bind="[action, {parentData}]"
-			@fieldA="$emit('fieldA', $event)"
+			@event="$emit('event', $event)"
 		/>
 	</div>
 </template>

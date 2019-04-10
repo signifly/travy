@@ -3,7 +3,7 @@
 
 		<div class="content">
 			<vlabel v-bind="{alt, name, label, tooltip}" v-if="rules.label"/>
-			<fieldType v-bind="[fieldType, {alt}]" @fieldA="$emit('fieldA', $event)"/>
+			<fieldType v-bind="[fieldType, {alt}]" @event="$emit('event', $event)"/>
 		</div>
 
 		<transition name="error">

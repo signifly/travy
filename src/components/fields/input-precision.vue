@@ -59,7 +59,7 @@ export default {
 			// prevent update emit on init
 			if (value === this.value) return;
 
-			this.$emit("fieldA", {
+			this.$emit("event", {
 				actions: {
 					update: {data: {[this._value]: value}}
 				}

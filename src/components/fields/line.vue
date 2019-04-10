@@ -25,7 +25,7 @@
 				:value="selectValue"
 				:_clearable="_selectClearable"
 				size="small"
-				@fieldA="fieldA"
+				@event="event"
 			/>
 		</div>
 
@@ -33,7 +33,7 @@
 			<elSwitch v-model="data.switchValue" :inactive-text="`${_switchTitle}:`" :disabled="_switchDisabled" @change="switchUpdate"/>
 		</div>
 
-		<vActions v-bind="{_actions, alt}" @fieldA="fieldA"/>
+		<vActions v-bind="{_actions, alt}" @event="event"/>
 	</div>
 </template>
 
@@ -119,15 +119,15 @@ export default {
 	},
 	methods: {
 		switchUpdate(val) {
-			this.$emit("fieldA", {
+			this.$emit("event", {
 				actions: {
 					update: {data: {[this._switchValue]: val}}
 				}
 			});
 		},
 
-		fieldA(obj) {
-			this.$emit("fieldA", obj);
+		event(obj) {
+			this.$emit("event", obj);
 		}
 	}
 }

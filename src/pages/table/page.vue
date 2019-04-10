@@ -3,7 +3,7 @@
 
 		<div class="header" v-if="filters || search || actions">
 			<filters v-if="filters || search" v-bind="[filters, {search}]" @filter="filter"/>
-			<actions v-if="actions" v-bind="{actions, parentData}" @fieldA="fieldA"/>
+			<actions v-if="actions" v-bind="{actions, parentData}" @event="event"/>
 		</div>
 
 		<div class="content">
@@ -15,11 +15,11 @@
 					v-bind="{data, columns, subtable, defaults, batch, loading}"
 					@select="select"
 					@getData="getData"
-					@fieldA="fieldA"
+					@event="event"
 				/>
 
 				<pagination v-if="meta && pagination" v-bind="[meta, {loading}]" @getData="getData"/>
-				<batch v-bind="[batch, {selectedItems}]" @unselect="unselect" @fieldA="fieldA"/>
+				<batch v-bind="[batch, {selectedItems}]" @unselect="unselect" @event="event"/>
 			</box>
 		</div>
 	</div>
@@ -90,7 +90,7 @@ export default {
 			if (done) await done()
 		},
 
-		async fieldA({actions, done}) {
+		async event({actions, done}) {
 			await s.acquire();
 
 			if (actions.update) {
@@ -113,7 +113,7 @@ export default {
 			if (done) await done();
 
 			// emit to view
-			this.$emit("fieldA", {actions});
+			this.$emit("event", {actions});
 
 			s.release();
 		},

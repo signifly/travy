@@ -10,7 +10,7 @@
 				:active="selectedAction === action"
 				:key="action.title"
 				@close="close"
-				@fieldA="$emit('fieldA', $event)">
+				@event="$emit('event', $event)">
 
 					<DropdownItem class="item" :command="action">
 						{{action.title}}

@@ -8,7 +8,7 @@
 			<inputImage
 				class="line"
 				v-bind="{url: image, _file: _imageBase64, _upload: _imageUpload}"
-				@fieldA="$emit('fieldA', $event)"
+				@event="$emit('event', $event)"
 			/>
 		</div>
 
@@ -24,7 +24,7 @@
 			</div>
 		</div>
 
-		<actions v-bind="{_actions, alt}" @fieldA="$emit('fieldA', $event)"/>
+		<actions v-bind="{_actions, alt}" @event="$emit('event', $event)"/>
 	</div>
 </template>
 

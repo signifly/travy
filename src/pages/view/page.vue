@@ -7,14 +7,14 @@
 					<vHeader v-bind="{data, header}"/>
 				</Col>
 				<Col class="right" :span="12">
-					<modifiers v-if="modifiers" v-bind="{modifiers}" @fieldA="fieldA"/>
-					<actions v-if="actions" v-bind="{actions, data}" @fieldA="fieldA"/>
+					<modifiers v-if="modifiers" v-bind="{modifiers}" @event="event"/>
+					<actions v-if="actions" v-bind="{actions, data}" @event="event"/>
 				</Col>
 			</Row>
 
 			<Row class="mid" :gutter="20">
 				<Col class="left" :span="16">
-					<tabs ref="tabs" :key="compKey" v-bind="{tabs, data}" @edit="edit = $event" @fieldA="fieldA"/>
+					<tabs ref="tabs" :key="compKey" v-bind="{tabs, data}" @edit="edit = $event" @event="event"/>
 				</Col>
 				<Col class="right" :span="8">
 					<sidebar
@@ -23,14 +23,14 @@
 						:key="compKey"
 						v-bind="{sidebar, endpoint, data}"
 						@edit="edit = $event"
-						@fieldA="fieldA"
+						@event="event"
 					/>
 				</Col>
 			</Row>
 
 			<Row class="bottom" :gutter="20">
 				<Col class="left" :span="24">
-					<activity v-if="activity" :key="data.updated_at" v-bind="{data, endpoint}" @fieldA="fieldA"/>
+					<activity v-if="activity" :key="data.updated_at" v-bind="{data, endpoint}" @event="event"/>
 				</Col>
 			</Row>
 
@@ -77,8 +77,8 @@ export default {
 		modifiersKey: (t) => Object.values(t.query.modifiers || {}).join(",")
 	},
 	methods: {
-		async fieldA({actions, done}) {
-			console.log("view fieldA", actions);
+		async event({actions, done}) {
+			console.log("view event", actions);
 
 			if (actions.refresh) {
 				const {definitions, data} = actions.refresh;

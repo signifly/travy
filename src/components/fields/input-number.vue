@@ -45,7 +45,7 @@ export default {
 		update(value) {
 			value = parseInt(value) || 0;
 
-			this.$emit("fieldA", {
+			this.$emit("event", {
 				actions: {
 					update: {data: {[this._value]: value}}
 				}

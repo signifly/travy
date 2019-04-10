@@ -8,7 +8,7 @@
 			:modifiers="[]"
 			:selected="[]"
 			:batch="{}"
-			@fieldA="fieldA"
+			@event="event"
 		/>
 	</div>
 </template>
@@ -64,14 +64,14 @@ export default {
 		}
 	},
 	methods: {
-		fieldA(obj) {
+		event(obj) {
 			// find index of the item in columnsData by {id}, and change key for every data property
 			const prop = this._columnsData;
 			const index = this.columnsData.findIndex(x => x.id === obj.item.id);
 			const dataKey = `${prop}[${index}]`;
 			obj.data = mapKeys(obj.data, (val, key) => `${dataKey}.${key}`);
 
-			this.$emit("fieldA", obj);
+			this.$emit("event", obj);
 		}
 	},
 	mounted() {

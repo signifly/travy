@@ -5,7 +5,7 @@
 				v-for="field in fields"
 				v-bind="[field, {alt: fieldAlt}]"
 				:key="field.name"
-				@fieldA="fieldA"
+				@event="event"
 			/>
 		</div>
 	</div>
@@ -44,7 +44,7 @@ export default {
 		})
 	},
 	methods: {
-		async fieldA({actions, done}) {
+		async event({actions, done}) {
 			if (actions.update) {
 				let {data} = actions.update;
 

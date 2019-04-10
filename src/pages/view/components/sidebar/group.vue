@@ -8,7 +8,7 @@
 				v-for="field in fields"
 				:key="field.name"
 				v-bind="[field, {alt: fieldAlt}]"
-				@fieldA="$emit('fieldA', $event)"
+				@event="$emit('event', $event)"
 			/>
 		</div>
 	</div>

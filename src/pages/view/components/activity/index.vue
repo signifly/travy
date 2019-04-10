@@ -81,7 +81,7 @@ export default {
 		async revert({id}) {
 			await this.$axios.post(`${this.endpointUrl}/activity/${id}/revert`);
 
-			this.$emit("fieldA", {
+			this.$emit("event", {
 				actions: {
 					refresh: {
 						data: true

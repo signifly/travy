@@ -41,7 +41,7 @@ export default {
 			// fix initial update
 			if (!this.init) return this.init = true;
 
-			this.$emit("fieldA", {
+			this.$emit("event", {
 				actions: {
 					update: {data: {[this._content]: content}}
 				}

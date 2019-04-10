@@ -2,7 +2,7 @@
 	<action
 	v-bind="{props: _action, data: alt.data, active}"
 	@close="close"
-	@fieldA="$emit('fieldA', $event)">
+	@event="$emit('event', $event)">
 
 		<div class="button-action">
 			<Button :size="_size" :type="_status" :icon="icon" @click="toggle" plain>{{_title}}</Button>

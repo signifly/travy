@@ -10,7 +10,7 @@
 					</div>
 
 					<div class="item">
-						<bulk v-if="bulk" v-bind="[bulk, {ids}]" @fieldA="fieldA"/>
+						<bulk v-if="bulk" v-bind="[bulk, {ids}]" @event="event"/>
 					</div>
 				</div>
 			</panel>
@@ -41,9 +41,9 @@ export default {
 			this.$emit("unselect");
 		},
 
-		fieldA(event) {
+		event(e) {
 			this.unselect();
-			this.$emit("fieldA", event);
+			this.$emit("event", e);
 		}
 	}
 };

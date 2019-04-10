@@ -3,7 +3,7 @@
 		<vField
 			v-bind="column"
 			:alt="{data, type: 'table'}"
-			@fieldA="fieldA"
+			@event="event"
 		/>
 	</component>
 </template>
@@ -28,10 +28,10 @@ export default {
 		}
 	},
 	methods: {
-		fieldA({actions, done}) {
+		event({actions, done}) {
 			const {data} = actions.update;
 
-			this.$emit("fieldA", {
+			this.$emit("event", {
 				done,
 				actions: {
 					...actions,

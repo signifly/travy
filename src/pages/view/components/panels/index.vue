@@ -4,7 +4,7 @@
 			v-if="comp"
 			:is="comp"
 			v-bind="{loading, error, title}"
-			@fieldA="$emit('fieldA', $event)"
+			@event="$emit('event', $event)"
 			@save="$emit('save', $event)"
 		/>
 	</transition>

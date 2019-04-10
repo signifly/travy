@@ -103,7 +103,7 @@ export default {
 		refreshData() {
 			this.loadingData = true;
 
-			this.$emit("fieldA", {
+			this.$emit("event", {
 				done: async () => this.loadingData = false,
 				actions: {
 					refresh: {

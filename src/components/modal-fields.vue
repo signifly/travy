@@ -12,7 +12,7 @@
 					:key="field.name"
 					v-bind="field"
 					:alt="{data, errors, loading}"
-					@fieldA="$emit('fieldA', $event)"
+					@event="$emit('event', $event)"
 				/>
 			</div>
 

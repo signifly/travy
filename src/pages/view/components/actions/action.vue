@@ -2,7 +2,7 @@
 	<action
 	v-bind="{props, active, hide, data}"
 	@close="toggle"
-	@fieldA="fieldA">
+	@event="event">
 
 		<div class="view-action">
 			<Button size="medium" :type="status" @click="toggle">
@@ -38,9 +38,9 @@ export default {
 			this.active = !this.active;
 		},
 
-		fieldA(event) {
+		event(e) {
 			this.active = false;
-			this.$emit("fieldA", event);
+			this.$emit("event", e);
 		},
 	}
 };

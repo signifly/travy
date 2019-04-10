@@ -3,7 +3,7 @@
 		<component
 			:is="comp"
 			v-bind="[propsData, propsValue, {alt}]"
-			@fieldA="$emit('fieldA', $event)"
+			@event="$emit('event', $event)"
 		/>
 	</div>
 </template>

@@ -3,7 +3,7 @@
 	v-bind="[actionC, {active}]"
 	:actionProps="{position: 'top-right'}"
 	@close="$emit('close', $event)"
-	@fieldA="$emit('fieldA', $event)">
+	@event="$emit('event', $event)">
 
 		<DropdownItem class="item" :command="action">{{action.title}}</DropdownItem>
 	</action>

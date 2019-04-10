@@ -12,7 +12,7 @@
 					:key="action.title"
 					v-bind="{action, ids}"
 					@close="close"
-					@fieldA="fieldA"
+					@event="event"
 				/>
 			</DropdownMenu>
 		</Dropdown>
@@ -41,9 +41,9 @@ export default {
 		select(action) {
 			this.actAction = this.actAction === action ? null : action;
 		},
-		fieldA(event) {
+		event(e) {
 			this.close();
-			this.$emit("fieldA", event);
+			this.$emit("event", e);
 		}
 	}
 };

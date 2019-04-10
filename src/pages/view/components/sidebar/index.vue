@@ -6,7 +6,7 @@
 				ref="group"
 				:key="group.id"
 				v-bind="[group, {fieldAlt}]"
-				@fieldA="fieldA"
+				@event="event"
 			/>
 		</div>
 	</div>
@@ -46,7 +46,7 @@ export default {
 		})
 	},
 	methods: {
-		async fieldA({actions, done}) {
+		async event({actions, done}) {
 			if (actions.update) {
 				let {data} = actions.update;
 
@@ -82,7 +82,7 @@ export default {
 					edit: false
 				};
 
-				this.$emit("fieldA", {actions: {
+				this.$emit("event", {actions: {
 					refresh: {data: true}
 				}});
 			} catch({errors}) {
