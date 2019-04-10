@@ -120,8 +120,9 @@ export default {
 	methods: {
 		switchUpdate(val) {
 			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._switchValue]: val}
+				actions: {
+					update: {data: {[this._switchValue]: val}}
+				}
 			});
 		},
 

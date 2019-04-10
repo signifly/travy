@@ -91,7 +91,9 @@ export default {
 			this.items = uniq([...this.items, ...newItems]);
 		},
 
-		select({data}) {
+		select({actions}) {
+			const {data} = actions.update;
+
 			this.saveItems();
 			const selectValues = get(data, this._values);
 
@@ -106,7 +108,9 @@ export default {
 			this.update();
 		},
 
-		fieldA({data}) {
+		fieldA({actions}) {
+			const {data} = actions.update;
+
 			forEach(data, (val, key) => set(this, key, val));
 			this.update();
 		},

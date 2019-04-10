@@ -110,22 +110,23 @@ export default {
 		}
 	},
 	methods: {
-		fieldA({action, data, done}, i) {
-			if (this[action]) this[action]({data, done, i});
-		},
 
-		refresh() {
-			this.$emit("fieldA", {action: "refreshData"});
-		},
+		fieldA({actions, done}, i) {
+			if (actions.update) {
+				let {data} = actions.update;
+				data = mapKeys(data, (val, key) => `${this._items}[${i}].${key}`);
 
-		update({data, done, i}) {
-			data = mapKeys(data, (val, key) => `${this._items}[${i}].${key}`);
-			this.$emit("fieldA", {action: "update", data, done});
-		},
+				this.$emit("fieldA", {
+					done,
+					actions: {
+						update: {data}
+					}
+				});
+			}
 
-		show({data, i}) {
-			const {id} = this.items[i];
-			this.$router.push("/" + data.endpoint.replace("{id}", id));
+			if (actions.refresh) {
+				this.$emit("fieldA", {actions});
+			}
 		},
 
 		remove({done, i}) {
@@ -136,8 +137,9 @@ export default {
 
 		listUpdate() {
 			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._items]: this.items}
+				actions: {
+					update: {data: {[this._items]: this.items}}
+				}
 			});
 		},
 	}

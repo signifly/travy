@@ -8,7 +8,7 @@
 			<inputImage
 				class="line"
 				v-bind="{url: image, _file: _imageBase64, _upload: _imageUpload}"
-				@fieldA="fieldA"
+				@fieldA="$emit('fieldA', $event)"
 			/>
 		</div>
 

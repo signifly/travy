@@ -7,8 +7,8 @@
 					<vHeader v-bind="{data, header}"/>
 				</Col>
 				<Col class="right" :span="12">
-					<modifiers v-if="modifiers" v-bind="{modifiers}" @refresh="refresh"/>
-					<actions v-if="actions" v-bind="{actions, data}" @submit="getData"/>
+					<modifiers v-if="modifiers" v-bind="{modifiers}" @fieldA="fieldA"/>
+					<actions v-if="actions" v-bind="{actions, data}" @fieldA="fieldA"/>
 				</Col>
 			</Row>
 
@@ -30,7 +30,7 @@
 
 			<Row class="bottom" :gutter="20">
 				<Col class="left" :span="24">
-					<activity v-if="activity" :key="data.updated_at" v-bind="{data, endpoint}" @refreshDataComp="refreshDataComp"/>
+					<activity v-if="activity" :key="data.updated_at" v-bind="{data, endpoint}" @fieldA="fieldA"/>
 				</Col>
 			</Row>
 
@@ -77,24 +77,9 @@ export default {
 		modifiersKey: (t) => Object.values(t.query.modifiers || {}).join(",")
 	},
 	methods: {
-		async refresh({done} = {}) {
-			await this.getDefinitions();
-			await this.getData();
-			if (done) await done();
-		},
-
-		async refreshData({done} = {}) {
-			await this.getData();
-			if (done) await done();
-		},
-
-		async refreshDataComp({done} = {}) {
-			await this.getData();
-			this.compUpdateKey++;
-			if (done) await done();
-		},
-
 		async fieldA({actions, done}) {
+			console.log("view fieldA", actions);
+
 			if (actions.refresh) {
 				const {definitions, data} = actions.refresh;
 				if (definitions) await this.getDefinitions();
@@ -145,7 +130,8 @@ export default {
 		}
 	},
 	created() {
-		this.refresh();
+		this.getDefinitions();
+		this.getData();
 	}
 };
 </script>

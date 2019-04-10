@@ -20,7 +20,14 @@ export default {
 				modifiers
 			}});
 
-			this.$emit("refresh");
+			this.$emit("fieldA", {
+				actions: {
+					refresh: {
+						definitions: true,
+						data: true
+					}
+				}
+			})
 		}
 	}
 }
