@@ -1,5 +1,5 @@
 <template>
-	<transition name="view-page" v-if="data">
+	<transition name="view-page" v-if="definitions && data">
 		<div class="view-page">
 
 			<Row class="top" :gutter="20">
