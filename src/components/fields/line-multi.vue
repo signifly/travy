@@ -1,6 +1,6 @@
 <template>
 	<div class="line-multi">
-		<draggable :list="items" :options="{handle: '.drag'}" @end="listUpdate" v-if="items.length > 0">
+		<draggable :list="items" handle=".drag" @end="listUpdate" v-if="items.length > 0">
 			<div class="item" v-for="(item, i) in items" :key="item.id">
 				<component
 					:is="_itemFieldId"
@@ -110,7 +110,6 @@ export default {
 		}
 	},
 	methods: {
-
 		event({actions, done}, i) {
 			if (actions.update) {
 				let {data} = actions.update;

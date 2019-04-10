@@ -9,7 +9,7 @@
 					</tr>
 				</thead>
 
-				<draggable v-model="items" :options="{handle: '.drag'}" @end="update" element="tbody">
+				<draggable v-model="items" handle=".drag" @end="update" tag="tbody">
 					<tr v-for="item in items" :key="item.id">
 						<td class="top" @click="moveTop(item)" title="Move to top"><i class="el-icon-d-arrow-left"/>
 						<td v-for="column in _columns" :key="column.key" class="drag" v-text="item[column.key]"/>
@@ -79,7 +79,7 @@ export default {
 
 		update() {
 			const ids = this.items.map(x => x[this._options.value]);
-			
+
 			this.$emit("event", {
 				actions: {
 					update: {data: {[this._prop]: ids}}
@@ -111,6 +111,10 @@ export default {
 			font-size: em(12);
 
 			tr {
+				&.sortable-ghost {
+					color: $blue5;
+				}
+
 				&:nth-child(even) {
 					td {
 						background-color: $white2;
@@ -129,10 +133,6 @@ export default {
 
 				td {
 					background-color: $white1;
-
-					&.drag {
-						cursor: grab;
-					}
 
 					&.top {
 						width: 1.5em;
