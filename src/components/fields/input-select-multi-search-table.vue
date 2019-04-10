@@ -113,8 +113,9 @@ export default {
 
 		update() {
 			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._values]: this.columnsData}
+				actions: {
+					update: {data: {[this._values]: this.columnsData}}
+				}
 			});
 		}
 	}

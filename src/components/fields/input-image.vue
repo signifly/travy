@@ -86,8 +86,9 @@ export default {
 
 		update(res) {
 			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._file]: res}
+				actions: {
+					update: {data: {[this._file]: res}}
+				}
 			});
 		}
 	},

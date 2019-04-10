@@ -154,8 +154,9 @@ export default {
 			this.image = url;
 
 			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._id]: id}
+				actions: {
+					update: {data: {[this._id]: id}}
+				}
 			});
 		}
 	},

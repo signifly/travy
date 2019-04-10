@@ -79,10 +79,11 @@ export default {
 
 		update() {
 			const ids = this.items.map(x => x[this._options.value]);
-
+			
 			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._prop]: ids}
+				actions: {
+					update: {data: {[this._prop]: ids}}
+				}
 			});
 		},
 

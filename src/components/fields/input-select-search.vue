@@ -107,10 +107,11 @@ export default {
 			this.$nextTick(() => this.selectedItem = null);
 		},
 
-		update(val) {
+		update(value) {
 			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._value]: val}
+				actions: {
+					update: {data: {[this._value]: value}}
+				}
 			});
 		}
 	},

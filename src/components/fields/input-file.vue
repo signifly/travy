@@ -78,8 +78,9 @@ export default {
 
 		update(obj) {
 			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._file]: obj}
+				actions: {
+					update: {data: {[this._file]: obj}}
+				}
 			});
 		}
 	},

@@ -112,6 +112,7 @@ export default {
 
 			if (done) await done();
 
+			// emit to view
 			this.$emit("fieldA", {actions});
 
 			s.release();
@@ -130,8 +131,6 @@ export default {
 
 		async getData({loading} = {loading: true}) {
 			this.loading = loading;
-
-			console.log("table getData");
 
 			const params = merge({}, this.endpoint.params, {
 				page: this.query.page,

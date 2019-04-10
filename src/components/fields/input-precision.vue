@@ -60,8 +60,9 @@ export default {
 			if (value === this.value) return;
 
 			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._value]: value}
+				actions: {
+					update: {data: {[this._value]: value}}
+				}
 			});
 		}
 	},

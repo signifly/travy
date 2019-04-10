@@ -35,8 +35,9 @@ export default {
 	methods: {
 		update(text) {
 			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._text]: text}
+				actions: {
+					update: {data: {[this._text]: text}}
+				}
 			});
 		}
 	}

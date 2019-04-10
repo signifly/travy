@@ -70,10 +70,11 @@ export default {
 			dates = dates.map(x => this.timestamp ? x / 1000 : x);
 
 			this.$emit("fieldA", {
-				action: "update",
-				data: {
-					[this._dateStart]: dates[0],
-					[this._dateEnd]: dates[1]
+				actions: {
+					update: {data: {
+						[this._dateStart]: dates[0],
+						[this._dateEnd]: dates[1]
+					}}
 				}
 			});
 		}

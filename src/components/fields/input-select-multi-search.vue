@@ -133,10 +133,11 @@ export default {
 		},
 
 
-		update(val) {
+		update(values) {
 			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._values]: val}
+				actions: {
+					update: {data: {[this._values]: values}}
+				}
 			});
 		}
 	},

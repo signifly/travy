@@ -26,10 +26,11 @@ export default {
 		_value: {type: String, required: true}
 	},
 	methods: {
-		update(val) {
+		update(value) {
 			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._value]: val}
+				actions: {
+					update: {data: {[this._value]: value}}
+				}
 			});
 		}
 	}
