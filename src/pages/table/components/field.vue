@@ -28,8 +28,16 @@ export default {
 		}
 	},
 	methods: {
-		fieldA(obj) {
-			this.$emit("fieldA", {...obj, item: this.data});
+		fieldA({actions, done}) {
+			const {data} = actions.update;
+
+			this.$emit("fieldA", {
+				done,
+				actions: {
+					...actions,
+					update: {item: this.data, data},
+				}
+			});
 		}
 	},
 	beforeCreate() {

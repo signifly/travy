@@ -54,7 +54,8 @@ export default {
 		}
 	},
 	methods: {
-		fieldA({data}) {
+		fieldA({actions}) {
+			const {data} = actions.update;
 			this.data = {...this.data, ...data};
 		},
 

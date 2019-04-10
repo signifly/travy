@@ -41,32 +41,29 @@ export default {
 			options: t.state.options,
 			data: t.state.data,
 			type: "view-tab"
-		}),
-
-		actions: (t) => ({
-			refresh: async ({done}) => {
-				await t.getData();
-				if (done) await done();
-			},
-
-			update: async ({data}) => {
-				// {"key1.key2": 1} ===> {key1: {key2: 1}}
-				data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
-
-				// merge payload with data
-				t.payload = merge({}, t.payload, data);
-
-				// merge state data with data
-				const stateData = merge({}, t.state.data, data);
-
-				// update state
-				t.updateState({data: stateData, edit: true});
-			}
 		})
 	},
 	methods: {
-		fieldA({action, data, done}) {
-			if (this.actions[action]) this.actions[action]({data, done});
+		async fieldA({actions, done}) {
+			if (actions.update) {
+				let {data} = actions.update;
+
+				// {"key1.key2": 1} ===> {key1: {key2: 1}}
+				data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
+				// merge payload with data
+				this.payload = merge({}, this.payload, data);
+				// merge state data with data
+				const stateData = merge({}, this.state.data, data);
+				// update state
+				this.updateState({data: stateData, edit: true});
+			}
+
+			if (actions.refresh) {
+				const {data} = actions.refresh;
+				if (data) await this.getData();
+			}
+
+			if (done) await done();
 		},
 
 		updateState(obj) {

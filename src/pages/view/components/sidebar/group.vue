@@ -8,7 +8,7 @@
 				v-for="field in fields"
 				:key="field.name"
 				v-bind="[field, {alt: fieldAlt}]"
-				@fieldA="fieldA"
+				@fieldA="$emit('fieldA', $event)"
 			/>
 		</div>
 	</div>
@@ -32,11 +32,6 @@ export default {
 	},
 	computed: {
 		fieldIds: (t) => t.fields.map(x => x.fieldType.id)
-	},
-	methods: {
-		fieldA($event) {
-			this.$emit("fieldA", $event);
-		}
 	}
 };
 </script>

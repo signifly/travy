@@ -71,8 +71,8 @@ export default {
 				this.$router.push(rStringProps({data, val: this.onSubmit}));
 			} else {
 				this.$emit("fieldA", {
-					action: "refreshData",
-					done: async () => this.close()
+					done: async () => this.close(),
+					actions: {refresh: {data: true}}
 				});
 			}
 		},

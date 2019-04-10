@@ -41,9 +41,9 @@ export default {
 			this.$emit("unselect");
 		},
 
-		fieldA(obj) {
+		fieldA(event) {
 			this.unselect();
-			this.$emit("fieldA", obj);
+			this.$emit("fieldA", event);
 		}
 	}
 };

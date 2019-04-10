@@ -2,8 +2,8 @@
 	<action
 	v-bind="[actionC, {active}]"
 	:actionProps="{position: 'top-right'}"
-	@close="close"
-	@fieldA="fieldA">
+	@close="$emit('close', $event)"
+	@fieldA="$emit('fieldA', $event)">
 
 		<DropdownItem class="item" :command="action">{{action.title}}</DropdownItem>
 	</action>
@@ -25,14 +25,6 @@ export default {
 		actionC: (t) => merge({}, t.action, {
 			props: {payload: {data: {ids: t.ids}}}
 		})
-	},
-	methods: {
-		close() {
-			this.$emit("close");
-		},
-		fieldA(obj) {
-			this.$emit("fieldA", obj);
-		}
 	}
 };
 </script>

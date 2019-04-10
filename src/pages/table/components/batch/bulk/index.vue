@@ -41,9 +41,9 @@ export default {
 		select(action) {
 			this.actAction = this.actAction === action ? null : action;
 		},
-		fieldA(obj) {
+		fieldA(event) {
 			this.close();
-			this.$emit("fieldA", obj);
+			this.$emit("fieldA", event);
 		}
 	}
 };

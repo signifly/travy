@@ -38,9 +38,9 @@ export default {
 			this.active = !this.active;
 		},
 
-		fieldA(obj) {
+		fieldA(event) {
 			this.active = false;
-			this.$emit("fieldA", obj);
+			this.$emit("fieldA", event);
 		},
 	}
 };

@@ -1,6 +1,6 @@
 <template>
 	<transition name="el-fade-in" appear>
-		<component :is="comp" ref="comp" v-bind="[tab, {parentData: data}]" :state.sync="stateC"/>
+		<component :is="comp" ref="comp" v-bind="[tab, {parentData: data}]" :state.sync="stateC" @fieldA="$emit('fieldA', $event)"/>
 	</transition>
 </template>
 

@@ -100,7 +100,8 @@ export default {
 		}
 	},
 	methods: {
-		async fieldA({data, done}) {
+		async fieldA({actions, done}) {
+			const {data} = actions.update;
 			this.data = {...this.data, ...data};
 			this.event = data;
 			if (done) await done();

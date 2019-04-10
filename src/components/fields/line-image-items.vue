@@ -8,7 +8,7 @@
 			<inputImage
 				class="line"
 				v-bind="{url: image, _file: _imageBase64, _upload: _imageUpload}"
-				@fieldA="fieldA"
+				@fieldA="$emit('fieldA', $event)"
 			/>
 		</div>
 
@@ -19,7 +19,7 @@
 			</div>
 		</div>
 
-		<actions v-bind="{_actions, alt}" @fieldA="fieldA"/>
+		<actions v-bind="{_actions, alt}" @fieldA="$emit('fieldA', $event)"/>
 	</div>
 </template>
 
@@ -87,11 +87,6 @@ export default {
 			key: x[t._itemKey],
 			value: x[t._itemValue]
 		}))
-	},
-	methods: {
-		fieldA(obj) {
-			this.$emit("fieldA", obj);
-		}
 	}
 }
 </script>

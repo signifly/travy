@@ -9,7 +9,7 @@
 						:key="field.name"
 						v-bind="field"
 						:alt="{data: dataComb}"
-						@fieldA="update"
+						@fieldA="fieldA"
 					/>
 				</div>
 
@@ -88,6 +88,12 @@ export default {
 		update({data}) {
 			this.loading = true;
 			this.updateDebounce({data});
+		},
+
+		async fieldA({actions, done}) {
+			const {data} = actions.update;
+			this.updateDebounce({data});
+			if (done) await done();
 		},
 
 		async reset() {

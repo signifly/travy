@@ -3,7 +3,7 @@
 		<Tabs type="card" v-model="activeTab">
 			<TabPane v-for="tab in tabs" :name="tab.id" :key="tab.id" :lazy="true">
 				<tabLabel slot="label" v-bind="tab" :state="state[tab.id]"/>
-				<tabContent ref="tabContent" v-bind="{tab, data}" :state.sync="state[tab.id]"/>
+				<tabContent ref="tabContent" v-bind="{tab, data}" :state.sync="state[tab.id]" @fieldA="$emit('fieldA', $event)"/>
 			</TabPane>
 		</Tabs>
 	</div>

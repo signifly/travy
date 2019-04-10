@@ -24,7 +24,7 @@
 			</div>
 		</div>
 
-		<actions v-bind="{_actions, alt}" @fieldA="fieldA"/>
+		<actions v-bind="{_actions, alt}" @fieldA="$emit('fieldA', $event)"/>
 	</div>
 </template>
 
@@ -76,11 +76,6 @@ export default {
 		_infoKey: {type: String, required: true, doc: true},
 		infoValue: {type: String, required: false, doc: true},
 		_actions: {type: Array, required: true, doc: true, note: `<a href="#vActions">vActions</a>`}
-	},
-	methods: {
-		fieldA(obj) {
-			this.$emit("fieldA", obj);
-		}
 	}
 }
 </script>

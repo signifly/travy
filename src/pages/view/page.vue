@@ -14,7 +14,7 @@
 
 			<Row class="mid" :gutter="20">
 				<Col class="left" :span="16">
-					<tabs ref="tabs" :key="compKey" v-bind="{tabs, data}" @edit="edit = $event"/>
+					<tabs ref="tabs" :key="compKey" v-bind="{tabs, data}" @edit="edit = $event" @fieldA="fieldA"/>
 				</Col>
 				<Col class="right" :span="8">
 					<sidebar
@@ -23,8 +23,7 @@
 						:key="compKey"
 						v-bind="{sidebar, endpoint, data}"
 						@edit="edit = $event"
-						@refresh="refresh"
-						@refreshData="refreshData"
+						@fieldA="fieldA"
 					/>
 				</Col>
 			</Row>
@@ -35,7 +34,7 @@
 				</Col>
 			</Row>
 
-			<panels v-bind="{loading, error, data, edit}" @save="save" @refreshData="refreshData"/>
+			<panels v-bind="{loading, error, data, edit}" @save="save"/>
 		</div>
 	</transition>
 </template>
@@ -95,6 +94,17 @@ export default {
 			if (done) await done();
 		},
 
+		async fieldA({actions, done}) {
+			if (actions.refresh) {
+				const {definitions, data} = actions.refresh;
+				if (definitions) await this.getDefinitions();
+				if (data) await this.getData();
+				this.compUpdateKey++;
+			}
+
+			if (done) await done();
+		},
+
 		async save({done} = {}) {
 			this.loading = true;
 
@@ -103,12 +113,12 @@ export default {
 					(this.sidebar && this.$refs.sidebar.save()),
 					this.$refs.tabs.save()
 				]);
-				await this.refreshData();
 				if (done) await done();
 				this.error = "";
 			} catch(err) {
 				this.error = err;
 			}
+
 			this.loading = false;
 		},
 

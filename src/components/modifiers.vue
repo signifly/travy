@@ -26,8 +26,10 @@ export default {
 		queryData: (t) => t.query.modifiers,
 	},
 	methods: {
-		fieldA({data}) {
+		fieldA({actions, done}) {
+			const {data} = actions.update;
 			this.$emit("update", {modifiers: {...this.queryData, ...data}});
+			if (done) done();
 		}
 	}
 };

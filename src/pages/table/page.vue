@@ -8,7 +8,7 @@
 
 		<div class="content">
 			<box>
-				<top v-bind="{modifiers, loading, title, meta}" @refresh="refresh"/>
+				<top v-bind="{modifiers, loading, title, meta}" @reset="reset"/>
 
 				<vTable
 					ref="table"
@@ -83,42 +83,38 @@ export default {
 			this.$refs.table.unselect();
 		},
 
-		async refresh({done} = {}) {
+		async reset({done} = {}) {
 			this.unselect();
 			await this.getDefinitions();
 			await this.getData();
 			if (done) await done()
 		},
 
-		async fieldA({action, data, item, done}) {
-			const actions = {
-				refresh: async () => {
-					await this.refresh();
-				},
+		async fieldA({actions, done}) {
+			await s.acquire();
 
-				refreshData: async () => {
-					await this.getData();
-				},
-
-				update: async ({item, data}) => {
-					// {"key1.key2": 1} ===> {key1: {key2: 1}}
-					data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
-
-					const url = rStringProps({data: item, val: `${this.endpoint.url}/{id}`});
-					await this.$axios.put(url, {data, modifier: this.modifiers});
-					await this.getData({loading: false});
-				}
-			};
-
-			try {
-				await s.acquire();
-				await actions[action]({data, item});
-				s.release();
-			} catch(err) {
-				// error
-			} finally {
-				if (done) await done();
+			if (actions.update) {
+				let {data, item} = actions.update;
+				// {"key1.key2": 1} ===> {key1: {key2: 1}}
+				data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
+				const url = rStringProps({data: item, val: `${this.endpoint.url}/{id}`});
+				await this.$axios.put(url, {data, modifier: this.modifiers});
+				await this.getData({loading: false});
 			}
+
+			// if we're inside a view (parentData), the view will refresh the table component
+			if (actions.refresh && !this.parentData) {
+				const {definitions, data} = actions.refresh;
+				if (definitions) await this.getDefinitions();
+				if (data) await this.getData();
+				this.unselect();
+			}
+
+			if (done) await done();
+
+			this.$emit("fieldA", {actions});
+
+			s.release();
 		},
 
 		async filter({done}) {
@@ -134,6 +130,8 @@ export default {
 
 		async getData({loading} = {loading: true}) {
 			this.loading = loading;
+
+			console.log("table getData");
 
 			const params = merge({}, this.endpoint.params, {
 				page: this.query.page,

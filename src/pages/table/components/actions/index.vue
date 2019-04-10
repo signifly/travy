@@ -4,7 +4,7 @@
 			v-for="action in actions"
 			:key="action.title"
 			v-bind="[action, {parentData}]"
-			@fieldA="fieldA"
+			@fieldA="$emit('fieldA', $event)"
 		/>
 	</div>
 </template>
@@ -17,11 +17,6 @@ export default {
 	props: {
 		actions: {type: Array, required: true},
 		parentData: {type: Object, required: false}
-	},
-	methods: {
-		fieldA(obj) {
-			this.$emit("fieldA", obj);
-		}
 	}
 };
 </script>
