@@ -78,8 +78,6 @@ export default {
 	},
 	methods: {
 		async event({actions, done}) {
-			console.log("view event", actions);
-
 			if (actions.refresh) {
 				const {definitions, data} = actions.refresh;
 				if (definitions) await this.getDefinitions();

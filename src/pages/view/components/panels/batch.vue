@@ -106,9 +106,7 @@ export default {
 			this.$emit("event", {
 				done: async () => this.loadingData = false,
 				actions: {
-					refresh: {
-						data: true
-					}
+					refresh: {data: true}
 				}
 			});
 		}

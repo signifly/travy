@@ -58,12 +58,11 @@ export default {
 				this.updateState({data: stateData, edit: true});
 			}
 
-			if (actions.refresh) {
-				const {data} = actions.refresh;
-				if (data) await this.getData();
-			}
-
 			if (done) await done();
+
+			if (actions.refresh) {
+				this.$emit("event", {actions});
+			}
 		},
 
 		updateState(obj) {
