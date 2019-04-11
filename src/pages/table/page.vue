@@ -60,6 +60,7 @@ export default {
 	},
 	computed: {
 		query: (t) => t.state.query,
+		ws: (t) => t.definitions.ws,
 		batch: (t) => t.definitions.batch,
 		search: (t) => t.definitions.search,
 		actions: (t) => t.definitions.actions,
@@ -150,9 +151,13 @@ export default {
 			this.meta = meta;
 		}
 	},
-	created() {
+	async created() {
 		this.state.query = this.$route.query;
-		this.getDefinitions();
+		await this.getDefinitions();
+
+		if (this.ws) {
+			this.$ws.on(this.ws.channel, this.getData);
+		}
 	}
 };
 </script>
