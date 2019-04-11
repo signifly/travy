@@ -25,8 +25,8 @@
 </template>
 
 <script>
+import {meta, rStringPropsDeep} from "@/modules/utils";
 import {Select, Option, Button} from "element-ui";
-import {meta} from "@/modules/utils";
 import {merge, get} from "lodash";
 
 export default {
@@ -51,6 +51,7 @@ export default {
 		}
 	},
 	props: {
+		alt: {type: Object, required: false},
 		meta: {type: Object, require: false, default: () => ({})},
 		_title: {type: String, required: true, doc: true},
 		_subtitle: {type: String, required: true, doc: true},
@@ -64,7 +65,10 @@ export default {
 		}
 	},
 	computed: {
-		endpoint: (t) => t._options.endpoint,
+		endpoint: (t) => rStringPropsDeep({
+			data: get(t.alt, "data"),
+			obj: t._options.endpoint
+		}),
 
 		size() {
 			if (this.meta.location === "table") return "small";
