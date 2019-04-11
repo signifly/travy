@@ -20,7 +20,12 @@
 			</a>
 		</div>
 
-		<a class="download" v-if="_download" target="_blank" :href="url" download>Download</a>
+		<a class="download" v-if="_download" target="_blank" :href="url" download>
+			{{$translate({
+				en: "Download",
+				da: "Hent"
+			})}}
+		</a>
 	</div>
 </template>
 

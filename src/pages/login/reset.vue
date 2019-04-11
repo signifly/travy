@@ -3,7 +3,12 @@
 		<vForm title="Reset password" v-bind="{loading, error, message, fields, data}" @event="event" @submit="reset">
 			<template slot="actions">
 				<Button size="medium" icon="el-icon-arrow-left" @click="login">Login</Button>
-				<Button type="primary" size="medium" v-bind="{loading}" @click="reset">Reset</Button>
+				<Button type="primary" size="medium" v-bind="{loading}" @click="reset">
+					{{$translate({
+						en: "Reset",
+						da: "Nulstil"
+					})}}
+				</Button>
 			</template>
 		</vForm>
 	</div>

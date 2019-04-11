@@ -66,3 +66,9 @@ export const rStringPropsDeep = ({data, obj}) => {
 export const meta = {
 	items: "$meta/items"
 };
+
+export const translate = (locales) => {
+	const {default: store} = require("@/store");
+	const locale = store.getters["config/locale"];
+	return locales[locale] || locales.en;
+};

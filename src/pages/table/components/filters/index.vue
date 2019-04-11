@@ -20,7 +20,10 @@
 					type="info"
 					icon="el-icon-refresh"
 					@click="reset">
-						Reset
+						{{$translate({
+							en: "Reset",
+							da: "Nulstil"
+						})}}
 					</Button>
 				</div>
 			</div>
@@ -36,7 +39,12 @@
 		:placeholder="search.placeholder"
 		@input="update({data: {search: $event}})"
 		clearable>
-			<Button slot="append" icon="el-icon-tickets" v-if="fields && fields.length > 0" v-popover:pop>Add filter</Button>
+			<Button slot="append" icon="el-icon-tickets" v-if="fields && fields.length > 0" v-popover:pop>
+				{{$translate({
+					en: "Add filter",
+					da: "Tilføj filter"
+				})}}
+			</Button>
 		</Input>
 
 	</div>

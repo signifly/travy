@@ -17,7 +17,12 @@
 			</Select>
 
 			<a class="button" target="_blank" :href="selectedItem && selectedItem.download" download>
-				<Button :disabled="!selectedItem" type="primary" size="small">Hent</Button>
+				<Button :disabled="!selectedItem" type="primary" size="small">
+					{{$translate({
+						en: "Download",
+						da: "Hent"
+					})}}
+				</Button>
 			</a>
 		</div>
 

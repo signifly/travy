@@ -1,7 +1,12 @@
 <template>
 	<div class="breadcrumb">
 		<Breadcrumb>
-			<BreadcrumbItem :to="{name: 'index'}">Home</BreadcrumbItem>
+			<BreadcrumbItem :to="{name: 'index'}">
+				{{$translate({
+					en: "Home",
+					da: "Hjem"
+				})}}
+			</BreadcrumbItem>
 			<BreadcrumbItem v-for="item in items" :key="item.to" :to="item.to">{{item.title}}</BreadcrumbItem>
 		</Breadcrumb>
 	</div>

@@ -43,6 +43,9 @@ export default {
 		dashboards(state, {data}) {
 			return data && data.dashboards;
 		},
+		locale(state, {settings}) {
+			return settings && settings.locale;
+		},
 		frontpage(state, {settings}) {
 			return settings && settings.frontpage;
 		},
