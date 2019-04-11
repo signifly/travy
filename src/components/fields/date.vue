@@ -1,33 +1,31 @@
 <template>
-	<div class="date">{{dateValue}}</div>
+	<time class="date" :datetime="datetime" v-text="date"/>
 </template>
 
 <script>
-import {date} from "@/modules/utils";
+import {formatDate} from "element-ui/packages/date-picker/src/util";
 
 export default {
 	meta: {
 		res: {
 			props: {
-				timestamp: "date"
+				timestamp: "dateTime",
+				format: "yyyy-MM-dd HH:mm:ss"
 			},
 			data: {
-				date: 1517529600
+				dateTime: 1517529600
 			}
 		}
 	},
 	props: {
-		timestamp: {type: Number, required: false, doc: true}
+		timestamp: {type: Number, required: false, doc: true},
+		_format: {type: String, default: "yyyy-MM-dd HH:mm:ss", doc: true, note: `
+			<a target="_blank" href="http://element.eleme.io/#/en-US/component/date-picker#date-formats">Formats</a>
+		`}
 	},
 	computed: {
-		date: (t) => date(t.timestamp),
-		dateValue: (t) => t.timestamp ? t.date.sDate : ""
+		date: (t) => formatDate(t.timestamp * 1000, t._format),
+		datetime: (t) => new Date(t.timestamp * 1000)
 	}
 };
 </script>
-
-<style lang="scss" scoped>
-.date {
-
-}
-</style>
