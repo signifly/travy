@@ -6,7 +6,7 @@
 			v-if="active"
 			:is="props.id"
 			v-bind="[actionProps, propsC, {data}]"
-			@fieldA="$emit('fieldA', $event)"
+			@event="$emit('event', $event)"
 			@close="close"
 			@submit="submit"
 		/>
@@ -70,9 +70,9 @@ export default {
 			if (this.onSubmit) {
 				this.$router.push(rStringProps({data, val: this.onSubmit}));
 			} else {
-				this.$emit("fieldA", {
-					action: "refreshData",
-					done: async () => this.close()
+				this.$emit("event", {
+					done: async () => this.close(),
+					actions: {refresh: {data: true}}
 				});
 			}
 		},

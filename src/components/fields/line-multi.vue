@@ -1,12 +1,12 @@
 <template>
 	<div class="line-multi">
-		<draggable :list="items" :options="{handle: '.drag'}" @end="listUpdate" v-if="items.length > 0">
+		<draggable :list="items" handle=".drag" @end="listUpdate" v-if="items.length > 0">
 			<div class="item" v-for="(item, i) in items" :key="item.id">
 				<component
 					:is="_itemFieldId"
 					v-bind="[itemsPropsData[i], itemsPropsValue[i]]"
 					:alt="{data: itemsData[i]}"
-					@fieldA="fieldA($event, i)"
+					@event="event($event, i)"
 				/>
 			</div>
 		</draggable>
@@ -110,22 +110,22 @@ export default {
 		}
 	},
 	methods: {
-		fieldA({action, data, done}, i) {
-			if (this[action]) this[action]({data, done, i});
-		},
+		event({actions, done}, i) {
+			if (actions.update) {
+				let {data} = actions.update;
+				data = mapKeys(data, (val, key) => `${this._items}[${i}].${key}`);
 
-		refresh() {
-			this.$emit("fieldA", {action: "refreshData"});
-		},
+				this.$emit("event", {
+					done,
+					actions: {
+						update: {data}
+					}
+				});
+			}
 
-		update({data, done, i}) {
-			data = mapKeys(data, (val, key) => `${this._items}[${i}].${key}`);
-			this.$emit("fieldA", {action: "update", data, done});
-		},
-
-		show({data, i}) {
-			const {id} = this.items[i];
-			this.$router.push("/" + data.endpoint.replace("{id}", id));
+			if (actions.refresh) {
+				this.$emit("event", {actions});
+			}
 		},
 
 		remove({done, i}) {
@@ -135,9 +135,10 @@ export default {
 		},
 
 		listUpdate() {
-			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._items]: this.items}
+			this.$emit("event", {
+				actions: {
+					update: {data: {[this._items]: this.items}}
+				}
 			});
 		},
 	}

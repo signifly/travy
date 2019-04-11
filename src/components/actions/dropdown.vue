@@ -5,7 +5,7 @@
 		v-bind="[action, {data}]"
 		:active="selected === action"
 		:key="action.title"
-		@fieldA="$emit('fieldA', $event)"
+		@event="$emit('event', $event)"
 		@submit="$emit('submit', $event)"
 		@close="$emit('close')">
 

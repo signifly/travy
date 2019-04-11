@@ -1,5 +1,5 @@
 <template>
-	<tablePage v-bind="{defsEndpoint: endpoint, title, parentData}"/>
+	<tablePage v-bind="{defsEndpoint: endpoint, title, parentData}" @event="$emit('event', $event)"/>
 </template>
 
 <script>

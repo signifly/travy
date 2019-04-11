@@ -45,9 +45,10 @@ export default {
 		update(value) {
 			value = parseInt(value) || 0;
 
-			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._value]: value}
+			this.$emit("event", {
+				actions: {
+					update: {data: {[this._value]: value}}
+				}
 			});
 		}
 	},
@@ -69,6 +70,7 @@ export default {
 			}
 		}
 	}
+
 	.unit {
 		pointer-events: none;
 		position: absolute;

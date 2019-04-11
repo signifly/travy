@@ -6,7 +6,7 @@
 				ref="group"
 				:key="group.id"
 				v-bind="[group, {fieldAlt}]"
-				@fieldA="fieldA"
+				@event="event"
 			/>
 		</div>
 	</div>
@@ -43,30 +43,28 @@ export default {
 			errors: get(t.state.error, "errors"),
 			options: t.state.options,
 			data: t.state.data
-		}),
+		})
+	},
+	methods: {
+		async event({actions, done}) {
+			if (actions.update) {
+				let {data} = actions.update;
 
-		actions: (t) => ({
-			refresh: (e) => t.$emit("refresh", e),
-			refreshData: (e) => t.$emit("refreshData", e),
-
-			update: async ({data}) => {
 				// {"key1.key2": 1} ===> {key1: {key2: 1}}
 				data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
 
 				// merge payload with data
-				t.state.payload = merge({}, t.state.payload, data);
+				this.state.payload = merge({}, this.state.payload, data);
 
 				// merge dataC with data
-				t.state.data = merge({}, t.state.data, data);
+				this.state.data = merge({}, this.state.data, data);
 
-				t.state.edit = true;
+				this.state.edit = true;
 			}
-		})
-	},
-	methods: {
-		fieldA({action, data, done}) {
-			if (this.actions[action]) this.actions[action]({data, done});
+
+			if (done) await done();
 		},
+
 		async save() {
 			if (!this.state.edit) return;
 
@@ -83,6 +81,10 @@ export default {
 					error: null,
 					edit: false
 				};
+
+				this.$emit("event", {actions: {
+					refresh: {data: true}
+				}});
 			} catch({errors}) {
 				this.state.error = {errors};
 			}

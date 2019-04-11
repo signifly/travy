@@ -6,7 +6,7 @@
 		header-row-class-name="header-row"
 		header-cell-class-name="header-cell">
 			<TableColumn v-for="column in columns" v-bind="column" :key="column.name">
-				<field slot-scope="scope" v-bind="{scope, column}" @fieldA="$emit('fieldA', $event)"/>
+				<field slot-scope="scope" v-bind="{scope, column}" @event="$emit('event', $event)"/>
 			</TableColumn>
 		</Table>
 	</div>

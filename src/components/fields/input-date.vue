@@ -63,10 +63,9 @@ export default {
 		update(date) {
 			date = this.timestamp ? date / 1000 : date;
 
-			this.$emit("fieldA", {
-				action: "update",
-				data: {
-					[this._date]: date
+			this.$emit("event", {
+				actions: {
+					update: {data: {[this._date]: date}}
 				}
 			});
 		}

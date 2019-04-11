@@ -1,9 +1,9 @@
 <template>
 	<div class="select-multi-search-table">
 		<div class="select">
-			<selectMultiSearch ref="select" v-bind="{_clearable, _options, _values, values, disabled: _disabled}" @fieldA="select"/>
+			<selectMultiSearch ref="select" v-bind="{_clearable, _options, _values, values, disabled: _disabled}" @event="select"/>
 		</div>
-		<vTable :key="columnsData.length" v-bind="{_columns, columnsData, _columnsData: 'columnsData'}" @fieldA="fieldA"/>
+		<vTable :key="columnsData.length" v-bind="{_columns, columnsData, _columnsData: 'columnsData'}" @event="event"/>
 	</div>
 </template>
 
@@ -91,7 +91,9 @@ export default {
 			this.items = uniq([...this.items, ...newItems]);
 		},
 
-		select({data}) {
+		select({actions}) {
+			const {data} = actions.update;
+
 			this.saveItems();
 			const selectValues = get(data, this._values);
 
@@ -106,15 +108,18 @@ export default {
 			this.update();
 		},
 
-		fieldA({data}) {
+		event({actions}) {
+			const {data} = actions.update;
+
 			forEach(data, (val, key) => set(this, key, val));
 			this.update();
 		},
 
 		update() {
-			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._values]: this.columnsData}
+			this.$emit("event", {
+				actions: {
+					update: {data: {[this._values]: this.columnsData}}
+				}
 			});
 		}
 	}

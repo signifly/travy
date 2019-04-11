@@ -1,6 +1,6 @@
 <template>
 	<div class="reset-password">
-		<vForm title="Reset password" v-bind="{loading, error, message, fields, data}" @fieldA="fieldA" @submit="reset">
+		<vForm title="Reset password" v-bind="{loading, error, message, fields, data}" @event="event" @submit="reset">
 			<template slot="actions">
 				<Button size="medium" icon="el-icon-arrow-left" @click="login">Login</Button>
 				<Button type="primary" size="medium" v-bind="{loading}" @click="reset">Reset</Button>
@@ -66,7 +66,8 @@ export default {
 		}
 	},
 	methods: {
-		fieldA({data}) {
+		event({actions}) {
+			const {data} = actions.update;
 			this.data = {...this.data, ...data};
 		},
 

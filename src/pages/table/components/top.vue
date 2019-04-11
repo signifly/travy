@@ -37,7 +37,7 @@ export default {
 				modifiers
 			}});
 
-			this.$emit("refresh");
+			this.$emit("reset");
 		}
 	}
 }

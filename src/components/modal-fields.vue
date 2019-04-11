@@ -3,6 +3,7 @@
 		<Dialog
 		v-bind="{width, title}"
 		:visible.sync="visibleC"
+		:close-on-click-modal="false"
 		:append-to-body="true"
 		:modal-append-to-body="true">
 
@@ -12,7 +13,7 @@
 					:key="field.name"
 					v-bind="field"
 					:alt="{data, errors, loading}"
-					@fieldA="$emit('fieldA', $event)"
+					@event="$emit('event', $event)"
 				/>
 			</div>
 

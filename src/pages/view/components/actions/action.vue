@@ -2,10 +2,13 @@
 	<action
 	v-bind="{props, active, hide, data}"
 	@close="toggle"
-	@fieldA="fieldA">
+	@event="event">
 
 		<div class="view-action">
-			<Button size="medium" :type="status" :icon="`el-icon-${icon}`" @click="toggle">{{title}}</Button>
+			<Button size="medium" :type="status" @click="toggle">
+				{{title}}
+				<i class="el-icon-arrow-right el-icon-right" :class="`el-icon-${icon} el-icon-right`" v-if="icon"/>
+			</Button>
 		</div>
 
 	</action>
@@ -35,9 +38,9 @@ export default {
 			this.active = !this.active;
 		},
 
-		fieldA(obj) {
+		event(e) {
 			this.active = false;
-			this.$emit("fieldA", obj);
+			this.$emit("event", e);
 		},
 	}
 };

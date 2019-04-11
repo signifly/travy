@@ -103,8 +103,11 @@ export default {
 		refreshData() {
 			this.loadingData = true;
 
-			this.$emit("refreshData", {
-				done: () => this.loadingData = false
+			this.$emit("event", {
+				done: async () => this.loadingData = false,
+				actions: {
+					refresh: {data: true}
+				}
 			});
 		}
 	},

@@ -33,7 +33,7 @@
 					:alt="{data, loading: false}"
 					:name="id"
 					:fieldType="fieldType"
-					@fieldA="fieldA"
+					@event="event"
 				/>
 			</div>
 
@@ -52,10 +52,10 @@
 					</pre>
 				</div>
 
-				<div class="block event" v-if="event">
+				<div class="block event" v-if="ev">
 					<div class="title">Event</div>
 					<pre>
-						<code>{{event}}</code>
+						<code>{{ev}}</code>
 					</pre>
 				</div>
 			</div>
@@ -80,7 +80,7 @@ export default {
 			propsDisplay: this.res.props,
 			dataDisplay: this.res.data,
 			data: this.res.data,
-			event: null
+			ev: null
 		}
 	},
 	computed: {
@@ -100,9 +100,10 @@ export default {
 		}
 	},
 	methods: {
-		async fieldA({data, done}) {
+		async event({actions, done}) {
+			const {data} = actions.update;
 			this.data = {...this.data, ...data};
-			this.event = data;
+			this.ev = data;
 			if (done) await done();
 		},
 
@@ -132,6 +133,7 @@ export default {
 			border-bottom: 0;
 			padding-bottom: 0;
 		}
+
 		> .props {
 			margin: 1em 0;
 			border: 1px solid $blue2;
@@ -148,6 +150,7 @@ export default {
 							background-color: $white2;
 						}
 					}
+
 					th, td {
 						text-align: left;
 						padding: 0.8em;
@@ -156,6 +159,15 @@ export default {
 					th {
 						font-weight: 500;
 						border-bottom: 1px solid $blue2;
+					}
+
+					td {
+						::v-deep {
+							a {
+								color: $blue5;
+								text-decoration: none;
+							}
+						}
 					}
 				}
 			}

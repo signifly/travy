@@ -74,9 +74,10 @@ export default {
 		},
 
 		update() {
-			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._files]: this.files}
+			this.$emit("event", {
+				actions: {
+					update: {data: {[this._files]: this.files}}
+				}
 			});
 		},
 

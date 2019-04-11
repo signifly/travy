@@ -153,9 +153,10 @@ export default {
 			this.modal.active = false;
 			this.image = url;
 
-			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._id]: id}
+			this.$emit("event", {
+				actions: {
+					update: {data: {[this._id]: id}}
+				}
 			});
 		}
 	},

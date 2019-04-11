@@ -1,5 +1,5 @@
 <template>
-	<transition name="view-page" v-if="data">
+	<transition name="view-page" v-if="definitions && data">
 		<div class="view-page">
 
 			<Row class="top" :gutter="20">
@@ -7,14 +7,14 @@
 					<vHeader v-bind="{data, header}"/>
 				</Col>
 				<Col class="right" :span="12">
-					<modifiers v-if="modifiers" v-bind="{modifiers}" @refresh="refresh"/>
-					<actions v-if="actions" v-bind="{actions, data}" @submit="getData"/>
+					<modifiers v-if="modifiers" v-bind="{modifiers}" @event="event"/>
+					<actions v-if="actions" v-bind="{actions, data}" @event="event"/>
 				</Col>
 			</Row>
 
 			<Row class="mid" :gutter="20">
 				<Col class="left" :span="16">
-					<tabs ref="tabs" :key="compKey" v-bind="{tabs, data}" @edit="edit = $event"/>
+					<tabs ref="tabs" :key="compKey" v-bind="{tabs, data}" @edit="edit = $event" @event="event"/>
 				</Col>
 				<Col class="right" :span="8">
 					<sidebar
@@ -23,19 +23,18 @@
 						:key="compKey"
 						v-bind="{sidebar, endpoint, data}"
 						@edit="edit = $event"
-						@refresh="refresh"
-						@refreshData="refreshData"
+						@event="event"
 					/>
 				</Col>
 			</Row>
 
 			<Row class="bottom" :gutter="20">
 				<Col class="left" :span="24">
-					<activity v-if="activity" :key="data.updated_at" v-bind="{data, endpoint}" @refreshDataComp="refreshDataComp"/>
+					<activity v-if="activity" :key="data.updated_at" v-bind="{data, endpoint}" @event="event"/>
 				</Col>
 			</Row>
 
-			<panels v-bind="{loading, error, data, edit}" @save="save" @refreshData="refreshData"/>
+			<panels v-bind="{loading, error, data, edit}" @save="save"/>
 		</div>
 	</transition>
 </template>
@@ -78,20 +77,14 @@ export default {
 		modifiersKey: (t) => Object.values(t.query.modifiers || {}).join(",")
 	},
 	methods: {
-		async refresh({done} = {}) {
-			await this.getDefinitions();
-			await this.getData();
-			if (done) await done();
-		},
+		async event({actions, done}) {
+			if (actions.refresh) {
+				const {definitions, data} = actions.refresh;
+				if (definitions) await this.getDefinitions();
+				if (data) await this.getData();
+				this.compUpdateKey++;
+			}
 
-		async refreshData({done} = {}) {
-			await this.getData();
-			if (done) await done();
-		},
-
-		async refreshDataComp({done} = {}) {
-			await this.getData();
-			this.compUpdateKey++;
 			if (done) await done();
 		},
 
@@ -103,12 +96,12 @@ export default {
 					(this.sidebar && this.$refs.sidebar.save()),
 					this.$refs.tabs.save()
 				]);
-				await this.refreshData();
 				if (done) await done();
 				this.error = "";
 			} catch(err) {
 				this.error = err;
 			}
+
 			this.loading = false;
 		},
 
@@ -135,7 +128,8 @@ export default {
 		}
 	},
 	created() {
-		this.refresh();
+		this.getDefinitions();
+		this.getData();
 	}
 };
 </script>

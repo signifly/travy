@@ -10,7 +10,7 @@
 					:key="field.name"
 					:alt="{data, errors}"
 					v-bind="field"
-					@fieldA="fieldA"
+					@event="$emit('event', $event)"
 				/>
 
 				<div class="actions">
@@ -41,11 +41,6 @@ export default {
 	computed: {
 		header: (t) => t.$store.getters["config/title"],
 		errors: (t) => t.error.errors
-	},
-	methods: {
-		fieldA(obj) {
-			this.$emit("fieldA", obj);
-		}
 	}
 };
 </script>

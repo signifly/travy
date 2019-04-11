@@ -10,7 +10,7 @@
 				:active="selectedAction === action"
 				:key="action.title"
 				@close="close"
-				@fieldA="fieldA">
+				@event="$emit('event', $event)">
 
 					<DropdownItem class="item" :command="action">
 						{{action.title}}
@@ -138,10 +138,6 @@ export default {
 			setTimeout(() => {
 				if (this.$refs.dropdown) this.$refs.dropdown.hide();
 			}, 100);
-		},
-
-		fieldA(obj) {
-			this.$emit("fieldA", obj);
 		}
 	}
 };

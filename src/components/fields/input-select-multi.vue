@@ -10,14 +10,13 @@
 			:multiple="true"
 			@change="update">
 
-			<Option v-for="item in itemsMap" v-bind="item" :key="item.value"/>
+			<Option v-for="item in _items" v-bind="item" :key="item.value"/>
 
 		</Select>
 	</div>
 </template>
 
 <script>
-import {get} from "lodash";
 import {Select, Option} from "element-ui";
 
 export default {
@@ -27,47 +26,36 @@ export default {
 			props: {
 				disabled: false,
 				values: "selectValues",
-				items: "selectOptions",
-				options: {
-					label: "name",
-					value: "id"
-				}
-			},
-			data: {
-				selectValues: ["DK"],
-				selectOptions: [
+				items: [
 					{
-						name: "Danmark",
-						id: "DK",
+						label: "Danmark",
+						value: "dk"
 					},
 					{
-						name: "England",
-						id: "UK"
+						label: "England",
+						value: "uk"
 					},
 					{
-						name: "Murica",
-						id: "US",
+						label: "Murica",
+						value: "us"
 					}
 				]
+			},
+			data: {
+				selectValues: ["uk"]
 			}
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false, doc: true},
 		meta: {type: Object, require: false, default: () => ({})},
+		_disabled: {type: Boolean, required: false, doc: true},
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
 		_addable: {type: Boolean, required: false, doc: true},
-		_options: {type: Object, required: true, doc: true},
 		values: {type: Array, required: false, doc: true},
 		_values: {type: String, required: true},
-		items: {type: Array, required: true, doc: true}
+		_items: {type: Array, required: true, doc: true}
 	},
 	computed: {
-		itemsMap: (t) => t.items.map(x => ({
-			value: get(x, t._options.value),
-			label: get(x, t._options.label)
-		})),
-
 		size() {
 			if (this.meta.location === "table") return "small";
 			if (this.meta.location === "tabs") return "medium";
@@ -75,10 +63,11 @@ export default {
 		}
 	},
 	methods: {
-		update(val) {
-			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._values]: val}
+		update(values) {
+			this.$emit("event", {
+				actions: {
+					update: {data: {[this._values]: values}}
+				}
 			});
 		}
 	}

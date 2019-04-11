@@ -32,9 +32,10 @@ export default {
 	},
 	methods: {
 		update(val) {
-			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._value]: val}
+			this.$emit("event", {
+				actions: {
+					update: {data: {[this._value]: val}}
+				}
 			});
 		}
 	}

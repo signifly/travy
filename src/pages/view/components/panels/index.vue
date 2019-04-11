@@ -1,6 +1,12 @@
 <template>
 	<transition name="el-zoom-in-bottom">
-		<component v-if="comp" :is="comp" v-bind="{loading, error, title}" @refreshData="refreshData" @save="save"/>
+		<component
+			v-if="comp"
+			:is="comp"
+			v-bind="{loading, error, title}"
+			@event="$emit('event', $event)"
+			@save="$emit('save', $event)"
+		/>
 	</transition>
 </template>
 
@@ -22,14 +28,6 @@ export default {
 		comp() {
 			if (this.sequential) return batch;
 			if (this.edit) return save;
-		}
-	},
-	methods: {
-		save(obj) {
-			this.$emit("save", obj);
-		},
-		refreshData(obj) {
-			this.$emit("refreshData", obj);
 		}
 	}
 };

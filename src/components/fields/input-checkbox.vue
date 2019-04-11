@@ -1,6 +1,6 @@
 <template>
 	<div class="checkbox">
-		<Checkbox v-model="data.value" @change="update" />
+		<Checkbox v-model="data.value" @change="update"/>
 	</div>
 </template>
 
@@ -32,9 +32,10 @@ export default {
 	},
 	methods: {
 		update(val) {
-			this.$emit("fieldA", {
-				action: "update",
-				data: {[this._value]: val}
+			this.$emit("event", {
+				actions: {
+					update: {data: {[this._value]: val}}
+				}
 			});
 		}
 	}

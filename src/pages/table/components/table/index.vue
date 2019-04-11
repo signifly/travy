@@ -1,6 +1,7 @@
 <template>
 	<div class="table" :class="{loading}">
 		<Table
+		stripe
 		ref="table"
 		row-key="id"
 		:default-sort="sorting"
@@ -11,13 +12,13 @@
 		@selection-change="select">
 
 			<tableColumn type="expand" v-if="subtable">
-				<subtable slot-scope="{row}" v-bind="[subtable, {data, item: row}]" @fieldA="$emit('fieldA', $event)"/>
+				<subtable slot-scope="{row}" v-bind="[subtable, {data, item: row}]" @event="$emit('event', $event)"/>
 			</tableColumn>
 
 			<TableColumn type="selection" :reserve-selection="true" v-if="batchActive"/>
 
 			<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name">
-				<field slot-scope="scope" v-bind="{scope, column}" @fieldA="$emit('fieldA', $event)"/>
+				<field slot-scope="scope" v-bind="{scope, column}" @event="$emit('event', $event)"/>
 			</TableColumn>
 		</Table>
 	</div>

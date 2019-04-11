@@ -2,7 +2,7 @@
 	<action
 	v-bind="{props: _action, data: alt.data, active}"
 	@close="close"
-	@fieldA="fieldA">
+	@event="$emit('event', $event)">
 
 		<div class="button-action">
 			<Button :size="_size" :type="_status" :icon="icon" @click="toggle" plain>{{_title}}</Button>
@@ -88,10 +88,6 @@ export default {
 
 		close() {
 			this.active = false;
-		},
-
-		fieldA(obj) {
-			this.$emit("fieldA", obj);
 		}
 	}
 };

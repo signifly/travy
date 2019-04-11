@@ -2,10 +2,13 @@
 	<action
 	v-bind="{props, active, hide, data: parentData}"
 	@close="toggle"
-	@fieldA="fieldA">
+	@event="$emit('event', $event)">
 
 		<div class="table-action">
-			<Button size="medium" :type="status" :icon="`el-icon-${icon}`" @click="toggle">{{title}}</Button>
+			<Button size="medium" :type="status" @click="toggle">
+				{{title}}
+				<i class="el-icon-right" :class="`el-icon-${icon}`" v-if="icon"/>
+			</Button>
 		</div>
 
 	</action>
@@ -33,10 +36,6 @@ export default {
 	methods: {
 		toggle() {
 			this.active = !this.active;
-		},
-
-		fieldA(obj) {
-			this.$emit("fieldA", obj);
 		}
 	}
 };
