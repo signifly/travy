@@ -5,8 +5,8 @@
 
 		<div class="download">
 			<Select
+			size="small"
 			v-model="value"
-			v-bind="{size}"
 			:remote-method="getItems"
 			:filterable="true"
 			:remote="true"
@@ -17,7 +17,7 @@
 			</Select>
 
 			<a class="button" target="_blank" :href="selectedItem && selectedItem.download" download>
-				<Button :disabled="!selectedItem" type="primary" size="medium">Hent</Button>
+				<Button :disabled="!selectedItem" type="primary" size="small">Hent</Button>
 			</a>
 		</div>
 
@@ -52,7 +52,6 @@ export default {
 	},
 	props: {
 		alt: {type: Object, required: false},
-		meta: {type: Object, require: false, default: () => ({})},
 		_title: {type: String, required: true, doc: true},
 		_subtitle: {type: String, required: true, doc: true},
 		_options: {type: Object, required: true, doc: true}
@@ -69,12 +68,6 @@ export default {
 			data: get(t.alt, "data"),
 			obj: t._options.endpoint
 		}),
-
-		size() {
-			if (this.meta.location === "table") return "small";
-			if (this.meta.location === "tabs") return "medium";
-			return "medium";
-		},
 
 		itemsC: (t) => t.items.map(x => ({
 			value: get(x, t._options.value),
