@@ -133,6 +133,7 @@ export default {
 			border-bottom: 0;
 			padding-bottom: 0;
 		}
+
 		> .props {
 			margin: 1em 0;
 			border: 1px solid $blue2;
@@ -149,6 +150,7 @@ export default {
 							background-color: $white2;
 						}
 					}
+
 					th, td {
 						text-align: left;
 						padding: 0.8em;
@@ -157,6 +159,15 @@ export default {
 					th {
 						font-weight: 500;
 						border-bottom: 1px solid $blue2;
+					}
+
+					td {
+						::v-deep {
+							a {
+								color: $blue5;
+								text-decoration: none;
+							}
+						}
 					}
 				}
 			}
