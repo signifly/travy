@@ -3,6 +3,7 @@
 		<Dialog
 		v-bind="{width, title}"
 		:visible.sync="visibleC"
+		:close-on-click-modal="false"
 		:append-to-body="true"
 		:modal-append-to-body="true">
 
