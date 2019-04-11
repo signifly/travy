@@ -7,7 +7,7 @@
 		:filterable="true"
 		@change="update">
 
-			<Option v-for="item in _options" v-bind="item" :key="item.value">
+			<Option v-for="item in _items" v-bind="item" :key="item.value">
 				<div class="option">
 					<div class="emoji" v-if="item.emoji" v-html="emoji(item.emoji)"/>
 					{{item.label}}
@@ -30,7 +30,7 @@ export default {
 				disabled: false,
 				value: "selectValue",
 
-				options: [
+				items: [
 					{label: "Danmark", emoji: "denmark", value: "dk"},
 					{label: "England", emoji: "uk", value: "uk"},
 					{label: "Murica", emoji: "us", value: "us", disabled: true},
@@ -45,7 +45,7 @@ export default {
 		_disabled: {type: Boolean, required: false, doc: true},
 		meta: {type: Object, require: false, default: () => ({})},
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
-		_options: {type: Array, required: true, doc: true},
+		_items: {type: Array, required: true, doc: true},
 		value: {type: [String, Number], required: false, doc: true},
 		_value: {type: String, required: true}
 	},
