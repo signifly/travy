@@ -21,8 +21,9 @@ import error from "@/pages/error.vue";
 
 import meta from "@/pages/meta";
 import metaHome from "@/pages/meta/pages/home";
-import metaFields from "@/pages/meta/pages/fields";
-import metaActions from "@/pages/meta/pages/actions";
+import metaPage from "@/pages/meta/pages/index";
+// import metaFields from "@/pages/meta/pages/fields";
+// import metaActions from "@/pages/meta/pages/actions";
 
 
 const routes = [
@@ -46,8 +47,9 @@ const routes = [
 		component: meta,
 		children: [
 			{path: "", name: "meta", component: metaHome, meta: {layout: "base", title: "Meta", auth: {roles: "all"}}},
-			{path: "fields", name: "meta-fields", component: metaFields, meta: {layout: "base", title: "Meta/Fields", auth: {roles: "all"}}},
-			{path: "actions", name: "meta-actions", component: metaActions, meta: {layout: "base", title: "Meta/Actions", auth: {roles: "all"}}},
+			{path: "*", name: "meta-page", component: metaPage, meta: {layout: "base", title: "Meta", auth: {roles: "all"}}},
+			// {path: "fields", name: "meta-fields", component: metaFields, meta: {layout: "base", title: "Meta/Fields", auth: {roles: "all"}}},
+			// {path: "actions", name: "meta-actions", component: metaActions, meta: {layout: "base", title: "Meta/Actions", auth: {roles: "all"}}},
 		]
 	}
 ];
