@@ -31,25 +31,22 @@ export default {
 		hide: {type: Object, required: false} // {key, operator, value}
 	},
 	computed: {
-		dataComb: (t) => ({...t.data, ...t.payload.data}), // parent data and action data combined
-
 		payload: ({props, data}) => ({
 			type: get(props, "payload.type"),
 			data: mapValues(get(props, "payload.data"), (val) => get(data, val, val))
 		}),
 
-		endpoint: ({props, dataComb}) => ({
-			method: get(props, "endpoint.method"),
-			url: rStringProps({data: dataComb, val: get(props, "endpoint.url")})
+		dataComb: (t) => ({ // parent data and action data combined
+			...t.data,
+			...t.payload.data
 		}),
 
-		onSubmit: ({dataComb, props}) => rStringProps({data: dataComb, val: props.onSubmit}),
-
-		propsC: ({props, payload, endpoint, onSubmit}) => ({
-			...props,
-			payload,
-			endpoint,
-			onSubmit
+		propsC: (t) => ({
+			...rStringProps({
+				data: t.dataComb,
+				val: t.props
+			}),
+			payload: t.payload
 		}),
 
 		disabled() {
@@ -67,8 +64,8 @@ export default {
 				this.$store.dispatch("notify/send", {type: "info", title, message});
 			}
 
-			if (this.onSubmit) {
-				this.$router.push(rStringProps({data, val: this.onSubmit}));
+			if (this.propsC.onSubmit) {
+				this.$router.push(rStringProps({data, val: this.propsC.onSubmit}));
 			} else {
 				this.$emit("event", {
 					done: async () => this.close(),
