@@ -1,8 +1,8 @@
 import * as utils from "./utils";
 
 describe("utils", () => {
-	test("rStringProps", () => {
-		const dataObject = utils.rStringProps({
+	test("rStringProps object", () => {
+		const obj = utils.rStringProps({
 			data: {
 				id: 1,
 				person: {name: "pete"}
@@ -18,18 +18,18 @@ describe("utils", () => {
 			}
 		});
 
-		expect(dataObject).toHaveProperty("objKey.key", "1/pete");
-		expect(dataObject).toHaveProperty(["arrayKey", 0], "1/pete");
-		expect(dataObject).toHaveProperty(["arrayKey", 1, "key"], "1/pete");
+		expect(obj).toHaveProperty("objKey.key", "1/pete");
+		expect(obj).toHaveProperty(["arrayKey", 0], "1/pete");
+		expect(obj).toHaveProperty(["arrayKey", 1, "key"], "1/pete");
+	});
 
 
-		const dataString = utils.rStringProps({
-			data: {
-				id: 1
-			},
+	test("rStringProps string", () => {
+		const string = utils.rStringProps({
+			data: {id: 1},
 			val: "test/{id}"
 		});
 
-		expect(dataString).toBe("test/1");
+		expect(string).toBe("test/1");
 	});
 });
