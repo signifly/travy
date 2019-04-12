@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import {rStringProps, rStringPropsDeep} from "@/modules/utils";
+import {rStringPropsDeep} from "@/modules/utils";
 import {Table, TableColumn} from "element-ui";
 import field from "../field";
 
@@ -31,12 +31,8 @@ export default {
 		}
 	},
 	computed: {
-		dataC: (t) => t.endpoint ? t.resData : t.data,
-
-		endpointC: ({item, endpoint = {}}) => ({
-			url: rStringProps({data: item, val: endpoint.url}),
-			params: rStringPropsDeep({data: item, obj: endpoint.params})
-		})
+		endpointC: (t) => rStringPropsDeep({data: t.item, obj: t.endpoint}),
+		dataC: (t) => t.endpoint ? t.resData : t.data
 	},
 	methods: {
 		async getData() {

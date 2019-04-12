@@ -70,9 +70,10 @@ export default {
 		defaults: (t) => t.definitions.defaults,
 		modifiers: (t) => t.definitions.modifiers,
 		pagination: (t) => t.definitions.pagination,
-		endpoint: (t) => ({
-			url: t.definitions.endpoint.url,
-			params: rStringPropsDeep({obj: t.definitions.endpoint.params, data: t.parentData})
+
+		endpoint: (t) => rStringPropsDeep({
+			obj: t.definitions.endpoint,
+			data: t.parentData
 		})
 	},
 	methods: {
