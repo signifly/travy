@@ -1,11 +1,13 @@
 const dev = process.env.NODE_ENV === "development";
 import axios from "@/modules/axios";
 import store from "@/store";
+import Vue from "vue";
 
 
 const url = () => {
-	const domain = process.env.API.replace(/^https?:\/\//i, "");
-	const ssl = process.env.API.includes("https");
+	const api = Vue.prototype.$settings.api;
+	const domain = api.replace(/^https?:\/\//i, "");
+	const ssl = api.includes("https");
 	const key = store.getters["config/wsKey"];
 	return `${ssl ? 'wss' : 'ws'}://${domain}/ws/app/${key}`;
 };
@@ -76,15 +78,32 @@ const listeners = {
 			}
 		}));
 	},
+
 	subscribeAll() {
 		this.list.forEach(x => this.subscribe(x));
 	},
+
 	add(item) {
 		if (state.wsState === "open") {
 			this.subscribe(item);
 		}
 
 		this.list.push(item);
+	},
+
+	remove({channel}) {
+		const item = this.list.find(x => x.channel === channel);
+		this.list = this.list.filter(x => x.channel !== channel);
+
+		if (!item) return;
+
+		if (state.wsState !== "open") return;
+
+		// unsubscribe
+		state.ws.send(JSON.stringify({
+			event: "pusher:unsubscribe",
+			data: {channel}
+		}));
 	}
 };
 
@@ -161,6 +180,11 @@ export default {
 			connect();
 		}
 	},
+
+	stop(channel) {
+		listeners.remove({channel});
+	},
+
 	close() {
 		if (state.ws.close) {
 			state.ws.close();

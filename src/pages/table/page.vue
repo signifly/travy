@@ -131,7 +131,7 @@ export default {
 			this.definitions = data;
 		},
 
-		async getData({loading} = {loading: true}) {
+		async getData({loading = true} = {}) {
 			this.loading = loading;
 
 			const params = merge({}, this.endpoint.params, {
@@ -158,6 +158,11 @@ export default {
 
 		if (this.ws) {
 			this.$ws.on(this.ws.channel, this.getData);
+		}
+	},
+	beforeDestroy() {
+		if (this.ws) {
+			this.$ws.stop(this.ws.channel);
 		}
 	}
 };
