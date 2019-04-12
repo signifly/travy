@@ -4,8 +4,10 @@ import store from "@/store";
 import Vue from "vue";
 
 
+const api = Vue.prototype.$settings.api;
+
+
 const url = () => {
-	const api = Vue.prototype.$settings.api;
 	const domain = api.replace(/^https?:\/\//i, "");
 	const ssl = api.includes("https");
 	const key = store.getters["config/wsKey"];
@@ -61,7 +63,7 @@ const listeners = {
 
 		// get private channel token
 		if (item.channel.startsWith("private")) {
-			const {data} = await axios.post(`${process.env.API}/broadcasting/auth`, {
+			const {data} = await axios.post(`${api}/broadcasting/auth`, {
 				socket_id: state.socketId,
 				channel_name: item.channel
 			});
