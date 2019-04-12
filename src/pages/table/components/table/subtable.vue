@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import {rStringPropsDeep} from "@/modules/utils";
+import {rStringProps} from "@/modules/utils";
 import {Table, TableColumn} from "element-ui";
 import field from "../field";
 
@@ -31,7 +31,7 @@ export default {
 		}
 	},
 	computed: {
-		endpointC: (t) => rStringPropsDeep({data: t.item, obj: t.endpoint}),
+		endpointC: (t) => rStringProps({data: t.item, val: t.endpoint}),
 		dataC: (t) => t.endpoint ? t.resData : t.data
 	},
 	methods: {

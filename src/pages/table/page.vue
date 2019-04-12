@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import {rStringProps, rStringPropsDeep} from "@/modules/utils";
 import Semaphore from "semaphore-async-await";
+import {rStringProps} from "@/modules/utils";
 import {merge, set} from "lodash";
 import state from "./state";
 
@@ -71,8 +71,8 @@ export default {
 		modifiers: (t) => t.definitions.modifiers,
 		pagination: (t) => t.definitions.pagination,
 
-		endpoint: (t) => rStringPropsDeep({
-			obj: t.definitions.endpoint,
+		endpoint: (t) => rStringProps({
+			val: t.definitions.endpoint,
 			data: t.parentData
 		})
 	},

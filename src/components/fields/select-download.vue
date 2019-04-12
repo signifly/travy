@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import {meta, rStringPropsDeep} from "@/modules/utils";
+import {meta, rStringProps} from "@/modules/utils";
 import {Select, Option, Button} from "element-ui";
 import {merge, get} from "lodash";
 
@@ -69,9 +69,9 @@ export default {
 		}
 	},
 	computed: {
-		endpoint: (t) => rStringPropsDeep({
+		endpoint: (t) => rStringProps({
 			data: get(t.alt, "data"),
-			obj: t._options.endpoint
+			val: t._options.endpoint
 		}),
 
 		itemsC: (t) => t.items.map(x => ({

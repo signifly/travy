@@ -22,8 +22,6 @@ import error from "@/pages/error.vue";
 import meta from "@/pages/meta";
 import metaHome from "@/pages/meta/pages/home";
 import metaPage from "@/pages/meta/pages/index";
-// import metaFields from "@/pages/meta/pages/fields";
-// import metaActions from "@/pages/meta/pages/actions";
 
 
 const routes = [
