@@ -81,8 +81,8 @@ export default {
 			default: () => [],
 			doc: true,
 			note: `
-			Can only be an array of <i>objects</i>.
-		`
+				Can only be an array of <i>objects</i>.
+			`
 		},
 
 		// vTable props

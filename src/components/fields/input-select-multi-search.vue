@@ -69,9 +69,9 @@ export default {
 			default: () => [],
 			doc: true,
 			note: `
-			Can be an array of <i>objects|strings|numbers</i>.<br>
-			if it's strings|numbers, an initial call to <code>options.list</code> will be made to get the label names for the values.
-		`
+				Can be an array of <i>objects|strings|numbers</i>.<br>
+				if it's strings|numbers, an initial call to <code>options.list</code> will be made to get the label names for the values.
+			`
 		}
 	},
 	data() {

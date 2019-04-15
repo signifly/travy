@@ -24,8 +24,8 @@ export default {
 			default: "yyyy-MM-dd HH:mm:ss",
 			doc: true,
 			note: `
-			<a target="_blank" href="http://element.eleme.io/#/en-US/component/date-picker#date-formats">Formats</a>
-		`
+				<a target="_blank" href="http://element.eleme.io/#/en-US/component/date-picker#date-formats">Formats</a>
+			`
 		}
 	},
 	computed: {

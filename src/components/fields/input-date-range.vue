@@ -48,8 +48,8 @@ export default {
 			default: "daterange",
 			doc: true,
 			note: `
-			<i>daterange/datetimerange</i>
-		`
+				<i>daterange/datetimerange</i>
+			`
 		}
 	},
 	data() {

@@ -43,8 +43,8 @@ export default {
 			default: "date",
 			doc: true,
 			note: `
-			<i>year/month/date/datetime</i>
-		`
+				<i>year/month/date/datetime</i>
+			`
 		}
 	},
 	data() {
