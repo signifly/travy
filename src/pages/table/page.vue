@@ -64,6 +64,7 @@ export default {
 			state,
 			data: null,
 			meta: null,
+			halt: false,
 			loading: false,
 			definitions: null,
 			selectedItems: []
@@ -130,6 +131,10 @@ export default {
 				this.unselect();
 			}
 
+			if (actions.halt) {
+				this.halt = actions.halt.state;
+			}
+
 			if (done) await done();
 
 			// emit to view
@@ -170,6 +175,7 @@ export default {
 			const {
 				data: {data, meta}
 			} = await this.$axios.get(this.endpoint.url, {params});
+
 			this.loading = false;
 			this.data = data;
 			this.meta = meta;
@@ -180,7 +186,9 @@ export default {
 		await this.getDefinitions();
 
 		if (this.ws) {
-			this.$ws.on(this.ws.channel, this.getData);
+			this.$ws.on(this.ws.channel, () => {
+				if (!this.halt) this.getData();
+			});
 		}
 	},
 	beforeDestroy() {
