@@ -50,7 +50,7 @@
 				v-if="fields && fields.length > 0"
 				v-popover:pop
 			>
-				{{ $translate({en: "Add filter", da: "Tilføj filter"}) }}
+				Filter
 			</Button>
 		</Input>
 	</div>
