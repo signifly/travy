@@ -27,13 +27,13 @@ export default {
 	},
 	methods: {
 		event({actions, done}) {
-			const {data} = actions.update;
+			const update = actions.update;
 
 			this.$emit("event", {
 				done,
 				actions: {
 					...actions,
-					update: {item: this.data, data}
+					update: update && {item: this.data, data: update.data}
 				}
 			});
 		}
