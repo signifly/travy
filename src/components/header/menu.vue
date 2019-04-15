@@ -1,14 +1,9 @@
 <template>
-	<Menu
-		mode="horizontal"
-		:default-active="active"
-		:router="true"
-		menu-trigger="click"
-	>
+	<Menu mode="horizontal" menu-trigger="click" :router="true" ref="menu">
 		<template v-for="item in menu">
-			<MenuItem v-if="!item.items" :index="item.link" :key="item.link">{{
-				item.title
-			}}</MenuItem>
+			<MenuItem v-if="!item.items" :index="item.link" :key="item.link">
+				{{ item.title }}
+			</MenuItem>
 
 			<Submenu v-else :index="item.title" :key="item.title">
 				<template slot="title">{{ item.title }}</template>
@@ -30,8 +25,13 @@ import {Menu, Submenu, MenuItem} from "element-ui";
 export default {
 	components: {Menu, Submenu, MenuItem},
 	computed: {
-		menu: (t) => t.$store.getters["config/menu"],
-		active: (t) => t.$route.path
+		menu: (t) => t.$store.getters["config/menu"]
+	},
+	mounted() {
+		// fix element-ui active menu
+		this.$watch("$route", ({path}) => (this.$refs.menu.activeIndex = path), {
+			immediate: true
+		});
 	}
 };
 </script>
