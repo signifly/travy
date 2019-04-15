@@ -5,9 +5,9 @@
 		@close="$emit('close', $event)"
 		@event="$emit('event', $event)"
 	>
-		<DropdownItem class="item" :command="action">{{
-			action.title
-		}}</DropdownItem>
+		<DropdownItem class="item" :command="action">
+			{{ action.title }}
+		</DropdownItem>
 	</action>
 </template>
 

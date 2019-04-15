@@ -11,8 +11,9 @@ import favicon from "./modules/favicon";
 import errors from "./modules/errors";
 import app from "./app.vue";
 
-// global components
-Vue.component("travy-action", require("@/components/actions").default);
+const components = {
+	action: require("@/components/actions").default
+};
 
 const start = (options) => {
 	Vue.use(require("vue-shortkey"));
@@ -51,4 +52,4 @@ const start = (options) => {
 	});
 };
 
-export {start as app, utils, Vue};
+export {start as app, utils, Vue, components};

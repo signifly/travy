@@ -19,12 +19,12 @@
 
 			<div class="footer" slot="footer">
 				<div class="actions">
-					<Button @click="visibleC = false" :disabled="!!loading">{{
-						buttonCancelText
-					}}</Button>
-					<Button type="primary" @click="submit" :loading="!!loading">{{
-						buttonSubmitText
-					}}</Button>
+					<Button @click="visibleC = false" :disabled="!!loading">
+						{{ buttonCancelText }}
+					</Button>
+					<Button type="primary" @click="submit" :loading="!!loading">
+						{{ buttonSubmitText }}
+					</Button>
 				</div>
 
 				<div class="error" v-if="error.message">{{ error.message }}</div>
