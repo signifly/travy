@@ -14,17 +14,17 @@
 
 		<div class="info">
 			<div class="item">
-				<div class="title">{{_titleKey}}:</div>
-				<div class="text">{{titleValue}}</div>
+				<div class="title">{{ _titleKey }}:</div>
+				<div class="text">{{ titleValue }}</div>
 			</div>
 
 			<div class="item">
-				<div class="title">{{_infoKey}}:</div>
-				<div class="text">{{infoValue}}</div>
+				<div class="title">{{ _infoKey }}:</div>
+				<div class="text">{{ infoValue }}</div>
 			</div>
 		</div>
 
-		<actions v-bind="{_actions, alt}" @event="$emit('event', $event)"/>
+		<actions v-bind="{_actions, alt}" @event="$emit('event', $event)" />
 	</div>
 </template>
 
@@ -34,7 +34,7 @@ import actions from "./button-actions.vue";
 
 export default {
 	components: {inputImage, actions},
-	meta: {
+	meta: {
 		res: {
 			props: {
 				image: "image",
@@ -75,9 +75,14 @@ export default {
 		titleValue: {type: String, required: false, doc: true},
 		_infoKey: {type: String, required: true, doc: true},
 		infoValue: {type: String, required: false, doc: true},
-		_actions: {type: Array, required: true, doc: true, note: `<a href="#vActions">vActions</a>`}
+		_actions: {
+			type: Array,
+			required: true,
+			doc: true,
+			note: `<a href="#vActions">vActions</a>`
+		}
 	}
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -122,7 +127,6 @@ export default {
 			}
 
 			.text {
-
 			}
 		}
 	}

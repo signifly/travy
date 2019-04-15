@@ -33,7 +33,7 @@ export default {
 				edit: false,
 				payload: {}
 			}
-		}
+		};
 	},
 	computed: {
 		endpointUrl: (t) => rStringProps({data: t.state.data, val: t.endpoint.url}),
@@ -51,7 +51,10 @@ export default {
 				let {data} = actions.update;
 
 				// {"key1.key2": 1} ===> {key1: {key2: 1}}
-				data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
+				data = Object.entries(data).reduce(
+					(obj, [key, val]) => set(obj, key, val),
+					{}
+				);
 
 				// merge payload with data
 				this.state.payload = merge({}, this.state.payload, data);
@@ -69,10 +72,16 @@ export default {
 			if (!this.state.edit) return;
 
 			try {
-				const {data: {data, options}} = await this.$axios.put(this.endpointUrl, {
-					modifier: this.modifiers,
-					data: this.state.payload
-				}, {customErr: true});
+				const {
+					data: {data, options}
+				} = await this.$axios.put(
+					this.endpointUrl,
+					{
+						modifier: this.modifiers,
+						data: this.state.payload
+					},
+					{customErr: true}
+				);
 
 				this.state = {
 					data,
@@ -82,10 +91,12 @@ export default {
 					edit: false
 				};
 
-				this.$emit("event", {actions: {
-					refresh: {data: true}
-				}});
-			} catch({errors}) {
+				this.$emit("event", {
+					actions: {
+						refresh: {data: true}
+					}
+				});
+			} catch ({errors}) {
 				this.state.error = {errors};
 			}
 		}

@@ -10,22 +10,32 @@
 			:accept="_fileTypes"
 			:on-change="addFile"
 			:on-remove="removeFile"
-			multiple>
+			multiple
+		>
 			<i class="el-icon-upload"></i>
-			<div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+			<div class="el-upload__text">
+				Drop file here or <em>click to upload</em>
+			</div>
 			<div class="el-upload__tip" slot="tip">
-				{{_note}}<template v-if="_limit">, {{files.length}}/{{_limit}} selected.</template>
-				<span class="limit" v-if="limitNote">{{limitNote}}</span>
+				{{ _note }}
+				<template v-if="_limit">
+					, {{ files.length }}/{{ _limit }} selected.
+				</template>
+				<span class="limit" v-if="limitNote">{{ limitNote }}</span>
 			</div>
 		</Upload>
 
 		<transition name="progress">
 			<div class="progress" v-if="Number.isInteger(alt.loading)">
-				<Progress :text-inside="true" :stroke-width="18" :percentage="alt.loading">{{alt.loading}}</Progress>
+				<Progress
+					:text-inside="true"
+					:stroke-width="18"
+					:percentage="alt.loading"
+				>
+					{{ alt.loading }}
+				</Progress>
 			</div>
 		</transition>
-
-
 	</div>
 </template>
 
@@ -42,9 +52,7 @@ export default {
 				limit: 10,
 				files: "key"
 			},
-			data: {
-
-			}
+			data: {}
 		}
 	},
 	props: {
@@ -58,7 +66,7 @@ export default {
 		return {
 			limitNote: false,
 			files: []
-		}
+		};
 	},
 	methods: {
 		addFile({raw}) {
@@ -68,7 +76,7 @@ export default {
 		},
 
 		removeFile({raw}) {
-			const index = this.files.findIndex(x => x === raw);
+			const index = this.files.findIndex((x) => x === raw);
 			this.files.splice(index, 1);
 			this.update();
 		},
@@ -83,7 +91,9 @@ export default {
 
 		limitError(files) {
 			const rest = this._limit - this.files.length;
-			this.limitNote = `${files.length} files selected, but only ${rest} more can be added.`;
+			this.limitNote = `${
+				files.length
+			} files selected, but only ${rest} more can be added.`;
 		}
 	}
 };
@@ -92,7 +102,8 @@ export default {
 <style lang="scss" scoped>
 .upload {
 	::v-deep {
-		.el-upload, .el-upload-dragger {
+		.el-upload,
+		.el-upload-dragger {
 			width: 100%;
 		}
 
@@ -118,7 +129,8 @@ export default {
 		height: 19px;
 		overflow: hidden;
 
-		&-enter-active, &-leave-active {
+		&-enter-active,
+		&-leave-active {
 			transition: cubic(height 0.4s);
 		}
 		&-enter, &-leave-to /* .fade-leave-active below version 2.1.8 */ {

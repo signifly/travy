@@ -1,15 +1,20 @@
 <template>
-	<layout v-bind="{sidebar}">
-		<section class="intro html" v-html="require('./intro.md')"/>
+	<div class="fields">
+		<section class="intro html" v-html="require('./intro.md')" />
 
 		<div class="items">
-			<vItem v-for="field in fieldsSorted" :key="field.name" :id="field.name" :props="field.comp.props" v-bind="field.comp.meta"/>
+			<vItem
+				v-for="field in fieldsSorted"
+				:key="field.name"
+				:id="field.name"
+				:props="field.comp.props"
+				v-bind="field.comp.meta"
+			/>
 		</div>
-	</layout>
+	</div>
 </template>
 
 <script>
-import layout from "@/pages/meta/layout.vue";
 import vItem from "./item.vue";
 import {sortBy} from "lodash";
 import Vue from "vue";
@@ -25,26 +30,26 @@ const fields = (() => {
 	}, {});
 })();
 
-
 export default {
-	components: {layout, vItem},
+	components: {vItem},
 	computed: {
 		fieldsSorted() {
-			const array = Object.entries({...fields, ...this.$settings.fields}).map(([name, comp]) => ({name, comp}));
+			const array = Object.entries({...fields, ...this.$settings.fields}).map(
+				([name, comp]) => ({name, comp})
+			);
 			return sortBy(array, "name");
-		},
-
-		sidebar: (t) => ({
+		}
+	},
+	created() {
+		this.$emit("sidebar", {
 			title: "Fields",
 			sections: [
 				[{value: "introduction", label: "Introduction"}],
-				t.fieldsSorted.map(x => ({value: x.name, label: x.name}))
+				this.fieldsSorted.map((x) => ({value: x.name, label: x.name}))
 			]
-		})
+		});
 	}
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

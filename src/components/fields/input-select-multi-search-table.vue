@@ -1,9 +1,17 @@
 <template>
 	<div class="select-multi-search-table">
 		<div class="select">
-			<selectMultiSearch ref="select" v-bind="{_clearable, _options, _values, values, disabled: _disabled}" @event="select"/>
+			<selectMultiSearch
+				ref="select"
+				v-bind="{_clearable, _options, _values, values, disabled: _disabled}"
+				@event="select"
+			/>
 		</div>
-		<vTable :key="columnsData.length" v-bind="{_columns, columnsData, _columnsData: 'columnsData'}" @event="event"/>
+		<vTable
+			:key="columnsData.length"
+			v-bind="{_columns, columnsData, _columnsData: 'columnsData'}"
+			@event="event"
+		/>
 	</div>
 </template>
 
@@ -16,7 +24,7 @@ import vTable from "./table.vue";
 export default {
 	components: {selectMultiSearch, vTable},
 	meta: {
-		res: {
+		res: {
 			props: {
 				disabled: false,
 				values: "values",
@@ -67,9 +75,15 @@ export default {
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
 		_options: {type: Object, required: true, doc: true},
 		_values: {type: String, required: true},
-		values: {type: Array, required: false, default: () => [], doc: true, note: `
-			Can only be an array of <i>objects</i>.
-		`},
+		values: {
+			type: Array,
+			required: false,
+			default: () => [],
+			doc: true,
+			note: `
+				Can only be an array of <i>objects</i>.
+			`
+		},
 
 		// vTable props
 		_columns: {type: Array, required: true, doc: true},
@@ -79,14 +93,15 @@ export default {
 		return {
 			columnsData: [],
 			items: [],
-			edits: {},
-		}
+			edits: {}
+		};
 	},
 	computed: {
 		oValue: (t) => t._options.value
 	},
 	methods: {
-		saveItems() { // save old items so each tableColumn still has data from an old select search
+		saveItems() {
+			// save old items so each tableColumn still has data from an old select search
 			const newItems = get(this.$refs, "select.items", []);
 			this.items = uniq([...this.items, ...newItems]);
 		},
@@ -98,11 +113,11 @@ export default {
 			const selectValues = get(data, this._values);
 
 			// populate table with data from the selected option
-			this.columnsData = selectValues.map(id => {
-				const item = this.items.find(opt => get(opt, this.oValue) === id);
+			this.columnsData = selectValues.map((id) => {
+				const item = this.items.find((opt) => get(opt, this.oValue) === id);
 
 				// overwrite properties if exists in _columnsDataOverwrite
-				return {...item, ...this._columnsDataOverwrite}
+				return {...item, ...this._columnsDataOverwrite};
 			});
 
 			this.update();

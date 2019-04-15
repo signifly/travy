@@ -1,17 +1,26 @@
 <template>
 	<div class="top" title="">
 		<div class="info">
-			<component :is="title.url ? 'router-link' : 'div'" class="title" v-text="title.text" :to="title.url"/>
-			<div class="total" v-if="meta" v-text="meta.total"/>
+			<component
+				:is="title.url ? 'router-link' : 'div'"
+				class="title"
+				v-text="title.text"
+				:to="title.url"
+			/>
+			<div class="total" v-if="meta" v-text="meta.total" />
 
 			<transition name="loading">
 				<div class="loading" v-if="loading">
-					<i class="el-icon-loading"/>
+					<i class="el-icon-loading" />
 				</div>
 			</transition>
 		</div>
 
-		<modifiers v-if="modifiers" v-bind="[modifiers, {query}]" @update="updateModifiers"/>
+		<modifiers
+			v-if="modifiers"
+			v-bind="[modifiers, {query}]"
+			@update="updateModifiers"
+		/>
 	</div>
 </template>
 
@@ -32,15 +41,18 @@ export default {
 	},
 	methods: {
 		updateModifiers({modifiers}) {
-			state.setQuery({type: "replace", query: {
-				...this.query,
-				modifiers
-			}});
+			state.setQuery({
+				type: "replace",
+				query: {
+					...this.query,
+					modifiers
+				}
+			});
 
 			this.$emit("reset");
 		}
 	}
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -75,10 +87,12 @@ export default {
 			font-size: em(16);
 			color: $blue5;
 
-			&-enter-active, &-leave-active {
+			&-enter-active,
+			&-leave-active {
 				transition: cubic(opacity, 0.1s);
 			}
-			&-enter, &-leave-to {
+			&-enter,
+			&-leave-to {
 				opacity: 0;
 			}
 		}

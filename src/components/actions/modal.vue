@@ -27,10 +27,11 @@ export default {
 			data: this.payload.data,
 			loading: false,
 			error: {}
-		}
+		};
 	},
 	computed: {
-		upload: (t) => t.fields.map(x => x.fieldType.id === "input-upload").some(x => x),
+		upload: (t) =>
+			t.fields.map((x) => x.fieldType.id === "input-upload").some((x) => x),
 		payloadC: (t) => ({...t.payload, data: t.data}),
 
 		visible: {
@@ -48,7 +49,10 @@ export default {
 				let {data} = actions.update;
 
 				// {"key1.key2": 1} ===> {key1: {key2: 1}}
-				data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
+				data = Object.entries(data).reduce(
+					(obj, [key, val]) => set(obj, key, val),
+					{}
+				);
 
 				// update state
 				this.data = merge({}, this.data, data);
@@ -69,12 +73,12 @@ export default {
 					url: this.endpoint.url,
 					customErr: true,
 					onUploadProgress: (e) => {
-						this.loading = Math.round(e.loaded / e.total * 100);
+						this.loading = Math.round((e.loaded / e.total) * 100);
 					}
 				});
 
 				this.$emit("submit", data);
-			} catch(err) {
+			} catch (err) {
 				this.error = err;
 				this.loading = false;
 			}

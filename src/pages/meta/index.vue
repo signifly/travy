@@ -5,23 +5,21 @@
 				<router-link class="title" :to="{name: 'meta'}">Meta</router-link>
 
 				<div class="menu">
-					<router-link :to="{name: 'meta-actions'}">Actions</router-link>
-					<router-link :to="{name: 'meta-fields'}">Fields</router-link>
+					<router-link to="/meta/actions">Actions</router-link>
+					<router-link to="/meta/fields">Fields</router-link>
 					<a class="ext" href="/" target="_blank">App</a>
 				</div>
 			</div>
 		</div>
 
 		<div class="router">
-			<router-view/>
+			<router-view />
 		</div>
 	</div>
 </template>
 
 <script>
-export default {
-
-};
+export default {};
 </script>
 
 <style lang="scss" scoped>
@@ -66,7 +64,8 @@ export default {
 					padding-bottom: 0.1em;
 					margin-left: 1em;
 
-					&.router-link-active, &:hover {
+					&.router-link-active,
+					&:hover {
 						border-bottom: 2px solid $blue5;
 					}
 

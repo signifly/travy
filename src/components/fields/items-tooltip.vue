@@ -3,7 +3,7 @@
 		<Tooltip placement="right" v-bind="{disabled}">
 			<slot>
 				<div class="info">
-					<div class="count">{{items.length}}</div>
+					<div class="count">{{ items.length }}</div>
 					<i class="el-icon-info" v-if="!disabled" />
 				</div>
 			</slot>
@@ -11,14 +11,20 @@
 			<div slot="content">
 				<div class="items-tooltip-content">
 					<template v-if="_itemLink">
-						<a v-for="item in itemsMap" class="item" :key="item.id" :href="item.link" @click.prevent="go(item)">
-							{{item.label}}
+						<a
+							v-for="item in itemsMap"
+							class="item"
+							:key="item.id"
+							:href="item.link"
+							@click.prevent="go(item)"
+						>
+							{{ item.label }}
 						</a>
 					</template>
 
 					<template v-else>
 						<div v-for="item in itemsMap" class="item" :key="item.id">
-							{{item.label}}
+							{{ item.label }}
 						</div>
 					</template>
 				</div>
@@ -42,10 +48,7 @@ export default {
 				items: "itemList"
 			},
 			data: {
-				itemList: [
-					{key: "item1", id: 1},
-					{key: "item2", id: 2}
-				]
+				itemList: [{key: "item1", id: 1}, {key: "item2", id: 2}]
 			}
 		}
 	},
@@ -57,11 +60,12 @@ export default {
 	computed: {
 		disabled: (t) => t.items.length < 1,
 
-		itemsMap: (t) => t.items.map(item => ({
-			id: item.id,
-			label: get(item, t._itemKey),
-			link: rStringProps({val: t._itemLink, data: item})
-		}))
+		itemsMap: (t) =>
+			t.items.map((item) => ({
+				id: item.id,
+				label: get(item, t._itemKey),
+				link: rStringProps({val: t._itemLink, data: item})
+			}))
 	},
 	methods: {
 		go({link}) {

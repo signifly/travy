@@ -1,7 +1,13 @@
 <template>
 	<div class="filters">
-
-		<Popover popper-class="pop" v-model="active" ref="pop" placement="bottom-end" width="300" transition="trans-fadeDown">
+		<Popover
+			popper-class="pop"
+			v-model="active"
+			ref="pop"
+			placement="bottom-end"
+			width="300"
+			transition="trans-fadeDown"
+		>
 			<div class="pop">
 				<div class="fields" :key="resetU">
 					<vField
@@ -15,38 +21,38 @@
 
 				<div class="reset">
 					<Button
-					plain
-					size="mini"
-					type="info"
-					icon="el-icon-refresh"
-					@click="reset">
-						{{$translate({
-							en: "Reset",
-							da: "Nulstil"
-						})}}
+						plain
+						size="mini"
+						type="info"
+						icon="el-icon-refresh"
+						@click="reset"
+					>
+						{{ $translate({en: "Reset", da: "Nulstil"}) }}
 					</Button>
 				</div>
 			</div>
 		</Popover>
 
 		<Input
-		v-if="search"
-		class="search"
-		:class="{active}"
-		size="medium"
-		v-model="input"
-		:prefix-icon="searchIcon"
-		:placeholder="search.placeholder"
-		@input="update({data: {search: $event}})"
-		clearable>
-			<Button slot="append" icon="el-icon-tickets" v-if="fields && fields.length > 0" v-popover:pop>
-				{{$translate({
-					en: "Add filter",
-					da: "Tilføj filter"
-				})}}
+			v-if="search"
+			class="search"
+			:class="{active}"
+			size="medium"
+			v-model="input"
+			:prefix-icon="searchIcon"
+			:placeholder="search.placeholder"
+			@input="update({data: {search: $event}})"
+			clearable
+		>
+			<Button
+				slot="append"
+				icon="el-icon-tickets"
+				v-if="fields && fields.length > 0"
+				v-popover:pop
+			>
+				Filter
 			</Button>
 		</Input>
-
 	</div>
 </template>
 
@@ -64,15 +70,15 @@ export default {
 		search: {type: Object, required: false}
 	},
 	data() {
-		return  {
+		return {
 			input: get(this.$route.query, "filters.search") || "",
 			loading: false,
 			active: false,
 			resetU: 0
-		}
+		};
 	},
 	computed: {
-		searchIcon: (t) => t.loading ? "el-icon-loading": "el-icon-search",
+		searchIcon: (t) => (t.loading ? "el-icon-loading" : "el-icon-search"),
 		dataComb: (t) => ({...t.data, ...t.query.filters}),
 		components: (t) => t.$options.components,
 		query: () => state.query
@@ -80,16 +86,19 @@ export default {
 	methods: {
 		updateDebounce: debounce(async function({data}) {
 			let filters = {...this.query.filters, ...data};
-			filters = mapValues(filters, (val) => val === "" ? undefined : val);
+			filters = mapValues(filters, (val) => (val === "" ? undefined : val));
 
-			state.setQuery({type: "replace", query: {
-				...this.query,
-				page: undefined,
-				filters,
-			}});
+			state.setQuery({
+				type: "replace",
+				query: {
+					...this.query,
+					page: undefined,
+					filters
+				}
+			});
 
 			this.$emit("filter", {
-				done: async () => this.loading = false
+				done: async () => (this.loading = false)
 			});
 		}, 400),
 
@@ -109,10 +118,13 @@ export default {
 			this.active = false;
 			const filters = this.input ? {search: this.input} : undefined;
 
-			state.setQuery({type: "replace", query: {
-				...this.query,
-				filters
-			}});
+			state.setQuery({
+				type: "replace",
+				query: {
+					...this.query,
+					filters
+				}
+			});
 
 			this.$emit("filter", {
 				done: async () => {

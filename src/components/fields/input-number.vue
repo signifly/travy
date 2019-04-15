@@ -1,7 +1,13 @@
 <template>
 	<div class="input" @keypress="validate">
-		<Input v-model="valueC" @input="update" :disabled="_disabled" :controls="false" size="medium"/>
-		<div class="unit" v-if="_unit">{{_unit}}</div>
+		<Input
+			v-model="valueC"
+			@input="update"
+			:disabled="_disabled"
+			:controls="false"
+			size="medium"
+		/>
+		<div class="unit" v-if="_unit">{{ _unit }}</div>
 	</div>
 </template>
 
@@ -10,7 +16,7 @@ import {toNumber, debounce} from "lodash";
 import {Input} from "element-ui";
 
 export default {
-	components: {Input},
+	components: {Input},
 	meta: {
 		res: {
 			props: {
@@ -28,17 +34,17 @@ export default {
 		_disabled: {type: Boolean, required: false, doc: true},
 		_unit: {type: String, required: false, doc: true},
 		value: {type: Number, required: false, doc: true},
-		_value: {type: String, required: true},
+		_value: {type: String, required: true}
 	},
 	data() {
 		return {
 			valueC: this.value
-		}
+		};
 	},
 	computed: {
-		wait: (t) => t.alt.type === "table" ? 500 : 0
+		wait: (t) => (t.alt.type === "table" ? 500 : 0)
 	},
-	methods: {
+	methods: {
 		validate(e) {
 			if (isNaN(toNumber(e.key))) e.preventDefault();
 		},

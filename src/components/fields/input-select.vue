@@ -1,19 +1,18 @@
 <template>
 	<div class="select">
 		<Select
-		v-bind="{size, value}"
-		:disabled="_disabled"
-		:clearable="_clearable"
-		:filterable="true"
-		@change="update">
-
+			v-bind="{size, value}"
+			:disabled="_disabled"
+			:clearable="_clearable"
+			:filterable="true"
+			@change="update"
+		>
 			<Option v-for="item in _items" v-bind="item" :key="item.value">
 				<div class="option">
-					<div class="emoji" v-if="item.emoji" v-html="emoji(item.emoji)"/>
-					{{item.label}}
+					<div class="emoji" v-if="item.emoji" v-html="emoji(item.emoji)" />
+					{{ item.label }}
 				</div>
 			</Option>
-
 		</Select>
 	</div>
 </template>
@@ -33,7 +32,7 @@ export default {
 				items: [
 					{label: "Danmark", emoji: "denmark", value: "dk"},
 					{label: "England", emoji: "uk", value: "uk"},
-					{label: "Murica", emoji: "us", value: "us", disabled: true},
+					{label: "Murica", emoji: "us", value: "us", disabled: true}
 				]
 			},
 			data: {

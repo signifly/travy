@@ -1,19 +1,24 @@
 <template>
 	<div class="subtable">
 		<Table
-		row-key="id"
-		:data="dataC"
-		header-row-class-name="header-row"
-		header-cell-class-name="header-cell">
+			row-key="id"
+			:data="dataC"
+			header-row-class-name="header-row"
+			header-cell-class-name="header-cell"
+		>
 			<TableColumn v-for="column in columns" v-bind="column" :key="column.name">
-				<field slot-scope="scope" v-bind="{scope, column}" @event="$emit('event', $event)"/>
+				<field
+					slot-scope="scope"
+					v-bind="{scope, column}"
+					@event="$emit('event', $event)"
+				/>
 			</TableColumn>
 		</Table>
 	</div>
 </template>
 
 <script>
-import {rStringPropsDeep} from "@/modules/utils";
+import {rStringProps} from "@/modules/utils";
 import {Table, TableColumn} from "element-ui";
 import field from "../field";
 
@@ -28,15 +33,19 @@ export default {
 	data() {
 		return {
 			resData: null
-		}
+		};
 	},
 	computed: {
-		endpointC: (t) => rStringPropsDeep({data: t.item, obj: t.endpoint}),
-		dataC: (t) => t.endpoint ? t.resData : t.data
+		endpointC: (t) => rStringProps({data: t.item, val: t.endpoint}),
+		dataC: (t) => (t.endpoint ? t.resData : t.data)
 	},
 	methods: {
 		async getData() {
-			const {data: {data}} = await this.$axios.get(this.endpointC.url, {params: this.endpointC.params});
+			const {
+				data: {data}
+			} = await this.$axios.get(this.endpointC.url, {
+				params: this.endpointC.params
+			});
 			this.resData = data;
 		}
 	},

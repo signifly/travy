@@ -1,6 +1,11 @@
 <template>
 	<div class="editor">
-		<editor ref="editor" v-model="data.content" v-bind="{configs}" @input="update"/>
+		<editor
+			ref="editor"
+			v-model="data.content"
+			v-bind="{configs}"
+			@input="update"
+		/>
 	</div>
 </template>
 
@@ -34,12 +39,12 @@ export default {
 				spellChecker: false,
 				hideIcons: ["image", "fullscreen", "side-by-side"]
 			}
-		}
+		};
 	},
 	methods: {
 		update(content) {
 			// fix initial update
-			if (!this.init) return this.init = true;
+			if (!this.init) return (this.init = true);
 
 			this.$emit("event", {
 				actions: {
@@ -48,7 +53,7 @@ export default {
 			});
 		}
 	},
-	watch: {
+	watch: {
 		$route() {
 			this.$refs.editor.simplemde.codemirror.refresh();
 		}

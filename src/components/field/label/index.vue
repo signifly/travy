@@ -1,19 +1,18 @@
 <template>
 	<div class="label" v-if="label">
-		{{label}}
+		{{ label }}
 
-		<translate v-bind="option"/>
+		<translate v-bind="option" />
 
 		<template v-if="dots">
 			<transition name="el-fade-in">
-				<div class="dot outdated" v-if="option.outdated"/>
+				<div class="dot outdated" v-if="option.outdated" />
 			</transition>
 		</template>
 
-
 		<div class="tooltip" v-if="tooltip">
 			<Tooltip :content="tooltip" placement="top">
-				<i class="el-icon-info"/>
+				<i class="el-icon-info" />
 			</Tooltip>
 		</div>
 	</div>
@@ -32,7 +31,7 @@ export default {
 		label: {type: String, required: false},
 		tooltip: {type: String, required: false}
 	},
-	computed: {
+	computed: {
 		option: (t) => get(t.alt.options, t.name, {}),
 		dots: (t) => t.alt.type === "view-tab"
 	}

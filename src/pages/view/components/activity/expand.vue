@@ -2,10 +2,10 @@
 	<div class="expand">
 		<Table border size="mini" v-bind="{data}">
 			<TableColumn label="key" prop="key" width="250">
-				<b class="key" slot-scope="{row}" v-text="row.key"/>
+				<b class="key" slot-scope="{row}" v-text="row.key" />
 			</TableColumn>
-			<TableColumn label="from" prop="from" v-if="old"/>
-			<TableColumn :label="old ? 'to' : 'data'" prop="to"/>
+			<TableColumn label="from" prop="from" v-if="old" />
+			<TableColumn :label="old ? 'to' : 'data'" prop="to" />
 		</Table>
 	</div>
 </template>
@@ -21,11 +21,12 @@ export default {
 		old: {type: Object, required: false}
 	},
 	computed: {
-		data: (t) => Object.entries(t.attributes).map(([key, val]) => ({
-			key,
-			to: val,
-			from: get(t.old, key)
-		}))
+		data: (t) =>
+			Object.entries(t.attributes).map(([key, val]) => ({
+				key,
+				to: val,
+				from: get(t.old, key)
+			}))
 	}
 };
 </script>

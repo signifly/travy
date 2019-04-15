@@ -2,8 +2,13 @@
 	<div class="progress-set">
 		<div class="rows">
 			<div class="row" v-for="(row, i) in rows" :key="i">
-				<div class="item" v-for="item in row" :class="item.status" :key="item.title">
-					<div class="title">{{item.title}}</div>
+				<div
+					class="item"
+					v-for="item in row"
+					:class="item.status"
+					:key="item.title"
+				>
+					<div class="title">{{ item.title }}</div>
 					<div class="bar">
 						<Progress class="progressbar" :percentage="item.percentage" />
 					</div>
@@ -61,13 +66,14 @@ export default {
 	},
 	computed: {
 		rows: (t) => chunk(t.itemsMap, 2),
-		itemsMap: (t) => t.items.map(x => ({
-			title: x[t._title],
-			percentage: x[t._percentage] || 0,
-			status: x[t._status] || "danger"
-		}))
+		itemsMap: (t) =>
+			t.items.map((x) => ({
+				title: x[t._title],
+				percentage: x[t._percentage] || 0,
+				status: x[t._status] || "danger"
+			}))
 	}
-}
+};
 </script>
 
 <style lang="scss" scoped>

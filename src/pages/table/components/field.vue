@@ -1,10 +1,6 @@
 <template>
 	<component :is="link ? 'router-link' : 'div'" class="table-field" :to="link">
-		<vField
-			v-bind="column"
-			:alt="{data, type: 'table'}"
-			@event="event"
-		/>
+		<vField v-bind="column" :alt="{data, type: 'table'}" @event="event" />
 	</component>
 </template>
 
@@ -24,7 +20,9 @@ export default {
 		onClick: (t) => t.column.onClick,
 		link() {
 			const url = rStringProps({data: this.data, val: this.onClick});
-			return url ? {path: url, query: {modifiers: this.query.modifiers}} : false;
+			return url
+				? {path: url, query: {modifiers: this.query.modifiers}}
+				: false;
 		}
 	},
 	methods: {
@@ -35,7 +33,7 @@ export default {
 				done,
 				actions: {
 					...actions,
-					update: {item: this.data, data},
+					update: {item: this.data, data}
 				}
 			});
 		}

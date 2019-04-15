@@ -1,6 +1,6 @@
 <template>
 	<div class="status">
-		<Tag :type="statusC" size="small">{{textC}}</Tag>
+		<Tag :type="statusC" size="small">{{ textC }}</Tag>
 	</div>
 </template>
 
@@ -24,9 +24,19 @@ export default {
 	props: {
 		_text: {type: String, required: true},
 		_status: {type: String, required: false},
-		text: {type: String, required: false, doc: true, note: `fallbacks as not mapped`},
-		status: {type: String, required: false, doc: true, note: `fallbacks as not mapped`,
-			validator: (val) => ["danger", "warning", "info", "primary", "success"].includes(val)
+		text: {
+			type: String,
+			required: false,
+			doc: true,
+			note: `fallbacks as not mapped`
+		},
+		status: {
+			type: String,
+			required: false,
+			doc: true,
+			note: `fallbacks as not mapped`,
+			validator: (val) =>
+				["danger", "warning", "info", "primary", "success"].includes(val)
 		}
 	},
 	computed: {

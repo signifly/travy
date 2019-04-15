@@ -2,7 +2,6 @@ import router from "@/modules/router";
 import axios from "@/modules/axios";
 import ws from "@/modules/ws";
 
-
 export default {
 	namespaced: true,
 
@@ -32,7 +31,7 @@ export default {
 				await dispatch("data", {customErr: true});
 
 				router.push(route);
-			} catch(err) {
+			} catch (err) {
 				commit("logout");
 				return Promise.reject(err);
 			}
@@ -41,12 +40,15 @@ export default {
 		async logout({commit}, {post} = {}) {
 			try {
 				if (post) await axios.post("logout");
-			} catch(err) {
+			} catch (err) {
 				// error
 			} finally {
 				ws.close();
 				commit("logout");
-				router.push({name: "login", params: {route: {path: window.location.pathname}}});
+				router.push({
+					name: "login",
+					params: {route: {path: window.location.pathname}}
+				});
 			}
 		},
 
@@ -60,10 +62,9 @@ export default {
 					const {data} = await axios.get("account", {customErr});
 					commit("data", data);
 					return getters.data;
-				} catch(err) {
+				} catch (err) {
 					// error
 				}
-
 			}
 		}
 	},

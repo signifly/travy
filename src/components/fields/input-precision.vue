@@ -18,7 +18,7 @@ import {toNumber, debounce} from "lodash";
 import {InputNumber} from "element-ui";
 
 export default {
-	components: {InputNumber},
+	components: {InputNumber},
 	meta: {
 		res: {
 			props: {
@@ -29,7 +29,7 @@ export default {
 				max: 10
 			},
 			data: {
-				inputVal: 3.20
+				inputVal: 3.2
 			}
 		}
 	},
@@ -40,17 +40,17 @@ export default {
 		_step: {type: Number, required: true, doc: true},
 		_max: {type: Number, required: true, doc: true},
 		value: {type: Number, required: false, doc: true},
-		_value: {type: String, required: true},
+		_value: {type: String, required: true}
 	},
 	data() {
 		return {
 			valueC: this.value
-		}
+		};
 	},
 	computed: {
-		wait: (t) => t.alt.type === "table" ? 500 : 0
+		wait: (t) => (t.alt.type === "table" ? 500 : 0)
 	},
-	methods: {
+	methods: {
 		validate(e) {
 			if (e.key === ".") return;
 			if (isNaN(toNumber(e.key))) e.preventDefault();

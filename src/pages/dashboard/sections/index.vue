@@ -1,6 +1,10 @@
 <template>
 	<div class="sections">
-		<vSection v-for="section in sections" :key="section.id" v-bind="{section}"/>
+		<vSection
+			v-for="section in sections"
+			:key="section.id"
+			v-bind="{section}"
+		/>
 	</div>
 </template>
 

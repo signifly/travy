@@ -1,8 +1,8 @@
 <template>
 	<div class="notification">
 		<a class="badge" @mousedown="toggle">
-			<Badge :hidden="!unread" :value="unread || 1" :max="99" type="primary">
-				<div class="icon" v-html="require('@/assets/icons/bell.svg')"/>
+			<Badge :hidden="!unread" :value="unread || 1" :max="99" type="primary">
+				<div class="icon" v-html="require('@/assets/icons/bell.svg')" />
 			</Badge>
 		</a>
 
@@ -29,7 +29,7 @@ export default {
 			items: [],
 			unread: 0,
 			meta: {}
-		}
+		};
 	},
 	computed: {
 		user: (t) => t.$store.getters["user/data"]
@@ -41,16 +41,20 @@ export default {
 
 		updateItem({id, ...data}) {
 			this.getUnread();
-			Object.assign(this.items.find(x => x.id === id), data);
+			Object.assign(this.items.find((x) => x.id === id), data);
 		},
 
 		updateItems(data) {
 			this.getUnread();
-			this.items = this.items.map(x => ({...x, ...data}));
+			this.items = this.items.map((x) => ({...x, ...data}));
 		},
 
 		async getUnread() {
-			const {data: {meta}} = await this.$axios.get("account/notifications", {params: {count: 1, filter: {read: false}}});
+			const {
+				data: {meta}
+			} = await this.$axios.get("account/notifications", {
+				params: {count: 1, filter: {read: false}}
+			});
 			this.unread = meta.total;
 		},
 
@@ -59,10 +63,14 @@ export default {
 			this.loading = true;
 
 			try {
-				const {data: {data, meta}} = await this.$axios.get("account/notifications", {params: {page, count: 20}});
+				const {
+					data: {data, meta}
+				} = await this.$axios.get("account/notifications", {
+					params: {page, count: 20}
+				});
 				this.items = page > 1 ? [...this.items, ...data] : data;
 				this.meta = meta;
-			} catch(err) {
+			} catch (err) {
 				// error
 			} finally {
 				this.loading = false;

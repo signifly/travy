@@ -1,43 +1,43 @@
 <template>
 	<div class="select-download">
-		<div class="title" v-text="_title"/>
-		<div class="sub" v-text="_subtitle"/>
+		<div class="title" v-text="_title" />
+		<div class="sub" v-text="_subtitle" />
 
 		<div class="download">
 			<Select
-			size="small"
-			v-model="value"
-			:remote-method="getItems"
-			:filterable="true"
-			:remote="true"
-			@visible-change="open">
-
-				<Option v-for="item in itemsC" :key="item.value" v-bind="item"/>
-
+				size="small"
+				v-model="value"
+				:remote-method="getItems"
+				:filterable="true"
+				:remote="true"
+				@visible-change="open"
+			>
+				<Option v-for="item in itemsC" :key="item.value" v-bind="item" />
 			</Select>
 
-			<a class="button" target="_blank" :href="selectedItem && selectedItem.download" download>
+			<a
+				class="button"
+				target="_blank"
+				:href="selectedItem && selectedItem.download"
+				download
+			>
 				<Button :disabled="!selectedItem" type="primary" size="small">
-					{{$translate({
-						en: "Download",
-						da: "Hent"
-					})}}
+					{{ $translate({en: "Download", da: "Hent"}) }}
 				</Button>
 			</a>
 		</div>
-
 	</div>
 </template>
 
 <script>
-import {meta, rStringPropsDeep} from "@/modules/utils";
+import {meta, rStringProps} from "@/modules/utils";
 import {Select, Option, Button} from "element-ui";
 import {merge, get} from "lodash";
 
 export default {
 	components: {Select, Option, Button},
 	meta: {
-		res: {
+		res: {
 			props: {
 				title: "Skatterapport",
 				subtitle: "Beskrivelse af rapporten",
@@ -66,22 +66,24 @@ export default {
 			opened: false,
 			value: "",
 			items: []
-		}
+		};
 	},
 	computed: {
-		endpoint: (t) => rStringPropsDeep({
-			data: get(t.alt, "data"),
-			obj: t._options.endpoint
-		}),
+		endpoint: (t) =>
+			rStringProps({
+				data: get(t.alt, "data"),
+				val: t._options.endpoint
+			}),
 
-		itemsC: (t) => t.items.map(x => ({
-			value: get(x, t._options.value),
-			label: get(x, t._options.label),
-			download: get(x, t._options.download)
-		})),
+		itemsC: (t) =>
+			t.items.map((x) => ({
+				value: get(x, t._options.value),
+				label: get(x, t._options.label),
+				download: get(x, t._options.download)
+			})),
 
 		selectedItem() {
-			return this.itemsC.find(x => x.value === this.value);
+			return this.itemsC.find((x) => x.value === this.value);
 		}
 	},
 	methods: {
@@ -110,9 +112,8 @@ export default {
 
 <style lang="scss" scoped>
 .select-download {
-
 	border: 1px solid $blue2;
-	background-color: #F5F7FA;
+	background-color: #f5f7fa;
 
 	padding: 1.5em;
 	padding-top: 1.75em;
@@ -124,7 +125,7 @@ export default {
 
 	.sub {
 		font-size: 13px;
-		color: #8C9EB4;
+		color: #8c9eb4;
 	}
 
 	.download {

@@ -102,9 +102,7 @@ export default {
 		endpoint: {
 			url: "/data/table",
 			params: {
-				include: [
-					"tags"
-				]
+				include: ["tags"]
 			}
 		},
 		defaults: {
@@ -160,9 +158,11 @@ export default {
 	},
 	data: {
 		meta: {total: 1, per_page: 15},
-		data: [{
-			id: 1,
-			tags: []
-		}]
+		data: [
+			{
+				id: 1,
+				tags: []
+			}
+		]
 	}
 };

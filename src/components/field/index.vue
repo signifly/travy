@@ -1,20 +1,17 @@
 <template>
 	<div class="field" :style="{width: widthCalc}">
-
 		<div class="content">
-			<vlabel v-bind="{alt, name, label, tooltip}" v-if="rules.label"/>
-			<fieldType v-bind="[fieldType, {alt}]" @event="$emit('event', $event)"/>
+			<vlabel v-bind="{alt, name, label, tooltip}" v-if="rules.label" />
+			<fieldType v-bind="[fieldType, {alt}]" @event="$emit('event', $event)" />
 		</div>
 
 		<transition name="error">
-			<div class="error" v-if="error">{{error}}</div>
+			<div class="error" v-if="error">{{ error }}</div>
 		</transition>
 
-
 		<div class="description" v-if="description && rules.description">
-			{{description}}
+			{{ description }}
 		</div>
-
 	</div>
 </template>
 
@@ -22,7 +19,6 @@
 import {get} from "lodash";
 import fieldType from "./field-type";
 import vlabel from "./label";
-
 
 export default {
 	components: {vlabel, fieldType},
@@ -39,7 +35,8 @@ export default {
 	computed: {
 		option: (t) => get(t.alt.options, t.name, {}),
 		error: (t) => get(t.alt.errors, t.name, [])[0],
-		widthCalc: (t) => t.width === 100 ? `${t.width}%` : `calc(${t.width}% - 1em)`,
+		widthCalc: (t) =>
+			t.width === 100 ? `${t.width}%` : `calc(${t.width}% - 1em)`,
 
 		rules() {
 			const type = this.alt.type;
@@ -47,7 +44,7 @@ export default {
 			return {
 				label: type !== "table",
 				description: type === "view-tab"
-			}
+			};
 		}
 	}
 };
@@ -68,11 +65,13 @@ export default {
 		margin-top: 0.5em;
 		height: 13px;
 
-		&-enter-active, &-leave-active {
+		&-enter-active,
+		&-leave-active {
 			$t: 0.4s;
 			transition: cubic(opacity, $t), cubic(height, $t), cubic(margin, $t);
 		}
-		&-enter, &-leave-to {
+		&-enter,
+		&-leave-to {
 			opacity: 0;
 			height: 0;
 			margin: 0;

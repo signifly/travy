@@ -31,37 +31,38 @@ export const date = (epoch) => {
 	};
 };
 
-
 export const base64Encode = (file) => {
 	return new Promise((resolve, reject) => {
 		const reader = new FileReader();
 		reader.readAsDataURL(file);
 		reader.onload = () => resolve(reader.result);
-		reader.onerror = error => reject(error);
+		reader.onerror = (error) => reject(error);
 	});
 };
-
 
 export const rStringProps = ({data, val = ""}) => {
-	// find all {KEY} in string and replace with data value
-	return replace(val, /\{.*?\}/g, (key) => get(data, key.slice(1, -1), key));
+	const reg = (string) => {
+		// find all {KEY} in string and replace with data value
+		return replace(string, /\{.*?\}/g, (key) =>
+			get(data, key.slice(1, -1), key)
+		);
+	};
+
+	if (typeof val === "string") {
+		return reg(val);
+	}
+
+	const parse = (item) =>
+		transform(item, (res, val, key) => {
+			if (isObject(val)) {
+				res[key] = parse(val);
+			} else {
+				res[key] = reg(val);
+			}
+		});
+
+	return parse(val);
 };
-
-
-export const rStringPropsDeep = ({data, obj}) => {
-	if (!obj) return;
-
-	const parse = (item) => transform(item, (res, val, key) => {
-		if (isObject(val)) {
-			res[key] = parse(val);
-		} else {
-			res[key] = rStringProps({data, val});
-		}
-	});
-
-	return parse(obj);
-};
-
 
 export const meta = {
 	items: "$meta/items"

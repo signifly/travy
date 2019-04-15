@@ -1,11 +1,8 @@
 <template>
 	<div class="header">
-		<div class="loading"><i class="el-icon-loading" v-if="loading"/></div>
+		<div class="loading"><i class="el-icon-loading" v-if="loading" /></div>
 		<Button size="mini" icon="el-icon-check" plain @click="markAllRead">
-			{{$translate({
-				en: "Mark all as read",
-				da: "Markér alle som læst"
-			})}}
+			{{ $translate({en: "Mark all as read", da: "Markér alle som læst"}) }}
 		</Button>
 	</div>
 </template>

@@ -1,6 +1,13 @@
 <template>
 	<div class="input">
-		<Input type="password" v-model="data.value" @input="update" :disabled="_disabled" :controls="false" size="medium" />
+		<Input
+			type="password"
+			v-model="data.value"
+			@input="update"
+			:disabled="_disabled"
+			:controls="false"
+			size="medium"
+		/>
 	</div>
 </template>
 
@@ -8,7 +15,7 @@
 import {Input} from "element-ui";
 
 export default {
-	components: {Input},
+	components: {Input},
 	meta: {
 		res: {
 			props: {
@@ -23,16 +30,16 @@ export default {
 	props: {
 		_disabled: {type: Boolean, required: false, doc: true},
 		value: {type: String, required: false, doc: true},
-		_value: {type: String, required: true},
+		_value: {type: String, required: true}
 	},
 	data() {
 		return {
 			data: {
 				value: this.value
 			}
-		}
+		};
 	},
-	methods: {
+	methods: {
 		update(val) {
 			this.$emit("event", {
 				actions: {

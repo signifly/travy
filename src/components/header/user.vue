@@ -1,8 +1,13 @@
 <template>
 	<div class="user">
-		<Dropdown trigger="click" :show-timeout="0" :hide-timeout="0" @command="command">
+		<Dropdown
+			trigger="click"
+			:show-timeout="0"
+			:hide-timeout="0"
+			@command="command"
+		>
 			<a class="el-dropdown-link">
-				{{user.name}}<i class="el-icon-arrow-down el-icon--right"></i>
+				{{ user.name }}<i class="el-icon-arrow-down el-icon--right"></i>
 			</a>
 
 			<DropdownMenu slot="dropdown" @command="$event()">

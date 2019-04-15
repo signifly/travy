@@ -1,30 +1,32 @@
 <template>
-	<div class="input-image" :class="{disabled: !_upload}" :style="{width: _width}">
+	<div
+		class="input-image"
+		:class="{disabled: !_upload}"
+		:style="{width: _width}"
+	>
 		<div class="input-image-wrap">
 			<Upload
-			class="upload"
-			drag
-			action=""
-			:before-upload="preventAction"
-			:show-file-list="false"
-			:on-change="addFile"
-			:disabled="!_upload">
+				class="upload"
+				drag
+				action=""
+				:before-upload="preventAction"
+				:show-file-list="false"
+				:on-change="addFile"
+				:disabled="!_upload"
+			>
 				<div class="image" :style="imageStyle">
 					<div class="img" :style="{backgroundImage: `url('${imageUrl}')`}" />
-					<div class="icon"><i class="el-icon-upload"/></div>
+					<div class="icon"><i class="el-icon-upload" /></div>
 				</div>
 			</Upload>
 
 			<a class="clear" v-if="image" @click="removeFile">
-				<i class="el-icon-remove"/>
+				<i class="el-icon-remove" />
 			</a>
 		</div>
 
 		<a class="download" v-if="_download" target="_blank" :href="url" download>
-			{{$translate({
-				en: "Download",
-				da: "Hent"
-			})}}
+			{{ $translate({en: "Download", da: "Hent"}) }}
 		</a>
 	</div>
 </template>
@@ -34,7 +36,7 @@ import {Upload} from "element-ui";
 import {base64Encode} from "@/modules/utils";
 
 export default {
-	components: {Upload},
+	components: {Upload},
 	meta: {
 		res: {
 			props: {
@@ -48,7 +50,12 @@ export default {
 		}
 	},
 	props: {
-		_width: {type: String, default: "160px", doc: true, note: "100% for full width"},
+		_width: {
+			type: String,
+			default: "160px",
+			doc: true,
+			note: "100% for full width"
+		},
 		_height: {type: String, default: "160px", doc: true},
 		file: {type: Object, required: false, doc: true, note: "base64"},
 		_download: {type: Boolean, default: false, doc: true},
@@ -63,18 +70,23 @@ export default {
 			data: {
 				file: this.file
 			}
-		}
+		};
 	},
 	computed: {
 		imageUrl() {
-			return this.image || `data:image/svg+xml;utf8,${encodeURIComponent(require("@/assets/icons/noimage.svg"))}`;
+			return (
+				this.image ||
+				`data:image/svg+xml;utf8,${encodeURIComponent(
+					require("@/assets/icons/noimage.svg")
+				)}`
+			);
 		},
 		imageStyle: (t) => ({
 			width: t._width,
 			height: t._height
 		})
 	},
-	methods: {
+	methods: {
 		preventAction: () => false,
 
 		async addFile(file) {
@@ -98,7 +110,7 @@ export default {
 		}
 	},
 	created() {
-		this.$watch("url", (url) => this.image = url, {immediate: true});
+		this.$watch("url", (url) => (this.image = url), {immediate: true});
 	}
 };
 </script>

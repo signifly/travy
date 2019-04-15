@@ -6,14 +6,18 @@
 
 		<div class="info">
 			<div class="item">
-				<div class="title">{{_titleKey}}:</div>
-				<div class="text">{{titleValue}}</div>
+				<div class="title">{{ _titleKey }}:</div>
+				<div class="text">{{ titleValue }}</div>
 			</div>
 
 			<div class="item">
-				<div class="title">{{_infoKey}}:</div>
+				<div class="title">{{ _infoKey }}:</div>
 				<div class="text">
-					<vItemsTooltip :items="infoItems" :_itemKey="_infoItemKey" :_itemLink="_infoItemLink" />
+					<vItemsTooltip
+						:items="infoItems"
+						:_itemKey="_infoItemKey"
+						:_itemLink="_infoItemLink"
+					/>
 				</div>
 			</div>
 		</div>
@@ -30,10 +34,15 @@
 		</div>
 
 		<div class="toggle">
-			<elSwitch v-model="data.switchValue" :inactive-text="`${_switchTitle}:`" :disabled="_switchDisabled" @change="switchUpdate"/>
+			<elSwitch
+				v-model="data.switchValue"
+				:inactive-text="`${_switchTitle}:`"
+				:disabled="_switchDisabled"
+				@change="switchUpdate"
+			/>
 		</div>
 
-		<vActions v-bind="{_actions, alt}" @event="event"/>
+		<vActions v-bind="{_actions, alt}" @event="event" />
 	</div>
 </template>
 
@@ -46,7 +55,7 @@ import vItemsTooltip from "./items-tooltip.vue";
 
 export default {
 	components: {elSwitch: Switch, vActions, vSelectSearch, vItemsTooltip},
-	meta: {
+	meta: {
 		res: {
 			props: {
 				titleKey: "Modal",
@@ -85,10 +94,7 @@ export default {
 				switchValue: false,
 				switchT: "title",
 				selectValue: "",
-				infoItems: [
-					{name: "model #1", id: 1},
-					{name: "model #2", id: 2}
-				]
+				infoItems: [{name: "model #1", id: 1}, {name: "model #2", id: 2}]
 			}
 		}
 	},
@@ -106,7 +112,12 @@ export default {
 		selectValue: {type: [String, Number], required: false, doc: true},
 		_selectClearable: {type: Boolean, required: false, doc: true},
 		_selectOptions: {type: Object, required: true, doc: true},
-		_actions: {type: Array, required: true, doc: true, note: `<a href="#vActions">vActions</a>`},
+		_actions: {
+			type: Array,
+			required: true,
+			doc: true,
+			note: `<a href="#vActions">vActions</a>`
+		},
 		_switchValue: {type: String, required: true},
 		_selectValue: {type: String, required: true}
 	},
@@ -115,7 +126,7 @@ export default {
 			data: {
 				switchValue: this.switchValue
 			}
-		}
+		};
 	},
 	methods: {
 		switchUpdate(val) {
@@ -130,7 +141,7 @@ export default {
 			this.$emit("event", obj);
 		}
 	}
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -171,7 +182,6 @@ export default {
 			}
 
 			.text {
-
 			}
 
 			.tooltip {

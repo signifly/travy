@@ -37,12 +37,10 @@ const items = [
 	}
 ];
 
-
 const item = {
 	id: 1,
 	name: "item1",
 	bool: false
 };
-
 
 export {items, item};

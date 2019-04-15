@@ -1,11 +1,13 @@
 <template>
 	<action
-	v-bind="{props: _action, data: alt.data, active}"
-	@close="close"
-	@event="$emit('event', $event)">
-
+		v-bind="{props: _action, data: alt.data, active}"
+		@close="close"
+		@event="$emit('event', $event)"
+	>
 		<div class="button-action">
-			<Button :size="_size" :type="_status" :icon="icon" @click="toggle" plain>{{_title}}</Button>
+			<Button :size="_size" :type="_status" :icon="icon" @click="toggle" plain>
+				{{ _title }}
+			</Button>
 		</div>
 	</action>
 </template>
@@ -16,7 +18,7 @@ import action from "@/components/actions";
 
 export default {
 	components: {Button, action},
-	meta: {
+	meta: {
 		res: {
 			props: {
 				title: "button",
@@ -60,14 +62,17 @@ export default {
 					}
 				}
 			},
-			data: {
-
-			}
+			data: {}
 		}
 	},
-	props: {
+	props: {
 		alt: {type: Object, default: () => ({})},
-		_size: {type: String, default: "medium", doc: true, note: `medium/small/mini`},
+		_size: {
+			type: String,
+			default: "medium",
+			doc: true,
+			note: `medium/small/mini`
+		},
 		_status: {type: String, default: "primary", doc: true},
 		_title: {type: String, required: true, doc: true},
 		_icon: {type: String, required: false, doc: true},
@@ -76,10 +81,10 @@ export default {
 	data() {
 		return {
 			active: false
-		}
+		};
 	},
 	computed: {
-		icon: (t) => t._icon ? `el-icon-${t._icon}` : ""
+		icon: (t) => (t._icon ? `el-icon-${t._icon}` : "")
 	},
 	methods: {
 		toggle() {
@@ -95,6 +100,5 @@ export default {
 
 <style lang="scss" scoped>
 .button-action {
-
 }
 </style>

@@ -29,7 +29,7 @@ export default {
 				dateStart: "dateStart",
 				dateEnd: "dateEnd"
 			},
-			data: {
+			data: {
 				dateStart: 1543878000,
 				dateEnd: 1545346800
 			}
@@ -42,39 +42,52 @@ export default {
 		_dateEnd: {type: String, required: true},
 		_format: {type: String, required: false, doc: true},
 		_formatValue: {type: String, default: "timestamp", doc: true},
-		_type: {type: String, required: false, default: "daterange", doc: true, note: `
-			<i>daterange/datetimerange</i>
-		`}
+		_type: {
+			type: String,
+			required: false,
+			default: "daterange",
+			doc: true,
+			note: `
+				<i>daterange/datetimerange</i>
+			`
+		}
 	},
 	data() {
 		return {
 			pickerOpts: {
 				firstDayOfWeek: 1
 			}
-		}
+		};
 	},
 	computed: {
 		timestamp: (t) => t._formatValue === "timestamp",
 
-		dates: (t) => [t.dateStart, t.dateEnd].filter(x => x).map(date => {
-			return (t.timestamp && date) ? date * 1000 : date;
-		}),
+		dates: (t) =>
+			[t.dateStart, t.dateEnd]
+				.filter((x) => x)
+				.map((date) => {
+					return t.timestamp && date ? date * 1000 : date;
+				}),
 
-		format: (t) => t._format || {
-			daterange: "dd-MM-yyyy",
-			datetimerange: "yyyy-MM-dd HH:mm:ss"
-		}[t._type]
+		format: (t) =>
+			t._format ||
+			{
+				daterange: "dd-MM-yyyy",
+				datetimerange: "yyyy-MM-dd HH:mm:ss"
+			}[t._type]
 	},
 	methods: {
 		update(dates) {
-			dates = dates.map(x => this.timestamp ? x / 1000 : x);
+			dates = dates.map((x) => (this.timestamp ? x / 1000 : x));
 
 			this.$emit("event", {
 				actions: {
-					update: {data: {
-						[this._dateStart]: dates[0],
-						[this._dateEnd]: dates[1]
-					}}
+					update: {
+						data: {
+							[this._dateStart]: dates[0],
+							[this._dateEnd]: dates[1]
+						}
+					}
 				}
 			});
 		}

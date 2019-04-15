@@ -1,5 +1,5 @@
 <template>
-	<time class="date" :datetime="datetime" v-text="date"/>
+	<time class="date" :datetime="datetime" v-text="date" />
 </template>
 
 <script>
@@ -19,9 +19,14 @@ export default {
 	},
 	props: {
 		timestamp: {type: Number, required: false, doc: true},
-		_format: {type: String, default: "yyyy-MM-dd HH:mm:ss", doc: true, note: `
-			<a target="_blank" href="http://element.eleme.io/#/en-US/component/date-picker#date-formats">Formats</a>
-		`}
+		_format: {
+			type: String,
+			default: "yyyy-MM-dd HH:mm:ss",
+			doc: true,
+			note: `
+				<a target="_blank" href="http://element.eleme.io/#/en-US/component/date-picker#date-formats">Formats</a>
+			`
+		}
 	},
 	computed: {
 		date: (t) => formatDate(t.timestamp * 1000, t._format),

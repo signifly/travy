@@ -1,14 +1,18 @@
 <template>
 	<div class="login">
-		<vForm title="Login" v-bind="{loading, error, message, fields, data}" @event="event" @submit="login">
+		<vForm
+			title="Login"
+			v-bind="{loading, error, message, fields, data}"
+			@event="event"
+			@submit="login"
+		>
 			<template slot="actions">
 				<a class="reset" :class="{loading}" @click="resetPassword">
-					{{$translate({
-						en: "Reset password",
-						da: "Nulstil password"
-					})}}
+					{{ $translate({en: "Reset password", da: "Nulstil password"}) }}
 				</a>
-				<Button type="primary" size="medium" v-bind="{loading}" @click="login">Login</Button>
+				<Button type="primary" size="medium" v-bind="{loading}" @click="login">
+					Login
+				</Button>
 			</template>
 		</vForm>
 	</div>
@@ -49,14 +53,14 @@ export default {
 							value: "password"
 						}
 					}
-				},
+				}
 			],
 
-			data: {
+			data: {
 				email: "",
 				password: ""
 			}
-		}
+		};
 	},
 	methods: {
 		event({actions}) {
@@ -73,8 +77,11 @@ export default {
 			try {
 				this.reset();
 				this.loading = true;
-				await this.$store.dispatch("user/login", {form: this.data, route: {...this.route}});
-			} catch(err) {
+				await this.$store.dispatch("user/login", {
+					form: this.data,
+					route: {...this.route}
+				});
+			} catch (err) {
 				this.error = err;
 			} finally {
 				this.loading = false;
@@ -85,9 +92,11 @@ export default {
 			try {
 				this.reset();
 				this.loading = true;
-				const {data} = await this.$store.dispatch("user/resetPassword", {form: this.data});
+				const {data} = await this.$store.dispatch("user/resetPassword", {
+					form: this.data
+				});
 				this.message = data.message;
-			} catch(err) {
+			} catch (err) {
 				this.error = err;
 			} finally {
 				this.loading = false;

@@ -3,17 +3,14 @@ import axios from "@/modules/axios";
 import store from "@/store";
 import Vue from "vue";
 
-
 const api = Vue.prototype.$settings.api;
-
 
 const url = () => {
 	const domain = api.replace(/^https?:\/\//i, "");
 	const ssl = api.includes("https");
 	const key = store.getters["config/wsKey"];
-	return `${ssl ? 'wss' : 'ws'}://${domain}/ws/app/${key}`;
+	return `${ssl ? "wss" : "ws"}://${domain}/ws/app/${key}`;
 };
-
 
 const state = {
 	ws: {},
@@ -28,17 +25,17 @@ const state = {
 	}
 };
 
-
-
 // keep connection alive
 const ping = {
 	interval: null,
 
 	start(time) {
 		this.interval = setInterval(() => {
-			state.ws.send(JSON.stringify({
-				event: "pusher:ping"
-			}));
+			state.ws.send(
+				JSON.stringify({
+					event: "pusher:ping"
+				})
+			);
 		}, time * 1000);
 	},
 
@@ -47,13 +44,13 @@ const ping = {
 	}
 };
 
-
-
 const listeners = {
 	list: [], // {channel, auth, cb, subscribed};
 
 	async subscribe(item) {
-		const subscribed = this.list.find(x => x.channel === item.channel && x.subscribed);
+		const subscribed = this.list.find(
+			(x) => x.channel === item.channel && x.subscribed
+		);
 
 		// channel is already subscribed to
 		if (subscribed) return;
@@ -72,17 +69,19 @@ const listeners = {
 		}
 
 		// subscribe to channel
-		state.ws.send(JSON.stringify({
-			event: "pusher:subscribe",
-			data: {
-				channel: item.channel,
-				auth: item.auth
-			}
-		}));
+		state.ws.send(
+			JSON.stringify({
+				event: "pusher:subscribe",
+				data: {
+					channel: item.channel,
+					auth: item.auth
+				}
+			})
+		);
 	},
 
 	subscribeAll() {
-		this.list.forEach(x => this.subscribe(x));
+		this.list.forEach((x) => this.subscribe(x));
 	},
 
 	add(item) {
@@ -94,34 +93,31 @@ const listeners = {
 	},
 
 	remove({channel}) {
-		const item = this.list.find(x => x.channel === channel);
-		this.list = this.list.filter(x => x.channel !== channel);
+		const item = this.list.find((x) => x.channel === channel);
+		this.list = this.list.filter((x) => x.channel !== channel);
 
 		if (!item) return;
 
 		if (state.wsState !== "open") return;
 
 		// unsubscribe
-		state.ws.send(JSON.stringify({
-			event: "pusher:unsubscribe",
-			data: {channel}
-		}));
+		state.ws.send(
+			JSON.stringify({
+				event: "pusher:unsubscribe",
+				data: {channel}
+			})
+		);
 	}
 };
 
-
-
 const reset = () => {
-	listeners.list.forEach(item => item.subscribed = false);
+	listeners.list.forEach((item) => (item.subscribed = false));
 	state.ws = {};
 	ping.stop();
 };
 
-
-
 const connect = () => {
 	state.ws = new WebSocket(url());
-
 
 	state.ws.addEventListener("open", (e) => {
 		if (dev) console.log("ws open", e);
@@ -141,7 +137,9 @@ const connect = () => {
 
 		// emit non-subscribe messages
 		if (msg.event !== "pusher_internal:subscription_succeeded") {
-			listeners.list.filter(x => x.channel === msg.channel).forEach(x => x.cb(msg));
+			listeners.list
+				.filter((x) => x.channel === msg.channel)
+				.forEach((x) => x.cb(msg));
 		}
 
 		if (dev && msg.event !== "pusher:pong") {
@@ -159,7 +157,8 @@ const connect = () => {
 
 		reset();
 
-		if (user) { // if still logged in
+		if (user) {
+			// if still logged in
 			setTimeout(connect, 5000);
 
 			store.dispatch("notify/send", {
@@ -170,8 +169,6 @@ const connect = () => {
 		}
 	});
 };
-
-
 
 export default {
 	on(channel, cb) {

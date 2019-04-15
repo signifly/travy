@@ -1,6 +1,6 @@
 <template>
 	<div class="dashboard" v-if="definitions">
-		<sections v-bind="{sections}"/>
+		<sections v-bind="{sections}" />
 	</div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
 	data() {
 		return {
 			definitions: null
-		}
+		};
 	},
 	computed: {
 		sections: (t) => t.definitions.sections
@@ -25,7 +25,7 @@ export default {
 			const {params, url} = this.defsEndpoint;
 			const {data} = await this.$axios.get(url, params);
 			this.definitions = data;
-		},
+		}
 	},
 	created() {
 		this.getDefinitions();
@@ -35,6 +35,5 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard {
-
 }
 </style>

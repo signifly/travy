@@ -7,7 +7,8 @@ export default {
 	},
 	computed: {
 		url: (t) => t.endpoint.url,
-		external: (t) => t.url.startsWith("http") && !t.url.startsWith(window.location.origin)
+		external: (t) =>
+			t.url.startsWith("http") && !t.url.startsWith(window.location.origin)
 	},
 	methods: {
 		downloadFile() {
@@ -21,7 +22,10 @@ export default {
 			if (this.external) {
 				window.location.href = this.url;
 			} else {
-				this.$router.push({path: this.url, query: {modifiers: this.$route.query.modifiers}});
+				this.$router.push({
+					path: this.url,
+					query: {modifiers: this.$route.query.modifiers}
+				});
 			}
 		}
 	},

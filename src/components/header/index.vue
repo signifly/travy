@@ -6,11 +6,11 @@
 			v-html="require('@/assets/icons/home.svg')"
 		/>
 
-		<vMenu/>
+		<vMenu />
 
 		<div class="account">
-			<notification v-if="notifications"/>
-			<user/>
+			<notification v-if="notifications" />
+			<user />
 		</div>
 	</Header>
 </template>
@@ -40,7 +40,7 @@ export default {
 	padding: 0;
 
 	.home {
-		background-color: #2B384B;
+		background-color: #2b384b;
 		height: 100%;
 		display: inline-flex;
 		align-items: center;

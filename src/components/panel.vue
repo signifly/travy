@@ -1,9 +1,9 @@
 <template>
 	<div class="panel">
 		<div class="wrap loading">
-			<slot/>
+			<slot />
 			<transition name="overlay">
-				<div class="overlay" v-if="loading"/>
+				<div class="overlay" v-if="loading" />
 			</transition>
 		</div>
 	</div>
@@ -37,7 +37,7 @@ export default {
 	}
 
 	.overlay {
-		background-color: rgba($white1, .7);
+		background-color: rgba($white1, 0.7);
 		position: absolute;
 		z-index: 1;
 		top: 0;
@@ -45,10 +45,12 @@ export default {
 		bottom: 0;
 		right: 0;
 
-		&-enter-active, &-leave-active {
+		&-enter-active,
+		&-leave-active {
 			transition: cubic(opacity, 0.2s);
 		}
-		&-enter, &-leave-to {
+		&-enter,
+		&-leave-to {
 			opacity: 0;
 		}
 	}

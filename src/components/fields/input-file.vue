@@ -1,18 +1,17 @@
 <template>
 	<div class="input-file">
 		<Upload
-		action=""
-		ref="upload"
-		:auto-upload="false"
-		:file-list="data.fileList"
-		:accept="_fileTypes"
-		:on-preview="preview"
-		:on-change="addFile"
-		:on-remove="removeFile">
-
+			action=""
+			ref="upload"
+			:auto-upload="false"
+			:file-list="data.fileList"
+			:accept="_fileTypes"
+			:on-preview="preview"
+			:on-change="addFile"
+			:on-remove="removeFile"
+		>
 			<Button type="primary" size="small" v-bind="{loading}">Upload</Button>
-			<div slot="tip" class="el-upload__tip" v-if="_note">{{_note}}</div>
-
+			<div slot="tip" class="el-upload__tip" v-if="_note">{{ _note }}</div>
 		</Upload>
 	</div>
 </template>
@@ -22,7 +21,7 @@ import {Upload, Button} from "element-ui";
 import {base64Encode} from "@/modules/utils";
 
 export default {
-	components: {Upload, Button},
+	components: {Upload, Button},
 	meta: {
 		res: {
 			props: {
@@ -51,9 +50,9 @@ export default {
 				file: this.file,
 				fileList: []
 			}
-		}
+		};
 	},
-	methods: {
+	methods: {
 		preview({url}) {
 			if (!url.startsWith("blob")) {
 				window.open(url, "_blank");
@@ -86,7 +85,7 @@ export default {
 	},
 
 	created() {
-		if (this.url) {
+		if (this.url) {
 			this.data.fileList.push({
 				url: this.url,
 				name: this.url.split("/").slice(-1)[0]
@@ -98,6 +97,5 @@ export default {
 
 <style lang="scss" scoped>
 .input-file {
-
 }
 </style>

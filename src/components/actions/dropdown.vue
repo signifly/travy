@@ -1,18 +1,17 @@
 <template>
 	<popup type="list">
 		<action
-		v-for="action in actions"
-		v-bind="[action, {data}]"
-		:active="selected === action"
-		:key="action.title"
-		@event="$emit('event', $event)"
-		@submit="$emit('submit', $event)"
-		@close="$emit('close')">
-
+			v-for="action in actions"
+			v-bind="[action, {data}]"
+			:active="selected === action"
+			:key="action.title"
+			@event="$emit('event', $event)"
+			@submit="$emit('submit', $event)"
+			@close="$emit('close')"
+		>
 			<a class="item" @click="select(action)">
-				{{action.title}}
+				{{ action.title }}
 			</a>
-
 		</action>
 	</popup>
 </template>
@@ -30,14 +29,14 @@ export default {
 	data() {
 		return {
 			selected: null
-		}
+		};
 	},
 	methods: {
 		select(action) {
 			this.selected = this.selected ? null : action;
 		}
 	},
-	beforeCreate() {
+	beforeCreate() {
 		this.$options.components.action = action;
 	}
 };

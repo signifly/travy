@@ -1,6 +1,10 @@
 <template>
 	<div class="progress" :class="status">
-		<Tooltip :content="`${percentage}%`" placement="right" transition="trans-fadeRight">
+		<Tooltip
+			:content="`${percentage}%`"
+			placement="right"
+			transition="trans-fadeRight"
+		>
 			<Progress class="bar" :percentage="percentage" :show-text="false" />
 		</Tooltip>
 	</div>
@@ -27,7 +31,7 @@ export default {
 		percentage: {type: Number, required: false, default: 0, doc: true},
 		status: {type: String, required: false, default: "danger", doc: true}
 	}
-}
+};
 </script>
 
 <style lang="scss" scoped>

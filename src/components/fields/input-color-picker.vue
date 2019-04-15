@@ -28,7 +28,7 @@ export default {
 			data: {
 				value: this.value
 			}
-		}
+		};
 	},
 	methods: {
 		update(val) {
@@ -39,5 +39,5 @@ export default {
 			});
 		}
 	}
-}
+};
 </script>

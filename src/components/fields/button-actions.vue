@@ -1,21 +1,30 @@
 <template>
 	<div class="actions">
-		<Dropdown ref="dropdown" trigger="click" :show-timeout="0" :hide-timeout="0" :hide-on-click="false" size="small" @command="select">
-			<Button :size="_size" :type="_status" plain>{{_title}} <i class="el-icon-arrow-down el-icon--right"/></Button>
+		<Dropdown
+			ref="dropdown"
+			trigger="click"
+			:show-timeout="0"
+			:hide-timeout="0"
+			:hide-on-click="false"
+			size="small"
+			@command="select"
+		>
+			<Button :size="_size" :type="_status" plain>
+				{{ _title }} <i class="el-icon-arrow-down el-icon--right" />
+			</Button>
 
 			<DropdownMenu slot="dropdown">
 				<action
-				v-for="action in actions"
-				v-bind="[action, {data: alt.data}]"
-				:active="selectedAction === action"
-				:key="action.title"
-				@close="close"
-				@event="$emit('event', $event)">
-
+					v-for="action in actions"
+					v-bind="[action, {data: alt.data}]"
+					:active="selectedAction === action"
+					:key="action.title"
+					@close="close"
+					@event="$emit('event', $event)"
+				>
 					<DropdownItem class="item" :command="action">
-						{{action.title}}
+						{{ action.title }}
 					</DropdownItem>
-
 				</action>
 			</DropdownMenu>
 		</Dropdown>
@@ -56,7 +65,7 @@ export default {
 								url: "https://example.com"
 							},
 							text: "delete this?",
-							onSubmit: "https://example.com",
+							onSubmit: "https://example.com"
 						}
 					},
 					{
@@ -109,13 +118,16 @@ export default {
 					}
 				]
 			},
-			data: {
-
-			}
+			data: {}
 		}
 	},
 	props: {
-		_size: {type: String, default: "mini", doc: true, note: `medium/small/mini`},
+		_size: {
+			type: String,
+			default: "mini",
+			doc: true,
+			note: `medium/small/mini`
+		},
 		_status: {type: String, default: "primary", doc: true},
 		_title: {type: String, default: "Actions", doc: true},
 		_actions: {type: Array, required: true, doc: true},
@@ -125,7 +137,7 @@ export default {
 		return {
 			actions: this._actions,
 			selectedAction: null
-		}
+		};
 	},
 	methods: {
 		select(action) {

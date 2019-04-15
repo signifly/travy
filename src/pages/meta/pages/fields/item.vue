@@ -1,7 +1,7 @@
 <template>
 	<div class="item">
 		<div class="wrap">
-			<h1 class="title" :id="id" :href="`#${id}`">{{id}}</h1>
+			<h1 class="title" :id="id" :href="`#${id}`">{{ id }}</h1>
 
 			<div class="props">
 				<table class="table">
@@ -16,13 +16,13 @@
 					</tr>
 
 					<tr v-for="(prop, name) in propsTable" :key="name">
-						<td>{{name}}</td>
-						<td>{{prop.type}}</td>
-						<td>{{prop.required || false}}</td>
-						<td>{{prop.map}}</td>
-						<td>{{prop.default}}</td>
+						<td>{{ name }}</td>
+						<td>{{ prop.type }}</td>
+						<td>{{ prop.required || false }}</td>
+						<td>{{ prop.map }}</td>
+						<td>{{ prop.default }}</td>
 						<td v-html="prop.note"></td>
-						<td>{{prop.validator}}</td>
+						<td>{{ prop.validator }}</td>
 					</tr>
 				</table>
 			</div>
@@ -66,10 +66,9 @@
 <script>
 import {mapValues, mapKeys, pickBy, get} from "lodash";
 import field from "@/components/field";
-import {Tag} from "element-ui";
 
 export default {
-	components: {Tag, field},
+	components: {field},
 	props: {
 		id: {type: String, required: true},
 		props: {type: Object, required: true},
@@ -81,7 +80,7 @@ export default {
 			dataDisplay: this.res.data,
 			data: this.res.data,
 			ev: null
-		}
+		};
 	},
 	computed: {
 		fieldType: (t) => ({id: t.id, props: t.res.props}),
@@ -89,14 +88,20 @@ export default {
 		propsTable() {
 			let props = pickBy(this.props, (x) => x.doc); // find props where {doc: true}
 
-			props = mapValues(props, (prop, key) => ({...prop,
-				type: get(prop.type, "name") || (prop.type || []).map(x => x.name).join("|"),
-				default: typeof prop.default === "function" ? prop.default() : prop.default,
+			props = mapValues(props, (prop, key) => ({
+				...prop,
+				type:
+					get(prop.type, "name") ||
+					(prop.type || []).map((x) => x.name).join("|"),
+				default:
+					typeof prop.default === "function" ? prop.default() : prop.default,
 				map: key.charAt(0) !== "_"
 			}));
 
 			// remove underscore if first character from prop name/key
-			return mapKeys(props, (val, key) => key.charAt(0) === "_" ? key.substr(1) : key);
+			return mapKeys(props, (val, key) =>
+				key.charAt(0) === "_" ? key.substr(1) : key
+			);
 		}
 	},
 	methods: {
@@ -151,7 +156,8 @@ export default {
 						}
 					}
 
-					th, td {
+					th,
+					td {
 						text-align: left;
 						padding: 0.8em;
 					}

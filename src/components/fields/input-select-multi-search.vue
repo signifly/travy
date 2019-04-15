@@ -1,21 +1,20 @@
 <template>
 	<div class="select-multi-search">
 		<Select
-		v-bind="{size}"
-		:value="valuesC"
-		:disabled="_disabled"
-		:clearable="_clearable"
-		:allow-create="_addable"
-		:filterable="true"
-		:multiple="true"
-		:remote="true"
-		:reserve-keyword="true"
-		:remote-method="getItems"
-		@change="update"
-		@visible-change="initSearch">
-
-			<Option v-for="item in itemsC" v-bind="item" :key="item.value"/>
-
+			v-bind="{size}"
+			:value="valuesC"
+			:disabled="_disabled"
+			:clearable="_clearable"
+			:allow-create="_addable"
+			:filterable="true"
+			:multiple="true"
+			:remote="true"
+			:reserve-keyword="true"
+			:remote-method="getItems"
+			@change="update"
+			@visible-change="initSearch"
+		>
+			<Option v-for="item in itemsC" v-bind="item" :key="item.value" />
 		</Select>
 	</div>
 </template>
@@ -28,7 +27,7 @@ import {meta} from "@/modules/utils";
 export default {
 	components: {Select, Option},
 	meta: {
-		res: {
+		res: {
 			props: {
 				disabled: false,
 				values: "values",
@@ -65,20 +64,25 @@ export default {
 		_addable: {type: Boolean, required: false, doc: true},
 		_options: {type: Object, required: true, doc: true},
 		_values: {type: String, required: true},
-		values: {required: true, default: () => [], doc: true, note: `
-			Can be an array of <i>objects|strings|numbers</i>.<br>
-			if it's strings|numbers, an initial call to <code>options.list</code> will be made to get the label names for the values.
-		`}
+		values: {
+			required: true,
+			default: () => [],
+			doc: true,
+			note: `
+				Can be an array of <i>objects|strings|numbers</i>.<br>
+				if it's strings|numbers, an initial call to <code>options.list</code> will be made to get the label names for the values.
+			`
+		}
 	},
 	data() {
 		return {
 			selectedItems: this.values,
 			opened: false,
 			items: []
-		}
+		};
 	},
 	computed: {
-		objArray: (t) => t.values.map(x => isObjectLike(x)).every(x => x),
+		objArray: (t) => t.values.map((x) => isObjectLike(x)).every((x) => x),
 		endpoint: (t) => t._options.endpoint,
 
 		size() {
@@ -87,14 +91,18 @@ export default {
 			return "medium";
 		},
 
-		valuesC: (t) => !t.objArray ? t.values : t.values.map(x => {
-			return get(x, t._options.value)
-		}),
+		valuesC: (t) =>
+			!t.objArray
+				? t.values
+				: t.values.map((x) => {
+						return get(x, t._options.value);
+				  }),
 
-		itemsC: (t) => [...t.selectedItems, ...t.items].map(x => ({
-			value: get(x, t._options.value),
-			label: get(x, t._options.label)
-		}))
+		itemsC: (t) =>
+			[...t.selectedItems, ...t.items].map((x) => ({
+				value: get(x, t._options.value),
+				label: get(x, t._options.label)
+			}))
 	},
 	methods: {
 		initSearch() {
@@ -122,16 +130,17 @@ export default {
 			const val = this._options.value;
 
 			if (!this.objArray) {
-				const {data} = await this.$axios.get(this.endpoint.url, {params: {
-					filter: {[val]: this.values}
-				}});
+				const {data} = await this.$axios.get(this.endpoint.url, {
+					params: {
+						filter: {[val]: this.values}
+					}
+				});
 				this.selectedItems = key ? get(data, key) : data;
 			}
 
 			// remove selectedItem after Select caches it
-			this.$nextTick(() => this.selectedItems = []);
+			this.$nextTick(() => (this.selectedItems = []));
 		},
-
 
 		update(values) {
 			this.$emit("event", {

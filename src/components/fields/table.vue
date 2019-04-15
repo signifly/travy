@@ -61,21 +61,23 @@ export default {
 		return {
 			columns: this._columns,
 			mounted: false
-		}
+		};
 	},
-	methods: {
+	methods: {
 		event({actions}) {
 			let {data, item} = actions.update;
 
 			// find index of the item in columnsData by {id}, and change key for every data property
 			const prop = this._columnsData;
-			const index = this.columnsData.findIndex(x => x.id === item.id);
+			const index = this.columnsData.findIndex((x) => x.id === item.id);
 			const dataKey = `${prop}[${index}]`;
 			data = mapKeys(data, (val, key) => `${dataKey}.${key}`);
 
-			this.$emit("event", {actions: {
-				update: {data, item}
-			}});
+			this.$emit("event", {
+				actions: {
+					update: {data, item}
+				}
+			});
 		}
 	},
 	mounted() {
