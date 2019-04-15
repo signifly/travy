@@ -874,9 +874,9 @@
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
 "@signifly/config@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@signifly/config/-/config-1.0.1.tgz#629713e1b5ea32b20e7de91605a0e6fd4be4ea4c"
-  integrity sha512-BIsDGVpVRK+kZQpiirslgYWCinbbLmRb5r7z3jnn7EbxpQcs6Zp6h0gYT2WJShuGo9DmW/G2X9EYIkgTACPqhg==
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@signifly/config/-/config-1.0.2.tgz#1306f61174db9fff3cf3276a318a4b11b312854d"
+  integrity sha512-4sGo0pXIkby5sVA1OjNeCFkbtU3XTqTDxKTGUvuVImRQBn2/VU4RHxjOxxR9/XhjLlppwzK2PBoT1EXcrhZqKg==
   dependencies:
     babel-eslint "10.0.1"
     eslint "5.16.0"
