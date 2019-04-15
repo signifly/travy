@@ -15,7 +15,7 @@ import save from "./save.vue";
 import batch from "./batch.vue";
 
 export default {
-	components: {save, batch},
+	components: {save, batch},
 	props: {
 		data: {type: Object, required: true},
 		edit: {type: Boolean, required: true},
@@ -28,11 +28,10 @@ export default {
 		comp() {
 			if (this.sequential) return batch;
 			if (this.edit) return save;
+			return "";
 		}
 	}
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

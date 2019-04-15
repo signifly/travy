@@ -1,6 +1,6 @@
 <template>
 	<div class="checkbox">
-		<Checkbox v-model="data.value" @change="update"/>
+		<Checkbox v-model="data.value" @change="update" />
 	</div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
 			data: {
 				value: this.value
 			}
-		}
+		};
 	},
 	methods: {
 		update(val) {
@@ -39,5 +39,5 @@ export default {
 			});
 		}
 	}
-}
+};
 </script>

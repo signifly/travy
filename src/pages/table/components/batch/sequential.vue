@@ -20,17 +20,23 @@ export default {
 	},
 	methods: {
 		setSequential() {
-			localStorage.setItem("sequential", JSON.stringify({
-				firstUrl: this.firstUrl,
-				tableId: this.tableId,
-				items: this.ids,
-				url: this.url
-			}));
+			localStorage.setItem(
+				"sequential",
+				JSON.stringify({
+					firstUrl: this.firstUrl,
+					tableId: this.tableId,
+					items: this.ids,
+					url: this.url
+				})
+			);
 		},
 
 		start() {
 			this.setSequential();
-			this.$router.push({path: this.firstUrl, query: {modifiers: this.query.modifiers, sequential: true}});
+			this.$router.push({
+				path: this.firstUrl,
+				query: {modifiers: this.query.modifiers, sequential: true}
+			});
 		}
 	}
 };

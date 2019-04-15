@@ -1,6 +1,11 @@
 <template>
 	<div class="actions" v-if="actions.length">
-		<viewAction v-for="action in actions" :key="action.title" v-bind="[action, {data}]" @event="$emit('event', $event)"/>
+		<viewAction
+			v-for="action in actions"
+			:key="action.title"
+			v-bind="[action, {data}]"
+			@event="$emit('event', $event)"
+		/>
 	</div>
 </template>
 

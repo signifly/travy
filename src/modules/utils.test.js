@@ -11,10 +11,7 @@ describe("utils", () => {
 				objKey: {
 					key: "{id}/{person.name}"
 				},
-				arrayKey: [
-					"{id}/{person.name}",
-					{key: "{id}/{person.name}"}
-				]
+				arrayKey: ["{id}/{person.name}", {key: "{id}/{person.name}"}]
 			}
 		});
 
@@ -22,7 +19,6 @@ describe("utils", () => {
 		expect(obj).toHaveProperty(["arrayKey", 0], "1/pete");
 		expect(obj).toHaveProperty(["arrayKey", 1, "key"], "1/pete");
 	});
-
 
 	test("rStringProps string", () => {
 		const string = utils.rStringProps({

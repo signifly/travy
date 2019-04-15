@@ -1,6 +1,6 @@
 <template>
 	<div class="custom" v-if="custom">
-		<component :is="component"/>
+		<component :is="component" />
 	</div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
 		load() {
 			const exists = document.querySelector(`script[src='${this.src}']`);
 
-			if (!exists) {
+			if (!exists) {
 				Vue.config.ignoredElements = [this.component];
 				const script = document.createElement("script");
 				script.src = this.src;
@@ -36,6 +36,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

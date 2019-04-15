@@ -2,13 +2,23 @@
 	<div class="page" :class="{sidebar}">
 		<div class="sidebar" v-if="sidebar">
 			<div class="wrap">
-				<div class="title" v-text="sidebar.title"/>
+				<div class="title" v-text="sidebar.title" />
 
 				<div class="sections">
-					<div class="section" v-for="(section, i) in sidebar.sections" :key="i">
+					<div
+						class="section"
+						v-for="(section, i) in sidebar.sections"
+						:key="i"
+					>
 						<div class="items">
 							<template v-for="item in section">
-								<a :key="item.value" :href="`#${item.value}`" :class="{active: $route.hash === `#${item.value}`}">{{item.label}}</a>
+								<a
+									:key="item.value"
+									:href="`#${item.value}`"
+									:class="{active: $route.hash === `#${item.value}`}"
+								>
+									{{ item.label }}
+								</a>
 							</template>
 						</div>
 					</div>
@@ -18,7 +28,7 @@
 
 		<div class="main">
 			<div class="wrap">
-				<slot/>
+				<slot />
 			</div>
 		</div>
 	</div>
@@ -120,7 +130,6 @@ $sidebar: 18em;
 				height: $s;
 				margin-top: -$s;
 			}
-
 
 			::v-deep {
 				h1 {

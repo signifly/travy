@@ -1,6 +1,6 @@
 <template>
 	<layout v-bind="{sidebar}">
-		<section class="intro html" v-html="require('./intro.md')"/>
+		<section class="intro html" v-html="require('./intro.md')" />
 	</layout>
 </template>
 
@@ -13,11 +13,9 @@ export default {
 		return {
 			sidebar: {
 				title: "Tables",
-				sections: [
-					[{value: "introduction", label: "Introduction"}]
-				]
+				sections: [[{value: "introduction", label: "Introduction"}]]
 			}
-		}
+		};
 	}
 };
 </script>

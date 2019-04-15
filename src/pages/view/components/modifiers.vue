@@ -1,5 +1,5 @@
 <template>
-	<modifiers v-bind="[modifiers, {query}]" @update="update"/>
+	<modifiers v-bind="[modifiers, {query}]" @update="update" />
 </template>
 
 <script>
@@ -15,10 +15,12 @@ export default {
 	},
 	methods: {
 		update({modifiers}) {
-			this.$router.replace({query: {
-				...this.query,
-				modifiers
-			}});
+			this.$router.replace({
+				query: {
+					...this.query,
+					modifiers
+				}
+			});
 
 			this.$emit("event", {
 				actions: {
@@ -27,8 +29,8 @@ export default {
 						data: true
 					}
 				}
-			})
+			});
 		}
 	}
-}
+};
 </script>

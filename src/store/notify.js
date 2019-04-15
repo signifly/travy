@@ -11,7 +11,7 @@ export default {
 		send(ctx, {message, title, type}) {
 			(async () => {
 				// make notification work on first load
-				await new Promise(resolve => setTimeout(resolve, 1));
+				await new Promise((resolve) => setTimeout(resolve, 1));
 				notify({message, title, type, offset: 40});
 			})();
 		}

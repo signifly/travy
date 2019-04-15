@@ -3,14 +3,22 @@
 		mode="horizontal"
 		:default-active="active"
 		:router="true"
-		menu-trigger="click">
-
+		menu-trigger="click"
+	>
 		<template v-for="item in menu">
-			<MenuItem v-if="!item.items" :index="item.link" :key="item.link">{{item.title}}</MenuItem>
+			<MenuItem v-if="!item.items" :index="item.link" :key="item.link">{{
+				item.title
+			}}</MenuItem>
 
 			<Submenu v-else :index="item.title" :key="item.title">
-				<template slot="title">{{item.title}}</template>
-				<MenuItem v-for="subitem in item.items" :index="subitem.link" :key="subitem.link">{{subitem.title}}</MenuItem>
+				<template slot="title">{{ item.title }}</template>
+				<MenuItem
+					v-for="subitem in item.items"
+					:index="subitem.link"
+					:key="subitem.link"
+				>
+					{{ subitem.title }}
+				</MenuItem>
 			</Submenu>
 		</template>
 	</Menu>

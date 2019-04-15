@@ -1,16 +1,15 @@
 <template>
 	<action
-	v-bind="{props, active, hide, data: parentData}"
-	@close="toggle"
-	@event="$emit('event', $event)">
-
+		v-bind="{props, active, hide, data: parentData}"
+		@close="toggle"
+		@event="$emit('event', $event)"
+	>
 		<div class="table-action">
 			<Button size="medium" :type="status" @click="toggle">
-				{{title}}
-				<i class="el-icon-right" :class="`el-icon-${icon}`" v-if="icon"/>
+				{{ title }}
+				<i class="el-icon-right" :class="`el-icon-${icon}`" v-if="icon" />
 			</Button>
 		</div>
-
 	</action>
 </template>
 
@@ -31,7 +30,7 @@ export default {
 	data() {
 		return {
 			active: false
-		}
+		};
 	},
 	methods: {
 		toggle() {

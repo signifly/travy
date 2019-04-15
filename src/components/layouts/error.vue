@@ -1,7 +1,7 @@
 <template>
 	<div class="error">
-		<vHeader v-if="user"/>
-		<vbase/>
+		<vHeader v-if="user" />
+		<vbase />
 	</div>
 </template>
 
@@ -9,7 +9,7 @@
 import vHeader from "@/components/header";
 import vbase from "./base.vue";
 
-export default {
+export default {
 	components: {vbase, vHeader},
 	computed: {
 		user: (t) => t.$store.getters["user/data"]

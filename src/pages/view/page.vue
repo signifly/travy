@@ -1,20 +1,25 @@
 <template>
 	<transition name="view-page" v-if="definitions && data">
 		<div class="view-page">
-
 			<Row class="top" :gutter="20">
 				<Col class="left" :span="12">
-					<vHeader v-bind="{data, header}"/>
+					<vHeader v-bind="{data, header}" />
 				</Col>
 				<Col class="right" :span="12">
-					<modifiers v-if="modifiers" v-bind="{modifiers}" @event="event"/>
-					<actions v-if="actions" v-bind="{actions, data}" @event="event"/>
+					<modifiers v-if="modifiers" v-bind="{modifiers}" @event="event" />
+					<actions v-if="actions" v-bind="{actions, data}" @event="event" />
 				</Col>
 			</Row>
 
 			<Row class="mid" :gutter="20">
 				<Col class="left" :span="16">
-					<tabs ref="tabs" :key="compKey" v-bind="{tabs, data}" @edit="edit = $event" @event="event"/>
+					<tabs
+						ref="tabs"
+						:key="compKey"
+						v-bind="{tabs, data}"
+						@edit="edit = $event"
+						@event="event"
+					/>
 				</Col>
 				<Col class="right" :span="8">
 					<sidebar
@@ -30,11 +35,16 @@
 
 			<Row class="bottom" :gutter="20">
 				<Col class="left" :span="24">
-					<activity v-if="activity" :key="data.updated_at" v-bind="{data, endpoint}" @event="event"/>
+					<activity
+						v-if="activity"
+						:key="data.updated_at"
+						v-bind="{data, endpoint}"
+						@event="event"
+					/>
 				</Col>
 			</Row>
 
-			<panels v-bind="{loading, error, data, edit}" @save="save"/>
+			<panels v-bind="{loading, error, data, edit}" @save="save" />
 		</div>
 	</transition>
 </template>
@@ -50,7 +60,17 @@ import activity from "./components/activity";
 import modifiers from "./components/modifiers";
 
 export default {
-	components: {Col, Row, tabs, panels, vHeader, sidebar, actions, activity, modifiers},
+	components: {
+		Col,
+		Row,
+		tabs,
+		panels,
+		vHeader,
+		sidebar,
+		actions,
+		activity,
+		modifiers
+	},
 	props: {
 		requests: {type: Object, required: true}
 	},
@@ -62,7 +82,7 @@ export default {
 			loading: false,
 			definitions: null,
 			compUpdateKey: 0
-		}
+		};
 	},
 	computed: {
 		query: (t) => t.$route.query,
@@ -74,11 +94,11 @@ export default {
 		endpoint: (t) => t.definitions.endpoint,
 		modifiers: (t) => t.definitions.modifiers,
 		compKey: (t) => `${t.modifiersKey}-${t.compUpdateKey}`,
-		modifiersKey: (t) => Object.values(t.query.modifiers || {}).join(",")
+		modifiersKey: (t) => Object.values(t.query.modifiers || {}).join(",")
 	},
 	methods: {
 		async event({actions, done}) {
-			if (actions.refresh) {
+			if (actions.refresh) {
 				const {definitions, data} = actions.refresh;
 				if (definitions) await this.getDefinitions();
 				if (data) await this.getData();
@@ -93,12 +113,12 @@ export default {
 
 			try {
 				await Promise.all([
-					(this.sidebar && this.$refs.sidebar.save()),
+					this.sidebar && this.$refs.sidebar.save(),
 					this.$refs.tabs.save()
 				]);
 				if (done) await done();
 				this.error = "";
-			} catch(err) {
+			} catch (err) {
 				this.error = err;
 			}
 
@@ -115,10 +135,14 @@ export default {
 			const params = {modifier: this.query.modifiers};
 
 			try {
-				const {data: {data}} = await this.$axios.get(this.requests.data, {params, customErr: true});
+				const {
+					data: {data}
+				} = await this.$axios.get(this.requests.data, {
+					params,
+					customErr: true
+				});
 				this.data = data;
-
-			} catch(err) {
+			} catch (err) {
 				if (err.status === 404) {
 					this.$router.replace({name: "error", params: {status: 404}});
 				} else {
@@ -138,12 +162,14 @@ export default {
 .view-page {
 	margin-top: 2em;
 
-	&-enter-active, &-leave-active {
+	&-enter-active,
+	&-leave-active {
 		transition: cubic(opacity, 0.3s);
 		transition-delay: 0.1s;
 	}
 
-	&-enter, &-leave-to {
+	&-enter,
+	&-leave-to {
 		opacity: 0;
 	}
 

@@ -2,7 +2,12 @@
 	<div class="items">
 		<div class="wrap">
 			<template v-if="items.length">
-				<item v-if="items" v-for="item in items" v-bind="item" :key="item.id" @updateItem="$emit('updateItem', $event)"/>
+				<item
+					v-for="item in items"
+					v-bind="item"
+					:key="item.id"
+					@updateItem="$emit('updateItem', $event)"
+				/>
 			</template>
 
 			<div class="noitems" v-else>
@@ -23,7 +28,7 @@ export default {
 	},
 	methods: {
 		scroll({target}) {
-			if (target.scrollTop + 200 >= (target.scrollHeight - target.offsetHeight)) {
+			if (target.scrollTop + 200 >= target.scrollHeight - target.offsetHeight) {
 				if (this.meta.current_page < this.meta.last_page) {
 					this.$emit("getItems", {page: this.meta.current_page + 1});
 				}

@@ -1,7 +1,7 @@
 <template>
 	<div class="table" v-if="table">
-		<breadcrumb :items="[{title: title.text, to: $route.path}]"/>
-		<page v-bind="{defsEndpoint, title}" :key="tableId"/>
+		<breadcrumb :items="[{title: title.text, to: $route.path}]" />
+		<page v-bind="{defsEndpoint, title}" :key="tableId" />
 	</div>
 </template>
 

@@ -13,15 +13,13 @@
 		</div>
 
 		<div class="router">
-			<router-view/>
+			<router-view />
 		</div>
 	</div>
 </template>
 
 <script>
-export default {
-
-};
+export default {};
 </script>
 
 <style lang="scss" scoped>
@@ -66,7 +64,8 @@ export default {
 					padding-bottom: 0.1em;
 					margin-left: 1em;
 
-					&.router-link-active, &:hover {
+					&.router-link-active,
+					&:hover {
 						border-bottom: 2px solid $blue5;
 					}
 

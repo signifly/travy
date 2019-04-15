@@ -1,6 +1,6 @@
 <template>
 	<div class="group" :class="fieldIds">
-		<div class="title" v-text="title"/>
+		<div class="title" v-text="title" />
 
 		<div class="fields">
 			<field
@@ -28,10 +28,10 @@ export default {
 	data() {
 		return {
 			payload: {}
-		}
+		};
 	},
 	computed: {
-		fieldIds: (t) => t.fields.map(x => x.fieldType.id)
+		fieldIds: (t) => t.fields.map((x) => x.fieldType.id)
 	}
 };
 </script>

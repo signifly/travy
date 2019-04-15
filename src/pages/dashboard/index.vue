@@ -1,7 +1,7 @@
 <template>
 	<div class="dashboard" v-if="dashboard">
-		<breadcrumb :items="[{title, to: $route.path}]"/>
-		<page v-bind="{defsEndpoint, title}" :key="id"/>
+		<breadcrumb :items="[{title, to: $route.path}]" />
+		<page v-bind="{defsEndpoint, title}" :key="id" />
 	</div>
 </template>
 

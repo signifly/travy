@@ -1,6 +1,11 @@
 <template>
 	<div class="line-multi">
-		<draggable :list="items" handle=".drag" @end="listUpdate" v-if="items.length > 0">
+		<draggable
+			:list="items"
+			handle=".drag"
+			@end="listUpdate"
+			v-if="items.length > 0"
+		>
 			<div class="item" v-for="(item, i) in items" :key="item.id">
 				<component
 					:is="_itemFieldId"
@@ -70,26 +75,20 @@ export default {
 						titleValue: "modal #1",
 						switchValue: false,
 						selectValue: "",
-						infoItems: [
-							{name: "okesf", id: 1},
-							{name: "wef", id: 2}
-						]
+						infoItems: [{name: "okesf", id: 1}, {name: "wef", id: 2}]
 					},
 					{
 						titleValue: "modal #2",
 						switchValue: false,
 						selectValue: "",
-						infoItems: [
-							{name: "okesf", id: 1},
-							{name: "wef", id: 2}
-						]
+						infoItems: [{name: "okesf", id: 1}, {name: "wef", id: 2}]
 					}
 				]
 			}
 		}
 	},
 	props: {
-		items: {type: Array, required: true, doc: true},
+		items: {type: Array, required: true, doc: true},
 		_items: {type: String, required: true},
 		_itemFieldId: {type: String, required: true, doc: true},
 		_itemFieldProps: {type: Object, required: true, doc: true}
@@ -99,7 +98,7 @@ export default {
 			return this.items;
 		},
 		itemsPropsData() {
-			return this.items.map(item => {
+			return this.items.map((item) => {
 				return mapValues(this._itemFieldProps, (val) => get(item, val));
 			});
 		},
@@ -140,7 +139,7 @@ export default {
 					update: {data: {[this._items]: this.items}}
 				}
 			});
-		},
+		}
 	}
 };
 </script>

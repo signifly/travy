@@ -1,8 +1,8 @@
 <template>
 	<popup>
 		<div class="notification-popup">
-			<vHeader v-bind="{loading}" @updateItems="updateItems"/>
-			<items v-if="items" v-bind="{items, meta}" @updateItem="updateItem"/>
+			<vHeader v-bind="{loading}" @updateItems="updateItems" />
+			<items v-if="items" v-bind="{items, meta}" @updateItem="updateItem" />
 		</div>
 	</popup>
 </template>

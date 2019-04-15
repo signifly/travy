@@ -1,51 +1,59 @@
 <template>
 	<div class="image-picker">
 		<a class="image" @click="modalActivate(true)">
-			<div class="img" :style="{backgroundImage: `url('${imageUrl}')`}"/>
+			<div class="img" :style="{backgroundImage: `url('${imageUrl}')`}" />
 
 			<div class="overlay">
-				<i class="el-icon-picture"/>
+				<i class="el-icon-picture" />
 			</div>
 		</a>
 
 		<Dialog
-		title="Select image"
-		width="700px"
-		:visible.sync="modal.active"
-		:append-to-body="true"
-		:modal-append-to-body="true">
+			title="Select image"
+			width="700px"
+			:visible.sync="modal.active"
+			:append-to-body="true"
+			:modal-append-to-body="true"
+		>
+			<div class="modal">
+				<div class="header">
+					<div class="search">
+						<Input
+							size="medium"
+							placeholder="Search"
+							@input="search"
+							:prefix-icon="searchIcon"
+						/>
+					</div>
 
-		<div class="modal">
-			<div class="header">
-				<div class="search">
-					<Input
-						size="medium"
-						placeholder="Search"
-						@input="search"
-						:prefix-icon="searchIcon"
-					/>
+					<div class="button">
+						<Button size="small" type="danger" @click="remove">Delete</Button>
+					</div>
 				</div>
 
-				<div class="button">
-					<Button size="small" type="danger" @click="remove">Delete</Button>
+				<div class="items">
+					<a
+						class="item"
+						v-for="item in modalItemsMap"
+						:key="item.id"
+						:title="item.label"
+						@click="update(item)"
+					>
+						<div class="img" :style="{backgroundImage: `url('${item.url}')`}" />
+						<div class="label" v-text="item.label" />
+					</a>
+
+					<div class="noitems" v-if="!modal.items.length">
+						No items
+					</div>
+				</div>
+
+				<div class="more" v-if="more">
+					<Button size="small" :loading="modal.loading" @click="getMore"
+						>More</Button
+					>
 				</div>
 			</div>
-
-			<div class="items">
-				<a class="item" v-for="item in modalItemsMap" :key="item.id" :title="item.label" @click="update(item)">
-					<div class="img" :style="{backgroundImage: `url('${item.url}')`}"/>
-					<div class="label" v-text="item.label"/>
-				</a>
-
-				<div class="noitems" v-if="!modal.items.length">
-					No items
-				</div>
-			</div>
-
-			<div class="more" v-if="more">
-				<Button size="small" :loading="modal.loading" @click="getMore">More</Button>
-			</div>
-		</div>
 		</Dialog>
 	</div>
 </template>
@@ -57,7 +65,7 @@ import {meta} from "@/modules/utils";
 
 export default {
 	components: {Dialog, Input, Button},
-	meta: {
+	meta: {
 		res: {
 			props: {
 				id: "file_id",
@@ -94,21 +102,27 @@ export default {
 				items: [],
 				meta: {}
 			}
-		}
+		};
 	},
 	computed: {
-		searchIcon: (t) => t.modal.loading ? "el-icon-loading": "el-icon-search",
+		searchIcon: (t) => (t.modal.loading ? "el-icon-loading" : "el-icon-search"),
 		more: (t) => t.modal.meta.current_page !== t.modal.meta.last_page,
 
 		imageUrl() {
-			return this.image || `data:image/svg+xml;utf8,${encodeURIComponent(require("@/assets/icons/noimage.svg"))}`;
+			return (
+				this.image ||
+				`data:image/svg+xml;utf8,${encodeURIComponent(
+					require("@/assets/icons/noimage.svg")
+				)}`
+			);
 		},
 
-		modalItemsMap: (t) => t.modal.items.map(x => ({
-			url: get(x, t._options.url),
-			id: get(x, t._options.value),
-			label: get(x, t._options.label)
-		}))
+		modalItemsMap: (t) =>
+			t.modal.items.map((x) => ({
+				url: get(x, t._options.url),
+				id: get(x, t._options.value),
+				label: get(x, t._options.label)
+			}))
 	},
 	methods: {
 		modalActivate(bool) {
@@ -129,19 +143,27 @@ export default {
 		getItemsDebounce() {},
 
 		async getItems({search, page = 1} = {}) {
-			const {key, endpoint: {params, url}} = this._options;
+			const {
+				key,
+				endpoint: {params, url}
+			} = this._options;
 
-			const {data} = await this.$axios.get(url, {params: {
-				...params, page, count: 25, filter: {
-					type: "image",
-					search
+			const {data} = await this.$axios.get(url, {
+				params: {
+					...params,
+					page,
+					count: 25,
+					filter: {
+						type: "image",
+						search
+					}
 				}
-			}});
+			});
 
 			const items = get(data, key, data);
 
 			this.modal.items = page > 1 ? [...this.modal.items, ...items] : items;
-			this.modal.meta = data.meta || {};
+			this.modal.meta = data.meta || {};
 			this.modal.loading = false;
 		},
 
@@ -211,7 +233,7 @@ export default {
 
 			i {
 				font-size: 1.2em;
-				background-color: #409EFF;
+				background-color: #409eff;
 				color: white;
 				padding: 0.3em;
 				border-radius: 3px;
@@ -246,7 +268,7 @@ export default {
 
 				&:hover {
 					.label {
-						color: #409EFF;
+						color: #409eff;
 					}
 				}
 

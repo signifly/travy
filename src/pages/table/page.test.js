@@ -20,19 +20,22 @@ beforeEach(async () => {
 			defsEndpoint: {url: "/definitions"},
 			title: {text: "Projects"}
 		},
-		stubs: { // element-ui fix
+		stubs: {
+			// element-ui fix
 			transition: false
 		},
 		mocks: {
 			$axios: {
 				get: (url) => {
-					if (url === "/definitions") return Promise.resolve({
-						data: table.definitions
-					});
+					if (url === "/definitions")
+						return Promise.resolve({
+							data: table.definitions
+						});
 
-					if (url === "/data/table") return Promise.resolve({
-						data: table.data
-					});
+					if (url === "/data/table")
+						return Promise.resolve({
+							data: table.data
+						});
 				}
 			}
 		}
@@ -40,7 +43,6 @@ beforeEach(async () => {
 
 	await wrapper.vm.$nextTick();
 });
-
 
 describe("table", () => {
 	test("get definitions", () => {

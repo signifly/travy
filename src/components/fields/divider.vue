@@ -1,6 +1,6 @@
 <template>
 	<div class="divider">
-		<div class="text" v-if="_text" v-text="_text"/>
+		<div class="text" v-if="_text" v-text="_text" />
 	</div>
 </template>
 
@@ -11,13 +11,16 @@ export default {
 			props: {
 				text: "Divider title"
 			},
-			data: {
-
-			}
+			data: {}
 		}
 	},
 	props: {
-		_text: {type: String, required: false, doc: true, note: `Don't use field label with the divider`}
+		_text: {
+			type: String,
+			required: false,
+			doc: true,
+			note: `Don't use field label with the divider`
+		}
 	}
 };
 </script>

@@ -21,7 +21,7 @@ export default {
 		disabled: {type: Boolean, required: false},
 		description: {type: String, required: false}
 	},
-	computed: {
+	computed: {
 		data: (t) => t.alt.data,
 		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
 		propsData: (t) => mapValues(t.props, (val) => get(t.data, val)),
@@ -32,7 +32,10 @@ export default {
 			if (customField) {
 				return customField;
 			} else {
-				return () => import(/* webpackMode: "eager" */ `@/components/fields/${this.id}.vue`);
+				return () =>
+					import(
+						/* webpackMode: "eager" */ `@/components/fields/${this.id}.vue`
+					);
 			}
 		}
 	}

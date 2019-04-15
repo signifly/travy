@@ -1,14 +1,17 @@
 <template>
 	<div class="table-main" v-if="definitions">
-
 		<div class="header" v-if="filters || search || actions">
-			<filters v-if="filters || search" v-bind="[filters, {search}]" @filter="filter"/>
-			<actions v-if="actions" v-bind="{actions, parentData}" @event="event"/>
+			<filters
+				v-if="filters || search"
+				v-bind="[filters, {search}]"
+				@filter="filter"
+			/>
+			<actions v-if="actions" v-bind="{actions, parentData}" @event="event" />
 		</div>
 
 		<div class="content">
 			<box>
-				<top v-bind="{modifiers, loading, title, meta}" @reset="reset"/>
+				<top v-bind="{modifiers, loading, title, meta}" @reset="reset" />
 
 				<vTable
 					ref="table"
@@ -18,8 +21,16 @@
 					@event="event"
 				/>
 
-				<pagination v-if="meta && pagination" v-bind="[meta, {loading}]" @getData="getData"/>
-				<batch v-bind="[batch, {selectedItems}]" @unselect="unselect" @event="event"/>
+				<pagination
+					v-if="meta && pagination"
+					v-bind="[meta, {loading}]"
+					@getData="getData"
+				/>
+				<batch
+					v-bind="[batch, {selectedItems}]"
+					@unselect="unselect"
+					@event="event"
+				/>
 			</box>
 		</div>
 	</div>
@@ -56,7 +67,7 @@ export default {
 			loading: false,
 			definitions: null,
 			selectedItems: []
-		}
+		};
 	},
 	computed: {
 		query: (t) => t.state.query,
@@ -71,10 +82,11 @@ export default {
 		modifiers: (t) => t.definitions.modifiers,
 		pagination: (t) => t.definitions.pagination,
 
-		endpoint: (t) => rStringProps({
-			val: t.definitions.endpoint,
-			data: t.parentData
-		})
+		endpoint: (t) =>
+			rStringProps({
+				val: t.definitions.endpoint,
+				data: t.parentData
+			})
 	},
 	methods: {
 		select(items) {
@@ -89,7 +101,7 @@ export default {
 			this.unselect();
 			await this.getDefinitions();
 			await this.getData();
-			if (done) await done()
+			if (done) await done();
 		},
 
 		async event({actions, done}) {
@@ -98,8 +110,14 @@ export default {
 			if (actions.update) {
 				let {data, item} = actions.update;
 				// {"key1.key2": 1} ===> {key1: {key2: 1}}
-				data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
-				const url = rStringProps({data: item, val: `${this.endpoint.url}/{id}`});
+				data = Object.entries(data).reduce(
+					(obj, [key, val]) => set(obj, key, val),
+					{}
+				);
+				const url = rStringProps({
+					data: item,
+					val: `${this.endpoint.url}/{id}`
+				});
 				await this.$axios.put(url, {data, modifier: this.modifiers});
 				await this.getData({loading: false});
 			}
@@ -126,7 +144,10 @@ export default {
 		},
 
 		async getDefinitions() {
-			const params = {...this.defsEndpoint.params, modifiers: this.query.modifiers};
+			const params = {
+				...this.defsEndpoint.params,
+				modifiers: this.query.modifiers
+			};
 			const {data} = await this.$axios.get(this.defsEndpoint.url, {params});
 			this.definitions = data;
 		},
@@ -136,7 +157,7 @@ export default {
 
 			const params = merge({}, this.endpoint.params, {
 				page: this.query.page,
-				count: this.query.pagesize || 15,
+				count: this.query.pagesize || 15,
 				filter: this.query.filters,
 				modifier: this.query.modifiers,
 				sort: (() => {
@@ -146,7 +167,9 @@ export default {
 				})()
 			});
 
-			const {data: {data, meta}} = await this.$axios.get(this.endpoint.url, {params});
+			const {
+				data: {data, meta}
+			} = await this.$axios.get(this.endpoint.url, {params});
 			this.loading = false;
 			this.data = data;
 			this.meta = meta;

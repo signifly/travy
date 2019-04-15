@@ -1,24 +1,40 @@
 <template>
 	<div class="table" :class="{loading}">
 		<Table
-		stripe
-		ref="table"
-		row-key="id"
-		:default-sort="sorting"
-		v-bind="{data, emptyText}"
-		header-row-class-name="header-row"
-		header-cell-class-name="header-cell"
-		@sort-change="sort"
-		@selection-change="select">
-
+			stripe
+			ref="table"
+			row-key="id"
+			:default-sort="sorting"
+			v-bind="{data, emptyText}"
+			header-row-class-name="header-row"
+			header-cell-class-name="header-cell"
+			@sort-change="sort"
+			@selection-change="select"
+		>
 			<tableColumn type="expand" v-if="subtable">
-				<subtable slot-scope="{row}" v-bind="[subtable, {data, item: row}]" @event="$emit('event', $event)"/>
+				<subtable
+					slot-scope="{row}"
+					v-bind="[subtable, {data, item: row}]"
+					@event="$emit('event', $event)"
+				/>
 			</tableColumn>
 
-			<TableColumn type="selection" :reserve-selection="true" v-if="batchActive"/>
+			<TableColumn
+				type="selection"
+				:reserve-selection="true"
+				v-if="batchActive"
+			/>
 
-			<TableColumn v-for="column in tableColumns" v-bind="column" :key="column.name">
-				<field slot-scope="scope" v-bind="{scope, column}" @event="$emit('event', $event)"/>
+			<TableColumn
+				v-for="column in tableColumns"
+				v-bind="column"
+				:key="column.name"
+			>
+				<field
+					slot-scope="scope"
+					v-bind="{scope, column}"
+					@event="$emit('event', $event)"
+				/>
 			</TableColumn>
 		</Table>
 	</div>
@@ -42,27 +58,32 @@ export default {
 	},
 	computed: {
 		query: () => state.query,
-		emptyText: (t) => t.data ? "No data" : "Loading",
+		emptyText: (t) => (t.data ? "No data" : "Loading"),
 		sorting: (t) => t.query.sort || t.defaults.sort || {},
 		batchActive: (t) => t.batch.bulk || t.batch.sequential,
 
 		tableColumns() {
-			return this.columns.map(x => ({...x,
+			return this.columns.map((x) => ({
+				...x,
 				sortable: x.sortable ? "custom" : false,
 				prop: x.sortBy
 			}));
 		}
 	},
-	methods: {
+	methods: {
 		sort({prop, order}) {
 			const sort = prop && order ? {prop, order} : undefined;
 
 			// don't set query params for default sorting
-			if (this.data) state.setQuery({type: "replace", query: {
-				...this.query,
-				page: undefined,
-				sort
-			}});
+			if (this.data)
+				state.setQuery({
+					type: "replace",
+					query: {
+						...this.query,
+						page: undefined,
+						sort
+					}
+				});
 
 			this.$emit("getData");
 		},

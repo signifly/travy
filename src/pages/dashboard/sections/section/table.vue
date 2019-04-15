@@ -1,5 +1,5 @@
 <template>
-	<tablePage v-bind="{defsEndpoint: endpoint, title}"/>
+	<tablePage v-bind="{defsEndpoint: endpoint, title}" />
 </template>
 
 <script>

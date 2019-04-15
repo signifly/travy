@@ -34,10 +34,13 @@ export default {
 		updatePage(page) {
 			page = page === 1 ? undefined : page;
 
-			state.setQuery({type: "replace", query: {
-				...this.query,
-				page
-			}});
+			state.setQuery({
+				type: "replace",
+				query: {
+					...this.query,
+					page
+				}
+			});
 
 			this.$emit("getData");
 		},
@@ -45,11 +48,14 @@ export default {
 		updateSize(pagesize) {
 			pagesize = pagesize === 15 ? undefined : pagesize;
 
-			state.setQuery({type: "replace", query: {
-				...this.query,
-				page: undefined,
-				pagesize
-			}});
+			state.setQuery({
+				type: "replace",
+				query: {
+					...this.query,
+					page: undefined,
+					pagesize
+				}
+			});
 
 			this.$emit("getData");
 		}

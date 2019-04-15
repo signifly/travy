@@ -1,13 +1,17 @@
 <template>
 	<div class="translate" v-if="translated">
 		<Tooltip placement="right" effect="light" :disabled="!languages">
-			<div class="icon" :class="{active: languages}" v-html="require('@/assets/icons/globe.svg')" />
+			<div
+				class="icon"
+				:class="{active: languages}"
+				v-html="require('@/assets/icons/globe.svg')"
+			/>
 
 			<div slot="content">
 				<div class="item" v-for="(item, i) in translated" :key="i">
-					<div class="emoji" v-text="emoji(item.emoji)"/>
-					{{item.label}}
-					<div class="outdated" v-if="item.outdated"/>
+					<div class="emoji" v-text="emoji(item.emoji)" />
+					{{ item.label }}
+					<div class="outdated" v-if="item.outdated" />
 				</div>
 			</div>
 		</Tooltip>

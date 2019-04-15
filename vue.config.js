@@ -15,24 +15,28 @@ module.exports = {
 		plugins: [
 			new webpack.DefinePlugin({
 				"process.env": {
-					"API": JSON.stringify(process.env.API)
+					API: JSON.stringify(process.env.API)
 				}
 			})
 		]
 	},
 
-	chainWebpack: config => {
+	chainWebpack: (config) => {
 		const svgRule = config.module.rule("svg");
 		svgRule.uses.clear();
-		svgRule.use("svg-inline-loader").loader("svg-inline-loader").options({
-			removeTags: true,
-			removingTags: ["title", "desc"],
-			idPrefix: true,
-			classPrefix: true,
-			removeSVGTagAttrs: false
-		});
+		svgRule
+			.use("svg-inline-loader")
+			.loader("svg-inline-loader")
+			.options({
+				removeTags: true,
+				removingTags: ["title", "desc"],
+				idPrefix: true,
+				classPrefix: true,
+				removeSVGTagAttrs: false
+			});
 
-		config.module.rule("markdown")
+		config.module
+			.rule("markdown")
 			.test(/\.md$/)
 			.use("html-loader")
 			.loader("html-loader")

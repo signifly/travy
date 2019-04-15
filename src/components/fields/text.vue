@@ -1,5 +1,5 @@
 <template>
-	<div class="text" :class="_status">{{textFinal}}</div>
+	<div class="text" :class="_status">{{ textFinal }}</div>
 </template>
 
 <script>
@@ -26,8 +26,10 @@ export default {
 			required: false,
 			doc: true,
 			note: `danger, warning, info, primary, success`,
-			validator: function (value) {
-				return ["danger", "warning", "info", "primary", "success"].includes(value);
+			validator: function(value) {
+				return ["danger", "warning", "info", "primary", "success"].includes(
+					value
+				);
 			}
 		}
 	},

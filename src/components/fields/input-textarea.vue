@@ -1,6 +1,14 @@
 <template>
 	<div class="textarea">
-		<Input v-model="data.text" @input="update" :disabled="_disabled" type="textarea" :rows="3" :controls="false" size="medium" />
+		<Input
+			v-model="data.text"
+			@input="update"
+			:disabled="_disabled"
+			type="textarea"
+			:rows="3"
+			:controls="false"
+			size="medium"
+		/>
 	</div>
 </template>
 
@@ -8,7 +16,7 @@
 import {Input} from "element-ui";
 
 export default {
-	components: {Input},
+	components: {Input},
 	meta: {
 		res: {
 			props: {
@@ -30,9 +38,9 @@ export default {
 			data: {
 				text: this.text
 			}
-		}
+		};
 	},
-	methods: {
+	methods: {
 		update(text) {
 			this.$emit("event", {
 				actions: {
@@ -46,6 +54,5 @@ export default {
 
 <style lang="scss" scoped>
 .textarea {
-
 }
 </style>

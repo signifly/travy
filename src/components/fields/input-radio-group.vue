@@ -2,11 +2,12 @@
 	<div class="input-radio-group">
 		<RadioGroup :value="value" size="medium" @input="update">
 			<RadioButton
-			v-for="item in _items"
-			:label="item.value"
-			:disabled="item.disabled"
-			:key="item.value">
-				{{item.label}}
+				v-for="item in _items"
+				:label="item.value"
+				:disabled="item.disabled"
+				:key="item.value"
+			>
+				{{ item.label }}
 			</RadioButton>
 		</RadioGroup>
 	</div>
@@ -52,6 +53,5 @@ export default {
 
 <style lang="scss" scoped>
 .input-radio-group {
-
 }
 </style>

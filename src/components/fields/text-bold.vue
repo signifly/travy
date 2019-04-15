@@ -1,5 +1,5 @@
 <template>
-	<div class="text">{{textFinal}}</div>
+	<div class="text">{{ textFinal }}</div>
 </template>
 
 <script>
@@ -19,7 +19,7 @@ export default {
 	},
 	props: {
 		text: {type: [String, Number], required: false, doc: true},
-		_textDefault: {type: [String, Number], required: false, doc: true},
+		_textDefault: {type: [String, Number], required: false, doc: true}
 	},
 	computed: {
 		textFinal: (t) => toString(t.text) || t._textDefault || "—"

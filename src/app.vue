@@ -1,6 +1,6 @@
 <template>
 	<div class="app" v-if="config">
-		<component :is="layout" v-if="layout"/>
+		<component :is="layout" v-if="layout" />
 	</div>
 </template>
 
@@ -13,10 +13,7 @@ export default {
 
 		layout() {
 			const name = this.$route.meta.layout;
-
-			if (name) {
-				return layouts[name];
-			}
+			return layouts[name];
 		}
 	},
 	beforeCreate() {

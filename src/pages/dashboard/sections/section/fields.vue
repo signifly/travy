@@ -1,7 +1,7 @@
 <template>
 	<box>
 		<div class="fields">
-			<div class="title" v-text="title"/>
+			<div class="title" v-text="title" />
 
 			<div class="fields-list">
 				<field
@@ -29,7 +29,7 @@ export default {
 		return {
 			options: null,
 			data: null
-		}
+		};
 	},
 	computed: {
 		fieldAlt: (t) => ({
@@ -39,7 +39,9 @@ export default {
 	},
 	methods: {
 		async getData() {
-			const {data: {data, options}} = await this.$axios.get(this.endpoint.url, {
+			const {
+				data: {data, options}
+			} = await this.$axios.get(this.endpoint.url, {
 				params: this.endpoint.params
 			});
 

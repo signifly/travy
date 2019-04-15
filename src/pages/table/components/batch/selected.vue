@@ -1,7 +1,13 @@
 <template>
 	<div class="selected">
-		<vItemsTooltip :items="selectedItems" :_itemKey="itemKey" :_itemLink="itemLink">
-			<Checkbox v-model="checked" @change="unselect">{{selectedItems.length}} selected</Checkbox>
+		<vItemsTooltip
+			:items="selectedItems"
+			:_itemKey="itemKey"
+			:_itemLink="itemLink"
+		>
+			<Checkbox v-model="checked" @change="unselect">
+				{{ selectedItems.length }} selected
+			</Checkbox>
 		</vItemsTooltip>
 	</div>
 </template>
@@ -19,7 +25,7 @@ export default {
 	data() {
 		return {
 			checked: true
-		}
+		};
 	},
 	computed: {
 		itemKey: (t) => t.selectedOptions.label,

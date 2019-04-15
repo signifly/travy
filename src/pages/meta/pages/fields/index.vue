@@ -1,9 +1,15 @@
 <template>
 	<div class="fields">
-		<section class="intro html" v-html="require('./intro.md')"/>
+		<section class="intro html" v-html="require('./intro.md')" />
 
 		<div class="items">
-			<vItem v-for="field in fieldsSorted" :key="field.name" :id="field.name" :props="field.comp.props" v-bind="field.comp.meta"/>
+			<vItem
+				v-for="field in fieldsSorted"
+				:key="field.name"
+				:id="field.name"
+				:props="field.comp.props"
+				v-bind="field.comp.meta"
+			/>
 		</div>
 	</div>
 </template>
@@ -24,12 +30,13 @@ const fields = (() => {
 	}, {});
 })();
 
-
 export default {
 	components: {vItem},
 	computed: {
 		fieldsSorted() {
-			const array = Object.entries({...fields, ...this.$settings.fields}).map(([name, comp]) => ({name, comp}));
+			const array = Object.entries({...fields, ...this.$settings.fields}).map(
+				([name, comp]) => ({name, comp})
+			);
 			return sortBy(array, "name");
 		}
 	},
@@ -38,13 +45,11 @@ export default {
 			title: "Fields",
 			sections: [
 				[{value: "introduction", label: "Introduction"}],
-				this.fieldsSorted.map(x => ({value: x.name, label: x.name}))
+				this.fieldsSorted.map((x) => ({value: x.name, label: x.name}))
 			]
 		});
 	}
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

@@ -3,8 +3,8 @@
 		<div class="rows">
 			<div class="row" v-for="(row, i) in rows" :key="i">
 				<div class="item" v-for="item in row" :key="item.title">
-					<div class="title">{{item.title}}</div>
-					<Tag size="small" :type="item.status">{{item.text}}</Tag>
+					<div class="title">{{ item.title }}</div>
+					<Tag size="small" :type="item.status">{{ item.text }}</Tag>
 				</div>
 			</div>
 		</div>
@@ -59,18 +59,18 @@ export default {
 	},
 	computed: {
 		rows: (t) => chunk(t.itemsMap, 2),
-		itemsMap: (t) => t.items.map(x => ({
-			title: x[t._title],
-			text: x[t._text],
-			status: x[t._status]
-		}))
+		itemsMap: (t) =>
+			t.items.map((x) => ({
+				title: x[t._title],
+				text: x[t._text],
+				status: x[t._status]
+			}))
 	}
 };
 </script>
 
 <style lang="scss" scoped>
 .status-set {
-
 	.rows {
 		.row {
 			display: flex;

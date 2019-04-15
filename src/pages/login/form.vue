@@ -1,10 +1,14 @@
 <template>
 	<div class="loginform">
-		<div class="header">{{header}}</div>
+		<div class="header">{{ header }}</div>
 		<div class="box">
-			<div class="title">{{title}}</div>
-			<Form class="form" :model="data" label-position="top" @keydown.native.enter="$emit('submit')">
-
+			<div class="title">{{ title }}</div>
+			<Form
+				class="form"
+				:model="data"
+				label-position="top"
+				@keydown.native.enter="$emit('submit')"
+			>
 				<field
 					v-for="field in fields"
 					:key="field.name"
@@ -18,18 +22,18 @@
 				</div>
 			</Form>
 
-			<div class="text error" v-if="error.message">{{error.message}}</div>
-			<div class="text message" v-if="message">{{message}}</div>
+			<div class="text error" v-if="error.message">{{ error.message }}</div>
+			<div class="text message" v-if="message">{{ message }}</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import {Form, Button} from "element-ui";
+import {Form} from "element-ui";
 import field from "@/components/field";
 
 export default {
-	components: {Form, Button, field},
+	components: {Form, field},
 	props: {
 		title: {type: String, required: true},
 		loading: {type: Boolean, required: false},

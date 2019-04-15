@@ -27,7 +27,7 @@ export default {
 				date: "somedate",
 				formatValue: "timestamp"
 			},
-			data: {
+			data: {
 				somedate: 1325376000
 			}
 		}
@@ -37,27 +37,35 @@ export default {
 		_date: {type: String, required: false},
 		_format: {type: String, required: false, doc: true},
 		_formatValue: {type: String, default: "timestamp", doc: true},
-		_type: {type: String, required: false, default: "date", doc: true, note: `
+		_type: {
+			type: String,
+			required: false,
+			default: "date",
+			doc: true,
+			note: `
 			<i>year/month/date/datetime</i>
-		`}
+		`
+		}
 	},
 	data() {
 		return {
 			pickerOpts: {
 				firstDayOfWeek: 1
 			}
-		}
+		};
 	},
 	computed: {
-		format: (t) => t._format || {
-			year: "yyyy",
-			month: "MM-yyyy",
-			date: "dd-MM-yyyy",
-			datetime: "yyyy-MM-dd HH:mm:ss"
-		}[t._type],
+		format: (t) =>
+			t._format ||
+			{
+				year: "yyyy",
+				month: "MM-yyyy",
+				date: "dd-MM-yyyy",
+				datetime: "yyyy-MM-dd HH:mm:ss"
+			}[t._type],
 
 		timestamp: (t) => t._formatValue === "timestamp",
-		dateC: (t) => (t.timestamp && t.date) ? t.date * 1000 : t.date
+		dateC: (t) => (t.timestamp && t.date ? t.date * 1000 : t.date)
 	},
 	methods: {
 		update(date) {

@@ -1,13 +1,17 @@
 <template>
 	<div class="reset-password">
-		<vForm title="Reset password" v-bind="{loading, error, message, fields, data}" @event="event" @submit="reset">
+		<vForm
+			title="Reset password"
+			v-bind="{loading, error, message, fields, data}"
+			@event="event"
+			@submit="reset"
+		>
 			<template slot="actions">
-				<Button size="medium" icon="el-icon-arrow-left" @click="login">Login</Button>
+				<Button size="medium" icon="el-icon-arrow-left" @click="login">
+					Login
+				</Button>
 				<Button type="primary" size="medium" v-bind="{loading}" @click="reset">
-					{{$translate({
-						en: "Reset",
-						da: "Nulstil"
-					})}}
+					{{ $translate({en: "Reset", da: "Nulstil"}) }}
 				</Button>
 			</template>
 		</vForm>
@@ -63,12 +67,12 @@ export default {
 				}
 			],
 
-			data: {
+			data: {
 				email: "",
 				password: "",
 				password_confirmation: ""
 			}
-		}
+		};
 	},
 	methods: {
 		event({actions}) {
@@ -85,9 +89,13 @@ export default {
 				this.error = {};
 				this.message = "";
 				this.loading = true;
-				const {data} = await this.$axios.post("password/reset", {...this.data, token: this.id}, {customErr: true});
+				const {data} = await this.$axios.post(
+					"password/reset",
+					{...this.data, token: this.id},
+					{customErr: true}
+				);
 				this.message = data.message;
-			} catch(err) {
+			} catch (err) {
 				this.error = err;
 			} finally {
 				this.loading = false;

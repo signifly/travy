@@ -1,7 +1,7 @@
 <template>
 	<transition :name="transition" appear>
 		<div class="popup" :class="[`position-${position}`, `type-${type}`]">
-			<slot/>
+			<slot />
 		</div>
 	</transition>
 </template>
@@ -17,6 +17,7 @@ export default {
 		transition() {
 			if (this.position.includes("top")) return "trans-fadeUp";
 			if (this.position.includes("bottom")) return "trans-fadeDown";
+			return "";
 		}
 	}
 };

@@ -1,19 +1,19 @@
 <template>
 	<div class="item" :class="{is_read}" @click="markRead">
 		<div class="unread">
-			<div class="dot" :class="{is_read}"/>
+			<div class="dot" :class="{is_read}" />
 		</div>
 
 		<div class="info">
-			<div class="title" v-text="title"/>
-			<div class="msg" v-text="message"/>
+			<div class="title" v-text="title" />
+			<div class="msg" v-text="message" />
 			<div class="link" v-if="link">
-				<Button size="mini" @click="goToLink">{{link_text}}</Button>
+				<Button size="mini" @click="goToLink">{{ link_text }}</Button>
 			</div>
 
 			<div class="bottom">
-				<div class="date" v-text="date"/>
-				<div class="status" :class="status"/>
+				<div class="date" v-text="date" />
+				<div class="status" :class="status" />
 			</div>
 		</div>
 	</div>
@@ -40,8 +40,10 @@ export default {
 	},
 	methods: {
 		async markRead() {
-			if (!this.is_read) {
-				await this.$axios.post("account/read-notifications", {data: {ids: [this.id]}});
+			if (!this.is_read) {
+				await this.$axios.post("account/read-notifications", {
+					data: {ids: [this.id]}
+				});
 				this.$emit("updateItem", {id: this.id, is_read: true});
 			}
 		},

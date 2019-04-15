@@ -10,25 +10,26 @@ const instance = app({
 	test: true
 });
 
-
 instance.$axios.get = (url) => {
-	if (url === "/definitions") return Promise.resolve({
-		data: dashboard.definitions
-	});
-	if (url === "/definitions/table") return Promise.resolve({
-		data: table.definitions
-	});
-	if (url === "/data/table") return Promise.resolve({
-		data: table.data
-	});
-	if (url === "/data/fields") return Promise.resolve({
-		data: {client_id: 1, name: "Pete"}
-	});
+	if (url === "/definitions")
+		return Promise.resolve({
+			data: dashboard.definitions
+		});
+	if (url === "/definitions/table")
+		return Promise.resolve({
+			data: table.definitions
+		});
+	if (url === "/data/table")
+		return Promise.resolve({
+			data: table.data
+		});
+	if (url === "/data/fields")
+		return Promise.resolve({
+			data: {client_id: 1, name: "Pete"}
+		});
 };
 
-
 let wrapper;
-
 
 beforeEach(async () => {
 	const {default: comp} = require("./page");
@@ -38,14 +39,14 @@ beforeEach(async () => {
 		propsData: {
 			defsEndpoint: {url: "/definitions"}
 		},
-		stubs: { // element-ui fix
+		stubs: {
+			// element-ui fix
 			transition: false
 		}
 	});
 
 	await wrapper.vm.$nextTick();
 });
-
 
 describe("dashboard", () => {
 	test("sections", () => {

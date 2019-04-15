@@ -1,7 +1,7 @@
 <template>
 	<div class="error">
-		<div class="title">{{info.title}}</div>
-		<div class="text">{{info.text}}&nbsp;&nbsp;(-_-｡)</div>
+		<div class="title">{{ info.title }}</div>
+		<div class="text">{{ info.text }}&nbsp;&nbsp;(-_-｡)</div>
 	</div>
 </template>
 
@@ -20,7 +20,6 @@ const info = {
 		text: "Server is unavailable"
 	}
 };
-
 
 export default {
 	props: {

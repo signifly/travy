@@ -1,11 +1,13 @@
 <template>
 	<action
-	v-bind="[actionC, {active}]"
-	:actionProps="{position: 'top-right'}"
-	@close="$emit('close', $event)"
-	@event="$emit('event', $event)">
-
-		<DropdownItem class="item" :command="action">{{action.title}}</DropdownItem>
+		v-bind="[actionC, {active}]"
+		:actionProps="{position: 'top-right'}"
+		@close="$emit('close', $event)"
+		@event="$emit('event', $event)"
+	>
+		<DropdownItem class="item" :command="action">{{
+			action.title
+		}}</DropdownItem>
 	</action>
 </template>
 
@@ -22,9 +24,10 @@ export default {
 		ids: {type: Array, required: true}
 	},
 	computed: {
-		actionC: (t) => merge({}, t.action, {
-			props: {payload: {data: {ids: t.ids}}}
-		})
+		actionC: (t) =>
+			merge({}, t.action, {
+				props: {payload: {data: {ids: t.ids}}}
+			})
 	}
 };
 </script>

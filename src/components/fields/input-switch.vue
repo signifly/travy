@@ -1,6 +1,6 @@
 <template>
 	<div class="switch">
-		<elSwitch :value="value" :disabled="_disabled" @change="update"/>
+		<elSwitch :value="value" :disabled="_disabled" @change="update" />
 	</div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
 		res: {
 			props: {
 				disabled: false,
-				value: "switchVal",
+				value: "switchVal"
 			},
 			data: {
 				switchVal: false
@@ -34,5 +34,5 @@ export default {
 			});
 		}
 	}
-}
+};
 </script>

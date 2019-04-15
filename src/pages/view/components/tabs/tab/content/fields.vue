@@ -30,7 +30,7 @@ export default {
 	data() {
 		return {
 			payload: {}
-		}
+		};
 	},
 	computed: {
 		endpointUrl: (t) => rStringProps({data: t.parentData, val: t.endpoint.url}),
@@ -49,7 +49,10 @@ export default {
 				let {data} = actions.update;
 
 				// {"key1.key2": 1} ===> {key1: {key2: 1}}
-				data = Object.entries(data).reduce((obj, [key, val]) => set(obj, key, val), {});
+				data = Object.entries(data).reduce(
+					(obj, [key, val]) => set(obj, key, val),
+					{}
+				);
 				// merge payload with data
 				this.payload = merge({}, this.payload, data);
 				// merge state data with data
@@ -70,7 +73,9 @@ export default {
 		},
 
 		async getData() {
-			const {data: {data, options}} = await this.$axios.get(this.endpointUrl, {
+			const {
+				data: {data, options}
+			} = await this.$axios.get(this.endpointUrl, {
 				params: {...this.endpoint.params, modifier: this.modifiers}
 			});
 
@@ -79,16 +84,22 @@ export default {
 
 		async save({done} = {}) {
 			try {
-				const {data: {data, options}} = await this.$axios.put(this.endpointUrl, {
-					modifier: this.modifiers,
-					data: this.payload
-				}, {customErr: true});
+				const {
+					data: {data, options}
+				} = await this.$axios.put(
+					this.endpointUrl,
+					{
+						modifier: this.modifiers,
+						data: this.payload
+					},
+					{customErr: true}
+				);
 
 				this.updateState({data, options, edit: false, error: null});
 				this.payload = {};
 
 				if (done) await done();
-			} catch(error) {
+			} catch (error) {
 				this.updateState({error});
 				throw error.message;
 			}

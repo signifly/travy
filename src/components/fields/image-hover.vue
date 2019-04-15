@@ -1,9 +1,14 @@
 <template>
-	<div class="image" v-if="image" @mouseover="active = true" @mouseleave="active = false">
-		<i class="el-icon-picture"/>
+	<div
+		class="image"
+		v-if="image"
+		@mouseover="active = true"
+		@mouseleave="active = false"
+	>
+		<i class="el-icon-picture" />
 		<transition name="img">
 			<div class="img" v-if="active">
-				<img :src="image">
+				<img :src="image" />
 			</div>
 		</transition>
 	</div>
@@ -11,7 +16,7 @@
 
 <script>
 export default {
-	meta: {
+	meta: {
 		res: {
 			props: {
 				image: "imageUrl"
@@ -27,7 +32,7 @@ export default {
 	data() {
 		return {
 			active: false
-		}
+		};
 	}
 };
 </script>
@@ -51,10 +56,12 @@ export default {
 
 		$t: 0.15s;
 
-		&-enter-active, &-leave-active {
+		&-enter-active,
+		&-leave-active {
 			transition: cubic(opacity, $t), cubic(transform, $t);
 		}
-		&-enter, &-leave-to {
+		&-enter,
+		&-leave-to {
 			opacity: 0;
 			transform: translateX(5px) scale(0.98);
 		}

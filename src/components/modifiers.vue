@@ -1,7 +1,7 @@
 <template>
 	<div class="modifiers">
 		<div class="modifiers-field" v-for="field in fields" :key="field.name">
-			<div class="label" v-text="field.label"/>
+			<div class="label" v-text="field.label" />
 			<field
 				label=""
 				v-bind="[field, {alt: {data: dataComb}}]"
@@ -23,7 +23,7 @@ export default {
 	},
 	computed: {
 		dataComb: (t) => ({...t.data, ...t.queryData}),
-		queryData: (t) => t.query.modifiers,
+		queryData: (t) => t.query.modifiers
 	},
 	methods: {
 		event({actions, done}) {

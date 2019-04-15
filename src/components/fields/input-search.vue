@@ -17,7 +17,7 @@ import {Autocomplete} from "element-ui";
 import {meta} from "@/modules/utils";
 
 export default {
-	components: {Autocomplete},
+	components: {Autocomplete},
 	meta: {
 		res: {
 			props: {
@@ -43,7 +43,12 @@ export default {
 	props: {
 		alt: {type: Object, required: true},
 		_disabled: {type: Boolean, required: false, doc: true},
-		_options: {type: Object, required: true, doc: true, note: `if options is an array of objects, options.value is required`},
+		_options: {
+			type: Object,
+			required: true,
+			doc: true,
+			note: `if options is an array of objects, options.value is required`
+		},
 		value: {type: String, required: false, doc: true},
 		_value: {type: String, required: true}
 	},
@@ -51,14 +56,18 @@ export default {
 		return {
 			valueC: this.value,
 			items: []
-		}
+		};
 	},
 	computed: {
-		wait: (t) => t.alt.type === "table" ? 500 : 0
+		wait: (t) => (t.alt.type === "table" ? 500 : 0)
 	},
-	methods: {
+	methods: {
 		async getOptions(search, cb) {
-			const {key, value, endpoint: {url, params}} = this._options;
+			const {
+				key,
+				value,
+				endpoint: {url, params}
+			} = this._options;
 
 			cb(this.items); // keep showing old items while fetching new items
 
@@ -68,7 +77,7 @@ export default {
 				})
 			});
 
-			const items = get(data, key, data).map(x => {
+			const items = get(data, key, data).map((x) => {
 				return typeof x === "string" ? {value: x} : {value: get(x, value)};
 			});
 

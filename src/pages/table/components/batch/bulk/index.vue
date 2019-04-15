@@ -1,6 +1,12 @@
 <template>
 	<div class="bulk">
-		<Dropdown trigger="click" :show-timeout="0" :hide-timeout="0" :hide-on-click="false" @command="select">
+		<Dropdown
+			trigger="click"
+			:show-timeout="0"
+			:hide-timeout="0"
+			:hide-on-click="false"
+			@command="select"
+		>
 			<Button size="medium">
 				Bulk actions<i class="el-icon-arrow-up el-icon--right"></i>
 			</Button>
@@ -32,7 +38,7 @@ export default {
 	data() {
 		return {
 			actAction: null
-		}
+		};
 	},
 	methods: {
 		close() {

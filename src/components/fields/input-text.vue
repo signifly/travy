@@ -8,7 +8,7 @@
 			size="medium"
 			@input="update"
 		/>
-		<div class="unit" v-if="_unit">{{_unit}}</div>
+		<div class="unit" v-if="_unit">{{ _unit }}</div>
 	</div>
 </template>
 
@@ -17,7 +17,7 @@ import {Input} from "element-ui";
 import {debounce} from "lodash";
 
 export default {
-	components: {Input},
+	components: {Input},
 	meta: {
 		res: {
 			props: {
@@ -41,12 +41,12 @@ export default {
 	data() {
 		return {
 			valueC: this.value
-		}
+		};
 	},
 	computed: {
-		wait: (t) => t.alt.type === "table" ? 500 : 0
+		wait: (t) => (t.alt.type === "table" ? 500 : 0)
 	},
-	methods: {
+	methods: {
 		update(value) {
 			this.$emit("event", {
 				actions: {

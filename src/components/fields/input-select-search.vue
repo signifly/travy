@@ -1,18 +1,17 @@
 <template>
 	<div class="select-search">
 		<Select
-		v-bind="{value, size}"
-		:remote-method="getItems"
-		:disabled="_disabled"
-		:clearable="_clearable"
-		:allow-create="_addable"
-		:filterable="true"
-		:remote="true"
-		@change="update"
-		@visible-change="open">
-
-			<Option v-for="item in itemsC" :key="item.value" v-bind="item"/>
-
+			v-bind="{value, size}"
+			:remote-method="getItems"
+			:disabled="_disabled"
+			:clearable="_clearable"
+			:allow-create="_addable"
+			:filterable="true"
+			:remote="true"
+			@change="update"
+			@visible-change="open"
+		>
+			<Option v-for="item in itemsC" :key="item.value" v-bind="item" />
 		</Select>
 	</div>
 </template>
@@ -25,7 +24,7 @@ import {merge, get} from "lodash";
 export default {
 	components: {Select, Option},
 	meta: {
-		res: {
+		res: {
 			props: {
 				disabled: false,
 				addable: false,
@@ -61,7 +60,7 @@ export default {
 			selectedItem: null,
 			opened: false,
 			items: []
-		}
+		};
 	},
 	computed: {
 		endpoint: (t) => t._options.endpoint,
@@ -72,10 +71,13 @@ export default {
 			return "medium";
 		},
 
-		itemsC: (t) => [t.selectedItem, ...t.items].filter(x => x).map(x => ({
-			value: get(x, t._options.value),
-			label: get(x, t._options.label)
-		}))
+		itemsC: (t) =>
+			[t.selectedItem, ...t.items]
+				.filter((x) => x)
+				.map((x) => ({
+					value: get(x, t._options.value),
+					label: get(x, t._options.label)
+				}))
 	},
 	methods: {
 		open() {
@@ -100,11 +102,13 @@ export default {
 
 		async getSelectedItem() {
 			const key = this._options.itemKey;
-			const {data} = await this.$axios.get(`${this.endpoint.url}/${this.value}`);
+			const {data} = await this.$axios.get(
+				`${this.endpoint.url}/${this.value}`
+			);
 			this.selectedItem = key ? get(data, key) : data;
 
 			// remove selectedItem after Select caches it
-			this.$nextTick(() => this.selectedItem = null);
+			this.$nextTick(() => (this.selectedItem = null));
 		},
 
 		update(value) {

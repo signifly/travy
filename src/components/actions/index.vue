@@ -1,6 +1,6 @@
 <template>
 	<div class="action" v-if="!disabled">
-		<slot/>
+		<slot />
 
 		<component
 			v-if="active"
@@ -36,7 +36,8 @@ export default {
 			data: mapValues(get(props, "payload.data"), (val) => get(data, val, val))
 		}),
 
-		dataComb: (t) => ({ // parent data and action data combined
+		dataComb: (t) => ({
+			// parent data and action data combined
 			...t.data,
 			...t.payload.data
 		}),
@@ -52,7 +53,7 @@ export default {
 		disabled() {
 			if (!this.hide) return false;
 
-			const op = ({eq, gt, gte, lt, lte})[this.hide.operator];
+			const op = {eq, gt, gte, lt, lte}[this.hide.operator];
 			const key = get(this.dataComb, this.hide.key);
 			const value = this.hide.value;
 			return op(key, value);

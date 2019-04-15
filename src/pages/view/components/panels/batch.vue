@@ -2,38 +2,49 @@
 	<panel v-bind="{loading: loadingAll}" v-if="items.length">
 		<div class="left">
 			<Tooltip content="Save and close">
-				<a class="close" @click="closeSave"><i class="el-icon-circle-close-outline"/></a>
+				<a class="close" @click="closeSave">
+					<i class="el-icon-circle-close-outline" />
+				</a>
 			</Tooltip>
-			<div class="text" v-text="title"/>
+			<div class="text" v-text="title" />
 		</div>
 
 		<div class="progress">
-			<div class="line"><Progress :percentage="progress" :show-text="false" /></div>
-			<div class="text">{{index + 1}} / {{items.length}}</div>
+			<div class="line">
+				<Progress :percentage="progress" :show-text="false" />
+			</div>
+			<div class="text">{{ index + 1 }} / {{ items.length }}</div>
 		</div>
 
 		<div class="actions">
-			<div class="error" v-if="error" v-text="error"/>
+			<div class="error" v-if="error" v-text="error" />
 
-			<Button v-if="prev" size="medium" type="success" icon="el-icon-arrow-left" @click="prevSave">
+			<Button
+				v-if="prev"
+				size="medium"
+				type="success"
+				icon="el-icon-arrow-left"
+				@click="prevSave"
+			>
 				Save and back
 			</Button>
 
 			<Button
-			v-if="next"
-			size="medium"
-			type="success"
-			@click="nextSave"
-			v-shortkey="{win: ['ctrl', 's'], mac: ['meta', 's']}"
-			@shortkey.native="nextSave"
-			title="CTRL/CMD + S">
+				v-if="next"
+				size="medium"
+				type="success"
+				@click="nextSave"
+				v-shortkey="{win: ['ctrl', 's'], mac: ['meta', 's']}"
+				@shortkey.native="nextSave"
+				title="CTRL/CMD + S"
+			>
 				Save and next
-				<i class="el-icon-arrow-right el-icon-right"/>
+				<i class="el-icon-arrow-right el-icon-right" />
 			</Button>
 
 			<Button v-if="!next" size="medium" type="success" @click="closeSave">
 				Save and close
-				<i class="el-icon-check el-icon-right"/>
+				<i class="el-icon-check el-icon-right" />
 			</Button>
 		</div>
 	</panel>
@@ -45,7 +56,7 @@ import panel from "@/components/panel";
 import {get} from "lodash";
 
 export default {
-	components: {Button, Tooltip, Progress, panel},
+	components: {Button, Tooltip, Progress, panel},
 	props: {
 		title: {type: String, required: true},
 		error: {type: String, required: true},
@@ -55,10 +66,10 @@ export default {
 		return {
 			sequential: JSON.parse(localStorage.getItem("sequential")),
 			loadingData: false
-		}
+		};
 	},
 	computed: {
-		items: (t) => get(t.sequential, "items", []).map(x => x.toString()),
+		items: (t) => get(t.sequential, "items", []).map((x) => x.toString()),
 		progress: (t) => ((t.index + 1) / t.items.length) * 100,
 		loadingAll: (t) => t.loading || t.loadingData,
 		modifiers: (t) => t.$route.query.modifiers,
@@ -66,9 +77,9 @@ export default {
 		viewId: (t) => t.$route.params.viewId,
 		index: (t) => t.items.indexOf(t.viewId),
 		prev: (t) => t.items[t.index - 1],
-		next: (t) => t.items[t.index + 1],
+		next: (t) => t.items[t.index + 1]
 	},
-	methods: {
+	methods: {
 		nextSave() {
 			this.$parent.$emit("save", {
 				done: async () => {
@@ -95,7 +106,10 @@ export default {
 			this.$emit("save", {
 				done: async () => {
 					localStorage.removeItem("sequential");
-					this.$router.push({path: `/t/${this.tableId}`, query: {modifiers: this.modifiers}});
+					this.$router.push({
+						path: `/t/${this.tableId}`,
+						query: {modifiers: this.modifiers}
+					});
 				}
 			});
 		},
@@ -104,7 +118,7 @@ export default {
 			this.loadingData = true;
 
 			this.$emit("event", {
-				done: async () => this.loadingData = false,
+				done: async () => (this.loadingData = false),
 				actions: {
 					refresh: {data: true}
 				}

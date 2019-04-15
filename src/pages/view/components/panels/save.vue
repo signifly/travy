@@ -2,19 +2,19 @@
 	<vPanel>
 		<div class="text">There are unsaved changes</div>
 		<div class="actions">
-			<div class="error" v-if="error" v-text="error"/>
+			<div class="error" v-if="error" v-text="error" />
 
 			<Button
-			size="medium"
-			type="primary"
-			v-bind="{loading}"
-			@click="save"
-			v-shortkey="{win: ['ctrl', 's'], mac: ['meta', 's']}"
-			@shortkey.native="save"
-			title="CTRL/CMD + S">
+				size="medium"
+				type="primary"
+				v-bind="{loading}"
+				@click="save"
+				v-shortkey="{win: ['ctrl', 's'], mac: ['meta', 's']}"
+				@shortkey.native="save"
+				title="CTRL/CMD + S"
+			>
 				Save changes
 			</Button>
-
 		</div>
 	</vPanel>
 </template>
@@ -24,12 +24,12 @@ import {Button} from "element-ui";
 import vPanel from "@/components/panel.vue";
 
 export default {
-	components: {Button, vPanel},
+	components: {Button, vPanel},
 	props: {
 		loading: {type: Boolean, required: true},
 		error: {type: String, required: true}
 	},
-	methods: {
+	methods: {
 		save() {
 			this.$emit("save");
 		}

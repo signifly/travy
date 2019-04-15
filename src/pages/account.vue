@@ -1,6 +1,6 @@
 <template>
 	<div class="account">
-		<viewPage v-bind="{requests}" @save="save"/>
+		<viewPage v-bind="{requests}" @save="save" />
 	</div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
 				data: "account",
 				definitions: "definitions/view/account"
 			}
-		}
+		};
 	},
 	methods: {
 		save({data}) {

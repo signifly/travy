@@ -8,10 +8,9 @@
 			:allow-create="_addable"
 			:filterable="true"
 			:multiple="true"
-			@change="update">
-
-			<Option v-for="item in _items" v-bind="item" :key="item.value"/>
-
+			@change="update"
+		>
+			<Option v-for="item in _items" v-bind="item" :key="item.value" />
 		</Select>
 	</div>
 </template>

@@ -1,16 +1,15 @@
 <template>
-	<action
-	v-bind="{props, active, hide, data}"
-	@close="toggle"
-	@event="event">
-
+	<action v-bind="{props, active, hide, data}" @close="toggle" @event="event">
 		<div class="view-action">
 			<Button size="medium" :type="status" @click="toggle">
-				{{title}}
-				<i class="el-icon-arrow-right el-icon-right" :class="`el-icon-${icon} el-icon-right`" v-if="icon"/>
+				{{ title }}
+				<i
+					class="el-icon-arrow-right el-icon-right"
+					:class="`el-icon-${icon} el-icon-right`"
+					v-if="icon"
+				/>
 			</Button>
 		</div>
-
 	</action>
 </template>
 
@@ -31,7 +30,7 @@ export default {
 	data() {
 		return {
 			active: false
-		}
+		};
 	},
 	methods: {
 		toggle() {
@@ -41,7 +40,7 @@ export default {
 		event(e) {
 			this.active = false;
 			this.$emit("event", e);
-		},
+		}
 	}
 };
 </script>

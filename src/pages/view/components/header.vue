@@ -1,11 +1,15 @@
 <template>
 	<div class="header">
-		<div class="image" :style="{backgroundImage: `url('${propsData.image}')`}" v-if="propsData.image"/>
+		<div
+			class="image"
+			:style="{backgroundImage: `url('${propsData.image}')`}"
+			v-if="propsData.image"
+		/>
 
 		<div class="info">
 			<div class="title">
-				<div class="text">{{propsData.title}}</div>
-				<Tag size="small">{{propsData.tag}}</Tag>
+				<div class="text">{{ propsData.title }}</div>
+				<Tag size="small">{{ propsData.tag }}</Tag>
 			</div>
 		</div>
 	</div>

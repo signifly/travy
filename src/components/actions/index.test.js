@@ -22,27 +22,26 @@ const propsData = {
 	}
 };
 
-
 describe("action", () => {
 	test("active", () => {
 		const wrapper = mount(comp, {propsData});
 		expect(wrapper.contains(compPopup)).toBe(true);
 	});
 
-
 	test("hide", () => {
 		const wrapper = mount(comp, {propsData});
 
-		wrapper.setProps({hide: {
-			key: "obj.isHidden",
-			operator: "eq",
-			value: true
-		}});
+		wrapper.setProps({
+			hide: {
+				key: "obj.isHidden",
+				operator: "eq",
+				value: true
+			}
+		});
 
 		expect(wrapper.vm.disabled).toBe(true);
 		expect(wrapper.contains(compPopup)).toBe(false);
 	});
-
 
 	test("propsC", () => {
 		const wrapper = mount(comp, {propsData});
@@ -54,10 +53,12 @@ describe("action", () => {
 		expect(wrapper.vm.propsC).toHaveProperty("payload.data.id", 1);
 
 		// endpoint
-		expect(wrapper.vm.propsC).toHaveProperty("endpoint.url", "https://localhost/1");
+		expect(wrapper.vm.propsC).toHaveProperty(
+			"endpoint.url",
+			"https://localhost/1"
+		);
 
 		// onSubmit
 		expect(wrapper.vm.propsC).toHaveProperty("onSubmit", "https://localhost/1");
-
 	});
 });

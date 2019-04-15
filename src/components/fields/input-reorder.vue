@@ -4,22 +4,33 @@
 			<table>
 				<thead>
 					<tr>
-						<th/>
-						<th v-for="column in _columns" :key="column.label" v-text="column.label"/>
+						<th />
+						<th
+							v-for="column in _columns"
+							:key="column.label"
+							v-text="column.label"
+						/>
 					</tr>
 				</thead>
 
 				<draggable v-model="items" handle=".drag" @end="update" tag="tbody">
 					<tr v-for="item in items" :key="item.id">
-						<td class="top" @click="moveTop(item)" title="Move to top"><i class="el-icon-d-arrow-left"/>
-						<td v-for="column in _columns" :key="column.key" class="drag" v-text="item[column.key]"/>
+						<td class="top" @click="moveTop(item)" title="Move to top">
+							<i class="el-icon-d-arrow-left" />
+						</td>
+						<td
+							v-for="column in _columns"
+							:key="column.key"
+							class="drag"
+							v-text="item[column.key]"
+						/>
 					</tr>
 				</draggable>
 			</table>
 		</div>
 
 		<div class="loading" v-else>
-			<i class="el-icon-loading"/>
+			<i class="el-icon-loading" />
 		</div>
 	</div>
 </template>
@@ -54,9 +65,7 @@ export default {
 					}
 				]
 			},
-			data: {
-
-			}
+			data: {}
 		}
 	},
 	props: {
@@ -67,18 +76,18 @@ export default {
 	data() {
 		return {
 			items: []
-		}
+		};
 	},
 	methods: {
 		moveTop(item) {
-			const items = this.items.filter(x => x !== item);
+			const items = this.items.filter((x) => x !== item);
 			items.unshift(item);
 			this.items = items;
 			this.update();
 		},
 
 		update() {
-			const ids = this.items.map(x => x[this._options.value]);
+			const ids = this.items.map((x) => x[this._options.value]);
 
 			this.$emit("event", {
 				actions: {
@@ -88,7 +97,9 @@ export default {
 		},
 
 		async getItems() {
-			const {endpoint: {url, params}} = this._options;
+			const {
+				endpoint: {url, params}
+			} = this._options;
 			const {data} = await this.$axios.get(url, {params});
 			this.items = get(data, this._options.key, data);
 		}
@@ -121,7 +132,8 @@ export default {
 					}
 				}
 
-				th, td {
+				th,
+				td {
 					text-align: left;
 					padding: 0.25em 0.5em;
 				}

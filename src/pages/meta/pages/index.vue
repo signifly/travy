@@ -1,6 +1,6 @@
 <template>
 	<layout v-bind="{sidebar}">
-		<component :is="page" ref="page" @sidebar="sidebar = $event"/>
+		<component :is="page" ref="page" @sidebar="sidebar = $event" />
 	</layout>
 </template>
 
@@ -12,7 +12,7 @@ export default {
 	data() {
 		return {
 			sidebar: {}
-		}
+		};
 	},
 	computed: {
 		pathMatch: (t) => t.$route.params.pathMatch,
@@ -26,6 +26,5 @@ export default {
 
 <style lang="scss" scoped>
 .index {
-
 }
 </style>

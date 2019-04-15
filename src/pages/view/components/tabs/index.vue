@@ -2,8 +2,13 @@
 	<div class="tabs">
 		<Tabs type="card" v-model="activeTab">
 			<TabPane v-for="tab in tabs" :name="tab.id" :key="tab.id" :lazy="true">
-				<tabLabel slot="label" v-bind="tab" :state="state[tab.id]"/>
-				<tabContent ref="tabContent" v-bind="{tab, data}" :state.sync="state[tab.id]" @event="$emit('event', $event)"/>
+				<tabLabel slot="label" v-bind="tab" :state="state[tab.id]" />
+				<tabContent
+					ref="tabContent"
+					v-bind="{tab, data}"
+					:state.sync="state[tab.id]"
+					@event="$emit('event', $event)"
+				/>
 			</TabPane>
 		</Tabs>
 	</div>
@@ -24,10 +29,10 @@ export default {
 		return {
 			activeTab: this.$route.params.tabId || this.tabs[0].id,
 			state: this.tabs.reduce((obj, tab) => ({...obj, [tab.id]: {}}), {}) // {tabId: {}}
-		}
+		};
 	},
 	computed: {
-		edit: (t) => Object.values(t.state).some(val => val.edit)
+		edit: (t) => Object.values(t.state).some((val) => val.edit)
 	},
 	methods: {
 		async save() {
@@ -51,7 +56,7 @@ export default {
 
 <style lang="scss" scoped>
 .tabs {
-	::v-deep{
+	::v-deep {
 		.el-tabs__header {
 			display: flex;
 			margin: 0;
@@ -70,7 +75,7 @@ export default {
 			}
 		}
 
-		.el-tabs__content{
+		.el-tabs__content {
 			background-color: $white1;
 			border: 1px solid #e4e7ed;
 			border-radius: 4px;
