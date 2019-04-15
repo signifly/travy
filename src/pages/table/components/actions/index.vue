@@ -24,5 +24,6 @@ export default {
 <style lang="scss" scoped>
 .actions {
 	display: flex;
+	margin-left: auto;
 }
 </style>
