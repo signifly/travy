@@ -50,7 +50,7 @@ export default {
 <style lang="scss" scoped>
 .text {
 	&.align {
-		&-left  {
+		&-left {
 			text-align: left;
 		}
 
