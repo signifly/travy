@@ -83,11 +83,12 @@ export default {
 		modifiers: (t) => t.definitions.modifiers,
 		pagination: (t) => t.definitions.pagination,
 
-		endpoint: (t) =>
-			rStringProps({
-				val: t.definitions.endpoint,
-				data: t.parentData
-			})
+		endpoint() {
+			return rStringProps({
+				val: this.definitions.endpoint,
+				data: this.parentData
+			});
+		}
 	},
 	methods: {
 		select(items) {

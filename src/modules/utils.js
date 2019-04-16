@@ -1,4 +1,4 @@
-import {get, replace, transform, isObject} from "lodash";
+import {eq, gt, gte, lt, lte, get, replace, isObject, transform} from "lodash";
 
 export const date = (epoch) => {
 	const d = new Date(epoch * 1000);
@@ -72,4 +72,10 @@ export const translate = (locales) => {
 	const {default: store} = require("@/store");
 	const locale = store.getters["config/locale"];
 	return locales[locale] || locales.en;
+};
+
+export const operator = ({key, value, operator, data}) => {
+	operator = {eq, gt, gte, lt, lte}[operator];
+	key = get(data, key);
+	return operator(key, value);
 };
