@@ -120,6 +120,19 @@ export default {
 				height: 3.25em;
 			}
 
+			// disable row hover
+			tr {
+				td {
+					background-color: #fff !important;
+				}
+
+				&.el-table__row--striped {
+					td {
+						background-color: #fafafa !important;
+					}
+				}
+			}
+
 			td {
 				padding: em(13) 0;
 			}
