@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import {get, eq, gt, gte, lt, lte, mapValues} from "lodash";
-import {rStringProps} from "@/modules/utils";
-import dropdown from "./dropdown.vue";
+import {rStringProps, operator} from "@/modules/utils";
+import {mapValues, get} from "lodash";
+import dropdown from "./dropdown";
 import modal from "./modal.vue";
 import popup from "./popup.vue";
 import show from "./show.vue";
@@ -51,12 +51,11 @@ export default {
 		}),
 
 		disabled() {
-			if (!this.hide) return false;
-
-			const op = {eq, gt, gte, lt, lte}[this.hide.operator];
-			const key = get(this.dataComb, this.hide.key);
-			const value = this.hide.value;
-			return op(key, value);
+			if (this.hide) {
+				return operator({...this.hide, data: this.dataComb});
+			} else {
+				return false;
+			}
 		}
 	},
 	methods: {

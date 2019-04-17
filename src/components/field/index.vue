@@ -1,5 +1,5 @@
 <template>
-	<div class="field" :style="{width: widthCalc}">
+	<div class="field" :style="{width: widthCalc}" v-if="!disabled">
 		<div class="content">
 			<vlabel v-bind="{alt, name, label, tooltip}" v-if="rules.label" />
 			<fieldType v-bind="[fieldType, {alt}]" @event="$emit('event', $event)" />
@@ -16,9 +16,10 @@
 </template>
 
 <script>
-import {get} from "lodash";
+import {operator} from "@/modules/utils";
 import fieldType from "./field-type";
 import vlabel from "./label";
+import {get} from "lodash";
 
 export default {
 	components: {vlabel, fieldType},
@@ -28,6 +29,7 @@ export default {
 		tooltip: {type: String, required: false},
 		onClick: {type: String, required: false},
 		label: {type: String, required: false},
+		hide: {type: Object, required: false},
 		name: {type: String, required: true},
 		width: {type: Number, default: 100},
 		alt: {type: Object, required: true}
@@ -45,6 +47,14 @@ export default {
 				label: type !== "table",
 				description: type === "view-tab"
 			};
+		},
+
+		disabled() {
+			if (this.hide) {
+				return operator({...this.hide, data: this.alt.data});
+			} else {
+				return false;
+			}
 		}
 	}
 };

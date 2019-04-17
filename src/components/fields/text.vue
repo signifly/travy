@@ -1,5 +1,8 @@
 <template>
-	<div class="text" :class="_status">{{ textFinal }}</div>
+	<div class="text" :class="`align-${_align}`">
+		<div class="title" :class="statusC" v-text="textC" />
+		<div class="subtitle" v-if="subtitle" v-text="subtitle" />
+	</div>
 </template>
 
 <script>
@@ -9,52 +12,84 @@ export default {
 	meta: {
 		res: {
 			props: {
-				text: "title",
-				textDefault: "default text"
+				text: "text",
+				textDefault: "default text",
+				subtitle: "subtitle",
+				status: "primary"
 			},
 			data: {
-				title: "some text"
+				text: "some text",
+				subtitle: "a subtitle",
+				status: "warning"
 			}
 		}
 	},
 	props: {
+		_align: {type: String, default: "left", doc: true},
 		text: {type: [String, Number], required: false, doc: true},
+		subtitle: {type: [String, Number], required: false, doc: true},
 		_textDefault: {type: [String, Number], required: false, doc: true},
+
+		status: {
+			type: String,
+			required: false,
+			doc: true,
+			note: `danger, warning, info, primary, success or mapped property`
+		},
 
 		_status: {
 			type: String,
 			required: false,
-			doc: true,
-			note: `danger, warning, info, primary, success`,
-			validator: function(value) {
-				return ["danger", "warning", "info", "primary", "success"].includes(
-					value
-				);
-			}
+			note: `danger, warning, info, primary, success`
 		}
 	},
 	computed: {
-		textFinal: (t) => toString(t.text) || t._textDefault || "—"
+		textC: (t) => toString(t.text) || t._textDefault || "—",
+		statusC() {
+			const map = !["danger", "warning", "info", "primary", "success"].includes(
+				this._status
+			);
+
+			return map ? this.status : this._status;
+		}
 	}
 };
 </script>
 
 <style lang="scss" scoped>
 .text {
-	&.danger {
-		color: $danger;
+	&.align {
+		&-left {
+			text-align: left;
+		}
+
+		&-right {
+			text-align: right;
+		}
 	}
-	&.warning {
-		color: $warning;
+
+	.title {
+		&.danger {
+			color: $danger;
+		}
+		&.warning {
+			color: $warning;
+		}
+		&.info {
+			color: $info;
+		}
+		&.primary {
+			color: $primary;
+		}
+		&.success {
+			color: $success;
+		}
 	}
-	&.info {
-		color: $info;
-	}
-	&.primary {
-		color: $primary;
-	}
-	&.success {
-		color: $success;
+
+	.subtitle {
+		font-style: italic;
+		font-size: 14px;
+		color: #8492a6;
 	}
 }
 </style>
