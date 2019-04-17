@@ -95,6 +95,12 @@ export default {
 		unselect() {
 			this.$refs.table.clearSelection();
 		}
+	},
+	created() {
+		// element ui will call sort-change on init if any sorting is defined
+		if (Object.keys(this.sorting).length === 0) {
+			this.$emit("getData");
+		}
 	}
 };
 </script>

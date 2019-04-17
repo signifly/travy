@@ -79,9 +79,9 @@ export default {
 		filters: (t) => t.definitions.filters,
 		columns: (t) => t.definitions.columns,
 		subtable: (t) => t.definitions.subtable,
-		defaults: (t) => t.definitions.defaults,
 		modifiers: (t) => t.definitions.modifiers,
 		pagination: (t) => t.definitions.pagination,
+		defaults: (t) => t.definitions.defaults || {},
 
 		endpoint() {
 			return rStringProps({
@@ -168,8 +168,11 @@ export default {
 				modifier: this.query.modifiers,
 				sort: (() => {
 					const sort = this.query.sort || this.defaults.sort;
-					const order = sort.order === "descending" ? "-" : "";
-					return `${order}${sort.prop}`;
+
+					if (sort) {
+						const order = sort.order === "descending" ? "-" : "";
+						return `${order}${sort.prop}`;
+					}
 				})()
 			});
 
