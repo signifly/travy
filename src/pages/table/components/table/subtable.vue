@@ -18,17 +18,18 @@
 </template>
 
 <script>
-import {rStringProps} from "@/modules/utils";
 import {Table, TableColumn} from "element-ui";
+import {rStringProps} from "@/modules/utils";
 import field from "../field";
+import {get} from "lodash";
 
 export default {
 	components: {Table, TableColumn, field},
 	props: {
 		endpoint: {type: Object, required: false},
 		columns: {type: Array, required: true},
-		item: {type: Object, required: true},
-		data: {type: Array, required: true}
+		data: {type: Object, required: true},
+		key: {type: String, required: false}
 	},
 	data() {
 		return {
@@ -36,8 +37,8 @@ export default {
 		};
 	},
 	computed: {
-		endpointC: (t) => rStringProps({data: t.item, val: t.endpoint}),
-		dataC: (t) => (t.endpoint ? t.resData : t.data)
+		endpointC: (t) => rStringProps({data: t.data, val: t.endpoint}),
+		dataC: (t) => (t.endpoint ? t.resData : get(t.key, t.data))
 	},
 	methods: {
 		async getData() {

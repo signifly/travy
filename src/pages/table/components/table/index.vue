@@ -14,7 +14,7 @@
 			<tableColumn type="expand" v-if="subtable">
 				<subtable
 					slot-scope="{row}"
-					v-bind="[subtable, {data, item: row}]"
+					v-bind="[subtable, {data: row}]"
 					@event="$emit('event', $event)"
 				/>
 			</tableColumn>
