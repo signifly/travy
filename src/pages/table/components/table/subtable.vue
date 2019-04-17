@@ -29,7 +29,7 @@ export default {
 		endpoint: {type: Object, required: false},
 		columns: {type: Array, required: true},
 		data: {type: Object, required: true},
-		key: {type: String, required: false}
+		dataKey: {type: String, required: false}
 	},
 	data() {
 		return {
@@ -38,7 +38,7 @@ export default {
 	},
 	computed: {
 		endpointC: (t) => rStringProps({data: t.data, val: t.endpoint}),
-		dataC: (t) => (t.endpoint ? t.resData : get(t.key, t.data))
+		dataC: (t) => (t.endpoint ? t.resData : get(t.dataKey, t.data))
 	},
 	methods: {
 		async getData() {
