@@ -1,6 +1,6 @@
 <template>
 	<div class="text" :class="`align-${_align}`">
-		<div class="title" :class="_status" v-text="textFinal" />
+		<div class="title" :class="statusC" v-text="textC" />
 		<div class="subtitle" v-if="subtitle" v-text="subtitle" />
 	</div>
 </template>
@@ -15,11 +15,12 @@ export default {
 				text: "text",
 				textDefault: "default text",
 				subtitle: "subtitle",
-				align: "right"
+				status: "primary"
 			},
 			data: {
 				text: "some text",
-				subtitle: "a subtitle"
+				subtitle: "a subtitle",
+				status: "warning"
 			}
 		}
 	},
@@ -29,20 +30,28 @@ export default {
 		subtitle: {type: [String, Number], required: false, doc: true},
 		_textDefault: {type: [String, Number], required: false, doc: true},
 
-		_status: {
+		status: {
 			type: String,
 			required: false,
 			doc: true,
-			note: `danger, warning, info, primary, success`,
-			validator: function(value) {
-				return ["danger", "warning", "info", "primary", "success"].includes(
-					value
-				);
-			}
+			note: `danger, warning, info, primary, success or mapped property`
+		},
+
+		_status: {
+			type: String,
+			required: false,
+			note: `danger, warning, info, primary, success`
 		}
 	},
 	computed: {
-		textFinal: (t) => toString(t.text) || t._textDefault || "—"
+		textC: (t) => toString(t.text) || t._textDefault || "—",
+		statusC() {
+			const map = !["danger", "warning", "info", "primary", "success"].includes(
+				this._status
+			);
+
+			return map ? this.status : this._status;
+		}
 	}
 };
 </script>
