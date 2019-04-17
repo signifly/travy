@@ -38,7 +38,7 @@ export default {
 	},
 	computed: {
 		endpointC: (t) => rStringProps({data: t.data, val: t.endpoint}),
-		dataC: (t) => (t.endpoint ? t.resData : get(t.dataKey, t.data))
+		dataC: (t) => (t.endpoint ? t.resData : get(t.data, t.dataKey))
 	},
 	methods: {
 		async getData() {
