@@ -41,9 +41,11 @@ export default {
 		sidebar: {type: Object, required: false}
 	},
 	mounted() {
-		const hash = location.hash;
-		location.hash = "";
-		location.hash = hash;
+		setTimeout(() => {
+			const hash = location.hash;
+			location.hash = "";
+			location.hash = hash;
+		});
 	}
 };
 </script>
