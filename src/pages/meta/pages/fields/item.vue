@@ -52,10 +52,10 @@
 					</pre>
 				</div>
 
-				<div class="block event" v-if="ev">
+				<div class="block event" v-if="eventData">
 					<div class="title">Event</div>
 					<pre>
-						<code>{{ev}}</code>
+						<code>{{eventData}}</code>
 					</pre>
 				</div>
 			</div>
@@ -79,7 +79,7 @@ export default {
 			propsDisplay: this.res.props,
 			dataDisplay: this.res.data,
 			data: this.res.data,
-			ev: null
+			eventData: null
 		};
 	},
 	computed: {
@@ -106,9 +106,12 @@ export default {
 	},
 	methods: {
 		async event({actions, done}) {
-			const {data} = actions.update;
-			this.data = {...this.data, ...data};
-			this.ev = data;
+			if (actions.update) {
+				const {data} = actions.update;
+				this.data = {...this.data, ...data};
+				this.eventData = data;
+			}
+
 			if (done) await done();
 		},
 
