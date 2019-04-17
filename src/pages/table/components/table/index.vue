@@ -30,6 +30,17 @@
 				v-bind="column"
 				:key="column.name"
 			>
+				<template slot="header">
+					<span class="column-header">
+						<span class="label" v-text="column.label" />
+						<span
+							class="sublabel"
+							v-if="column.sublabel"
+							v-text="column.sublabel"
+						/>
+					</span>
+				</template>
+
 				<field
 					slot-scope="scope"
 					v-bind="{scope, column}"
@@ -45,6 +56,7 @@ import {Table, TableColumn} from "element-ui";
 import subtable from "./subtable";
 import state from "../../state";
 import field from "../field";
+import {get} from "lodash";
 
 export default {
 	components: {Table, TableColumn, subtable, field},
@@ -53,6 +65,7 @@ export default {
 		columns: {type: Array, required: true},
 		defaults: {type: Object, required: true},
 		subtable: {type: Object, required: false},
+		metadata: {type: Object, required: false},
 		loading: {type: Boolean, required: false},
 		batch: {type: Object, default: () => ({})}
 	},
@@ -65,6 +78,7 @@ export default {
 		tableColumns() {
 			return this.columns.map((x) => ({
 				...x,
+				sublabel: get(this.metadata, x.sublabel),
 				sortable: x.sortable ? "custom" : false,
 				prop: x.sortBy
 			}));
@@ -160,6 +174,24 @@ export default {
 
 			.cell {
 				overflow: visible;
+				display: flex;
+				align-items: center;
+
+				.column-header {
+					margin-right: 0.2em;
+					margin-top: -2px;
+
+					.label {
+						display: block;
+					}
+
+					.sublabel {
+						display: block;
+						font-size: 13px;
+						font-weight: 400;
+						margin-top: -0.4em;
+					}
+				}
 			}
 		}
 	}

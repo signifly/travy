@@ -15,7 +15,7 @@
 
 				<vTable
 					ref="table"
-					v-bind="{data, columns, subtable, defaults, batch, loading}"
+					v-bind="{data, metadata, columns, subtable, defaults, batch, loading}"
 					@select="select"
 					@getData="getData"
 					@event="event"
@@ -66,6 +66,7 @@ export default {
 			meta: null,
 			halt: false,
 			loading: false,
+			metadata: null,
 			definitions: null,
 			selectedItems: []
 		};
