@@ -22,7 +22,7 @@ export default {
 	meta: {
 		res: {
 			props: {
-				columnsData: "tableData",
+				columnsData: "columnsData",
 				columns: [
 					{
 						name: "title",
@@ -33,11 +33,21 @@ export default {
 								text: "title"
 							}
 						}
+					},
+					{
+						name: "input",
+						label: "Input",
+						fieldType: {
+							id: "input-text",
+							props: {
+								value: "input"
+							}
+						}
 					}
 				]
 			},
 			data: {
-				tableData: [
+				columnsData: [
 					{
 						id: 0,
 						title: "sfef",
@@ -64,20 +74,26 @@ export default {
 		};
 	},
 	methods: {
-		event({actions}) {
-			let {data, item} = actions.update;
+		event({actions, done}) {
+			if (actions.update) {
+				let {data, item} = actions.update;
 
-			// find index of the item in columnsData by {id}, and change key for every data property
-			const prop = this._columnsData;
-			const index = this.columnsData.findIndex((x) => x.id === item.id);
-			const dataKey = `${prop}[${index}]`;
-			data = mapKeys(data, (val, key) => `${dataKey}.${key}`);
+				// find index of the item in columnsData by {id}, and change key for every data property
+				const prop = this._columnsData;
+				const index = this.columnsData.findIndex((x) => x.id === item.id);
+				const dataKey = `${prop}[${index}]`;
+				data = mapKeys(data, (val, key) => `${dataKey}.${key}`);
 
-			this.$emit("event", {
-				actions: {
-					update: {data, item}
-				}
-			});
+				this.$emit("event", {
+					done,
+					actions: {
+						...actions,
+						update: {data, item}
+					}
+				});
+			} else {
+				this.$emit("event", {actions, done});
+			}
 		}
 	},
 	mounted() {
