@@ -63,11 +63,11 @@ export default {
 	props: {
 		data: {type: Array, required: false},
 		columns: {type: Array, required: true},
-		defaults: {type: Object, required: true},
 		subtable: {type: Object, required: false},
 		metadata: {type: Object, required: false},
 		loading: {type: Boolean, required: false},
-		batch: {type: Object, default: () => ({})}
+		batch: {type: Object, default: () => ({})},
+		defaults: {type: Object, default: () => ({})}
 	},
 	computed: {
 		query: () => state.query,

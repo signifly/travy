@@ -2,20 +2,16 @@
 	<div class="table" v-if="mounted">
 		<vTable
 			ref="table"
-			v-bind="{columns}"
-			:data="columnsData"
-			:defaults="{}"
-			:modifiers="[]"
-			:selected="[]"
-			:batch="{}"
+			:columns="columns"
+			:data="columnsDataC"
 			@event="event"
 		/>
 	</div>
 </template>
 
 <script>
-import {mapKeys, get} from "lodash";
 import vTable from "@/pages/table/components/table";
+import {cloneDeep, set} from "lodash";
 
 export default {
 	components: {vTable},
@@ -64,33 +60,38 @@ export default {
 	},
 	props: {
 		_columns: {type: Array, required: true, doc: true},
-		columnsData: {type: Array, required: true, doc: true},
-		_columnsData: {type: String, required: true}
+		columnsData: {type: Array, required: true, doc: true}
 	},
 	data() {
 		return {
+			columnsDataC: this.columnsData,
 			columns: this._columns,
 			mounted: false
 		};
 	},
 	methods: {
-		event({actions, done}) {
+		async event({actions, done}) {
 			if (actions.update) {
-				let {data, item} = actions.update;
+				const {data, item} = actions.update;
 
-				// find index of the item in columnsData by {id}, and change key for every data property
-				const prop = this._columnsData;
-				const index = this.columnsData.findIndex((x) => x.id === item.id);
-				const dataKey = `${prop}[${index}]`;
-				data = mapKeys(data, (val, key) => `${dataKey}.${key}`);
+				// don't mutate columnsData
+				const columnsData = cloneDeep(this.columnsDataC);
 
-				this.$emit("event", {
-					done,
-					actions: {
-						...actions,
-						update: {data, item}
-					}
-				});
+				const columnItem = columnsData.find((x) => x.id === item.id);
+
+				// {"key1.key2": 1} ===> {key1: {key2: 1}}
+				const columnData = Object.entries(data).reduce(
+					(obj, [key, val]) => set(obj, key, val),
+					{}
+				);
+
+				Object.assign(columnItem, columnData);
+				this.columnsDataC = columnsData;
+
+				// used in conjunction with input-select-multi-search-table
+				this.$emit("data", this.columnsDataC);
+
+				if (done) await done();
 			} else {
 				this.$emit("event", {actions, done});
 			}
@@ -98,13 +99,6 @@ export default {
 	},
 	mounted() {
 		this.mounted = true;
-	},
-	watch: {
-		$route() {
-			// table bugs out after tab change, refresh it on tab changes to fix
-			const table = get(this.$refs, "table.$refs.table");
-			if (table) table.doLayout();
-		}
 	}
 };
 </script>

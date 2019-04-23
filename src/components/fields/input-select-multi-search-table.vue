@@ -9,8 +9,9 @@
 		</div>
 		<vTable
 			:key="columnsData.length"
-			v-bind="{_columns, columnsData, _columnsData: 'columnsData'}"
-			@event="event"
+			v-bind="{_columns, columnsData}"
+			@event="$emit('event', $event)"
+			@data="tableData"
 		/>
 	</div>
 </template>
@@ -64,6 +65,17 @@ export default {
 				columnsDataOverwrite: {
 					is_mandatory: true
 				}
+			},
+			data: {
+				values: [
+					{
+						id: 1,
+						name: "item1",
+						bool: false,
+						image: "https://picsum.photos/600/600",
+						is_mandatory: true
+					}
+				]
 			}
 		}
 	},
@@ -107,33 +119,33 @@ export default {
 		},
 
 		select({actions}) {
-			const {data} = actions.update;
+			if (actions.update) {
+				const {data} = actions.update;
 
-			this.saveItems();
-			const selectValues = get(data, this._values);
+				this.saveItems();
 
-			// populate table with data from the selected option
-			this.columnsData = selectValues.map((id) => {
-				const item = this.items.find((opt) => get(opt, this.oValue) === id);
+				const selectValues = get(data, this._values);
 
-				// overwrite properties if exists in _columnsDataOverwrite
-				return {...item, ...this._columnsDataOverwrite};
-			});
+				// populate table with data from the selected option
+				this.columnsData = selectValues.map((id) => {
+					const item = this.items.find((item) => get(item, this.oValue) === id);
 
-			this.update();
+					// overwrite properties if exists in _columnsDataOverwrite
+					return {...item, ...this._columnsDataOverwrite};
+				});
+
+				this.update(this.columnsData);
+			}
 		},
 
-		event({actions}) {
-			const {data} = actions.update;
-
-			forEach(data, (val, key) => set(this, key, val));
-			this.update();
+		tableData(data) {
+			this.update(data);
 		},
 
-		update() {
+		update(data) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._values]: this.columnsData}}
+					update: {data: {[this._values]: data}}
 				}
 			});
 		}
