@@ -101,6 +101,14 @@ export default {
 				this.loading = false;
 			}
 		}
+	},
+	created() {
+		this.$store.dispatch("base/meta", {
+			title: this.$translate({
+				en: "Reset login",
+				da: "Nulstil login"
+			})
+		});
 	}
 };
 </script>

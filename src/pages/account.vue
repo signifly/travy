@@ -21,6 +21,14 @@ export default {
 		save({data}) {
 			this.$store.commit("user/data", {data});
 		}
+	},
+	created() {
+		this.$store.dispatch("base/meta", {
+			title: this.$translate({
+				en: "Account",
+				da: "Profil"
+			})
+		});
 	}
 };
 </script>
