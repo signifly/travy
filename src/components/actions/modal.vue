@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {merge, set} from "lodash";
+import {set} from "lodash";
 import toFormData from "object-to-formdata";
 import vModalFields from "@/components/modal-fields.vue";
 
