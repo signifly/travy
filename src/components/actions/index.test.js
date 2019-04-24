@@ -1,6 +1,12 @@
 import {mount} from "@vue/test-utils";
 import compPopup from "./popup";
 import comp from "./index";
+import {app} from "@/lib";
+
+app({
+	api: "https://localhost",
+	test: true
+});
 
 const propsData = {
 	active: true,

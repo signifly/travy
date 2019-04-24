@@ -8,6 +8,9 @@ describe("utils", () => {
 				person: {name: "pete"}
 			},
 			val: {
+				number: 1,
+				null: null,
+				boolean: true,
 				objKey: {
 					key: "{id}/{person.name}"
 				},
@@ -15,6 +18,9 @@ describe("utils", () => {
 			}
 		});
 
+		expect(obj).toHaveProperty("number", 1);
+		expect(obj).toHaveProperty("null", null);
+		expect(obj).toHaveProperty("boolean", true);
 		expect(obj).toHaveProperty("objKey.key", "1/pete");
 		expect(obj).toHaveProperty(["arrayKey", 0], "1/pete");
 		expect(obj).toHaveProperty(["arrayKey", 1, "key"], "1/pete");

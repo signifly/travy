@@ -15,7 +15,7 @@
 
 				<vTable
 					ref="table"
-					v-bind="{data, columns, subtable, defaults, batch, loading}"
+					v-bind="{data, metadata, columns, subtable, defaults, batch, loading}"
 					@select="select"
 					@getData="getData"
 					@event="event"
@@ -66,6 +66,7 @@ export default {
 			meta: null,
 			halt: false,
 			loading: false,
+			metadata: null,
 			definitions: null,
 			selectedItems: []
 		};
@@ -79,9 +80,9 @@ export default {
 		filters: (t) => t.definitions.filters,
 		columns: (t) => t.definitions.columns,
 		subtable: (t) => t.definitions.subtable,
-		defaults: (t) => t.definitions.defaults,
 		modifiers: (t) => t.definitions.modifiers,
 		pagination: (t) => t.definitions.pagination,
+		defaults: (t) => t.definitions.defaults || {},
 
 		endpoint() {
 			return rStringProps({
@@ -168,16 +169,20 @@ export default {
 				modifier: this.query.modifiers,
 				sort: (() => {
 					const sort = this.query.sort || this.defaults.sort;
-					const order = sort.order === "descending" ? "-" : "";
-					return `${order}${sort.prop}`;
+
+					if (sort) {
+						const order = sort.order === "descending" ? "-" : "";
+						return `${order}${sort.prop}`;
+					}
 				})()
 			});
 
 			const {
-				data: {data, meta}
+				data: {data, meta, metadata}
 			} = await this.$axios.get(this.endpoint.url, {params});
 
 			this.loading = false;
+			this.metadata = metadata;
 			this.data = data;
 			this.meta = meta;
 		}

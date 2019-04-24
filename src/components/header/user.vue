@@ -11,8 +11,22 @@
 			</a>
 
 			<DropdownMenu slot="dropdown" @command="$event()">
-				<DropdownItem :command="account">Account</DropdownItem>
-				<DropdownItem divided :command="logout">Logout</DropdownItem>
+				<DropdownItem :command="account">
+					{{
+						$translate({
+							en: "Account",
+							da: "Profil"
+						})
+					}}
+				</DropdownItem>
+				<DropdownItem divided :command="logout">
+					{{
+						$translate({
+							en: "Logout",
+							da: "Log ud"
+						})
+					}}
+				</DropdownItem>
 			</DropdownMenu>
 		</Dropdown>
 	</div>

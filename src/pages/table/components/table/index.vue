@@ -14,7 +14,7 @@
 			<tableColumn type="expand" v-if="subtable">
 				<subtable
 					slot-scope="{row}"
-					v-bind="[subtable, {data, item: row}]"
+					v-bind="[subtable, {data: row}]"
 					@event="$emit('event', $event)"
 				/>
 			</tableColumn>
@@ -25,11 +25,21 @@
 				v-if="batchActive"
 			/>
 
+			<!-- If we don't key sublabel, it won't update on changes -->
 			<TableColumn
 				v-for="column in tableColumns"
 				v-bind="column"
-				:key="column.name"
+				:key="column.name + column.sublabel"
 			>
+				<span class="column-header" slot="header">
+					<span class="label" v-text="column.label" />
+					<span
+						class="sublabel"
+						v-if="column.sublabel"
+						v-text="column.sublabel"
+					/>
+				</span>
+
 				<field
 					slot-scope="scope"
 					v-bind="{scope, column}"
@@ -45,16 +55,18 @@ import {Table, TableColumn} from "element-ui";
 import subtable from "./subtable";
 import state from "../../state";
 import field from "../field";
+import {get} from "lodash";
 
 export default {
 	components: {Table, TableColumn, subtable, field},
 	props: {
 		data: {type: Array, required: false},
 		columns: {type: Array, required: true},
-		defaults: {type: Object, required: true},
+		metadata: {type: Object, required: false},
 		subtable: {type: Object, required: false},
 		loading: {type: Boolean, required: false},
-		batch: {type: Object, default: () => ({})}
+		batch: {type: Object, default: () => ({})},
+		defaults: {type: Object, default: () => ({})}
 	},
 	computed: {
 		query: () => state.query,
@@ -65,8 +77,9 @@ export default {
 		tableColumns() {
 			return this.columns.map((x) => ({
 				...x,
+				prop: x.sortBy,
 				sortable: x.sortable ? "custom" : false,
-				prop: x.sortBy
+				sublabel: get(this.metadata, x.sublabel)
 			}));
 		}
 	},
@@ -95,6 +108,12 @@ export default {
 		unselect() {
 			this.$refs.table.clearSelection();
 		}
+	},
+	created() {
+		// element ui will call sort-change on init if any sorting is defined
+		if (Object.keys(this.sorting).length === 0) {
+			this.$emit("getData");
+		}
 	}
 };
 </script>
@@ -112,6 +131,19 @@ export default {
 			th {
 				padding: 0;
 				height: 3.25em;
+			}
+
+			// disable row hover
+			tr {
+				td {
+					background-color: #fff !important;
+				}
+
+				&.el-table__row--striped {
+					td {
+						background-color: #fafafa !important;
+					}
+				}
 			}
 
 			td {
@@ -141,6 +173,24 @@ export default {
 
 			.cell {
 				overflow: visible;
+				display: flex;
+				align-items: center;
+
+				.column-header {
+					margin-right: 0.2em;
+					margin-top: -2px;
+
+					.label {
+						display: block;
+					}
+
+					.sublabel {
+						display: block;
+						font-size: 13px;
+						font-weight: 400;
+						margin-top: -0.4em;
+					}
+				}
 			}
 		}
 	}

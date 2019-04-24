@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import {merge, set} from "lodash";
-import toFormData from "object-to-formdata";
 import vModalFields from "@/components/modal-fields.vue";
+import toFormData from "object-to-formdata";
+import {set} from "lodash";
 
 export default {
 	components: {vModalFields},
@@ -30,9 +30,17 @@ export default {
 		};
 	},
 	computed: {
-		upload: (t) =>
-			t.fields.map((x) => x.fieldType.id === "input-upload").some((x) => x),
-		payloadC: (t) => ({...t.payload, data: t.data}),
+		upload() {
+			return this.fields
+				.map((x) => x.fieldType.id === "input-upload")
+				.some((x) => x);
+		},
+
+		payloadC: (t) => ({
+			...t.payload,
+			// {"key1.key2": 1} ===> {key1: {key2: 1}}
+			data: Object.entries(t.data).reduce((o, [k, v]) => set(o, k, v), {})
+		}),
 
 		visible: {
 			get() {
@@ -47,15 +55,7 @@ export default {
 		event({actions}) {
 			if (actions.update) {
 				let {data} = actions.update;
-
-				// {"key1.key2": 1} ===> {key1: {key2: 1}}
-				data = Object.entries(data).reduce(
-					(obj, [key, val]) => set(obj, key, val),
-					{}
-				);
-
-				// update state
-				this.data = merge({}, this.data, data);
+				this.data = {...this.data, ...data};
 			}
 		},
 

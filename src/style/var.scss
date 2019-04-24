@@ -1,23 +1,21 @@
 @import "~element-ui/packages/theme-chalk/src/common/var";
 
-$font1: "Helvetica Neue", Helvetica, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
-
+$font1: "Helvetica Neue", Helvetica, -apple-system, BlinkMacSystemFont,
+	"Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
 
 // colors
-$black1: #1E2D3E;
+$black1: #1e2d3e;
 $white1: #ffffff;
-$white2: #F9FAFC;
+$white2: #f9fafc;
 $blue1: #334056;
-$blue2: #E0E6ED;
-$blue3: #C0CCDA;
-$blue4: #5E6D82;
-$blue5: #20A0FF;
-
+$blue2: #e0e6ed;
+$blue3: #c0ccda;
+$blue4: #5e6d82;
+$blue5: #20a0ff;
 
 // settings
 $width: 1440px;
 $fieldMargin: 1em;
-
 
 // built-in colors
 $primary: $--color-primary;
@@ -26,10 +24,11 @@ $warning: $--color-warning;
 $info: $--color-info;
 $success: $--color-success;
 
-
 // utils
 @mixin res($width, $dir: max) {
-	@media (#{$dir}-width: #{$width} + "px") {@content}
+	@media (#{$dir}-width: #{$width} + "px") {
+		@content;
+	}
 }
 
 @function em($pixels) {
@@ -38,4 +37,4 @@ $success: $--color-success;
 
 @function cubic($property, $time: 0.1s) {
 	@return $property $time cubic-bezier(0.645, 0.045, 0.355, 1);
-};
+}

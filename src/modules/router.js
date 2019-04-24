@@ -33,24 +33,22 @@ const routes = [
 		path: "/account",
 		name: "account",
 		component: account,
-		meta: {layout: "main", title: "Account", auth: {roles: "all"}}
+		meta: {layout: "main", auth: {roles: "all"}}
 	},
-
 	{
 		path: "/login",
 		name: "login",
 		component: login,
 		props: true,
-		meta: {layout: "base", title: "Login"}
+		meta: {layout: "base"}
 	},
 	{
 		path: "/login/reset/:id",
 		name: "login-reset",
 		component: loginReset,
 		props: true,
-		meta: {layout: "base", title: "Reset login"}
+		meta: {layout: "base"}
 	},
-
 	{
 		path: "/t/:tableId",
 		name: "table",
@@ -63,21 +61,18 @@ const routes = [
 		component: view,
 		meta: {layout: "main", auth: {roles: "all"}}
 	},
-
 	{
 		path: "/d/:id",
 		name: "dashboard",
 		component: dashboard,
 		meta: {layout: "main", auth: {roles: "all"}}
 	},
-
 	{
 		path: "/c/:id",
 		name: "custom",
 		component: custom,
 		meta: {layout: "main", auth: {roles: "all"}}
 	},
-
 	{
 		path: "/error",
 		alias: "*",
@@ -86,7 +81,6 @@ const routes = [
 		component: error,
 		meta: {layout: "error", title: "Error"}
 	},
-
 	{
 		path: "/meta",
 		component: meta,
@@ -103,8 +97,6 @@ const routes = [
 				component: metaPage,
 				meta: {layout: "base", title: "Meta", auth: {roles: "all"}}
 			}
-			// {path: "fields", name: "meta-fields", component: metaFields, meta: {layout: "base", title: "Meta/Fields", auth: {roles: "all"}}},
-			// {path: "actions", name: "meta-actions", component: metaActions, meta: {layout: "base", title: "Meta/Actions", auth: {roles: "all"}}},
 		]
 	}
 ];
@@ -116,10 +108,10 @@ const router = new VueRouter({
 		const parse = (item) =>
 			transform(item, (res, val, key) => {
 				const types = {
+					undefined: undefined,
 					false: false,
 					true: true,
-					null: null,
-					undefined: undefined
+					null: null
 				};
 
 				if (isObject(val)) {

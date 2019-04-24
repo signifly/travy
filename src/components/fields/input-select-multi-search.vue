@@ -2,7 +2,7 @@
 	<div class="select-multi-search">
 		<Select
 			v-bind="{size}"
-			:value="valuesC"
+			:value="selectedItems"
 			:disabled="_disabled"
 			:clearable="_clearable"
 			:allow-create="_addable"
@@ -14,15 +14,15 @@
 			@change="update"
 			@visible-change="initSearch"
 		>
-			<Option v-for="item in itemsC" v-bind="item" :key="item.value" />
+			<Option v-for="item in optionItemsC" v-bind="item" :key="item.value" />
 		</Select>
 	</div>
 </template>
 
 <script>
-import {get, merge, isObjectLike} from "lodash";
 import {Select, Option} from "element-ui";
 import {meta} from "@/modules/utils";
+import {get, merge, uniqBy} from "lodash";
 
 export default {
 	components: {Select, Option},
@@ -42,9 +42,7 @@ export default {
 				}
 			},
 			data: {
-				values: [1, 2, 3],
-
-				valuesObjs: [
+				values: [
 					{
 						id: 1,
 						name: "item1"
@@ -63,26 +61,16 @@ export default {
 		_clearable: {type: Boolean, required: false, default: true, doc: true},
 		_addable: {type: Boolean, required: false, doc: true},
 		_options: {type: Object, required: true, doc: true},
-		_values: {type: String, required: true},
-		values: {
-			required: true,
-			default: () => [],
-			doc: true,
-			note: `
-				Can be an array of <i>objects|strings|numbers</i>.<br>
-				if it's strings|numbers, an initial call to <code>options.list</code> will be made to get the label names for the values.
-			`
-		}
+		values: {default: () => [], doc: true},
+		_values: {type: String, required: true}
 	},
 	data() {
 		return {
-			selectedItems: this.values,
 			opened: false,
-			items: []
+			optionItems: []
 		};
 	},
 	computed: {
-		objArray: (t) => t.values.map((x) => isObjectLike(x)).every((x) => x),
 		endpoint: (t) => t._options.endpoint,
 
 		size() {
@@ -91,15 +79,11 @@ export default {
 			return "medium";
 		},
 
-		valuesC: (t) =>
-			!t.objArray
-				? t.values
-				: t.values.map((x) => {
-						return get(x, t._options.value);
-				  }),
+		allItems: (t) => uniqBy([...t.optionItems, ...t.values], t._options.value),
+		selectedItems: (t) => t.values.map((x) => get(x, t._options.value)),
 
-		itemsC: (t) =>
-			[...t.selectedItems, ...t.items].map((x) => ({
+		optionItemsC: (t) =>
+			t.allItems.map((x) => ({
 				value: get(x, t._options.value),
 				label: get(x, t._options.label)
 			}))
@@ -122,36 +106,21 @@ export default {
 				})
 			});
 
-			this.items = key ? get(data, key) : data;
-		},
-
-		async getSelectedItems() {
-			const key = this._options.key;
-			const val = this._options.value;
-
-			if (!this.objArray) {
-				const {data} = await this.$axios.get(this.endpoint.url, {
-					params: {
-						filter: {[val]: this.values}
-					}
-				});
-				this.selectedItems = key ? get(data, key) : data;
-			}
-
-			// remove selectedItem after Select caches it
-			this.$nextTick(() => (this.selectedItems = []));
+			this.optionItems = key ? get(data, key) : data;
 		},
 
 		update(values) {
+			// [1, 2] => [{}, {}]
+			values = values.map((val) =>
+				this.allItems.find((x) => x[this._options.value] === val)
+			);
+
 			this.$emit("event", {
 				actions: {
 					update: {data: {[this._values]: values}}
 				}
 			});
 		}
-	},
-	created() {
-		this.getSelectedItems();
 	}
 };
 </script>
