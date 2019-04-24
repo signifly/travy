@@ -3,9 +3,11 @@
 		<div class="popup">
 			<div class="text">{{ text }}</div>
 			<div class="buttons">
-				<Button size="mini" :disabled="loading" @click="close">Cancel</Button>
+				<Button size="mini" :disabled="loading" @click="close">
+					{{ $translate({en: "Cancel", da: "Annuller"}) }}
+				</Button>
 				<Button size="mini" type="primary" :loading="loading" @click="submit">
-					Submit
+					{{ $translate({en: "Submit", da: "Gem"}) }}
 				</Button>
 			</div>
 		</div>
@@ -13,16 +15,25 @@
 </template>
 
 <script>
-import {Button} from "element-ui";
+import {translate} from "@/modules/utils";
 import popup from "@/components/popup";
+import {Button} from "element-ui";
 
 export default {
 	components: {Button, popup},
 	props: {
 		position: {type: String, required: false, default: "bottom-right"},
-		text: {type: String, required: false, default: "Are you sure?"},
 		endpoint: {type: Object, required: true},
-		payload: {type: Object, required: true}
+		payload: {type: Object, required: true},
+		text: {
+			type: String,
+			required: false,
+			default: () =>
+				translate({
+					en: "Are you sure? Please confirm this action.",
+					da: "Er du sikker? Bekræft venligst."
+				})
+		}
 	},
 	data() {
 		return {

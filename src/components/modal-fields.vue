@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import {translate} from "@/modules/utils";
 import {Dialog, Button} from "element-ui";
 import vField from "./field";
 
@@ -50,8 +51,14 @@ export default {
 
 		width: {type: String, default: "700px"},
 		visible: {type: Boolean, required: false},
-		buttonSubmitText: {type: String, default: "Submit"},
-		buttonCancelText: {type: String, default: "Cancel"}
+		buttonSubmitText: {
+			type: String,
+			default: () => translate({en: "Submit", da: "Gem"})
+		},
+		buttonCancelText: {
+			type: String,
+			default: () => translate({en: "Cancel", da: "Annuller"})
+		}
 	},
 	computed: {
 		errors: (t) => t.error.errors,
