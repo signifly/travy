@@ -21,7 +21,6 @@ beforeEach(async () => {
 			title: {text: "Projects"}
 		},
 		stubs: {
-			// element-ui fix
 			transition: false
 		},
 		mocks: {

@@ -1,5 +1,11 @@
 import {shallowMount} from "@vue/test-utils";
 import comp from "./modal";
+import {app} from "@/lib";
+
+app({
+	api: "https://localhost",
+	test: true
+});
 
 const propsData = {
 	title: "modal",
