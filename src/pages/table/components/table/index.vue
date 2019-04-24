@@ -25,21 +25,20 @@
 				v-if="batchActive"
 			/>
 
+			<!-- If we don't key sublabel, it won't update on changes -->
 			<TableColumn
 				v-for="column in tableColumns"
 				v-bind="column"
-				:key="column.name"
+				:key="column.name + column.sublabel"
 			>
-				<template slot="header">
-					<span class="column-header">
-						<span class="label" v-text="column.label" />
-						<span
-							class="sublabel"
-							v-if="column.sublabel"
-							v-text="column.sublabel"
-						/>
-					</span>
-				</template>
+				<span class="column-header" slot="header">
+					<span class="label" v-text="column.label" />
+					<span
+						class="sublabel"
+						v-if="column.sublabel"
+						v-text="column.sublabel"
+					/>
+				</span>
 
 				<field
 					slot-scope="scope"
@@ -63,8 +62,8 @@ export default {
 	props: {
 		data: {type: Array, required: false},
 		columns: {type: Array, required: true},
-		subtable: {type: Object, required: false},
 		metadata: {type: Object, required: false},
+		subtable: {type: Object, required: false},
 		loading: {type: Boolean, required: false},
 		batch: {type: Object, default: () => ({})},
 		defaults: {type: Object, default: () => ({})}
@@ -78,9 +77,9 @@ export default {
 		tableColumns() {
 			return this.columns.map((x) => ({
 				...x,
-				sublabel: get(this.metadata, x.sublabel),
+				prop: x.sortBy,
 				sortable: x.sortable ? "custom" : false,
-				prop: x.sortBy
+				sublabel: get(this.metadata, x.sublabel)
 			}));
 		}
 	},
