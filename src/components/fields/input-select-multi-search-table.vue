@@ -4,7 +4,7 @@
 			<selectMultiSearch
 				ref="select"
 				v-bind="{_clearable, _options, _values, values, disabled: _disabled}"
-				@event="select"
+				@event="selectEvent"
 			/>
 		</div>
 		<vTable
@@ -17,10 +17,10 @@
 </template>
 
 <script>
-import {meta} from "@/modules/utils";
-import {get, set, uniq, forEach} from "lodash";
 import selectMultiSearch from "./input-select-multi-search.vue";
+import {meta} from "@/modules/utils";
 import vTable from "./table.vue";
+import {get} from "lodash";
 
 export default {
 	components: {selectMultiSearch, vTable},
@@ -93,7 +93,7 @@ export default {
 			default: () => [],
 			doc: true,
 			note: `
-				Can only be an array of <i>objects</i>.
+				Array of <i>objects</i>.
 			`
 		},
 
@@ -103,8 +103,7 @@ export default {
 	},
 	data() {
 		return {
-			columnsData: [],
-			items: [],
+			columnsData: this.values,
 			edits: {}
 		};
 	},
@@ -112,26 +111,21 @@ export default {
 		oValue: (t) => t._options.value
 	},
 	methods: {
-		saveItems() {
-			// save old items so each tableColumn still has data from an old select search
-			const newItems = get(this.$refs, "select.items", []);
-			this.items = uniq([...this.items, ...newItems]);
-		},
-
-		select({actions}) {
+		selectEvent({actions}) {
 			if (actions.update) {
 				const {data} = actions.update;
+				const values = get(data, this._values);
 
-				this.saveItems();
+				this.columnsData = values.map((item) => {
+					const oldItem = this.columnsData.find(
+						(x) => x[this.oValue] === item[this.oValue]
+					);
 
-				const selectValues = get(data, this._values);
-
-				// populate table with data from the selected option
-				this.columnsData = selectValues.map((id) => {
-					const item = this.items.find((item) => get(item, this.oValue) === id);
-
-					// overwrite properties if exists in _columnsDataOverwrite
-					return {...item, ...this._columnsDataOverwrite};
+					return {
+						...item,
+						...oldItem, // keep old state of item
+						...this._columnsDataOverwrite // overwrite properties if exists in _columnsDataOverwrite
+					};
 				});
 
 				this.update(this.columnsData);
@@ -139,6 +133,7 @@ export default {
 		},
 
 		tableData(data) {
+			this.columnsData = data;
 			this.update(data);
 		},
 
