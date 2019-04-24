@@ -39,10 +39,7 @@ export default {
 		payloadC: (t) => ({
 			...t.payload,
 			// {"key1.key2": 1} ===> {key1: {key2: 1}}
-			data: Object.entries(t.data).reduce(
-				(obj, [key, val]) => set(obj, key, val),
-				{}
-			)
+			data: Object.entries(t.data).reduce((o, [k, v]) => set(o, k, v), {})
 		}),
 
 		visible: {
