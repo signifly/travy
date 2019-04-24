@@ -41,11 +41,9 @@ export const base64Encode = (file) => {
 };
 
 export const rStringProps = ({data, val = ""}) => {
-	const reg = (val) => {
-		if (typeof val === "number") return val;
-
+	const reg = (str) => {
 		// find all {KEY} in string and replace with data value
-		return replace(val, /\{.*?\}/g, (key) => get(data, key.slice(1, -1), key));
+		return replace(str, /\{.*?\}/g, (key) => get(data, key.slice(1, -1), key));
 	};
 
 	if (typeof val === "string") {
@@ -56,8 +54,10 @@ export const rStringProps = ({data, val = ""}) => {
 		transform(item, (res, val, key) => {
 			if (isObject(val)) {
 				res[key] = parse(val);
-			} else {
+			} else if (typeof val === "string") {
 				res[key] = reg(val);
+			} else {
+				res[key] = val;
 			}
 		});
 
