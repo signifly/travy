@@ -12,7 +12,6 @@
 		<div class="content">
 			<box>
 				<top v-bind="{modifiers, loading, title, meta}" @reset="reset" />
-
 				<vTable
 					ref="table"
 					v-bind="{data, metadata, columns, subtable, defaults, batch, loading}"
@@ -20,7 +19,6 @@
 					@getData="getData"
 					@event="event"
 				/>
-
 				<pagination
 					v-if="meta && pagination"
 					v-bind="[meta, {loading}]"
