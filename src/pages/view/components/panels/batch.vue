@@ -26,7 +26,7 @@
 				icon="el-icon-arrow-left"
 				@click="prevSave"
 			>
-				Save and back
+				{{ $translate({en: "Save and back", da: "Gem og gå tilbage"}) }}
 			</Button>
 
 			<Button
@@ -38,12 +38,12 @@
 				@shortkey.native="nextSave"
 				title="CTRL/CMD + S"
 			>
-				Save and next
+				{{ $translate({en: "Save and next", da: "Gem og gå videre"}) }}
 				<i class="el-icon-arrow-right el-icon-right" />
 			</Button>
 
 			<Button v-if="!next" size="medium" type="success" @click="closeSave">
-				Save and close
+				{{ $translate({en: "Save and close", da: "Gem og luk"}) }}
 				<i class="el-icon-check el-icon-right" />
 			</Button>
 		</div>

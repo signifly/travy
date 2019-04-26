@@ -1,6 +1,13 @@
 <template>
 	<vPanel>
-		<div class="text">There are unsaved changes</div>
+		<div class="text">
+			{{
+				$translate({
+					en: "There are unsaved changes",
+					da: "Der er ikke gemte ændringer"
+				})
+			}}
+		</div>
 		<div class="actions">
 			<div class="error" v-if="error" v-text="error" />
 
@@ -13,7 +20,7 @@
 				@shortkey.native="save"
 				title="CTRL/CMD + S"
 			>
-				Save changes
+				{{ $translate({en: "Save changes", da: "Gem ændringer"}) }}
 			</Button>
 		</div>
 	</vPanel>
