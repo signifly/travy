@@ -73,7 +73,6 @@ export default {
 	},
 	computed: {
 		query: (t) => t.state.query,
-		ws: (t) => t.definitions.ws,
 		batch: (t) => t.definitions.batch,
 		search: (t) => t.definitions.search,
 		actions: (t) => t.definitions.actions,
@@ -83,6 +82,13 @@ export default {
 		modifiers: (t) => t.definitions.modifiers,
 		pagination: (t) => t.definitions.pagination,
 		defaults: (t) => t.definitions.defaults || {},
+
+		ws() {
+			return rStringProps({
+				val: this.definitions.ws,
+				data: this.parentData
+			});
+		},
 
 		endpoint() {
 			return rStringProps({
