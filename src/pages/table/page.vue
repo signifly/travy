@@ -12,7 +12,6 @@
 		<div class="content">
 			<box>
 				<top v-bind="{modifiers, loading, title, meta}" @reset="reset" />
-
 				<vTable
 					ref="table"
 					v-bind="{data, metadata, columns, subtable, defaults, batch, loading}"
@@ -20,7 +19,6 @@
 					@getData="getData"
 					@event="event"
 				/>
-
 				<pagination
 					v-if="meta && pagination"
 					v-bind="[meta, {loading}]"
@@ -39,7 +37,7 @@
 <script>
 import Semaphore from "semaphore-async-await";
 import {rStringProps} from "@/modules/utils";
-import {merge, set} from "lodash";
+import {merge, get, set} from "lodash";
 import state from "./state";
 
 import pagination from "./components/pagination";
@@ -85,7 +83,7 @@ export default {
 
 		ws() {
 			return rStringProps({
-				val: this.definitions.ws,
+				val: get(this.definitions, "ws"),
 				data: this.parentData
 			});
 		},
