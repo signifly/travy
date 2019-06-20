@@ -1,4 +1,16 @@
-import {eq, gt, gte, lt, lte, get, replace, isObject, transform} from "lodash";
+import {
+	mergeWith,
+	transform,
+	isObject,
+	isArray,
+	replace,
+	get,
+	lte,
+	gte,
+	lt,
+	gt,
+	eq
+} from "lodash";
 
 export const date = (epoch) => {
 	const d = new Date(epoch * 1000);
@@ -78,4 +90,13 @@ export const operator = ({key, value, operator, data}) => {
 	operator = {eq, gt, gte, lt, lte}[operator];
 	key = get(data, key);
 	return operator(key, value);
+};
+
+export const mergeData = (srcData, newData) => {
+	// merge objects deep, but ignore arrays
+	return mergeWith({}, srcData, newData, (oldValue, newValue) => {
+		if (isArray(newValue)) {
+			return newValue;
+		}
+	});
 };

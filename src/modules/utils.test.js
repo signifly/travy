@@ -34,4 +34,27 @@ describe("utils", () => {
 
 		expect(string).toBe("test/1");
 	});
+
+	test("mergeData", () => {
+		const data = {
+			obj: {
+				key1: 1,
+				key2: 1,
+				key3: [{id: 1}, {id: 2}]
+			}
+		};
+
+		const update = {
+			obj: {
+				key2: 2,
+				key3: [{id: 3}]
+			}
+		};
+
+		const merged = utils.mergeData(data, update);
+
+		expect(merged).toHaveProperty("obj.key1", 1);
+		expect(merged).toHaveProperty("obj.key2", 2);
+		expect(merged).toHaveProperty("obj.key3", update.obj.key3);
+	});
 });

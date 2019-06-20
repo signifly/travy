@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import {rStringProps} from "@/modules/utils";
+import {rStringProps, mergeData} from "@/modules/utils";
 import field from "@/components/field";
-import {get, set, merge} from "lodash";
+import {get, set} from "lodash";
 
 export default {
 	components: {field},
@@ -53,10 +53,13 @@ export default {
 					(obj, [key, val]) => set(obj, key, val),
 					{}
 				);
+
 				// merge payload with data
-				this.payload = merge({}, this.payload, data);
+				this.payload = mergeData(this.payload, data);
+
 				// merge state data with data
-				const stateData = merge({}, this.state.data, data);
+				const stateData = mergeData(this.state.data, data);
+
 				// update state
 				this.updateState({data: stateData, edit: true});
 			}

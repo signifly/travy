@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import {rStringProps} from "@/modules/utils";
-import {merge, get, set} from "lodash";
+import {rStringProps, mergeData} from "@/modules/utils";
+import {get, set} from "lodash";
 import group from "./group";
 
 export default {
@@ -57,10 +57,10 @@ export default {
 				);
 
 				// merge payload with data
-				this.state.payload = merge({}, this.state.payload, data);
+				this.state.payload = mergeData(this.state.payload, data);
 
 				// merge dataC with data
-				this.state.data = merge({}, this.state.data, data);
+				this.state.data = mergeData(this.state.data, data);
 
 				this.state.edit = true;
 			}
