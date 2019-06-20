@@ -20,9 +20,9 @@
 </template>
 
 <script>
+import {get, merge, uniqBy, pick} from "lodash";
 import {Select, Option} from "element-ui";
 import {meta} from "@/modules/utils";
-import {get, merge, uniqBy} from "lodash";
 
 export default {
 	components: {Select, Option},
@@ -109,11 +109,20 @@ export default {
 			this.optionItems = key ? get(data, key) : data;
 		},
 
-		update(values) {
-			// [1, 2] => [{}, {}]
-			values = values.map((val) =>
-				this.allItems.find((x) => x[this._options.value] === val)
-			);
+		update(data) {
+			const values = data.map((val) => {
+				// [1, 2] => [{}, {}]
+				let item = this.allItems.find((x) => x[this._options.value] === val);
+
+				// if new item
+				item = item || {
+					[this._options.value]: val,
+					[this._options.label]: val
+				};
+
+				// only emit label and value properties
+				return pick(item, [this._options.value, this._options.label]);
+			});
 
 			this.$emit("event", {
 				actions: {
