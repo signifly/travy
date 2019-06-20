@@ -3,6 +3,7 @@
 		<div class="header">
 			<div class="wrap">
 				<router-link class="title" :to="{name: 'meta'}">Meta</router-link>
+				<div class="version" v-text="version" />
 
 				<div class="menu">
 					<router-link to="/meta/actions">Actions</router-link>
@@ -19,7 +20,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+	data: () => ({
+		version: process.env.VERSION
+	})
+};
 </script>
 
 <style lang="scss" scoped>
@@ -53,6 +58,14 @@ export default {};
 			.title {
 				font-size: 1.5em;
 				font-weight: 600;
+			}
+
+			.version {
+				margin-right: auto;
+				margin-left: 1em;
+				font-size: 0.7em;
+				font-weight: 600;
+				color: $blue4;
 			}
 
 			.menu {

@@ -1,3 +1,4 @@
+const pkg = require("./package.json");
 const webpack = require("webpack");
 
 module.exports = {
@@ -15,7 +16,8 @@ module.exports = {
 		plugins: [
 			new webpack.DefinePlugin({
 				"process.env": {
-					API: JSON.stringify(process.env.API)
+					API: JSON.stringify(process.env.API),
+					VERSION: JSON.stringify(pkg.version)
 				}
 			})
 		]
