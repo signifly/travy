@@ -2,7 +2,7 @@
 	<div class="reorder-items">
 		<draggable
 			class="draggable"
-			:value="items.data"
+			v-model="cache"
 			handle=".drag"
 			@input="update"
 			v-if="items.data.length > 0"
@@ -22,7 +22,7 @@
 				</div>
 
 				<actions
-					v-bind="{_actions: item.actions, alt}"
+					v-bind="{_actions: item.actions, alt: {data: item.data}}"
 					@event="$emit('event', $event)"
 				/>
 			</div>
@@ -33,7 +33,7 @@
 <script>
 import actions from "./button-actions.vue";
 import draggable from "vuedraggable";
-import {meta} from "@/modules/utils";
+import {meta, rStringProps} from "@/modules/utils";
 import {get} from "lodash";
 
 export default {
@@ -52,7 +52,10 @@ export default {
 				},
 				endpoint: {
 					url: meta.items,
-					method: "put"
+					method: "put",
+					payload: {
+						type: "type"
+					}
 				}
 			},
 			data: {
@@ -61,19 +64,19 @@ export default {
 						id: 1,
 						model: 1,
 						variant: 1,
-						image: "https://picsum.photos/200/300?grayscale"
+						image: "https://picsum.photos/200/300"
 					},
 					{
 						id: 2,
 						model: 2,
 						variant: 2,
-						image: "https://picsum.photos/200/300?grayscale"
+						image: "https://picsum.photos/200/300"
 					},
 					{
 						id: 3,
 						model: 3,
 						variant: 3,
-						image: "https://picsum.photos/200/300?grayscale"
+						image: "https://picsum.photos/200/300"
 					}
 				]
 			}
@@ -85,27 +88,41 @@ export default {
 		items: {type: Object, required: true},
 		alt: {type: Object, required: true}
 	},
+	data: (t) => ({
+		cache: t.items.data
+	}),
 	computed: {
+		endpoint() {
+			return rStringProps({
+				val: this._endpoint,
+				data: this.alt.data
+			});
+		},
 		itemsC() {
-			return this.items.data.map((item) => ({
+			return this.cache.map((item) => ({
 				data: item,
-
+				actions: this._items.actions,
 				image: get(item, this._items.image),
-
 				list: this._items.list.map((x) => ({
 					label: x.label,
 					value: get(item, x.value)
-				})),
-
-				actions: this._items.actions
+				}))
 			}));
 		}
 	},
 	methods: {
-		update(items) {
-			this.$emit("event", {
-				actions: {
-					update: {data: {[this._items.data]: items}}
+		async update(items) {
+			const {method, url, payload} = this.endpoint;
+			const itemsKey = this._items.data;
+
+			await this.$axios({
+				method,
+				url,
+				data: {
+					...payload,
+					data: {
+						[itemsKey]: items
+					}
 				}
 			});
 		}
@@ -123,7 +140,7 @@ export default {
 			padding: 0 2em;
 			display: flex;
 			align-items: center;
-			margin: 0.25em 0;
+			margin: 0.5em 0;
 			height: em(100);
 
 			.icon {
@@ -165,11 +182,6 @@ export default {
 
 			.actions {
 				margin-left: auto;
-
-				a {
-					text-decoration: none;
-					color: $blue5;
-				}
 			}
 		}
 	}
