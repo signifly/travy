@@ -117,11 +117,12 @@ export default {
 				// if new item
 				item = item || {
 					[this._options.value]: val,
-					[this._options.label]: val
+					[this._options.label]: val,
+					new: true
 				};
 
 				// only emit label and value properties
-				return pick(item, [this._options.value, this._options.label]);
+				return pick(item, [this._options.value, this._options.label, "new"]);
 			});
 
 			this.$emit("event", {
