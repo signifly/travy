@@ -133,7 +133,6 @@ export default {
 		},
 
 		search(search) {
-			console.log({search});
 			this.modal.loading = true;
 			this.getItemsDebounce({search});
 		},
