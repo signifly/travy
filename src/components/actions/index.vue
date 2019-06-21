@@ -14,12 +14,12 @@
 </template>
 
 <script>
-import {rStringProps, operator} from "@/modules/utils";
-import {mapValues, get} from "lodash";
+import {rStringProps, operator, mapProps} from "@/modules/utils";
 import dropdown from "./dropdown";
 import modal from "./modal.vue";
 import popup from "./popup.vue";
 import show from "./show.vue";
+import {get} from "lodash";
 
 export default {
 	components: {dropdown, modal, popup, show},
@@ -33,7 +33,11 @@ export default {
 	computed: {
 		payload: ({props, data}) => ({
 			type: get(props, "payload.type"),
-			data: mapValues(get(props, "payload.data"), (val) => get(data, val, val))
+			data: mapProps({
+				props: get(props, "payload.data"),
+				fallback: true,
+				data
+			})
 		}),
 
 		dataComb: (t) => ({

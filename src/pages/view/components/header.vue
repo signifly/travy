@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import {mapValues, get} from "lodash";
+import {mapProps} from "@/modules/utils";
 import {Tag} from "element-ui";
 
 export default {
@@ -27,7 +27,7 @@ export default {
 	},
 	computed: {
 		props: (t) => t.header.props,
-		propsData: (t) => mapValues(t.props, (val) => get(t.data, val))
+		propsData: (t) => mapProps({props: t.props, data: t.data})
 	}
 };
 </script>

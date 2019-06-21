@@ -24,7 +24,7 @@ export default {
 	},
 	computed: {
 		data: (t) => t.alt.data,
-		propsData: (t) => mapProps(t.props, t.data),
+		propsData: (t) => mapProps({props: t.props, data: t.data}),
 		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
 
 		comp() {

@@ -60,7 +60,8 @@ describe("utils", () => {
 
 	test("mapProps", () => {
 		const props = {
-			text: "not mapped",
+			string: "string",
+			null: null,
 			key1: "text1",
 			deep: {
 				key1: "text1",
@@ -72,12 +73,37 @@ describe("utils", () => {
 			text1: "1"
 		};
 
-		const res = utils.mapProps(props, data);
+		const res = utils.mapProps({props, data});
 
-		expect(res).toHaveProperty("text", undefined);
+		expect(res).toHaveProperty("null", undefined);
+		expect(res).toHaveProperty("string", undefined);
 		expect(res).toHaveProperty("key1", data.text1);
 		expect(res).toHaveProperty("deep.key1", data.text1);
 		expect(res).toHaveProperty(["deep", "arrayObj", 0], data.text1);
 		expect(res).toHaveProperty(["deep", "arrayObj", 1, "key1"], data.text1);
+	});
+
+	test("mapProps fallback", () => {
+		const props = {
+			string: "string",
+			boolean: true,
+			null: null,
+			deep: {
+				num: 1,
+				text: "text"
+			}
+		};
+
+		const data = {
+			text: "1"
+		};
+
+		const res = utils.mapProps({props, data, fallback: true});
+
+		expect(res).toHaveProperty("null", null);
+		expect(res).toHaveProperty("deep.num", 1);
+		expect(res).toHaveProperty("boolean", true);
+		expect(res).toHaveProperty("string", "string");
+		expect(res).toHaveProperty("deep.text", data.text);
 	});
 });

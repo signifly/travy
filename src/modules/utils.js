@@ -102,22 +102,23 @@ export const mergeData = (srcData, newData) => {
 	});
 };
 
-export const mapProps = (props, data) => {
+export const mapProps = ({props, data, fallback}) => {
+	const object = isObject(props);
 	const array = isArray(props);
 	const rSum = array ? [] : {};
 
-	if (typeof props === "string") {
-		return get(data, props);
+	if (!object && !array) {
+		return get(data, props, fallback && props);
 	}
 
 	return reduce(
 		props,
 		(sum, value, key) => {
-			if (array) return [...sum, ...[mapProps(value, data)]];
+			if (array) return [...sum, ...[mapProps({props: value, data, fallback})]];
 
 			return {
 				...sum,
-				[key]: mapProps(value, data)
+				[key]: mapProps({props: value, data, fallback})
 			};
 		},
 		rSum
