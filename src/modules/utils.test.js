@@ -57,4 +57,27 @@ describe("utils", () => {
 		expect(merged).toHaveProperty("obj.key2", 2);
 		expect(merged).toHaveProperty("obj.key3", update.obj.key3);
 	});
+
+	test("mapProps", () => {
+		const props = {
+			text: "not mapped",
+			key1: "text1",
+			deep: {
+				key1: "text1",
+				arrayObj: ["text1", {key1: "text1"}]
+			}
+		};
+
+		const data = {
+			text1: "1"
+		};
+
+		const res = utils.mapProps(props, data);
+
+		expect(res).toHaveProperty("text", undefined);
+		expect(res).toHaveProperty("key1", data.text1);
+		expect(res).toHaveProperty("deep.key1", data.text1);
+		expect(res).toHaveProperty(["deep", "arrayObj", 0], data.text1);
+		expect(res).toHaveProperty(["deep", "arrayObj", 1, "key1"], data.text1);
+	});
 });

@@ -9,8 +9,9 @@
 </template>
 
 <script>
-import {get, mapKeys, mapValues} from "lodash";
+import {mapProps} from "@/modules/utils";
 import {FormItem} from "element-ui";
+import {mapKeys} from "lodash";
 
 export default {
 	components: {FormItem},
@@ -23,8 +24,8 @@ export default {
 	},
 	computed: {
 		data: (t) => t.alt.data,
+		propsData: (t) => mapProps(t.props, t.data),
 		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
-		propsData: (t) => mapValues(t.props, (val) => get(t.data, val)),
 
 		comp() {
 			const customField = this.$settings.fields[this.id];

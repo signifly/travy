@@ -4,6 +4,7 @@ import {
 	isObject,
 	isArray,
 	replace,
+	reduce,
 	get,
 	lte,
 	gte,
@@ -99,4 +100,26 @@ export const mergeData = (srcData, newData) => {
 			return newValue;
 		}
 	});
+};
+
+export const mapProps = (props, data) => {
+	const array = isArray(props);
+	const rSum = array ? [] : {};
+
+	if (typeof props === "string") {
+		return get(data, props);
+	}
+
+	return reduce(
+		props,
+		(sum, value, key) => {
+			if (array) return [...sum, ...[mapProps(value, data)]];
+
+			return {
+				...sum,
+				[key]: mapProps(value, data)
+			};
+		},
+		rSum
+	);
 };
