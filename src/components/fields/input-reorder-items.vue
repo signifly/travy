@@ -81,8 +81,8 @@ export default {
 	},
 	props: {
 		_endpoint: {type: Object, required: true, doc: true},
-		items: {type: Object, required: true, doc: true},
-		_items: {type: Object, required: true},
+		_items: {type: Object, required: true, doc: true},
+		items: {type: Object, required: true},
 		alt: {type: Object, required: true}
 	},
 	computed: {
