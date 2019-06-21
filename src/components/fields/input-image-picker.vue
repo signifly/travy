@@ -19,6 +19,7 @@
 				<div class="header">
 					<div class="search">
 						<Input
+							v-model="searchInput"
 							size="medium"
 							placeholder="Search"
 							@input="search"
@@ -95,6 +96,7 @@ export default {
 	},
 	data() {
 		return {
+			searchInput: "",
 			image: this.url,
 			modal: {
 				loading: false,
@@ -131,6 +133,7 @@ export default {
 		},
 
 		search(search) {
+			console.log({search});
 			this.modal.loading = true;
 			this.getItemsDebounce({search});
 		},
@@ -188,6 +191,7 @@ export default {
 		}
 	},
 	created() {
+		this.searchInput = "";
 		this.getItemsDebounce = debounce(this.getItems, 400);
 	}
 };
