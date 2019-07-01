@@ -1,17 +1,19 @@
 <template>
-	<div class="field" v-if="!disabled">
+	<div class="field" :style="{width: fWidth}" v-if="!disabled">
 		<div class="content">
 			<vlabel v-bind="{alt, name, label, tooltip}" v-if="rules.label" />
 			<fieldType v-bind="[fieldType, {alt}]" @event="$emit('event', $event)" />
 		</div>
 
 		<transition name="error">
-			<div class="error" v-if="error">{{ error }}</div>
+			<div class="error" v-if="error" v-text="error" />
 		</transition>
 
-		<div class="description" v-if="description && rules.description">
-			{{ description }}
-		</div>
+		<div
+			class="description"
+			v-if="description && rules.description"
+			v-text="description"
+		/>
 	</div>
 </template>
 
@@ -31,28 +33,23 @@ export default {
 		label: {type: String, required: false},
 		hide: {type: Object, required: false},
 		name: {type: String, required: true},
+		width: {type: Number, default: 100},
 		alt: {type: Object, required: true}
 	},
 	computed: {
+		type: (t) => t.alt.type,
 		option: (t) => get(t.alt.options, t.name, {}),
 		error: (t) => get(t.alt.errors, t.name, [])[0],
+		disabled: (t) => t.hide && operator({...t.hide, data: t.alt.data}),
 
-		rules() {
-			const type = this.alt.type;
+		fWidth: (t) =>
+			t.type !== "table" &&
+			(t.width === 100 ? `${t.width}%` : `calc(${t.width}% - 1em)`),
 
-			return {
-				label: type !== "table",
-				description: type === "view-tab"
-			};
-		},
-
-		disabled() {
-			if (this.hide) {
-				return operator({...this.hide, data: this.alt.data});
-			} else {
-				return false;
-			}
-		}
+		rules: ({type}) => ({
+			label: type !== "table",
+			description: type === "view-tab"
+		})
 	}
 };
 </script>

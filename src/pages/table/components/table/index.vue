@@ -70,7 +70,7 @@ export default {
 	},
 	computed: {
 		query: () => state.query,
-		emptyText: (t) => (t.data ? "No data" : "Loading"),
+		emptyText: (t) => (t.loading ? "loading" : "no data"),
 		sorting: (t) => t.query.sort || t.defaults.sort || {},
 		batchActive: (t) => t.batch.bulk || t.batch.sequential,
 
@@ -88,7 +88,7 @@ export default {
 			const sort = prop && order ? {prop, order} : undefined;
 
 			// don't set query params for default sorting
-			if (this.data)
+			if (this.data.length)
 				state.setQuery({
 					type: "replace",
 					query: {

@@ -1,9 +1,9 @@
 <template>
 	<div class="tab">
 		<div class="fields" v-if="state.data">
-			<viewField
+			<field
 				v-for="field in fields"
-				v-bind="{field, alt: fieldAlt}"
+				v-bind="[field, {alt: fieldAlt}]"
 				:key="field.name"
 				@event="event"
 			/>
@@ -13,11 +13,11 @@
 
 <script>
 import {rStringProps, mergeData} from "@/modules/utils";
+import field from "@/components/field";
 import {get, set} from "lodash";
-import viewField from "./field";
 
 export default {
-	components: {viewField},
+	components: {field},
 	props: {
 		parentData: {type: Object, required: true},
 		endpoint: {type: Object, required: true},

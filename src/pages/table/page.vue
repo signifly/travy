@@ -60,7 +60,7 @@ export default {
 	data() {
 		return {
 			state,
-			data: null,
+			data: [],
 			meta: null,
 			halt: false,
 			loading: false,
