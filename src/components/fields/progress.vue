@@ -35,23 +35,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bar {
-	::v-deep {
-		.el-progress-bar__inner {
-			.danger & {
-				background-color: $danger;
-			}
-			.warning & {
-				background-color: $warning;
-			}
-			.info & {
-				background-color: $info;
-			}
-			.primary & {
-				background-color: $primary;
-			}
-			.success & {
-				background-color: $success;
+.progress {
+	width: 100%;
+
+	.bar {
+		::v-deep {
+			.el-progress-bar__inner {
+				.danger & {
+					background-color: $danger;
+				}
+				.warning & {
+					background-color: $warning;
+				}
+				.info & {
+					background-color: $info;
+				}
+				.primary & {
+					background-color: $primary;
+				}
+				.success & {
+					background-color: $success;
+				}
 			}
 		}
 	}

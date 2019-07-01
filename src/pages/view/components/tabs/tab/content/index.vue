@@ -28,7 +28,7 @@ export default {
 			}
 		},
 		comp() {
-			return () => import(/* webpackMode: "eager" */ `./${this.tab.type}.vue`);
+			return () => import(/* webpackMode: "eager" */ `./${this.tab.type}`);
 		}
 	},
 	methods: {

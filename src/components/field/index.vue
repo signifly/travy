@@ -1,5 +1,5 @@
 <template>
-	<div class="field" :style="{width: widthCalc}" v-if="!disabled">
+	<div class="field" v-if="!disabled">
 		<div class="content">
 			<vlabel v-bind="{alt, name, label, tooltip}" v-if="rules.label" />
 			<fieldType v-bind="[fieldType, {alt}]" @event="$emit('event', $event)" />
@@ -31,14 +31,11 @@ export default {
 		label: {type: String, required: false},
 		hide: {type: Object, required: false},
 		name: {type: String, required: true},
-		width: {type: Number, default: 100},
 		alt: {type: Object, required: true}
 	},
 	computed: {
 		option: (t) => get(t.alt.options, t.name, {}),
 		error: (t) => get(t.alt.errors, t.name, [])[0],
-		widthCalc: (t) =>
-			t.width === 100 ? `${t.width}%` : `calc(${t.width}% - 1em)`,
 
 		rules() {
 			const type = this.alt.type;

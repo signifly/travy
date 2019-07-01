@@ -48,6 +48,7 @@ export default {
 .table-field {
 	text-decoration: none;
 	color: $black1;
+	width: 100%;
 
 	.field {
 		margin: 0;
