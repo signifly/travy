@@ -4,27 +4,14 @@
 			<h1 class="title" :id="id" :href="`#${id}`">{{ id }}</h1>
 
 			<div class="props">
-				<table class="table">
-					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Required</th>
-						<th>Map</th>
-						<th>Default</th>
-						<th>Note</th>
-						<th>Validator</th>
-					</tr>
-
-					<tr v-for="(prop, name) in propsTable" :key="name">
-						<td>{{ name }}</td>
-						<td>{{ prop.type }}</td>
-						<td>{{ prop.required || false }}</td>
-						<td>{{ prop.map }}</td>
-						<td>{{ prop.default }}</td>
-						<td v-html="prop.note"></td>
-						<td>{{ prop.validator }}</td>
-					</tr>
-				</table>
+				<Table :data="propsTable" row-key="name" size="small" stripe>
+					<TableColumn prop="name" label="Name" />
+					<TableColumn prop="type" label="Type" />
+					<TableColumn prop="required" label="Required" />
+					<TableColumn prop="map" label="Map" />
+					<TableColumn prop="default" label="Default" />
+					<TableColumn prop="note" label="Note" />
+				</Table>
 			</div>
 
 			<div class="field-wrap">
@@ -64,11 +51,12 @@
 </template>
 
 <script>
-import {mapValues, mapKeys, pickBy, get} from "lodash";
+import {Table, TableColumn} from "element-ui";
 import field from "@/components/field";
+import {pickBy, get} from "lodash";
 
 export default {
-	components: {field},
+	components: {field, Table, TableColumn},
 	props: {
 		id: {type: String, required: true},
 		props: {type: Object, required: true},
@@ -86,22 +74,28 @@ export default {
 		fieldType: (t) => ({id: t.id, props: t.res.props}),
 
 		propsTable() {
-			let props = pickBy(this.props, (x) => x.doc); // find props where {doc: true}
+			const mapProps = (props) => {
+				return Object.entries(props).map(([key, prop]) => ({
+					...prop,
+					get type() {
+						const names = () =>
+							(prop.type || []).map((x) => x.name).join(" | ");
+						const name = () => get(prop.type, "name");
+						return name() || names();
+					},
+					get default() {
+						return typeof prop.default === "function"
+							? JSON.stringify(prop.default())
+							: prop.default;
+					},
+					name: key.charAt(0) === "_" ? key.substr(1) : key,
+					map: (key.charAt(0) !== "_").toString(),
+					children: mapProps(prop.children || {}),
+					required: (!!prop.required).toString()
+				}));
+			};
 
-			props = mapValues(props, (prop, key) => ({
-				...prop,
-				type:
-					get(prop.type, "name") ||
-					(prop.type || []).map((x) => x.name).join("|"),
-				default:
-					typeof prop.default === "function" ? prop.default() : prop.default,
-				map: key.charAt(0) !== "_"
-			}));
-
-			// remove underscore if first character from prop name/key
-			return mapKeys(props, (val, key) =>
-				key.charAt(0) === "_" ? key.substr(1) : key
-			);
+			return mapProps(pickBy(this.props, (x) => x.doc));
 		}
 	},
 	methods: {
@@ -143,42 +137,15 @@ export default {
 		}
 
 		> .props {
-			margin: 1em 0;
 			border: 1px solid $blue2;
 			border-radius: 4px;
+			overflow: hidden;
+			border-bottom: 0;
+			margin: 1em 0;
 
-			.table {
-				width: 100%;
-				border-collapse: collapse;
-				font-size: em(13);
-
-				tr {
-					&:nth-child(even) {
-						td {
-							background-color: $white2;
-						}
-					}
-
-					th,
-					td {
-						text-align: left;
-						padding: 0.8em;
-					}
-
-					th {
-						font-weight: 500;
-						border-bottom: 1px solid $blue2;
-					}
-
-					td {
-						::v-deep {
-							a {
-								color: $blue5;
-								text-decoration: none;
-							}
-						}
-					}
-				}
+			::v-deep .el-table .cell {
+				word-break: normal;
+				color: $black1;
 			}
 		}
 

@@ -22,6 +22,7 @@
 				</div>
 
 				<actions
+					v-if="item.actions"
 					v-bind="{_actions: item.actions, alt: {data: item.data}}"
 					@event="$emit('event', $event)"
 				/>
@@ -84,7 +85,24 @@ export default {
 	},
 	props: {
 		_endpoint: {type: Object, required: true, doc: true},
-		_items: {type: Object, required: true, doc: true},
+		_items: {
+			type: Object,
+			required: true,
+			doc: true,
+			children: {
+				data: {type: String, required: true},
+				image: {type: String, required: true},
+				_list: {
+					type: Array,
+					required: true,
+					children: {
+						_label: {type: String, required: true},
+						value: {type: String, required: true}
+					}
+				},
+				_actions: {type: Array, required: false}
+			}
+		},
 		items: {type: Object, required: true},
 		alt: {type: Object, required: true}
 	},
