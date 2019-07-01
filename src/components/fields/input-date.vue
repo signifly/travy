@@ -42,9 +42,7 @@ export default {
 			required: false,
 			default: "date",
 			doc: true,
-			note: `
-				<i>year/month/date/datetime</i>
-			`
+			note: "year, month, date, datetime"
 		}
 	},
 	data() {
