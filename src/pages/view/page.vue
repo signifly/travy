@@ -15,7 +15,7 @@
 				<Col class="left" :span="16">
 					<tabs
 						ref="tabs"
-						:key="compKey"
+						:key="updateKey"
 						v-bind="{tabs, data}"
 						@edit="edit = $event"
 						@event="event"
@@ -25,7 +25,7 @@
 					<sidebar
 						v-if="sidebar"
 						ref="sidebar"
-						:key="compKey"
+						:key="updateKey"
 						v-bind="{sidebar, endpoint, data}"
 						@edit="edit = $event"
 						@event="event"
@@ -79,9 +79,9 @@ export default {
 			error: "",
 			data: null,
 			edit: false,
+			updateKey: 0,
 			loading: false,
-			definitions: null,
-			compUpdateKey: 0
+			definitions: null
 		};
 	},
 	computed: {
@@ -92,9 +92,7 @@ export default {
 		sidebar: (t) => t.definitions.sidebar,
 		activity: (t) => t.definitions.activity,
 		endpoint: (t) => t.definitions.endpoint,
-		modifiers: (t) => t.definitions.modifiers,
-		compKey: (t) => `${t.modifiersKey}-${t.compUpdateKey}`,
-		modifiersKey: (t) => Object.values(t.query.modifiers || {}).join(",")
+		modifiers: (t) => t.definitions.modifiers
 	},
 	methods: {
 		async event({actions, done}) {
@@ -102,7 +100,7 @@ export default {
 				const {definitions, data} = actions.refresh;
 				if (definitions) await this.getDefinitions();
 				if (data) await this.getData();
-				this.compUpdateKey++;
+				this.updateKey++;
 			}
 
 			if (done) await done();
