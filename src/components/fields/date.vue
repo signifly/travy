@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import {formatDate} from "element-ui/packages/date-picker/src/util";
+import {formatDate} from "element-ui/src/utils/date-util";
 
 export default {
 	meta: {
