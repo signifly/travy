@@ -4,7 +4,7 @@
 			<h1 class="title" :id="id" :href="`#${id}`">{{ id }}</h1>
 
 			<div class="props">
-				<Table :data="propsTable" row-key="name" size="small" stripe>
+				<Table :data="propsTable" row-key="rowKey" size="small" stripe>
 					<TableColumn prop="name" label="Name" />
 					<TableColumn prop="type" label="Type" />
 					<TableColumn prop="required" label="Required" />
@@ -74,6 +74,8 @@ export default {
 		fieldType: (t) => ({id: t.id, props: t.res.props}),
 
 		propsTable() {
+			let rowKey = 0;
+
 			const mapProps = (props) => {
 				return Object.entries(props).map(([key, prop]) => ({
 					...prop,
@@ -91,7 +93,8 @@ export default {
 					name: key.charAt(0) === "_" ? key.substr(1) : key,
 					map: (key.charAt(0) !== "_").toString(),
 					children: mapProps(prop.children || {}),
-					required: (!!prop.required).toString()
+					required: (!!prop.required).toString(),
+					rowKey: rowKey++
 				}));
 			};
 
