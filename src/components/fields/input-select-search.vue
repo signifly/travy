@@ -18,7 +18,6 @@
 
 <script>
 import {Select, Option} from "element-ui";
-import {meta} from "@/modules/utils";
 import {merge, get} from "lodash";
 
 export default {
@@ -31,7 +30,7 @@ export default {
 				value: "selectValue",
 				options: {
 					endpoint: {
-						url: meta.items,
+						url: "items",
 						params: {filter: {test: "test"}}
 					},
 					itemKey: "",

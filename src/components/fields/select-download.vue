@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import {meta, rStringProps} from "@/modules/utils";
 import {Select, Option, Button} from "element-ui";
+import {rStringProps} from "@/modules/utils";
 import {merge, get} from "lodash";
 
 export default {
@@ -44,7 +44,7 @@ export default {
 
 				options: {
 					endpoint: {
-						url: meta.items,
+						url: "items",
 						params: {filter: {test: "test"}}
 					},
 					key: "",

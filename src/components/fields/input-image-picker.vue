@@ -62,7 +62,6 @@
 <script>
 import {Dialog, Input, Button} from "element-ui";
 import {get, debounce} from "lodash";
-import {meta} from "@/modules/utils";
 
 export default {
 	components: {Dialog, Input, Button},
@@ -73,7 +72,7 @@ export default {
 				url: "image_url",
 				options: {
 					endpoint: {
-						url: meta.items,
+						url: "items",
 						params: {sort: "name"}
 					},
 					key: "",

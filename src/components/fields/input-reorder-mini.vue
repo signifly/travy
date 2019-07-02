@@ -36,9 +36,8 @@
 </template>
 
 <script>
-import {get} from "lodash";
-import {meta} from "@/modules/utils";
 import draggable from "vuedraggable";
+import {get} from "lodash";
 
 export default {
 	components: {draggable},
@@ -50,7 +49,7 @@ export default {
 					key: "",
 					value: "id",
 					endpoint: {
-						url: meta.items,
+						url: "items",
 						params: {test: "test"}
 					}
 				},

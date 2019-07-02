@@ -18,7 +18,6 @@
 
 <script>
 import selectMultiSearch from "./input-select-multi-search.vue";
-import {meta} from "@/modules/utils";
 import vTable from "./table.vue";
 import {get} from "lodash";
 
@@ -31,7 +30,7 @@ export default {
 				values: "values",
 				options: {
 					endpoint: {
-						url: meta.items,
+						url: "items",
 						params: {filter: {test: "test"}}
 					},
 					key: "",

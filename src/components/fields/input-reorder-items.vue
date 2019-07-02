@@ -32,9 +32,9 @@
 </template>
 
 <script>
+import {rStringProps} from "@/modules/utils";
 import actions from "./button-actions.vue";
 import draggable from "vuedraggable";
-import {meta, rStringProps} from "@/modules/utils";
 import {get} from "lodash";
 
 export default {
@@ -52,7 +52,7 @@ export default {
 					actions: []
 				},
 				endpoint: {
-					url: meta.items,
+					url: "items",
 					method: "put",
 					payload: {
 						type: "type"

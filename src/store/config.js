@@ -1,4 +1,4 @@
-import axios from "@/modules/axios";
+import {api} from "@/modules/axios";
 
 export default {
 	namespaced: true,
@@ -16,7 +16,7 @@ export default {
 	actions: {
 		async data({commit}) {
 			try {
-				const {data} = await axios.get("definitions/config", {customErr: true});
+				const {data} = await api.get("definitions/config", {customErr: true});
 				commit("data", data);
 			} catch (err) {
 				// error

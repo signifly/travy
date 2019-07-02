@@ -22,7 +22,6 @@
 <script>
 import {get, merge, uniqBy, pick} from "lodash";
 import {Select, Option} from "element-ui";
-import {meta} from "@/modules/utils";
 
 export default {
 	components: {Select, Option},
@@ -33,7 +32,7 @@ export default {
 				values: "values",
 				options: {
 					endpoint: {
-						url: meta.items,
+						url: "items",
 						params: {filter: {test: "test"}}
 					},
 					key: "",

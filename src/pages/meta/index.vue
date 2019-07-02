@@ -20,10 +20,19 @@
 </template>
 
 <script>
+import {metaApi, api} from "@/modules/axios";
+import Vue from "vue";
+
 export default {
 	data: () => ({
 		version: process.env.VERSION
-	})
+	}),
+	beforeCreate() {
+		Vue.prototype.$axios = metaApi;
+	},
+	beforeDestroy() {
+		Vue.prototype.$axios = api;
+	}
 };
 </script>
 

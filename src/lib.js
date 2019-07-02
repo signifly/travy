@@ -31,12 +31,12 @@ const start = (options) => {
 	));
 
 	const {default: router} = require("./modules/router");
-	const {default: axios} = require("./modules/axios");
 	const {default: ws} = require("./modules/ws");
 	const {default: store} = require("./store");
+	const {api} = require("./modules/axios");
 
 	Vue.prototype.$translate = utils.translate;
-	Vue.prototype.$axios = axios;
+	Vue.prototype.$axios = api;
 	Vue.prototype.$ws = ws;
 
 	if (!settings.test) {

@@ -1,5 +1,5 @@
 import router from "@/modules/router";
-import axios from "@/modules/axios";
+import {api} from "@/modules/axios";
 import ws from "@/modules/ws";
 
 export default {
@@ -25,7 +25,7 @@ export default {
 	actions: {
 		async login({commit, dispatch}, {form, route}) {
 			try {
-				const {data} = await axios.post("login", form, {customErr: true});
+				const {data} = await api.post("login", form, {customErr: true});
 				commit("authSet", {data});
 
 				await dispatch("data", {customErr: true});
@@ -39,7 +39,7 @@ export default {
 
 		async logout({commit}, {post} = {}) {
 			try {
-				if (post) await axios.post("logout");
+				if (post) await api.post("logout");
 			} catch (err) {
 				// error
 			} finally {
@@ -53,13 +53,13 @@ export default {
 		},
 
 		async resetPassword(ctx, {form}) {
-			return await axios.post("password/email", form, {customErr: true});
+			return await api.post("password/email", form, {customErr: true});
 		},
 
 		async data({commit, getters}, {customErr} = {}) {
 			if (localStorage.getItem("auth")) {
 				try {
-					const {data} = await axios.get("account", {customErr});
+					const {data} = await api.get("account", {customErr});
 					commit("data", data);
 					return getters.data;
 				} catch (err) {

@@ -77,10 +77,6 @@ export const rStringProps = ({data, val = ""}) => {
 	return parse(val);
 };
 
-export const meta = {
-	items: "$meta/items"
-};
-
 export const translate = (locales) => {
 	const {default: store} = require("@/store");
 	const locale = store.getters["config/locale"];

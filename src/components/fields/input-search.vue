@@ -14,7 +14,6 @@
 <script>
 import {debounce, merge, get} from "lodash";
 import {Autocomplete} from "element-ui";
-import {meta} from "@/modules/utils";
 
 export default {
 	components: {Autocomplete},
@@ -24,7 +23,7 @@ export default {
 				value: "inputVal",
 				options: {
 					endpoint: {
-						url: meta.items,
+						url: "items",
 						params: {
 							filter: {test: "test"},
 							modifiers: {language_id: 1},
