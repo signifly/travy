@@ -3,7 +3,7 @@
 		<slot />
 
 		<component
-			v-if="active"
+			v-if="value"
 			:is="props.id"
 			v-bind="[actionProps, propsC, {data}]"
 			@event="$emit('event', $event)"
@@ -25,7 +25,7 @@ export default {
 	components: {dropdown, modal, popup, show},
 	props: {
 		actionProps: {type: Object, required: false},
-		active: {type: Boolean, required: true},
+		value: {type: Boolean, required: true},
 		props: {type: Object, required: true},
 		data: {type: Object, required: false}, // parent data
 		hide: {type: Object, required: false} // {key, operator, value}
@@ -79,7 +79,7 @@ export default {
 		},
 
 		close() {
-			this.$emit("close");
+			this.$emit("input", false);
 		}
 	}
 };

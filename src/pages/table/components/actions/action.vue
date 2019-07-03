@@ -1,11 +1,11 @@
 <template>
 	<action
-		v-bind="{props, active, hide, data: parentData}"
-		@close="toggle"
+		v-bind="{props, hide, data: parentData}"
+		v-model="active"
 		@event="$emit('event', $event)"
 	>
 		<div class="table-action">
-			<Button size="medium" :type="status" @click="toggle">
+			<Button size="medium" :type="status" @click="active = !active">
 				{{ title }}
 				<i class="el-icon-right" :class="`el-icon-${icon}`" v-if="icon" />
 			</Button>
@@ -31,11 +31,6 @@ export default {
 		return {
 			active: false
 		};
-	},
-	methods: {
-		toggle() {
-			this.active = !this.active;
-		}
 	}
 };
 </script>

@@ -1,11 +1,17 @@
 <template>
 	<action
-		v-bind="{props: _action, data: alt.data, active}"
-		@close="close"
+		v-bind="{props: _action, data: alt.data}"
+		v-model="active"
 		@event="$emit('event', $event)"
 	>
 		<div class="button-action">
-			<Button :size="_size" :type="_status" :icon="icon" @click="toggle" plain>
+			<Button
+				plain
+				:size="_size"
+				:type="_status"
+				:icon="icon"
+				@click="active = !active"
+			>
 				{{ _title }}
 			</Button>
 		</div>
@@ -85,15 +91,6 @@ export default {
 	},
 	computed: {
 		icon: (t) => (t._icon ? `el-icon-${t._icon}` : "")
-	},
-	methods: {
-		toggle() {
-			this.active = !this.active;
-		},
-
-		close() {
-			this.active = false;
-		}
 	}
 };
 </script>

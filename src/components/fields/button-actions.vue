@@ -17,9 +17,9 @@
 				<action
 					v-for="action in actions"
 					v-bind="[action, {data: alt.data}]"
-					:active="selectedAction === action"
+					:value="selectedAction === action"
 					:key="action.title"
-					@close="close"
+					@input="close"
 					@event="$emit('event', $event)"
 				>
 					<DropdownItem class="item" :command="action">
@@ -148,7 +148,7 @@ export default {
 			this.selectedAction = null;
 
 			setTimeout(() => {
-				if (this.$refs.dropdown) this.$refs.dropdown.hide();
+				this.$refs.dropdown.hide();
 			}, 100);
 		}
 	}

@@ -17,8 +17,8 @@
 					:active="actAction === action"
 					:key="action.title"
 					v-bind="{action, ids}"
-					@close="close"
-					@event="event"
+					@close="actAction = null"
+					@event="$emit('event', $event)"
 				/>
 			</DropdownMenu>
 		</Dropdown>
@@ -41,15 +41,8 @@ export default {
 		};
 	},
 	methods: {
-		close() {
-			this.actAction = null;
-		},
 		select(action) {
 			this.actAction = this.actAction === action ? null : action;
-		},
-		event(e) {
-			this.close();
-			this.$emit("event", e);
 		}
 	}
 };

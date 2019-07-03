@@ -3,11 +3,11 @@
 		<action
 			v-for="action in actions"
 			v-bind="[action, {data}]"
-			:active="selected === action"
+			:value="selected === action"
 			:key="action.title"
 			@event="$emit('event', $event)"
 			@submit="$emit('submit', $event)"
-			@close="$emit('close')"
+			@input="$emit('close')"
 		>
 			<a class="item" @click="select(action)">
 				{{ action.title }}

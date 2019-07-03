@@ -1,7 +1,11 @@
 <template>
-	<action v-bind="{props, active, hide, data}" @close="toggle" @event="event">
+	<action
+		v-model="active"
+		v-bind="{props, hide, data}"
+		@event="$emit('event', $event)"
+	>
 		<div class="view-action">
-			<Button size="medium" :type="status" @click="toggle">
+			<Button size="medium" :type="status" @click="active = !active">
 				{{ title }}
 				<i
 					class="el-icon-arrow-right el-icon-right"
@@ -31,16 +35,6 @@ export default {
 		return {
 			active: false
 		};
-	},
-	methods: {
-		toggle() {
-			this.active = !this.active;
-		},
-
-		event(e) {
-			this.active = false;
-			this.$emit("event", e);
-		}
 	}
 };
 </script>

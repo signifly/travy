@@ -1,8 +1,9 @@
 <template>
 	<action
-		v-bind="[actionC, {active}]"
+		v-bind="actionC"
+		:value="active"
 		:actionProps="{position: 'top-right'}"
-		@close="$emit('close', $event)"
+		@input="$emit('close', $event)"
 		@event="$emit('event', $event)"
 	>
 		<DropdownItem class="item" :command="action">
