@@ -1,4 +1,8 @@
 body {
+	.el-main {
+		overflow: unset;
+	}
+
 	.el-popover,
 	.el-dialog__body {
 		font-size: 1em;

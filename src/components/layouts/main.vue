@@ -29,9 +29,6 @@ export default {
 
 <style lang="scss" scoped>
 .main {
-	background-color: $white2;
-	min-height: 100vh;
-
 	.container {
 		max-width: $width;
 		margin: 0 auto;
