@@ -9,7 +9,7 @@ app({
 });
 
 const propsData = {
-	active: true,
+	value: true,
 	data: {
 		value: 1,
 		obj: {isHidden: true, id: 1}
