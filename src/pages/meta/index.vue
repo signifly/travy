@@ -3,7 +3,6 @@
 		<div class="header">
 			<div class="wrap">
 				<router-link class="title" :to="{name: 'meta'}">Meta</router-link>
-				<div class="version" v-text="version" />
 
 				<div class="menu">
 					<router-link to="/meta/actions">Actions</router-link>
@@ -24,9 +23,6 @@ import {metaApi, api} from "@/modules/axios";
 import Vue from "vue";
 
 export default {
-	data: () => ({
-		version: process.env.VERSION
-	}),
 	beforeCreate() {
 		Vue.prototype.$axios = metaApi;
 	},
@@ -70,14 +66,6 @@ export default {
 			.title {
 				font-size: 1.5em;
 				font-weight: 600;
-			}
-
-			.version {
-				margin-right: auto;
-				margin-left: 1em;
-				font-size: 0.7em;
-				font-weight: 600;
-				color: $blue4;
 			}
 
 			.menu {
