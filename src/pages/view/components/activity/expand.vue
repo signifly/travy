@@ -1,8 +1,8 @@
 <template>
 	<div class="expand">
 		<Table border size="mini" v-bind="{data}">
-			<TableColumn label="key" prop="key" width="250">
-				<b class="key" slot-scope="{row}" v-text="row.key" />
+			<TableColumn label="key" prop="key" width="250" v-slot="{row}">
+				<b class="key" v-text="row.key" />
 			</TableColumn>
 			<TableColumn label="from" prop="from" v-if="old" />
 			<TableColumn :label="old ? 'to' : 'data'" prop="to" />

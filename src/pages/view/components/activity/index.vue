@@ -4,8 +4,8 @@
 
 		<div class="table">
 			<Table size="small" class="activity-table" v-bind="{data: itemsMap}">
-				<TableColumn type="expand">
-					<expand slot-scope="{row}" v-bind="row.properties" />
+				<TableColumn type="expand" v-slot="{row}">
+					<expand v-bind="row.properties" />
 				</TableColumn>
 				<TableColumn width="100" label="id" prop="hashId" />
 				<TableColumn width="180" label="date" prop="date" />
@@ -18,8 +18,8 @@
 					v-if="tableId !== 'users'"
 				/>
 				<TableColumn label="changes" prop="changes" />
-				<TableColumn label="actions" prop="revert">
-					<div class="revert" slot-scope="{row}">
+				<TableColumn label="actions" prop="revert" v-slot="{row}">
+					<div class="revert">
 						<Button
 							v-if="row.revertable"
 							size="mini"
@@ -73,7 +73,7 @@ export default {
 				subject: x.humanized_subject,
 				date: date(x.updated_at).sDateTime,
 				user: x.causer ? x.causer.name : "System",
-				changes: Object.keys(get(x.properties, "attributes", {})).join(", ")
+				changes: Object.keys(get(x.properties, "attributes", {})).length
 			}))
 	},
 	methods: {

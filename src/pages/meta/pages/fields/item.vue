@@ -10,7 +10,9 @@
 					<TableColumn prop="required" label="Required" />
 					<TableColumn prop="map" label="Map" />
 					<TableColumn prop="default" label="Default" />
-					<TableColumn prop="note" label="Note" />
+					<TableColumn label="Note" v-slot="{row}">
+						<div v-html="row.note" />
+					</TableColumn>
 				</Table>
 			</div>
 
