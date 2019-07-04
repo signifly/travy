@@ -38,6 +38,9 @@ export default {
 
 <style lang="scss" scoped>
 .meta {
+	background-color: $white1;
+	min-height: 100vh;
+
 	$h: 3.5em;
 
 	.header {

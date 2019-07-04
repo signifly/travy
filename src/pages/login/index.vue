@@ -115,16 +115,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.reset {
-	font-size: 0.8em;
-	color: $info;
+.login {
+	background-color: $white1;
+	min-height: 100vh;
 
-	&:hover {
-		text-decoration: underline;
-	}
+	.reset {
+		font-size: 0.8em;
+		color: $info;
 
-	&.loading {
-		pointer-events: none;
+		&:hover {
+			text-decoration: underline;
+		}
+
+		&.loading {
+			pointer-events: none;
+		}
 	}
 }
 </style>
