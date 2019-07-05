@@ -22,17 +22,11 @@ export default {
 	props: {
 		endpoint: {type: Object, required: true},
 		sidebar: {type: Array, required: true},
-		data: {type: Object, required: true}
+		state: {type: Object, required: true}
 	},
 	data() {
 		return {
-			state: {
-				data: this.data,
-				options: null,
-				error: null,
-				edit: false,
-				payload: {}
-			}
+			payload: {}
 		};
 	},
 	computed: {
@@ -46,6 +40,9 @@ export default {
 		})
 	},
 	methods: {
+		updateState(obj) {
+			this.$emit("update:state", {...this.state, ...obj});
+		},
 		async event({actions, done}) {
 			if (actions.update) {
 				let {data} = actions.update;
@@ -57,12 +54,13 @@ export default {
 				);
 
 				// merge payload with data
-				this.state.payload = mergeData(this.state.payload, data);
+				this.payload = mergeData(this.payload, data);
 
 				// merge dataC with data
-				this.state.data = mergeData(this.state.data, data);
-
-				this.state.edit = true;
+				this.updateState({
+					data: mergeData(this.state.data, data),
+					edit: true
+				});
 			}
 
 			if (done) await done();
@@ -71,39 +69,27 @@ export default {
 		async save() {
 			if (!this.state.edit) return;
 
-			try {
-				const {
-					data: {data, options}
-				} = await this.$axios.put(
-					this.endpointUrl,
-					{
-						modifier: this.modifiers,
-						data: this.state.payload
-					},
-					{customErr: true}
-				);
+			const {
+				data: {data, options}
+			} = await this.$axios.put(
+				this.endpointUrl,
+				{
+					modifier: this.modifiers,
+					data: this.payload
+				},
+				{customErr: true}
+			);
 
-				this.state = {
-					data,
-					options,
-					payload: {},
-					error: null,
-					edit: false
-				};
+			this.payload = {};
 
-				this.$emit("event", {
-					actions: {
-						refresh: {data: true}
-					}
-				});
-			} catch ({errors}) {
-				this.state.error = {errors};
-			}
-		}
-	},
-	watch: {
-		"state.edit"(edit) {
-			this.$emit("edit", edit);
+			this.updateState({
+				data,
+				options,
+				edit: false,
+				error: null
+			});
+
+			return {refresh: {data: true}};
 		}
 	}
 };

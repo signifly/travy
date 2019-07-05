@@ -1,7 +1,7 @@
 <template>
 	<div class="input" @keypress="validate">
 		<InputNumber
-			v-model="valueC"
+			:value="value"
 			:disabled="_disabled"
 			:precision="_precision"
 			:step="_step"
@@ -14,16 +14,16 @@
 </template>
 
 <script>
-import {toNumber, debounce} from "lodash";
 import {InputNumber} from "element-ui";
+import {toNumber} from "lodash";
 
 export default {
 	components: {InputNumber},
 	meta: {
 		res: {
 			props: {
-				disabled: false,
 				value: "inputVal",
+				disabled: false,
 				precision: 2,
 				step: 0.1,
 				max: 10
@@ -42,14 +42,6 @@ export default {
 		value: {type: Number, required: false, doc: true},
 		_value: {type: String, required: true}
 	},
-	data() {
-		return {
-			valueC: this.value
-		};
-	},
-	computed: {
-		wait: (t) => (t.alt.type === "table" ? 500 : 0)
-	},
 	methods: {
 		validate(e) {
 			if (e.key === ".") return;
@@ -65,9 +57,6 @@ export default {
 				}
 			});
 		}
-	},
-	created() {
-		this.update = debounce(this.update, this.wait);
 	}
 };
 </script>

@@ -3,7 +3,7 @@
 		<component
 			v-if="comp"
 			:is="comp"
-			v-bind="{loading, error, title}"
+			v-bind="{loading, title, errorMsg}"
 			@event="$emit('event', $event)"
 			@save="$emit('save', $event)"
 		/>
@@ -11,18 +11,20 @@
 </template>
 
 <script>
-import save from "./save.vue";
 import batch from "./batch.vue";
+import save from "./save.vue";
+import {get} from "lodash";
 
 export default {
 	components: {save, batch},
 	props: {
 		data: {type: Object, required: true},
 		edit: {type: Boolean, required: true},
-		error: {type: String, required: true},
+		error: {type: Object, required: false},
 		loading: {type: Boolean, required: true}
 	},
 	computed: {
+		errorMsg: (t) => get(t.error, "message", ""),
 		sequential: (t) => t.$route.query.sequential,
 		title: (t) => `#${t.data.id}`,
 		comp() {

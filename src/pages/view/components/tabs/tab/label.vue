@@ -35,8 +35,10 @@ export default {
 	computed: {
 		edit: (t) => t.state.edit,
 		error: (t) => t.state.error,
-		outdated: (t) =>
-			Object.values(t.state.options || {}).some((obj) => obj.outdated)
+		options: (t) => t.state.options || {},
+		outdated() {
+			return Object.values(this.options).some((obj) => obj.outdated);
+		}
 	}
 };
 </script>

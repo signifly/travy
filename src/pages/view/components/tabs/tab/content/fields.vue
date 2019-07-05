@@ -1,6 +1,6 @@
 <template>
 	<div class="tab">
-		<div class="fields" v-if="state.data">
+		<div class="fields">
 			<field
 				v-for="field in fields"
 				v-bind="[field, {alt: fieldAlt}]"
@@ -58,10 +58,10 @@ export default {
 				this.payload = mergeData(this.payload, data);
 
 				// merge state data with data
-				const stateData = mergeData(this.state.data, data);
-
-				// update state
-				this.updateState({data: stateData, edit: true});
+				this.updateState({
+					data: mergeData(this.state.data, data),
+					edit: true
+				});
 			}
 
 			if (done) await done();
@@ -85,7 +85,7 @@ export default {
 			this.updateState({data, options});
 		},
 
-		async save({done} = {}) {
+		async save() {
 			try {
 				const {
 					data: {data, options}
@@ -101,7 +101,7 @@ export default {
 				this.updateState({data, options, edit: false, error: null});
 				this.payload = {};
 
-				if (done) await done();
+				return {refresh: {data: true}};
 			} catch (error) {
 				this.updateState({error});
 				throw error.message;

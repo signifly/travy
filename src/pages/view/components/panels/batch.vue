@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="actions">
-			<div class="error" v-if="error" v-text="error" />
+			<div class="error" v-if="errorMsg" v-text="errorMsg" />
 
 			<Button
 				v-if="prev"
@@ -59,7 +59,7 @@ export default {
 	components: {Button, Tooltip, Progress, panel},
 	props: {
 		title: {type: String, required: true},
-		error: {type: String, required: true},
+		errorMsg: {type: String, required: true},
 		loading: {type: Boolean, required: true}
 	},
 	data() {

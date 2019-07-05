@@ -1,11 +1,6 @@
 <template>
 	<div class="editor">
-		<editor
-			ref="editor"
-			v-model="data.content"
-			v-bind="{configs}"
-			@input="update"
-		/>
+		<editor ref="editor" :value="content" v-bind="{configs}" @input="update" />
 	</div>
 </template>
 
@@ -32,9 +27,6 @@ export default {
 	data() {
 		return {
 			init: false,
-			data: {
-				content: this.content
-			},
 			configs: {
 				spellChecker: false,
 				hideIcons: ["image", "fullscreen", "side-by-side"]

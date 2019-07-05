@@ -9,7 +9,7 @@
 			}}
 		</div>
 		<div class="actions">
-			<div class="error" v-if="error" v-text="error" />
+			<div class="error" v-if="errorMsg" v-text="errorMsg" />
 
 			<Button
 				size="medium"
@@ -34,7 +34,7 @@ export default {
 	components: {Button, vPanel},
 	props: {
 		loading: {type: Boolean, required: true},
-		error: {type: String, required: true}
+		errorMsg: {type: String, required: true}
 	},
 	methods: {
 		save() {

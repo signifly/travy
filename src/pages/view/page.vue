@@ -15,9 +15,8 @@
 				<Col class="left" :span="16">
 					<tabs
 						ref="tabs"
-						:key="updateKey"
-						v-bind="{tabs, data}"
-						@edit="edit = $event"
+						v-bind="{tabs, data, updateKey}"
+						@edit="state.edit = $event"
 						@event="event"
 					/>
 				</Col>
@@ -25,9 +24,8 @@
 					<sidebar
 						v-if="sidebar"
 						ref="sidebar"
-						:key="updateKey"
-						v-bind="{sidebar, endpoint, data}"
-						@edit="edit = $event"
+						v-bind="{sidebar, endpoint}"
+						:state.sync="state"
 						@event="event"
 					/>
 				</Col>
@@ -50,6 +48,7 @@
 </template>
 
 <script>
+import {merge} from "lodash";
 import {Row, Col} from "element-ui";
 import tabs from "./components/tabs";
 import panels from "./components/panels";
@@ -76,15 +75,21 @@ export default {
 	},
 	data() {
 		return {
-			error: "",
-			data: null,
-			edit: false,
-			updateKey: 0,
+			definitions: null,
 			loading: false,
-			definitions: null
+			updateKey: 0,
+			state: {
+				data: null,
+				error: null,
+				edit: false,
+				options: null
+			}
 		};
 	},
 	computed: {
+		edit: (t) => t.state.edit,
+		data: (t) => t.state.data,
+		error: (t) => t.state.error,
 		query: (t) => t.$route.query,
 		tabs: (t) => t.definitions.tabs,
 		header: (t) => t.definitions.header,
@@ -97,6 +102,8 @@ export default {
 	methods: {
 		async event({actions, done}) {
 			if (actions.refresh) {
+				console.log("refresh", actions.refresh);
+
 				const {definitions, data} = actions.refresh;
 				if (definitions) await this.getDefinitions();
 				if (data) await this.getData();
@@ -110,14 +117,16 @@ export default {
 			this.loading = true;
 
 			try {
-				await Promise.all([
+				const [sidebar, tabs] = await Promise.all([
 					this.sidebar && this.$refs.sidebar.save(),
 					this.$refs.tabs.save()
 				]);
-				if (done) await done();
-				this.error = "";
+
+				const actions = merge(sidebar, tabs);
+				await this.event({actions, done});
+				this.state.error = null;
 			} catch (err) {
-				this.error = err;
+				this.state.error = err;
 			}
 
 			this.loading = false;
@@ -133,13 +142,13 @@ export default {
 			const params = {modifier: this.query.modifiers};
 
 			try {
-				const {
-					data: {data}
-				} = await this.$axios.get(this.requests.data, {
+				const {data} = await this.$axios.get(this.requests.data, {
 					params,
 					customErr: true
 				});
-				this.data = data;
+
+				this.state.data = data.data;
+				this.state.options = data.options;
 			} catch (err) {
 				if (err.status === 404) {
 					this.$router.replace({name: "error", params: {status: 404}});

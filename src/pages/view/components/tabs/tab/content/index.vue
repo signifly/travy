@@ -3,6 +3,7 @@
 		<component
 			:is="comp"
 			ref="comp"
+			:key="updateKey"
 			v-bind="[tab, {parentData: data}]"
 			:state.sync="stateC"
 			@event="$emit('event', $event)"
@@ -15,7 +16,8 @@ export default {
 	props: {
 		tab: {type: Object, required: true},
 		data: {type: Object, required: true},
-		state: {type: Object, required: true}
+		state: {type: Object, required: true},
+		updateKey: {type: Number, required: true}
 	},
 	computed: {
 		edit: (t) => t.state.edit,
@@ -34,9 +36,12 @@ export default {
 	methods: {
 		async save() {
 			if (this.$refs.comp.save && this.edit) {
-				await this.$refs.comp.save();
+				return await this.$refs.comp.save();
 			}
 		}
+	},
+	created() {
+		console.log("tab created");
 	}
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
 	<div class="colorpicker">
-		<ColorPicker color-format="hex" v-model="data.value" @change="update" />
+		<ColorPicker color-format="hex" v-bind="{value}" @change="update" />
 	</div>
 </template>
 
@@ -22,13 +22,6 @@ export default {
 	props: {
 		value: {type: String, required: false, doc: true},
 		_value: {type: String, required: true}
-	},
-	data() {
-		return {
-			data: {
-				value: this.value
-			}
-		};
 	},
 	methods: {
 		update(val) {

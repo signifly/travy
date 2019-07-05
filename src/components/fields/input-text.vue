@@ -1,12 +1,12 @@
 <template>
 	<div class="input">
 		<Input
-			v-model="valueC"
+			v-bind="{value}"
+			@input="update"
 			:disabled="_disabled"
 			:type="_type"
 			:controls="false"
 			size="medium"
-			@input="update"
 		/>
 		<div class="unit" v-if="_unit">{{ _unit }}</div>
 	</div>
@@ -14,7 +14,6 @@
 
 <script>
 import {Input} from "element-ui";
-import {debounce} from "lodash";
 
 export default {
 	components: {Input},
@@ -38,14 +37,6 @@ export default {
 		_type: {type: String, default: "text", doc: true},
 		_value: {type: String, required: true}
 	},
-	data() {
-		return {
-			valueC: this.value
-		};
-	},
-	computed: {
-		wait: (t) => (t.alt.type === "table" ? 500 : 0)
-	},
 	methods: {
 		update(value) {
 			this.$emit("event", {
@@ -54,9 +45,6 @@ export default {
 				}
 			});
 		}
-	},
-	created() {
-		this.update = debounce(this.update, this.wait);
 	}
 };
 </script>

@@ -2,18 +2,16 @@
 
 Dynamic CMS, WIP
 
-
 ## Install
 
 ```
 $ npm install @signifly/travy
 ```
 
-
 ## Usage
 
 ```js
-import {Vue, app, utils} from "@signifly/travy";
+import {Vue, app, utils, components} from "@signifly/travy";
 import "@signifly/travy/dist/lib.css";
 
 const instance = app({
@@ -22,7 +20,6 @@ const instance = app({
 	fields: {}
 });
 ```
-
 
 ## Development
 

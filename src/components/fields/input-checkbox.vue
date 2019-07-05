@@ -1,6 +1,6 @@
 <template>
 	<div class="checkbox">
-		<Checkbox v-model="data.value" @change="update" />
+		<Checkbox v-bind="{value}" @change="update" />
 	</div>
 </template>
 
@@ -22,13 +22,6 @@ export default {
 	props: {
 		value: {type: Boolean, required: false, doc: true},
 		_value: {type: String, required: true}
-	},
-	data() {
-		return {
-			data: {
-				value: this.value
-			}
-		};
 	},
 	methods: {
 		update(val) {

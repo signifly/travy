@@ -2,7 +2,7 @@
 	<div class="input">
 		<Input
 			type="password"
-			v-model="data.value"
+			v-bind="{value}"
 			@input="update"
 			:disabled="_disabled"
 			:controls="false"
@@ -31,13 +31,6 @@ export default {
 		_disabled: {type: Boolean, required: false, doc: true},
 		value: {type: String, required: false, doc: true},
 		_value: {type: String, required: true}
-	},
-	data() {
-		return {
-			data: {
-				value: this.value
-			}
-		};
 	},
 	methods: {
 		update(val) {

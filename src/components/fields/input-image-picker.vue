@@ -96,7 +96,7 @@ export default {
 	data() {
 		return {
 			searchInput: "",
-			image: this.url,
+			image: null,
 			modal: {
 				loading: false,
 				active: false,
@@ -183,14 +183,10 @@ export default {
 			});
 		}
 	},
-	watch: {
-		url(url) {
-			this.image = url;
-		}
-	},
 	created() {
 		this.searchInput = "";
 		this.getItemsDebounce = debounce(this.getItems, 400);
+		this.$watch("url", (url) => (this.image = url), {immediate: true});
 	}
 };
 </script>

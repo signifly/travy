@@ -4,7 +4,7 @@
 			action=""
 			ref="upload"
 			:auto-upload="false"
-			:file-list="data.fileList"
+			:file-list="fileList"
 			:accept="_fileTypes"
 			:on-preview="preview"
 			:on-change="addFile"
@@ -45,11 +45,7 @@ export default {
 	data() {
 		return {
 			loading: false,
-
-			data: {
-				file: this.file,
-				fileList: []
-			}
+			fileList: []
 		};
 	},
 	methods: {
@@ -65,13 +61,13 @@ export default {
 
 			const base64 = await base64Encode(file.raw);
 			this.update({file: base64, title: file.name});
-			this.data.fileList = [file];
+			this.fileList = [file];
 
 			this.loading = false;
 		},
 
 		removeFile() {
-			this.data.fileList = [];
+			this.fileList = [];
 			this.update(null);
 		},
 
@@ -86,7 +82,7 @@ export default {
 
 	created() {
 		if (this.url) {
-			this.data.fileList.push({
+			this.fileList.push({
 				url: this.url,
 				name: this.url.split("/").slice(-1)[0]
 			});

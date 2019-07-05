@@ -5,7 +5,7 @@
 				<tabLabel slot="label" v-bind="tab" :state="state[tab.id]" />
 				<tabContent
 					ref="tabContent"
-					v-bind="{tab, data}"
+					v-bind="{tab, data, updateKey}"
 					:state.sync="state[tab.id]"
 					@event="$emit('event', $event)"
 				/>
@@ -18,12 +18,14 @@
 import {Tabs, TabPane} from "element-ui";
 import tabContent from "./tab/content";
 import tabLabel from "./tab/label";
+import {merge} from "lodash";
 
 export default {
 	components: {Tabs, TabPane, tabContent, tabLabel},
 	props: {
 		tabs: {type: Array, required: true},
-		data: {type: Object, required: true}
+		data: {type: Object, required: true},
+		updateKey: {type: Number, required: true}
 	},
 	data() {
 		return {
@@ -37,10 +39,8 @@ export default {
 	methods: {
 		async save() {
 			const tabs = this.$refs.tabContent;
-
-			for (const tab of tabs) {
-				await tab.save();
-			}
+			const res = await Promise.all(tabs.map((x) => x.save()));
+			return res.reduce((sum, x) => merge(sum, x), {});
 		}
 	},
 	watch: {
