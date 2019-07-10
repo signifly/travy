@@ -1,6 +1,7 @@
 <template>
-	<div class="editor">
-		<editor ref="editor" :value="content" v-bind="{configs}" @input="update" />
+	<div class="editor" :class="{disabled: _disabled}">
+		<div class="overlay" v-if="_disabled" />
+		<editor ref="editor" v-bind="{configs, value}" @input="update" />
 	</div>
 </template>
 
@@ -13,7 +14,8 @@ export default {
 	meta: {
 		res: {
 			props: {
-				content: "markdown"
+				content: "markdown",
+				disabled: true
 			},
 			data: {
 				markdown: "some markdown"
@@ -21,6 +23,7 @@ export default {
 		}
 	},
 	props: {
+		_disabled: {type: Boolean, required: false, doc: true},
 		content: {type: String, required: false, doc: true},
 		_content: {type: String, required: true}
 	},
@@ -32,6 +35,9 @@ export default {
 				hideIcons: ["image", "fullscreen", "side-by-side"]
 			}
 		};
+	},
+	computed: {
+		value: (t) => t.content || ""
 	},
 	methods: {
 		update(content) {
@@ -55,6 +61,26 @@ export default {
 
 <style lang="scss" scoped>
 .editor {
+	position: relative;
+
+	.overlay {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		top: 0;
+		z-index: 2;
+	}
+
+	&.disabled {
+		::v-deep {
+			.CodeMirror {
+				background-color: transparentize($black1, 0.97);
+				color: $blue4;
+			}
+		}
+	}
+
 	::v-deep {
 		.editor-toolbar {
 			background-color: $white2;
