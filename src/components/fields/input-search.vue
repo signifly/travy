@@ -2,7 +2,7 @@
 	<div class="input">
 		<Autocomplete
 			size="medium"
-			v-model="valueC"
+			:value="value"
 			@input="update"
 			:debounce="300"
 			:disabled="_disabled"
@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import {debounce, merge, get} from "lodash";
 import {Autocomplete} from "element-ui";
+import {merge, get} from "lodash";
 
 export default {
 	components: {Autocomplete},
@@ -53,12 +53,8 @@ export default {
 	},
 	data() {
 		return {
-			valueC: this.value,
 			items: []
 		};
-	},
-	computed: {
-		wait: (t) => (t.alt.type === "table" ? 500 : 0)
 	},
 	methods: {
 		async getOptions(search, cb) {
@@ -91,9 +87,6 @@ export default {
 				}
 			});
 		}
-	},
-	created() {
-		this.update = debounce(this.update, this.wait);
 	}
 };
 </script>

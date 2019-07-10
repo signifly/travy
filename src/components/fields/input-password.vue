@@ -20,7 +20,7 @@ export default {
 		res: {
 			props: {
 				disabled: false,
-				value: "passord"
+				value: "password"
 			},
 			data: {
 				password: ""
