@@ -40,7 +40,6 @@ export default {
 		}
 	},
 	props: {
-		alt: {type: Object, required: true},
 		_disabled: {type: Boolean, required: false, doc: true},
 		_options: {
 			type: Object,

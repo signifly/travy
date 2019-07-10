@@ -34,7 +34,6 @@ export default {
 		}
 	},
 	props: {
-		alt: {type: Object, required: true},
 		_disabled: {type: Boolean, required: false, doc: true},
 		_precision: {type: Number, required: true, doc: true},
 		_step: {type: Number, required: true, doc: true},

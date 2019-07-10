@@ -30,7 +30,6 @@ export default {
 		}
 	},
 	props: {
-		alt: {type: Object, required: true},
 		_disabled: {type: Boolean, required: false, doc: true},
 		value: {type: [String, Number], required: false, doc: true},
 		_unit: {type: String, required: false, doc: true},
