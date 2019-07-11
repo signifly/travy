@@ -1,7 +1,7 @@
 <template>
 	<div class="text" :class="[`align-${_align}`, {subtitle}]">
 		<div class="content">
-			<div class="title" :class="statusC" v-text="textC" />
+			<div class="title" :class="[statusC, {bold: _bold}]" v-text="textC" />
 			<div class="subtitle" v-if="subtitle" v-text="subtitle" />
 		</div>
 
@@ -42,6 +42,7 @@ export default {
 	},
 	props: {
 		_align: {type: String, default: "left", doc: true},
+		_bold: {type: Boolean, required: false, doc: true},
 		tooltip: {type: [String], required: false, doc: true},
 		text: {type: [String, Number], required: false, doc: true},
 		subtitle: {type: [String, Number], required: false, doc: true},
@@ -94,6 +95,10 @@ export default {
 
 	.content {
 		.title {
+			&.bold {
+				font-weight: 600;
+			}
+
 			&.danger {
 				color: $danger;
 			}
