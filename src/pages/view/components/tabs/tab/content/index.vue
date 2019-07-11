@@ -39,9 +39,6 @@ export default {
 				return await this.$refs.comp.save();
 			}
 		}
-	},
-	created() {
-		console.log("tab created");
 	}
 };
 </script>

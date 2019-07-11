@@ -3,7 +3,7 @@
 		<div class="left">
 			<Tooltip content="Save and close">
 				<a class="close" @click="closeSave">
-					<i class="el-icon-circle-close-outline" />
+					<i class="el-icon-circle-close" />
 				</a>
 			</Tooltip>
 			<div class="text" v-text="title" />

@@ -11,7 +11,8 @@
 
 <script>
 import vTable from "@/pages/table/components/table";
-import {cloneDeep, set} from "lodash";
+import {mapPaths} from "@/modules/utils";
+import {cloneDeep} from "lodash";
 
 export default {
 	components: {vTable},
@@ -79,11 +80,7 @@ export default {
 
 				const columnItem = columnsData.find((x) => x.id === item.id);
 
-				// {"key1.key2": 1} ===> {key1: {key2: 1}}
-				const columnData = Object.entries(data).reduce(
-					(obj, [key, val]) => set(obj, key, val),
-					{}
-				);
+				const columnData = mapPaths(data);
 
 				Object.assign(columnItem, columnData);
 				this.columnsDataC = columnsData;

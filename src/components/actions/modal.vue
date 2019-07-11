@@ -12,7 +12,7 @@
 <script>
 import vModalFields from "@/components/modal-fields.vue";
 import toFormData from "object-to-formdata";
-import {set} from "lodash";
+import {mapPaths} from "@/modules/utils";
 
 export default {
 	components: {vModalFields},
@@ -38,8 +38,7 @@ export default {
 
 		payloadC: (t) => ({
 			...t.payload,
-			// {"key1.key2": 1} ===> {key1: {key2: 1}}
-			data: Object.entries(t.data).reduce((o, [k, v]) => set(o, k, v), {})
+			data: mapPaths(t.data)
 		}),
 
 		visible: {

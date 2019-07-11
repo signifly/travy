@@ -106,4 +106,16 @@ describe("utils", () => {
 		expect(res).toHaveProperty("string", "string");
 		expect(res).toHaveProperty("deep.text", data.text);
 	});
+
+	test("mapPaths", () => {
+		const data = {
+			text1: "text",
+			"obj.text2": "text"
+		};
+
+		const res = utils.mapPaths(data);
+
+		expect(res).toHaveProperty("text1", "text");
+		expect(res).toHaveProperty(["obj", "text2"], "text");
+	});
 });

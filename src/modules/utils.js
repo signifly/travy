@@ -6,6 +6,7 @@ import {
 	replace,
 	reduce,
 	get,
+	set,
 	lte,
 	gte,
 	lt,
@@ -118,5 +119,13 @@ export const mapProps = ({props, data, fallback}) => {
 			};
 		},
 		rSum
+	);
+};
+
+export const mapPaths = (data) => {
+	// {"key1.key2": 1} ===> {key1: {key2: 1}}
+	return Object.entries(data).reduce(
+		(obj, [key, val]) => set(obj, key, val),
+		{}
 	);
 };
