@@ -9,11 +9,11 @@ export default {
 	meta: {
 		res: {
 			props: {
-				timestamp: "dateTime",
+				timestamp: "timestamp",
 				format: "yyyy-MM-dd HH:mm:ss"
 			},
 			data: {
-				dateTime: 1517529600
+				timestamp: 1517529600
 			}
 		}
 	},
@@ -29,8 +29,14 @@ export default {
 		}
 	},
 	computed: {
-		date: (t) => formatDate(t.timestamp * 1000, t._format),
-		datetime: (t) => new Date(t.timestamp * 1000)
+		datetime: (t) => new Date(t.timestamp * 1000),
+		date() {
+			if (this.timestamp) {
+				return formatDate(this.timestamp * 1000, this._format);
+			} else {
+				return "-";
+			}
+		}
 	}
 };
 </script>
