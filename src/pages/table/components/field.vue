@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import {rStringProps} from "@/modules/utils";
+import {rStringProps, mergeData, mapPaths} from "@/modules/utils";
 import vField from "@/components/field";
 import state from "../state";
 
@@ -27,7 +27,13 @@ export default {
 	},
 	methods: {
 		event({actions, done}) {
-			const update = actions.update;
+			const {update} = actions;
+
+			// because of element-ui we have to update table item data here
+			if (update) {
+				update.data = mapPaths(update.data);
+				Object.assign(this.data, mergeData(this.data, update.data));
+			}
 
 			this.$emit("event", {
 				done,

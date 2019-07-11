@@ -16,7 +16,7 @@
 					<tabs
 						ref="tabs"
 						v-bind="{tabs, data, updateKey}"
-						@edit="state.edit = $event"
+						@edit="setEdit('tabs', $event)"
 						@event="event"
 					/>
 				</Col>
@@ -42,7 +42,7 @@
 				</Col>
 			</Row>
 
-			<panels v-bind="{loading, error, data, edit}" @save="save" />
+			<panels v-bind="{loading, error, data, edits}" @save="save" />
 		</div>
 	</transition>
 </template>
@@ -79,16 +79,16 @@ export default {
 			loading: false,
 			updateKey: 0,
 			state: {
+				edits: {},
 				data: null,
 				error: null,
-				edit: false,
 				options: null
 			}
 		};
 	},
 	computed: {
-		edit: (t) => t.state.edit,
 		data: (t) => t.state.data,
+		edits: (t) => t.state.edits,
 		error: (t) => t.state.error,
 		query: (t) => t.$route.query,
 		tabs: (t) => t.definitions.tabs,
@@ -100,10 +100,11 @@ export default {
 		modifiers: (t) => t.definitions.modifiers
 	},
 	methods: {
+		setEdit(key, val) {
+			this.state.edits = {...this.edits, [key]: val};
+		},
 		async event({actions, done}) {
 			if (actions.refresh) {
-				console.log("refresh", actions.refresh);
-
 				const {definitions, data} = actions.refresh;
 				if (definitions) await this.getDefinitions();
 				if (data) await this.getData();
@@ -125,6 +126,7 @@ export default {
 				const actions = merge(sidebar, tabs);
 				await this.event({actions, done});
 				this.state.error = null;
+				this.state.edits = {};
 			} catch (err) {
 				this.state.error = err;
 			}

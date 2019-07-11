@@ -35,9 +35,8 @@
 </template>
 
 <script>
-import Semaphore from "semaphore-async-await";
-import {rStringProps} from "@/modules/utils";
-import {merge, get, set} from "lodash";
+import {rStringProps, mergeData} from "@/modules/utils";
+import {merge, get, set, debounce} from "lodash";
 import state from "./state";
 
 import pagination from "./components/pagination";
@@ -47,8 +46,6 @@ import vTable from "./components/table";
 import batch from "./components/batch";
 import box from "@/components/box.vue";
 import top from "./components/top";
-
-const s = new Semaphore(1);
 
 export default {
 	components: {box, vTable, filters, actions, pagination, batch, top},
@@ -62,6 +59,7 @@ export default {
 			state,
 			data: [],
 			meta: null,
+			updates: {},
 			halt: false,
 			loading: false,
 			metadata: null,
@@ -112,21 +110,38 @@ export default {
 		},
 
 		async event({actions, done}) {
-			await s.acquire();
-
 			if (actions.update) {
 				let {data, item} = actions.update;
-				// {"key1.key2": 1} ===> {key1: {key2: 1}}
-				data = Object.entries(data).reduce(
-					(obj, [key, val]) => set(obj, key, val),
-					{}
-				);
-				const url = rStringProps({
-					data: item,
-					val: `${this.endpoint.url}/{id}`
-				});
-				await this.$axios.put(url, {data, modifier: this.modifiers});
-				await this.getData({loading: false});
+
+				// create update item
+				const uItem = (() => set(this.updates, item.id, {})[item.id])();
+
+				// set payload
+				uItem.payload = mergeData(uItem.payload, data);
+
+				// set method
+				if (!uItem.method) {
+					uItem.method = debounce(async () => {
+						const url = rStringProps({
+							data: item,
+							val: `${this.endpoint.url}/{id}`
+						});
+
+						await this.$axios.put(url, {
+							data: uItem.payload,
+							modifier: this.modifiers
+						});
+
+						// clear method and payload
+						Object.assign(uItem, {payload: null, method: null});
+
+						// update table if all methods are finished
+						const rdy = !Object.values(this.updates).some((x) => x && x.method);
+						if (rdy) this.getData();
+					}, 1000);
+				}
+
+				uItem.method();
 			}
 
 			// if we're inside a view (parentData), the view will refresh the table component
@@ -145,8 +160,6 @@ export default {
 
 			// emit to view
 			this.$emit("event", {actions});
-
-			s.release();
 		},
 
 		async filter({done}) {

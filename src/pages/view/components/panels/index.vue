@@ -19,11 +19,12 @@ export default {
 	components: {save, batch},
 	props: {
 		data: {type: Object, required: true},
-		edit: {type: Boolean, required: true},
+		edits: {type: Object, required: true},
 		error: {type: Object, required: false},
 		loading: {type: Boolean, required: true}
 	},
 	computed: {
+		edit: (t) => Object.values(t.edits).some((x) => x),
 		errorMsg: (t) => get(t.error, "message", ""),
 		sequential: (t) => t.$route.query.sequential,
 		title: (t) => `#${t.data.id}`,

@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import {rStringProps, mergeData} from "@/modules/utils";
+import {rStringProps, mergeData, mapPaths} from "@/modules/utils";
 import field from "@/components/field";
-import {get, set} from "lodash";
+import {get} from "lodash";
 
 export default {
 	components: {field},
@@ -48,11 +48,7 @@ export default {
 			if (actions.update) {
 				let {data} = actions.update;
 
-				// {"key1.key2": 1} ===> {key1: {key2: 1}}
-				data = Object.entries(data).reduce(
-					(obj, [key, val]) => set(obj, key, val),
-					{}
-				);
+				data = mapPaths(data);
 
 				// merge payload with data
 				this.payload = mergeData(this.payload, data);
@@ -88,7 +84,7 @@ export default {
 		async save() {
 			try {
 				const {
-					data: {data, options}
+					data: {options}
 				} = await this.$axios.put(
 					this.endpointUrl,
 					{
@@ -98,13 +94,13 @@ export default {
 					{customErr: true}
 				);
 
-				this.updateState({data, options, edit: false, error: null});
+				this.updateState({options, edit: false, error: null});
 				this.payload = {};
 
 				return {refresh: {data: true}};
 			} catch (error) {
 				this.updateState({error});
-				throw error.message;
+				throw error;
 			}
 		}
 	},

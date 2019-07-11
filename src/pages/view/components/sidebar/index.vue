@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import {rStringProps, mergeData} from "@/modules/utils";
-import {get, set} from "lodash";
+import {rStringProps, mergeData, mapPaths} from "@/modules/utils";
 import group from "./group";
+import {get} from "lodash";
 
 export default {
 	components: {group},
@@ -32,6 +32,7 @@ export default {
 	computed: {
 		endpointUrl: (t) => rStringProps({data: t.state.data, val: t.endpoint.url}),
 		modifiers: (t) => t.$route.query.modifiers,
+		edit: (t) => t.state.edits.sidebar,
 
 		fieldAlt: (t) => ({
 			errors: get(t.state.error, "errors"),
@@ -47,27 +48,25 @@ export default {
 			if (actions.update) {
 				let {data} = actions.update;
 
-				// {"key1.key2": 1} ===> {key1: {key2: 1}}
-				data = Object.entries(data).reduce(
-					(obj, [key, val]) => set(obj, key, val),
-					{}
-				);
+				data = mapPaths(data);
 
 				// merge payload with data
 				this.payload = mergeData(this.payload, data);
 
 				// merge dataC with data
-				this.updateState({
-					data: mergeData(this.state.data, data),
-					edit: true
-				});
+				this.updateState(
+					mergeData(this.state, {
+						data,
+						edits: {sidebar: true}
+					})
+				);
 			}
 
 			if (done) await done();
 		},
 
 		async save() {
-			if (!this.state.edit) return;
+			if (!this.edit) return;
 
 			const {
 				data: {data, options}
@@ -85,7 +84,6 @@ export default {
 			this.updateState({
 				data,
 				options,
-				edit: false,
 				error: null
 			});
 
