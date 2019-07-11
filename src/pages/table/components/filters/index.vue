@@ -9,8 +9,8 @@
 			transition="trans-fadeDown"
 		>
 			<div class="pop">
-				<div class="fields" :key="resetU">
-					<vField
+				<div class="fields">
+					<field
 						v-for="field in fields"
 						:key="field.name"
 						v-bind="field"
@@ -59,11 +59,11 @@
 <script>
 import {mapValues, debounce, get} from "lodash";
 import {Input, Button, Popover} from "element-ui";
-import vField from "@/components/field";
+import field from "@/components/field";
 import state from "../../state";
 
 export default {
-	components: {Input, Button, Popover},
+	components: {Input, Button, Popover, field},
 	props: {
 		data: {type: Object, required: false, default: () => ({})},
 		fields: {type: Array, required: false},
@@ -73,8 +73,7 @@ export default {
 		return {
 			input: get(this.$route.query, "filters.search") || "",
 			loading: false,
-			active: false,
-			resetU: 0
+			active: false
 		};
 	},
 	computed: {
@@ -84,7 +83,15 @@ export default {
 		query: () => state.query
 	},
 	methods: {
-		updateDebounce: debounce(async function({data}) {
+		updateDebounce: debounce(function() {
+			this.$emit("filter", {
+				done: async () => (this.loading = false)
+			});
+		}, 1000),
+
+		update({data}) {
+			this.loading = true;
+
 			let filters = {...this.query.filters, ...data};
 			filters = mapValues(filters, (val) => (val === "" ? undefined : val));
 
@@ -97,19 +104,12 @@ export default {
 				}
 			});
 
-			this.$emit("filter", {
-				done: async () => (this.loading = false)
-			});
-		}, 400),
-
-		update({data}) {
-			this.loading = true;
-			this.updateDebounce({data});
+			this.updateDebounce();
 		},
 
 		async event({actions, done}) {
-			const {data} = actions.update;
-			this.updateDebounce({data});
+			const {update} = actions;
+			if (update) this.update({data: update.data});
 			if (done) await done();
 		},
 
@@ -127,15 +127,9 @@ export default {
 			});
 
 			this.$emit("filter", {
-				done: async () => {
-					this.loading = false;
-					this.resetU++;
-				}
+				done: async () => (this.loading = false)
 			});
 		}
-	},
-	beforeCreate() {
-		this.$options.components.vField = vField;
 	}
 };
 </script>
