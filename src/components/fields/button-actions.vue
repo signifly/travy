@@ -148,7 +148,9 @@ export default {
 			this.selectedAction = null;
 
 			setTimeout(() => {
-				this.$refs.dropdown.hide();
+				if (this.$refs.dropdown) {
+					this.$refs.dropdown.hide();
+				}
 			}, 100);
 		}
 	}

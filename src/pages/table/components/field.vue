@@ -1,15 +1,16 @@
 <template>
 	<component :is="link ? 'router-link' : 'div'" class="table-field" :to="link">
-		<vField v-bind="column" :alt="{data, type: 'table'}" @event="event" />
+		<field v-bind="column" :alt="{data, type: 'table'}" @event="event" />
 	</component>
 </template>
 
 <script>
 import {rStringProps, mergeData, mapPaths} from "@/modules/utils";
-import vField from "@/components/field";
+import field from "@/components/field";
 import state from "../state";
 
 export default {
+	components: {field},
 	props: {
 		column: {type: Object, required: true},
 		scope: {type: Object, required: true}
@@ -43,9 +44,6 @@ export default {
 				}
 			});
 		}
-	},
-	beforeCreate() {
-		this.$options.components.vField = vField;
 	}
 };
 </script>

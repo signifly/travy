@@ -8,7 +8,7 @@
 			:modal-append-to-body="true"
 		>
 			<div class="fields">
-				<vField
+				<field
 					v-for="field in fields"
 					:key="field.name"
 					v-bind="field"
@@ -38,10 +38,10 @@
 <script>
 import {translate} from "@/modules/utils";
 import {Dialog, Button} from "element-ui";
-import vField from "./field";
+import field from "./field";
 
 export default {
-	components: {Dialog, Button},
+	components: {Dialog, Button, field},
 	props: {
 		fields: {type: Array, required: true},
 		data: {type: Object, required: true},
@@ -85,9 +85,6 @@ export default {
 	},
 	beforeDestroy() {
 		this.$el.removeEventListener("keyup", this.enter);
-	},
-	beforeCreate() {
-		this.$options.components.vField = vField;
 	}
 };
 </script>
