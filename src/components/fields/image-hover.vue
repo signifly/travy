@@ -1,14 +1,14 @@
 <template>
 	<div
 		class="image"
-		v-if="image"
+		v-if="src"
 		@mouseover="active = true"
 		@mouseleave="active = false"
 	>
 		<i class="el-icon-picture" />
 		<transition name="img">
 			<div class="img" v-if="active">
-				<img :src="image" />
+				<img :src="src" />
 			</div>
 		</transition>
 	</div>
@@ -19,15 +19,15 @@ export default {
 	meta: {
 		res: {
 			props: {
-				image: "imageUrl"
+				src: "src"
 			},
 			data: {
-				imageUrl: "https://picsum.photos/200/200"
+				src: "https://picsum.photos/200/200"
 			}
 		}
 	},
 	props: {
-		image: {type: String, required: false, doc: true}
+		src: {type: String, required: false, doc: true}
 	},
 	data() {
 		return {
