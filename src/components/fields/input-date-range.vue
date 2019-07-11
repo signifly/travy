@@ -7,7 +7,8 @@
 			:type="_type"
 			:format="format"
 			:editable="false"
-			:clearable="false"
+			:clearable="_clearable"
+			:disabled="_disabled"
 			:picker-options="pickerOpts"
 			:value-format="_formatValue"
 			start-placeholder="Start Date"
@@ -42,6 +43,8 @@ export default {
 		_dateEnd: {type: String, required: true},
 		_format: {type: String, required: false, doc: true},
 		_formatValue: {type: String, default: "timestamp", doc: true},
+		_clearable: {type: Boolean, default: false, doc: true},
+		_disabled: {type: Boolean, default: false, doc: true},
 		_type: {
 			type: String,
 			required: false,
