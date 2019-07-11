@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import editor from "vue-simplemde/src/markdown-editor.vue";
 import "simplemde-theme-base/dist/simplemde-theme-base.min.css";
+import editor from "vue-simplemde";
 
 export default {
 	components: {editor},
