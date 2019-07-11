@@ -14,8 +14,7 @@ export default {
 	meta: {
 		res: {
 			props: {
-				content: "markdown",
-				disabled: true
+				content: "markdown"
 			},
 			data: {
 				markdown: "some markdown"
