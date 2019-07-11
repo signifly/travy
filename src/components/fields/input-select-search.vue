@@ -101,6 +101,7 @@ export default {
 
 		async getSelectedItem() {
 			const key = this._options.itemKey;
+
 			const {data} = await this.$axios.get(
 				`${this.endpoint.url}/${this.value}`
 			);
@@ -119,9 +120,15 @@ export default {
 		}
 	},
 	created() {
-		if (this.value) {
-			this.getSelectedItem();
-		}
+		this.$watch(
+			"value",
+			(value) => {
+				if (value && !this.itemsC.find((x) => x.value === value)) {
+					this.getSelectedItem();
+				}
+			},
+			{immediate: true}
+		);
 	}
 };
 </script>
