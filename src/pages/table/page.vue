@@ -144,8 +144,7 @@ export default {
 				uItem.method();
 			}
 
-			// if we're inside a view (parentData), the view will refresh the table component
-			if (actions.refresh && !this.parentData) {
+			if (actions.refresh) {
 				const {definitions, data} = actions.refresh;
 				if (definitions) await this.getDefinitions();
 				if (data) await this.getData();
@@ -157,9 +156,6 @@ export default {
 			}
 
 			if (done) await done();
-
-			// emit to view
-			this.$emit("event", {actions});
 		},
 
 		async filter({done}) {

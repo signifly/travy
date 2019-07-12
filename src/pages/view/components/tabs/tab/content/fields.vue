@@ -83,9 +83,7 @@ export default {
 
 		async save() {
 			try {
-				const {
-					data: {options}
-				} = await this.$axios.put(
+				await this.$axios.put(
 					this.endpointUrl,
 					{
 						modifier: this.modifiers,
@@ -94,10 +92,14 @@ export default {
 					{customErr: true}
 				);
 
-				this.updateState({options, edit: false, error: null});
+				this.updateState({edit: false, error: null});
 				this.payload = {};
 
-				return {refresh: {data: true}};
+				return {
+					actions: {
+						refresh: {data: true}
+					}
+				};
 			} catch (error) {
 				this.updateState({error});
 				throw error;

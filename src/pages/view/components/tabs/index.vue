@@ -1,11 +1,19 @@
 <template>
 	<div class="tabs">
 		<Tabs type="card" v-model="activeTab">
-			<TabPane v-for="tab in tabs" :name="tab.id" :key="tab.id" :lazy="true">
+			<TabPane
+				v-for="tab in tabs"
+				:name="tab.id"
+				:key="tab.id"
+				:lazy="true"
+				ref="tab"
+			>
 				<tabLabel slot="label" v-bind="tab" :state="state[tab.id]" />
+
 				<tabContent
 					ref="tabContent"
-					v-bind="{tab, data, updateKey}"
+					:key="update"
+					v-bind="{tab, data}"
 					:state.sync="state[tab.id]"
 					@event="$emit('event', $event)"
 				/>
@@ -25,18 +33,22 @@ export default {
 	props: {
 		tabs: {type: Array, required: true},
 		data: {type: Object, required: true},
-		updateKey: {type: Number, required: true}
+		update: {type: Number, required: true}
 	},
 	data() {
 		return {
 			activeTab: this.$route.params.tabId || this.tabs[0].id,
-			state: this.tabs.reduce((obj, tab) => ({...obj, [tab.id]: {}}), {}) // {tabId: {}}
+			state: this.createState()
 		};
 	},
 	computed: {
-		edit: (t) => Object.values(t.state).some((val) => val.edit)
+		edits: (t) => Object.values(t.state).some((val) => val.edit)
 	},
 	methods: {
+		createState() {
+			return this.tabs.reduce((obj, {id}) => ({...obj, [id]: {}}), {});
+		},
+
 		async save() {
 			const tabs = this.$refs.tabContent;
 			const res = await Promise.all(tabs.map((x) => x.save()));
@@ -47,8 +59,16 @@ export default {
 		activeTab(tabId) {
 			this.$router.replace({...this.$route, params: {tabId}});
 		},
-		edit(edit) {
-			this.$emit("edit", edit);
+		edits(edits) {
+			this.$emit("update:edit", edits);
+		},
+		update() {
+			// unload non active tabs on updates so they don't all get data at once.
+			this.$refs.tab
+				.filter((x) => !x.active)
+				.forEach((x) => {
+					x.loaded = false;
+				});
 		}
 	}
 };

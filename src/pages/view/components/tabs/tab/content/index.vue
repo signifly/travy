@@ -1,14 +1,11 @@
 <template>
-	<transition name="el-fade-in" appear>
-		<component
-			:is="comp"
-			ref="comp"
-			:key="updateKey"
-			v-bind="[tab, {parentData: data}]"
-			:state.sync="stateC"
-			@event="$emit('event', $event)"
-		/>
-	</transition>
+	<component
+		:is="comp"
+		ref="comp"
+		v-bind="[tab, {parentData: data}]"
+		:state.sync="stateC"
+		@event="$emit('event', $event)"
+	/>
 </template>
 
 <script>
@@ -16,8 +13,7 @@ export default {
 	props: {
 		tab: {type: Object, required: true},
 		data: {type: Object, required: true},
-		state: {type: Object, required: true},
-		updateKey: {type: Number, required: true}
+		state: {type: Object, required: true}
 	},
 	computed: {
 		edit: (t) => t.state.edit,

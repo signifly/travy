@@ -21,29 +21,28 @@ export default {
 	components: {group},
 	props: {
 		endpoint: {type: Object, required: true},
+		options: {type: Object, required: false},
 		sidebar: {type: Array, required: true},
-		state: {type: Object, required: true}
+		edit: {type: Boolean, required: false},
+		data: {type: Object, required: true}
 	},
 	data() {
 		return {
-			payload: {}
+			payload: {},
+			error: null
 		};
 	},
 	computed: {
-		endpointUrl: (t) => rStringProps({data: t.state.data, val: t.endpoint.url}),
+		endpointUrl: (t) => rStringProps({data: t.data, val: t.endpoint.url}),
 		modifiers: (t) => t.$route.query.modifiers,
-		edit: (t) => t.state.edits.sidebar,
 
 		fieldAlt: (t) => ({
-			errors: get(t.state.error, "errors"),
-			options: t.state.options,
-			data: t.state.data
+			errors: get(t.error, "errors"),
+			options: t.options,
+			data: t.data
 		})
 	},
 	methods: {
-		updateState(obj) {
-			this.$emit("update:state", {...this.state, ...obj});
-		},
 		async event({actions, done}) {
 			if (actions.update) {
 				let {data} = actions.update;
@@ -53,13 +52,11 @@ export default {
 				// merge payload with data
 				this.payload = mergeData(this.payload, data);
 
-				// merge dataC with data
-				this.updateState(
-					mergeData(this.state, {
-						data,
-						edits: {sidebar: true}
-					})
-				);
+				// merge data with data
+				this.$emit("update:data", mergeData(this.data, data));
+
+				// update sidebar edit
+				this.$emit("update:edit", true);
 			}
 
 			if (done) await done();
@@ -68,26 +65,24 @@ export default {
 		async save() {
 			if (!this.edit) return;
 
-			const {
-				data: {data, options}
-			} = await this.$axios.put(
-				this.endpointUrl,
-				{
-					modifier: this.modifiers,
-					data: this.payload
-				},
-				{customErr: true}
-			);
+			try {
+				await this.$axios.put(
+					this.endpointUrl,
+					{
+						modifier: this.modifiers,
+						data: this.payload
+					},
+					{customErr: true}
+				);
 
-			this.payload = {};
+				this.payload = {};
+				this.error = null;
 
-			this.updateState({
-				data,
-				options,
-				error: null
-			});
-
-			return {refresh: {data: true}};
+				return {actions: {refresh: {data: true}}};
+			} catch (error) {
+				this.error = error;
+				throw error;
+			}
 		}
 	}
 };

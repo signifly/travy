@@ -15,8 +15,8 @@
 				<Col class="left" :span="16">
 					<tabs
 						ref="tabs"
-						v-bind="{tabs, data, updateKey}"
-						@edit="setEdit('tabs', $event)"
+						v-bind="{tabs, data, update}"
+						:edit.sync="edits.tabs"
 						@event="event"
 					/>
 				</Col>
@@ -24,8 +24,9 @@
 					<sidebar
 						v-if="sidebar"
 						ref="sidebar"
-						v-bind="{sidebar, endpoint}"
-						:state.sync="state"
+						v-bind="{sidebar, endpoint, options}"
+						:edit.sync="edits.sidebar"
+						:data.sync="res.data"
 						@event="event"
 					/>
 				</Col>
@@ -33,12 +34,14 @@
 
 			<Row class="bottom" :gutter="20">
 				<Col class="left" :span="24">
-					<activity
-						v-if="activity"
-						:key="data.updated_at"
-						v-bind="{data, endpoint}"
-						@event="event"
-					/>
+					<transition name="el-fade-in" mode="out-in" appear>
+						<activity
+							v-if="activity"
+							:key="data.updated_at"
+							v-bind="{data, endpoint}"
+							@event="event"
+						/>
+					</transition>
 				</Col>
 			</Row>
 
@@ -77,20 +80,19 @@ export default {
 		return {
 			definitions: null,
 			loading: false,
-			updateKey: 0,
-			state: {
-				edits: {},
+			error: null,
+			update: 0,
+			edits: {},
+			res: {
 				data: null,
-				error: null,
 				options: null
 			}
 		};
 	},
 	computed: {
-		data: (t) => t.state.data,
-		edits: (t) => t.state.edits,
-		error: (t) => t.state.error,
+		data: (t) => t.res.data,
 		query: (t) => t.$route.query,
+		options: (t) => t.res.options,
 		tabs: (t) => t.definitions.tabs,
 		header: (t) => t.definitions.header,
 		actions: (t) => t.definitions.actions,
@@ -100,15 +102,12 @@ export default {
 		modifiers: (t) => t.definitions.modifiers
 	},
 	methods: {
-		setEdit(key, val) {
-			this.state.edits = {...this.edits, [key]: val};
-		},
 		async event({actions, done}) {
 			if (actions.refresh) {
 				const {definitions, data} = actions.refresh;
 				if (definitions) await this.getDefinitions();
 				if (data) await this.getData();
-				this.updateKey++;
+				this.update++;
 			}
 
 			if (done) await done();
@@ -123,12 +122,14 @@ export default {
 					this.$refs.tabs.save()
 				]);
 
-				const actions = merge(sidebar, tabs);
-				await this.event({actions, done});
-				this.state.error = null;
-				this.state.edits = {};
+				const event = merge(sidebar, tabs);
+				await this.event(event);
+				if (done) await done();
+
+				this.error = null;
+				this.edits = {};
 			} catch (err) {
-				this.state.error = err;
+				this.error = err;
 			}
 
 			this.loading = false;
@@ -149,8 +150,7 @@ export default {
 					customErr: true
 				});
 
-				this.state.data = data.data;
-				this.state.options = data.options;
+				this.res = data;
 			} catch (err) {
 				if (err.status === 404) {
 					this.$router.replace({name: "error", params: {status: 404}});
@@ -174,7 +174,6 @@ export default {
 	&-enter-active,
 	&-leave-active {
 		transition: cubic(opacity, 0.3s);
-		transition-delay: 0.1s;
 	}
 
 	&-enter,

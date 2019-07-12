@@ -1,7 +1,7 @@
 <template>
 	<div class="fieldType">
 		<component
-			:is="comp"
+			:is="customField || field"
 			v-bind="[propsData, propsValue, {alt}]"
 			@event="$emit('event', $event)"
 		/>
@@ -26,18 +26,11 @@ export default {
 		data: (t) => t.alt.data,
 		propsData: (t) => mapProps({props: t.props, data: t.data}),
 		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
+		customField: (t) => t.$settings.fields[t.id],
 
-		comp() {
-			const customField = this.$settings.fields[this.id];
-
-			if (customField) {
-				return customField;
-			} else {
-				return () =>
-					import(
-						/* webpackMode: "eager" */ `@/components/fields/${this.id}.vue`
-					);
-			}
+		field() {
+			const id = this.id;
+			return () => import(/* webpackMode: "eager" */ `../fields/${id}.vue`);
 		}
 	}
 };
