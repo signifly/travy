@@ -3,15 +3,6 @@ import {api} from "@/modules/axios";
 import store from "@/store";
 import Vue from "vue";
 
-const apiUrl = Vue.prototype.$settings.api;
-
-const url = () => {
-	const domain = apiUrl.replace(/^https?:\/\//i, "");
-	const ssl = apiUrl.includes("https");
-	const key = store.getters["config/wsKey"];
-	return `${ssl ? "wss" : "ws"}://${domain}/ws/app/${key}`;
-};
-
 const state = {
 	ws: {},
 	socketId: null,
@@ -60,7 +51,9 @@ const listeners = {
 
 		// get private channel token
 		if (item.channel.startsWith("private")) {
-			const {data} = await api.post(`${apiUrl}/broadcasting/auth`, {
+			const url = Vue.prototype.$settings.api;
+
+			const {data} = await api.post(`${url}/broadcasting/auth`, {
 				socket_id: state.socketId,
 				channel_name: item.channel
 			});
@@ -117,7 +110,9 @@ const reset = () => {
 };
 
 const connect = () => {
-	state.ws = new WebSocket(url());
+	const url = store.getters["config/ws"].url;
+
+	state.ws = new WebSocket(url);
 
 	state.ws.addEventListener("open", (e) => {
 		if (dev) console.log("ws open", e);

@@ -49,8 +49,8 @@ export default {
 		frontpage(state, {settings}) {
 			return settings && settings.frontpage;
 		},
-		wsKey(state, {settings}) {
-			return settings && settings.websockets_key;
+		ws(state, {settings}) {
+			return settings && settings.websockets;
 		},
 		title(state, {settings}) {
 			return (settings && settings.title) || "Travy";
