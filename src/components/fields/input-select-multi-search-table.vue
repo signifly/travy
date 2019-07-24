@@ -11,7 +11,7 @@
 			:key="columnsData.length"
 			v-bind="{_columns, columnsData}"
 			@event="$emit('event', $event)"
-			@data="tableData"
+			@data="update"
 		/>
 	</div>
 </template>
@@ -102,11 +102,11 @@ export default {
 	},
 	data() {
 		return {
-			columnsData: this.values,
 			edits: {}
 		};
 	},
 	computed: {
+		columnsData: (t) => t.values,
 		oValue: (t) => t._options.value
 	},
 	methods: {
@@ -115,7 +115,7 @@ export default {
 				const {data} = actions.update;
 				const values = get(data, this._values);
 
-				this.columnsData = values.map((item) => {
+				const columnsData = values.map((item) => {
 					const oldItem = this.columnsData.find(
 						(x) => x[this.oValue] === item[this.oValue]
 					);
@@ -127,13 +127,8 @@ export default {
 					};
 				});
 
-				this.update(this.columnsData);
+				this.update(columnsData);
 			}
-		},
-
-		tableData(data) {
-			this.columnsData = data;
-			this.update(data);
 		},
 
 		update(data) {
