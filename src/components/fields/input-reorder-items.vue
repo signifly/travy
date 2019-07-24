@@ -2,10 +2,10 @@
 	<div class="reorder-items">
 		<draggable
 			class="draggable"
-			v-model="cache"
+			v-model="data"
 			handle=".drag"
 			@input="update"
-			v-if="items.data.length > 0"
+			v-if="data.length > 0"
 		>
 			<div class="item" v-for="item in itemsC" :key="item.data.id">
 				<div class="icon drag">
@@ -106,8 +106,8 @@ export default {
 		items: {type: Object, required: true},
 		alt: {type: Object, required: true}
 	},
-	data: (t) => ({
-		cache: t.items.data
+	data: () => ({
+		data: []
 	}),
 	computed: {
 		endpoint() {
@@ -117,7 +117,7 @@ export default {
 			});
 		},
 		itemsC() {
-			return this.cache.map((item) => ({
+			return this.data.map((item) => ({
 				data: item,
 				actions: this._items.actions,
 				image: get(item, this._items.image),
@@ -144,6 +144,12 @@ export default {
 				}
 			});
 		}
+	},
+
+	created() {
+		this.$watch("items.data", (data) => (this.data = data || []), {
+			immediate: true
+		});
 	}
 };
 </script>

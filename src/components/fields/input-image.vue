@@ -65,11 +65,7 @@ export default {
 	},
 	data() {
 		return {
-			image: null,
-
-			data: {
-				file: this.file
-			}
+			image: null
 		};
 	},
 	computed: {
