@@ -96,9 +96,6 @@ export default {
 				width: 120
 			}
 		],
-		ws: {
-			channel: "tables.buy"
-		},
 		endpoint: {
 			url: "/data/table",
 			params: {
