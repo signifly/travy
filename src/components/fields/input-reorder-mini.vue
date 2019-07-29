@@ -1,6 +1,6 @@
 <template>
 	<div class="reorder">
-		<div class="table" v-if="items.length > 0">
+		<div class="table" v-if="loaded">
 			<table>
 				<thead>
 					<tr>
@@ -27,6 +27,8 @@
 					</tr>
 				</draggable>
 			</table>
+
+			<div class="noitems" v-if="!items.length">0 items</div>
 		</div>
 
 		<div class="loading" v-else>
@@ -74,6 +76,7 @@ export default {
 	},
 	data() {
 		return {
+			loaded: false,
 			items: []
 		};
 	},
@@ -101,6 +104,7 @@ export default {
 			} = this._options;
 			const {data} = await this.$axios.get(url, {params});
 			this.items = get(data, this._options.key, data);
+			this.loaded = true;
 		}
 	},
 	created() {
@@ -155,6 +159,13 @@ export default {
 					}
 				}
 			}
+		}
+
+		.noitems {
+			text-align: center;
+			font-weight: 500;
+			font-size: 12px;
+			margin: 1em;
 		}
 	}
 
