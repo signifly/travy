@@ -18,7 +18,7 @@
 
 <script>
 import {Select, Option} from "element-ui";
-import {merge, get} from "lodash";
+import {merge, get, uniqBy} from "lodash";
 
 export default {
 	components: {Select, Option},
@@ -70,13 +70,16 @@ export default {
 			return "medium";
 		},
 
-		itemsC: (t) =>
-			[t.selectedItem, ...t.items]
+		itemsC() {
+			const items = [this.selectedItem, ...this.items]
 				.filter((x) => x)
 				.map((x) => ({
-					value: get(x, t._options.value),
-					label: get(x, t._options.label)
-				}))
+					value: get(x, this._options.value),
+					label: get(x, this._options.label)
+				}));
+
+			return uniqBy(items, "value");
+		}
 	},
 	methods: {
 		open() {
@@ -105,10 +108,8 @@ export default {
 			const {data} = await this.$axios.get(
 				`${this.endpoint.url}/${this.value}`
 			);
-			this.selectedItem = key ? get(data, key) : data;
 
-			// remove selectedItem after Select caches it
-			this.$nextTick(() => (this.selectedItem = null));
+			this.selectedItem = key ? get(data, key) : data;
 		},
 
 		update(value) {
@@ -120,15 +121,9 @@ export default {
 		}
 	},
 	created() {
-		this.$watch(
-			"value",
-			(value) => {
-				if (value && !this.itemsC.find((x) => x.value === value)) {
-					this.getSelectedItem();
-				}
-			},
-			{immediate: true}
-		);
+		if (this.value) {
+			this.getSelectedItem();
+		}
 	}
 };
 </script>
