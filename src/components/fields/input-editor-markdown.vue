@@ -1,5 +1,5 @@
 <template>
-	<div class="editor" :class="{disabled: _disabled}" @paste="paste">
+	<div class="editor" :class="{disabled: _disabled}">
 		<div class="overlay" v-if="_disabled" />
 		<editor ref="editor" v-bind="{configs, value}" @input="update" />
 	</div>
@@ -28,8 +28,8 @@ export default {
 	},
 	data() {
 		return {
-			init: false,
 			configs: {
+				status: false,
 				spellChecker: false,
 				hideIcons: ["image", "fullscreen", "side-by-side"]
 			}
@@ -39,23 +39,14 @@ export default {
 		value: (t) => t.content || ""
 	},
 	methods: {
-		paste(e) {
-			this.update(e.clipboardData.getData("Text"));
-		},
 		update(content) {
-			// fix initial update
-			if (!this.init) return (this.init = true);
+			if (this.value === content) return;
 
 			this.$emit("event", {
 				actions: {
 					update: {data: {[this._content]: content}}
 				}
 			});
-		}
-	},
-	watch: {
-		$route() {
-			this.$refs.editor.simplemde.codemirror.refresh();
 		}
 	}
 };
