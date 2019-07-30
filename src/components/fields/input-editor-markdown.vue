@@ -1,5 +1,5 @@
 <template>
-	<div class="editor" :class="{disabled: _disabled}">
+	<div class="editor" :class="{disabled: _disabled}" @paste="paste">
 		<div class="overlay" v-if="_disabled" />
 		<editor ref="editor" v-bind="{configs, value}" @input="update" />
 	</div>
@@ -39,6 +39,9 @@ export default {
 		value: (t) => t.content || ""
 	},
 	methods: {
+		paste(e) {
+			this.update(e.clipboardData.getData("Text"));
+		},
 		update(content) {
 			// fix initial update
 			if (!this.init) return (this.init = true);
