@@ -1,6 +1,6 @@
 {
 	"name": "@signifly/travy",
-	"version": "0.5.14",
+	"version": "0.5.15",
 	"license": "MIT",
 	"main": "dist/lib.common.js",
 	"repository": "github:signifly/travy",
