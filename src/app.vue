@@ -1,23 +1,26 @@
 <template>
-	<div class="app" v-if="config">
-		<component :is="layout" v-if="layout" />
+	<div class="app" v-if="loaded">
+		<component :is="layout" v-if="config && layout" />
+		<error :status="500" v-else />
 	</div>
 </template>
 
 <script>
 import layouts from "./components/layouts";
+import error from "./pages/error";
 
 export default {
+	components: {error},
+	data: () => ({
+		loaded: false
+	}),
 	computed: {
 		config: (t) => t.$store.getters["config/data"],
-
-		layout() {
-			const name = this.$route.meta.layout;
-			return layouts[name];
-		}
+		layout: (t) => layouts[t.$route.meta.layout]
 	},
-	beforeCreate() {
-		this.$store.dispatch("config/data");
+	async beforeCreate() {
+		await this.$store.dispatch("config/data");
+		this.loaded = true;
 	}
 };
 </script>
