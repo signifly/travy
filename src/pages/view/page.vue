@@ -102,7 +102,7 @@ export default {
 		modifiers: (t) => t.definitions.modifiers
 	},
 	methods: {
-		async event({actions, done}) {
+		async event({actions = {}, done}) {
 			if (actions.refresh) {
 				const {definitions, data} = actions.refresh;
 				if (definitions) await this.getDefinitions();
