@@ -120,9 +120,14 @@ export default {
 			});
 		}
 	},
-	created() {
-		if (this.value) {
-			this.getSelectedItem();
+	watch: {
+		value: {
+			immediate: true,
+			handler(value) {
+				if (value && !this.selectedItem) {
+					this.getSelectedItem();
+				}
+			}
 		}
 	}
 };

@@ -80,12 +80,17 @@ export default {
 		}
 	},
 
-	created() {
-		if (this.url) {
-			this.fileList.push({
-				url: this.url,
-				name: this.url.split("/").slice(-1)[0]
-			});
+	watch: {
+		url: {
+			immediate: true,
+			handler(url) {
+				if (url) {
+					this.fileList.push({
+						url: url,
+						name: url.split("/").slice(-1)[0]
+					});
+				}
+			}
 		}
 	}
 };
