@@ -25,6 +25,7 @@ export default {
 		res: {
 			props: {
 				type: "month",
+				clearable: true,
 				date: "somedate",
 				formatValue: "timestamp"
 			},
@@ -70,7 +71,7 @@ export default {
 	},
 	methods: {
 		update(date) {
-			date = this.timestamp ? date / 1000 : date;
+			date = (this.timestamp ? date / 1000 : date) || null;
 
 			this.$emit("event", {
 				actions: {

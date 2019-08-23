@@ -28,7 +28,8 @@ export default {
 			props: {
 				type: "daterange",
 				dateStart: "dateStart",
-				dateEnd: "dateEnd"
+				dateEnd: "dateEnd",
+				clearable: true
 			},
 			data: {
 				dateStart: 1543878000,
@@ -81,7 +82,11 @@ export default {
 	},
 	methods: {
 		update(dates) {
-			dates = dates.map((x) => (this.timestamp ? x / 1000 : x));
+			dates = (dates || []).map((x) => (this.timestamp ? x / 1000 : x));
+
+			if (dates.length === 0) {
+				dates = [null, null];
+			}
 
 			this.$emit("event", {
 				actions: {
