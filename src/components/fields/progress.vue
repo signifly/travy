@@ -19,7 +19,7 @@ export default {
 		res: {
 			props: {
 				percentage: "percentage",
-				status: "status"
+				status: "danger"
 			},
 			data: {
 				percentage: 60,
@@ -37,26 +37,24 @@ export default {
 <style lang="scss" scoped>
 .progress {
 	width: 100%;
+}
 
-	.bar {
-		::v-deep {
-			.el-progress-bar__inner {
-				.danger & {
-					background-color: $danger;
-				}
-				.warning & {
-					background-color: $warning;
-				}
-				.info & {
-					background-color: $info;
-				}
-				.primary & {
-					background-color: $primary;
-				}
-				.success & {
-					background-color: $success;
-				}
-			}
+::v-deep {
+	.el-progress-bar__inner {
+		.danger & {
+			background-color: $danger;
+		}
+		.warning & {
+			background-color: $warning;
+		}
+		.info & {
+			background-color: $info;
+		}
+		.primary & {
+			background-color: $primary;
+		}
+		.success & {
+			background-color: $success;
 		}
 	}
 }
