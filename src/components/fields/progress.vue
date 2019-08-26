@@ -19,17 +19,17 @@ export default {
 		res: {
 			props: {
 				percentage: "percentage",
-				status: "danger"
+				status: "status"
 			},
 			data: {
 				percentage: 60,
-				status: "primary"
+				status: "warning"
 			}
 		}
 	},
 	props: {
 		percentage: {type: Number, required: false, default: 0, doc: true},
-		status: {type: String, required: false, default: "danger", doc: true}
+		status: {type: String, required: false, default: "primary", doc: true}
 	}
 };
 </script>
