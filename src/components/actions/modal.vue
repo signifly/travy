@@ -11,15 +11,16 @@
 
 <script>
 import vModalFields from "@/components/modal-fields.vue";
+import {mapPaths, download} from "@/modules/utils";
 import toFormData from "object-to-formdata";
-import {mapPaths} from "@/modules/utils";
 
 export default {
 	components: {vModalFields},
 	props: {
-		title: {type: String, required: false},
+		download: {type: Boolean, required: false},
 		endpoint: {type: Object, required: true},
 		payload: {type: Object, required: true},
+		title: {type: String, required: false},
 		fields: {type: Array, required: true}
 	},
 	data() {
@@ -66,17 +67,27 @@ export default {
 			try {
 				this.loading = true;
 
-				const {data} = await this.$axios({
+				const {data, headers} = await this.$axios({
 					data: this.upload ? toFormData(this.payloadC) : this.payloadC,
 					method: this.endpoint.method,
 					url: this.endpoint.url,
+					responseType: this.download && "blob",
 					customErr: true,
 					onUploadProgress: (e) => {
 						this.loading = Math.round((e.loaded / e.total) * 100);
 					}
 				});
 
-				this.$emit("submit", data);
+				if (this.download) {
+					download({
+						url: URL.createObjectURL(data),
+						name: headers["content-disposition"].split("filename=")[1]
+					});
+
+					this.$emit("submit", {});
+				} else {
+					this.$emit("submit", data);
+				}
 			} catch (err) {
 				this.error = err;
 				this.loading = false;

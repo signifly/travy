@@ -1,4 +1,6 @@
 <script>
+import {download} from "@/modules/utils";
+
 export default {
 	render: () => ({}),
 	props: {
@@ -12,10 +14,7 @@ export default {
 	},
 	methods: {
 		downloadFile() {
-			const link = document.createElement("a");
-			link.href = this.url;
-			link.download = true;
-			link.click();
+			download({url: this.url});
 		},
 
 		go() {

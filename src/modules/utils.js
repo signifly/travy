@@ -54,6 +54,20 @@ export const base64Encode = (file) => {
 	});
 };
 
+export const download = ({url, name}) => {
+	const link = document.createElement("a");
+	link.download = true;
+	link.href = url;
+
+	if (name) {
+		link.setAttribute("download", name);
+	}
+
+	document.body.appendChild(link);
+	link.click();
+	link.remove();
+};
+
 export const rStringProps = ({data, val = ""}) => {
 	const reg = (str) => {
 		// find all {KEY} in string and replace with data value
