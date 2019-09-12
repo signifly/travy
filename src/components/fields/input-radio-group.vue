@@ -23,19 +23,19 @@ export default {
 			props: {
 				value: "option",
 				items: [
-					{label: "Option A", value: 1},
-					{label: "Option B", value: 2},
+					{label: "Option A", value: true},
+					{label: "Option B", value: false},
 					{label: "Option C", value: 3},
 					{label: "Option D", value: 4, disabled: true}
 				]
 			},
 			data: {
-				option: 1
+				option: true
 			}
 		}
 	},
 	props: {
-		value: {type: [String, Number], required: false, doc: true},
+		value: {type: [String, Number, Boolean], required: false, doc: true},
 		_items: {type: Array, required: true, doc: true},
 		_value: {type: String, required: true}
 	},
