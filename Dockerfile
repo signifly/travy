@@ -1,4 +1,4 @@
-from node:12-alpine
+from node:12-alpine as build
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ ENV API=${API}
 RUN yarn build-app
 
 
-from node:12-alpine
+from node:12-alpine as dist
 
 WORKDIR /app
 
