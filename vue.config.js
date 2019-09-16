@@ -3,6 +3,11 @@ const webpack = require("webpack");
 module.exports = {
 	parallel: false,
 
+	devServer: {
+		disableHostCheck: true,
+		public: "dev.signifly.io"
+	},
+
 	css: {
 		loaderOptions: {
 			sass: {

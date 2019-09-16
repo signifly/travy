@@ -1,0 +1,10 @@
+{
+	"name": "mock",
+	"scripts": {
+		"start": "nodemon"
+	},
+	"dependencies": {
+		"fastify": "2.8.0",
+		"nodemon": "1.19.2"
+	}
+}
