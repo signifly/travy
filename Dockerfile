@@ -1,7 +1,4 @@
-from node:11.10-alpine
-
-# install global npm packages
-RUN yarn global add @vue/cli
+from node:12-alpine
 
 WORKDIR /app
 
@@ -17,3 +14,10 @@ ARG API
 ENV API=${API}
 
 RUN yarn build-app
+
+
+from node:12-alpine
+
+WORKDIR /app
+
+COPY --from=0 /app/dist /app/dist
