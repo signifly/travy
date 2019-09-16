@@ -15,9 +15,9 @@ ENV API=${API}
 
 RUN yarn build-app
 
-
 from node:12-alpine as dist
 
 WORKDIR /app
 
-COPY --from=0 /app/dist /app/dist
+COPY --from=build /app/dist .
+COPY --from=build /app/netlify.toml .
