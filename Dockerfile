@@ -19,5 +19,5 @@ from node:12-alpine as dist
 
 WORKDIR /app
 
-COPY --from=build /app/dist .
+COPY --from=build /app/dist ./dist
 COPY --from=build /app/netlify.toml .
