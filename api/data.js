@@ -174,58 +174,64 @@ module.exports = {
 				label: "Tags",
 				fieldType: {
 					id: "items-tooltip",
-					props: {itemKey: "name", itemLink: "/t/tags/{id}", items: "tags"}
-				}
-			},
-			{
-				order: 3,
-				sortable: false,
-				name: "actions",
-				label: "Actions",
-				fieldType: {
-					id: "button-actions",
 					props: {
-						actions: [
-							{
-								title: "View",
-								props: {
-									title: "View",
-									id: "show",
-									endpoint: {url: "/t/projects/{id}", method: "get"}
-								},
-								hide: {key: "is_deleted", operator: "eq", value: true}
-							},
-							{
-								title: "Delete",
-								props: {
-									title: "Delete",
-									id: "popup",
-									text: "Are you sure? Please confirm this action.",
-									endpoint: {
-										url: "http://localhost:3001/v1/admin/projects/{id}",
-										method: "delete"
-									}
-								},
-								hide: {key: "is_deleted", operator: "eq", value: true}
-							},
-							{
-								title: "Restore",
-								props: {
-									title: "Restore",
-									id: "popup",
-									text: "Are you sure? Please confirm this action.",
-									endpoint: {
-										url: "http://localhost:3001/v1/admin/projects/{id}/restore",
-										method: "post"
-									}
-								},
-								hide: {key: "is_deleted", operator: "eq", value: false}
-							}
-						]
+						items: {
+							_link: "/t/tags/{id}",
+							"@scope": "tags",
+							label: "key"
+						}
 					}
-				},
-				width: 120
+				}
 			}
+			// {
+			// 	order: 3,
+			// 	sortable: false,
+			// 	name: "actions",
+			// 	label: "Actions",
+			// 	fieldType: {
+			// 		id: "button-actions",
+			// 		props: {
+			// 			actions: [
+			// 				{
+			// 					title: "View",
+			// 					props: {
+			// 						title: "View",
+			// 						id: "show",
+			// 						endpoint: {url: "/t/projects/{id}", method: "get"}
+			// 					},
+			// 					hide: {key: "is_deleted", operator: "eq", value: true}
+			// 				},
+			// 				{
+			// 					title: "Delete",
+			// 					props: {
+			// 						title: "Delete",
+			// 						id: "popup",
+			// 						text: "Are you sure? Please confirm this action.",
+			// 						endpoint: {
+			// 							url: "http://localhost:3001/v1/admin/projects/{id}",
+			// 							method: "delete"
+			// 						}
+			// 					},
+			// 					hide: {key: "is_deleted", operator: "eq", value: true}
+			// 				},
+			// 				{
+			// 					title: "Restore",
+			// 					props: {
+			// 						title: "Restore",
+			// 						id: "popup",
+			// 						text: "Are you sure? Please confirm this action.",
+			// 						endpoint: {
+			// 							url: "http://localhost:3001/v1/admin/projects/{id}/restore",
+			// 							method: "post"
+			// 						}
+			// 					},
+			// 					hide: {key: "is_deleted", operator: "eq", value: false}
+			// 				}
+			// 			]
+			// 		}
+			// 	},
+			// 	width: 120
+			// }
 		],
 		defaults: {sort: {prop: "name", order: "ascending"}},
 		endpoint: {
@@ -319,54 +325,54 @@ module.exports = {
 				icon: "plus",
 				status: "primary"
 			}
-		],
-		filters: {
-			data: {client_id: "", tags: [], trashed: false},
-			fields: [
-				{
-					name: "client_id",
-					label: "Client",
-					fieldType: {
-						id: "input-select-search",
-						props: {
-							value: "client_id",
-							options: {
-								key: "data",
-								itemKey: "data",
-								value: "id",
-								label: "name",
-								endpoint: {
-									url: "http://localhost:3001/v1/admin/clients"
-								}
-							}
-						}
-					}
-				},
-				{
-					name: "tags",
-					label: "Tags",
-					fieldType: {
-						id: "input-select-multi-search",
-						props: {
-							values: "tags",
-							options: {
-								key: "data",
-								itemKey: "data",
-								value: "id",
-								label: "name",
-								endpoint: {url: "http://localhost:3001/v1/admin/tags"}
-							}
-						}
-					}
-				},
-				{
-					name: "trashed",
-					label: "Show only deleted",
-					fieldType: {id: "input-switch", props: {value: "trashed"}}
-				}
-			]
-		},
-		search: {placeholder: "Search for Name"}
+		]
+		// filters: {
+		// 	data: {client_id: "", tags: [], trashed: false},
+		// 	fields: [
+		// 		{
+		// 			name: "client_id",
+		// 			label: "Client",
+		// 			fieldType: {
+		// 				id: "input-select-search",
+		// 				props: {
+		// 					value: "client_id",
+		// 					options: {
+		// 						key: "data",
+		// 						itemKey: "data",
+		// 						value: "id",
+		// 						label: "name",
+		// 						endpoint: {
+		// 							url: "http://localhost:3001/v1/admin/clients"
+		// 						}
+		// 					}
+		// 				}
+		// 			}
+		// 		},
+		// 		{
+		// 			name: "tags",
+		// 			label: "Tags",
+		// 			fieldType: {
+		// 				id: "input-select-multi-search",
+		// 				props: {
+		// 					values: "tags",
+		// 					options: {
+		// 						key: "data",
+		// 						itemKey: "data",
+		// 						value: "id",
+		// 						label: "name",
+		// 						endpoint: {url: "http://localhost:3001/v1/admin/tags"}
+		// 					}
+		// 				}
+		// 			}
+		// 		},
+		// 		{
+		// 			name: "trashed",
+		// 			label: "Show only deleted",
+		// 			fieldType: {id: "input-switch", props: {value: "trashed"}}
+		// 		}
+		// 	]
+		// },
+		// search: {placeholder: "Search for Name"}
 	},
 
 	"/projects": {
@@ -384,7 +390,7 @@ module.exports = {
 				created_by: null,
 				updated_by: null,
 				tags_count: 0,
-				tags: [],
+				tags: [{key: "item1", id: 1}, {key: "item2", id: 2}],
 				is_deleted: false
 			},
 			{

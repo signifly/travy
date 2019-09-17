@@ -1,36 +1,45 @@
 <template>
 	<div class="fieldType">
-		<component
-			:is="customField || field"
-			v-bind="[propsData, propsValue, {alt}]"
-			@event="$emit('event', $event)"
-		/>
+		<component :is="customField || field" v-bind="mapProps" @event="event" />
 	</div>
 </template>
 
 <script>
 import {mapProps} from "@/modules/utils";
 import {FormItem} from "element-ui";
-import {mapKeys} from "lodash";
+import {get, mapKeys} from "lodash";
+import produce from "immer";
 
 export default {
 	components: {FormItem},
 	props: {
 		id: {type: String, required: true},
-		alt: {type: Object, required: false},
-		props: {type: Object, required: true},
-		disabled: {type: Boolean, required: false},
-		description: {type: String, required: false}
+		data: {type: Object, required: true},
+		props: {type: Object, required: true}
 	},
 	computed: {
-		data: (t) => t.alt.data,
-		propsData: (t) => mapProps({props: t.props, data: t.data}),
-		propsValue: (t) => mapKeys(t.props, (val, key) => `_${key}`),
 		customField: (t) => t.$settings.fields[t.id],
+		mapProps: (t) => mapProps({props: t.props, data: t.data}),
 
 		field() {
 			const id = this.id;
 			return () => import(/* webpackMode: "eager" */ `../fields/${id}.vue`);
+		}
+	},
+	methods: {
+		event(event) {
+			// reverse map props
+			const newEvent = produce(event, (draft) => {
+				const update = draft.actions.update;
+
+				if (update) {
+					update.data = mapKeys(update.data, (val, key) => {
+						return get(this.props, key);
+					});
+				}
+			});
+
+			this.$emit("event", newEvent);
 		}
 	}
 };

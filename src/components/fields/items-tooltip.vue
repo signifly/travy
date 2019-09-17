@@ -10,22 +10,18 @@
 
 			<div slot="content">
 				<div class="items-tooltip-content">
-					<template v-if="_itemLink">
+					<template v-for="item in items">
 						<a
-							v-for="item in itemsMap"
+							v-if="item._link"
 							class="item"
-							:key="item.id"
-							:href="item.link"
+							:key="item._link"
+							:href="item._link"
 							@click.prevent="go(item)"
 						>
 							{{ item.label }}
 						</a>
-					</template>
 
-					<template v-else>
-						<div v-for="item in itemsMap" class="item" :key="item.id">
-							{{ item.label }}
-						</div>
+						<div v-else class="item" :key="item.label" v-text="item.label" />
 					</template>
 				</div>
 			</div>
@@ -34,42 +30,33 @@
 </template>
 
 <script>
-import {get} from "lodash";
 import {Tooltip} from "element-ui";
-import {rStringProps} from "@/modules/utils";
 
 export default {
 	components: {Tooltip},
 	meta: {
 		res: {
 			props: {
-				itemKey: "key",
-				itemLink: "/view/{id}",
-				items: "itemList"
+				items: {
+					_link: "/view/{id}",
+					"@scope": "items",
+					label: "name"
+				}
 			},
 			data: {
-				itemList: [{key: "item1", id: 1}, {key: "item2", id: 2}]
+				items: [{name: "item1", id: 1}, {name: "item2", id: 2}]
 			}
 		}
 	},
 	props: {
-		items: {type: Array, required: true, doc: true},
-		_itemLink: {type: String, required: false, doc: true},
-		_itemKey: {type: String, required: true, doc: true}
+		items: {type: Array, required: true, doc: true}
 	},
 	computed: {
-		disabled: (t) => t.items.length < 1,
-
-		itemsMap: (t) =>
-			t.items.map((item) => ({
-				id: item.id,
-				label: get(item, t._itemKey),
-				link: rStringProps({val: t._itemLink, data: item})
-			}))
+		disabled: (t) => t.items.length < 1
 	},
 	methods: {
-		go({link}) {
-			this.$router.push(link);
+		go({_link}) {
+			this.$router.push(_link);
 		}
 	}
 };

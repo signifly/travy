@@ -30,17 +30,16 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false, doc: true},
 		value: {type: [String, Number], required: false, doc: true},
+		_disabled: {type: Boolean, required: false, doc: true},
 		_unit: {type: String, required: false, doc: true},
-		_type: {type: String, default: "text", doc: true},
-		_value: {type: String, required: true}
+		_type: {type: String, default: "text", doc: true}
 	},
 	methods: {
 		update(value) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._value]: value}}
+					update: {data: {value}}
 				}
 			});
 		}
