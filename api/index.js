@@ -1,5 +1,8 @@
 const fastify = require("fastify")({logger: false});
+const cors = require("fastify-cors");
 const data = require("./data");
+
+fastify.register(cors);
 
 fastify.register(
 	async (instance, opts) => {
@@ -13,6 +16,6 @@ fastify.register(
 	}
 );
 
-fastify.listen(3000, "::", () => {
+fastify.listen(3001, "::", () => {
 	console.log("api ready");
 });

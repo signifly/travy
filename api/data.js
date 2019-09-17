@@ -60,7 +60,7 @@ module.exports = {
 			{
 				id: "details",
 				type: "fields",
-				endpoint: {url: "http://dev.signifly.io/api/v1/admin/account"},
+				endpoint: {url: "http://localhost:3001/v1/admin/account"},
 				title: {text: "Details", url: null},
 				fields: [
 					{
@@ -100,8 +100,7 @@ module.exports = {
 				id: "actions",
 				type: "table",
 				endpoint: {
-					url:
-						"http://dev.signifly.io/api/v1/admin/definitions/table/action-logs",
+					url: "http://localhost:3001/v1/admin/definitions/table/action-logs",
 					params: {type: "account"}
 				},
 				title: {text: "Actions", url: null},
@@ -111,15 +110,14 @@ module.exports = {
 				id: "notifications",
 				type: "table",
 				endpoint: {
-					url:
-						"http://dev.signifly.io/api/v1/admin/definitions/table/notifications"
+					url: "http://localhost:3001/v1/admin/definitions/table/notifications"
 				},
 				title: {text: "Notifications", url: null},
 				fields: []
 			}
 		],
 		header: {props: {title: "name", image: null, tag: "id"}},
-		endpoint: {url: "http://dev.signifly.io/api/v1/admin/account/{id}"},
+		endpoint: {url: "http://localhost:3001/v1/admin/account/{id}"},
 		activity: {},
 		actions: [
 			{
@@ -130,7 +128,7 @@ module.exports = {
 					text: "Are you sure? Please confirm this action.",
 					onSubmit: "/t/account",
 					endpoint: {
-						url: "http://dev.signifly.io/api/v1/admin/account/{id}",
+						url: "http://localhost:3001/v1/admin/account/{id}",
 						method: "delete"
 					}
 				},
@@ -204,7 +202,7 @@ module.exports = {
 									id: "popup",
 									text: "Are you sure? Please confirm this action.",
 									endpoint: {
-										url: "http://dev.signifly.io/api/v1/admin/projects/{id}",
+										url: "http://localhost:3001/v1/admin/projects/{id}",
 										method: "delete"
 									}
 								},
@@ -217,8 +215,7 @@ module.exports = {
 									id: "popup",
 									text: "Are you sure? Please confirm this action.",
 									endpoint: {
-										url:
-											"http://dev.signifly.io/api/v1/admin/projects/{id}/restore",
+										url: "http://localhost:3001/v1/admin/projects/{id}/restore",
 										method: "post"
 									}
 								},
@@ -232,7 +229,7 @@ module.exports = {
 		],
 		defaults: {sort: {prop: "name", order: "ascending"}},
 		endpoint: {
-			url: "http://dev.signifly.io/api/v1/admin/projects",
+			url: "http://localhost:3001/v1/admin/projects",
 			params: {include: ["tags"]}
 		},
 		pagination: {},
@@ -257,7 +254,7 @@ module.exports = {
 										value: "id",
 										label: "name",
 										endpoint: {
-											url: "http://dev.signifly.io/api/v1/admin/clients",
+											url: "http://localhost:3001/v1/admin/clients",
 											params: {sort: "name"}
 										}
 									}
@@ -290,7 +287,7 @@ module.exports = {
 										value: "id",
 										label: "name",
 										endpoint: {
-											url: "http://dev.signifly.io/api/v1/admin/tags"
+											url: "http://localhost:3001/v1/admin/tags"
 										}
 									}
 								}
@@ -315,7 +312,7 @@ module.exports = {
 						}
 					},
 					endpoint: {
-						url: "http://dev.signifly.io/api/v1/admin/projects",
+						url: "http://localhost:3001/v1/admin/projects",
 						method: "post"
 					}
 				},
@@ -339,7 +336,7 @@ module.exports = {
 								value: "id",
 								label: "name",
 								endpoint: {
-									url: "http://dev.signifly.io/api/v1/admin/clients"
+									url: "http://localhost:3001/v1/admin/clients"
 								}
 							}
 						}
@@ -357,7 +354,7 @@ module.exports = {
 								itemKey: "data",
 								value: "id",
 								label: "name",
-								endpoint: {url: "http://dev.signifly.io/api/v1/admin/tags"}
+								endpoint: {url: "http://localhost:3001/v1/admin/tags"}
 							}
 						}
 					}
@@ -424,8 +421,8 @@ module.exports = {
 			}
 		],
 		links: {
-			first: "http://dev.signifly.io/api/v1/admin/projects?page=1",
-			last: "http://dev.signifly.io/api/v1/admin/projects?page=1",
+			first: "http://localhost:3001/v1/admin/projects?page=1",
+			last: "http://localhost:3001/v1/admin/projects?page=1",
 			prev: null,
 			next: null
 		},
@@ -433,7 +430,7 @@ module.exports = {
 			current_page: 1,
 			from: 1,
 			last_page: 1,
-			path: "http://dev.signifly.io/api/v1/admin/projects",
+			path: "http://localhost:3001/v1/admin/projects",
 			per_page: 15,
 			to: 6,
 			total: 6
@@ -445,7 +442,7 @@ module.exports = {
 			{
 				id: "details",
 				type: "fields",
-				endpoint: {url: "http://dev.signifly.io/api/v1/admin/projects/{id}"},
+				endpoint: {url: "http://localhost:3001/v1/admin/projects/{id}"},
 				title: {text: "Details", url: null},
 				fields: [
 					{
@@ -473,7 +470,7 @@ module.exports = {
 									itemKey: "data",
 									value: "id",
 									label: "name",
-									endpoint: {url: "http://dev.signifly.io/api/v1/admin/tags"}
+									endpoint: {url: "http://localhost:3001/v1/admin/tags"}
 								}
 							}
 						}
@@ -492,7 +489,7 @@ module.exports = {
 				id: "issues",
 				type: "table",
 				endpoint: {
-					url: "http://dev.signifly.io/api/v1/admin/definitions/table/issues"
+					url: "http://localhost:3001/v1/admin/definitions/table/issues"
 				},
 				title: {text: "Issues", url: null},
 				fields: []
@@ -501,8 +498,7 @@ module.exports = {
 				id: "notes",
 				type: "table",
 				endpoint: {
-					url:
-						"http://dev.signifly.io/api/v1/admin/definitions/table/project-notes"
+					url: "http://localhost:3001/v1/admin/definitions/table/project-notes"
 				},
 				title: {text: "Notes", url: null},
 				fields: []
@@ -511,8 +507,7 @@ module.exports = {
 				id: "actions",
 				type: "table",
 				endpoint: {
-					url:
-						"http://dev.signifly.io/api/v1/admin/definitions/table/action-logs",
+					url: "http://localhost:3001/v1/admin/definitions/table/action-logs",
 					params: {type: "entity", actionable: []}
 				},
 				title: {text: "Actions", url: null},
@@ -520,7 +515,7 @@ module.exports = {
 			}
 		],
 		header: {props: {title: "name", image: null, tag: "id"}},
-		endpoint: {url: "http://dev.signifly.io/api/v1/admin/projects/{id}"},
+		endpoint: {url: "http://localhost:3001/v1/admin/projects/{id}"},
 		activity: {},
 		actions: [
 			{
@@ -531,7 +526,7 @@ module.exports = {
 					text: "Are you sure? Please confirm this action.",
 					onSubmit: "/t/projects",
 					endpoint: {
-						url: "http://dev.signifly.io/api/v1/admin/projects/{id}",
+						url: "http://localhost:3001/v1/admin/projects/{id}",
 						method: "delete"
 					}
 				},
@@ -627,8 +622,8 @@ module.exports = {
 			}
 		],
 		links: {
-			first: "http://dev.signifly.io/api/v1/admin/projects/3/activity?page=1",
-			last: "http://dev.signifly.io/api/v1/admin/projects/3/activity?page=1",
+			first: "http://localhost:3001/v1/admin/projects/3/activity?page=1",
+			last: "http://localhost:3001/v1/admin/projects/3/activity?page=1",
 			prev: null,
 			next: null
 		},
@@ -636,7 +631,7 @@ module.exports = {
 			current_page: 1,
 			from: 1,
 			last_page: 1,
-			path: "http://dev.signifly.io/api/v1/admin/projects/3/activity",
+			path: "http://localhost:3001/v1/admin/projects/3/activity",
 			per_page: 15,
 			to: 1,
 			total: 1
@@ -670,8 +665,8 @@ module.exports = {
 			}
 		],
 		links: {
-			first: "http://dev.signifly.io/api/v1/admin/projects/3/activity?page=1",
-			last: "http://dev.signifly.io/api/v1/admin/projects/3/activity?page=1",
+			first: "http://localhost:3001/v1/admin/projects/3/activity?page=1",
+			last: "http://localhost:3001/v1/admin/projects/3/activity?page=1",
 			prev: null,
 			next: null
 		},
@@ -679,7 +674,7 @@ module.exports = {
 			current_page: 1,
 			from: 1,
 			last_page: 1,
-			path: "http://dev.signifly.io/api/v1/admin/projects/3/activity",
+			path: "http://localhost:3001/v1/admin/projects/3/activity",
 			per_page: 15,
 			to: 1,
 			total: 1

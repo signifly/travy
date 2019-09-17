@@ -1,37 +1,21 @@
 version: "3.7"
 
 services:
-  traefik:
-    image: traefik:1.7
-    command:
-      - "--entrypoints=Name:http Address::80"
-      - "--defaultentrypoints=http"
-      - "--docker.watch"
-      - "--docker"
-    ports:
-      - "80:80"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
   app:
-    build: ./
+    build: .
     command: sh -c "yarn && yarn dev"
+    ports:
+      - "3000:3000"
     volumes:
       - ./:/app
     environment:
-      API: ${API}
-    labels:
-      traefik.port: 3000
-      traefik.app.frontend.rule: Host:dev.signifly.io
+      API: ${API:-http://localhost:3001}
 
   api:
     image: node:alpine
     command: sh -c "yarn && yarn start"
     working_dir: /app
     ports:
-      - "3000:3000"
+      - "3001:3001"
     volumes:
       - ./api:/app
-    labels:
-      traefik.port: 3000
-      traefik.app.frontend.rule: Host:dev.signifly.io;PathPrefixStrip:/api
