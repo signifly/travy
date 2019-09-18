@@ -16,8 +16,8 @@ export default {
 		res: {
 			props: {
 				src: "src",
-				width: "100%",
-				height: "300px"
+				_width: "100%",
+				_height: "300px"
 			},
 			data: {
 				src: "https://picsum.photos/1000/1000"
@@ -25,10 +25,10 @@ export default {
 		}
 	},
 	props: {
-		src: {type: String, required: false, doc: true},
-		_width: {type: String, default: "200px", doc: true},
-		_height: {type: String, default: "200px", doc: true},
-		_fit: {type: String, default: "cover", doc: true, note: "contain/cover"}
+		src: {type: String, required: false},
+		_width: {type: String, default: "200px"},
+		_height: {type: String, default: "200px"},
+		_fit: {type: String, default: "cover", note: "contain/cover"}
 	},
 	computed: {
 		style: (t) => ({

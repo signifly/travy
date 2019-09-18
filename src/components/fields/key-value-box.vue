@@ -1,41 +1,30 @@
 <template>
 	<div class="key-value-box">
-		<div class="item" v-for="item in items" :key="item.label">
-			<div class="label" v-text="`${item.label}:`" />
+		<div class="item" v-for="item in items" :key="item._label">
+			<div class="label" v-text="`${item._label}:`" />
 			<div class="value" v-text="item.value" />
 		</div>
 	</div>
 </template>
 
 <script>
-import {get} from "lodash";
-
 export default {
 	meta: {
 		res: {
 			props: {
 				items: [
-					{label: "Client1", value: "name"},
-					{label: "Client2", value: "people[0].name"}
+					{_label: "Client1", value: "name1"},
+					{_label: "Client2", value: "name2"}
 				]
 			},
 			data: {
-				name: "pete1",
-				people: [{name: "Pete2222"}]
+				name1: "pete1",
+				name2: "pete2"
 			}
 		}
 	},
 	props: {
-		_items: {type: Array, required: true, doc: true},
-		alt: {type: Object, required: true}
-	},
-	computed: {
-		data: (t) => t.alt.data,
-		items: (t) =>
-			t._items.map((x) => ({
-				value: get(t.data, x.value),
-				label: x.label
-			}))
+		items: {type: Array, required: true}
 	}
 };
 </script>

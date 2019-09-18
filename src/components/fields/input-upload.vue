@@ -24,39 +24,25 @@
 				<span class="limit" v-if="limitNote">{{ limitNote }}</span>
 			</div>
 		</Upload>
-
-		<transition name="progress">
-			<div class="progress" v-if="Number.isInteger(alt.loading)">
-				<Progress
-					:text-inside="true"
-					:stroke-width="18"
-					:percentage="alt.loading"
-				>
-					{{ alt.loading }}
-				</Progress>
-			</div>
-		</transition>
 	</div>
 </template>
 
 <script>
-import {Upload, Progress} from "element-ui";
+import {Upload} from "element-ui";
 
 export default {
-	components: {Upload, Progress},
+	components: {Upload},
 	meta: {
 		res: {
 			props: {
-				note: "jpg/png files with a size less than 500kb",
-				fileTypes: ".jpg, .jpeg, .png",
-				limit: 10,
-				files: "key"
-			},
-			data: {}
+				_note: "jpg/png files with a size less than 500kb",
+				_fileTypes: ".jpg, .jpeg, .png",
+				_limit: 10,
+				_files: "key"
+			}
 		}
 	},
 	props: {
-		alt: {type: Object, required: true},
 		_note: {type: String, required: false, doc: true},
 		_fileTypes: {type: String, required: false, doc: true},
 		_limit: {type: Number, required: false, doc: true},

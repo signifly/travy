@@ -1,9 +1,6 @@
 import {
 	mapValues,
 	mergeWith,
-	transform,
-	isObject,
-	isArray,
 	replace,
 	get,
 	set,
@@ -83,7 +80,7 @@ export const operator = ({key, value, operator, data}) => {
 export const mergeData = (srcData, newData) => {
 	// merge objects deep, but ignore arrays
 	return mergeWith({}, srcData, newData, (oldValue, newValue) => {
-		if (isArray(newValue)) {
+		if (Array.isArray(newValue)) {
 			return newValue;
 		}
 	});
@@ -95,15 +92,13 @@ export const rStringProps = ({data, val}) => {
 		return replace(str, /\{.*?\}/g, (key) => get(data, key.slice(1, -1), key));
 	};
 
-	const type = typeof val;
-
-	if (type === "object") {
-		return transform(val, (res, val, key) => {
-			res[key] = rStringProps({data, val});
+	if (val instanceof Object) {
+		return mapValues(val, (val) => {
+			return rStringProps({data, val});
 		});
 	}
 
-	if (type === "string") {
+	if (typeof val === "string") {
 		return reg(val);
 	}
 
@@ -113,7 +108,13 @@ export const rStringProps = ({data, val}) => {
 export const mapProps = ({props, data}) => {
 	return mapValues(props, (val, key) => {
 		if (Array.isArray(val)) {
-			return val.map((props) => mapProps({props, data}));
+			return val.map((props) => {
+				if (key.startsWith("_")) {
+					return rStringProps({data, val: props});
+				} else {
+					return mapProps({props, data});
+				}
+			});
 		}
 
 		if (val instanceof Object) {
@@ -128,7 +129,9 @@ export const mapProps = ({props, data}) => {
 						data: {...item, $root: data}
 					})
 				);
-			} else {
+			}
+
+			if (!key.startsWith("_")) {
 				return mapProps({props: val, data});
 			}
 		}

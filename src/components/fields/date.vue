@@ -10,7 +10,7 @@ export default {
 		res: {
 			props: {
 				timestamp: "timestamp",
-				format: "yyyy-MM-dd HH:mm:ss"
+				_format: "yyyy-MM-dd"
 			},
 			data: {
 				timestamp: 1517529600
@@ -18,11 +18,10 @@ export default {
 		}
 	},
 	props: {
-		timestamp: {type: Number, required: false, doc: true},
+		timestamp: {type: Number, required: false},
 		_format: {
 			type: String,
 			default: "yyyy-MM-dd HH:mm:ss",
-			doc: true,
 			note: `
 				<a target="_blank" href="http://element.eleme.io/#/en-US/component/date-picker#date-formats">Formats</a>
 			`

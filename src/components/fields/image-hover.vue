@@ -27,7 +27,7 @@ export default {
 		}
 	},
 	props: {
-		src: {type: String, required: false, doc: true}
+		src: {type: String, required: false}
 	},
 	data() {
 		return {

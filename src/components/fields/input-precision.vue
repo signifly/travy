@@ -23,10 +23,10 @@ export default {
 		res: {
 			props: {
 				value: "inputVal",
-				disabled: false,
-				precision: 2,
-				step: 0.1,
-				max: 10
+				_disabled: false,
+				_precision: 2,
+				_step: 0.1,
+				_max: 10
 			},
 			data: {
 				inputVal: 3.2
@@ -34,12 +34,11 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false, doc: true},
-		_precision: {type: Number, required: true, doc: true},
-		_step: {type: Number, required: true, doc: true},
-		_max: {type: Number, required: true, doc: true},
-		value: {type: Number, required: false, doc: true},
-		_value: {type: String, required: true}
+		_disabled: {type: Boolean, required: false},
+		_precision: {type: Number, required: true},
+		value: {type: Number, required: false},
+		_step: {type: Number, required: true},
+		_max: {type: Number, required: true}
 	},
 	methods: {
 		validate(e) {
@@ -52,7 +51,7 @@ export default {
 
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._value]: value}}
+					update: {data: {value}}
 				}
 			});
 		}

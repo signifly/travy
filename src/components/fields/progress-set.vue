@@ -27,51 +27,44 @@ export default {
 	meta: {
 		res: {
 			props: {
-				items: "items",
-				title: "tt",
-				percentage: "pp",
-				status: "ss"
+				items: {
+					"@scope": "items",
+					title: "title",
+					percentage: "percentage",
+					status: "status"
+				}
 			},
 			data: {
 				items: [
 					{
-						tt: "English",
-						pp: 60,
-						ss: "primary"
+						title: "English",
+						percentage: 60,
+						status: "primary"
 					},
 					{
-						tt: "Danish",
-						pp: 10,
-						ss: "Danger"
+						title: "Danish",
+						percentage: 10,
+						status: "Danger"
 					},
 					{
-						tt: "Khmer",
-						pp: 30,
-						ss: "warning"
+						title: "Khmer",
+						percentage: 30,
+						status: "warning"
 					},
 					{
-						tt: "Chinese",
-						pp: 100,
-						ss: "success"
+						title: "Chinese",
+						percentage: 100,
+						status: "success"
 					}
 				]
 			}
 		}
 	},
 	props: {
-		items: {type: Array, required: true, doc: true},
-		_title: {type: String, required: true, doc: true},
-		_percentage: {type: String, required: true, doc: true},
-		_status: {type: String, required: true, doc: true}
+		items: {type: Array, required: true}
 	},
 	computed: {
-		rows: (t) => chunk(t.itemsMap, 2),
-		itemsMap: (t) =>
-			t.items.map((x) => ({
-				title: x[t._title],
-				percentage: x[t._percentage] || 0,
-				status: x[t._status] || "danger"
-			}))
+		rows: (t) => chunk(t.items, 2)
 	}
 };
 </script>

@@ -7,15 +7,15 @@
 <script>
 import {mapProps} from "@/modules/utils";
 import {FormItem} from "element-ui";
-import {get, mapKeys} from "lodash";
+import {mapKeys, get} from "lodash";
 import produce from "immer";
 
 export default {
 	components: {FormItem},
 	props: {
-		id: {type: String, required: true},
-		data: {type: Object, required: true},
-		props: {type: Object, required: true}
+		data: {type: Object, default: () => ({})},
+		props: {type: Object, required: true},
+		id: {type: String, required: true}
 	},
 	computed: {
 		customField: (t) => t.$settings.fields[t.id],

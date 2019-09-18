@@ -19,7 +19,7 @@ export default {
 	meta: {
 		res: {
 			props: {
-				disabled: false,
+				_disabled: false,
 				value: "password"
 			},
 			data: {

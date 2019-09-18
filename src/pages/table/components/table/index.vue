@@ -40,7 +40,7 @@
 					/>
 				</span>
 
-				<field
+				<tableField
 					slot-scope="scope"
 					v-bind="{scope, column}"
 					@event="$emit('event', $event)"
@@ -54,11 +54,11 @@
 import {Table, TableColumn} from "element-ui";
 import subtable from "./subtable";
 import state from "../../state";
-import field from "../field";
+import tableField from "../field";
 import {get} from "lodash";
 
 export default {
-	components: {Table, TableColumn, subtable, field},
+	components: {Table, TableColumn, subtable, tableField},
 	props: {
 		data: {type: Array, required: false},
 		columns: {type: Array, required: true},

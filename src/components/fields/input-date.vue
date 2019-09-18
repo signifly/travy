@@ -24,10 +24,10 @@ export default {
 	meta: {
 		res: {
 			props: {
-				type: "month",
-				clearable: true,
+				_type: "month",
 				date: "somedate",
-				formatValue: "timestamp"
+				_clearable: true,
+				_formatValue: "timestamp"
 			},
 			data: {
 				somedate: 1325376000
@@ -35,19 +35,12 @@ export default {
 		}
 	},
 	props: {
-		date: {type: [Number, String], required: false, doc: true},
-		_date: {type: String, required: false},
-		_format: {type: String, required: false, doc: true},
-		_formatValue: {type: String, default: "timestamp", doc: true},
-		_clearable: {type: Boolean, default: false, doc: true},
-		_disabled: {type: Boolean, default: false, doc: true},
-		_type: {
-			type: String,
-			required: false,
-			default: "date",
-			doc: true,
-			note: "year, month, date, datetime"
-		}
+		_type: {type: String, required: false, note: "year, month, date, datetime"},
+		_formatValue: {type: String, default: "timestamp"},
+		date: {type: [Number, String], required: false},
+		_clearable: {type: Boolean, default: false},
+		_disabled: {type: Boolean, default: false},
+		_format: {type: String, required: false}
 	},
 	data() {
 		return {
@@ -75,7 +68,7 @@ export default {
 
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._date]: date}}
+					update: {data: {date}}
 				}
 			});
 		}

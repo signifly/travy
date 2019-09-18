@@ -27,7 +27,7 @@ export default {
 		res: {
 			props: {
 				text: "text",
-				textDefault: "default text",
+				_textDefault: "default text",
 				subtitle: "subtitle",
 				status: "primary",
 				tooltip: "tooltip"

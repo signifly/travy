@@ -12,7 +12,7 @@ export default {
 	meta: {
 		res: {
 			props: {
-				disabled: false,
+				_disabled: false,
 				value: "switchVal"
 			},
 			data: {
@@ -21,15 +21,14 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false, doc: true},
-		value: {type: Boolean, required: false, doc: true},
-		_value: {type: String, required: true}
+		_disabled: {type: Boolean, required: false},
+		value: {type: Boolean, required: false}
 	},
 	methods: {
 		update(value) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._value]: value}}
+					update: {data: {value}}
 				}
 			});
 		}

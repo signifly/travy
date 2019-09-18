@@ -41,7 +41,7 @@ export default {
 		res: {
 			props: {
 				url: "image",
-				download: true,
+				_download: true,
 				file: "image_file"
 			},
 			data: {
@@ -50,18 +50,12 @@ export default {
 		}
 	},
 	props: {
-		_width: {
-			type: String,
-			default: "160px",
-			doc: true,
-			note: "100% for full width"
-		},
-		_height: {type: String, default: "160px", doc: true},
-		file: {type: Object, required: false, doc: true, note: "base64"},
-		_download: {type: Boolean, default: false, doc: true},
-		_upload: {type: Boolean, default: true, doc: true},
-		url: {type: String, required: false, doc: true},
-		_file: {type: String, required: false}
+		_width: {type: String, default: "160px", note: "100% for full width"},
+		file: {type: Object, required: false, note: "base64"},
+		_download: {type: Boolean, default: false},
+		_height: {type: String, default: "160px"},
+		_upload: {type: Boolean, default: true},
+		url: {type: String, required: false}
 	},
 	data() {
 		return {
@@ -97,10 +91,10 @@ export default {
 			this.update(null);
 		},
 
-		update(res) {
+		update(file) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._file]: res}}
+					update: {data: {file}}
 				}
 			});
 		}

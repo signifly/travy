@@ -12,36 +12,27 @@ export default {
 	meta: {
 		res: {
 			props: {
-				text: "statusText",
-				status: "statusColor"
+				text: "text",
+				status: "status",
+				_fallback: {
+					text: "fallback",
+					status: "fallback"
+				}
 			},
 			data: {
-				statusText: "14/144",
-				statusColor: "primary"
+				text: "4/8",
+				status: "primary"
 			}
 		}
 	},
 	props: {
-		_text: {type: String, required: true},
-		_status: {type: String, required: false},
-		text: {
-			type: String,
-			required: false,
-			doc: true,
-			note: `fallbacks as not mapped`
-		},
-		status: {
-			type: String,
-			required: false,
-			doc: true,
-			note: `fallbacks as not mapped`,
-			validator: (val) =>
-				["danger", "warning", "info", "primary", "success"].includes(val)
-		}
+		text: {type: String, required: true},
+		status: {type: String, required: false},
+		_fallback: {type: Object, default: () => ({})}
 	},
 	computed: {
-		textC: (t) => t.text || t._text,
-		statusC: (t) => t.status || t._status
+		textC: (t) => t.text || t._fallback.text,
+		statusC: (t) => t.status || t._fallback.status
 	}
 };
 </script>

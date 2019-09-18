@@ -46,8 +46,8 @@ export default {
 	meta: {
 		res: {
 			props: {
-				prop: "propKey",
-				options: {
+				value: "key",
+				_options: {
 					key: "",
 					value: "id",
 					endpoint: {
@@ -55,7 +55,7 @@ export default {
 						params: {test: "test"}
 					}
 				},
-				columns: [
+				_columns: [
 					{
 						key: "id",
 						label: "Id"
@@ -65,14 +65,13 @@ export default {
 						label: "Name"
 					}
 				]
-			},
-			data: {}
+			}
 		}
 	},
 	props: {
-		_prop: {type: String, required: true, doc: true},
-		_columns: {type: Array, required: true, doc: true},
-		_options: {type: Object, required: true, doc: true}
+		_options: {type: Object, required: true},
+		_columns: {type: Array, required: true},
+		value: {required: false}
 	},
 	data() {
 		return {
@@ -93,15 +92,13 @@ export default {
 
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._prop]: ids}}
+					update: {data: {value: ids}}
 				}
 			});
 		},
 
 		async getItems() {
-			const {
-				endpoint: {url, params}
-			} = this._options;
+			const {url, params} = this._options.endpoint;
 			const {data} = await this.$axios.get(url, {params});
 			this.items = get(data, this._options.key, data);
 			this.loaded = true;

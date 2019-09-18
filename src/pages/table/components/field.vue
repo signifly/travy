@@ -5,9 +5,10 @@
 </template>
 
 <script>
-import {rStringProps, mergeData, mapPaths} from "@/modules/utils";
+import {rStringProps, mapPaths} from "@/modules/utils";
 import field from "@/components/field";
 import state from "../state";
+import produce from "immer";
 
 export default {
 	components: {field},
@@ -27,22 +28,20 @@ export default {
 		}
 	},
 	methods: {
-		event({actions, done}) {
-			const {update} = actions;
+		event(event) {
+			const newEvent = produce(event, (draft) => {
+				const update = draft.actions.update;
 
-			// because of element-ui we have to update table item data here
-			if (update) {
-				update.data = mapPaths(update.data);
-				Object.assign(this.data, mergeData(this.data, update.data));
-			}
-
-			this.$emit("event", {
-				done,
-				actions: {
-					...actions,
-					update: update && {item: this.data, data: update.data}
+				// because of element-ui we have to update table item data here
+				if (update) {
+					Object.assign(update, {
+						data: mapPaths(update.data),
+						item: this.data
+					});
 				}
 			});
+
+			this.$emit("event", newEvent);
 		}
 	}
 };

@@ -20,8 +20,9 @@ export default {
 	meta: {
 		res: {
 			props: {
+				_disabled: false,
 				value: "inputVal",
-				options: {
+				_options: {
 					endpoint: {
 						url: "items",
 						params: {
@@ -35,20 +36,18 @@ export default {
 				}
 			},
 			data: {
-				inputVal: ""
+				inputVal: "item1"
 			}
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false, doc: true},
+		_disabled: {type: Boolean, required: false},
 		_options: {
 			type: Object,
 			required: true,
-			doc: true,
 			note: `if options is an array of objects, options.value is required`
 		},
-		value: {type: String, required: false, doc: true},
-		_value: {type: String, required: true}
+		value: {type: String, required: false}
 	},
 	data() {
 		return {
@@ -62,8 +61,6 @@ export default {
 				value,
 				endpoint: {url, params}
 			} = this._options;
-
-			cb(this.items); // keep showing old items while fetching new items
 
 			const {data} = await this.$axios.get(url, {
 				params: merge({}, params, {
@@ -82,7 +79,7 @@ export default {
 		update(value) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._value]: value}}
+					update: {data: {value}}
 				}
 			});
 		}

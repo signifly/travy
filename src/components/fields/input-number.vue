@@ -20,9 +20,9 @@ export default {
 	meta: {
 		res: {
 			props: {
-				disabled: false,
 				value: "inputVal",
-				unit: "cm"
+				_disabled: false,
+				_unit: "cm"
 			},
 			data: {
 				inputVal: 3
@@ -30,10 +30,9 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false, doc: true},
-		_unit: {type: String, required: false, doc: true},
-		value: {type: Number, required: false, doc: true},
-		_value: {type: String, required: true}
+		_disabled: {type: Boolean, required: false},
+		_unit: {type: String, required: false},
+		value: {type: Number, required: false}
 	},
 	data() {
 		return {
@@ -51,7 +50,7 @@ export default {
 
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._value]: value}}
+					update: {data: {value}}
 				}
 			});
 		}

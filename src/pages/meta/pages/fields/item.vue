@@ -34,7 +34,7 @@
 					</pre>
 				</div>
 
-				<div class="block data">
+				<div class="block data" v-if="dataDisplay">
 					<div class="title">Data</div>
 					<pre>
 						<code>{{dataDisplay}}</code>
@@ -55,14 +55,14 @@
 <script>
 import {Table, TableColumn} from "element-ui";
 import field from "@/components/field";
-import {pickBy, get} from "lodash";
+import {get} from "lodash";
 
 export default {
 	components: {field, Table, TableColumn},
 	props: {
-		id: {type: String, required: true},
 		props: {type: Object, required: true},
-		res: {type: Object, required: true}
+		res: {type: Object, required: true},
+		id: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -100,7 +100,7 @@ export default {
 				}));
 			};
 
-			return mapProps(pickBy(this.props, (x) => x.doc));
+			return mapProps(this.props);
 		}
 	},
 	methods: {
