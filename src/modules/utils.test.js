@@ -2,7 +2,7 @@ import * as utils from "./utils";
 
 describe("utils", () => {
 	test("rStringProps object", () => {
-		const obj = utils.rStringProps({
+		const res = utils.rStringProps({
 			data: {
 				id: 1,
 				person: {name: "pete"}
@@ -11,28 +11,29 @@ describe("utils", () => {
 				number: 1,
 				null: null,
 				boolean: true,
-				objKey: {
+				obj: {
 					key: "{id}/{person.name}"
 				},
-				arrayKey: ["{id}/{person.name}", {key: "{id}/{person.name}"}]
+				array: ["{id}/{person.name}", {key: "{id}/{person.name}"}]
 			}
 		});
 
-		expect(obj).toHaveProperty("number", 1);
-		expect(obj).toHaveProperty("null", null);
-		expect(obj).toHaveProperty("boolean", true);
-		expect(obj).toHaveProperty("objKey.key", "1/pete");
-		expect(obj).toHaveProperty(["arrayKey", 0], "1/pete");
-		expect(obj).toHaveProperty(["arrayKey", 1, "key"], "1/pete");
+		expect(res).toEqual({
+			number: 1,
+			null: null,
+			boolean: true,
+			obj: {key: "1/pete"},
+			array: {"0": "1/pete", "1": {key: "1/pete"}}
+		});
 	});
 
 	test("rStringProps string", () => {
-		const string = utils.rStringProps({
+		const res = utils.rStringProps({
 			data: {id: 1},
 			val: "test/{id}"
 		});
 
-		expect(string).toBe("test/1");
+		expect(res).toBe("test/1");
 	});
 
 	test("mergeData", () => {
@@ -51,71 +52,63 @@ describe("utils", () => {
 			}
 		};
 
-		const merged = utils.mergeData(data, update);
+		const res = utils.mergeData(data, update);
 
-		expect(merged).toHaveProperty("obj.key1", 1);
-		expect(merged).toHaveProperty("obj.key2", 2);
-		expect(merged).toHaveProperty("obj.key3", update.obj.key3);
+		expect(res).toEqual({
+			obj: {
+				key1: 1,
+				key2: 2,
+				key3: [{id: 3}]
+			}
+		});
 	});
 
 	test("mapProps", () => {
 		const props = {
-			string: "string",
-			null: null,
-			key1: "text1",
-			deep: {
-				key1: "text1",
-				arrayObj: ["text1", {key1: "text1"}]
-			}
+			scope: {
+				rootId: "$root.id",
+				"@scope": "scope",
+				id: "id"
+			},
+			obj: {_text: "text"},
+			_obj: {text: "text"},
+			array: [{id: "id"}],
+			_array: [{id: 2}],
+			id: "id",
+			_null: null,
+			nothing: "nothing"
 		};
 
 		const data = {
-			text1: "1"
+			id: 1,
+			scope: [{id: 2, text: "text", rootId: "$root.id"}]
 		};
 
 		const res = utils.mapProps({props, data});
 
-		expect(res).toHaveProperty("null", undefined);
-		expect(res).toHaveProperty("string", undefined);
-		expect(res).toHaveProperty("key1", data.text1);
-		expect(res).toHaveProperty("deep.key1", data.text1);
-		expect(res).toHaveProperty(["deep", "arrayObj", 0], data.text1);
-		expect(res).toHaveProperty(["deep", "arrayObj", 1, "key1"], data.text1);
-	});
-
-	test("mapProps fallback", () => {
-		const props = {
-			string: "string",
-			boolean: true,
-			null: null,
-			deep: {
-				num: 1,
-				text: "text"
-			}
-		};
-
-		const data = {
-			text: "1"
-		};
-
-		const res = utils.mapProps({props, data, fallback: true});
-
-		expect(res).toHaveProperty("null", null);
-		expect(res).toHaveProperty("deep.num", 1);
-		expect(res).toHaveProperty("boolean", true);
-		expect(res).toHaveProperty("string", "string");
-		expect(res).toHaveProperty("deep.text", data.text);
+		expect(res).toEqual({
+			scope: [{"@scope": "scope", rootId: 1, id: 2}],
+			obj: {_text: "text"},
+			_obj: {text: "text"},
+			array: [{id: 1}],
+			_array: [{id: 2}],
+			id: 1,
+			_null: null,
+			nothing: undefined
+		});
 	});
 
 	test("mapPaths", () => {
 		const data = {
-			text1: "text",
-			"obj.text2": "text"
+			text: "text",
+			"obj.text": "text"
 		};
 
 		const res = utils.mapPaths(data);
 
-		expect(res).toHaveProperty("text1", "text");
-		expect(res).toHaveProperty(["obj", "text2"], "text");
+		expect(res).toEqual({
+			text: "text",
+			obj: {text: "text"}
+		});
 	});
 });
