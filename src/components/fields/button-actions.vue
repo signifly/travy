@@ -125,12 +125,11 @@ export default {
 		_size: {
 			type: String,
 			default: "mini",
-			doc: true,
 			note: `medium/small/mini`
 		},
-		_status: {type: String, default: "primary", doc: true},
-		_title: {type: String, default: "Actions", doc: true},
-		_actions: {type: Array, required: true, doc: true},
+		_status: {type: String, default: "primary"},
+		_title: {type: String, default: "Actions"},
+		_actions: {type: Array, required: true},
 		alt: {type: Object, default: () => ({})}
 	},
 	data() {

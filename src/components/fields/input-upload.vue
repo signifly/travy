@@ -43,10 +43,10 @@ export default {
 		}
 	},
 	props: {
-		_note: {type: String, required: false, doc: true},
-		_fileTypes: {type: String, required: false, doc: true},
-		_limit: {type: Number, required: false, doc: true},
-		_files: {type: String, required: true, doc: true}
+		_note: {type: String, required: false},
+		_fileTypes: {type: String, required: false},
+		_limit: {type: Number, required: false},
+		_files: {type: String, required: true}
 	},
 	data() {
 		return {

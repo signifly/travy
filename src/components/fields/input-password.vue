@@ -28,8 +28,8 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false, doc: true},
-		value: {type: String, required: false, doc: true}
+		_disabled: {type: Boolean, required: false},
+		value: {type: String, required: false}
 	},
 	methods: {
 		update(value) {

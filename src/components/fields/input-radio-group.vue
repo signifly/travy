@@ -35,8 +35,8 @@ export default {
 		}
 	},
 	props: {
-		value: {type: [String, Number, Boolean], required: false, doc: true},
-		items: {type: Array, required: true, doc: true}
+		value: {type: [String, Number, Boolean], required: false},
+		items: {type: Array, required: true}
 	},
 	methods: {
 		update(value) {

@@ -49,7 +49,7 @@ export default {
 		}
 	},
 	props: {
-		items: {type: Array, required: true, doc: true}
+		items: {type: Array, required: true}
 	},
 	computed: {
 		disabled: (t) => t.items.length < 1

@@ -54,7 +54,7 @@ export default {
 		}
 	},
 	props: {
-		items: {type: Array, required: true, doc: true}
+		items: {type: Array, required: true}
 	},
 	computed: {
 		rows: (t) => chunk(t.items, 2)

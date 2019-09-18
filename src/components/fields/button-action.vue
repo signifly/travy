@@ -76,13 +76,12 @@ export default {
 		_size: {
 			type: String,
 			default: "medium",
-			doc: true,
 			note: `medium/small/mini`
 		},
-		_status: {type: String, default: "primary", doc: true},
-		_title: {type: String, required: true, doc: true},
-		_icon: {type: String, required: false, doc: true},
-		_action: {type: Object, required: true, doc: true}
+		_status: {type: String, default: "primary"},
+		_title: {type: String, required: true},
+		_icon: {type: String, required: false},
+		_action: {type: Object, required: true}
 	},
 	data() {
 		return {

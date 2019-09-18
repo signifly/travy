@@ -30,10 +30,10 @@ export default {
 		}
 	},
 	props: {
-		value: {type: [String, Number], required: false, doc: true},
-		_disabled: {type: Boolean, required: false, doc: true},
-		_unit: {type: String, required: false, doc: true},
-		_type: {type: String, default: "text", doc: true}
+		value: {type: [String, Number], required: false},
+		_disabled: {type: Boolean, required: false},
+		_unit: {type: String, required: false},
+		_type: {type: String, default: "text"}
 	},
 	methods: {
 		update(value) {

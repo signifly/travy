@@ -46,11 +46,11 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false, doc: true},
-		_clearable: {type: Boolean, required: false, default: true, doc: true},
-		_addable: {type: Boolean, required: false, doc: true},
-		value: {type: [String, Number], required: false, doc: true},
-		_options: {type: Object, required: true, doc: true}
+		_disabled: {type: Boolean, required: false},
+		_clearable: {type: Boolean, required: false, default: true},
+		_addable: {type: Boolean, required: false},
+		value: {type: [String, Number], required: false},
+		_options: {type: Object, required: true}
 	},
 	data() {
 		return {
