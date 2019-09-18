@@ -37,54 +37,55 @@ describe("utils", () => {
 	});
 
 	test("mergeData", () => {
-		const data = {
-			obj: {
-				key1: 1,
-				key2: 1,
-				key3: [{id: 1}, {id: 2}]
+		const res = utils.mergeData(
+			{
+				obj: {
+					key1: 1,
+					key2: 1,
+					key3: [{id: 1}, {id: 2}]
+				}
+			},
+			{
+				obj: {
+					key2: 2,
+					key3: [{id: 3}],
+					key4: 4
+				}
 			}
-		};
-
-		const update = {
-			obj: {
-				key2: 2,
-				key3: [{id: 3}]
-			}
-		};
-
-		const res = utils.mergeData(data, update);
+		);
 
 		expect(res).toEqual({
 			obj: {
 				key1: 1,
 				key2: 2,
-				key3: [{id: 3}]
+				key3: [{id: 3}],
+				key4: 4
 			}
 		});
 	});
 
 	test("mapProps", () => {
-		const props = {
-			scope: {
-				rootId: "$root.id",
-				"@scope": "scope",
-				id: "id"
+		const res = utils.mapProps({
+			props: {
+				scope: {
+					rootId: "$root.id",
+					"@scope": "scope",
+					id: "id"
+				},
+				obj: {_text: "text"},
+				_obj: {text: "text"},
+				array: [{id: "id"}],
+				_array: [{id: 2}],
+				id: "id",
+				_null: null,
+				nothing: "nothing"
 			},
-			obj: {_text: "text"},
-			_obj: {text: "text"},
-			array: [{id: "id"}],
-			_array: [{id: 2}],
-			id: "id",
-			_null: null,
-			nothing: "nothing"
-		};
 
-		const data = {
-			id: 1,
-			scope: [{id: 2, text: "text", rootId: "$root.id"}]
-		};
-
-		const res = utils.mapProps({props, data});
+			data: {
+				id: 1,
+				scope: [{id: 2, text: "text", rootId: "$root.id"}]
+			}
+		});
 
 		expect(res).toEqual({
 			scope: [{"@scope": "scope", rootId: 1, id: 2}],
@@ -99,12 +100,10 @@ describe("utils", () => {
 	});
 
 	test("mapPaths", () => {
-		const data = {
+		const res = utils.mapPaths({
 			text: "text",
 			"obj.text": "text"
-		};
-
-		const res = utils.mapPaths(data);
+		});
 
 		expect(res).toEqual({
 			text: "text",
