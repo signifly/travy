@@ -159,19 +159,16 @@ module.exports = {
 	"/definitions/table/projects": {
 		columns: [
 			{
-				order: 1,
+				width: 350,
 				sortable: true,
-				name: "name",
-				label: "Name",
+				name: "Name",
 				fieldType: {id: "text", props: {text: "name"}},
 				onClick: "/t/projects/{id}",
 				sortBy: "name"
 			},
 			{
-				order: 2,
 				sortable: false,
-				name: "tags",
-				label: "Tags",
+				name: "Tags",
 				fieldType: {
 					id: "items-tooltip",
 					props: {
@@ -182,56 +179,17 @@ module.exports = {
 						}
 					}
 				}
+			},
+			{
+				sortable: false,
+				name: "input",
+				fieldType: {
+					id: "input-switch",
+					props: {
+						value: "test.switch"
+					}
+				}
 			}
-			// {
-			// 	order: 3,
-			// 	sortable: false,
-			// 	name: "actions",
-			// 	label: "Actions",
-			// 	fieldType: {
-			// 		id: "button-actions",
-			// 		props: {
-			// 			actions: [
-			// 				{
-			// 					title: "View",
-			// 					props: {
-			// 						title: "View",
-			// 						id: "show",
-			// 						endpoint: {url: "/t/projects/{id}", method: "get"}
-			// 					},
-			// 					hide: {key: "is_deleted", operator: "eq", value: true}
-			// 				},
-			// 				{
-			// 					title: "Delete",
-			// 					props: {
-			// 						title: "Delete",
-			// 						id: "popup",
-			// 						text: "Are you sure? Please confirm this action.",
-			// 						endpoint: {
-			// 							url: "http://localhost:3001/v1/admin/projects/{id}",
-			// 							method: "delete"
-			// 						}
-			// 					},
-			// 					hide: {key: "is_deleted", operator: "eq", value: true}
-			// 				},
-			// 				{
-			// 					title: "Restore",
-			// 					props: {
-			// 						title: "Restore",
-			// 						id: "popup",
-			// 						text: "Are you sure? Please confirm this action.",
-			// 						endpoint: {
-			// 							url: "http://localhost:3001/v1/admin/projects/{id}/restore",
-			// 							method: "post"
-			// 						}
-			// 					},
-			// 					hide: {key: "is_deleted", operator: "eq", value: false}
-			// 				}
-			// 			]
-			// 		}
-			// 	},
-			// 	width: 120
-			// }
 		],
 		defaults: {sort: {prop: "name", order: "ascending"}},
 		endpoint: {
@@ -581,7 +539,7 @@ module.exports = {
 		]
 	},
 
-	"/projects/1": {
+	"/projects/:id": {
 		data: {
 			id: 1,
 			client_id: 8,
@@ -601,7 +559,7 @@ module.exports = {
 		}
 	},
 
-	"/projects/1/activity": {
+	"/projects/:id/activity": {
 		data: [
 			{
 				id: 22,
@@ -644,7 +602,7 @@ module.exports = {
 		}
 	},
 
-	"/account/1/activity": {
+	"/account/:id/activity": {
 		data: [
 			{
 				id: 22,

@@ -13,7 +13,6 @@ import {
 
 export const date = (epoch) => {
 	const d = new Date(epoch * 1000);
-
 	const zero = (val) => ("0" + val).slice(-2);
 
 	return {

@@ -14,7 +14,17 @@
 				<top v-bind="{modifiers, loading, title, meta}" @reset="reset" />
 				<vTable
 					ref="table"
-					v-bind="{data, metadata, columns, subtable, defaults, batch, loading}"
+					v-bind="{
+						data,
+						metadata,
+						columns,
+						subtable,
+						defaults,
+						batch,
+						loading,
+						endpoint,
+						modifiers
+					}"
 					@select="select"
 					@getData="getData"
 					@event="event"
@@ -35,8 +45,8 @@
 </template>
 
 <script>
-import {rStringProps, mergeData} from "@/modules/utils";
-import {merge, get, set, debounce} from "lodash";
+import {rStringProps} from "@/modules/utils";
+import {merge, get} from "lodash";
 import state from "./state";
 
 import pagination from "./components/pagination";
@@ -59,7 +69,6 @@ export default {
 			state,
 			data: [],
 			meta: null,
-			updates: {},
 			halt: false,
 			loading: false,
 			metadata: null,
@@ -110,40 +119,6 @@ export default {
 		},
 
 		async event({actions, done}) {
-			if (actions.update) {
-				let {data, item} = actions.update;
-
-				// create update item
-				const uItem = (() => set(this.updates, item.id, {})[item.id])();
-
-				// set payload
-				uItem.payload = mergeData(uItem.payload, data);
-
-				// set method
-				if (!uItem.method) {
-					uItem.method = debounce(async () => {
-						const url = rStringProps({
-							data: item,
-							val: `${this.endpoint.url}/{id}`
-						});
-
-						await this.$axios.put(url, {
-							data: uItem.payload,
-							modifier: this.modifiers
-						});
-
-						// clear method and payload
-						Object.assign(uItem, {payload: null, method: null});
-
-						// update table if all methods are finished
-						const rdy = !Object.values(this.updates).some((x) => x && x.method);
-						if (rdy) this.getData();
-					}, 1000);
-				}
-
-				uItem.method();
-			}
-
 			if (actions.refresh) {
 				const {definitions, data} = actions.refresh;
 				if (definitions) await this.getDefinitions();
@@ -203,6 +178,7 @@ export default {
 	async created() {
 		this.state.query = this.$route.query;
 		await this.getDefinitions();
+		await this.getData();
 
 		if (this.ws) {
 			this.$ws.on(this.ws.channel, () => {

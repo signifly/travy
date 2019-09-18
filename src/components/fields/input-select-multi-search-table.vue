@@ -19,6 +19,7 @@
 
 <script>
 import selectMultiSearch from "./input-select-multi-search.vue";
+import {mapPaths} from "@/modules/utils";
 import vTable from "./table.vue";
 import produce from "immer";
 
@@ -100,11 +101,6 @@ export default {
 		data: {type: Array, default: () => []},
 		table: {type: Object, required: true}
 	},
-	data() {
-		return {
-			edits: {}
-		};
-	},
 	methods: {
 		selectEvent(event) {
 			const update = event.actions.update;
@@ -121,7 +117,7 @@ export default {
 					return {
 						...value,
 						...item,
-						...this._columnsDataOverwrite
+						...this.table._columnsDataOverwrite
 					};
 				});
 
@@ -134,8 +130,10 @@ export default {
 
 			if (update) {
 				const data = produce(this.data, (data) => {
+					const updateData = mapPaths(update.data);
+
 					const index = data.findIndex((x) => x.id === update.item.id);
-					data[index] = {...update.item, ...update.data};
+					data[index] = {...update.item, ...updateData};
 				});
 
 				this.update(data);
