@@ -77,9 +77,7 @@ export default {
 
 		limitError(files) {
 			const rest = this._limit - this.files.length;
-			this.limitNote = `${
-				files.length
-			} files selected, but only ${rest} more can be added.`;
+			this.limitNote = `${files.length} files selected, but only ${rest} more can be added.`;
 		}
 	}
 };

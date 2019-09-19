@@ -186,7 +186,7 @@ module.exports = {
 				fieldType: {
 					id: "input-switch",
 					props: {
-						value: "test.switch"
+						value: "switch"
 					}
 				}
 			}

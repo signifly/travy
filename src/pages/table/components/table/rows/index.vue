@@ -1,9 +1,9 @@
 <template>
 	<tbody class="rows">
 		<row
-			v-for="item in data"
-			:key="item.id"
-			v-bind="{data: item, columns, endpoint}"
+			v-for="row in data"
+			:key="row.id"
+			v-bind="{row, columns, endpoint}"
 			@event="$emit('event', $event)"
 		/>
 	</tbody>

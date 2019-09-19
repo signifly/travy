@@ -58,6 +58,7 @@ const listeners = {
 				channel_name: item.channel
 			});
 
+			// eslint-disable-next-line
 			item.auth = data.auth;
 		}
 

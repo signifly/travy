@@ -1,14 +1,14 @@
 <template>
 	<tr>
 		<td v-for="column in columns" :key="column.name">
-			<item v-bind="{data: dataC, column}" @event="event" />
+			<item v-bind="{data: data, column}" @event="event" />
 		</td>
 	</tr>
 </template>
 
 <script>
 import {mergeData, mapPaths, rStringProps} from "@/modules/utils";
-import {debounce} from "lodash";
+import {debounce, cloneDeep} from "lodash";
 import produce from "immer";
 import item from "./item";
 
@@ -18,17 +18,17 @@ export default {
 		modifiers: {type: Object, required: false},
 		endpoint: {type: Object, required: false},
 		columns: {type: Array, required: true},
-		data: {type: Object, required: true}
+		row: {type: Object, required: true}
 	},
 	data: (t) => ({
-		dataC: t.data,
+		data: cloneDeep(t.row),
 		payload: {}
 	}),
 	computed: {
 		url: (t) =>
 			rStringProps({
 				val: `${t.endpoint.url}/{id}`,
-				data: t.dataC
+				data: t.data
 			})
 	},
 	methods: {
@@ -37,11 +37,11 @@ export default {
 
 			if (update) {
 				const data = mapPaths(update.data);
-				this.dataC = mergeData(this.dataC, data);
+				this.data = mergeData(this.data, data);
 				this.payload = mergeData(this.payload, data);
 
 				const newEvent = produce(event, (event) => {
-					event.actions.update.item = this.dataC;
+					event.actions.update.item = this.data;
 				});
 
 				// only update if we're making an update request
