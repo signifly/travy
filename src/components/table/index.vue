@@ -1,5 +1,5 @@
 <template>
-	<div class="table-main" v-if="definitions">
+	<div class="table" v-if="definitions">
 		<div class="header" v-if="filters || search || actions">
 			<filters
 				v-if="filters || search"
@@ -10,36 +10,33 @@
 		</div>
 
 		<div class="content">
-			<box>
-				<top v-bind="{modifiers, loading, title, meta}" @reset="reset" />
-				<vTable
-					ref="table"
-					v-bind="{
-						data,
-						metadata,
-						columns,
-						subtable,
-						defaults,
-						batch,
-						loading,
-						endpoint,
-						modifiers
-					}"
-					@select="select"
-					@getData="getData"
-					@event="event"
-				/>
-				<pagination
-					v-if="meta && pagination"
-					v-bind="[meta, {loading}]"
-					@getData="getData"
-				/>
-				<batch
-					v-bind="[batch, {selectedItems}]"
-					@unselect="unselect"
-					@event="event"
-				/>
-			</box>
+			<top v-bind="{modifiers, loading, meta}" @reset="reset" />
+			<vTable
+				ref="table"
+				v-bind="{
+					data,
+					metadata,
+					columns,
+					subtable,
+					batch,
+					loading,
+					endpoint,
+					modifiers
+				}"
+				@select="select"
+				@getData="getData"
+				@event="event"
+			/>
+			<pagination
+				v-if="meta && pagination"
+				v-bind="[meta, {loading}]"
+				@getData="getData"
+			/>
+			<batch
+				v-bind="[batch, {selectedItems}]"
+				@unselect="unselect"
+				@event="event"
+			/>
 		</div>
 	</div>
 </template>
@@ -54,15 +51,13 @@ import filters from "./components/filters";
 import actions from "./components/actions";
 import vTable from "./components/table";
 import batch from "./components/batch";
-import box from "@/components/box.vue";
 import top from "./components/top";
 
 export default {
-	components: {box, vTable, filters, actions, pagination, batch, top},
+	components: {vTable, filters, actions, pagination, batch, top},
 	props: {
-		defsEndpoint: {type: Object, required: true},
-		parentData: {type: Object, required: false},
-		title: {type: Object, required: true}
+		definitions: {type: Object, required: true},
+		parentData: {type: Object, required: false}
 	},
 	data() {
 		return {
@@ -72,7 +67,7 @@ export default {
 			halt: false,
 			loading: false,
 			metadata: null,
-			definitions: null,
+			// definitions: null,
 			selectedItems: []
 		};
 	},
@@ -86,7 +81,6 @@ export default {
 		subtable: (t) => t.definitions.subtable,
 		modifiers: (t) => t.definitions.modifiers,
 		pagination: (t) => t.definitions.pagination,
-		defaults: (t) => t.definitions.defaults || {},
 
 		ws() {
 			return rStringProps({
@@ -138,31 +132,24 @@ export default {
 			await done();
 		},
 
-		async getDefinitions() {
-			const params = {
-				...this.defsEndpoint.params,
-				modifiers: this.query.modifiers
-			};
-			const {data} = await this.$axios.get(this.defsEndpoint.url, {params});
-			this.definitions = data;
-		},
+		// async getDefinitions() {
+		// 	const params = {
+		// 		...this.defsEndpoint.params,
+		// 		modifiers: this.query.modifiers
+		// 	};
+		// 	const {data} = await this.$axios.get(this.defsEndpoint.url, {params});
+		// 	this.definitions = data;
+		// },
 
 		async getData({loading = true} = {}) {
 			this.loading = loading;
 
 			const params = merge({}, this.endpoint.params, {
 				page: this.query.page,
+				sort: this.query.sort,
 				count: this.query.pagesize || 15,
 				filter: this.query.filters,
-				modifier: this.query.modifiers,
-				sort: (() => {
-					const sort = this.query.sort || this.defaults.sort;
-
-					if (sort) {
-						const order = sort.order === "descending" ? "-" : "";
-						return `${order}${sort.prop}`;
-					}
-				})()
+				modifier: this.query.modifiers
 			});
 
 			const {
@@ -177,7 +164,7 @@ export default {
 	},
 	async created() {
 		this.state.query = this.$route.query;
-		await this.getDefinitions();
+		// await this.getDefinitions();
 		await this.getData();
 
 		if (this.ws) {
@@ -195,7 +182,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table-main {
+.table {
 	.header {
 		margin-bottom: 1.5em;
 		display: flex;

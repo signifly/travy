@@ -1,7 +1,12 @@
 <template>
 	<thead class="head" align="left">
 		<tr>
-			<item v-for="column in columns" :key="column.name" v-bind="column" />
+			<item
+				@getData="$emit('getData')"
+				v-for="column in columns"
+				:key="column.name"
+				v-bind="column"
+			/>
 		</tr>
 	</thead>
 </template>

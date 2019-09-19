@@ -1,7 +1,7 @@
 <template>
 	<div class="table" :class="{loading}">
 		<table>
-			<vHead v-bind="{columns}" />
+			<vHead v-bind="{columns}" @getData="$emit('getData')" />
 			<rows
 				v-bind="{columns, data, endpoint, modifiers}"
 				@event="$emit('event', $event)"
@@ -25,45 +25,20 @@ export default {
 		subtable: {type: Object, required: false},
 		loading: {type: Boolean, required: false},
 		modifiers: {type: Object, required: false},
-		batch: {type: Object, default: () => ({})},
-		defaults: {type: Object, default: () => ({})}
+		batch: {type: Object, default: () => ({})}
 	},
 	computed: {
 		query: () => state.query,
 		emptyText: (t) => (t.loading ? "loading" : "no data"),
-		sorting: (t) => t.query.sort || t.defaults.sort || {},
 		batchActive: (t) => t.batch.bulk || t.batch.sequential
 	},
 	methods: {
-		sort({prop, order}) {
-			const sort = prop && order ? {prop, order} : undefined;
-
-			// don't set query params for default sorting
-			if (this.data.length)
-				state.setQuery({
-					type: "replace",
-					query: {
-						...this.query,
-						page: undefined,
-						sort
-					}
-				});
-
-			this.$emit("getData");
-		},
-
 		select(items) {
 			this.$emit("select", items);
 		},
 
 		unselect() {
 			this.$refs.table.clearSelection();
-		}
-	},
-	created() {
-		// element ui will call sort-change on init if any sorting is defined
-		if (Object.keys(this.sorting).length === 0) {
-			this.$emit("getData");
 		}
 	}
 };

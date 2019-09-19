@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import tablePage from "@/pages/table/page";
+import tablePage from "@/components/table";
 
 export default {
 	components: {tablePage},
