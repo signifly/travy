@@ -28,6 +28,10 @@
 				/>
 			</div>
 		</draggable>
+
+		<div class="noitems" v-else>
+			No data
+		</div>
 	</div>
 </template>
 
@@ -208,6 +212,12 @@ export default {
 				margin-left: auto;
 			}
 		}
+	}
+
+	.noitems {
+		font-weight: 500;
+		font-size: 14px;
+		margin: 1em;
 	}
 }
 </style>

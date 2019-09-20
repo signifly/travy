@@ -22,7 +22,7 @@
 							v-for="column in _columns"
 							:key="column.key"
 							class="drag"
-							v-text="item[column.key]"
+							v-text="get(item, column.key)"
 						/>
 					</tr>
 				</draggable>
@@ -61,7 +61,7 @@ export default {
 						label: "Id"
 					},
 					{
-						key: "name",
+						key: "nested.name",
 						label: "Name"
 					}
 				]
@@ -81,6 +81,8 @@ export default {
 		};
 	},
 	methods: {
+		get,
+
 		moveTop(item) {
 			const items = this.items.filter((x) => x !== item);
 			items.unshift(item);
