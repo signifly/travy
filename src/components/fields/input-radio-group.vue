@@ -2,12 +2,12 @@
 	<div class="input-radio-group">
 		<RadioGroup :value="value" size="medium" @input="update">
 			<RadioButton
-				v-for="item in _items"
-				:label="item.value"
-				:disabled="item.disabled"
-				:key="item.value"
+				v-for="item in items"
+				:label="item._value"
+				:disabled="item._disabled"
+				:key="item._value"
 			>
-				{{ item.label }}
+				{{ item._label }}
 			</RadioButton>
 		</RadioGroup>
 	</div>
@@ -23,10 +23,10 @@ export default {
 			props: {
 				value: "option",
 				items: [
-					{label: "Option A", value: true},
-					{label: "Option B", value: false},
-					{label: "Option C", value: 3},
-					{label: "Option D", value: 4, disabled: true}
+					{_label: "Option A", _value: true},
+					{_label: "Option B", _value: false},
+					{_label: "Option C", _value: 3},
+					{_label: "Option D", _value: 4, _disabled: true}
 				]
 			},
 			data: {
@@ -35,15 +35,14 @@ export default {
 		}
 	},
 	props: {
-		value: {type: [String, Number, Boolean], required: false, doc: true},
-		_items: {type: Array, required: true, doc: true},
-		_value: {type: String, required: true}
+		value: {type: [String, Number, Boolean], required: false},
+		items: {type: Array, required: true}
 	},
 	methods: {
 		update(value) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._value]: value}}
+					update: {data: {value}}
 				}
 			});
 		}

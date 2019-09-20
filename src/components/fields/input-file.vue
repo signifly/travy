@@ -27,8 +27,8 @@ export default {
 			props: {
 				file: "base64",
 				url: "url",
-				note: "jpg/png files with a size less than 500kb",
-				fileTypes: ".jpg, .jpeg, .png"
+				_note: "jpg/png files with a size less than 500kb",
+				_fileTypes: ".jpg, .jpeg, .png"
 			},
 			data: {
 				url: "https://pbs.twimg.com/media/DVnfJkqVAAAqS91.jpg"
@@ -36,11 +36,10 @@ export default {
 		}
 	},
 	props: {
-		file: {type: Object, required: false, doc: true, note: "base64"},
-		url: {type: String, required: false, doc: true},
-		_file: {type: String, required: true},
-		_note: {type: String, required: false, doc: true},
-		_fileTypes: {type: String, required: false, doc: true}
+		file: {type: Object, required: false, note: "base64"},
+		_fileTypes: {type: String, required: false},
+		_note: {type: String, required: false},
+		url: {type: String, required: false}
 	},
 	data() {
 		return {
@@ -71,10 +70,10 @@ export default {
 			this.update(null);
 		},
 
-		update(obj) {
+		update(file) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._file]: obj}}
+					update: {data: {file}}
 				}
 			});
 		}

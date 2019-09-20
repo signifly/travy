@@ -88,10 +88,9 @@ export default {
 		}
 	},
 	props: {
-		id: {type: Number, required: false, doc: true},
-		_id: {type: String, required: true},
-		url: {type: String, required: false, doc: true},
-		_options: {type: Object, required: true, doc: true}
+		id: {type: Number, required: false},
+		url: {type: String, required: false},
+		options: {type: Object, required: true}
 	},
 	data() {
 		return {
@@ -178,7 +177,7 @@ export default {
 
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._id]: id}}
+					update: {data: {id}}
 				}
 			});
 		}

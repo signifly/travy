@@ -1,7 +1,7 @@
 <template>
 	<div class="select-search">
 		<Select
-			v-bind="{value, size}"
+			:value="value"
 			:remote-method="getItems"
 			:disabled="_disabled"
 			:clearable="_clearable"
@@ -25,10 +25,11 @@ export default {
 	meta: {
 		res: {
 			props: {
-				disabled: false,
-				addable: false,
+				_clearable: false,
+				_disabled: false,
+				_addable: false,
 				value: "selectValue",
-				options: {
+				_options: {
 					endpoint: {
 						url: "items",
 						params: {filter: {test: "test"}}
@@ -45,14 +46,11 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false, doc: true},
-		meta: {type: Object, require: false, default: () => ({})},
-		_clearable: {type: Boolean, required: false, default: true, doc: true},
-		_addable: {type: Boolean, required: false, doc: true},
-		value: {type: [String, Number], required: false, doc: true},
-		_value: {type: String, required: true},
-		options: {type: Object, required: false},
-		_options: {type: Object, required: true, doc: true}
+		_disabled: {type: Boolean, required: false},
+		_clearable: {type: Boolean, required: false, default: true},
+		_addable: {type: Boolean, required: false},
+		value: {type: [String, Number], required: false},
+		_options: {type: Object, required: true}
 	},
 	data() {
 		return {
@@ -63,12 +61,6 @@ export default {
 	},
 	computed: {
 		endpoint: (t) => t._options.endpoint,
-
-		size() {
-			if (this.meta.location === "table") return "small";
-			if (this.meta.location === "tabs") return "medium";
-			return "medium";
-		},
 
 		itemsC() {
 			const items = [this.selectedItem, ...this.items]
@@ -115,7 +107,7 @@ export default {
 		update(value) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._value]: value}}
+					update: {data: {value}}
 				}
 			});
 		}

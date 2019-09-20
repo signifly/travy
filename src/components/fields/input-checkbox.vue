@@ -20,14 +20,13 @@ export default {
 		}
 	},
 	props: {
-		value: {type: Boolean, required: false, doc: true},
-		_value: {type: String, required: true}
+		value: {type: Boolean, required: false}
 	},
 	methods: {
-		update(val) {
+		update(value) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._value]: val}}
+					update: {data: {value}}
 				}
 			});
 		}

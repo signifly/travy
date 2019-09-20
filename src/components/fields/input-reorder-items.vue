@@ -7,7 +7,7 @@
 			@input="update"
 			v-if="data.length > 0"
 		>
-			<div class="item" v-for="item in itemsC" :key="item.data.id">
+			<div class="item" v-for="item in data" :key="item.id">
 				<div class="icon drag">
 					<i class="el-icon-rank"></i>
 				</div>
@@ -36,10 +36,8 @@
 </template>
 
 <script>
-import {rStringProps} from "@/modules/utils";
 import actions from "./button-actions.vue";
 import draggable from "vuedraggable";
-import {get} from "lodash";
 
 export default {
 	components: {draggable, actions},
@@ -47,15 +45,15 @@ export default {
 		res: {
 			props: {
 				items: {
-					data: "items",
+					"@scope": "items",
 					image: "image",
+					id: "id",
 					list: [
-						{label: "variant", value: "variant"},
-						{label: "model", value: "model"}
-					],
-					actions: []
+						{_label: "variant", value: "variant"},
+						{_label: "model", value: "model"}
+					]
 				},
-				endpoint: {
+				_endpoint: {
 					url: "items",
 					method: "put",
 					payload: {
@@ -67,20 +65,20 @@ export default {
 				items: [
 					{
 						id: 1,
-						model: 1,
-						variant: 1,
+						model: "model1",
+						variant: "variant1",
 						image: "https://picsum.photos/200/300"
 					},
 					{
 						id: 2,
-						model: 2,
-						variant: 2,
+						model: "model2",
+						variant: "variant2",
 						image: "https://picsum.photos/200/300"
 					},
 					{
 						id: 3,
-						model: 3,
-						variant: 3,
+						model: "model3",
+						variant: "variant3",
 						image: "https://picsum.photos/200/300"
 					}
 				]
@@ -88,70 +86,29 @@ export default {
 		}
 	},
 	props: {
-		_endpoint: {type: Object, required: true, doc: true},
-		_items: {
-			type: Object,
-			required: true,
-			doc: true,
-			children: {
-				data: {type: String, required: true},
-				image: {type: String, required: true},
-				_list: {
-					type: Array,
-					required: true,
-					children: {
-						_label: {type: String, required: true},
-						value: {type: String, required: true}
-					}
-				},
-				_actions: {type: Array, required: false}
-			}
-		},
-		items: {type: Object, required: true},
-		alt: {type: Object, required: true}
+		_endpoint: {type: Object, required: true},
+		items: {type: Array, required: true}
 	},
 	data: () => ({
 		data: []
 	}),
-	computed: {
-		endpoint() {
-			return rStringProps({
-				val: this._endpoint,
-				data: this.alt.data
-			});
-		},
-		itemsC() {
-			return this.data.map((item) => ({
-				data: item,
-				actions: this._items.actions,
-				image: get(item, this._items.image),
-				list: this._items.list.map((x) => ({
-					label: x.label,
-					value: get(item, x.value)
-				}))
-			}));
-		}
-	},
 	methods: {
 		async update(items) {
-			const {method, url, payload} = this.endpoint;
-			const itemsKey = this._items.data;
+			const {method, url, payload} = this._endpoint;
 
 			await this.$axios({
-				method,
 				url,
+				method,
 				data: {
 					...payload,
-					data: {
-						[itemsKey]: items
-					}
+					data: {items}
 				}
 			});
 		}
 	},
 
 	created() {
-		this.$watch("items.data", (data) => (this.data = data || []), {
+		this.$watch("items", (items) => (this.data = items || []), {
 			immediate: true
 		});
 	}

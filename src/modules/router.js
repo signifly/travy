@@ -1,8 +1,6 @@
-import {get, transform, isObject, isFinite} from "lodash";
 import VueRouter from "vue-router";
 import store from "@/store";
 import Vue from "vue";
-import qs from "qs";
 
 // pages
 import index from "@/pages";
@@ -27,51 +25,51 @@ const routes = [
 		path: "/",
 		name: "index",
 		component: index,
-		meta: {layout: "main", title: "", auth: {roles: "all"}}
+		meta: {layout: "main", title: ""}
 	},
 	{
 		path: "/account",
 		name: "account",
 		component: account,
-		meta: {layout: "main", auth: {roles: "all"}}
+		meta: {layout: "main"}
 	},
 	{
 		path: "/login",
 		name: "login",
 		component: login,
 		props: true,
-		meta: {layout: "base"}
+		meta: {layout: "base", public: true}
 	},
 	{
 		path: "/login/reset/:id",
 		name: "login-reset",
 		component: loginReset,
 		props: true,
-		meta: {layout: "base"}
+		meta: {layout: "base", public: true}
 	},
 	{
 		path: "/t/:tableId",
 		name: "table",
 		component: table,
-		meta: {layout: "main", auth: {roles: "all"}}
+		meta: {layout: "main"}
 	},
 	{
-		path: "/t/:tableId/:viewId/:tabId?",
+		path: "/t/:tableId/:viewId",
 		name: "tableView",
 		component: view,
-		meta: {layout: "main", auth: {roles: "all"}}
+		meta: {layout: "main"}
 	},
 	{
 		path: "/d/:id",
 		name: "dashboard",
 		component: dashboard,
-		meta: {layout: "main", auth: {roles: "all"}}
+		meta: {layout: "main"}
 	},
 	{
 		path: "/c/:id",
 		name: "custom",
 		component: custom,
-		meta: {layout: "main", auth: {roles: "all"}}
+		meta: {layout: "main"}
 	},
 	{
 		path: "/error",
@@ -89,13 +87,13 @@ const routes = [
 				path: "",
 				name: "meta",
 				component: metaHome,
-				meta: {layout: "base", title: "Meta", auth: {roles: "all"}}
+				meta: {layout: "base", title: "Meta"}
 			},
 			{
 				path: "*",
 				name: "meta-page",
 				component: metaPage,
-				meta: {layout: "base", title: "Meta", auth: {roles: "all"}}
+				meta: {layout: "base", title: "Meta"}
 			}
 		]
 	}
@@ -103,34 +101,7 @@ const routes = [
 
 const router = new VueRouter({
 	routes: [...routes, ...Vue.prototype.$settings.routes],
-	mode: "history",
-	parseQuery(query) {
-		const parse = (item) =>
-			transform(item, (res, val, key) => {
-				const types = {
-					undefined: undefined,
-					false: false,
-					true: true,
-					null: null
-				};
-
-				if (isObject(val)) {
-					res[key] = parse(val);
-				} else if (val in types) {
-					res[key] = types[val];
-				} else if (isFinite(parseInt(val))) {
-					res[key] = parseInt(val);
-				} else {
-					res[key] = val;
-				}
-			});
-
-		return parse(qs.parse(query));
-	},
-	stringifyQuery(query) {
-		const res = qs.stringify(query);
-		return res ? "?" + res : "";
-	}
+	mode: "history"
 });
 
 const go = ({to, next}) => {
@@ -142,21 +113,14 @@ const go = ({to, next}) => {
 };
 
 router.beforeEach(async (to, from, next) => {
-	// allow all routes that isn't protected by auth
-	if (!to.meta.auth) return go({to, next});
+	if (to.meta.public) return go({to, next});
 
-	// get user if not fetched
 	const user =
 		store.getters["user/data"] || (await store.dispatch("user/data"));
-	const roles = get(to.meta, "auth.roles", []);
 
 	if (!user) return store.dispatch("user/logout");
 
-	if (roles === "all" || roles.includes(user.role)) {
-		go({to, next});
-	} else {
-		next({name: "error", replace: true, params: {status: 403}});
-	}
+	go({to, next});
 });
 
 export default router;

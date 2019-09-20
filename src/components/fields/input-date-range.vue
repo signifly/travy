@@ -26,34 +26,29 @@ export default {
 	meta: {
 		res: {
 			props: {
-				type: "daterange",
-				dateStart: "dateStart",
-				dateEnd: "dateEnd",
-				clearable: true
+				_type: "daterange",
+				dateStart: "date1",
+				dateEnd: "date2",
+				_clearable: true
 			},
 			data: {
-				dateStart: 1543878000,
-				dateEnd: 1545346800
+				date1: 1543878000,
+				date2: 1545346800
 			}
 		}
 	},
 	props: {
-		dateStart: {type: [Number, String], required: false, doc: true},
-		dateEnd: {type: [Number, String], required: false, doc: true},
-		_dateStart: {type: String, required: true},
-		_dateEnd: {type: String, required: true},
-		_format: {type: String, required: false, doc: true},
-		_formatValue: {type: String, default: "timestamp", doc: true},
-		_clearable: {type: Boolean, default: false, doc: true},
-		_disabled: {type: Boolean, default: false, doc: true},
+		dateStart: {type: [Number, String], required: false},
+		dateEnd: {type: [Number, String], required: false},
+		_formatValue: {type: String, default: "timestamp"},
+		_clearable: {type: Boolean, default: false},
+		_disabled: {type: Boolean, default: false},
+		_format: {type: String, required: false},
 		_type: {
 			type: String,
 			required: false,
 			default: "daterange",
-			doc: true,
-			note: `
-				<i>daterange/datetimerange</i>
-			`
+			note: `daterange/datetimerange`
 		}
 	},
 	data() {
@@ -92,8 +87,8 @@ export default {
 				actions: {
 					update: {
 						data: {
-							[this._dateStart]: dates[0],
-							[this._dateEnd]: dates[1]
+							dateStart: dates[0],
+							dateEnd: dates[1]
 						}
 					}
 				}

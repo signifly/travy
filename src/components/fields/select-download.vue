@@ -7,21 +7,16 @@
 			<Select
 				size="small"
 				v-model="value"
-				:remote-method="getItems"
+				:remote-method="getData"
 				:filterable="true"
 				:remote="true"
 				@visible-change="open"
 			>
-				<Option v-for="item in itemsC" :key="item.value" v-bind="item" />
+				<Option v-for="item in items" :key="item.value" v-bind="item" />
 			</Select>
 
-			<a
-				class="button"
-				target="_blank"
-				:href="selectedItem && selectedItem.download"
-				download
-			>
-				<Button :disabled="!selectedItem" type="primary" size="small">
+			<a class="button" target="_blank" :href="value" download>
+				<Button :disabled="!value" type="primary" size="small">
 					{{ $translate({en: "Download", da: "Hent"}) }}
 				</Button>
 			</a>
@@ -31,7 +26,6 @@
 
 <script>
 import {Select, Option, Button} from "element-ui";
-import {rStringProps} from "@/modules/utils";
 import {merge, get} from "lodash";
 
 export default {
@@ -39,72 +33,59 @@ export default {
 	meta: {
 		res: {
 			props: {
-				title: "Skatterapport",
-				subtitle: "Beskrivelse af rapporten",
+				_title: "Skatterapport",
+				_subtitle: "Beskrivelse af rapporten",
 
-				options: {
+				_options: {
 					endpoint: {
 						url: "items",
 						params: {filter: {test: "test"}}
 					},
 					key: "",
-					label: "name",
-					value: "id",
-					download: "image"
+					url: "image",
+					label: "name"
 				}
 			}
 		}
 	},
 	props: {
-		alt: {type: Object, required: false},
-		_title: {type: String, required: true, doc: true},
-		_subtitle: {type: String, required: true, doc: true},
-		_options: {type: Object, required: true, doc: true}
+		_title: {type: String, required: true},
+		_subtitle: {type: String, required: true},
+		_options: {type: Object, required: true}
 	},
 	data() {
 		return {
 			opened: false,
 			value: "",
-			items: []
+			data: []
 		};
 	},
 	computed: {
-		endpoint: (t) =>
-			rStringProps({
-				data: get(t.alt, "data"),
-				val: t._options.endpoint
-			}),
-
-		itemsC: (t) =>
-			t.items.map((x) => ({
-				value: get(x, t._options.value),
-				label: get(x, t._options.label),
-				download: get(x, t._options.download)
-			})),
-
-		selectedItem() {
-			return this.itemsC.find((x) => x.value === this.value);
-		}
+		items: (t) =>
+			t.data.map((x) => ({
+				value: get(x, t._options.url),
+				label: get(x, t._options.label)
+			}))
 	},
 	methods: {
 		open() {
 			if (!this.opened) {
 				this.opened = true;
-				this.getItems();
+				this.getData();
 			}
 		},
 
-		async getItems(search) {
-			const key = this._options.key;
+		async getData(search) {
+			const {key, url, params} = this._options.endpoint;
 
-			const {data} = await this.$axios.get(this.endpoint.url, {
-				params: merge({}, this.endpoint.params, {
+			const {data} = await this.$axios.get(url, {
+				params: merge({}, params, {
 					filter: {search},
 					count: 30
 				})
 			});
 
-			this.items = key ? get(data, key) : data;
+			this.data = key ? get(data, key) : data;
 		}
 	}
 };

@@ -27,6 +27,7 @@ module.exports = {
 	},
 
 	chainWebpack: (config) => {
+		// inline svg
 		const svgRule = config.module.rule("svg");
 		svgRule.uses.clear();
 		svgRule
@@ -40,6 +41,7 @@ module.exports = {
 				removeSVGTagAttrs: false
 			});
 
+		// load markdown
 		config.module
 			.rule("markdown")
 			.test(/\.md$/)
@@ -49,5 +51,13 @@ module.exports = {
 			.use("markdown-loader")
 			.loader("markdown-loader")
 			.end();
+
+		// new progress plugin
+		config.plugins.delete("progress");
+		config
+			.plugin("simple-progress-webpack-plugin")
+			.use(require.resolve("simple-progress-webpack-plugin"), [
+				{format: "minimal"}
+			]);
 	}
 };

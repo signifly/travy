@@ -1,7 +1,7 @@
 <template>
 	<div class="select">
 		<Select
-			v-bind="{size, value}"
+			v-bind="{value}"
 			:disabled="_disabled"
 			:clearable="_clearable"
 			:filterable="true"
@@ -26,10 +26,11 @@ export default {
 	meta: {
 		res: {
 			props: {
-				disabled: false,
+				_disabled: false,
+				_clearable: false,
 				value: "selectValue",
 
-				items: [
+				_items: [
 					{label: "Danmark", emoji: "denmark", value: "dk"},
 					{label: "England", emoji: "uk", value: "uk"},
 					{label: "Murica", emoji: "us", value: "us", disabled: true}
@@ -41,19 +42,10 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false, doc: true},
-		meta: {type: Object, require: false, default: () => ({})},
-		_clearable: {type: Boolean, required: false, default: true, doc: true},
-		_items: {type: Array, required: true, doc: true},
-		value: {type: [String, Number], required: false, doc: true},
-		_value: {type: String, required: true}
-	},
-	computed: {
-		size() {
-			if (this.meta.location === "table") return "small";
-			if (this.meta.location === "tabs") return "medium";
-			return "medium";
-		}
+		_clearable: {type: Boolean, required: false, default: true},
+		value: {type: [String, Number], required: false},
+		_disabled: {type: Boolean, required: false},
+		_items: {type: Array, required: true}
 	},
 	methods: {
 		emoji(name) {
@@ -63,7 +55,7 @@ export default {
 		update(value) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._value]: value}}
+					update: {data: {value}}
 				}
 			});
 		}

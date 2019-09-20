@@ -1,7 +1,7 @@
 <template>
 	<div class="textarea">
 		<Input
-			:value="text"
+			:value="value"
 			@input="update"
 			:disabled="_disabled"
 			type="textarea"
@@ -20,8 +20,8 @@ export default {
 	meta: {
 		res: {
 			props: {
-				disabled: false,
-				text: "content"
+				_disabled: false,
+				value: "content"
 			},
 			data: {
 				content: ""
@@ -29,15 +29,14 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false, doc: true},
-		text: {type: String, required: false, doc: true},
-		_text: {type: String, required: true}
+		_disabled: {type: Boolean, required: false},
+		value: {type: String, required: false}
 	},
 	methods: {
-		update(text) {
+		update(value) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._text]: text}}
+					update: {data: {value}}
 				}
 			});
 		}

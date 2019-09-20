@@ -46,7 +46,7 @@ export default {
 		}
 	},
 	props: {
-		timestamp: {type: Number, required: true, doc: true}
+		timestamp: {type: Number, required: true}
 	},
 	data() {
 		return {

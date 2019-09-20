@@ -22,9 +22,8 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false, doc: true},
-		content: {type: String, required: false, doc: true},
-		_content: {type: String, required: true}
+		_disabled: {type: Boolean, required: false},
+		content: {type: String, required: false}
 	},
 	data() {
 		return {
@@ -44,7 +43,7 @@ export default {
 
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._content]: content}}
+					update: {data: {content}}
 				}
 			});
 		}

@@ -9,16 +9,14 @@ export default {
 	meta: {
 		res: {
 			props: {
-				text: "Divider title"
-			},
-			data: {}
+				_text: "Divider title"
+			}
 		}
 	},
 	props: {
 		_text: {
 			type: String,
 			required: false,
-			doc: true,
 			note: `Don't use field label with the divider`
 		}
 	}

@@ -1,12 +1,6 @@
 <template>
-	<div class="top" title="">
+	<div class="top">
 		<div class="info">
-			<component
-				:is="title.url ? 'router-link' : 'div'"
-				class="title"
-				v-text="title.text"
-				:to="title.url"
-			/>
 			<div class="total" v-if="meta" v-text="meta.total" />
 
 			<transition name="loading">
@@ -33,7 +27,6 @@ export default {
 	props: {
 		modifiers: {type: Object, required: false},
 		loading: {type: Boolean, required: true},
-		title: {type: Object, required: true},
 		meta: {type: Object, required: false}
 	},
 	computed: {
@@ -57,7 +50,7 @@ export default {
 
 <style lang="scss" scoped>
 .top {
-	padding: 1.5em 1.5em;
+	padding: 0.5em 1.5em;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -67,18 +60,8 @@ export default {
 		display: flex;
 		align-items: center;
 
-		a.title {
-			text-decoration: none;
-			color: $black1;
-
-			&:hover {
-				color: $blue5;
-			}
-		}
-
 		.total {
 			font-size: em(12);
-			margin-left: 0.75em;
 			color: $blue3;
 		}
 

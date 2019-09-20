@@ -1,7 +1,6 @@
 <template>
 	<div class="select-multi-search">
 		<Select
-			v-bind="{size}"
 			:value="selectedItems"
 			:disabled="_disabled"
 			:clearable="_clearable"
@@ -28,9 +27,11 @@ export default {
 	meta: {
 		res: {
 			props: {
-				disabled: false,
+				_clearable: false,
+				_disabled: false,
+				_addable: false,
 				values: "values",
-				options: {
+				_options: {
 					endpoint: {
 						url: "items",
 						params: {filter: {test: "test"}}
@@ -55,13 +56,11 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false, doc: true},
-		meta: {type: Object, require: false, default: () => ({})},
-		_clearable: {type: Boolean, required: false, default: true, doc: true},
-		_addable: {type: Boolean, required: false, doc: true},
-		_options: {type: Object, required: true, doc: true},
-		values: {default: () => [], doc: true},
-		_values: {type: String, required: true}
+		_disabled: {type: Boolean, required: false},
+		_clearable: {type: Boolean, required: false, default: true},
+		_addable: {type: Boolean, required: false},
+		_options: {type: Object, required: true},
+		values: {default: () => []}
 	},
 	data() {
 		return {
@@ -71,12 +70,6 @@ export default {
 	},
 	computed: {
 		endpoint: (t) => t._options.endpoint,
-
-		size() {
-			if (this.meta.location === "table") return "small";
-			if (this.meta.location === "tabs") return "medium";
-			return "medium";
-		},
 
 		allItems: (t) => uniqBy([...t.optionItems, ...t.values], t._options.value),
 		selectedItems: (t) => t.values.map((x) => get(x, t._options.value)),
@@ -126,7 +119,7 @@ export default {
 
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._values]: values}}
+					update: {data: {values}}
 				}
 			});
 		}

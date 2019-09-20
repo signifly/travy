@@ -1,10 +1,7 @@
 import {
+	mapValues,
 	mergeWith,
-	transform,
-	isObject,
-	isArray,
 	replace,
-	reduce,
 	get,
 	set,
 	lte,
@@ -16,7 +13,6 @@ import {
 
 export const date = (epoch) => {
 	const d = new Date(epoch * 1000);
-
 	const zero = (val) => ("0" + val).slice(-2);
 
 	return {
@@ -68,30 +64,6 @@ export const download = ({url, name}) => {
 	link.remove();
 };
 
-export const rStringProps = ({data, val = ""}) => {
-	const reg = (str) => {
-		// find all {KEY} in string and replace with data value
-		return replace(str, /\{.*?\}/g, (key) => get(data, key.slice(1, -1), key));
-	};
-
-	if (typeof val === "string") {
-		return reg(val);
-	}
-
-	const parse = (item) =>
-		transform(item, (res, val, key) => {
-			if (isObject(val)) {
-				res[key] = parse(val);
-			} else if (typeof val === "string") {
-				res[key] = reg(val);
-			} else {
-				res[key] = val;
-			}
-		});
-
-	return parse(val);
-};
-
 export const translate = (locales) => {
 	const {default: store} = require("@/store");
 	const locale = store.getters["config/locale"];
@@ -107,33 +79,76 @@ export const operator = ({key, value, operator, data}) => {
 export const mergeData = (srcData, newData) => {
 	// merge objects deep, but ignore arrays
 	return mergeWith({}, srcData, newData, (oldValue, newValue) => {
-		if (isArray(newValue)) {
+		if (Array.isArray(newValue)) {
 			return newValue;
 		}
 	});
 };
 
-export const mapProps = ({props, data, fallback}) => {
-	const object = isObject(props);
-	const array = isArray(props);
-	const rSum = array ? [] : {};
+export const rStringProps = ({data, val}) => {
+	const reg = (str) => {
+		// find all {KEY} in string and replace with data value
+		return replace(str, /\{.*?\}/g, (key) => get(data, key.slice(1, -1), key));
+	};
 
-	if (!object && !array) {
-		return get(data, props, fallback && props);
+	if (val instanceof Object) {
+		return mapValues(val, (val) => {
+			return rStringProps({data, val});
+		});
 	}
 
-	return reduce(
-		props,
-		(sum, value, key) => {
-			if (array) return [...sum, ...[mapProps({props: value, data, fallback})]];
+	if (typeof val === "string") {
+		return reg(val);
+	}
 
-			return {
-				...sum,
-				[key]: mapProps({props: value, data, fallback})
-			};
-		},
-		rSum
-	);
+	return val;
+};
+
+export const mapProps = ({props, data}) => {
+	return mapValues(props, (val, key) => {
+		if (Array.isArray(val)) {
+			return val.map((props) => {
+				if (key.startsWith("_")) {
+					return rStringProps({data, val: props});
+				} else {
+					return mapProps({props, data});
+				}
+			});
+		}
+
+		if (val instanceof Object) {
+			const scope = val["@scope"];
+
+			if (scope) {
+				const items = get(data, scope, []);
+
+				return items.map((item) =>
+					mapProps({
+						props: val,
+						data: {...item, $root: data}
+					})
+				);
+			}
+
+			if (!key.startsWith("_")) {
+				return mapProps({props: val, data});
+			}
+		}
+
+		if (key.startsWith("_")) {
+			return rStringProps({data, val});
+		}
+
+		if (key.startsWith("@")) {
+			return val;
+		}
+
+		if (val === "$root") {
+			return data;
+		}
+
+		return get(data, val);
+	});
 };
 
 export const mapPaths = (data) => {

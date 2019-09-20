@@ -1,14 +1,13 @@
 <template>
 	<div class="select-multi">
 		<Select
-			v-bind="{size}"
-			:value="values"
-			:disabled="_disabled"
-			:clearable="_clearable"
 			:allow-create="_addable"
+			:clearable="_clearable"
+			:disabled="_disabled"
 			:filterable="true"
 			:multiple="true"
 			@change="update"
+			:value="values"
 		>
 			<Option v-for="item in _items" v-bind="item" :key="item.value" />
 		</Select>
@@ -23,9 +22,10 @@ export default {
 	meta: {
 		res: {
 			props: {
-				disabled: false,
+				_disabled: false,
+				_clearable: false,
 				values: "selectValues",
-				items: [
+				_items: [
 					{
 						label: "Danmark",
 						value: "dk"
@@ -36,6 +36,7 @@ export default {
 					},
 					{
 						label: "Murica",
+						disabled: true,
 						value: "us"
 					}
 				]
@@ -46,26 +47,17 @@ export default {
 		}
 	},
 	props: {
-		meta: {type: Object, require: false, default: () => ({})},
-		_disabled: {type: Boolean, required: false, doc: true},
-		_clearable: {type: Boolean, required: false, default: true, doc: true},
-		_addable: {type: Boolean, required: false, doc: true},
-		values: {type: Array, required: false, doc: true},
-		_values: {type: String, required: true},
-		_items: {type: Array, required: true, doc: true}
-	},
-	computed: {
-		size() {
-			if (this.meta.location === "table") return "small";
-			if (this.meta.location === "tabs") return "medium";
-			return "medium";
-		}
+		_clearable: {type: Boolean, required: false, default: true},
+		_disabled: {type: Boolean, required: false},
+		_addable: {type: Boolean, required: false},
+		values: {type: Array, required: false},
+		_items: {type: Array, required: true}
 	},
 	methods: {
 		update(values) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._values]: values}}
+					update: {data: {values}}
 				}
 			});
 		}

@@ -2,7 +2,7 @@
 	<div class="field" :style="{width: fWidth}" v-if="!disabled">
 		<div class="content">
 			<vlabel v-bind="{alt, name, label, tooltip}" v-if="rules.label" />
-			<fieldType v-bind="[fieldType, {alt}]" @event="$emit('event', $event)" />
+			<fieldType v-bind="[fieldType, {data}]" @event="$emit('event', $event)" />
 		</div>
 
 		<transition name="error">
@@ -37,10 +37,11 @@ export default {
 		alt: {type: Object, required: true}
 	},
 	computed: {
+		data: (t) => t.alt.data,
 		type: (t) => t.alt.type,
 		option: (t) => get(t.alt.options, t.name, {}),
 		error: (t) => get(t.alt.errors, t.name, [])[0],
-		disabled: (t) => t.hide && operator({...t.hide, data: t.alt.data}),
+		disabled: (t) => t.hide && operator({...t.hide, data: t.data}),
 
 		fWidth: (t) =>
 			t.type !== "table" &&

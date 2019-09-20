@@ -83,21 +83,29 @@ export const metaApi = (() => {
 	api.interceptors.response.use(
 		(res) => res,
 		({config}) => {
-			const {method, data, url} = config;
+			const {method, data, url, params} = config;
+			const obj = {};
+
+			if (params) {
+				obj.params = params;
+			}
 
 			if (["put", "post"].includes(method)) {
-				console.log("payload", cloneDeep(data));
+				obj.payload = cloneDeep(data);
 			}
 
 			// single item
 			if (url.includes("items/")) {
-				return {data: meta.data.item};
+				obj.res = {data: meta.data.item};
 			}
 
 			// multiple items
 			if (url.includes("items")) {
-				return {data: meta.data.items};
+				obj.res = {data: meta.data.items};
 			}
+
+			console.log(obj);
+			return obj.res;
 		}
 	);
 
