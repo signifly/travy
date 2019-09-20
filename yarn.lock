@@ -932,7 +932,7 @@
     "@nodelib/fs.scandir" "2.1.1"
     fastq "^1.6.0"
 
-"@signifly/config@latest":
+"@signifly/config@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@signifly/config/-/config-1.0.2.tgz#1306f61174db9fff3cf3276a318a4b11b312854d"
   integrity sha512-4sGo0pXIkby5sVA1OjNeCFkbtU3XTqTDxKTGUvuVImRQBn2/VU4RHxjOxxR9/XhjLlppwzK2PBoT1EXcrhZqKg==
