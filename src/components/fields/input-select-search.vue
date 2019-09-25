@@ -94,8 +94,7 @@ export default {
 
 			const {data} = await this.$axios.get(this.endpoint.url, {
 				params: merge({}, this.endpoint.params, {
-					filter: {search},
-					count: 30
+					filter: {search}
 				})
 			});
 
