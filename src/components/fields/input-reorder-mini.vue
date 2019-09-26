@@ -44,6 +44,7 @@ import {get} from "lodash";
 export default {
 	components: {draggable},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				value: "key",

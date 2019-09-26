@@ -35,6 +35,7 @@ import {Tooltip} from "element-ui";
 export default {
 	components: {Tooltip},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				items: {

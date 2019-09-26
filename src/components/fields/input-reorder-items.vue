@@ -42,6 +42,7 @@ import draggable from "vuedraggable";
 export default {
 	components: {draggable, actions},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				items: {

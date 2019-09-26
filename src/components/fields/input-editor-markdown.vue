@@ -12,6 +12,7 @@ import editor from "vue-simplemde";
 export default {
 	components: {editor},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				content: "markdown"

@@ -20,6 +20,7 @@ import {toNumber} from "lodash";
 export default {
 	components: {InputNumber},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				value: "inputVal",

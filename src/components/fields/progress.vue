@@ -16,6 +16,7 @@ import {Progress, Tooltip} from "element-ui";
 export default {
 	components: {Progress, Tooltip},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				percentage: "percentage",

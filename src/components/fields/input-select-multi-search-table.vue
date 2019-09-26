@@ -26,6 +26,7 @@ import produce from "immer";
 export default {
 	components: {selectMultiSearch, vTable},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				data: "data",

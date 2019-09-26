@@ -10,6 +10,7 @@ import {Tag} from "element-ui";
 export default {
 	components: {Tag},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				text: "text",

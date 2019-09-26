@@ -66,6 +66,7 @@ import {get, debounce} from "lodash";
 export default {
 	components: {Dialog, Input, Button},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				id: "file_id",

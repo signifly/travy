@@ -10,6 +10,7 @@ import {ColorPicker} from "element-ui";
 export default {
 	components: {ColorPicker},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				value: "color"

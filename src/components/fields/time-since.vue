@@ -36,6 +36,7 @@ const timeSince = (timestamp) => {
 
 export default {
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				timestamp: "timestamp"

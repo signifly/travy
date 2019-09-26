@@ -10,6 +10,7 @@ import {Switch} from "element-ui";
 export default {
 	components: {elSwitch: Switch},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				_disabled: false,

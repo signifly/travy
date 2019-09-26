@@ -24,6 +24,7 @@ import {toString} from "lodash";
 export default {
 	components: {Tooltip},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				text: "text",

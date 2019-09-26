@@ -60,6 +60,7 @@ import {get} from "lodash";
 export default {
 	components: {field, Table, TableColumn},
 	props: {
+		spec: {type: [String, Object], required: true},
 		props: {type: Object, required: true},
 		res: {type: Object, required: true},
 		id: {type: String, required: true}
@@ -76,6 +77,7 @@ export default {
 		fieldType: (t) => ({id: t.id, props: t.res.props}),
 
 		propsTable() {
+			const spec = this.spec;
 			let rowKey = 0;
 
 			const mapProps = (props) => {
@@ -92,7 +94,7 @@ export default {
 							? JSON.stringify(prop.default())
 							: prop.default;
 					},
-					name: key.charAt(0) === "_" ? key.substr(1) : key,
+					name: key,
 					map: (key.charAt(0) !== "_").toString(),
 					children: mapProps(prop.children || {}),
 					required: (!!prop.required).toString(),
@@ -100,7 +102,7 @@ export default {
 				}));
 			};
 
-			return mapProps(this.props);
+			return mapProps(spec === "props" ? this.props : spec);
 		}
 	},
 	methods: {

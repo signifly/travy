@@ -25,6 +25,7 @@ import action from "@/components/actions";
 export default {
 	components: {Button, action},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				title: "button",

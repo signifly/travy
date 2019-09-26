@@ -17,6 +17,7 @@ import {Input} from "element-ui";
 export default {
 	components: {Input},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				_disabled: false,

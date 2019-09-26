@@ -10,6 +10,7 @@ import {Checkbox} from "element-ui";
 export default {
 	components: {Checkbox},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				value: "checkbox"

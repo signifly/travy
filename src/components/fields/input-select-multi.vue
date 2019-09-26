@@ -20,6 +20,7 @@ import {Select, Option} from "element-ui";
 export default {
 	components: {Select, Option},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				_disabled: false,

@@ -33,6 +33,7 @@ import {Upload} from "element-ui";
 export default {
 	components: {Upload},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				_note: "jpg/png files with a size less than 500kb",

@@ -25,6 +25,7 @@ import {Progress} from "element-ui";
 export default {
 	components: {Progress},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				items: {

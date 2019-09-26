@@ -38,6 +38,7 @@ import action from "@/components/actions";
 export default {
 	components: {Dropdown, DropdownMenu, DropdownItem, Button, action},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				size: "mini",

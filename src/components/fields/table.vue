@@ -15,6 +15,7 @@ import vTable from "@/components/table/components/table";
 export default {
 	components: {vTable},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				data: "data",

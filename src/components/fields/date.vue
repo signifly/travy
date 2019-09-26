@@ -7,6 +7,7 @@ import {formatDate} from "element-ui/src/utils/date-util";
 
 export default {
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				timestamp: "timestamp",

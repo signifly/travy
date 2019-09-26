@@ -13,6 +13,7 @@
 <script>
 export default {
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				src: "src",

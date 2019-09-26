@@ -18,6 +18,7 @@ import {merge, get} from "lodash";
 export default {
 	components: {Autocomplete},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				_disabled: false,

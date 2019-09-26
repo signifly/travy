@@ -23,6 +23,7 @@ import {merge, get, uniqBy} from "lodash";
 export default {
 	components: {Select, Option},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				_clearable: false,

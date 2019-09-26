@@ -19,6 +19,7 @@ import {RadioGroup, RadioButton} from "element-ui";
 export default {
 	components: {RadioGroup, RadioButton},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				value: "option",

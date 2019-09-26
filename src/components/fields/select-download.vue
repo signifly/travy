@@ -31,6 +31,7 @@ import {merge, get} from "lodash";
 export default {
 	components: {Select, Option, Button},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				_title: "Skatterapport",

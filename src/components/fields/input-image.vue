@@ -38,6 +38,7 @@ import {base64Encode} from "@/modules/utils";
 export default {
 	components: {Upload},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				url: "image",

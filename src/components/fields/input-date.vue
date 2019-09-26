@@ -22,6 +22,7 @@ import {DatePicker} from "element-ui";
 export default {
 	components: {DatePicker},
 	meta: {
+		spec: "props",
 		res: {
 			props: {
 				_type: "month",
