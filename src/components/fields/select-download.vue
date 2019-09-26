@@ -80,8 +80,7 @@ export default {
 
 			const {data} = await this.$axios.get(url, {
 				params: merge({}, params, {
-					filter: {search},
-					count: 30
+					filter: {search}
 				})
 			});
 

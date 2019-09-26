@@ -152,7 +152,6 @@ export default {
 				params: {
 					...params,
 					page,
-					count: 25,
 					filter: {
 						type: "image",
 						search
