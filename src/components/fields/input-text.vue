@@ -21,8 +21,8 @@ export default {
 		res: {
 			props: {
 				value: "inputVal",
-				type: "text",
-				unit: "cm"
+				_type: "text",
+				_unit: "cm"
 			},
 			data: {
 				inputVal: ""
