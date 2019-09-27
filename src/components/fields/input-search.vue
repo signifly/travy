@@ -6,7 +6,7 @@
 			@input="update"
 			:debounce="300"
 			:disabled="_disabled"
-			:fetch-suggestions="getOptions"
+			:fetch-suggestions="getData"
 		/>
 	</div>
 </template>
@@ -18,50 +18,54 @@ import {merge, get} from "lodash";
 export default {
 	components: {Autocomplete},
 	meta: {
-		spec: "props",
+		spec: {
+			value: {type: [String, Number], required: false},
+			_disabled: {type: Boolean, required: false},
+			_entities: {
+				type: Object,
+				required: true,
+				children: {
+					dataWrap: {type: String, required: false},
+					value: {type: [String, Number], required: true},
+					endpoint: {
+						type: Object,
+						required: true,
+						children: {
+							url: {type: String, required: true},
+							params: {type: Object, required: false}
+						}
+					}
+				}
+			}
+		},
 		res: {
 			props: {
 				_disabled: false,
-				value: "inputVal",
-				_options: {
+				value: "value",
+				_entities: {
 					endpoint: {
-						url: "items",
-						params: {
-							filter: {test: "test"},
-							modifiers: {language_id: 1},
-							sort: "value"
-						}
+						url: "items"
 					},
-					value: "name",
-					key: ""
+					value: "name"
 				}
 			},
 			data: {
-				inputVal: "item1"
+				value: "item1"
 			}
 		}
 	},
 	props: {
 		_disabled: {type: Boolean, required: false},
-		_options: {
-			type: Object,
-			required: true,
-			note: `if options is an array of objects, options.value is required`
-		},
+		_entities: {type: Object, required: true},
 		value: {type: String, required: false}
 	},
-	data() {
-		return {
-			items: []
-		};
-	},
 	methods: {
-		async getOptions(search, cb) {
+		async getData(search, cb) {
 			const {
-				key,
 				value,
+				dataWrap,
 				endpoint: {url, params}
-			} = this._options;
+			} = this._entities;
 
 			const {data} = await this.$axios.get(url, {
 				params: merge({}, params, {
@@ -69,11 +73,10 @@ export default {
 				})
 			});
 
-			const items = get(data, key, data).map((x) => {
-				return typeof x === "string" ? {value: x} : {value: get(x, value)};
-			});
+			const items = get(data, dataWrap, data).map((x) => ({
+				value: get(x, value)
+			}));
 
-			this.items = items;
 			cb(items);
 		},
 
