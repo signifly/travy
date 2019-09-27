@@ -15,8 +15,8 @@
 				<div class="image" :style="{backgroundImage: `url('${item.image}')`}" />
 
 				<div class="list">
-					<div class="item" v-for="{label, value} in item.list" :key="label">
-						<div class="label">{{ label }}:</div>
+					<div class="item" v-for="{_label, value} in item.list" :key="_label">
+						<div class="label">{{ _label }}:</div>
 						<div class="value" v-text="value" />
 					</div>
 				</div>
@@ -42,7 +42,34 @@ import draggable from "vuedraggable";
 export default {
 	components: {draggable, actions},
 	meta: {
-		spec: "props",
+		spec: {
+			_endpoint: {
+				type: Object,
+				required: true,
+				children: {
+					payload: {type: Object, required: false},
+					method: {type: String, required: true},
+					url: {type: String, required: true}
+				}
+			},
+			items: {
+				type: Array,
+				required: true,
+				children: {
+					"@scope": {type: Array, required: true},
+					image: {type: String, required: true},
+					id: {type: [String, Number], required: true},
+					list: {
+						type: Array,
+						required: true,
+						children: {
+							_label: {type: String, required: true},
+							value: {type: [String, Number], required: false}
+						}
+					}
+				}
+			}
+		},
 		res: {
 			props: {
 				items: {

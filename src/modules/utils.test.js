@@ -14,7 +14,11 @@ describe("utils", () => {
 				obj: {
 					key: "{id}/{person.name}"
 				},
-				array: ["{id}/{person.name}", {key: "{id}/{person.name}"}]
+				array: [
+					"{id}/{person.name}",
+					{key: "{id}/{person.name}"},
+					{deepArr: [{id: "id: {id}"}]}
+				]
 			}
 		});
 
@@ -23,7 +27,7 @@ describe("utils", () => {
 			null: null,
 			boolean: true,
 			obj: {key: "1/pete"},
-			array: {"0": "1/pete", "1": {key: "1/pete"}}
+			array: ["1/pete", {key: "1/pete"}, {deepArr: [{id: "id: 1"}]}]
 		});
 	});
 
@@ -74,8 +78,8 @@ describe("utils", () => {
 				},
 				obj: {_text: "text"},
 				_obj: {text: "text"},
-				array: [{id: "id"}],
-				_array: [{id: 2}],
+				array: [{id: "id", deepArr: [{id: "id"}]}],
+				_array: [{id: 2, deepArr: [{id: 2}]}],
 				id: "id",
 				_null: null,
 				nothing: "nothing"
@@ -91,8 +95,8 @@ describe("utils", () => {
 			scope: [{"@scope": "scope", rootId: 1, id: 2}],
 			obj: {_text: "text"},
 			_obj: {text: "text"},
-			array: [{id: 1}],
-			_array: [{id: 2}],
+			array: [{id: 1, deepArr: [{id: 1}]}],
+			_array: [{id: 2, deepArr: [{id: 2}]}],
 			id: 1,
 			_null: null,
 			nothing: undefined

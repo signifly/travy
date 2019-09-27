@@ -91,7 +91,7 @@ export const metaApi = (() => {
 			}
 
 			if (["put", "post"].includes(method)) {
-				obj.payload = cloneDeep(data);
+				obj.req = cloneDeep(data);
 			}
 
 			// single item

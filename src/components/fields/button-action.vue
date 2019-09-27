@@ -28,11 +28,11 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				title: "button",
+				_title: "button",
 				icon: "plus",
 				size: "mini",
 				status: "primary",
-				action: {
+				_action: {
 					id: "modal",
 					title: "Modal title",
 					onSubmit: "#button-action",

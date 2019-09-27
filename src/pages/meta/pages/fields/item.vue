@@ -6,12 +6,12 @@
 			<div class="props">
 				<Table :data="propsTable" row-key="rowKey" size="small" stripe>
 					<TableColumn prop="name" label="Name" />
-					<TableColumn prop="type" label="Type" />
+					<TableColumn prop="typePretty" label="Type" />
 					<TableColumn prop="required" label="Required" />
-					<TableColumn prop="map" label="Map" />
+					<TableColumn prop="mapPretty" label="Map" />
 					<TableColumn prop="default" label="Default" />
 					<TableColumn label="Note" v-slot="{row}">
-						<div v-html="row.note" />
+						<div class="note" v-html="row.note" />
 					</TableColumn>
 				</Table>
 			</div>
@@ -55,7 +55,6 @@
 <script>
 import {Table, TableColumn} from "element-ui";
 import field from "@/components/field";
-import {get} from "lodash";
 
 export default {
 	components: {field, Table, TableColumn},
@@ -78,31 +77,45 @@ export default {
 
 		propsTable() {
 			const spec = this.spec;
-			let rowKey = 0;
+			let rowKey = 1;
 
-			const mapProps = (props) => {
+			const mapProps = ({props = {}, map = true}) => {
 				return Object.entries(props).map(([key, prop]) => ({
 					...prop,
 					get type() {
-						const names = () =>
-							(prop.type || []).map((x) => x.name).join(" | ");
-						const name = () => get(prop.type, "name");
-						return name() || names();
+						return [prop.type]
+							.flatMap((x) => x)
+							.filter((x) => x)
+							.map((x) => x.name);
+					},
+					get typePretty() {
+						return this.type.join(" | ");
 					},
 					get default() {
 						return typeof prop.default === "function"
 							? JSON.stringify(prop.default())
 							: prop.default;
 					},
+					get map() {
+						if (key.startsWith("_")) {
+							return false;
+						} else {
+							return map;
+						}
+					},
+					get mapPretty() {
+						return this.map.toString();
+					},
+					get children() {
+						return mapProps({props: prop.children, map: this.map});
+					},
 					name: key,
-					map: (key.charAt(0) !== "_").toString(),
-					children: mapProps(prop.children || {}),
 					required: (!!prop.required).toString(),
 					rowKey: rowKey++
 				}));
 			};
 
-			return mapProps(spec === "props" ? this.props : spec);
+			return mapProps({props: spec === "props" ? this.props : spec});
 		}
 	},
 	methods: {
@@ -153,6 +166,10 @@ export default {
 			::v-deep .el-table .cell {
 				word-break: normal;
 				color: $black1;
+			}
+
+			.note {
+				line-height: 1.25em;
 			}
 		}
 

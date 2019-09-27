@@ -44,7 +44,7 @@ export default {
 				size: "mini",
 				title: "Stuff",
 
-				actions: [
+				_actions: [
 					{
 						title: "Remove",
 						props: {

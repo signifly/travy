@@ -14,15 +14,15 @@
 				</thead>
 
 				<draggable v-model="items" handle=".drag" @end="update" tag="tbody">
-					<tr v-for="item in items" :key="item.id">
+					<tr v-for="item in itemsC" :key="item.id">
 						<td class="top" @click="moveTop(item)" title="Move to top">
 							<i class="el-icon-d-arrow-left" />
 						</td>
 						<td
-							v-for="column in _columns"
-							:key="column.key"
+							v-for="column in item.columns"
+							:key="`${item.id}-${column}`"
 							class="drag"
-							v-text="get(item, column.key)"
+							v-text="column"
 						/>
 					</tr>
 				</draggable>
@@ -44,12 +44,37 @@ import {get} from "lodash";
 export default {
 	components: {draggable},
 	meta: {
-		spec: "props",
+		spec: {
+			value: {required: false},
+			_entities: {
+				type: Object,
+				required: true,
+				children: {
+					dataWrap: {type: String, required: false},
+					value: {type: String, required: true},
+					endpoint: {
+						type: Object,
+						required: true,
+						children: {
+							url: {type: String, required: true},
+							params: {type: Object, required: false}
+						}
+					}
+				}
+			},
+			_columns: {
+				type: Array,
+				required: true,
+				children: {
+					value: {type: String, required: true, note: "maps to an entity"},
+					label: {type: String, required: true}
+				}
+			}
+		},
 		res: {
 			props: {
-				value: "key",
-				_options: {
-					key: "",
+				value: "itemId",
+				_entities: {
 					value: "id",
 					endpoint: {
 						url: "items",
@@ -58,11 +83,11 @@ export default {
 				},
 				_columns: [
 					{
-						key: "id",
+						value: "id",
 						label: "Id"
 					},
 					{
-						key: "nested.name",
+						value: "nested.name",
 						label: "Name"
 					}
 				]
@@ -70,7 +95,7 @@ export default {
 		}
 	},
 	props: {
-		_options: {type: Object, required: true},
+		_entities: {type: Object, required: true},
 		_columns: {type: Array, required: true},
 		value: {required: false}
 	},
@@ -80,10 +105,17 @@ export default {
 			items: []
 		};
 	},
+	computed: {
+		itemsC() {
+			return this.items.map((item) => ({
+				item,
+				id: item.id,
+				columns: this._columns.map((column) => get(item, column.value))
+			}));
+		}
+	},
 	methods: {
-		get,
-
-		moveTop(item) {
+		moveTop({item}) {
 			const items = this.items.filter((x) => x !== item);
 			items.unshift(item);
 			this.items = items;
@@ -91,19 +123,21 @@ export default {
 		},
 
 		update() {
-			const ids = this.items.map((x) => x[this._options.value]);
+			const value = this.items.map((x) => get(x, this._entities.value));
 
 			this.$emit("event", {
 				actions: {
-					update: {data: {value: ids}}
+					update: {data: {value}}
 				}
 			});
 		},
 
 		async getItems() {
-			const {url, params} = this._options.endpoint;
+			const {url, params} = this._entities.endpoint;
+			const {dataWrap} = this._entities;
+
 			const {data} = await this.$axios.get(url, {params});
-			this.items = get(data, this._options.key, data);
+			this.items = get(data, dataWrap, data);
 			this.loaded = true;
 		}
 	},

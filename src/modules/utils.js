@@ -91,10 +91,12 @@ export const rStringProps = ({data, val}) => {
 		return replace(str, /\{.*?\}/g, (key) => get(data, key.slice(1, -1), key));
 	};
 
+	if (Array.isArray(val)) {
+		return val.map((val) => rStringProps({data, val}));
+	}
+
 	if (val instanceof Object) {
-		return mapValues(val, (val) => {
-			return rStringProps({data, val});
-		});
+		return mapValues(val, (val) => rStringProps({data, val}));
 	}
 
 	if (typeof val === "string") {
