@@ -42,8 +42,8 @@ export default {
 		dateStart: {type: [Number, String], required: false},
 		dateEnd: {type: [Number, String], required: false},
 		_formatValue: {type: String, default: "timestamp"},
-		_clearable: {type: Boolean, default: false},
-		_disabled: {type: Boolean, default: false},
+		_clearable: {type: Boolean, required: false},
+		_disabled: {type: Boolean, required: false},
 		_format: {type: String, required: false},
 		_type: {
 			type: String,

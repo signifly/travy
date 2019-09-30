@@ -10,15 +10,22 @@ import {Tag} from "element-ui";
 export default {
 	components: {Tag},
 	meta: {
-		spec: "props",
+		spec: {
+			text: {type: String, required: true},
+			status: {type: String, required: false},
+			_fallback: {
+				type: Object,
+				required: false,
+				children: {
+					text: {type: String, required: false},
+					status: {type: String, required: false}
+				}
+			}
+		},
 		res: {
 			props: {
 				text: "text",
-				status: "status",
-				_fallback: {
-					text: "fallback",
-					status: "fallback"
-				}
+				status: "status"
 			},
 			data: {
 				text: "4/8",

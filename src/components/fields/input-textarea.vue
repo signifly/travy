@@ -22,10 +22,10 @@ export default {
 		res: {
 			props: {
 				_disabled: false,
-				value: "content"
+				value: "value"
 			},
 			data: {
-				content: ""
+				value: ""
 			}
 		}
 	},

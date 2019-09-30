@@ -92,9 +92,12 @@ export default {
 						return this.type.join(" | ");
 					},
 					get default() {
-						return typeof prop.default === "function"
-							? JSON.stringify(prop.default())
-							: prop.default;
+						const def = () =>
+							typeof prop.default === "function"
+								? prop.default()
+								: prop.default;
+
+						return JSON.stringify(def());
 					},
 					get map() {
 						if (key.startsWith("_")) {

@@ -25,14 +25,25 @@ import {Progress} from "element-ui";
 export default {
 	components: {Progress},
 	meta: {
-		spec: "props",
+		spec: {
+			items: {
+				type: Object,
+				required: true,
+				children: {
+					percentage: {type: Number, required: true},
+					"@scope": {type: Array, required: true},
+					status: {type: String, required: true},
+					title: {type: String, required: true}
+				}
+			}
+		},
 		res: {
 			props: {
 				items: {
-					"@scope": "items",
-					title: "title",
 					percentage: "percentage",
-					status: "status"
+					"@scope": "items",
+					status: "status",
+					title: "title"
 				}
 			},
 			data: {

@@ -53,7 +53,7 @@ export default {
 	props: {
 		_width: {type: String, default: "160px", note: "100% for full width"},
 		file: {type: Object, required: false, note: "base64"},
-		_download: {type: Boolean, default: false},
+		_download: {type: Boolean, required: false},
 		_height: {type: String, default: "160px"},
 		_upload: {type: Boolean, default: true},
 		url: {type: String, required: false}

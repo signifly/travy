@@ -1,18 +1,13 @@
 <template>
 	<div class="select-multi-search-table">
 		<div class="select">
-			<selectMultiSearch
-				ref="select"
-				v-bind="select"
-				:values="data"
-				@event="selectEvent"
-			/>
+			<selectMultiSearch ref="select" v-bind="select" @event="selectEvent" />
 		</div>
 		<vTable
-			:key="data.length"
-			:_columns="table._columns"
-			:data="data"
+			:_columns="_table.columns"
 			@event="tableEvent"
+			:key="data.length"
+			:value="data"
 		/>
 	</div>
 </template>
@@ -23,30 +18,31 @@ import {mapPaths} from "@/modules/utils";
 import vTable from "./table.vue";
 import produce from "immer";
 
+const selectProps = selectMultiSearch.meta.res.props;
+const selectSpec = selectMultiSearch.meta.spec;
+
 export default {
 	components: {selectMultiSearch, vTable},
 	meta: {
-		spec: "props",
+		spec: {
+			select: {type: Object, required: true, children: selectSpec},
+			_table: {
+				type: Object,
+				required: true,
+				note: "see table definitions",
+				children: {
+					columnsData: {type: Object, required: false},
+					columns: {type: Array, required: true}
+				}
+			},
+			value: {type: Array, required: true}
+		},
 		res: {
 			props: {
-				data: "data",
-
-				select: {
-					_clearable: false,
-					_disabled: false,
-					_options: {
-						endpoint: {
-							url: "items",
-							params: {filter: {test: "test"}}
-						},
-						key: "",
-						label: "name",
-						value: "id"
-					}
-				},
-
-				table: {
-					_columns: [
+				value: "value",
+				select: selectProps,
+				_table: {
+					columns: [
 						{
 							name: "title",
 							label: "Title",
@@ -79,13 +75,13 @@ export default {
 						}
 					],
 
-					_columnsDataOverwrite: {
+					columnsData: {
 						is_mandatory: true
 					}
 				}
 			},
 			data: {
-				data: [
+				value: [
 					{
 						id: 1,
 						name: "item1",
@@ -99,17 +95,20 @@ export default {
 	},
 	props: {
 		select: {type: Object, required: true},
-		data: {type: Array, default: () => []},
-		table: {type: Object, required: true}
+		_table: {type: Object, required: true},
+		value: {type: Array, required: true}
+	},
+	computed: {
+		data: (t) => t.select.value
 	},
 	methods: {
 		selectEvent(event) {
 			const update = event.actions.update;
 
 			if (update) {
-				const values = update.data.values;
+				const items = update.data.value;
 
-				const data = values.map((value) => {
+				const data = items.map((value) => {
 					// find data item by all properties of value
 					const item = this.data.find((item) => {
 						return Object.entries(value).every(([k, v]) => item[k] === v);
@@ -118,7 +117,7 @@ export default {
 					return {
 						...value,
 						...item,
-						...this.table._columnsDataOverwrite
+						...this._table.columnsData
 					};
 				});
 
@@ -141,10 +140,10 @@ export default {
 			}
 		},
 
-		update(data) {
+		update(value) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {data}}
+					update: {data: {value}}
 				}
 			});
 		}

@@ -14,10 +14,10 @@ export default {
 		res: {
 			props: {
 				_disabled: false,
-				value: "switchVal"
+				value: "value"
 			},
 			data: {
-				switchVal: false
+				value: false
 			}
 		}
 	},

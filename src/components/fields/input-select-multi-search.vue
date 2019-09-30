@@ -13,7 +13,7 @@
 			@change="update"
 			@visible-change="initSearch"
 		>
-			<Option v-for="item in optionItemsC" v-bind="item" :key="item.value" />
+			<Option v-for="item in itemsC" v-bind="item" :key="item.value" />
 		</Select>
 	</div>
 </template>
@@ -25,25 +25,47 @@ import {Select, Option} from "element-ui";
 export default {
 	components: {Select, Option},
 	meta: {
-		spec: "props",
+		spec: {
+			_disabled: {type: Boolean, required: false},
+			_clearable: {type: Boolean, default: true},
+			_addable: {type: Boolean, required: false},
+			value: {type: Array, required: true},
+			_entities: {
+				type: Object,
+				required: true,
+				children: {
+					dataWrap: {type: String, required: false},
+					label: {type: String, required: true, note: "maps to an entity"},
+					value: {
+						type: [String, Number],
+						required: true,
+						note: "maps to an entity"
+					},
+					endpoint: {
+						type: Object,
+						required: true,
+						children: {
+							url: {type: String, required: true},
+							params: {type: Object, required: false}
+						}
+					}
+				}
+			}
+		},
 		res: {
 			props: {
-				_clearable: false,
-				_disabled: false,
-				_addable: false,
-				values: "values",
-				_options: {
+				value: "value",
+				_entities: {
 					endpoint: {
 						url: "items",
 						params: {filter: {test: "test"}}
 					},
-					key: "",
 					label: "name",
 					value: "id"
 				}
 			},
 			data: {
-				values: [
+				value: [
 					{
 						id: 1,
 						name: "item1"
@@ -58,27 +80,25 @@ export default {
 	},
 	props: {
 		_disabled: {type: Boolean, required: false},
-		_clearable: {type: Boolean, required: false, default: true},
+		_clearable: {type: Boolean, default: true},
 		_addable: {type: Boolean, required: false},
-		_options: {type: Object, required: true},
-		values: {default: () => []}
+		_entities: {type: Object, required: true},
+		value: {type: Array, required: true}
 	},
 	data() {
 		return {
 			opened: false,
-			optionItems: []
+			items: []
 		};
 	},
 	computed: {
-		endpoint: (t) => t._options.endpoint,
+		selectedItems: (t) => t.value.map((x) => get(x, t._entities.value)),
+		allItems: (t) => uniqBy([...t.items, ...t.value], t._entities.value),
 
-		allItems: (t) => uniqBy([...t.optionItems, ...t.values], t._options.value),
-		selectedItems: (t) => t.values.map((x) => get(x, t._options.value)),
-
-		optionItemsC: (t) =>
+		itemsC: (t) =>
 			t.allItems.map((x) => ({
-				value: get(x, t._options.value),
-				label: get(x, t._options.label)
+				value: get(x, t._entities.value),
+				label: get(x, t._entities.label)
 			}))
 	},
 	methods: {
@@ -90,36 +110,39 @@ export default {
 		},
 
 		async getItems(search) {
-			const key = this._options.key;
+			const {url, params} = this._entities.endpoint;
+			const {dataWrap} = this._entities;
 
-			const {data} = await this.$axios.get(this.endpoint.url, {
-				params: merge({}, this.endpoint.params, {
+			const {data} = await this.$axios.get(url, {
+				params: merge({}, params, {
 					filter: {search}
 				})
 			});
 
-			this.optionItems = key ? get(data, key) : data;
+			this.items = get(data, dataWrap, data);
 		},
 
 		update(data) {
-			const values = data.map((val) => {
+			const ent = this._entities;
+
+			const value = data.map((val) => {
 				// [1, 2] => [{}, {}]
-				let item = this.allItems.find((x) => x[this._options.value] === val);
+				let item = this.allItems.find((x) => x[ent.value] === val);
 
 				// if new item
 				item = item || {
-					[this._options.value]: val,
-					[this._options.label]: val,
+					[ent.value]: val,
+					[ent.label]: val,
 					new: true
 				};
 
 				// only emit label and value properties
-				return pick(item, [this._options.value, this._options.label, "new"]);
+				return pick(item, [ent.value, ent.label, "new"]);
 			});
 
 			this.$emit("event", {
 				actions: {
-					update: {data: {values}}
+					update: {data: {value}}
 				}
 			});
 		}

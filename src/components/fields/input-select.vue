@@ -1,4 +1,4 @@
-<template>
+_entities<template>
 	<div class="select">
 		<Select
 			v-bind="{value}"
@@ -7,7 +7,7 @@
 			:filterable="true"
 			@change="update"
 		>
-			<Option v-for="item in _items" v-bind="item" :key="item.value">
+			<Option v-for="item in _entities" v-bind="item" :key="item.value">
 				<div class="option">
 					<div class="emoji" v-if="item.emoji" v-html="emoji(item.emoji)" />
 					{{ item.label }}
@@ -24,21 +24,34 @@ import emoji from "emojilib";
 export default {
 	components: {Select, Option},
 	meta: {
-		spec: "props",
+		spec: {
+			_clearable: {type: Boolean, required: false, default: true},
+			value: {type: [String, Number], required: false},
+			_disabled: {type: Boolean, required: false},
+			_entities: {
+				type: Array,
+				required: true,
+				children: {
+					value: {type: [String, Number], required: true},
+					disabled: {type: Boolean, required: false},
+					emoji: {type: String, required: false},
+					label: {type: String, required: true}
+				}
+			}
+		},
 		res: {
 			props: {
-				_disabled: false,
 				_clearable: false,
-				value: "selectValue",
-
-				_items: [
+				_disabled: false,
+				value: "value",
+				_entities: [
 					{label: "Danmark", emoji: "denmark", value: "dk"},
 					{label: "England", emoji: "uk", value: "uk"},
 					{label: "Murica", emoji: "us", value: "us", disabled: true}
 				]
 			},
 			data: {
-				selectValue: "uk"
+				value: "uk"
 			}
 		}
 	},
@@ -46,7 +59,7 @@ export default {
 		_clearable: {type: Boolean, required: false, default: true},
 		value: {type: [String, Number], required: false},
 		_disabled: {type: Boolean, required: false},
-		_items: {type: Array, required: true}
+		_entities: {type: Array, required: true}
 	},
 	methods: {
 		emoji(name) {

@@ -2,7 +2,7 @@
 	<div class="select-search">
 		<Select
 			:value="value"
-			:remote-method="getItems"
+			:remote-method="elementGet"
 			:disabled="_disabled"
 			:clearable="_clearable"
 			:allow-create="_addable"
@@ -18,60 +18,76 @@
 
 <script>
 import {Select, Option} from "element-ui";
-import {merge, get, uniqBy} from "lodash";
+import {merge, get} from "lodash";
 
 export default {
 	components: {Select, Option},
 	meta: {
-		spec: "props",
+		spec: {
+			value: {type: [String, Number], required: false},
+			_disabled: {type: Boolean, required: false},
+			_clearable: {type: Boolean, default: true},
+			_addable: {type: Boolean, required: false},
+			_entities: {
+				type: Object,
+				required: true,
+				children: {
+					dataWrap: {type: String, required: false},
+					label: {type: String, required: true, note: "maps to an entity"},
+					value: {
+						type: [String, Number],
+						required: true,
+						note: "maps to an entity"
+					},
+					endpoint: {
+						type: Object,
+						required: true,
+						children: {
+							url: {type: String, required: true},
+							params: {type: Object, required: false}
+						}
+					}
+				}
+			}
+		},
 		res: {
 			props: {
-				_clearable: false,
-				_disabled: false,
-				_addable: false,
-				value: "selectValue",
-				_options: {
+				value: "value",
+				_entities: {
 					endpoint: {
 						url: "items",
 						params: {filter: {test: "test"}}
 					},
-					itemKey: "",
-					key: "",
 					label: "name",
 					value: "id"
 				}
 			},
 			data: {
-				selectValue: 1
+				value: 1
 			}
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false},
-		_clearable: {type: Boolean, required: false, default: true},
-		_addable: {type: Boolean, required: false},
 		value: {type: [String, Number], required: false},
-		_options: {type: Object, required: true}
+		_disabled: {type: Boolean, required: false},
+		_clearable: {type: Boolean, default: true},
+		_addable: {type: Boolean, required: false},
+		_entities: {type: Object, required: true}
 	},
 	data() {
 		return {
-			selectedItem: null,
 			opened: false,
 			items: []
 		};
 	},
 	computed: {
-		endpoint: (t) => t._options.endpoint,
+		selectedItem: (t) => t.itemsC.find((x) => x.value === t.value),
 
 		itemsC() {
-			const items = [this.selectedItem, ...this.items]
-				.filter((x) => x)
-				.map((x) => ({
-					value: get(x, this._options.value),
-					label: get(x, this._options.label)
-				}));
-
-			return uniqBy(items, "value");
+			return this.items.map((x) => ({
+				value: get(x, this._entities.value),
+				label: get(x, this._entities.label)
+			}));
 		}
 	},
 	methods: {
@@ -82,26 +98,21 @@ export default {
 			}
 		},
 
-		async getItems(search) {
-			const key = this._options.key;
+		elementGet(search) {
+			this.getItems({search});
+		},
 
-			const {data} = await this.$axios.get(this.endpoint.url, {
-				params: merge({}, this.endpoint.params, {
-					filter: {search}
+		async getItems({search, ids} = {}) {
+			const {url, params} = this._entities.endpoint;
+			const {dataWrap} = this._entities;
+
+			const {data} = await this.$axios.get(url, {
+				params: merge({}, params, {
+					filter: {search, ids}
 				})
 			});
 
-			this.items = key ? get(data, key) : data;
-		},
-
-		async getSelectedItem() {
-			const key = this._options.itemKey;
-
-			const {data} = await this.$axios.get(
-				`${this.endpoint.url}/${this.value}`
-			);
-
-			this.selectedItem = key ? get(data, key) : data;
+			this.items = get(data, dataWrap, data);
 		},
 
 		update(value) {
@@ -117,7 +128,7 @@ export default {
 			immediate: true,
 			handler(value) {
 				if (value && !this.selectedItem) {
-					this.getSelectedItem();
+					this.getItems({ids: [value]});
 				}
 			}
 		}

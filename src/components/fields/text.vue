@@ -24,11 +24,24 @@ import {toString} from "lodash";
 export default {
 	components: {Tooltip},
 	meta: {
-		spec: "props",
+		spec: {
+			subtitle: {type: [String, Number], required: false},
+			text: {type: [String, Number], required: false},
+			tooltip: {type: String, required: false},
+			_align: {type: String, default: "left"},
+			_bold: {type: Boolean, required: false},
+			_fallback: {
+				type: Object,
+				required: false,
+				children: {
+					text: {type: [String, Number], required: false},
+					status: {type: String, required: false}
+				}
+			}
+		},
 		res: {
 			props: {
 				text: "text",
-				_textDefault: "default text",
 				subtitle: "subtitle",
 				status: "primary",
 				tooltip: "tooltip"
@@ -42,34 +55,17 @@ export default {
 		}
 	},
 	props: {
-		_align: {type: String, default: "left"},
-		_bold: {type: Boolean, required: false},
-		tooltip: {type: [String], required: false},
-		text: {type: [String, Number], required: false},
 		subtitle: {type: [String, Number], required: false},
-		_textDefault: {type: [String, Number], required: false},
-
-		status: {
-			type: String,
-			required: false,
-			note: `danger, warning, info, primary, success or mapped property`
-		},
-
-		_status: {
-			type: String,
-			required: false,
-			note: `danger, warning, info, primary, success`
-		}
+		text: {type: [String, Number], required: false},
+		_fallback: {type: Object, default: () => ({})},
+		tooltip: {type: String, required: false},
+		status: {type: String, required: false},
+		_align: {type: String, default: "left"},
+		_bold: {type: Boolean, required: false}
 	},
 	computed: {
-		textC: (t) => toString(t.text) || t._textDefault || "—",
-		statusC() {
-			const map = !["danger", "warning", "info", "primary", "success"].includes(
-				this._status
-			);
-
-			return map ? this.status : this._status;
-		}
+		statusC: (t) => t.status || t._fallback.status || "primary",
+		textC: (t) => toString(t.text) || t._fallback.text || "—"
 	}
 };
 </script>

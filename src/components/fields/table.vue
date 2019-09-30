@@ -2,7 +2,7 @@
 	<div class="table">
 		<vTable
 			ref="table"
-			:data="data"
+			:data="value"
 			:columns="_columns"
 			@event="$emit('event', $event)"
 		/>
@@ -18,7 +18,7 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				data: "data",
+				value: "value",
 				_columns: [
 					{
 						name: "title",
@@ -43,7 +43,7 @@ export default {
 				]
 			},
 			data: {
-				data: [
+				value: [
 					{
 						id: 0,
 						title: "title",
@@ -59,8 +59,8 @@ export default {
 		}
 	},
 	props: {
-		_columns: {type: Array, required: true},
-		data: {type: Array, required: true}
+		_columns: {type: Array, required: true, note: "see table definitions"},
+		value: {type: Array, required: true}
 	}
 };
 </script>

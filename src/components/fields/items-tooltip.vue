@@ -35,7 +35,17 @@ import {Tooltip} from "element-ui";
 export default {
 	components: {Tooltip},
 	meta: {
-		spec: "props",
+		spec: {
+			items: {
+				type: Object,
+				required: true,
+				children: {
+					"@scope": {type: Array, required: true},
+					_link: {type: String, required: false},
+					label: {type: String, required: true}
+				}
+			}
+		},
 		res: {
 			props: {
 				items: {

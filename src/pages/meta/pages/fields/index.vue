@@ -37,6 +37,7 @@ export default {
 			const array = Object.entries({...fields, ...this.$settings.fields}).map(
 				([name, comp]) => ({name, comp})
 			);
+
 			return sortBy(array, "name");
 		}
 	},

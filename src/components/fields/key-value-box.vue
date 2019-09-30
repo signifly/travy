@@ -10,7 +10,16 @@
 <script>
 export default {
 	meta: {
-		spec: "props",
+		spec: {
+			items: {
+				type: Array,
+				required: true,
+				children: {
+					value: {type: [String, Number], required: true},
+					_label: {type: String, required: true}
+				}
+			}
+		},
 		res: {
 			props: {
 				items: [

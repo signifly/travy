@@ -21,12 +21,12 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				value: "inputVal",
+				value: "value",
 				_type: "text",
 				_unit: "cm"
 			},
 			data: {
-				inputVal: ""
+				value: ""
 			}
 		}
 	},

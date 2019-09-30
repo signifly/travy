@@ -7,9 +7,9 @@
 			:filterable="true"
 			:multiple="true"
 			@change="update"
-			:value="values"
+			:value="value"
 		>
-			<Option v-for="item in _items" v-bind="item" :key="item.value" />
+			<Option v-for="item in _entities" v-bind="item" :key="item.value" />
 		</Select>
 	</div>
 </template>
@@ -20,13 +20,24 @@ import {Select, Option} from "element-ui";
 export default {
 	components: {Select, Option},
 	meta: {
-		spec: "props",
+		spec: {
+			_clearable: {type: Boolean, required: false, default: true},
+			_disabled: {type: Boolean, required: false},
+			_addable: {type: Boolean, required: false},
+			value: {type: Array, required: false},
+			_entities: {
+				type: Array,
+				required: true,
+				children: {
+					value: {type: [String, Number], required: true},
+					label: {type: String, required: true}
+				}
+			}
+		},
 		res: {
 			props: {
-				_disabled: false,
-				_clearable: false,
-				values: "selectValues",
-				_items: [
+				value: "value",
+				_entities: [
 					{
 						label: "Danmark",
 						value: "dk"
@@ -43,7 +54,7 @@ export default {
 				]
 			},
 			data: {
-				selectValues: ["uk"]
+				value: ["uk"]
 			}
 		}
 	},
@@ -51,14 +62,14 @@ export default {
 		_clearable: {type: Boolean, required: false, default: true},
 		_disabled: {type: Boolean, required: false},
 		_addable: {type: Boolean, required: false},
-		values: {type: Array, required: false},
-		_items: {type: Array, required: true}
+		_entities: {type: Array, required: true},
+		value: {type: Array, required: false}
 	},
 	methods: {
-		update(values) {
+		update(value) {
 			this.$emit("event", {
 				actions: {
-					update: {data: {values}}
+					update: {data: {value}}
 				}
 			});
 		}

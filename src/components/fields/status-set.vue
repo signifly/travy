@@ -18,14 +18,25 @@ import {Tag} from "element-ui";
 export default {
 	components: {Tag},
 	meta: {
-		spec: "props",
+		spec: {
+			items: {
+				type: Object,
+				required: true,
+				children: {
+					"@scope": {type: Array, required: true},
+					status: {type: String, required: true},
+					title: {type: String, required: true},
+					text: {type: String, required: true}
+				}
+			}
+		},
 		res: {
 			props: {
 				items: {
 					"@scope": "items",
+					status: "status",
 					title: "title",
-					text: "text",
-					status: "status"
+					text: "text"
 				}
 			},
 			data: {

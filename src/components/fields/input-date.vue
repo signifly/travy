@@ -39,8 +39,8 @@ export default {
 		_type: {type: String, required: false, note: "year, month, date, datetime"},
 		_formatValue: {type: String, default: "timestamp"},
 		date: {type: [Number, String], required: false},
-		_clearable: {type: Boolean, default: false},
-		_disabled: {type: Boolean, default: false},
+		_clearable: {type: Boolean, required: false},
+		_disabled: {type: Boolean, required: false},
 		_format: {type: String, required: false}
 	},
 	data() {

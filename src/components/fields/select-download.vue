@@ -31,19 +31,34 @@ import {merge, get} from "lodash";
 export default {
 	components: {Select, Option, Button},
 	meta: {
-		spec: "props",
+		spec: {
+			_title: {type: String, required: true},
+			_subtitle: {type: String, required: true},
+			_entities: {
+				type: Object,
+				required: true,
+				children: {
+					dataWrap: {type: String, required: false},
+					value: {type: String, required: true, note: "maps to an entity"},
+					label: {type: String, required: true, note: "maps to an entity"},
+					endpoint: {
+						type: Object,
+						required: true,
+						children: {
+							url: {type: String, required: true},
+							params: {type: Object, required: false}
+						}
+					}
+				}
+			}
+		},
 		res: {
 			props: {
 				_title: "Skatterapport",
 				_subtitle: "Beskrivelse af rapporten",
-
-				_options: {
-					endpoint: {
-						url: "items",
-						params: {filter: {test: "test"}}
-					},
-					key: "",
-					url: "image",
+				_entities: {
+					endpoint: {url: "items"},
+					value: "image",
 					label: "name"
 				}
 			}
@@ -52,7 +67,7 @@ export default {
 	props: {
 		_title: {type: String, required: true},
 		_subtitle: {type: String, required: true},
-		_options: {type: Object, required: true}
+		_entities: {type: Object, required: true}
 	},
 	data() {
 		return {
@@ -64,8 +79,8 @@ export default {
 	computed: {
 		items: (t) =>
 			t.data.map((x) => ({
-				value: get(x, t._options.url),
-				label: get(x, t._options.label)
+				value: get(x, t._entities.value),
+				label: get(x, t._entities.label)
 			}))
 	},
 	methods: {
@@ -77,7 +92,8 @@ export default {
 		},
 
 		async getData(search) {
-			const {key, url, params} = this._options.endpoint;
+			const {url, params} = this._entities.endpoint;
+			const {dataWrap} = this._entities;
 
 			const {data} = await this.$axios.get(url, {
 				params: merge({}, params, {
@@ -85,7 +101,7 @@ export default {
 				})
 			});
 
-			this.data = key ? get(data, key) : data;
+			this.data = get(data, dataWrap, data);
 		}
 	}
 };
