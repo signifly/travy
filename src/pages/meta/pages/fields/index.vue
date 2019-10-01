@@ -1,7 +1,5 @@
 <template>
 	<div class="fields">
-		<section class="intro html" v-html="require('./intro.md')" />
-
 		<div class="items">
 			<vItem
 				v-for="field in fieldsSorted"
@@ -44,13 +42,8 @@ export default {
 	created() {
 		this.$emit("sidebar", {
 			title: "Fields",
-			sections: [
-				[{value: "introduction", label: "Introduction"}],
-				this.fieldsSorted.map((x) => ({value: x.name, label: x.name}))
-			]
+			sections: [this.fieldsSorted.map((x) => ({value: x.name, label: x.name}))]
 		});
 	}
 };
 </script>
-
-<style lang="scss" scoped></style>

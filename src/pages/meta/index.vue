@@ -5,7 +5,6 @@
 				<router-link class="title" :to="{name: 'meta'}">Meta</router-link>
 
 				<div class="menu">
-					<router-link to="/meta/actions">Actions</router-link>
 					<router-link to="/meta/fields">Fields</router-link>
 					<a class="ext" href="/" target="_blank">App</a>
 				</div>

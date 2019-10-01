@@ -41,17 +41,6 @@ module.exports = {
 				removeSVGTagAttrs: false
 			});
 
-		// load markdown
-		config.module
-			.rule("markdown")
-			.test(/\.md$/)
-			.use("html-loader")
-			.loader("html-loader")
-			.end()
-			.use("markdown-loader")
-			.loader("markdown-loader")
-			.end();
-
 		// new progress plugin
 		config.plugins.delete("progress");
 		config

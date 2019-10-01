@@ -2,7 +2,7 @@
 	<layout>
 		<div class="index">
 			<div class="title">Travy</div>
-			<div class="desc">Frontend documentation</div>
+			<div class="desc">Meta documentation</div>
 		</div>
 	</layout>
 </template>
@@ -18,6 +18,7 @@ export default {
 <style lang="scss" scoped>
 .index {
 	text-align: center;
+	padding: 5em 0;
 
 	.title {
 		font-size: 2.5em;

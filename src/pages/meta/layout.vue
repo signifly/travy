@@ -118,7 +118,7 @@ $sidebar: 18em;
 
 	.main {
 		width: calc(100% - #{$sidebar});
-		padding: 5em 0;
+		padding-bottom: 5em;
 
 		.wrap {
 			max-width: 65em;
@@ -145,42 +145,6 @@ $sidebar: 18em;
 					font-size: 1.5em;
 					font-weight: 500;
 					margin-top: 1.5em;
-				}
-			}
-
-			.html {
-				line-height: 1.5em;
-
-				::v-deep {
-					ul {
-						padding-left: 1em;
-
-						li {
-							margin-bottom: 0.5em;
-
-							ul {
-								li {
-									margin-bottom: 0.2em;
-								}
-							}
-						}
-					}
-
-					code {
-						background-color: rgba(black, 0.05);
-						border-radius: 2px;
-						padding: 0.1em 0.3em;
-						font-size: 0.9em;
-					}
-
-					pre {
-						display: inline-flex;
-						margin: 0;
-
-						code {
-							padding: 1em 1.5em;
-						}
-					}
 				}
 			}
 		}
