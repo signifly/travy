@@ -65,9 +65,9 @@ import state from "../../state";
 export default {
 	components: {Input, Button, Popover, field},
 	props: {
-		data: {type: Object, required: false, default: () => ({})},
-		fields: {type: Array, required: false},
-		search: {type: Object, required: false}
+		data: {type: Object, default: () => ({})},
+		search: {type: Object, required: false},
+		fields: {type: Array, required: false}
 	},
 	data() {
 		return {
@@ -95,10 +95,9 @@ export default {
 			let filters = {...this.query.filters, ...data};
 			filters = mapValues(filters, (val) => (val === "" ? undefined : val));
 
-			state.setQuery({
+			state.mergeQuery({
 				type: "replace",
 				query: {
-					...this.query,
 					page: undefined,
 					filters
 				}

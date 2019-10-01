@@ -20,26 +20,23 @@ export default {
 	props: {
 		total: {type: Number, required: true},
 		loading: {type: Boolean, required: true},
-		per_page: {type: Number, required: true}
+		per_page: {type: Number, required: true},
+		current_page: {type: Number, required: true}
 	},
 	computed: {
-		query: () => state.query,
 		pagination: (t) => ({
-			total: t.total,
+			"current-page": t.current_page,
 			"page-size": t.per_page,
-			"current-page": Number(t.$route.query.page) || 1
+			total: t.total
 		})
 	},
 	methods: {
 		updatePage(page) {
 			page = page === 1 ? undefined : page;
 
-			state.setQuery({
+			state.mergeQuery({
 				type: "replace",
-				query: {
-					...this.query,
-					page
-				}
+				query: {page}
 			});
 
 			this.$emit("getData");
@@ -48,13 +45,9 @@ export default {
 		updateSize(pagesize) {
 			pagesize = pagesize === 15 ? undefined : pagesize;
 
-			state.setQuery({
+			state.mergeQuery({
 				type: "replace",
-				query: {
-					...this.query,
-					page: undefined,
-					pagesize
-				}
+				query: {page: undefined, pagesize}
 			});
 
 			this.$emit("getData");

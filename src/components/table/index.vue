@@ -1,11 +1,7 @@
 <template>
 	<div class="table" v-if="definitions">
-		<div class="header" v-if="filters || search || actions">
-			<filters
-				v-if="filters || search"
-				v-bind="[filters, {search}]"
-				@filter="filter"
-			/>
+		<div class="header" v-if="filters || actions">
+			<filters v-if="filters" v-bind="filters" @filter="filter" />
 			<actions v-if="actions" v-bind="{actions, parentData}" @event="event" />
 		</div>
 
@@ -132,24 +128,15 @@ export default {
 			await done();
 		},
 
-		// async getDefinitions() {
-		// 	const params = {
-		// 		...this.defsEndpoint.params,
-		// 		modifiers: this.query.modifiers
-		// 	};
-		// 	const {data} = await this.$axios.get(this.defsEndpoint.url, {params});
-		// 	this.definitions = data;
-		// },
-
 		async getData({loading = true} = {}) {
 			this.loading = loading;
 
 			const params = merge({}, this.endpoint.params, {
 				page: this.query.page,
 				sort: this.query.sort,
-				count: this.query.pagesize || 15,
 				filter: this.query.filters,
-				modifier: this.query.modifiers
+				modifier: this.query.modifiers,
+				count: this.query.pagesize || 15
 			});
 
 			const {
@@ -163,19 +150,13 @@ export default {
 		}
 	},
 	async created() {
-		this.state.query = this.$route.query;
-		// await this.getDefinitions();
+		this.state.initQuery(this.$route);
 		await this.getData();
 
 		if (this.ws) {
 			this.$ws.on(this.ws.channel, () => {
 				if (!this.halt) this.getData();
 			});
-		}
-	},
-	beforeDestroy() {
-		if (this.ws) {
-			this.$ws.stop(this.ws.channel);
 		}
 	}
 };
@@ -184,9 +165,9 @@ export default {
 <style lang="scss" scoped>
 .table {
 	.header {
-		margin-bottom: 1.5em;
 		display: flex;
 		align-items: center;
+		margin: 0 1.5em 1.5em;
 		justify-content: space-between;
 	}
 }

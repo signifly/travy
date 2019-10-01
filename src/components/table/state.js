@@ -3,6 +3,10 @@ import router from "@/modules/router";
 export default {
 	query: {},
 
+	initQuery({query}) {
+		this.query = query;
+	},
+
 	setQuery({type, query}) {
 		this.query = query;
 

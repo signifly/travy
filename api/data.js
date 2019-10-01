@@ -178,7 +178,7 @@ module.exports = {
 						{
 							name: "Tags",
 							fieldType: {
-								id: "items-tooltip",
+								id: "list-tooltip",
 								props: {
 									items: {
 										_link: "/t/tags/{id}",
@@ -198,6 +198,18 @@ module.exports = {
 							}
 						}
 					],
+					filters: {
+						search: {
+							placeholder: "Search..."
+						},
+						fields: [
+							{
+								name: "name",
+								label: "Name",
+								fieldType: {id: "input-text", props: {value: "name"}}
+							}
+						]
+					},
 					actions: [
 						{
 							title: "Add project",
@@ -308,7 +320,7 @@ module.exports = {
 						{
 							name: "Tags",
 							fieldType: {
-								id: "items-tooltip",
+								id: "list-tooltip",
 								props: {
 									items: {
 										_link: "/t/tags/{id}",

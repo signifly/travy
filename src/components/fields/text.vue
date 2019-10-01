@@ -64,7 +64,7 @@ export default {
 		_bold: {type: Boolean, required: false}
 	},
 	computed: {
-		statusC: (t) => t.status || t._fallback.status || "primary",
+		statusC: (t) => t.status || t._fallback.status,
 		textC: (t) => toString(t.text) || t._fallback.text || "—"
 	}
 };
