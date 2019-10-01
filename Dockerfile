@@ -3,8 +3,7 @@ from node:12-alpine as build
 WORKDIR /app
 
 # install dependencies
-COPY package.json ./
-COPY yarn.lock ./
+COPY package.json yarn.lock ./
 RUN yarn
 
 # install app
