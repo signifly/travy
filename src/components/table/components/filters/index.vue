@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import {mapValues, debounce, get} from "lodash";
 import {Input, Button, Popover} from "element-ui";
+import {pickBy, debounce, get} from "lodash";
 import field from "@/components/field";
 import state from "../../state";
 
@@ -93,7 +93,12 @@ export default {
 			this.loading = true;
 
 			let filters = {...this.query.filters, ...data};
-			filters = mapValues(filters, (val) => (val === "" ? undefined : val));
+
+			// remove empty properties
+			filters = pickBy(filters);
+
+			// remove filters query if empty
+			filters = Object.entries(filters).length === 0 ? undefined : filters;
 
 			state.mergeQuery({
 				type: "replace",
@@ -113,9 +118,9 @@ export default {
 		},
 
 		async reset() {
+			const filters = this.input ? {search: this.input} : undefined;
 			this.loading = true;
 			this.active = false;
-			const filters = this.input ? {search: this.input} : undefined;
 
 			state.setQuery({
 				type: "replace",
