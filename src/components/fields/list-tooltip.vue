@@ -1,5 +1,5 @@
 <template>
-	<div class="items-tooltip">
+	<div class="list-tooltip">
 		<Tooltip placement="right" v-bind="{disabled}">
 			<slot>
 				<div class="info">
@@ -9,7 +9,7 @@
 			</slot>
 
 			<div slot="content">
-				<div class="items-tooltip-content">
+				<div class="list-tooltip-content">
 					<template v-for="item in items">
 						<a
 							v-if="item._link"
@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.items-tooltip {
+.list-tooltip {
 	.info {
 		display: inline-flex;
 		align-items: center;

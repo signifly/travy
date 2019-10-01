@@ -1,6 +1,6 @@
 <template>
 	<div class="selected">
-		<vItemsTooltip
+		<listTooltip
 			:items="selectedItems"
 			:_itemKey="itemKey"
 			:_itemLink="itemLink"
@@ -8,16 +8,16 @@
 			<Checkbox v-model="checked" @change="unselect">
 				{{ selectedItems.length }} selected
 			</Checkbox>
-		</vItemsTooltip>
+		</listTooltip>
 	</div>
 </template>
 
 <script>
 import {Checkbox} from "element-ui";
-import vItemsTooltip from "@/components/fields/items-tooltip.vue";
+import listTooltip from "@/components/fields/list-tooltip.vue";
 
 export default {
-	components: {Checkbox, vItemsTooltip},
+	components: {Checkbox, listTooltip},
 	props: {
 		selectedItems: {type: Array, required: true},
 		selectedOptions: {type: Object, required: true}
