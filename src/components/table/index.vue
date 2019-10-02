@@ -1,23 +1,30 @@
 <template>
 	<div class="table" v-if="definitions">
 		<div class="header" v-if="filters || actions">
-			<filters v-if="filters" v-bind="filters" @filter="filter" />
+			<filters
+				v-if="filters"
+				v-bind="filters"
+				:loading.sync="loading"
+				@getData="getData"
+			/>
+			<sort v-if="sort" v-bind="sort" @getData="getData" />
 			<actions v-if="actions" v-bind="{actions, parentData}" @event="event" />
 		</div>
 
 		<div class="content">
 			<top v-bind="{modifiers, loading, meta}" @reset="reset" />
-			<vTable
+			<tableEl
 				ref="table"
 				v-bind="{
-					data,
+					modifiers,
 					metadata,
-					columns,
 					subtable,
-					batch,
-					loading,
 					endpoint,
-					modifiers
+					columns,
+					loading,
+					batch,
+					sort,
+					data
 				}"
 				@select="select"
 				@getData="getData"
@@ -45,32 +52,31 @@ import state from "./state";
 import pagination from "./components/pagination";
 import filters from "./components/filters";
 import actions from "./components/actions";
-import vTable from "./components/table";
+import tableEl from "./components/table";
 import batch from "./components/batch";
+import sort from "./components/sort";
 import top from "./components/top";
 
 export default {
-	components: {vTable, filters, actions, pagination, batch, top},
+	components: {tableEl, filters, actions, pagination, sort, batch, top},
 	props: {
 		definitions: {type: Object, required: true},
 		parentData: {type: Object, required: false}
 	},
 	data() {
 		return {
-			state,
 			data: [],
 			meta: null,
 			halt: false,
 			loading: false,
 			metadata: null,
-			// definitions: null,
 			selectedItems: []
 		};
 	},
 	computed: {
-		query: (t) => t.state.query,
+		query: () => state.query,
+		sort: (t) => t.definitions.sort,
 		batch: (t) => t.definitions.batch,
-		search: (t) => t.definitions.search,
 		actions: (t) => t.definitions.actions,
 		filters: (t) => t.definitions.filters,
 		columns: (t) => t.definitions.columns,
@@ -101,6 +107,10 @@ export default {
 			this.$refs.table.unselect();
 		},
 
+		async getDefinitions() {
+			console.log("get definitions");
+		},
+
 		async reset({done} = {}) {
 			this.unselect();
 			await this.getDefinitions();
@@ -123,34 +133,29 @@ export default {
 			if (done) await done();
 		},
 
-		async filter({done}) {
-			await this.getData({loading: false}); // don't show table loading indicator
-			await done();
-		},
-
 		async getData({loading = true} = {}) {
 			this.loading = loading;
 
 			const params = merge({}, this.endpoint.params, {
-				page: this.query.page,
-				sort: this.query.sort,
-				filter: this.query.filters,
+				count: this.query.pagesize || 15,
 				modifier: this.query.modifiers,
-				count: this.query.pagesize || 15
+				filter: this.query.filters,
+				sort: this.query.sort,
+				page: this.query.page
 			});
 
 			const {
 				data: {data, meta, metadata}
 			} = await this.$axios.get(this.endpoint.url, {params});
 
-			this.loading = false;
 			this.metadata = metadata;
+			this.loading = false;
 			this.data = data;
 			this.meta = meta;
 		}
 	},
 	async created() {
-		this.state.initQuery(this.$route);
+		state.initQuery(this.definitions);
 		await this.getData();
 
 		if (this.ws) {

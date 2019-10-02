@@ -2,8 +2,8 @@
 	<div class="labels">
 		<vLabel
 			v-for="_tab in tabs"
+			:name="_tab.name"
 			:id="_tab.id"
-			:title="_tab.title"
 			:active="tab === _tab"
 			:key="_tab.id"
 		/>

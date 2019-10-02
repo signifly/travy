@@ -91,8 +91,8 @@ export default {
 		}
 	},
 	methods: {
-		open() {
-			if (!this.opened) {
+		open(open) {
+			if (!this.opened && open) {
 				this.opened = true;
 				this.getItems();
 			}

@@ -3,13 +3,13 @@
 		<div class="wrap">
 			{{ name }}
 
-			<a class="sort" v-if="sortBy" @click="sort">
+			<!-- <a class="sort" v-if="sortBy" @click="sort">
 				<i class="el-icon-caret-top" :class="{active: query.sort === sortBy}" />
 				<i
 					class="el-icon-caret-bottom"
 					:class="{active: query.sort === `-${sortBy}`}"
 				/>
-			</a>
+			</a> -->
 		</div>
 	</th>
 </template>

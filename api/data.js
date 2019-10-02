@@ -159,7 +159,7 @@ module.exports = {
 		tabs: [
 			{
 				id: "stuff1",
-				title: "stuff1",
+				name: "stuff1",
 				type: "table",
 				definitions: {
 					endpoint: {
@@ -167,6 +167,13 @@ module.exports = {
 						params: {include: ["tags"]}
 					},
 					pagination: {},
+					sort: {
+						default: "name",
+						items: [
+							{label: "Name", value: "name"},
+							{label: "Input", value: "input"}
+						]
+					},
 					columns: [
 						{
 							width: 350,
@@ -199,6 +206,9 @@ module.exports = {
 						}
 					],
 					filters: {
+						data: {
+							name: "test"
+						},
 						search: {
 							placeholder: "Search..."
 						},
@@ -301,7 +311,7 @@ module.exports = {
 			},
 			{
 				id: "stuff2",
-				title: "stuff2",
+				name: "stuff 2",
 				type: "table",
 				definitions: {
 					endpoint: {

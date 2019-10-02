@@ -11,7 +11,6 @@ export default {
 	components: {vtable},
 	props: {
 		definitions: {type: Object, required: true},
-		title: {type: String, required: true},
 		type: {type: String, required: true},
 		id: {type: String, required: true}
 	}

@@ -1,20 +1,20 @@
 <template>
 	<a class="label" :class="{active}" @click="set">
-		{{ title }}
+		{{ name }}
 	</a>
 </template>
 <script>
 export default {
 	props: {
 		id: {type: String, required: true},
-		title: {type: String, required: true},
+		name: {type: String, required: true},
 		active: {type: Boolean, required: true}
 	},
 	methods: {
 		set() {
 			if (this.$route.query.tab !== this.id) {
 				this.$router.replace({
-					...this.$route,
+					path: this.$route.path,
 					query: {tab: this.id}
 				});
 			}
