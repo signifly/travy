@@ -16,17 +16,15 @@
 			<tableEl
 				ref="table"
 				v-bind="{
+					selected,
 					modifiers,
 					metadata,
-					subtable,
 					endpoint,
 					columns,
 					loading,
-					batch,
 					sort,
 					data
 				}"
-				@select="select"
 				@getData="getData"
 				@event="event"
 			/>
@@ -35,27 +33,22 @@
 				v-bind="[meta, {loading}]"
 				@getData="getData"
 			/>
-			<batch
-				v-bind="[batch, {selectedItems}]"
-				@unselect="unselect"
-				@event="event"
-			/>
+			<batch v-bind="[batch, {selected}]" @event="event" />
 		</div>
 	</div>
 </template>
 
 <script>
-import {rStringProps} from "@/modules/utils";
-import {merge, get} from "lodash";
-import state from "./state";
-
 import pagination from "./components/pagination";
+import {rStringProps} from "@/modules/utils";
 import filters from "./components/filters";
 import actions from "./components/actions";
 import tableEl from "./components/table";
 import batch from "./components/batch";
 import sort from "./components/sort";
 import top from "./components/top";
+import {merge, get} from "lodash";
+import state from "./state";
 
 export default {
 	components: {tableEl, filters, actions, pagination, sort, batch, top},
@@ -70,7 +63,10 @@ export default {
 			halt: false,
 			loading: false,
 			metadata: null,
-			selectedItems: []
+			selected: {
+				items: [],
+				active: this.definitions.batch || true
+			}
 		};
 	},
 	computed: {
@@ -80,7 +76,6 @@ export default {
 		actions: (t) => t.definitions.actions,
 		filters: (t) => t.definitions.filters,
 		columns: (t) => t.definitions.columns,
-		subtable: (t) => t.definitions.subtable,
 		modifiers: (t) => t.definitions.modifiers,
 		pagination: (t) => t.definitions.pagination,
 
@@ -99,14 +94,6 @@ export default {
 		}
 	},
 	methods: {
-		select(items) {
-			this.selectedItems = items;
-		},
-
-		unselect() {
-			this.$refs.table.unselect();
-		},
-
 		async getDefinitions() {
 			console.log("get definitions");
 		},

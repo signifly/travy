@@ -1,5 +1,6 @@
 <template>
 	<tr>
+		<td v-if="selected.active"><vselect v-bind="{selected, row}" /></td>
 		<td v-for="column in columns" :key="column.name">
 			<item v-bind="{data: data, column}" @event="event" />
 		</td>
@@ -9,14 +10,16 @@
 <script>
 import {mergeData, mapPaths, rStringProps} from "@/modules/utils";
 import {debounce, cloneDeep} from "lodash";
+import vselect from "./select";
 import produce from "immer";
 import item from "./item";
 
 export default {
-	components: {item},
+	components: {vselect, item},
 	props: {
 		modifiers: {type: Object, required: false},
 		endpoint: {type: Object, required: false},
+		selected: {type: Object, required: true},
 		columns: {type: Array, required: true},
 		row: {type: Object, required: true}
 	},

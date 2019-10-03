@@ -9,23 +9,22 @@ import {Button} from "element-ui";
 export default {
 	components: {Button},
 	props: {
-		ids: {type: Array, required: true},
 		url: {type: String, required: true},
-		selectedItems: {type: Array, required: true}
+		selected: {type: Object, required: true}
 	},
 	computed: {
 		query: (t) => t.$route.query,
 		tableId: (t) => t.$route.params.tableId,
-		firstUrl: (t) => rStringProps({val: t.url, data: t.selectedItems[0]})
+		firstUrl: (t) => rStringProps({val: t.url, data: t.selected.items[0]})
 	},
 	methods: {
 		setSequential() {
 			localStorage.setItem(
 				"sequential",
 				JSON.stringify({
+					items: this.selected.items,
 					firstUrl: this.firstUrl,
 					tableId: this.tableId,
-					items: this.ids,
 					url: this.url
 				})
 			);

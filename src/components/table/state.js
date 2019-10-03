@@ -4,13 +4,14 @@ export default {
 	query: {},
 
 	initQuery({filters = {}, sort = {}}) {
-		const query = {
-			...router.currentRoute.query,
-			filters: filters.data,
-			sort: sort.default
-		};
-
-		this.setQuery({type: "replace", query});
+		this.setQuery({
+			type: "replace",
+			query: {
+				...router.currentRoute.query,
+				filters: filters.data,
+				sort: sort.default
+			}
+		});
 	},
 
 	setQuery({type, query}) {

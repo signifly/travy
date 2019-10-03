@@ -162,6 +162,15 @@ module.exports = {
 				name: "stuff1",
 				type: "table",
 				definitions: {
+					batch: {
+						selectedOptions: {
+							label: "{name}",
+							link: "/t/products/{id}"
+						},
+						sequential: {
+							url: "/t/products/{id}"
+						}
+					},
 					endpoint: {
 						url: "http://localhost:3001/v1/admin/projects",
 						params: {include: ["tags"]}
@@ -319,6 +328,10 @@ module.exports = {
 						params: {include: ["tags"]}
 					},
 					pagination: {},
+					expand: {
+						type: "fields",
+						fields: [{}]
+					},
 					columns: [
 						{
 							width: 350,

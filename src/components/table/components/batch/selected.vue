@@ -1,39 +1,38 @@
 <template>
 	<div class="selected">
-		<listTooltip
-			:items="selectedItems"
-			:_itemKey="itemKey"
-			:_itemLink="itemLink"
-		>
-			<Checkbox v-model="checked" @change="unselect">
-				{{ selectedItems.length }} selected
+		<listTooltip :items="itemsC">
+			<Checkbox v-bind="{value}" @input="select">
+				{{ selected.items.length }} selected
 			</Checkbox>
 		</listTooltip>
 	</div>
 </template>
 
 <script>
-import {Checkbox} from "element-ui";
 import listTooltip from "@/components/fields/list-tooltip.vue";
+import {rStringProps} from "@/modules/utils";
+import {Checkbox} from "element-ui";
 
 export default {
 	components: {Checkbox, listTooltip},
 	props: {
-		selectedItems: {type: Array, required: true},
+		selected: {type: Object, required: true},
 		selectedOptions: {type: Object, required: true}
 	},
-	data() {
-		return {
-			checked: true
-		};
-	},
 	computed: {
-		itemKey: (t) => t.selectedOptions.label,
-		itemLink: (t) => t.selectedOptions.link
+		value: (t) => t.selected.items.length > 0,
+		itemsC() {
+			return this.selected.items.map((x) => {
+				return rStringProps({
+					val: this.selectedOptions,
+					data: x
+				});
+			});
+		}
 	},
 	methods: {
-		unselect() {
-			this.$emit("unselect");
+		select() {
+			this.selected.items = [];
 		}
 	}
 };

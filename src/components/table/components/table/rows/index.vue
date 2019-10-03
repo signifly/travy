@@ -3,7 +3,7 @@
 		<row
 			v-for="row in data"
 			:key="row.id"
-			v-bind="{row, columns, endpoint}"
+			v-bind="{row, columns, endpoint, selected}"
 			@event="$emit('event', $event)"
 		/>
 	</tbody>
@@ -17,6 +17,7 @@ export default {
 	props: {
 		modifiers: {type: Object, required: false},
 		endpoint: {type: Object, required: false},
+		selected: {type: Object, required: true},
 		columns: {type: Array, required: true},
 		data: {type: Array, required: true}
 	}

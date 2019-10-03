@@ -1,9 +1,9 @@
 <template>
 	<div class="table" :class="{loading}">
 		<table>
-			<vHead v-bind="{columns}" @getData="$emit('getData')" />
+			<vHead v-bind="{columns, selected, data}" @getData="$emit('getData')" />
 			<rows
-				v-bind="{columns, data, endpoint, modifiers}"
+				v-bind="{columns, data, endpoint, modifiers, selected}"
 				@event="$emit('event', $event)"
 			/>
 		</table>
@@ -20,23 +20,18 @@ export default {
 	props: {
 		data: {type: Array, required: false},
 		columns: {type: Array, required: true},
+		selected: {type: Object, required: true},
 		endpoint: {type: Object, required: false},
 		metadata: {type: Object, required: false},
 		subtable: {type: Object, required: false},
 		loading: {type: Boolean, required: false},
-		modifiers: {type: Object, required: false},
-		batch: {type: Object, default: () => ({})}
+		modifiers: {type: Object, required: false}
 	},
 	computed: {
 		query: () => state.query,
-		emptyText: (t) => (t.loading ? "loading" : "no data"),
-		batchActive: (t) => t.batch.bulk || t.batch.sequential
+		emptyText: (t) => (t.loading ? "loading" : "no data")
 	},
 	methods: {
-		select(items) {
-			this.$emit("select", items);
-		},
-
 		unselect() {
 			this.$refs.table.clearSelection();
 		}

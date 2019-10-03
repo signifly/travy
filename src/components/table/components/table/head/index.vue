@@ -1,6 +1,9 @@
 <template>
 	<thead class="head" align="left">
 		<tr>
+			<th width="30" v-if="selected.active">
+				<vselect v-bind="{selected, data}" />
+			</th>
 			<item
 				@getData="$emit('getData')"
 				v-for="column in columns"
@@ -12,12 +15,15 @@
 </template>
 
 <script>
+import vselect from "./select";
 import item from "./item";
 
 export default {
-	components: {item},
+	components: {vselect, item},
 	props: {
-		columns: {type: Array, required: true}
+		selected: {type: Object, required: true},
+		columns: {type: Array, required: true},
+		data: {type: Array, required: false}
 	}
 };
 </script>
