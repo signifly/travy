@@ -7,8 +7,11 @@
 				:loading.sync="loading"
 				@getData="getData"
 			/>
-			<sort v-if="sort" v-bind="sort" @getData="getData" />
-			<actions v-if="actions" v-bind="{actions, parentData}" @event="event" />
+
+			<div class="right">
+				<sort v-if="sort" v-bind="sort" @getData="getData" />
+				<actions v-if="actions" v-bind="{actions, parentData}" @event="event" />
+			</div>
 		</div>
 
 		<div class="content">
@@ -17,12 +20,10 @@
 				ref="table"
 				v-bind="{
 					selected,
-					modifiers,
-					metadata,
 					endpoint,
 					columns,
 					loading,
-					sort,
+					expand,
 					data
 				}"
 				@getData="getData"
@@ -73,6 +74,7 @@ export default {
 		query: () => state.query,
 		sort: (t) => t.definitions.sort,
 		batch: (t) => t.definitions.batch,
+		expand: (t) => t.definitions.expand,
 		actions: (t) => t.definitions.actions,
 		filters: (t) => t.definitions.filters,
 		columns: (t) => t.definitions.columns,
@@ -161,6 +163,11 @@ export default {
 		align-items: center;
 		margin: 0 1.5em 1.5em;
 		justify-content: space-between;
+
+		.right {
+			display: flex;
+			align-items: center;
+		}
 	}
 }
 </style>

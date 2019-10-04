@@ -162,13 +162,46 @@ module.exports = {
 				name: "stuff1",
 				type: "table",
 				definitions: {
+					expand: {
+						type: "fields",
+						fields: [
+							{
+								width: 50,
+								name: "Name",
+								fieldType: {id: "text", props: {text: "name"}}
+							},
+							{
+								width: 50,
+								name: "Tags",
+								fieldType: {
+									id: "list-tooltip",
+									props: {
+										items: {
+											_link: "/t/tags/{id}",
+											"@scope": "tags",
+											label: "key"
+										}
+									}
+								}
+							},
+							{
+								name: "input",
+								fieldType: {
+									id: "input-switch",
+									props: {
+										value: "switch"
+									}
+								}
+							}
+						]
+					},
 					batch: {
 						selectedOptions: {
 							label: "{name}",
-							link: "/t/products/{id}"
+							link: "/t/projects/{id}"
 						},
 						sequential: {
-							url: "/t/products/{id}"
+							url: "/t/projects/{id}"
 						}
 					},
 					endpoint: {
@@ -327,10 +360,6 @@ module.exports = {
 						params: {include: ["tags"]}
 					},
 					pagination: {},
-					expand: {
-						type: "fields",
-						fields: [{}]
-					},
 					columns: [
 						{
 							width: 350,

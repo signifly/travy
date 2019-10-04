@@ -1,6 +1,7 @@
 <template>
-	<thead class="head" align="left">
+	<thead align="left">
 		<tr>
+			<th width="30" v-if="expand" />
 			<th width="30" v-if="selected.active">
 				<vselect v-bind="{selected, data}" />
 			</th>
@@ -22,6 +23,7 @@ export default {
 	components: {vselect, item},
 	props: {
 		selected: {type: Object, required: true},
+		expand: {type: Object, required: false},
 		columns: {type: Array, required: true},
 		data: {type: Array, required: false}
 	}
@@ -29,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.head {
+thead {
 	tr {
 		th {
 			background-color: #f9fafc;

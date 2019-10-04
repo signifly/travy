@@ -1,7 +1,7 @@
 <template>
 	<div class="field" :style="{width: fWidth}" v-if="!disabled">
 		<div class="content">
-			<vlabel v-bind="{alt, name, label, tooltip}" v-if="rules.label" />
+			<vlabel v-bind="{alt, name, tooltip}" v-if="rules.label" />
 			<fieldType v-bind="[fieldType, {data}]" @event="$emit('event', $event)" />
 		</div>
 
@@ -30,7 +30,6 @@ export default {
 		fieldType: {type: Object, required: true},
 		tooltip: {type: String, required: false},
 		onClick: {type: String, required: false},
-		label: {type: String, required: false},
 		hide: {type: Object, required: false},
 		name: {type: String, required: true},
 		width: {type: Number, default: 100},
@@ -48,8 +47,8 @@ export default {
 			(t.width === 100 ? `${t.width}%` : `calc(${t.width}% - 1em)`),
 
 		rules: ({type}) => ({
-			label: type !== "table",
-			description: type === "view-tab"
+			label: type === "fields",
+			description: type === "fields"
 		})
 	}
 };

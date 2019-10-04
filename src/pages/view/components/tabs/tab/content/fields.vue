@@ -40,7 +40,7 @@ export default {
 			errors: get(t.state.error, "errors"),
 			options: t.state.options,
 			data: t.state.data,
-			type: "view-tab"
+			type: "fields"
 		})
 	},
 	methods: {

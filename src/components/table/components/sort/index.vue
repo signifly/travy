@@ -16,9 +16,7 @@ export default {
 		items: {type: Array, required: true},
 		default: {type: String, required: false}
 	},
-	data: () => ({
-		state
-	}),
+	data: () => ({state}),
 	computed: {
 		value: (t) => t.state.query.sort,
 		options() {
@@ -47,9 +45,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="scss" scoped>
-.sort {
-	margin-left: auto;
-}
-</style>

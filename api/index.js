@@ -7,9 +7,12 @@ fastify.register(cors);
 fastify.register(
 	async (instance, opts) => {
 		Object.entries(data).forEach(([key, val]) => {
-			instance.get(key, async (req, res) => val);
-			instance.put(key, async (req, res) => val);
-			instance.post(key, async (req, res) => val);
+			["get", "put", "post"].forEach((x) => {
+				instance[x](key, async (req, res) => {
+					await new Promise((res) => setTimeout(res, 50));
+					return val;
+				});
+			});
 		});
 	},
 	{

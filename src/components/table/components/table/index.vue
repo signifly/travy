@@ -1,40 +1,39 @@
 <template>
-	<div class="table" :class="{loading}">
+	<div class="table">
 		<table>
-			<vHead v-bind="{columns, selected, data}" @getData="$emit('getData')" />
-			<rows
-				v-bind="{columns, data, endpoint, modifiers, selected}"
+			<vHead
+				v-bind="{columns, selected, data, expand}"
+				@getData="$emit('getData')"
+			/>
+
+			<row
+				:key="row.id"
+				v-for="row in data"
 				@event="$emit('event', $event)"
+				v-bind="{row, columns, endpoint, selected, expand}"
 			/>
 		</table>
+
+		<div class="info" v-if="data.length === 0">
+			<div class="nodata" v-if="!loading">no data</div>
+			<div class="loading" v-if="loading">loading</div>
+		</div>
 	</div>
 </template>
 
 <script>
-import state from "../../state";
 import vHead from "./head";
-import rows from "./rows";
+import row from "./row";
 
 export default {
-	components: {vHead, rows},
+	components: {vHead, row},
 	props: {
 		data: {type: Array, required: false},
 		columns: {type: Array, required: true},
+		expand: {type: Object, required: false},
 		selected: {type: Object, required: true},
-		endpoint: {type: Object, required: false},
-		metadata: {type: Object, required: false},
-		subtable: {type: Object, required: false},
-		loading: {type: Boolean, required: false},
-		modifiers: {type: Object, required: false}
-	},
-	computed: {
-		query: () => state.query,
-		emptyText: (t) => (t.loading ? "loading" : "no data")
-	},
-	methods: {
-		unselect() {
-			this.$refs.table.clearSelection();
-		}
+		endpoint: {type: Object, required: true},
+		loading: {type: Boolean, required: false}
 	}
 };
 </script>
@@ -48,15 +47,28 @@ export default {
 		border-collapse: collapse;
 
 		::v-deep {
-			th,
-			td {
-				border-bottom: 1px solid #ebeef5;
+			tbody {
+				&:nth-child(odd) {
+					tr {
+						background-color: #fafafa;
+					}
+				}
 			}
 
-			th {
-				border-top: 1px solid #ebeef5;
+			th,
+			td {
+				border: 1px solid #ebeef5;
+				border-right: 0;
+				border-left: 0;
 			}
 		}
+	}
+
+	.info {
+		padding: 2em;
+		color: #909399;
+		text-align: center;
+		border-bottom: 1px solid #ebeef5;
 	}
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-	<div class="label" v-if="label">
-		{{ label }}
+	<div class="label" v-if="name">
+		{{ name }}
 
 		<translate v-bind="option" />
 
@@ -28,12 +28,11 @@ export default {
 	props: {
 		alt: {type: Object, required: false},
 		name: {type: String, required: false},
-		label: {type: String, required: false},
 		tooltip: {type: String, required: false}
 	},
 	computed: {
 		option: (t) => get(t.alt.options, t.name, {}),
-		dots: (t) => t.alt.type === "view-tab"
+		dots: (t) => t.alt.type === "fields"
 	}
 };
 </script>
