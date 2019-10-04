@@ -24,8 +24,11 @@ export default {
 		itemsC() {
 			return this.selected.items.map((x) => {
 				return rStringProps({
-					val: this.selectedOptions,
-					data: x
+					data: x,
+					val: {
+						label: this.selectedOptions.label,
+						_link: this.selectedOptions.link
+					}
 				});
 			});
 		}

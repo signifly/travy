@@ -188,8 +188,7 @@ module.exports = {
 							width: 350,
 							name: "Name",
 							fieldType: {id: "text", props: {text: "name"}},
-							onClick: "/t/projects/{id}",
-							sortBy: "name"
+							onClick: "/t/projects/{id}"
 						},
 						{
 							name: "Tags",
@@ -337,8 +336,7 @@ module.exports = {
 							width: 350,
 							name: "Name",
 							fieldType: {id: "text", props: {text: "name"}},
-							onClick: "/t/projects/{id}",
-							sortBy: "name"
+							onClick: "/t/projects/{id}"
 						},
 						{
 							name: "Tags",

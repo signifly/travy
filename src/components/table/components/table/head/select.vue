@@ -19,7 +19,10 @@ export default {
 			return this.selected.items;
 		},
 		all() {
-			return this.data.every((x) => this.items.find((i) => i.id === x.id));
+			return (
+				this.items.length &&
+				this.data.every((x) => this.items.find((i) => i.id === x.id))
+			);
 		},
 		indeterminate() {
 			return this.all ? false : this.items.length > 0;
