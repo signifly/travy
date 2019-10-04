@@ -2,23 +2,19 @@
 	<div class="main" v-if="user">
 		<Container class="is-vertical">
 			<vHeader />
-			<Main>
-				<div class="container">
-					<vBreadcrumb v-if="page" :items="[page]" />
-					<router-view />
-				</div>
-			</Main>
+			<vBreadcrumb v-if="page" :items="[page]" />
+			<router-view />
 		</Container>
 	</div>
 </template>
 
 <script>
 import vBreadcrumb from "../breadcrumb.vue";
-import {Container, Main} from "element-ui";
 import vHeader from "@/components/header";
+import {Container} from "element-ui";
 
 export default {
-	components: {vBreadcrumb, Container, Main, vHeader},
+	components: {vBreadcrumb, Container, vHeader},
 	computed: {
 		title: (t) => t.$route.meta.title,
 		user: (t) => t.$store.getters["user/data"],
@@ -26,12 +22,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="scss" scoped>
-.main {
-	.container {
-		max-width: $width;
-		margin: 0 auto;
-	}
-}
-</style>

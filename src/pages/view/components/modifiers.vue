@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import modifiers from "@/components/modifiers";
+import modifiers from "@/components/hero/modifiers";
 
 export default {
 	components: {modifiers},

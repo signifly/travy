@@ -21,12 +21,17 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 0.5em 0;
+	padding: 1em 0;
 	color: #666;
-	transition: cubic(transform, 0.15s);
+
+	i {
+		transition: cubic(transform, 0.15s);
+	}
 
 	&.expanded {
-		transform: rotate(90deg);
+		i {
+			transform: rotate(90deg);
+		}
 	}
 }
 </style>

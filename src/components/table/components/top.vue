@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import modifiers from "@/components/modifiers";
+import modifiers from "@/components/hero/modifiers";
 import state from "../state";
 
 export default {

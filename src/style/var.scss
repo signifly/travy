@@ -24,6 +24,12 @@ $warning: $--color-warning;
 $info: $--color-info;
 $success: $--color-success;
 
+.container {
+	max-width: $width;
+	margin: 0 auto;
+	padding: 0 1em;
+}
+
 // utils
 @mixin res($width, $dir: max) {
 	@media (#{$dir}-width: #{$width} + "px") {

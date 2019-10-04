@@ -10,12 +10,18 @@ export default {
 		name: {type: String, required: true},
 		active: {type: Boolean, required: true}
 	},
+	computed: {
+		query: (t) => t.$route.query
+	},
 	methods: {
 		set() {
-			if (this.$route.query.tab !== this.id) {
+			if (this.query.tab !== this.id) {
 				this.$router.replace({
 					path: this.$route.path,
-					query: {tab: this.id}
+					query: {
+						modifiers: this.query.modifiers,
+						tab: this.id
+					}
 				});
 			}
 		}

@@ -42,9 +42,15 @@ export default {
 		error: (t) => get(t.alt.errors, t.name, [])[0],
 		disabled: (t) => t.hide && operator({...t.hide, data: t.data}),
 
-		fWidth: (t) =>
-			t.type !== "table" &&
-			(t.width === 100 ? `${t.width}%` : `calc(${t.width}% - 1em)`),
+		fWidth() {
+			const w = this.width;
+
+			if (this.type === "fields") {
+				return w === 100 ? `${w}%` : `calc(${w}% - 1em)`;
+			} else {
+				return `${w}px`;
+			}
+		},
 
 		rules: ({type}) => ({
 			label: type === "fields",

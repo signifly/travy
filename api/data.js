@@ -48,7 +48,10 @@ module.exports = {
 			title: "Travy",
 			frontpage: "/t/projects",
 			locale: "en",
-			notifications: false
+			notifications: false,
+			theme: {
+				color: "#00233d"
+			}
 		}
 	},
 
@@ -156,6 +159,30 @@ module.exports = {
 	"/definitions/table/projects": {
 		title: "stuff",
 		sub: "stuff",
+		modifiers: {
+			data: {
+				language_code: "dk"
+			},
+			fields: [
+				{
+					name: "language_code",
+					label: "Language",
+					width: 200,
+					fieldType: {
+						id: "input-select",
+						props: {
+							_clearable: false,
+							value: "language_code",
+							_entities: [
+								{label: "Danmark", emoji: "denmark", value: "dk"},
+								{label: "England", emoji: "uk", value: "uk"},
+								{label: "Murica", emoji: "us", value: "us", disabled: true}
+							]
+						}
+					}
+				}
+			]
+		},
 		tabs: [
 			{
 				id: "stuff1",

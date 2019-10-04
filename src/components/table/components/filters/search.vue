@@ -7,7 +7,6 @@
 			@input="update"
 			:value="value"
 			class="input"
-			size="medium"
 			clearable
 		>
 			<slot slot="append" v-if="fields && fields.length > 0" />

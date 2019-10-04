@@ -19,7 +19,7 @@
 							v-for="field in fields"
 							:key="field.name"
 							v-bind="field"
-							:alt="{data: filters}"
+							:alt="{data: filters, type: 'fields'}"
 							@event="event"
 						/>
 					</div>
