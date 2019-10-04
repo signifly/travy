@@ -53,7 +53,7 @@ export default {
 				}
 			},
 			items: {
-				type: Array,
+				type: Object,
 				required: true,
 				children: {
 					"@scope": {type: Array, required: true},
