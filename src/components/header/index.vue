@@ -1,10 +1,8 @@
 <template>
-	<Header>
-		<router-link
-			class="home"
-			:to="{name: 'index'}"
-			v-html="require('@/assets/icons/home.svg')"
-		/>
+	<Header height="64px">
+		<router-link class="logo" :to="{name: 'index'}">
+			<img :src="config.theme.logo" />
+		</router-link>
 
 		<vMenu />
 
@@ -24,36 +22,28 @@ import user from "./user";
 export default {
 	components: {Header, notification, vMenu, user},
 	computed: {
-		settings: (t) => t.$store.getters["config/settings"],
-		notifications: (t) => t.settings.notifications !== false
+		config: (t) => t.$store.getters["config/data"],
+		notifications: (t) => t.config.notifications !== false
 	}
 };
 </script>
 
 <style lang="scss" scoped>
 .el-header {
-	background-color: #334056;
-	color: $white1;
-	user-select: none;
-	display: flex;
+	background-color: $white1;
 	align-items: center;
-	padding: 0;
+	user-select: none;
+	padding: 0 3em;
+	display: flex;
 
-	.home {
-		background-color: #2b384b;
-		height: 100%;
+	.logo {
+		margin-right: 2em;
+		justify-content: center;
 		display: inline-flex;
 		align-items: center;
-		justify-content: center;
-		width: 60px;
 
-		::v-deep svg {
-			$s: 1.9em;
-			width: $s;
-			height: $s;
-			path {
-				fill: $white1;
-			}
+		img {
+			max-height: 40px;
 		}
 	}
 

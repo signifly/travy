@@ -66,8 +66,8 @@ export const download = ({url, name}) => {
 
 export const translate = (locales) => {
 	const {default: store} = require("@/store");
-	const locale = store.getters["config/locale"];
-	return locales[locale] || locales.en;
+	const config = store.getters["config/data"];
+	return locales[config.locale] || locales.en;
 };
 
 export const operator = ({key, value, operator, data}) => {

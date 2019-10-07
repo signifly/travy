@@ -1,5 +1,5 @@
 <template>
-	<div class="hero" :style="{backgroundColor: theme.color}">
+	<div class="hero" :style="{backgroundColor: config.theme.color}">
 		<div class="container">
 			<div class="wrap">
 				<div class="breadcrumbs">
@@ -27,7 +27,7 @@ export default {
 		modifiers: {type: Object, required: true}
 	},
 	computed: {
-		theme: (t) => t.$store.getters["config/settings"].theme
+		config: (t) => t.$store.getters["config/data"]
 	}
 };
 </script>

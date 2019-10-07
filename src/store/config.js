@@ -28,32 +28,11 @@ export default {
 		data(state) {
 			return state.data;
 		},
-		menu(state, {data}) {
-			return data && data.menu;
+		ws(state, {data}) {
+			return data.websockets;
 		},
-		tables(state, {data}) {
-			return data && data.tables;
-		},
-		customs(state, {data}) {
-			return data && data.customs;
-		},
-		settings(state, {data}) {
-			return data && data.settings;
-		},
-		dashboards(state, {data}) {
-			return data && data.dashboards;
-		},
-		locale(state, {settings}) {
-			return settings && settings.locale;
-		},
-		frontpage(state, {settings}) {
-			return settings && settings.frontpage;
-		},
-		ws(state, {settings}) {
-			return settings && settings.websockets;
-		},
-		title(state, {settings}) {
-			return (settings && settings.title) || "Travy";
+		title(state, {data}) {
+			return data.title || "Travy";
 		}
 	}
 };

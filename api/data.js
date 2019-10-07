@@ -23,36 +23,50 @@ module.exports = {
 	},
 
 	"/definitions/config": {
+		frontpage: "/t/projects",
+		notifications: false,
+		title: "Travy",
+		locale: "en",
+		theme: {
+			logo: "https://picsum.photos/200/50",
+			color: "#00233d"
+		},
 		menu: [
 			{
-				title: "Projects",
-				link: "/t/projects"
+				name: "Projects",
+				url: "/t/projects"
 			},
 			{
-				title: "Media",
-				link: "/t/media",
+				name: "Media",
 				items: [
 					{
-						title: "Projects",
-						link: "/t/projects"
+						name: "test",
+						url: "/t/seof"
+					},
+					{
+						name: "Projects",
+						items: [
+							{
+								name: "Projects",
+								url: "/t/projects1"
+							},
+							{
+								name: "awdawd",
+								url: "/t/projects2"
+							},
+							{
+								name: "sdfsfd",
+								url: "/t/projects3"
+							}
+						]
 					}
 				]
+			},
+			{
+				name: "Test",
+				url: "/t/test"
 			}
-		],
-		tables: {
-			projects: {
-				title: "Projects"
-			}
-		},
-		settings: {
-			title: "Travy",
-			frontpage: "/t/projects",
-			locale: "en",
-			notifications: false,
-			theme: {
-				color: "#00233d"
-			}
-		}
+		]
 	},
 
 	"/definitions/view/account": {

@@ -111,7 +111,7 @@ const reset = () => {
 };
 
 const connect = () => {
-	const url = store.getters["config/ws"].url;
+	const {url} = store.getters["config/ws"];
 
 	state.ws = new WebSocket(url);
 
