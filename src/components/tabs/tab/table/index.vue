@@ -159,13 +159,14 @@ export default {
 <style lang="scss" scoped>
 .table {
 	.header {
+		height: 40px;
 		display: flex;
 		align-items: center;
 		margin: 0 1.5em 1.5em;
-		justify-content: space-between;
 
 		.right {
 			display: flex;
+			margin-left: auto;
 			align-items: center;
 		}
 	}

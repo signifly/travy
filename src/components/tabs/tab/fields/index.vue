@@ -22,6 +22,7 @@ export default {
 	data: () => ({
 		options: null,
 		payload: {},
+		error: null,
 		data: null
 	}),
 	computed: {
@@ -36,7 +37,7 @@ export default {
 		},
 
 		alt: (t) => ({
-			// errors: get(t.state.error, "errors"),
+			errors: t.error && t.error.errors,
 			options: t.options,
 			type: "fields",
 			data: t.data
@@ -72,6 +73,22 @@ export default {
 
 			this.options = options;
 			this.data = data;
+		},
+
+		async save() {
+			const body = {modifer: this.modifiers, data: this.payload};
+
+			try {
+				await this.$axios.put(this.endpoint.url, body, {customErr: true});
+
+				this.error = null;
+				this.payload = {};
+
+				return {actions: {refresh: {data: true}}};
+			} catch (error) {
+				this.error = error;
+				throw error;
+			}
 		}
 	},
 	created() {

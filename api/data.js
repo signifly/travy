@@ -612,6 +612,10 @@ module.exports = {
 						{
 							name: "Name",
 							fieldType: {id: "text", props: {text: "name"}}
+						},
+						{
+							name: "Text",
+							fieldType: {id: "input-text", props: {value: "text"}}
 						}
 					]
 				}
