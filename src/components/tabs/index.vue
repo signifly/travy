@@ -1,7 +1,7 @@
 <template>
 	<div class="tabs">
 		<labels v-bind="{tab, tabs}" />
-		<tab v-bind="tab" />
+		<tab v-bind="[tab, {data}]" />
 	</div>
 </template>
 
@@ -12,6 +12,7 @@ import tab from "./tab";
 export default {
 	components: {labels, tab},
 	props: {
+		data: {type: Object, required: false},
 		tabs: {type: Array, required: true}
 	},
 	computed: {

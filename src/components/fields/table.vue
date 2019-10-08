@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import vTable from "@/components/table/components/table";
+import vTable from "@/components/tabs/tab/table/components/table";
 
 export default {
 	components: {vTable},

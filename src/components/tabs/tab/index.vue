@@ -1,16 +1,22 @@
 <template>
 	<div class="tab">
-		<component :is="`v${type}`" v-bind="{definitions}" :key="id" />
+		<component
+			:is="`v${type}`"
+			v-bind="{definitions, parentData: data}"
+			:key="id"
+		/>
 	</div>
 </template>
 
 <script>
-import vtable from "@/components/table";
+import vfields from "./fields";
+import vtable from "./table";
 
 export default {
-	components: {vtable},
+	components: {vfields, vtable},
 	props: {
 		definitions: {type: Object, required: true},
+		data: {type: Object, required: false},
 		type: {type: String, required: true},
 		id: {type: String, required: true}
 	}
@@ -19,6 +25,6 @@ export default {
 
 <style lang="scss" scoped>
 .tab {
-	margin-top: 1em;
+	margin: 1.5em 0;
 }
 </style>

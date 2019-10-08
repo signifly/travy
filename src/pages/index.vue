@@ -6,7 +6,7 @@
 export default {
 	computed: {
 		frontpage() {
-			return this.$store.getters["config/frontpage"];
+			return this.$store.getters["config/data"].frontpage;
 		}
 	},
 	created() {

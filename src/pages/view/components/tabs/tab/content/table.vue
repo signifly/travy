@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import tablePage from "@/components/table";
+import tablePage from "@/components/tabs/tab/table";
 
 export default {
 	components: {tablePage},

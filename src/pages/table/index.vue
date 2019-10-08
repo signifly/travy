@@ -1,8 +1,8 @@
 <template>
-	<div class="table" v-if="data">
-		<hero v-if="data" v-bind="{modifiers}" @refresh="refresh" />
+	<div class="table" v-if="definitions">
+		<hero v-if="definitions" v-bind="{modifiers, title}" @refresh="refresh" />
 		<div class="container">
-			<tabs :tabs="data.tabs" :key="url + refreshKey" />
+			<tabs :tabs="definitions.tabs" :key="url + refreshKey" />
 		</div>
 	</div>
 </template>
@@ -14,13 +14,14 @@ import tabs from "@/components/tabs";
 export default {
 	components: {tabs, hero},
 	data: () => ({
-		refreshKey: 0,
-		data: null
+		definitions: null,
+		refreshKey: 0
 	}),
 	computed: {
 		url: (t) => `definitions/table/${t.tableId}`,
+		modifiers: (t) => t.definitions.modifiers,
 		tableId: (t) => t.$route.params.tableId,
-		modifiers: (t) => t.data.modifiers,
+		title: (t) => t.definitions.title,
 		query: (t) => t.$route.query
 	},
 	methods: {
@@ -33,7 +34,7 @@ export default {
 				params: {modifiers: this.query.modifiers}
 			});
 
-			this.data = data;
+			this.definitions = data;
 			this.$store.dispatch("base/meta", {title: data.title});
 		}
 	},

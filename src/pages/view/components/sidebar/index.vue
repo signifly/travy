@@ -87,11 +87,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="scss" scoped>
-.sidebar {
-	.sections {
-		margin-top: 2.5em;
-	}
-}
-</style>

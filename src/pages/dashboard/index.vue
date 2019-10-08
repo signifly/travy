@@ -1,17 +1,15 @@
 <template>
 	<div class="dashboard" v-if="dashboard">
-		<breadcrumb :items="[{title, to: $route.path}]" />
 		<page v-bind="{defsEndpoint, title}" :key="id" />
 	</div>
 </template>
 
 <script>
-import breadcrumb from "@/components/breadcrumb.vue";
 import page from "./page.vue";
 import {get} from "lodash";
 
 export default {
-	components: {breadcrumb, page},
+	components: {page},
 	computed: {
 		defsEndpoint: (t) => ({url: `definitions/dashboard/${t.id}`}),
 		dashboard: (t) => t.$store.getters["config/dashboards"][t.id],

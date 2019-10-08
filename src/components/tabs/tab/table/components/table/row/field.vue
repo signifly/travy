@@ -10,8 +10,8 @@
 
 <script>
 import {rStringProps} from "@/modules/utils";
-import state from "@/components/table/state";
 import field from "@/components/field";
+import state from "../../../state";
 
 export default {
 	components: {field},

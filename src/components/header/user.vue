@@ -1,5 +1,7 @@
 <template>
 	<div class="user">
+		<div class="image" :style="{backgroundImage: `url('${user.image}')`}" />
+
 		<Dropdown
 			trigger="click"
 			:show-timeout="0"
@@ -56,8 +58,18 @@ export default {
 
 <style lang="scss" scoped>
 .user {
-	.el-dropdown {
-		color: $white1;
+	display: flex;
+	align-items: center;
+
+	.image {
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+		border-radius: 50%;
+		margin-right: 0.5em;
+		$s: 24px;
+		width: $s;
+		height: $s;
 	}
 }
 </style>

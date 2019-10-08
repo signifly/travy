@@ -1,17 +1,16 @@
 <template>
-	<div class="hero" :style="{backgroundColor: config.theme.color}">
+	<div class="hero" :style="{backgroundColor: theme.color}">
 		<div class="container">
 			<div class="wrap">
-				<div class="breadcrumbs">
-					path / stuff / test
-				</div>
+				<breadcrumbs v-if="breadcrumbs" />
 
 				<div class="bottom">
-					<div class="title">
-						hero
-					</div>
-
-					<modifiers v-bind="modifiers" @refresh="$emit('refresh')" />
+					<div class="title" v-text="title" />
+					<modifiers
+						v-if="modifiers"
+						v-bind="modifiers"
+						@refresh="$emit('refresh')"
+					/>
 				</div>
 			</div>
 		</div>
@@ -19,15 +18,18 @@
 </template>
 
 <script>
+import breadcrumbs from "./breadcrumbs";
 import modifiers from "./modifiers";
 
 export default {
-	components: {modifiers},
+	components: {breadcrumbs, modifiers},
 	props: {
-		modifiers: {type: Object, required: true}
+		breadcrumbs: {type: Array, required: false},
+		modifiers: {type: Object, required: false},
+		title: {type: String, required: true}
 	},
 	computed: {
-		config: (t) => t.$store.getters["config/data"]
+		theme: (t) => t.$store.getters["config/theme"]
 	}
 };
 </script>
@@ -50,9 +52,10 @@ export default {
 		}
 
 		.bottom {
-			display: flex;
 			justify-content: space-between;
 			align-items: flex-end;
+			display: flex;
+			height: 100%;
 
 			.title {
 				font-size: 32px;

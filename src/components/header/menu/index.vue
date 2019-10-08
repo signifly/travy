@@ -6,7 +6,7 @@
 		ref="menu"
 		:text-color="config.theme.color"
 	>
-		<item v-for="item in config.menu" v-bind="{item}" :key="item.name" />
+		<item v-for="item in header.menu" v-bind="{item}" :key="item.name" />
 	</Menu>
 </template>
 
@@ -17,6 +17,7 @@ import item from "./item";
 export default {
 	components: {Menu, item},
 	computed: {
+		header: (t) => t.$store.getters["config/header"],
 		config: (t) => t.$store.getters["config/data"]
 	},
 	mounted() {

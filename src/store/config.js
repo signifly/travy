@@ -4,7 +4,7 @@ export default {
 	namespaced: true,
 
 	state: {
-		data: null
+		data: undefined
 	},
 
 	mutations: {
@@ -28,10 +28,16 @@ export default {
 		data(state) {
 			return state.data;
 		},
-		ws(state, {data}) {
+		theme(state, {data = {}}) {
+			return data.theme;
+		},
+		header(state, {data = {}}) {
+			return data.header;
+		},
+		ws(state, {data = {}}) {
 			return data.websockets;
 		},
-		title(state, {data}) {
+		title(state, {data = {}}) {
 			return data.title || "Travy";
 		}
 	}

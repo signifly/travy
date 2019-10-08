@@ -1,7 +1,10 @@
 <template>
-	<transition name="view-page" v-if="definitions && data">
-		<div class="view-page">
-			<Row class="top" :gutter="20">
+	<transition name="view-page">
+		<div class="view-page" v-if="data">
+			<hero v-bind="{modifiers, title: 'test'}" />
+
+			<div class="container">
+				<!-- <Row class="top" :gutter="20">
 				<Col class="left" :span="12">
 					<vHeader v-bind="{data, header}" />
 				</Col>
@@ -9,62 +12,60 @@
 					<modifiers v-if="modifiers" v-bind="{modifiers}" @event="event" />
 					<actions v-if="actions" v-bind="{actions, data}" @event="event" />
 				</Col>
-			</Row>
+			</Row> -->
 
-			<Row class="mid" :gutter="20">
-				<Col class="left" :span="16">
-					<tabs
-						ref="tabs"
-						v-bind="{tabs, data, update}"
-						:edit.sync="edits.tabs"
-						@event="event"
-					/>
-				</Col>
-				<Col class="right" :span="8">
-					<sidebar
-						v-if="sidebar"
-						ref="sidebar"
-						v-bind="{sidebar, endpoint, options}"
-						:edit.sync="edits.sidebar"
-						:data.sync="res.data"
-						@event="event"
-					/>
-				</Col>
-			</Row>
-
-			<Row class="bottom" :gutter="20">
-				<Col class="left" :span="24">
-					<transition name="el-fade-in" mode="out-in" appear>
-						<activity
-							v-if="activity"
-							:key="data.updated_at"
-							v-bind="{data, endpoint}"
+				<Row class="mid" :gutter="20">
+					<Col class="left" :span="16">
+						<tabs v-bind="{tabs, data: res.data}" @event="event" />
+					</Col>
+					<Col class="right" :span="8">
+						<sidebar
+							v-if="sidebar"
+							ref="sidebar"
+							v-bind="{sidebar, endpoint, options}"
+							:edit.sync="edits.sidebar"
+							:data.sync="res.data"
 							@event="event"
 						/>
-					</transition>
-				</Col>
-			</Row>
+					</Col>
+				</Row>
 
-			<panels v-bind="{loading, error, data, edits}" @save="save" />
+				<Row class="bottom" :gutter="20">
+					<Col class="left" :span="24">
+						<transition name="el-fade-in" mode="out-in" appear>
+							<activity
+								v-if="activity"
+								:key="data.updated_at"
+								v-bind="{data, endpoint}"
+								@event="event"
+							/>
+						</transition>
+					</Col>
+				</Row>
+
+				<panels v-bind="{loading, error, data, edits}" @save="save" />
+			</div>
 		</div>
 	</transition>
 </template>
 
 <script>
-import {merge} from "lodash";
-import {Row, Col} from "element-ui";
-import tabs from "./components/tabs";
-import panels from "./components/panels";
-import vHeader from "./components/header";
-import sidebar from "./components/sidebar";
-import actions from "./components/actions";
-import activity from "./components/activity";
 import modifiers from "./components/modifiers";
+import activity from "./components/activity";
+import actions from "./components/actions";
+import sidebar from "./components/sidebar";
+import vHeader from "./components/header";
+import panels from "./components/panels";
+import tabs from "@/components/tabs";
+import hero from "@/components/hero";
+import {Row, Col} from "element-ui";
+import {merge} from "lodash";
 
 export default {
 	components: {
 		Col,
 		Row,
+		hero,
 		tabs,
 		panels,
 		vHeader,
@@ -74,11 +75,16 @@ export default {
 		modifiers
 	},
 	props: {
-		requests: {type: Object, required: true}
+		tabs: {type: Array, required: true},
+		header: {type: Object, required: true},
+		actions: {type: Array, required: true},
+		sidebar: {type: Array, required: true},
+		activity: {type: Object, required: true},
+		endpoint: {type: Object, required: true},
+		modifiers: {type: Array, required: false}
 	},
 	data() {
 		return {
-			definitions: null,
 			loading: false,
 			error: null,
 			update: 0,
@@ -92,14 +98,7 @@ export default {
 	computed: {
 		data: (t) => t.res.data,
 		query: (t) => t.$route.query,
-		options: (t) => t.res.options,
-		tabs: (t) => t.definitions.tabs,
-		header: (t) => t.definitions.header,
-		actions: (t) => t.definitions.actions,
-		sidebar: (t) => t.definitions.sidebar,
-		activity: (t) => t.definitions.activity,
-		endpoint: (t) => t.definitions.endpoint,
-		modifiers: (t) => t.definitions.modifiers
+		options: (t) => t.res.options
 	},
 	methods: {
 		async event({actions = {}, done}) {
@@ -135,17 +134,12 @@ export default {
 			this.loading = false;
 		},
 
-		async getDefinitions() {
-			const params = {modifier: this.query.modifiers};
-			const {data} = await this.$axios.get(this.requests.definitions, {params});
-			this.definitions = data;
-		},
-
 		async getData() {
 			const params = {modifier: this.query.modifiers};
+			const {tableId, viewId} = this.$route.params;
 
 			try {
-				const {data} = await this.$axios.get(this.requests.data, {
+				const {data} = await this.$axios.get(`/${tableId}/${viewId}`, {
 					params,
 					customErr: true
 				});
@@ -161,7 +155,6 @@ export default {
 		}
 	},
 	created() {
-		this.getDefinitions();
 		this.getData();
 	}
 };
@@ -169,8 +162,6 @@ export default {
 
 <style lang="scss" scoped>
 .view-page {
-	margin-top: 2em;
-
 	&-enter-active,
 	&-leave-active {
 		transition: cubic(opacity, 0.3s);
@@ -179,14 +170,6 @@ export default {
 	&-enter,
 	&-leave-to {
 		opacity: 0;
-	}
-
-	.top {
-		.right {
-			display: flex;
-			flex-direction: column;
-			align-items: flex-end;
-		}
 	}
 }
 </style>

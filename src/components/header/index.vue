@@ -1,7 +1,7 @@
 <template>
 	<Header height="64px">
 		<router-link class="logo" :to="{name: 'index'}">
-			<img :src="config.theme.logo" />
+			<img :src="theme.logo" />
 		</router-link>
 
 		<vMenu />
@@ -22,8 +22,9 @@ import user from "./user";
 export default {
 	components: {Header, notification, vMenu, user},
 	computed: {
-		config: (t) => t.$store.getters["config/data"],
-		notifications: (t) => t.config.notifications !== false
+		theme: (t) => t.$store.getters["config/theme"],
+		header: (t) => t.$store.getters["config/header"],
+		notifications: (t) => t.header.notifications !== false
 	}
 };
 </script>

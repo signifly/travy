@@ -1,13 +1,14 @@
 module.exports = {
 	"/account": {
 		data: {
+			image: "https://picsum.photos/50/50",
 			email: "mtm@signifly.com",
 			email_verified_at: null,
 			updated_at: 1568191509,
-			created_at: 1568191509,
+			created_at: 156819150,
 			deleted_at: null,
 			role: "admin",
-			name: "mtm",
+			name: "Bret",
 			id: 1
 		}
 	},
@@ -24,49 +25,55 @@ module.exports = {
 
 	"/definitions/config": {
 		frontpage: "/t/projects",
-		notifications: false,
 		title: "Travy",
 		locale: "en",
 		theme: {
 			logo: "https://picsum.photos/200/50",
 			color: "#00233d"
 		},
-		menu: [
-			{
-				name: "Projects",
-				url: "/t/projects"
+		header: {
+			notifications: false,
+			link: {
+				url: "http://google.dk",
+				name: "Back to shop"
 			},
-			{
-				name: "Media",
-				items: [
-					{
-						name: "test",
-						url: "/t/seof"
-					},
-					{
-						name: "Projects",
-						items: [
-							{
-								name: "Projects",
-								url: "/t/projects1"
-							},
-							{
-								name: "awdawd",
-								url: "/t/projects2"
-							},
-							{
-								name: "sdfsfd",
-								url: "/t/projects3"
-							}
-						]
-					}
-				]
-			},
-			{
-				name: "Test",
-				url: "/t/test"
-			}
-		]
+			menu: [
+				{
+					name: "Projects",
+					url: "/t/projects"
+				},
+				{
+					name: "Media",
+					items: [
+						{
+							name: "test",
+							url: "/t/seof"
+						},
+						{
+							name: "Projects",
+							items: [
+								{
+									name: "Projects",
+									url: "/t/projects1"
+								},
+								{
+									name: "awdawd",
+									url: "/t/projects2"
+								},
+								{
+									name: "sdfsfd",
+									url: "/t/projects3"
+								}
+							]
+						}
+					]
+				},
+				{
+					name: "Test",
+					url: "/t/test"
+				}
+			]
+		}
 	},
 
 	"/definitions/view/account": {
@@ -594,78 +601,342 @@ module.exports = {
 	"/definitions/view/projects": {
 		tabs: [
 			{
-				id: "details",
+				id: "fields",
+				name: "Fields",
 				type: "fields",
-				endpoint: {url: "http://localhost:3001/v1/admin/projects/{id}"},
-				title: {text: "Details", url: null},
-				fields: [
-					{
-						name: "name",
-						label: "Name",
-						fieldType: {id: "input-text", props: {value: "name"}}
+				definitions: {
+					endpoint: {
+						url: "/projects/{id}"
 					},
-					{
-						name: "start_date",
-						label: "Start Date",
-						fieldType: {
-							id: "input-date",
-							props: {formatValue: "yyyy-MM-dd", date: "start_date"}
+					fields: [
+						{
+							name: "Name",
+							fieldType: {id: "text", props: {text: "name"}}
+						}
+					]
+				}
+			},
+			{
+				id: "stuff1",
+				name: "stuff1",
+				type: "table",
+				definitions: {
+					expand: {
+						type: "fields",
+						fields: [
+							{
+								width: 50,
+								name: "Name",
+								fieldType: {id: "text", props: {text: "name"}}
+							},
+							{
+								width: 50,
+								name: "Tags",
+								fieldType: {
+									id: "list-tooltip",
+									props: {
+										items: {
+											_link: "/t/tags/{id}",
+											"@scope": "tags",
+											label: "key"
+										}
+									}
+								}
+							},
+							{
+								name: "input",
+								fieldType: {
+									id: "input-switch",
+									props: {
+										value: "switch"
+									}
+								}
+							}
+						]
+					},
+					batch: {
+						selectedOptions: {
+							label: "{name}",
+							link: "/t/projects/{id}"
+						},
+						sequential: {
+							url: "/t/projects/{id}"
 						}
 					},
-					{
-						name: "tags",
-						label: "Tags",
-						fieldType: {
-							id: "input-select-multi-search",
-							props: {
-								values: "tags",
-								options: {
-									key: "data",
-									itemKey: "data",
-									value: "id",
-									label: "name",
-									endpoint: {url: "http://localhost:3001/v1/admin/tags"}
+					endpoint: {
+						url: "http://localhost:3001/v1/admin/projects",
+						params: {include: ["tags"]}
+					},
+					pagination: {},
+					sort: {
+						default: "name",
+						items: [
+							{label: "Name", value: "name"},
+							{label: "Input", value: "input"}
+						]
+					},
+					columns: [
+						{
+							width: 350,
+							name: "Name",
+							fieldType: {id: "text", props: {text: "name"}},
+							onClick: "/t/projects/{id}"
+						},
+						{
+							name: "Tags",
+							fieldType: {
+								id: "list-tooltip",
+								props: {
+									items: {
+										_link: "/t/tags/{id}",
+										"@scope": "tags",
+										label: "key"
+									}
+								}
+							}
+						},
+						{
+							name: "input",
+							fieldType: {
+								id: "input-switch",
+								props: {
+									value: "switch"
 								}
 							}
 						}
+					],
+					filters: {
+						data: {
+							name: "test"
+						},
+						search: {
+							placeholder: "Search..."
+						},
+						fields: [
+							{
+								name: "name",
+								label: "Name",
+								fieldType: {id: "input-text", props: {value: "name"}}
+							}
+						]
 					},
-					{
-						name: "description",
-						label: "Description",
-						fieldType: {
-							id: "input-editor-markdown",
-							props: {content: "description"}
+					actions: [
+						{
+							title: "Add project",
+							props: {
+								title: "Add project",
+								id: "modal",
+								onSubmit: "/t/projects/{id}",
+								fields: [
+									{
+										name: "client_id",
+										label: "Client",
+										fieldType: {
+											id: "input-select-search",
+											props: {
+												value: "client_id",
+												options: {
+													key: "data",
+													itemKey: "data",
+													value: "id",
+													label: "name",
+													endpoint: {
+														url: "http://localhost:3001/v1/admin/clients",
+														params: {sort: "name"}
+													}
+												}
+											}
+										}
+									},
+									{
+										name: "name",
+										label: "Name",
+										fieldType: {id: "input-text", props: {value: "name"}}
+									},
+									{
+										name: "start_date",
+										label: "Start Date",
+										fieldType: {
+											id: "input-date",
+											props: {formatValue: "yyyy-MM-dd", date: "start_date"}
+										}
+									},
+									{
+										name: "tags",
+										label: "Tags",
+										fieldType: {
+											id: "input-select-multi-search",
+											props: {
+												values: "tags",
+												options: {
+													key: "data",
+													itemKey: "data",
+													value: "id",
+													label: "name",
+													endpoint: {
+														url: "http://localhost:3001/v1/admin/tags"
+													}
+												}
+											}
+										}
+									},
+									{
+										name: "description",
+										label: "Description",
+										fieldType: {
+											id: "input-editor-markdown",
+											props: {content: "description"}
+										}
+									}
+								],
+								payload: {
+									data: {
+										client_id: "",
+										name: "",
+										start_date: "",
+										tags: [],
+										description: ""
+									}
+								},
+								endpoint: {
+									url: "http://localhost:3001/v1/admin/projects",
+									method: "post"
+								}
+							},
+							icon: "plus",
+							status: "primary"
 						}
-					}
-				]
+					]
+				}
 			},
 			{
-				id: "issues",
+				id: "stuff2",
+				name: "stuff 2",
 				type: "table",
-				endpoint: {
-					url: "http://localhost:3001/v1/admin/definitions/table/issues"
-				},
-				title: {text: "Issues", url: null},
-				fields: []
-			},
-			{
-				id: "notes",
-				type: "table",
-				endpoint: {
-					url: "http://localhost:3001/v1/admin/definitions/table/project-notes"
-				},
-				title: {text: "Notes", url: null},
-				fields: []
-			},
-			{
-				id: "actions",
-				type: "table",
-				endpoint: {
-					url: "http://localhost:3001/v1/admin/definitions/table/action-logs",
-					params: {type: "entity", actionable: []}
-				},
-				title: {text: "Actions", url: null},
-				fields: []
+				definitions: {
+					endpoint: {
+						url: "http://localhost:3001/v1/admin/projects",
+						params: {include: ["tags"]}
+					},
+					pagination: {},
+					columns: [
+						{
+							width: 350,
+							name: "Name",
+							fieldType: {id: "text", props: {text: "name"}},
+							onClick: "/t/projects/{id}"
+						},
+						{
+							name: "Tags",
+							fieldType: {
+								id: "list-tooltip",
+								props: {
+									items: {
+										_link: "/t/tags/{id}",
+										"@scope": "tags",
+										label: "key"
+									}
+								}
+							}
+						},
+						{
+							name: "input",
+							fieldType: {
+								id: "input-switch",
+								props: {
+									value: "switch"
+								}
+							}
+						}
+					],
+					actions: [
+						{
+							title: "Add project",
+							props: {
+								title: "Add project",
+								id: "modal",
+								onSubmit: "/t/projects/{id}",
+								fields: [
+									{
+										name: "client_id",
+										label: "Client",
+										fieldType: {
+											id: "input-select-search",
+											props: {
+												value: "client_id",
+												options: {
+													key: "data",
+													itemKey: "data",
+													value: "id",
+													label: "name",
+													endpoint: {
+														url: "http://localhost:3001/v1/admin/clients",
+														params: {sort: "name"}
+													}
+												}
+											}
+										}
+									},
+									{
+										name: "name",
+										label: "Name",
+										fieldType: {id: "input-text", props: {value: "name"}}
+									},
+									{
+										name: "start_date",
+										label: "Start Date",
+										fieldType: {
+											id: "input-date",
+											props: {formatValue: "yyyy-MM-dd", date: "start_date"}
+										}
+									},
+									{
+										name: "tags",
+										label: "Tags",
+										fieldType: {
+											id: "input-select-multi-search",
+											props: {
+												values: "tags",
+												options: {
+													key: "data",
+													itemKey: "data",
+													value: "id",
+													label: "name",
+													endpoint: {
+														url: "http://localhost:3001/v1/admin/tags"
+													}
+												}
+											}
+										}
+									},
+									{
+										name: "description",
+										label: "Description",
+										fieldType: {
+											id: "input-editor-markdown",
+											props: {content: "description"}
+										}
+									}
+								],
+								payload: {
+									data: {
+										client_id: "",
+										name: "",
+										start_date: "",
+										tags: [],
+										description: ""
+									}
+								},
+								endpoint: {
+									url: "http://localhost:3001/v1/admin/projects",
+									method: "post"
+								}
+							},
+							icon: "plus",
+							status: "primary"
+						}
+					]
+				}
 			}
 		],
 		header: {props: {title: "name", image: null, tag: "id"}},

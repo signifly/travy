@@ -1,37 +1,36 @@
 <template>
-	<div class="view" v-if="table">
-		<vBreadcrumb :items="breadcrumb" />
-		<page v-bind="[{tableId, requests}]" :key="viewKey" />
+	<div class="view" v-if="definitions">
+		<page v-bind="definitions" :key="key" />
 	</div>
 </template>
 
 <script>
-import vBreadcrumb from "@/components/breadcrumb.vue";
-import page from "./page.vue";
+import page from "./page";
 
 export default {
-	components: {vBreadcrumb, page},
+	components: {page},
+	data: () => ({
+		definitions: null
+	}),
 	computed: {
+		url: (t) => `/definitions/view/${t.tableId}`,
 		tableId: (t) => t.$route.params.tableId,
-		table: (t) => t.$store.getters["config/tables"][t.tableId],
-
+		key: (t) => `${t.tableId}-${t.viewId}`,
 		viewId: (t) => t.$route.params.viewId,
-		viewKey: (t) => `${t.tableId}-${t.viewId}`,
+		query: (t) => t.$route.query
+	},
+	methods: {
+		async getData() {
+			const {data} = await this.$axios.get(this.url, {
+				params: {modifiers: this.query.modifiers}
+			});
 
-		requests: (t) => ({
-			data: `${t.tableId}/${t.viewId}`,
-			definitions: `definitions/view/${t.tableId}`
-		}),
-
-		breadcrumb: (t) => [
-			{title: t.table.title, to: `/t/${t.tableId}`},
-			{title: t.viewId, to: t.$route.path}
-		]
+			this.definitions = data;
+			this.$store.dispatch("base/meta", {title: data.title});
+		}
 	},
 	created() {
-		if (!this.table) {
-			this.$router.replace({name: "error"});
-		}
+		this.getData();
 	}
 };
 </script>
