@@ -16,7 +16,12 @@
 
 				<Row class="mid" :gutter="20">
 					<Col class="left" :span="16">
-						<tabs v-bind="{tabs, data: res.data}" @event="event" />
+						<tabs
+							ref="tabs"
+							v-bind="{tabs, data: res.data}"
+							:edit.sync="edits.tabs"
+							@event="event"
+						/>
 					</Col>
 					<Col class="right" :span="8">
 						<sidebar

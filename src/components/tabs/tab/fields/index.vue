@@ -46,6 +46,7 @@ export default {
 	methods: {
 		async event({actions, done}) {
 			if (actions.update) {
+				this.$emit("edit", true);
 				let {data} = actions.update;
 
 				data = mapPaths(data);
@@ -77,6 +78,8 @@ export default {
 
 		async save() {
 			const body = {modifer: this.modifiers, data: this.payload};
+
+			console.log("save");
 
 			try {
 				await this.$axios.put(this.endpoint.url, body, {customErr: true});

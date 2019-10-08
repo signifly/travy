@@ -29,11 +29,7 @@
 				@getData="getData"
 				@event="event"
 			/>
-			<pagination
-				v-if="meta && pagination"
-				v-bind="[meta, {loading}]"
-				@getData="getData"
-			/>
+			<pagination v-if="meta" v-bind="[meta, {loading}]" @getData="getData" />
 			<batch v-bind="[batch, {selected}]" @event="event" />
 		</div>
 	</div>

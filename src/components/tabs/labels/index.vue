@@ -1,11 +1,12 @@
 <template>
 	<div class="labels">
 		<vLabel
-			v-for="_tab in tabs"
-			:name="_tab.name"
-			:id="_tab.id"
-			:active="tab === _tab"
-			:key="_tab.id"
+			v-for="item in tabs"
+			:active="tab === item"
+			:name="item.name"
+			:key="item.id"
+			:id="item.id"
+			:edit="edit"
 		/>
 	</div>
 </template>
@@ -16,6 +17,7 @@ import vLabel from "./label";
 export default {
 	components: {vLabel},
 	props: {
+		edit: {type: Boolean, required: false},
 		tabs: {type: Array, required: true},
 		tab: {type: Object, required: true}
 	}
