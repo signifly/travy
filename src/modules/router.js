@@ -12,7 +12,6 @@ import login from "@/pages/login";
 import loginReset from "@/pages/login/reset.vue";
 
 import dashboard from "@/pages/dashboard";
-import custom from "@/pages/custom.vue";
 import table from "@/pages/table";
 import view from "@/pages/view";
 
@@ -68,12 +67,6 @@ const routes = [
 		meta: {layout: "main", auth: {roles: "all"}}
 	},
 	{
-		path: "/c/:id",
-		name: "custom",
-		component: custom,
-		meta: {layout: "main", auth: {roles: "all"}}
-	},
-	{
 		path: "/error",
 		alias: "*",
 		name: "error",
@@ -102,7 +95,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-	routes: [...routes, ...Vue.prototype.$settings.routes],
+	routes: [...Vue.prototype.$settings.routes, ...routes],
 	mode: "history",
 	parseQuery(query) {
 		const parse = (item) =>

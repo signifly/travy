@@ -34,9 +34,6 @@ export default {
 		tables(state, {data}) {
 			return data && data.tables;
 		},
-		customs(state, {data}) {
-			return data && data.customs;
-		},
 		settings(state, {data}) {
 			return data && data.settings;
 		},
