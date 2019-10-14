@@ -1,8 +1,9 @@
 <template>
 	<component :is="link ? 'router-link' : 'div'" class="table-field" :to="link">
 		<field
-			v-bind="column"
-			:alt="{data, type: 'table'}"
+			:field="column"
+			:data="data"
+			type="table"
 			@event="$emit('event', $event)"
 		/>
 	</component>

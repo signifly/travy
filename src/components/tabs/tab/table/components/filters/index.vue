@@ -18,8 +18,8 @@
 						<field
 							v-for="field in fields"
 							:key="field.name"
-							v-bind="field"
-							:alt="{data: filters, type: 'fields'}"
+							v-bind="{field, data}"
+							type="fields"
 							@event="event"
 						/>
 					</div>

@@ -1,6 +1,6 @@
 <template>
-	<div class="label" v-if="name">
-		{{ name }}
+	<div class="label" v-if="field.name">
+		{{ field.name }}
 
 		<translate v-bind="option" />
 
@@ -26,13 +26,13 @@ import translate from "./translate";
 export default {
 	components: {Tooltip, translate},
 	props: {
-		alt: {type: Object, required: false},
-		name: {type: String, required: false},
-		tooltip: {type: String, required: false}
+		tooltip: {type: String, required: false},
+		field: {type: Object, required: true},
+		type: {type: String, required: true}
 	},
 	computed: {
-		option: (t) => get(t.alt.options, t.name, {}),
-		dots: (t) => t.alt.type === "fields"
+		option: (t) => get(t.options, t.field.name, {}),
+		dots: (t) => t.type === "fields"
 	}
 };
 </script>

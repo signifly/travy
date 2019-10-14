@@ -1,8 +1,12 @@
 <template>
 	<div class="field" :style="{width: fWidth}" v-if="!disabled">
 		<div class="content">
-			<vlabel v-bind="{alt, name, tooltip}" v-if="rules.label" />
-			<fieldType v-bind="[fieldType, {data}]" @event="$emit('event', $event)" />
+			<vlabel v-bind="{field, type}" v-if="rules.label" />
+			<fieldType
+				@event="$emit('event', $event)"
+				v-bind="field.fieldType"
+				:data="data"
+			/>
 		</div>
 
 		<transition name="error">
@@ -11,8 +15,8 @@
 
 		<div
 			class="description"
-			v-if="description && rules.description"
-			v-text="description"
+			v-if="field.description && rules.description"
+			v-text="field.description"
 		/>
 	</div>
 </template>
@@ -26,24 +30,17 @@ import {get} from "lodash";
 export default {
 	components: {vlabel, fieldType},
 	props: {
-		description: {type: String, required: false},
-		fieldType: {type: Object, required: true},
-		tooltip: {type: String, required: false},
-		onClick: {type: String, required: false},
-		hide: {type: Object, required: false},
-		name: {type: String, required: true},
-		width: {type: Number, default: 100},
-		alt: {type: Object, required: true}
+		errors: {type: Object, required: false},
+		field: {type: Object, required: true},
+		data: {type: Object, required: false},
+		type: {type: String, required: true}
 	},
 	computed: {
-		data: (t) => t.alt.data,
-		type: (t) => t.alt.type,
-		option: (t) => get(t.alt.options, t.name, {}),
-		error: (t) => get(t.alt.errors, t.name, [])[0],
-		disabled: (t) => t.hide && operator({...t.hide, data: t.data}),
+		error: (t) => get(t.errors, t.field.name, [])[0],
+		disabled: (t) => t.field.hide && operator({...t.field.hide, data: t.data}),
 
 		fWidth() {
-			const w = this.width;
+			const w = this.field.width;
 
 			if (this.type === "fields") {
 				return w === 100 ? `${w}%` : `calc(${w}% - 1em)`;

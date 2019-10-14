@@ -159,8 +159,7 @@ module.exports = {
 		],
 		sidebar: [
 			{
-				id: "history",
-				title: "History",
+				name: "History",
 				fields: [
 					{
 						name: "created_at",
@@ -963,45 +962,46 @@ module.exports = {
 				status: "danger"
 			}
 		],
-		sidebar: [
-			{
-				id: "history",
-				title: "History",
-				fields: [
-					{
-						name: "created_at",
-						label: "Created At",
-						fieldType: {id: "date", props: {timestamp: "created_at"}}
-					},
-					{
-						name: "creator.name",
-						label: "Created By",
-						fieldType: {id: "text", props: {text: "creator.name"}}
-					},
-					{
-						name: "updated_at",
-						label: "Last Modified",
-						fieldType: {id: "date", props: {timestamp: "updated_at"}}
-					},
-					{
-						name: "editor.name",
-						label: "Last Modified By",
-						fieldType: {id: "text", props: {text: "editor.name"}}
-					}
-				]
-			},
-			{
-				id: "test",
-				title: "Test",
-				fields: [
-					{
-						name: "name",
-						label: "Name",
-						fieldType: {id: "input-text", props: {value: "name"}}
-					}
-				]
-			}
-		]
+		sidebar: {
+			name: "Name",
+			sections: [
+				{
+					name: "History",
+					fields: [
+						{
+							name: "created_at",
+							label: "Created At",
+							fieldType: {id: "date", props: {timestamp: "created_at"}}
+						},
+						{
+							name: "creator.name",
+							label: "Created By",
+							fieldType: {id: "text", props: {text: "creator.name"}}
+						},
+						{
+							name: "updated_at",
+							label: "Last Modified",
+							fieldType: {id: "date", props: {timestamp: "updated_at"}}
+						},
+						{
+							name: "editor.name",
+							label: "Last Modified By",
+							fieldType: {id: "text", props: {text: "editor.name"}}
+						}
+					]
+				},
+				{
+					name: "Test",
+					fields: [
+						{
+							name: "name",
+							label: "Name",
+							fieldType: {id: "input-text", props: {value: "name"}}
+						}
+					]
+				}
+			]
+		}
 	},
 
 	"/projects/:id": {

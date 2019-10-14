@@ -83,7 +83,7 @@ export default {
 		tabs: {type: Array, required: true},
 		header: {type: Object, required: true},
 		actions: {type: Array, required: true},
-		sidebar: {type: Array, required: true},
+		sidebar: {type: Object, required: true},
 		activity: {type: Object, required: true},
 		endpoint: {type: Object, required: true},
 		modifiers: {type: Array, required: false}
@@ -145,8 +145,8 @@ export default {
 
 			try {
 				const {data} = await this.$axios.get(`/${tableId}/${viewId}`, {
-					params,
-					customErr: true
+					customErr: true,
+					params
 				});
 
 				this.res = data;

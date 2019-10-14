@@ -1,11 +1,11 @@
 <template>
 	<div class="sidebar">
+		<div class="name" v-text="sidebar.name" />
 		<div class="sections">
-			<group
-				v-for="group in sidebar"
-				ref="group"
-				:key="group.id"
-				v-bind="[group, {fieldAlt}]"
+			<vSection
+				v-for="section in sidebar.sections"
+				v-bind="{section, error, options, data}"
+				:key="section.name"
 				@event="event"
 			/>
 		</div>
@@ -14,15 +14,14 @@
 
 <script>
 import {rStringProps, mergeData, mapPaths} from "@/modules/utils";
-import group from "./group";
-import {get} from "lodash";
+import vSection from "./section";
 
 export default {
-	components: {group},
+	components: {vSection},
 	props: {
 		endpoint: {type: Object, required: true},
 		options: {type: Object, required: false},
-		sidebar: {type: Array, required: true},
+		sidebar: {type: Object, required: true},
 		edit: {type: Boolean, required: false},
 		data: {type: Object, required: true}
 	},
@@ -34,13 +33,7 @@ export default {
 	},
 	computed: {
 		endpointUrl: (t) => rStringProps({data: t.data, val: t.endpoint.url}),
-		modifiers: (t) => t.$route.query.modifiers,
-
-		fieldAlt: (t) => ({
-			errors: get(t.error, "errors"),
-			options: t.options,
-			data: t.data
-		})
+		modifiers: (t) => t.$route.query.modifiers
 	},
 	methods: {
 		async event({actions, done}) {
@@ -87,3 +80,23 @@ export default {
 	}
 };
 </script>
+
+<style lang="scss" scoped>
+.sidebar {
+	background-color: $white1;
+	border: 1px solid #e0e6ed;
+	border-radius: 4px;
+
+	.name {
+		border-bottom: 1px solid #f5f7fa;
+		align-items: center;
+		padding: 0 24px;
+		display: flex;
+		height: 55px;
+	}
+
+	.sections {
+		padding: 24px;
+	}
+}
+</style>

@@ -1,10 +1,11 @@
 <template>
 	<div class="fields">
 		<field
+			v-bind="{field, data, options, error}"
 			v-for="field in fields"
-			v-bind="[field, {alt}]"
 			:key="field.name"
 			@event="event"
+			type="fields"
 		/>
 	</div>
 </template>
@@ -78,8 +79,6 @@ export default {
 
 		async save() {
 			const body = {modifer: this.modifiers, data: this.payload};
-
-			console.log("save");
 
 			try {
 				await this.$axios.put(this.endpoint.url, body, {customErr: true});
