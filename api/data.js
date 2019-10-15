@@ -143,18 +143,18 @@ module.exports = {
 		actions: [
 			{
 				title: "Delete",
+				icon: "delete",
+				status: "danger",
 				props: {
-					title: "Delete",
 					id: "popup",
+					title: "Delete",
 					text: "Are you sure? Please confirm this action.",
 					onSubmit: "/t/account",
 					endpoint: {
 						url: "http://localhost:3001/v1/admin/account/{id}",
 						method: "delete"
 					}
-				},
-				icon: "delete",
-				status: "danger"
+				}
 			}
 		],
 		sidebar: [
@@ -164,6 +164,7 @@ module.exports = {
 					{
 						attribute: "created_at",
 						name: "Created At",
+						labelLeft: true,
 						fieldType: {id: "date", props: {timestamp: "created_at"}}
 					},
 					{

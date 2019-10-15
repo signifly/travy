@@ -2,7 +2,7 @@
 	<div class="actions" v-if="actions.length">
 		<viewAction
 			v-for="action in actions"
-			:key="action.title"
+			:key="action.name"
 			v-bind="[action, {data}]"
 			@event="$emit('event', $event)"
 		/>
