@@ -5,7 +5,7 @@
 				<expandToggle :expanded.sync="expanded" v-if="expand" />
 			</td>
 			<td v-if="selected.active"><vselect v-bind="{selected, row}" /></td>
-			<td v-for="column in columns" :key="column.name">
+			<td v-for="column in columns" :key="column.attribute">
 				<rowField v-bind="{data: data, column}" @event="event" />
 			</td>
 		</tr>

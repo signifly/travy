@@ -11,9 +11,8 @@
 			>
 				<field
 					v-for="field in fields"
-					:key="field.name"
-					:alt="{data, errors}"
-					v-bind="field"
+					:key="field.attribute"
+					v-bind="{field, data, error}"
 					@event="$emit('event', $event)"
 				/>
 
@@ -35,16 +34,15 @@ import field from "@/components/field";
 export default {
 	components: {Form, field},
 	props: {
-		title: {type: String, required: true},
+		error: {type: Object, default: () => ({})},
 		loading: {type: Boolean, required: false},
-		error: {type: Object, required: true},
 		message: {type: String, required: true},
+		title: {type: String, required: true},
 		fields: {type: Array, required: true},
 		data: {type: Object, required: true}
 	},
 	computed: {
-		header: (t) => t.$store.getters["config/title"],
-		errors: (t) => t.error.errors
+		header: (t) => t.$store.getters["config/title"]
 	}
 };
 </script>

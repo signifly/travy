@@ -17,9 +17,9 @@
 					<div class="fields">
 						<field
 							v-for="field in fields"
-							:key="field.name"
-							v-bind="{field, data}"
-							type="fields"
+							:key="field.attribute"
+							v-bind="{field}"
+							:data="filters"
 							@event="event"
 						/>
 					</div>

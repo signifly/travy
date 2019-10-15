@@ -28,12 +28,12 @@ import row from "./row";
 export default {
 	components: {vHead, row},
 	props: {
-		data: {type: Array, required: false},
-		columns: {type: Array, required: true},
+		selected: {type: Object, default: () => ({})},
+		loading: {type: Boolean, required: false},
+		endpoint: {type: Object, required: false},
 		expand: {type: Object, required: false},
-		selected: {type: Object, required: true},
-		endpoint: {type: Object, required: true},
-		loading: {type: Boolean, required: false}
+		columns: {type: Array, required: true},
+		data: {type: Array, required: false}
 	}
 };
 </script>

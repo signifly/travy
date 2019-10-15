@@ -1,7 +1,12 @@
 <template>
 	<div class="modifiers">
-		<div class="modifiers-field" v-for="field in fields" :key="field.name">
-			<field :field="field" :data="data" type="modifiers" @event="event" />
+		<div class="modifiers-field" v-for="field in fields" :key="field.attribute">
+			<field
+				v-bind="{field, data}"
+				:hide="['label']"
+				:widthPx="true"
+				@event="event"
+			/>
 		</div>
 	</div>
 </template>

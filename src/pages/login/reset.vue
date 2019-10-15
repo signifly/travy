@@ -30,14 +30,14 @@ export default {
 	},
 	data() {
 		return {
+			error: undefined,
 			loading: false,
 			message: "",
-			error: {},
 
 			fields: [
 				{
-					name: "email",
-					label: "Email",
+					name: "Email",
+					attribute: "email",
 					fieldType: {
 						id: "input-text",
 						props: {
@@ -46,8 +46,8 @@ export default {
 					}
 				},
 				{
-					name: "password",
-					label: "New password",
+					name: "New password",
+					attribute: "password",
 					fieldType: {
 						id: "input-password",
 						props: {
@@ -56,8 +56,8 @@ export default {
 					}
 				},
 				{
-					name: "password-confirmation",
-					label: "Confirm password",
+					name: "Confirm password",
+					attribute: "password-confirmation",
 					fieldType: {
 						id: "input-password",
 						props: {
@@ -86,17 +86,19 @@ export default {
 
 		async reset() {
 			try {
-				this.error = {};
+				this.error = undefined;
 				this.message = "";
 				this.loading = true;
+
 				const {data} = await this.$axios.post(
 					"password/reset",
 					{...this.data, token: this.id},
 					{customErr: true}
 				);
+
 				this.message = data.message;
-			} catch (err) {
-				this.error = err;
+			} catch (error) {
+				this.error = error;
 			} finally {
 				this.loading = false;
 			}

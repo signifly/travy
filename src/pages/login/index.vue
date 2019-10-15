@@ -29,14 +29,14 @@ export default {
 	},
 	data() {
 		return {
+			error: undefined,
 			loading: false,
-			error: {},
 			message: "",
 
 			fields: [
 				{
-					name: "email",
-					label: "Email",
+					name: "Email",
+					attribute: "email",
 					fieldType: {
 						id: "input-text",
 						props: {
@@ -45,8 +45,8 @@ export default {
 					}
 				},
 				{
-					name: "password",
-					label: "Password",
+					name: "Password",
+					attribute: "password",
 					fieldType: {
 						id: "input-password",
 						props: {
@@ -69,7 +69,7 @@ export default {
 		},
 
 		reset() {
-			this.error = {};
+			this.error = undefined;
 			this.message = "";
 		},
 
@@ -81,8 +81,8 @@ export default {
 					form: this.data,
 					route: {...this.route}
 				});
-			} catch (err) {
-				this.error = err;
+			} catch (error) {
+				this.error = error;
 			} finally {
 				this.loading = false;
 			}
@@ -96,8 +96,8 @@ export default {
 					form: this.data
 				});
 				this.message = data.message;
-			} catch (err) {
-				this.error = err;
+			} catch (error) {
+				this.error = error;
 			} finally {
 				this.loading = false;
 			}

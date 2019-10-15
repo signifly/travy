@@ -3,8 +3,8 @@
 		<div class="fields">
 			<field
 				v-for="field in expand.fields"
-				v-bind="[field, {alt: {data, type: 'fields'}}]"
-				:key="field.name"
+				v-bind="{field, data}"
+				:key="field.attribute"
 				@event="$emit('event', $event)"
 			/>
 		</div>

@@ -4,11 +4,9 @@
 
 		<translate v-bind="option" />
 
-		<template v-if="dots">
-			<transition name="el-fade-in">
-				<div class="dot outdated" v-if="option.outdated" />
-			</transition>
-		</template>
+		<transition name="el-fade-in">
+			<div class="dot outdated" v-if="option.outdated" />
+		</transition>
 
 		<div class="tooltip" v-if="tooltip">
 			<Tooltip :content="tooltip" placement="top">
@@ -27,12 +25,10 @@ export default {
 	components: {Tooltip, translate},
 	props: {
 		tooltip: {type: String, required: false},
-		field: {type: Object, required: true},
-		type: {type: String, required: true}
+		field: {type: Object, required: true}
 	},
 	computed: {
-		option: (t) => get(t.options, t.field.name, {}),
-		dots: (t) => t.type === "fields"
+		option: (t) => get(t.options, t.field.name, {})
 	}
 };
 </script>

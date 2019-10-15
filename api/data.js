@@ -85,31 +85,31 @@ module.exports = {
 				title: {text: "Details", url: null},
 				fields: [
 					{
-						name: "name",
-						label: "Name",
+						attribute: "name",
+						name: "Name",
 						fieldType: {id: "input-text", props: {value: "name"}}
 					},
 					{
-						name: "email",
-						label: "E-mail",
+						attribute: "email",
+						name: "E-mail",
 						fieldType: {id: "input-text", props: {value: "email"}}
 					},
 					{
-						name: "current_password",
-						label: "Current Password",
+						attribute: "current_password",
+						name: "Current Password",
 						fieldType: {
 							id: "input-password",
 							props: {value: "current_password"}
 						}
 					},
 					{
-						name: "password",
-						label: "New Password",
+						attribute: "password",
+						name: "New Password",
 						fieldType: {id: "input-password", props: {value: "password"}}
 					},
 					{
-						name: "password_confirmation",
-						label: "Confirm New Password",
+						attribute: "password_confirmation",
+						name: "Confirm New Password",
 						fieldType: {
 							id: "input-password",
 							props: {value: "password_confirmation"}
@@ -162,13 +162,13 @@ module.exports = {
 				name: "History",
 				fields: [
 					{
-						name: "created_at",
-						label: "Created At",
+						attribute: "created_at",
+						name: "Created At",
 						fieldType: {id: "date", props: {timestamp: "created_at"}}
 					},
 					{
-						name: "updated_at",
-						label: "Last Modified",
+						attribute: "updated_at",
+						name: "Last Modified",
 						fieldType: {id: "date", props: {timestamp: "updated_at"}}
 					}
 				]
@@ -185,8 +185,8 @@ module.exports = {
 			},
 			fields: [
 				{
-					name: "language_code",
-					label: "Language",
+					attribute: "language_code",
+					name: "Language",
 					width: 200,
 					fieldType: {
 						id: "input-select",
@@ -215,11 +215,13 @@ module.exports = {
 							{
 								width: 50,
 								name: "Name",
+								attribute: "name",
 								fieldType: {id: "text", props: {text: "name"}}
 							},
 							{
 								width: 50,
 								name: "Tags",
+								attribute: "tags",
 								fieldType: {
 									id: "list-tooltip",
 									props: {
@@ -302,8 +304,8 @@ module.exports = {
 						},
 						fields: [
 							{
-								name: "name",
-								label: "Name",
+								name: "Name",
+								attribute: "name",
 								fieldType: {id: "input-text", props: {value: "name"}}
 							}
 						]
@@ -317,8 +319,8 @@ module.exports = {
 								onSubmit: "/t/projects/{id}",
 								fields: [
 									{
-										name: "client_id",
-										label: "Client",
+										name: "Client",
+										attribute: "client_id",
 										fieldType: {
 											id: "input-select-search",
 											props: {
@@ -337,21 +339,21 @@ module.exports = {
 										}
 									},
 									{
-										name: "name",
-										label: "Name",
+										attribute: "name",
+										name: "Name",
 										fieldType: {id: "input-text", props: {value: "name"}}
 									},
 									{
-										name: "start_date",
-										label: "Start Date",
+										attribute: "start_date",
+										name: "Start Date",
 										fieldType: {
 											id: "input-date",
 											props: {formatValue: "yyyy-MM-dd", date: "start_date"}
 										}
 									},
 									{
-										name: "tags",
-										label: "Tags",
+										attribute: "tags",
+										name: "Tags",
 										fieldType: {
 											id: "input-select-multi-search",
 											props: {
@@ -369,8 +371,8 @@ module.exports = {
 										}
 									},
 									{
-										name: "description",
-										label: "Description",
+										attribute: "description",
+										name: "Description",
 										fieldType: {
 											id: "input-editor-markdown",
 											props: {content: "description"}
@@ -446,8 +448,8 @@ module.exports = {
 								onSubmit: "/t/projects/{id}",
 								fields: [
 									{
-										name: "client_id",
-										label: "Client",
+										attribute: "client_id",
+										name: "Client",
 										fieldType: {
 											id: "input-select-search",
 											props: {
@@ -466,21 +468,21 @@ module.exports = {
 										}
 									},
 									{
-										name: "name",
-										label: "Name",
+										attribute: "name",
+										name: "Name",
 										fieldType: {id: "input-text", props: {value: "name"}}
 									},
 									{
-										name: "start_date",
-										label: "Start Date",
+										attribute: "start_date",
+										name: "Start Date",
 										fieldType: {
 											id: "input-date",
 											props: {formatValue: "yyyy-MM-dd", date: "start_date"}
 										}
 									},
 									{
-										name: "tags",
-										label: "Tags",
+										attribute: "tags",
+										name: "Tags",
 										fieldType: {
 											id: "input-select-multi-search",
 											props: {
@@ -498,8 +500,8 @@ module.exports = {
 										}
 									},
 									{
-										name: "description",
-										label: "Description",
+										attribute: "description",
+										name: "Description",
 										fieldType: {
 											id: "input-editor-markdown",
 											props: {content: "description"}
@@ -610,10 +612,12 @@ module.exports = {
 					fields: [
 						{
 							name: "Name",
+							attribute: "name",
 							fieldType: {id: "text", props: {text: "name"}}
 						},
 						{
 							name: "Text",
+							attribute: "text",
 							fieldType: {id: "input-text", props: {value: "text"}}
 						}
 					]
@@ -630,11 +634,13 @@ module.exports = {
 							{
 								width: 50,
 								name: "Name",
+								attribute: "name",
 								fieldType: {id: "text", props: {text: "name"}}
 							},
 							{
 								width: 50,
 								name: "Tags",
+								attribute: "tags",
 								fieldType: {
 									id: "list-tooltip",
 									props: {
@@ -647,7 +653,8 @@ module.exports = {
 								}
 							},
 							{
-								name: "input",
+								name: "Input",
+								attribute: "input",
 								fieldType: {
 									id: "input-switch",
 									props: {
@@ -717,8 +724,8 @@ module.exports = {
 						},
 						fields: [
 							{
-								name: "name",
-								label: "Name",
+								name: "Name",
+								attribute: "name",
 								fieldType: {id: "input-text", props: {value: "name"}}
 							}
 						]
@@ -732,8 +739,8 @@ module.exports = {
 								onSubmit: "/t/projects/{id}",
 								fields: [
 									{
-										name: "client_id",
-										label: "Client",
+										name: "Client",
+										attribute: "client_id",
 										fieldType: {
 											id: "input-select-search",
 											props: {
@@ -752,21 +759,21 @@ module.exports = {
 										}
 									},
 									{
-										name: "name",
-										label: "Name",
+										name: "Name",
+										attribute: "name",
 										fieldType: {id: "input-text", props: {value: "name"}}
 									},
 									{
-										name: "start_date",
-										label: "Start Date",
+										name: "Start Date",
+										attribute: "start_date",
 										fieldType: {
 											id: "input-date",
 											props: {formatValue: "yyyy-MM-dd", date: "start_date"}
 										}
 									},
 									{
-										name: "tags",
-										label: "Tags",
+										name: "Tags",
+										attribute: "tags",
 										fieldType: {
 											id: "input-select-multi-search",
 											props: {
@@ -784,8 +791,8 @@ module.exports = {
 										}
 									},
 									{
-										name: "description",
-										label: "Description",
+										name: "Description",
+										attribute: "description",
 										fieldType: {
 											id: "input-editor-markdown",
 											props: {content: "description"}
@@ -826,11 +833,13 @@ module.exports = {
 						{
 							width: 350,
 							name: "Name",
+							attribute: "name",
 							fieldType: {id: "text", props: {text: "name"}},
 							onClick: "/t/projects/{id}"
 						},
 						{
 							name: "Tags",
+							attribute: "tags",
 							fieldType: {
 								id: "list-tooltip",
 								props: {
@@ -844,6 +853,7 @@ module.exports = {
 						},
 						{
 							name: "input",
+							attribute: "input",
 							fieldType: {
 								id: "input-switch",
 								props: {
@@ -861,8 +871,8 @@ module.exports = {
 								onSubmit: "/t/projects/{id}",
 								fields: [
 									{
-										name: "client_id",
-										label: "Client",
+										name: "Client",
+										attribute: "client_id",
 										fieldType: {
 											id: "input-select-search",
 											props: {
@@ -881,21 +891,21 @@ module.exports = {
 										}
 									},
 									{
-										name: "name",
-										label: "Name",
+										name: "Name",
+										attribute: "name",
 										fieldType: {id: "input-text", props: {value: "name"}}
 									},
 									{
-										name: "start_date",
-										label: "Start Date",
+										name: "Start Date",
+										attribute: "start_date",
 										fieldType: {
 											id: "input-date",
 											props: {formatValue: "yyyy-MM-dd", date: "start_date"}
 										}
 									},
 									{
-										name: "tags",
-										label: "Tags",
+										name: "Tags",
+										attribute: "tags",
 										fieldType: {
 											id: "input-select-multi-search",
 											props: {
@@ -913,8 +923,8 @@ module.exports = {
 										}
 									},
 									{
-										name: "description",
-										label: "Description",
+										name: "Description",
+										attribute: "description",
 										fieldType: {
 											id: "input-editor-markdown",
 											props: {content: "description"}
@@ -969,23 +979,23 @@ module.exports = {
 					name: "History",
 					fields: [
 						{
-							name: "created_at",
-							label: "Created At",
+							attribute: "created_at",
+							name: "Created At",
 							fieldType: {id: "date", props: {timestamp: "created_at"}}
 						},
 						{
-							name: "creator.name",
-							label: "Created By",
+							attribute: "creator.name",
+							name: "Created By",
 							fieldType: {id: "text", props: {text: "creator.name"}}
 						},
 						{
-							name: "updated_at",
-							label: "Last Modified",
+							attribute: "updated_at",
+							name: "Last Modified",
 							fieldType: {id: "date", props: {timestamp: "updated_at"}}
 						},
 						{
-							name: "editor.name",
-							label: "Last Modified By",
+							attribute: "editor.name",
+							name: "Last Modified By",
 							fieldType: {id: "text", props: {text: "editor.name"}}
 						}
 					]
@@ -994,8 +1004,8 @@ module.exports = {
 					name: "Test",
 					fields: [
 						{
-							name: "name",
-							label: "Name",
+							name: "Name",
+							attribute: "name",
 							fieldType: {id: "input-text", props: {value: "name"}}
 						}
 					]

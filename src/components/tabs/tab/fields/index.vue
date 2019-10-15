@@ -3,7 +3,7 @@
 		<field
 			v-bind="{field, data, options, error}"
 			v-for="field in fields"
-			:key="field.name"
+			:key="field.attribute"
 			@event="event"
 			type="fields"
 		/>
@@ -35,14 +35,7 @@ export default {
 				val: this.definitions.endpoint,
 				data: this.parentData
 			});
-		},
-
-		alt: (t) => ({
-			errors: t.error && t.error.errors,
-			options: t.options,
-			type: "fields",
-			data: t.data
-		})
+		}
 	},
 	methods: {
 		async event({actions, done}) {
@@ -67,14 +60,12 @@ export default {
 		},
 
 		async getData() {
-			const {
-				data: {data, options}
-			} = await this.$axios.get(this.endpoint.url, {
+			const {data} = await this.$axios.get(this.endpoint.url, {
 				params: {...this.endpoint.params, modifier: this.modifiers}
 			});
 
-			this.options = options;
-			this.data = data;
+			this.options = data.options;
+			this.data = data.data;
 		},
 
 		async save() {

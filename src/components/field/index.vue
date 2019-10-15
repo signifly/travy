@@ -1,7 +1,8 @@
 <template>
 	<div class="field" :style="{width: fWidth}" v-if="!disabled">
 		<div class="content">
-			<vlabel v-bind="{field, type}" v-if="rules.label" />
+			<vlabel v-bind="{field}" v-if="show.label" />
+
 			<fieldType
 				@event="$emit('event', $event)"
 				v-bind="field.fieldType"
@@ -10,12 +11,12 @@
 		</div>
 
 		<transition name="error">
-			<div class="error" v-if="error" v-text="error" />
+			<div class="error" v-if="errorMsg" v-text="errorMsg" />
 		</transition>
 
 		<div
 			class="description"
-			v-if="field.description && rules.description"
+			v-if="field.description"
 			v-text="field.description"
 		/>
 	</div>
@@ -30,29 +31,37 @@ import {get} from "lodash";
 export default {
 	components: {vlabel, fieldType},
 	props: {
-		errors: {type: Object, required: false},
+		widthPx: {type: Boolean, required: false},
+		error: {type: Object, required: false},
+		hide: {type: Array, default: () => []},
 		field: {type: Object, required: true},
-		data: {type: Object, required: false},
-		type: {type: String, required: true}
+		data: {type: Object, required: false}
 	},
 	computed: {
-		error: (t) => get(t.errors, t.field.name, [])[0],
 		disabled: (t) => t.field.hide && operator({...t.field.hide, data: t.data}),
+		errorMsg: (t) => get(t.error, ["errors", t.field.attribute, 0]),
 
-		fWidth() {
-			const w = this.field.width;
+		show() {
+			const rules = ["label"];
 
-			if (this.type === "fields") {
-				return w === 100 ? `${w}%` : `calc(${w}% - 1em)`;
-			} else {
-				return `${w}px`;
-			}
+			return rules.reduce(
+				(sum, rule) => ({
+					...sum,
+					[rule]: !this.hide.includes(rule)
+				}),
+				{}
+			);
 		},
 
-		rules: ({type}) => ({
-			label: type === "fields",
-			description: type === "fields"
-		})
+		fWidth() {
+			const w = this.field.width || 100;
+
+			if (this.widthPx) {
+				return `${w}px`;
+			} else {
+				return w === 100 ? `${w}%` : `calc(${w}% - 1em)`;
+			}
+		}
 	}
 };
 </script>

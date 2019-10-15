@@ -17,13 +17,7 @@
 			</div>
 
 			<div class="field-wrap">
-				<field
-					ref="field"
-					:alt="{data, loading: false}"
-					:name="id"
-					:fieldType="fieldType"
-					@event="event"
-				/>
+				<field ref="field" v-bind="{field, data}" @event="event" />
 			</div>
 
 			<div class="info">
@@ -73,7 +67,10 @@ export default {
 		};
 	},
 	computed: {
-		fieldType: (t) => ({id: t.id, props: t.res.props}),
+		field: (t) => ({
+			fieldType: {id: t.id, props: t.res.props},
+			attribute: t.id
+		}),
 
 		propsTable() {
 			const spec = this.spec;

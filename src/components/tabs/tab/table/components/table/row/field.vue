@@ -1,9 +1,9 @@
 <template>
 	<component :is="link ? 'router-link' : 'div'" class="table-field" :to="link">
 		<field
-			:field="column"
 			:data="data"
-			type="table"
+			:field="column"
+			:hide="['label']"
 			@event="$emit('event', $event)"
 		/>
 	</component>
