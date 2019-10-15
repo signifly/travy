@@ -2,9 +2,10 @@
 	<div class="modifiers">
 		<div class="modifiers-field" v-for="field in fields" :key="field.attribute">
 			<field
-				v-bind="{field, data}"
+				v-bind="{field}"
 				:hide="['label']"
 				:widthPx="true"
+				:data="dataC"
 				@event="event"
 			/>
 		</div>
@@ -17,11 +18,11 @@ import field from "../field";
 export default {
 	components: {field},
 	props: {
-		data: {type: Object, required: true},
-		fields: {type: Array, required: true}
+		fields: {type: Array, required: true},
+		data: {type: Object, required: true}
 	},
 	computed: {
-		dataComb: (t) => ({...t.data, ...t.query.modifiers}),
+		dataC: (t) => ({...t.data, ...t.query.modifiers}),
 		query: (t) => t.$route.query
 	},
 	methods: {
@@ -49,14 +50,13 @@ export default {
 
 <style lang="scss" scoped>
 .modifiers {
-	width: 100%;
 	max-width: 550px;
 	display: flex;
-	justify-content: flex-end;
+	width: 100%;
 
 	&-field {
-		max-width: 200px;
 		margin: -1em 0 -1em 1em;
+		max-width: 200px;
 	}
 }
 </style>

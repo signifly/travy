@@ -5,9 +5,8 @@
 		<div class="fields">
 			<field
 				v-for="field in section.fields"
-				:key="field.name"
+				:key="field.attribute"
 				v-bind="{field, data, options}"
-				type="fields"
 				@event="$emit('event', $event)"
 			/>
 		</div>
@@ -23,11 +22,6 @@ export default {
 		options: {type: Object, required: false},
 		section: {type: Object, required: true},
 		data: {type: Object, required: true}
-	},
-	data() {
-		return {
-			payload: {}
-		};
 	}
 };
 </script>

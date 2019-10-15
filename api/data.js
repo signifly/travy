@@ -600,6 +600,47 @@ module.exports = {
 	},
 
 	"/definitions/view/projects": {
+		modifiers: {
+			data: {
+				language_code: "dk"
+			},
+			fields: [
+				{
+					attribute: "language_code1",
+					name: "Language",
+					width: 200,
+					fieldType: {
+						id: "input-select",
+						props: {
+							_clearable: false,
+							value: "language_code",
+							_entities: [
+								{label: "Danmark", emoji: "denmark", value: "dk"},
+								{label: "England", emoji: "uk", value: "uk"},
+								{label: "Murica", emoji: "us", value: "us", disabled: true}
+							]
+						}
+					}
+				},
+				{
+					attribute: "language_code2",
+					name: "Language",
+					width: 200,
+					fieldType: {
+						id: "input-select",
+						props: {
+							_clearable: false,
+							value: "language_code",
+							_entities: [
+								{label: "Danmark", emoji: "denmark", value: "dk"},
+								{label: "England", emoji: "uk", value: "uk"},
+								{label: "Murica", emoji: "us", value: "us", disabled: true}
+							]
+						}
+					}
+				}
+			]
+		},
 		tabs: [
 			{
 				id: "fields",

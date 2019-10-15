@@ -6,11 +6,16 @@
 
 				<div class="bottom">
 					<div class="title" v-text="title" />
-					<modifiers
-						v-if="modifiers"
-						v-bind="modifiers"
-						@refresh="$emit('refresh')"
-					/>
+
+					<div class="settings">
+						<modifiers
+							v-if="modifiers"
+							v-bind="modifiers"
+							@refresh="$emit('refresh')"
+						/>
+
+						<slot name="settings" />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -60,6 +65,12 @@ export default {
 			.title {
 				font-size: 32px;
 				font-weight: 700;
+			}
+
+			.settings {
+				display: flex;
+				align-items: flex-end;
+				flex-direction: column;
 			}
 		}
 	}

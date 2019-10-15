@@ -91,6 +91,8 @@ export default {
 				// remove filters query if empty
 				data = Object.entries(data).length === 0 ? undefined : data;
 
+				console.log(data);
+
 				this.state.mergeQuery({
 					type: "replace",
 					query: {page: undefined, filters: data}

@@ -1,19 +1,16 @@
 <template>
 	<transition name="view-page">
 		<div class="view-page" v-if="data">
-			<hero v-bind="{modifiers, title: 'test'}" />
+			<hero
+				v-bind="{modifiers, title: 'test'}"
+				@refresh="event({actions: {refresh: {data: true}}})"
+			>
+				<template v-slot:settings>
+					<actions v-if="actions" v-bind="{actions, data}" @event="event" />
+				</template>
+			</hero>
 
 			<div class="container">
-				<!-- <Row class="top" :gutter="20">
-				<Col class="left" :span="12">
-					<vHeader v-bind="{data, header}" />
-				</Col>
-				<Col class="right" :span="12">
-					<modifiers v-if="modifiers" v-bind="{modifiers}" @event="event" />
-					<actions v-if="actions" v-bind="{actions, data}" @event="event" />
-				</Col>
-			</Row> -->
-
 				<Row class="mid" :gutter="20">
 					<Col class="left" :span="16">
 						<tabs
@@ -55,11 +52,9 @@
 </template>
 
 <script>
-import modifiers from "./components/modifiers";
 import activity from "./components/activity";
 import actions from "./components/actions";
 import sidebar from "./components/sidebar";
-import vHeader from "./components/header";
 import panels from "./components/panels";
 import tabs from "@/components/tabs";
 import hero from "@/components/hero";
@@ -73,11 +68,9 @@ export default {
 		hero,
 		tabs,
 		panels,
-		vHeader,
 		sidebar,
 		actions,
-		activity,
-		modifiers
+		activity
 	},
 	props: {
 		tabs: {type: Array, required: true},
@@ -86,7 +79,7 @@ export default {
 		sidebar: {type: Object, required: true},
 		activity: {type: Object, required: true},
 		endpoint: {type: Object, required: true},
-		modifiers: {type: Array, required: false}
+		modifiers: {type: Object, required: false}
 	},
 	data() {
 		return {

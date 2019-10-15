@@ -16,6 +16,7 @@
 
 <script>
 import {Input} from "element-ui";
+import state from "../../state";
 import {get} from "lodash";
 
 export default {
@@ -26,8 +27,11 @@ export default {
 		active: {type: Boolean, required: true},
 		fields: {type: Array, required: false}
 	},
+	data: () => ({
+		state
+	}),
 	computed: {
-		value: (t) => get(t.$route.query, "filters.search", ""),
+		value: (t) => get(t.state.query, "filters.search", ""),
 		icon: (t) => (t.loading ? "el-icon-loading" : "el-icon-search")
 	},
 	methods: {
