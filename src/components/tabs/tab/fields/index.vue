@@ -77,7 +77,7 @@ export default {
 				this.error = null;
 				this.payload = {};
 
-				return {actions: {refresh: {data: true}}};
+				return {actions: {refresh: true}};
 			} catch (error) {
 				this.error = error;
 				throw error;

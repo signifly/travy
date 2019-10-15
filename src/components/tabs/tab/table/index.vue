@@ -15,7 +15,7 @@
 		</div>
 
 		<div class="content">
-			<top v-bind="{modifiers, loading, meta}" @reset="reset" />
+			<top v-bind="{loading, meta}" />
 			<tableEl
 				ref="table"
 				v-bind="{
@@ -74,7 +74,6 @@ export default {
 		actions: (t) => t.definitions.actions,
 		filters: (t) => t.definitions.filters,
 		columns: (t) => t.definitions.columns,
-		modifiers: (t) => t.definitions.modifiers,
 		pagination: (t) => t.definitions.pagination,
 
 		ws() {
@@ -105,9 +104,7 @@ export default {
 
 		async event({actions, done}) {
 			if (actions.refresh) {
-				const {definitions, data} = actions.refresh;
-				if (definitions) await this.getDefinitions();
-				if (data) await this.getData();
+				await this.getData();
 				this.unselect();
 			}
 

@@ -119,9 +119,7 @@ export default {
 
 			this.$emit("event", {
 				done: async () => (this.loadingData = false),
-				actions: {
-					refresh: {data: true}
-				}
+				actions: {refresh: true}
 			});
 		}
 	},

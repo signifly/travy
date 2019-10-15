@@ -103,9 +103,7 @@ export default {
 
 		async event({actions = {}, done}) {
 			if (actions.refresh) {
-				const {definitions, data} = actions.refresh;
-				if (definitions) await this.getDefinitions();
-				if (data) await this.getData();
+				await this.getData();
 				this.update++;
 			}
 

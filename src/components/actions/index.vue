@@ -73,7 +73,7 @@ export default {
 			} else {
 				this.$emit("event", {
 					done: async () => this.close(),
-					actions: {refresh: {data: true}}
+					actions: {refresh: true}
 				});
 			}
 		},
