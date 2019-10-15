@@ -2,7 +2,7 @@
 	<div class="actions">
 		<tableAction
 			v-for="action in actions"
-			:key="action.title"
+			:key="action.name"
 			v-bind="[action, {parentData}]"
 			@event="$emit('event', $event)"
 		/>

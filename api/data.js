@@ -177,8 +177,10 @@ module.exports = {
 	},
 
 	"/definitions/table/projects": {
-		title: "stuff",
-		sub: "stuff",
+		hero: {
+			title: "Hero title",
+			subtitle: "Subtitle"
+		},
 		modifiers: {
 			data: {
 				language_code: "dk"
@@ -312,10 +314,10 @@ module.exports = {
 					},
 					actions: [
 						{
-							title: "Add project",
+							name: "Add project",
 							props: {
-								title: "Add project",
 								id: "modal",
+								name: "Add project",
 								onSubmit: "/t/projects/{id}",
 								fields: [
 									{
@@ -441,9 +443,9 @@ module.exports = {
 					],
 					actions: [
 						{
-							title: "Add project",
+							name: "Add project",
 							props: {
-								title: "Add project",
+								name: "Add project",
 								id: "modal",
 								onSubmit: "/t/projects/{id}",
 								fields: [
@@ -600,6 +602,10 @@ module.exports = {
 	},
 
 	"/definitions/view/projects": {
+		hero: {
+			title: "Hello {name}",
+			subtitle: "Subtitle"
+		},
 		modifiers: {
 			data: {
 				language_code: "dk"
@@ -773,10 +779,10 @@ module.exports = {
 					},
 					actions: [
 						{
-							title: "Add project",
+							name: "Add project",
 							props: {
-								title: "Add project",
 								id: "modal",
+								name: "Add project",
 								onSubmit: "/t/projects/{id}",
 								fields: [
 									{
@@ -905,10 +911,10 @@ module.exports = {
 					],
 					actions: [
 						{
-							title: "Add project",
+							name: "Add project",
 							props: {
-								title: "Add project",
 								id: "modal",
+								name: "Add project",
 								onSubmit: "/t/projects/{id}",
 								fields: [
 									{

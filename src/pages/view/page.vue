@@ -1,10 +1,7 @@
 <template>
 	<transition name="view-page">
 		<div class="view-page" v-if="data">
-			<hero
-				v-bind="{modifiers, title: 'test'}"
-				@refresh="event({actions: {refresh: {data: true}}})"
-			>
+			<hero v-bind="{modifiers, hero, data}" @refresh="refresh">
 				<template v-slot:settings>
 					<actions v-if="actions" v-bind="{actions, data}" @event="event" />
 				</template>
@@ -74,6 +71,7 @@ export default {
 	},
 	props: {
 		tabs: {type: Array, required: true},
+		hero: {type: Object, required: true},
 		header: {type: Object, required: true},
 		actions: {type: Array, required: true},
 		sidebar: {type: Object, required: true},
@@ -99,6 +97,10 @@ export default {
 		options: (t) => t.res.options
 	},
 	methods: {
+		refresh() {
+			this.$emit("refresh");
+		},
+
 		async event({actions = {}, done}) {
 			if (actions.refresh) {
 				const {definitions, data} = actions.refresh;

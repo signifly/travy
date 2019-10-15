@@ -1,6 +1,6 @@
 <template>
 	<div class="table" v-if="definitions">
-		<hero v-if="definitions" v-bind="{modifiers, title}" @refresh="refresh" />
+		<hero v-if="definitions" v-bind="{modifiers, hero}" @refresh="refresh" />
 		<div class="container">
 			<tabs :tabs="definitions.tabs" :key="url + refreshKey" />
 		</div>
@@ -21,7 +21,7 @@ export default {
 		url: (t) => `definitions/table/${t.tableId}`,
 		modifiers: (t) => t.definitions.modifiers,
 		tableId: (t) => t.$route.params.tableId,
-		title: (t) => t.definitions.title,
+		hero: (t) => t.definitions.hero,
 		query: (t) => t.$route.query
 	},
 	methods: {

@@ -6,7 +6,7 @@
 	>
 		<div class="table-action">
 			<Button size="medium" :type="status" @click="active = !active">
-				{{ title }}
+				{{ name }}
 				<i class="el-icon-right" :class="`el-icon-${icon}`" v-if="icon" />
 			</Button>
 		</div>
@@ -20,12 +20,12 @@ import action from "@/components/actions";
 export default {
 	components: {Button, action},
 	props: {
+		status: {type: String, required: false, default: "primary"},
+		parentData: {type: Object, required: false},
 		props: {type: Object, required: true},
 		hide: {type: Object, required: false},
 		icon: {type: String, required: false},
-		title: {type: String, required: true},
-		status: {type: String, required: false, default: "primary"},
-		parentData: {type: Object, required: false}
+		name: {type: String, required: true}
 	},
 	data() {
 		return {

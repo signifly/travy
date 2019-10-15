@@ -5,7 +5,10 @@
 				<breadcrumbs v-if="breadcrumbs" />
 
 				<div class="bottom">
-					<div class="title" v-text="title" />
+					<div class="info">
+						<div class="title" v-text="heroC.title" />
+						<div class="sub" v-if="heroC.subtitle" v-text="heroC.subtitle" />
+					</div>
 
 					<div class="settings">
 						<modifiers
@@ -23,6 +26,7 @@
 </template>
 
 <script>
+import {rStringProps} from "@/modules/utils";
 import breadcrumbs from "./breadcrumbs";
 import modifiers from "./modifiers";
 
@@ -31,9 +35,11 @@ export default {
 	props: {
 		breadcrumbs: {type: Array, required: false},
 		modifiers: {type: Object, required: false},
-		title: {type: String, required: true}
+		data: {type: Object, required: false},
+		hero: {type: Object, required: true}
 	},
 	computed: {
+		heroC: (t) => rStringProps({data: t.data, val: t.hero}),
 		theme: (t) => t.$store.getters["config/theme"]
 	}
 };
@@ -62,9 +68,15 @@ export default {
 			display: flex;
 			height: 100%;
 
-			.title {
-				font-size: 32px;
-				font-weight: 700;
+			.info {
+				.title {
+					font-size: 32px;
+					font-weight: 700;
+				}
+				.sub {
+					font-size: 20px;
+					margin-top: 8px;
+				}
 			}
 
 			.settings {

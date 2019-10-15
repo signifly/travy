@@ -1,6 +1,6 @@
 <template>
 	<div class="view" v-if="definitions">
-		<page v-bind="definitions" :key="key" />
+		<page v-bind="definitions" :key="key" @refresh="getData" />
 	</div>
 </template>
 
@@ -10,12 +10,13 @@ import page from "./page";
 export default {
 	components: {page},
 	data: () => ({
+		refreshKey: 0,
 		definitions: null
 	}),
 	computed: {
+		key: (t) => `${t.tableId}-${t.viewId}-${t.refreshKey}`,
 		url: (t) => `/definitions/view/${t.tableId}`,
 		tableId: (t) => t.$route.params.tableId,
-		key: (t) => `${t.tableId}-${t.viewId}`,
 		viewId: (t) => t.$route.params.viewId,
 		query: (t) => t.$route.query
 	},
@@ -25,6 +26,7 @@ export default {
 				params: {modifiers: this.query.modifiers}
 			});
 
+			this.refreshKey++;
 			this.definitions = data;
 			this.$store.dispatch("base/meta", {title: data.title});
 		}
