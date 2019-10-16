@@ -7,9 +7,9 @@ export default {
 		this.setQuery({
 			type: "replace",
 			query: {
-				...router.currentRoute.query,
+				sort: sort.default,
 				filters: filters.data,
-				sort: sort.default
+				...router.currentRoute.query
 			}
 		});
 	},
