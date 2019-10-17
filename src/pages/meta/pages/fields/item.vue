@@ -126,7 +126,7 @@ export default {
 				this.eventData = data;
 			}
 
-			if (done) await done();
+			if (done) done();
 		},
 
 		check() {

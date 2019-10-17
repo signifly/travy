@@ -99,7 +99,7 @@ export default {
 			this.unselect();
 			await this.getDefinitions();
 			await this.getData();
-			if (done) await done();
+			if (done) done();
 		},
 
 		async event({actions, done}) {
@@ -112,7 +112,7 @@ export default {
 				this.halt = actions.halt.state;
 			}
 
-			if (done) await done();
+			if (done) done();
 		},
 
 		async getData({loading = true} = {}) {

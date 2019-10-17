@@ -28,10 +28,10 @@ export default {
 		spec: "props",
 		res: {
 			props: {
+				status: "primary",
 				_title: "button",
 				icon: "plus",
 				size: "mini",
-				status: "primary",
 				_action: {
 					id: "modal",
 					title: "Modal title",

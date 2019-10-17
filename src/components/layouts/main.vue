@@ -2,7 +2,9 @@
 	<div class="main" v-if="user">
 		<Container class="is-vertical">
 			<vHeader />
-			<router-view />
+			<transition name="router">
+				<router-view />
+			</transition>
 		</Container>
 	</div>
 </template>
@@ -20,3 +22,19 @@ export default {
 	}
 };
 </script>
+
+<style lang="scss" scoped>
+.main {
+	.router {
+		&-enter-active,
+		&-leave-active {
+			transition: cubic(opacity, 0.1s);
+		}
+
+		&-enter,
+		&-leave-to {
+			opacity: 0;
+		}
+	}
+}
+</style>

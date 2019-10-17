@@ -53,12 +53,14 @@ export default {
 		}
 
 		&-list {
+			padding: 0.4em 0;
+
 			::v-deep .item {
 				display: block;
 				font-size: 0.8em;
 				white-space: nowrap;
 				user-select: none;
-				padding: 1em;
+				padding: 0.75em 1em;
 
 				&:hover {
 					background-color: $--dropdown-menuItem-hover-fill;

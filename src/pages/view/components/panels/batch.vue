@@ -82,7 +82,7 @@ export default {
 	methods: {
 		nextSave() {
 			this.$parent.$emit("save", {
-				done: async () => {
+				done: () => {
 					this.$router.push({
 						params: {...this.$route.params, viewId: this.next},
 						query: {modifiers: this.modifiers, sequential: true}
@@ -93,7 +93,7 @@ export default {
 
 		prevSave() {
 			this.$parent.$emit("save", {
-				done: async () => {
+				done: () => {
 					this.$router.push({
 						params: {...this.$route.params, viewId: this.prev},
 						query: {modifiers: this.modifiers, sequential: true}
@@ -104,7 +104,7 @@ export default {
 
 		closeSave() {
 			this.$emit("save", {
-				done: async () => {
+				done: () => {
 					localStorage.removeItem("sequential");
 					this.$router.push({
 						path: `/t/${this.tableId}`,
@@ -118,7 +118,7 @@ export default {
 			this.loadingData = true;
 
 			this.$emit("event", {
-				done: async () => (this.loadingData = false),
+				done: () => (this.loadingData = false),
 				actions: {refresh: true}
 			});
 		}

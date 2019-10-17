@@ -1,17 +1,14 @@
 <template>
 	<popup type="list">
 		<action
-			v-for="action in actions"
-			v-bind="[action, {data}]"
 			:value="selected === action"
+			v-for="action in actions"
 			:key="action.title"
-			@event="$emit('event', $event)"
-			@submit="$emit('submit', $event)"
-			@input="$emit('close')"
+			v-on="$listeners"
+			v-bind="action"
+			:data="data"
 		>
-			<a class="item" @click="select(action)">
-				{{ action.title }}
-			</a>
+			<a class="item" @click="select(action)" v-text="action.title" />
 		</action>
 	</popup>
 </template>

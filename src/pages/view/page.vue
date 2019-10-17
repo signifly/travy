@@ -1,51 +1,49 @@
 <template>
-	<transition name="view-page">
-		<div class="view-page" v-if="data">
-			<hero v-bind="{modifiers, hero, data}" @refresh="refresh">
-				<template v-slot:settings>
-					<actions v-if="actions" v-bind="{actions, data}" @event="event" />
-				</template>
-			</hero>
+	<div class="view-page" v-if="data">
+		<hero v-bind="{modifiers, hero, data}" @refresh="refresh">
+			<template v-slot:settings>
+				<actions v-if="actions" v-bind="{actions, data}" @event="event" />
+			</template>
+		</hero>
 
-			<div class="container">
-				<Row class="mid" :gutter="20">
-					<Col class="left" :span="16">
-						<tabs
-							ref="tabs"
-							v-bind="{tabs, data: res.data}"
-							:edit.sync="edits.tabs"
+		<div class="container">
+			<Row class="mid" :gutter="20">
+				<Col class="left" :span="16">
+					<tabs
+						ref="tabs"
+						v-bind="{tabs, data: res.data}"
+						:edit.sync="edits.tabs"
+						@event="event"
+					/>
+				</Col>
+				<Col class="right" :span="8">
+					<sidebar
+						v-if="sidebar"
+						ref="sidebar"
+						v-bind="{sidebar, endpoint, options}"
+						:edit.sync="edits.sidebar"
+						:data.sync="res.data"
+						@event="event"
+					/>
+				</Col>
+			</Row>
+
+			<Row class="bottom" :gutter="20">
+				<Col class="left" :span="24">
+					<transition name="el-fade-in" mode="out-in" appear>
+						<activity
+							v-if="activity"
+							:key="data.updated_at"
+							v-bind="{data, endpoint}"
 							@event="event"
 						/>
-					</Col>
-					<Col class="right" :span="8">
-						<sidebar
-							v-if="sidebar"
-							ref="sidebar"
-							v-bind="{sidebar, endpoint, options}"
-							:edit.sync="edits.sidebar"
-							:data.sync="res.data"
-							@event="event"
-						/>
-					</Col>
-				</Row>
+					</transition>
+				</Col>
+			</Row>
 
-				<Row class="bottom" :gutter="20">
-					<Col class="left" :span="24">
-						<transition name="el-fade-in" mode="out-in" appear>
-							<activity
-								v-if="activity"
-								:key="data.updated_at"
-								v-bind="{data, endpoint}"
-								@event="event"
-							/>
-						</transition>
-					</Col>
-				</Row>
-
-				<panels v-bind="{loading, error, data, edits}" @save="save" />
-			</div>
+			<panels v-bind="{loading, error, data, edits}" @save="save" />
 		</div>
-	</transition>
+	</div>
 </template>
 
 <script>
@@ -72,7 +70,6 @@ export default {
 	props: {
 		tabs: {type: Array, required: true},
 		hero: {type: Object, required: true},
-		header: {type: Object, required: true},
 		actions: {type: Array, required: true},
 		sidebar: {type: Object, required: true},
 		activity: {type: Object, required: true},
@@ -107,7 +104,7 @@ export default {
 				this.update++;
 			}
 
-			if (done) await done();
+			if (done) done();
 		},
 
 		async save({done} = {}) {
@@ -121,7 +118,7 @@ export default {
 
 				const event = merge(sidebar, tabs);
 				await this.event(event);
-				if (done) await done();
+				if (done) done();
 
 				this.error = null;
 				this.edits = {};
@@ -157,17 +154,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="scss" scoped>
-.view-page {
-	&-enter-active,
-	&-leave-active {
-		transition: cubic(opacity, 0.3s);
-	}
-
-	&-enter,
-	&-leave-to {
-		opacity: 0;
-	}
-}
-</style>

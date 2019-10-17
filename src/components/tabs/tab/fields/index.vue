@@ -52,7 +52,7 @@ export default {
 				this.data = mergeData(this.data, data);
 			}
 
-			if (done) await done();
+			if (done) done();
 
 			if (actions.refresh) {
 				this.$emit("event", {actions});

@@ -3,12 +3,13 @@
 		<slot />
 
 		<component
-			v-if="value"
-			:is="props.id"
-			v-bind="[actionProps, propsC, {data}]"
 			@event="$emit('event', $event)"
-			@close="close"
 			@submit="submit"
+			v-bind="propsC"
+			@close="close"
+			:is="props.id"
+			v-if="value"
+			:data="data"
 		/>
 	</div>
 </template>
@@ -24,7 +25,6 @@ import {get} from "lodash";
 export default {
 	components: {dropdown, modal, popup, show},
 	props: {
-		actionProps: {type: Object, required: false},
 		value: {type: Boolean, required: true},
 		props: {type: Object, required: true},
 		data: {type: Object, required: false}, // parent data
@@ -33,12 +33,14 @@ export default {
 	computed: {
 		payload: ({props, data}) => ({
 			type: get(props, "payload.type"),
-			data: mapProps({
-				props: get(props, "payload.data"),
-				fallback: true,
-				data
-			})
+			data: mapProps({props: get(props, "payload.data"), data})
 		}),
+
+		tt: (t) =>
+			rStringProps({
+				data: t.data,
+				val: t.props
+			}),
 
 		dataComb: (t) => ({
 			// parent data and action data combined
@@ -63,6 +65,10 @@ export default {
 		}
 	},
 	methods: {
+		close() {
+			this.$emit("input", false);
+		},
+
 		submit({data, title, message}) {
 			if (title && message) {
 				this.$store.dispatch("notify/send", {type: "info", title, message});
@@ -72,14 +78,10 @@ export default {
 				this.$router.push(rStringProps({data, val: this.propsC.onSubmit}));
 			} else {
 				this.$emit("event", {
-					done: async () => this.close(),
-					actions: {refresh: true}
+					actions: {refresh: true},
+					done: this.close
 				});
 			}
-		},
-
-		close() {
-			this.$emit("input", false);
 		}
 	}
 };

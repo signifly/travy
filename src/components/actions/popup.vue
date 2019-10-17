@@ -1,6 +1,6 @@
 <template>
 	<popup v-bind="{position, type: 'action'}">
-		<div class="popup">
+		<div class="popup-action">
 			<div class="text">{{ text }}</div>
 			<div class="buttons">
 				<Button size="mini" :disabled="loading" @click="close">
@@ -65,11 +65,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.popup {
+.popup-action {
 	.text {
 		word-break: break-word;
 		text-align: left;
 		margin-bottom: 1.25em;
+		line-height: 1.25em;
 		font-size: 13px;
 	}
 	.buttons {

@@ -2,7 +2,6 @@
 	<action
 		v-bind="actionC"
 		:value="active"
-		:actionProps="{position: 'top-right'}"
 		@input="$emit('close', $event)"
 		@event="$emit('event', $event)"
 	>

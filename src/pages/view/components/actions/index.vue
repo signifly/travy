@@ -1,10 +1,10 @@
 <template>
 	<div class="actions" v-if="actions.length">
 		<viewAction
-			v-for="action in actions"
-			:key="action.name"
-			v-bind="[action, {data}]"
 			@event="$emit('event', $event)"
+			v-for="action in actions"
+			v-bind="{action, data}"
+			:key="action.name"
 		/>
 	</div>
 </template>

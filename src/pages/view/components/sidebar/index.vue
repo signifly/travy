@@ -52,7 +52,7 @@ export default {
 				this.$emit("update:edit", true);
 			}
 
-			if (done) await done();
+			if (done) done();
 		},
 
 		async save() {

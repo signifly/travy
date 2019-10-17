@@ -1000,24 +1000,57 @@ module.exports = {
 				}
 			}
 		],
-		header: {props: {title: "name", image: null, tag: "id"}},
 		endpoint: {url: "http://localhost:3001/v1/admin/projects/{id}"},
 		activity: {},
 		actions: [
 			{
+				status: "danger",
 				title: "Delete",
+				icon: "delete",
 				props: {
-					title: "Delete",
 					id: "popup",
+					title: "Delete",
 					text: "Are you sure? Please confirm this action.",
 					onSubmit: "/t/projects",
 					endpoint: {
 						url: "http://localhost:3001/v1/admin/projects/{id}",
 						method: "delete"
 					}
-				},
-				icon: "delete",
-				status: "danger"
+				}
+			},
+			{
+				title: "List",
+				props: {
+					id: "dropdown",
+					actions: [
+						{
+							title: "Delete1",
+							props: {
+								id: "popup",
+								title: "Delete1",
+								text: "Are you sure? Please confirm this action.",
+								onSubmit: "/t/projects",
+								endpoint: {
+									url: "http://localhost:3001/v1/admin/projects/{id}",
+									method: "delete"
+								}
+							}
+						},
+						{
+							title: "Delete2",
+							props: {
+								id: "popup",
+								title: "Delete2",
+								text: "Are you sure? Please confirm this action.",
+								onSubmit: "/t/projects",
+								endpoint: {
+									url: "http://localhost:3001/v1/admin/projects/{id}",
+									method: "delete"
+								}
+							}
+						}
+					]
+				}
 			}
 		],
 		sidebar: {
