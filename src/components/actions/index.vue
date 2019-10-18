@@ -1,5 +1,5 @@
 <template>
-	<div class="action" v-if="!disabled">
+	<div class="action" v-if="!disabled" tabindex="0" @blur="blur" @test="test">
 		<slot />
 
 		<component
@@ -65,8 +65,15 @@ export default {
 		}
 	},
 	methods: {
+		blur(e) {
+			if (!this.$el.contains(e.relatedTarget)) {
+				this.close();
+			}
+		},
+
 		close() {
 			this.$emit("input", false);
+			this.$emit("close");
 		},
 
 		submit({data, title, message}) {
@@ -83,6 +90,13 @@ export default {
 				});
 			}
 		}
+	},
+	watch: {
+		value(val) {
+			if (val) {
+				this.$el.focus();
+			}
+		}
 	}
 };
 </script>
@@ -90,5 +104,6 @@ export default {
 <style lang="scss" scoped>
 .action {
 	position: relative;
+	outline: none;
 }
 </style>

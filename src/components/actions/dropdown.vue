@@ -29,6 +29,9 @@ export default {
 		};
 	},
 	methods: {
+		test() {
+			console.log(this.$listeners);
+		},
 		select(action) {
 			this.selected = this.selected ? null : action;
 		}
