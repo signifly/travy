@@ -1,5 +1,5 @@
 <template>
-	<div class="action" v-if="!disabled" tabindex="0" @blur="blur" @test="test">
+	<div class="action" v-if="!disabled" tabindex="0" @blur="blur">
 		<slot />
 
 		<component
