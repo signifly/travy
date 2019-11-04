@@ -72,8 +72,8 @@ export default {
 		},
 
 		close() {
-			this.$emit("input", false);
 			this.$emit("close");
+			this.$emit("input", false);
 		},
 
 		submit({data, title, message}) {
