@@ -241,7 +241,7 @@ module.exports = {
 								fieldType: {
 									id: "input-switch",
 									props: {
-										value: "switch"
+										value: "test.switch"
 									}
 								}
 							}
@@ -293,7 +293,7 @@ module.exports = {
 							fieldType: {
 								id: "input-switch",
 								props: {
-									value: "switch"
+									value: "test.switch"
 								}
 							}
 						}
@@ -1007,51 +1007,84 @@ module.exports = {
 				status: "danger",
 				title: "Delete",
 				icon: "delete",
-				props: {
-					id: "popup",
-					title: "Delete",
-					text: "Are you sure? Please confirm this action.",
+
+				actionType: {
 					onSubmit: "/t/projects",
-					endpoint: {
-						url: "http://localhost:3001/v1/admin/projects/{id}",
-						method: "delete"
-					}
-				}
-			},
-			{
-				title: "List",
-				props: {
-					id: "dropdown",
-					actions: [
-						{
-							title: "Delete1",
-							props: {
-								id: "popup",
-								title: "Delete1",
-								text: "Are you sure? Please confirm this action.",
-								onSubmit: "/t/projects",
-								endpoint: {
-									url: "http://localhost:3001/v1/admin/projects/{id}",
-									method: "delete"
-								}
-							}
+					id: "popup",
+					props: {
+						title: "Delete",
+						text: "Are you sure? Please confirm this action.",
+						endpoint: {
+							url: "http://localhost:3001/v1/admin/projects/{id}",
+							method: "delete"
 						},
-						{
-							title: "Delete2",
-							props: {
-								id: "popup",
-								title: "Delete2",
-								text: "Are you sure? Please confirm this action.",
-								onSubmit: "/t/projects",
-								endpoint: {
-									url: "http://localhost:3001/v1/admin/projects/{id}",
-									method: "delete"
-								}
+						payload: {
+							type: "a type",
+							data: {
+								test: "test"
 							}
 						}
-					]
+					}
 				}
 			}
+			// {
+			// 	title: "modal",
+			// 	props: {
+			// 		id: "modal",
+			// 		title: "modal title",
+			// 		fields: [
+			// 			{
+			// 				attribute: "name",
+			// 				name: "Name",
+			// 				fieldType: {id: "input-text", props: {value: "test.name"}}
+			// 			}
+			// 		],
+			// 		endpoint: {
+			// 			url: "http://localhost:3001/v1/admin/projects/{id}",
+			// 			method: "delete"
+			// 		},
+			// 		payload: {
+			// 			type: "a type",
+			// 			data: {
+			// 				test: {
+			// 					name: "a name"
+			// 				}
+			// 			}
+			// 		}
+			// 	}
+			// },
+			// {
+			// 	title: "List",
+			// 	props: {
+			// 		id: "dropdown",
+			// 		actions: [
+			// 			{
+			// 				title: "Delete1",
+			// 				props: {
+			// 					id: "popup",
+			// 					title: "Delete1",
+			// 					text: "Are you sure? Please confirm this action.",
+			// 					endpoint: {
+			// 						url: "http://localhost:3001/v1/admin/projects/{id}",
+			// 						method: "delete"
+			// 					}
+			// 				}
+			// 			},
+			// 			{
+			// 				title: "Delete2",
+			// 				props: {
+			// 					id: "popup",
+			// 					title: "Delete2",
+			// 					text: "Are you sure? Please confirm this action.",
+			// 					endpoint: {
+			// 						url: "http://localhost:3001/v1/admin/projects/{id}",
+			// 						method: "delete"
+			// 					}
+			// 				}
+			// 			}
+			// 		]
+			// 	}
+			// }
 		],
 		sidebar: {
 			name: "Name",

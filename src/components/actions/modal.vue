@@ -1,27 +1,60 @@
 <template>
 	<div class="modal">
-		<vModalFields
-			v-bind="{fields, error, loading, title, data}"
+		<Dialog
+			:close-on-click-modal="false"
+			:modal-append-to-body="true"
 			:visible.sync="visible"
-			@event="event"
-			@submit="submit"
-		/>
+			:append-to-body="false"
+			v-bind="{width, title}"
+		>
+			<div class="fields">
+				<field
+					v-for="field in fields"
+					:key="field.attribute"
+					v-bind="{field, data, error}"
+					@event="event"
+				/>
+			</div>
+
+			<div class="footer" slot="footer">
+				<div class="actions">
+					<Button @click="visible = false" :disabled="!!loading">
+						{{ buttonCancelText }}
+					</Button>
+					<Button type="primary" @click="submit" :loading="!!loading">
+						{{ buttonSubmitText }}
+					</Button>
+				</div>
+
+				<div class="error" v-if="error.message">{{ error.message }}</div>
+
+				<slot name="footer" />
+			</div>
+		</Dialog>
 	</div>
 </template>
 
 <script>
-import vModalFields from "@/components/modal-fields.vue";
-import {mapPaths, download} from "@/modules/utils";
-import toFormData from "object-to-formdata";
+import {translate, mergeData} from "@/modules/utils";
+import {Dialog, Button} from "element-ui";
+import field from "@/components/field";
 
 export default {
-	components: {vModalFields},
+	components: {Dialog, Button, field},
 	props: {
-		download: {type: Boolean, required: false},
 		endpoint: {type: Object, required: true},
-		payload: {type: Object, required: true},
+		payload: {type: Object, required: false},
+		width: {type: String, default: "700px"},
 		title: {type: String, required: false},
-		fields: {type: Array, required: true}
+		fields: {type: Array, required: true},
+		buttonSubmitText: {
+			type: String,
+			default: () => translate({en: "Submit", da: "Gem"})
+		},
+		buttonCancelText: {
+			type: String,
+			default: () => translate({en: "Cancel", da: "Annuller"})
+		}
 	},
 	data() {
 		return {
@@ -31,68 +64,71 @@ export default {
 		};
 	},
 	computed: {
-		upload() {
-			return this.fields
-				.map((x) => x.fieldType.id === "input-upload")
-				.some((x) => x);
-		},
-
-		payloadC: (t) => ({
-			...t.payload,
-			data: mapPaths(t.data)
-		}),
-
 		visible: {
-			get() {
-				return true;
-			},
+			get: () => true,
 			set() {
-				this.close();
+				this.$emit("close");
 			}
 		}
 	},
 	methods: {
-		event({actions}) {
-			if (actions.update) {
-				let {data} = actions.update;
-				this.data = {...this.data, ...data};
-			}
+		enter({key}) {
+			if (key === "Enter") this.submit();
 		},
 
-		close() {
-			this.$emit("close");
+		event({actions}) {
+			if (actions.update) {
+				this.data = mergeData(this.data, actions.update.data);
+			}
 		},
 
 		async submit() {
 			try {
 				this.loading = true;
 
-				const {data, headers} = await this.$axios({
-					data: this.upload ? toFormData(this.payloadC) : this.payloadC,
+				const {data} = await this.$axios({
 					method: this.endpoint.method,
 					url: this.endpoint.url,
-					responseType: this.download && "blob",
 					customErr: true,
-					onUploadProgress: (e) => {
-						this.loading = Math.round((e.loaded / e.total) * 100);
+					data: {
+						...this.payload,
+						data: this.data
 					}
 				});
 
-				if (this.download) {
-					download({
-						url: URL.createObjectURL(data),
-						name: headers["content-disposition"].split("filename=")[1]
-					});
-
-					this.$emit("submit", {});
-				} else {
-					this.$emit("submit", data);
-				}
+				this.$emit("submit", data);
 			} catch (err) {
 				this.error = err;
 				this.loading = false;
 			}
 		}
+	},
+	mounted() {
+		this.$el.addEventListener("keyup", this.enter);
+	},
+	beforeDestroy() {
+		this.$el.removeEventListener("keyup", this.enter);
 	}
 };
 </script>
+
+<style lang="scss" scoped>
+.modal {
+	text-align: left;
+}
+
+.fields {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: -$fieldMargin 0;
+}
+
+.footer {
+	.error {
+		margin-top: 1em;
+		font-size: 0.875em;
+		color: $danger;
+	}
+}
+</style>

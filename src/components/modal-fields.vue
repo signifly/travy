@@ -10,9 +10,8 @@
 			<div class="fields">
 				<field
 					v-for="field in fields"
-					:key="field.name"
-					v-bind="field"
-					:alt="{data, errors, loading}"
+					:key="field.attribute"
+					v-bind="{field, data, error}"
 					@event="$emit('event', $event)"
 				/>
 			</div>
@@ -61,8 +60,6 @@ export default {
 		}
 	},
 	computed: {
-		errors: (t) => t.error.errors,
-
 		visibleC: {
 			get() {
 				return this.visible;

@@ -24,7 +24,7 @@ export default {
 	props: {
 		position: {type: String, required: false, default: "bottom-right"},
 		endpoint: {type: Object, required: true},
-		payload: {type: Object, required: true},
+		payload: {type: Object, required: false},
 		text: {
 			type: String,
 			required: false,

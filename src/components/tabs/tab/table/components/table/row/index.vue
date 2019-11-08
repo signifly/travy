@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {mergeData, mapPaths, rStringProps} from "@/modules/utils";
+import {mergeData, rStringProps} from "@/modules/utils";
 import {debounce, cloneDeep} from "lodash";
 import expandToggle from "./expand/toggle";
 import expandView from "./expand/view";
@@ -54,9 +54,8 @@ export default {
 			const update = event.actions.update;
 
 			if (update) {
-				const data = mapPaths(update.data);
-				this.data = mergeData(this.data, data);
-				this.payload = mergeData(this.payload, data);
+				this.data = mergeData(this.data, update.data);
+				this.payload = mergeData(this.payload, update.data);
 
 				const newEvent = produce(event, (event) => {
 					event.actions.update.item = this.data;

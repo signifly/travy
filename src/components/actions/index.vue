@@ -15,12 +15,11 @@
 </template>
 
 <script>
-import {rStringProps, operator, mapProps} from "@/modules/utils";
+import {rStringProps, operator} from "@/modules/utils";
 import dropdown from "./dropdown";
 import modal from "./modal.vue";
 import popup from "./popup.vue";
 import show from "./show.vue";
-import {get} from "lodash";
 
 export default {
 	components: {dropdown, modal, popup, show},
@@ -31,34 +30,16 @@ export default {
 		hide: {type: Object, required: false} // {key, operator, value}
 	},
 	computed: {
-		payload: ({props, data}) => ({
-			type: get(props, "payload.type"),
-			data: mapProps({props: get(props, "payload.data"), data})
-		}),
-
-		tt: (t) =>
-			rStringProps({
-				data: t.data,
-				val: t.props
-			}),
-
-		dataComb: (t) => ({
-			// parent data and action data combined
-			...t.data,
-			...t.payload.data
-		}),
-
-		propsC: (t) => ({
-			...rStringProps({
-				data: t.dataComb,
-				val: t.props
-			}),
-			payload: t.payload
-		}),
+		propsC() {
+			return rStringProps({
+				data: this.data,
+				val: this.props
+			});
+		},
 
 		disabled() {
 			if (this.hide) {
-				return operator({...this.hide, data: this.dataComb});
+				return operator({...this.hide, data: this.data});
 			} else {
 				return false;
 			}

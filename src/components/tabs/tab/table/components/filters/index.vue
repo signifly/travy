@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import {mapPaths, mergeData} from "@/modules/utils";
 import {Button, Popover} from "element-ui";
+import {mergeData} from "@/modules/utils";
 import {pickBy, debounce} from "lodash";
 import field from "@/components/field";
 import state from "../../state";
@@ -81,7 +81,7 @@ export default {
 			const {update} = actions;
 
 			if (update) {
-				let data = mapPaths(update.data);
+				let data = update.data;
 
 				data = mergeData(this.filters, data);
 

@@ -14,7 +14,6 @@
 
 <script>
 import selectMultiSearch from "./input-select-multi-search.vue";
-import {mapPaths} from "@/modules/utils";
 import vTable from "./table.vue";
 import produce from "immer";
 
@@ -130,10 +129,8 @@ export default {
 
 			if (update) {
 				const data = produce(this.data, (data) => {
-					const updateData = mapPaths(update.data);
-
 					const index = data.findIndex((x) => x.id === update.item.id);
-					data[index] = {...update.item, ...updateData};
+					data[index] = {...update.item, ...update.data};
 				});
 
 				this.update(data);

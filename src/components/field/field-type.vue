@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import {mapProps} from "@/modules/utils";
+import {mapProps, mapPaths} from "@/modules/utils";
 import {FormItem} from "element-ui";
 import {mapKeys, get} from "lodash";
 import produce from "immer";
@@ -28,14 +28,16 @@ export default {
 	},
 	methods: {
 		event(event) {
-			// reverse map props
 			const newEvent = produce(event, (draft) => {
 				const update = draft.actions.update;
 
 				if (update) {
+					// reverse map props
 					update.data = mapKeys(update.data, (val, key) => {
 						return get(this.props, key);
 					});
+
+					update.data = mapPaths(update.data);
 				}
 			});
 

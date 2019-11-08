@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {rStringProps, mapPaths, mergeData} from "@/modules/utils";
+import {rStringProps, mergeData} from "@/modules/utils";
 import field from "@/components/field";
 
 export default {
@@ -41,9 +41,7 @@ export default {
 		async event({actions, done}) {
 			if (actions.update) {
 				this.$emit("edit", true);
-				let {data} = actions.update;
-
-				data = mapPaths(data);
+				const {data} = actions.update;
 
 				// merge payload
 				this.payload = mergeData(this.payload, data);
