@@ -7,9 +7,9 @@
 			@submit="submit"
 			v-bind="propsC"
 			@close="close"
-			:is="props.id"
 			v-if="value"
 			:data="data"
+			:is="id"
 		/>
 	</div>
 </template>
@@ -24,10 +24,12 @@ import show from "./show.vue";
 export default {
 	components: {dropdown, modal, popup, show},
 	props: {
+		onSubmit: {type: String, required: false},
 		value: {type: Boolean, required: true},
 		props: {type: Object, required: true},
 		data: {type: Object, required: false}, // parent data
-		hide: {type: Object, required: false} // {key, operator, value}
+		hide: {type: Object, required: false}, // {key, operator, value}
+		id: {type: String, required: true}
 	},
 	computed: {
 		propsC() {
@@ -62,8 +64,8 @@ export default {
 				this.$store.dispatch("notify/send", {type: "info", title, message});
 			}
 
-			if (this.propsC.onSubmit) {
-				this.$router.push(rStringProps({data, val: this.propsC.onSubmit}));
+			if (this.onSubmit) {
+				this.$router.push(rStringProps({data, val: this.onSubmit}));
 			} else {
 				this.$emit("event", {
 					actions: {refresh: true},

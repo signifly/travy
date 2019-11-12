@@ -3,8 +3,9 @@
 		<viewAction
 			@event="$emit('event', $event)"
 			v-for="action in actions"
-			v-bind="{action, data}"
 			:key="action.name"
+			v-bind="action"
+			:data="data"
 		/>
 	</div>
 </template>

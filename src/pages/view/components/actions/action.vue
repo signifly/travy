@@ -1,17 +1,17 @@
 <template>
 	<action
 		v-model="active"
-		v-bind="action"
+		v-bind="actionType"
 		:data="data"
 		@event="$emit('event', $event)"
 	>
 		<div class="view-action">
-			<Button size="medium" :type="action.status" @click="active = !active">
-				{{ action.title }}
+			<Button size="medium" :type="status" @click="active = !active">
+				{{ title }}
 				<i
 					class="el-icon-arrow-right el-icon-right"
-					:class="`el-icon-${action.icon} el-icon-right`"
-					v-if="action.icon"
+					:class="`el-icon-${icon} el-icon-right`"
+					v-if="icon"
 				/>
 			</Button>
 		</div>
@@ -25,7 +25,10 @@ import action from "@/components/actions";
 export default {
 	components: {Button, action},
 	props: {
-		action: {type: Object, required: true},
+		actionType: {type: Object, required: true},
+		status: {type: String, required: false},
+		title: {type: String, required: true},
+		icon: {type: String, required: false},
 		data: {type: Object, required: true}
 	},
 	data() {
