@@ -1,7 +1,9 @@
 <template>
 	<div class="error">
-		<div class="title">{{ info.title }}</div>
-		<div class="text">{{ info.text }}&nbsp;&nbsp;(-_-｡)</div>
+		<div class="info">
+			<div class="title">{{ info.title }}</div>
+			<div class="text">{{ info.text }}&nbsp;&nbsp;(-_-｡)</div>
+		</div>
 	</div>
 </template>
 
@@ -25,24 +27,37 @@ export default {
 	props: {
 		status: {type: Number, default: 404}
 	},
+	data: () => ({
+		path: ""
+	}),
 	computed: {
+		ready: (t) => t.$store.getters["base/ready"],
 		info: (t) => info[t.status]
 	},
-	created() {
-		history.replaceState(null, null, "/");
+	watch: {
+		path(path) {
+			history.replaceState(null, null, path);
+		}
+	},
+	beforeRouteEnter(to, from, next) {
+		next((vm) => {
+			vm.path = from.fullPath;
+		});
 	}
 };
 </script>
 
 <style lang="scss" scoped>
 .error {
-	text-align: center;
-	padding: 7em 0 2em;
+	.info {
+		text-align: center;
+		padding: 7em 0 2em;
 
-	.title {
-		font-size: 5em;
-		margin-bottom: 0.75em;
-		font-weight: 600;
+		.title {
+			font-size: 5em;
+			margin-bottom: 0.75em;
+			font-weight: 600;
+		}
 	}
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
-	<div class="main" v-if="user">
+	<div class="main">
 		<Container class="is-vertical">
-			<vHeader />
+			<vHeader v-if="ready" />
 			<transition name="router">
-				<router-view />
+				<router-view :key="$route.path" />
 			</transition>
 		</Container>
 	</div>
@@ -16,15 +16,16 @@ import {Container} from "element-ui";
 export default {
 	components: {Container, vHeader},
 	computed: {
-		title: (t) => t.$route.meta.title,
-		user: (t) => t.$store.getters["user/data"],
-		page: (t) => (t.title ? {title: t.title, to: t.$route.path} : null)
+		ready: (t) => t.$store.getters["base/ready"]
 	}
 };
 </script>
 
 <style lang="scss" scoped>
 .main {
+	background-color: $white2;
+	min-height: 100vh;
+
 	.router {
 		&-enter-active,
 		&-leave-active {

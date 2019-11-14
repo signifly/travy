@@ -15,12 +15,8 @@ export default {
 
 	actions: {
 		async data({commit}) {
-			try {
-				const {data} = await api.get("definitions/config", {customErr: true});
-				commit("data", data);
-			} catch (err) {
-				// error
-			}
+			const {data} = await api.get("definitions/config", {customErr: true});
+			commit("data", data);
 		}
 	},
 

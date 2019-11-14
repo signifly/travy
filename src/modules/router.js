@@ -25,13 +25,12 @@ const routes = [
 		path: "/",
 		name: "index",
 		component: index,
-		meta: {layout: "main", title: ""}
+		meta: {title: ""}
 	},
 	{
 		path: "/account",
 		name: "account",
-		component: account,
-		meta: {layout: "main"}
+		component: account
 	},
 	{
 		path: "/login",
@@ -50,28 +49,25 @@ const routes = [
 	{
 		path: "/t/:tableId",
 		name: "table",
-		component: table,
-		meta: {layout: "main"}
+		component: table
 	},
 	{
 		path: "/t/:tableId/:viewId",
 		name: "tableView",
-		component: view,
-		meta: {layout: "main"}
+		component: view
 	},
 	{
 		path: "/d/:id",
 		name: "dashboard",
-		component: dashboard,
-		meta: {layout: "main"}
+		component: dashboard
 	},
 	{
 		path: "/error",
-		alias: "*",
 		name: "error",
 		props: true,
+		alias: "*",
 		component: error,
-		meta: {layout: "error", title: "Error"}
+		meta: {title: "Error"}
 	},
 	{
 		path: "/meta",
@@ -119,7 +115,9 @@ router.beforeEach(async (to, from, next) => {
 	const user =
 		store.getters["user/data"] || (await store.dispatch("user/data"));
 
-	if (!user) return store.dispatch("user/logout");
+	if (!user) {
+		return store.dispatch("user/logout");
+	}
 
 	go({to, next});
 });

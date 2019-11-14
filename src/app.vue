@@ -1,26 +1,27 @@
 <template>
 	<div class="app" v-if="loaded">
-		<component :is="layout" v-if="config && layout" />
-		<error :status="500" v-else />
+		<component :is="layout" />
 	</div>
 </template>
 
 <script>
 import layouts from "./components/layouts";
-import error from "./pages/error";
 
 export default {
-	components: {error},
 	data: () => ({
 		loaded: false
 	}),
 	computed: {
-		config: (t) => t.$store.getters["config/data"],
-		layout: (t) => layouts[t.$route.meta.layout]
+		layout: (t) => layouts[t.$route.meta.layout || "main"]
 	},
-	async beforeCreate() {
-		await this.$store.dispatch("config/data");
-		this.loaded = true;
+	async created() {
+		try {
+			await this.$store.dispatch("config/data");
+		} catch (err) {
+			this.$router.replace({name: "error", params: {status: 500}});
+		} finally {
+			this.loaded = true;
+		}
 	}
 };
 </script>

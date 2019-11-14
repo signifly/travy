@@ -30,12 +30,17 @@ export default {
 			this.refreshKey++;
 		},
 		async getData() {
-			const {data} = await this.$axios.get(this.url, {
-				params: {modifiers: this.query.modifiers}
-			});
+			try {
+				const {data} = await this.$axios.get(this.url, {
+					params: {modifiers: this.query.modifiers},
+					customErr: true
+				});
 
-			this.definitions = data;
-			this.$store.dispatch("base/meta", {title: data.title});
+				this.$store.dispatch("base/meta", {title: data.title});
+				this.definitions = data;
+			} catch ({status}) {
+				this.$router.replace({name: "error", params: {status}});
+			}
 		}
 	},
 	created() {

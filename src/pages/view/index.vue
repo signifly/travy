@@ -22,13 +22,17 @@ export default {
 	},
 	methods: {
 		async getData() {
-			const {data} = await this.$axios.get(this.url, {
-				params: {modifiers: this.query.modifiers}
-			});
+			try {
+				const {data} = await this.$axios.get(this.url, {
+					params: {modifiers: this.query.modifiers}
+				});
 
-			this.refreshKey++;
-			this.definitions = data;
-			this.$store.dispatch("base/meta", {title: data.title});
+				this.refreshKey++;
+				this.definitions = data;
+				this.$store.dispatch("base/meta", {title: data.title});
+			} catch ({status}) {
+				this.$router.replace({name: "error", params: {status}});
+			}
 		}
 	},
 	created() {

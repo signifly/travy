@@ -1,7 +1,7 @@
 module.exports = {
 	"/account": {
 		data: {
-			image: "https://picsum.photos/50/50",
+			image: "https://picsum.photos/id/11/50/50",
 			email: "mtm@signifly.com",
 			email_verified_at: null,
 			updated_at: 1568191509,
@@ -28,7 +28,7 @@ module.exports = {
 		title: "Travy",
 		locale: "en",
 		theme: {
-			logo: "https://picsum.photos/200/50",
+			logo: "https://picsum.photos/id/11/200/50",
 			color: "#00233d"
 		},
 		header: {
@@ -71,6 +71,10 @@ module.exports = {
 				{
 					name: "Test",
 					url: "/t/test"
+				},
+				{
+					name: "404",
+					url: "/t/nopage"
 				}
 			]
 		}
