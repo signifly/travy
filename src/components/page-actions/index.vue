@@ -1,22 +1,23 @@
 <template>
-	<div class="actions">
-		<tableAction
+	<div class="actions" v-if="actions.length">
+		<pageAction
+			@event="$emit('event', $event)"
 			v-for="action in actions"
 			:key="action.name"
-			v-bind="[action, {parentData}]"
-			@event="$emit('event', $event)"
+			v-bind="action"
+			:data="data"
 		/>
 	</div>
 </template>
 
 <script>
-import tableAction from "./action.vue";
+import pageAction from "./action.vue";
 
 export default {
-	components: {tableAction},
+	components: {pageAction},
 	props: {
 		actions: {type: Array, required: true},
-		parentData: {type: Object, required: false}
+		data: {type: Object, required: false}
 	}
 };
 </script>
@@ -24,6 +25,5 @@ export default {
 <style lang="scss" scoped>
 .actions {
 	display: flex;
-	align-items: center;
 }
 </style>

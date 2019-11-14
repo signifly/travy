@@ -10,7 +10,11 @@
 
 			<div class="right">
 				<sort v-if="sort" v-bind="sort" @getData="getData" />
-				<actions v-if="actions" v-bind="{actions, parentData}" @event="event" />
+				<actions
+					v-if="actions"
+					v-bind="{actions, data: parentData}"
+					@event="event"
+				/>
 			</div>
 		</div>
 
@@ -37,9 +41,9 @@
 
 <script>
 import pagination from "./components/pagination";
+import actions from "@/components/page-actions";
 import {rStringProps} from "@/modules/utils";
 import filters from "./components/filters";
-import actions from "./components/actions";
 import tableEl from "./components/table";
 import batch from "./components/batch";
 import sort from "./components/sort";
@@ -95,17 +99,10 @@ export default {
 			console.log("get definitions");
 		},
 
-		async reset({done} = {}) {
-			this.unselect();
-			await this.getDefinitions();
-			await this.getData();
-			if (done) done();
-		},
-
 		async event({actions, done}) {
 			if (actions.refresh) {
 				await this.getData();
-				this.unselect();
+				this.selected.items = [];
 			}
 
 			if (actions.halt) {

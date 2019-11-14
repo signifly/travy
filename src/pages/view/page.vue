@@ -47,8 +47,8 @@
 </template>
 
 <script>
+import actions from "@/components/page-actions";
 import activity from "./components/activity";
-import actions from "./components/actions";
 import sidebar from "./components/sidebar";
 import panels from "./components/panels";
 import tabs from "@/components/tabs";

@@ -72,8 +72,8 @@ export default {
 
 		async update(event) {
 			await this.$axios.put(this.url, {
-				data: this.payload,
-				modifier: this.modifiers
+				modifier: this.modifiers,
+				data: this.payload
 			});
 
 			this.$emit("event", event);

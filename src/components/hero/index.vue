@@ -18,7 +18,9 @@
 								@refresh="$emit('refresh')"
 							/>
 
-							<slot name="settings" />
+							<div class="slot" v-if="$slots.settings">
+								<slot name="settings" />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -96,6 +98,10 @@ export default {
 				display: flex;
 				align-items: flex-end;
 				flex-direction: column;
+
+				.slot {
+					margin-top: 1em;
+				}
 			}
 		}
 	}

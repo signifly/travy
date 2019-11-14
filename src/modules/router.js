@@ -11,7 +11,6 @@ import login from "@/pages/login";
 import loginReset from "@/pages/login/reset.vue";
 
 import dashboard from "@/pages/dashboard";
-import custom from "@/pages/custom.vue";
 import table from "@/pages/table";
 import view from "@/pages/view";
 
@@ -64,12 +63,6 @@ const routes = [
 		path: "/d/:id",
 		name: "dashboard",
 		component: dashboard,
-		meta: {layout: "main"}
-	},
-	{
-		path: "/c/:id",
-		name: "custom",
-		component: custom,
 		meta: {layout: "main"}
 	},
 	{

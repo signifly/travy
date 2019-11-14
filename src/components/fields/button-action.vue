@@ -1,6 +1,6 @@
 <template>
 	<action
-		v-bind="{props: _action, data: alt.data}"
+		v-bind="_action.actionType"
 		v-model="active"
 		@event="$emit('event', $event)"
 	>
@@ -33,39 +33,43 @@ export default {
 				icon: "plus",
 				size: "mini",
 				_action: {
-					id: "modal",
-					title: "Modal title",
-					onSubmit: "#button-action",
-					endpoint: {
-						method: "post",
-						url: "https://example.com",
-						params: {}
-					},
-					fields: [
-						{
-							name: "1",
-							label: "a field",
-							fieldType: {
-								id: "input-text",
-								props: {
-									value: "input"
+					actionType: {
+						id: "modal",
+						onSubmit: "#button-action",
+						props: {
+							title: "Modal title",
+							endpoint: {
+								method: "post",
+								url: "https://example.com",
+								params: {}
+							},
+							fields: [
+								{
+									name: "1",
+									label: "a field",
+									fieldType: {
+										id: "input-text",
+										props: {
+											value: "input"
+										}
+									}
+								},
+								{
+									name: "2",
+									label: "a field",
+									fieldType: {
+										id: "input-text",
+										props: {
+											value: "input2"
+										}
+									}
 								}
-							}
-						},
-						{
-							name: "2",
-							label: "a field",
-							fieldType: {
-								id: "input-text",
-								props: {
-									value: "input2"
-								}
+							],
+							data: {
+								input: "32",
+								input2: "34"
 							}
 						}
-					],
-					data: {
-						input: "32",
-						input2: "34"
 					}
 				}
 			},

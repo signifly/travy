@@ -5,7 +5,7 @@
 			:modal-append-to-body="true"
 			:visible.sync="visible"
 			:append-to-body="false"
-			v-bind="{width, title}"
+			v-bind="{width, title: name}"
 		>
 			<div class="fields">
 				<field
@@ -45,7 +45,7 @@ export default {
 		endpoint: {type: Object, required: true},
 		payload: {type: Object, required: false},
 		width: {type: String, default: "700px"},
-		title: {type: String, required: false},
+		name: {type: String, required: false},
 		fields: {type: Array, required: true},
 		buttonSubmitText: {
 			type: String,
