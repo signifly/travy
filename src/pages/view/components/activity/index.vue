@@ -15,7 +15,7 @@
 					width="250"
 					label="user"
 					prop="user"
-					v-if="tableId !== 'users'"
+					v-if="indexId !== 'users'"
 				/>
 				<TableColumn label="changes" prop="changes" />
 				<TableColumn label="actions" prop="revert" v-slot="{row}">
@@ -60,7 +60,7 @@ export default {
 		};
 	},
 	computed: {
-		tableId: (t) => t.$route.params.tableId,
+		indexId: (t) => t.$route.params.indexId,
 		endpointUrl: (t) => rStringProps({data: t.data, val: t.endpoint.url}),
 
 		itemsMap: (t) =>

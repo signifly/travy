@@ -4,14 +4,14 @@ import urlon from "urlon";
 import Vue from "vue";
 
 // pages
-import index from "@/pages";
+import home from "@/pages/home";
 import account from "@/pages/account.vue";
 
 import login from "@/pages/login";
 import loginReset from "@/pages/login/reset.vue";
 
 import dashboard from "@/pages/dashboard";
-import table from "@/pages/table";
+import index from "@/pages/index";
 import view from "@/pages/view";
 
 import error from "@/pages/error.vue";
@@ -23,8 +23,8 @@ import metaPage from "@/pages/meta/pages/index";
 const routes = [
 	{
 		path: "/",
-		name: "index",
-		component: index,
+		name: "home",
+		component: home,
 		meta: {title: ""}
 	},
 	{
@@ -47,13 +47,13 @@ const routes = [
 		meta: {layout: "base", public: true}
 	},
 	{
-		path: "/t/:tableId",
-		name: "table",
-		component: table
+		path: "/i/:indexId",
+		name: "index",
+		component: index
 	},
 	{
-		path: "/t/:tableId/:viewId",
-		name: "tableView",
+		path: "/i/:indexId/:viewId",
+		name: "indexView",
 		component: view
 	},
 	{

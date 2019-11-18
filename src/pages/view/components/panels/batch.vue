@@ -73,7 +73,7 @@ export default {
 		progress: (t) => ((t.index + 1) / t.items.length) * 100,
 		loadingAll: (t) => t.loading || t.loadingData,
 		modifiers: (t) => t.$route.query.modifiers,
-		tableId: (t) => t.$route.params.tableId,
+		indexId: (t) => t.$route.params.indexId,
 		viewId: (t) => t.$route.params.viewId,
 		index: (t) => t.items.indexOf(t.viewId),
 		prev: (t) => t.items[t.index - 1],
@@ -107,7 +107,7 @@ export default {
 				done: () => {
 					localStorage.removeItem("sequential");
 					this.$router.push({
-						path: `/t/${this.tableId}`,
+						path: `/i/${this.indexId}`,
 						query: {modifiers: this.modifiers}
 					});
 				}

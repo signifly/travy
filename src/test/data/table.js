@@ -13,7 +13,7 @@ export default {
 						text: "name"
 					}
 				},
-				onClick: "/t/projects/{id}"
+				onClick: "/i/projects/{id}"
 			},
 			{
 				order: 2,
@@ -25,7 +25,7 @@ export default {
 					id: "list-tooltip",
 					props: {
 						itemKey: "name",
-						itemLink: "/t/tags/{id}",
+						itemLink: "/i/tags/{id}",
 						items: "tags"
 					}
 				}
@@ -46,7 +46,7 @@ export default {
 									title: "View",
 									id: "show",
 									endpoint: {
-										url: "/t/projects/{id}",
+										url: "/i/projects/{id}",
 										method: "get"
 									}
 								},
@@ -114,7 +114,7 @@ export default {
 				props: {
 					title: "Add project",
 					id: "modal",
-					onSubmit: "/t/projects/{id}",
+					onSubmit: "/i/projects/{id}",
 					fields: [
 						{
 							name: "name",
@@ -145,10 +145,10 @@ export default {
 		batch: {
 			selectedOptions: {
 				label: "name",
-				link: "/t/projects/{id}"
+				link: "/i/projects/{id}"
 			},
 			sequential: {
-				url: "/t/projects/{id}"
+				url: "/i/projects/{id}"
 			}
 		},
 		pagination: {}

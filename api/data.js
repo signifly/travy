@@ -24,7 +24,7 @@ module.exports = {
 	},
 
 	"/definitions/config": {
-		frontpage: "/t/projects",
+		frontpage: "/i/projects",
 		title: "Travy",
 		locale: "en",
 		theme: {
@@ -40,29 +40,29 @@ module.exports = {
 			menu: [
 				{
 					name: "Projects",
-					url: "/t/projects"
+					url: "/i/projects"
 				},
 				{
 					name: "Media",
 					items: [
 						{
 							name: "test",
-							url: "/t/seof"
+							url: "/i/seof"
 						},
 						{
 							name: "Projects",
 							items: [
 								{
 									name: "Projects",
-									url: "/t/projects1"
+									url: "/i/projects1"
 								},
 								{
 									name: "awdawd",
-									url: "/t/projects2"
+									url: "/i/projects2"
 								},
 								{
 									name: "sdfsfd",
-									url: "/t/projects3"
+									url: "/i/projects3"
 								}
 							]
 						}
@@ -70,11 +70,11 @@ module.exports = {
 				},
 				{
 					name: "Test",
-					url: "/t/test"
+					url: "/i/test"
 				},
 				{
 					name: "404",
-					url: "/t/nopage"
+					url: "/i/nopage"
 				}
 			]
 		}
@@ -153,7 +153,7 @@ module.exports = {
 					id: "popup",
 					title: "Delete",
 					text: "Are you sure? Please confirm this action.",
-					onSubmit: "/t/account",
+					onSubmit: "/i/account",
 					endpoint: {
 						url: "http://localhost:3001/v1/admin/account/{id}",
 						method: "delete"
@@ -181,7 +181,7 @@ module.exports = {
 		]
 	},
 
-	"/definitions/table/projects": {
+	"/definitions/index/projects": {
 		hero: {
 			title: "Hero title",
 			subtitle: "Subtitle"
@@ -233,7 +233,7 @@ module.exports = {
 									id: "list-tooltip",
 									props: {
 										items: {
-											_link: "/t/tags/{id}",
+											_link: "/i/tags/{id}",
 											"@scope": "tags",
 											label: "key"
 										}
@@ -254,10 +254,10 @@ module.exports = {
 					batch: {
 						selectedOptions: {
 							label: "{name}",
-							link: "/t/projects/{id}"
+							link: "/i/projects/{id}"
 						},
 						sequential: {
-							url: "/t/projects/{id}"
+							url: "/i/projects/{id}"
 						}
 					},
 					endpoint: {
@@ -277,7 +277,7 @@ module.exports = {
 							width: 350,
 							name: "Name",
 							fieldType: {id: "text", props: {text: "name"}},
-							onClick: "/t/projects/{id}"
+							onClick: "/i/projects/{id}"
 						},
 						{
 							name: "Tags",
@@ -285,7 +285,7 @@ module.exports = {
 								id: "list-tooltip",
 								props: {
 									items: {
-										_link: "/t/tags/{id}",
+										_link: "/i/tags/{id}",
 										"@scope": "tags",
 										label: "key"
 									}
@@ -412,7 +412,7 @@ module.exports = {
 							width: 350,
 							name: "Name",
 							fieldType: {id: "text", props: {text: "name"}},
-							onClick: "/t/projects/{id}"
+							onClick: "/i/projects/{id}"
 						},
 						{
 							name: "Tags",
@@ -420,7 +420,7 @@ module.exports = {
 								id: "list-tooltip",
 								props: {
 									items: {
-										_link: "/t/tags/{id}",
+										_link: "/i/tags/{id}",
 										"@scope": "tags",
 										label: "key"
 									}
@@ -601,7 +601,7 @@ module.exports = {
 									id: "list-tooltip",
 									props: {
 										items: {
-											_link: "/t/tags/{id}",
+											_link: "/i/tags/{id}",
 											"@scope": "tags",
 											label: "key"
 										}
@@ -623,10 +623,10 @@ module.exports = {
 					batch: {
 						selectedOptions: {
 							label: "{name}",
-							link: "/t/projects/{id}"
+							link: "/i/projects/{id}"
 						},
 						sequential: {
-							url: "/t/projects/{id}"
+							url: "/i/projects/{id}"
 						}
 					},
 					endpoint: {
@@ -646,7 +646,7 @@ module.exports = {
 							width: 350,
 							name: "Name",
 							fieldType: {id: "text", props: {text: "name"}},
-							onClick: "/t/projects/{id}"
+							onClick: "/i/projects/{id}"
 						},
 						{
 							name: "Tags",
@@ -654,7 +654,7 @@ module.exports = {
 								id: "list-tooltip",
 								props: {
 									items: {
-										_link: "/t/tags/{id}",
+										_link: "/i/tags/{id}",
 										"@scope": "tags",
 										label: "key"
 									}
@@ -692,7 +692,7 @@ module.exports = {
 							props: {
 								id: "modal",
 								name: "Add project",
-								onSubmit: "/t/projects/{id}",
+								onSubmit: "/i/projects/{id}",
 								fields: [
 									{
 										name: "Client",
@@ -791,7 +791,7 @@ module.exports = {
 							name: "Name",
 							attribute: "name",
 							fieldType: {id: "text", props: {text: "name"}},
-							onClick: "/t/projects/{id}"
+							onClick: "/i/projects/{id}"
 						},
 						{
 							name: "Tags",
@@ -800,7 +800,7 @@ module.exports = {
 								id: "list-tooltip",
 								props: {
 									items: {
-										_link: "/t/tags/{id}",
+										_link: "/i/tags/{id}",
 										"@scope": "tags",
 										label: "key"
 									}
@@ -824,7 +824,7 @@ module.exports = {
 							props: {
 								id: "modal",
 								name: "Add project",
-								onSubmit: "/t/projects/{id}",
+								onSubmit: "/i/projects/{id}",
 								fields: [
 									{
 										name: "Client",
@@ -916,7 +916,7 @@ module.exports = {
 				icon: "delete",
 				name: "Delete",
 				actionType: {
-					onSubmit: "/t/projects",
+					onSubmit: "/i/projects",
 					id: "popup",
 					props: {
 						title: "Delete",
@@ -939,7 +939,7 @@ module.exports = {
 				icon: "delete",
 				name: "Delete2",
 				actionType: {
-					onSubmit: "/t/projects",
+					onSubmit: "/i/projects",
 					id: "popup",
 					props: {
 						title: "Delete",

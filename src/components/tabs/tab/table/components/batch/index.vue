@@ -36,9 +36,6 @@ export default {
 		selected: {type: Object, required: true},
 		bulk: {type: Object, required: false}
 	},
-	computed: {
-		tableId: (t) => t.$route.params.tableId
-	},
 	methods: {
 		unselect() {
 			this.$emit("unselect");

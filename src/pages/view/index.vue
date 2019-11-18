@@ -14,9 +14,9 @@ export default {
 		definitions: null
 	}),
 	computed: {
-		key: (t) => `${t.tableId}-${t.viewId}-${t.refreshKey}`,
-		url: (t) => `/definitions/view/${t.tableId}`,
-		tableId: (t) => t.$route.params.tableId,
+		key: (t) => `${t.indexId}-${t.viewId}-${t.refreshKey}`,
+		url: (t) => `/definitions/view/${t.indexId}`,
+		indexId: (t) => t.$route.params.indexId,
 		viewId: (t) => t.$route.params.viewId,
 		query: (t) => t.$route.query
 	},

@@ -14,7 +14,7 @@ export default {
 	},
 	computed: {
 		query: (t) => t.$route.query,
-		tableId: (t) => t.$route.params.tableId,
+		indexId: (t) => t.$route.params.indexId,
 		firstUrl: (t) => rStringProps({val: t.url, data: t.selected.items[0]})
 	},
 	methods: {
@@ -24,7 +24,7 @@ export default {
 				JSON.stringify({
 					items: this.selected.items,
 					firstUrl: this.firstUrl,
-					tableId: this.tableId,
+					indexId: this.indexId,
 					url: this.url
 				})
 			);

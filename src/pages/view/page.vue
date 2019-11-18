@@ -131,10 +131,10 @@ export default {
 
 		async getData() {
 			const params = {modifier: this.query.modifiers};
-			const {tableId, viewId} = this.$route.params;
+			const {indexId, viewId} = this.$route.params;
 
 			try {
-				const {data} = await this.$axios.get(`/${tableId}/${viewId}`, {
+				const {data} = await this.$axios.get(`/${indexId}/${viewId}`, {
 					customErr: true,
 					params
 				});
