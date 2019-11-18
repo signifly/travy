@@ -2,7 +2,7 @@
 	<div class="index" v-if="definitions">
 		<hero v-if="definitions" v-bind="{modifiers, hero}" @refresh="refresh" />
 		<div class="container">
-			<tabs :tabs="definitions.tabs" :key="url + refreshKey" />
+			<tabs :tabs="definitions.tabs" :key="refreshKey" />
 		</div>
 	</div>
 </template>

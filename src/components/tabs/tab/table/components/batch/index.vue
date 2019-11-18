@@ -3,9 +3,9 @@
 		<transition name="el-zoom-in-bottom">
 			<panel v-if="selected.items.length > 0">
 				<selected
+					@unselect="unselect"
 					v-if="selectedOptions"
 					v-bind="{selected, selectedOptions}"
-					@unselect="unselect"
 				/>
 
 				<div class="actions">
@@ -41,9 +41,9 @@ export default {
 			this.$emit("unselect");
 		},
 
-		event(e) {
+		event(event) {
 			this.unselect();
-			this.$emit("event", e);
+			this.$emit("event", event);
 		}
 	}
 };

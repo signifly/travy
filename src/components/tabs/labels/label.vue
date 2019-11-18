@@ -34,6 +34,7 @@ export default {
 						path: this.$route.path,
 						query: {
 							modifiers: this.query.modifiers,
+							seq: this.query.seq,
 							tab: this.id
 						}
 					})

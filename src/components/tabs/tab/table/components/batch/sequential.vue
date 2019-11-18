@@ -13,28 +13,19 @@ export default {
 		selected: {type: Object, required: true}
 	},
 	computed: {
-		query: (t) => t.$route.query,
-		indexId: (t) => t.$route.params.indexId,
-		firstUrl: (t) => rStringProps({val: t.url, data: t.selected.items[0]})
+		items() {
+			return this.selected.items.map((data) =>
+				rStringProps({val: this.url, data})
+			);
+		}
 	},
 	methods: {
-		setSequential() {
-			localStorage.setItem(
-				"sequential",
-				JSON.stringify({
-					items: this.selected.items,
-					firstUrl: this.firstUrl,
-					indexId: this.indexId,
-					url: this.url
-				})
-			);
-		},
-
 		start() {
-			this.setSequential();
+			localStorage.setItem("seq", JSON.stringify({items: this.items}));
+
 			this.$router.push({
-				path: this.firstUrl,
-				query: {modifiers: this.query.modifiers, sequential: true}
+				path: this.items[0],
+				query: {modifiers: this.$route.query.modifiers, seq: true}
 			});
 		}
 	}

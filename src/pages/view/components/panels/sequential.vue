@@ -1,8 +1,8 @@
 <template>
-	<panel v-bind="{loading: loadingAll}" v-if="items.length">
+	<panel v-bind="{loading}" v-if="items.length">
 		<div class="left">
-			<Tooltip content="Save and close">
-				<a class="close" @click="closeSave">
+			<Tooltip content="Close">
+				<a class="close" @click="close">
 					<i class="el-icon-circle-close" />
 				</a>
 			</Tooltip>
@@ -19,33 +19,50 @@
 		<div class="actions">
 			<div class="error" v-if="errorMsg" v-text="errorMsg" />
 
-			<Button
-				v-if="prev"
-				size="medium"
-				type="success"
-				icon="el-icon-arrow-left"
-				@click="prevSave"
-			>
-				{{ $translate({en: "Save and back", da: "Gem og gå tilbage"}) }}
-			</Button>
+			<transition name="el-fade-in" mode="out-in">
+				<Button
+					v-if="edit"
+					size="medium"
+					type="primary"
+					v-bind="{loading}"
+					@click="save"
+					v-shortkey="{win: ['ctrl', 's'], mac: ['meta', 's']}"
+					@shortkey.native="save"
+					title="CTRL/CMD + S"
+				>
+					{{ $translate({en: "Save changes", da: "Gem ændringer"}) }}
+				</Button>
 
-			<Button
-				v-if="next"
-				size="medium"
-				type="success"
-				@click="nextSave"
-				v-shortkey="{win: ['ctrl', 's'], mac: ['meta', 's']}"
-				@shortkey.native="nextSave"
-				title="CTRL/CMD + S"
-			>
-				{{ $translate({en: "Save and next", da: "Gem og gå videre"}) }}
-				<i class="el-icon-arrow-right el-icon-right" />
-			</Button>
+				<div v-else>
+					<Button
+						v-if="prevPath"
+						size="medium"
+						type="success"
+						icon="el-icon-back"
+						@click="prev"
+					>
+						{{ $translate({en: "Back", da: "Forrige"}) }}
+					</Button>
 
-			<Button v-if="!next" size="medium" type="success" @click="closeSave">
-				{{ $translate({en: "Save and close", da: "Gem og luk"}) }}
-				<i class="el-icon-check el-icon-right" />
-			</Button>
+					<Button
+						v-if="nextPath"
+						size="medium"
+						type="success"
+						@click="next"
+						v-shortkey="{win: ['ctrl', 's'], mac: ['meta', 's']}"
+						@shortkey.native="nextSave"
+						title="CTRL/CMD + S"
+					>
+						{{ $translate({en: "Next", da: "Næste"}) }}
+						<i class="el-icon-arrow-right el-icon-right" />
+					</Button>
+
+					<Button v-if="!nextPath" size="medium" type="success" @click="close">
+						{{ $translate({en: "Close", da: "Luk"}) }}
+						<i class="el-icon-check el-icon-right" />
+					</Button>
+				</div>
+			</transition>
 		</div>
 	</panel>
 </template>
@@ -53,79 +70,77 @@
 <script>
 import {Button, Tooltip, Progress} from "element-ui";
 import panel from "@/components/panel";
-import {get} from "lodash";
 
 export default {
 	components: {Button, Tooltip, Progress, panel},
 	props: {
-		title: {type: String, required: true},
 		errorMsg: {type: String, required: true},
-		loading: {type: Boolean, required: true}
+		loading: {type: Boolean, required: true},
+		edit: {type: Boolean, required: true},
+		title: {type: String, required: true}
 	},
 	data() {
 		return {
-			sequential: JSON.parse(localStorage.getItem("sequential")),
-			loadingData: false
+			data: JSON.parse(localStorage.getItem("seq"))
 		};
 	},
 	computed: {
-		items: (t) => get(t.sequential, "items", []).map((x) => x.toString()),
 		progress: (t) => ((t.index + 1) / t.items.length) * 100,
-		loadingAll: (t) => t.loading || t.loadingData,
+		index: (t) => t.items.indexOf(t.$route.path),
 		modifiers: (t) => t.$route.query.modifiers,
 		indexId: (t) => t.$route.params.indexId,
 		viewId: (t) => t.$route.params.viewId,
-		index: (t) => t.items.indexOf(t.viewId),
-		prev: (t) => t.items[t.index - 1],
-		next: (t) => t.items[t.index + 1]
+		items: (t) => t.data.items,
+
+		prevPath() {
+			const {fullPath, path} = this.$route;
+			const prev = this.items[this.index - 1];
+			return prev && fullPath.replace(path, prev);
+		},
+
+		nextPath() {
+			const {fullPath, path} = this.$route;
+			const next = this.items[this.index + 1];
+			return next && fullPath.replace(path, next);
+		}
 	},
 	methods: {
-		nextSave() {
+		next() {
 			this.$parent.$emit("save", {
 				done: () => {
 					this.$router.push({
-						params: {...this.$route.params, viewId: this.next},
+						path: this.nextPath,
 						query: {modifiers: this.modifiers, sequential: true}
 					});
 				}
 			});
 		},
 
-		prevSave() {
+		prev() {
 			this.$parent.$emit("save", {
 				done: () => {
 					this.$router.push({
-						params: {...this.$route.params, viewId: this.prev},
+						path: this.prevPath,
 						query: {modifiers: this.modifiers, sequential: true}
 					});
 				}
 			});
 		},
 
-		closeSave() {
+		save() {
+			this.$emit("save");
+		},
+
+		close() {
 			this.$emit("save", {
 				done: () => {
-					localStorage.removeItem("sequential");
+					localStorage.removeItem("seq");
 					this.$router.push({
 						path: `/i/${this.indexId}`,
 						query: {modifiers: this.modifiers}
 					});
 				}
 			});
-		},
-
-		refreshData() {
-			this.loadingData = true;
-
-			this.$emit("event", {
-				done: () => (this.loadingData = false),
-				actions: {refresh: true}
-			});
-		}
-	},
-	watch: {
-		viewId() {
-			this.refreshData();
 		}
 	}
 };
@@ -157,8 +172,10 @@ export default {
 }
 
 .progress {
-	display: flex;
 	align-items: center;
+	margin-right: auto;
+	margin-left: 29%;
+	display: flex;
 	width: 30%;
 
 	.line {
