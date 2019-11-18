@@ -42,9 +42,7 @@ export default {
 		errorMsg: (t) => get(t.error, ["errors", t.field.attribute, 0]),
 
 		show() {
-			const rules = ["label"];
-
-			return rules.reduce(
+			return ["label"].reduce(
 				(sum, rule) => ({
 					...sum,
 					[rule]: !this.hide.includes(rule)

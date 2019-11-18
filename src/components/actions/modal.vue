@@ -1,11 +1,16 @@
 <template>
-	<div class="modal">
+	<div
+		class="modal"
+		v-shortkey="{win: ['ctrl', 'enter'], mac: ['meta', 'enter']}"
+		@shortkey="submit"
+	>
 		<Dialog
 			:close-on-click-modal="false"
 			:modal-append-to-body="true"
 			:visible.sync="visible"
 			:append-to-body="false"
-			v-bind="{width, title: name}"
+			:width="`${width}px`"
+			:title="name"
 		>
 			<div class="fields">
 				<field
@@ -19,10 +24,10 @@
 			<div class="footer" slot="footer">
 				<div class="actions">
 					<Button @click="visible = false" :disabled="!!loading">
-						{{ buttonCancelText }}
+						{{ $translate({en: "Cancel", da: "Annuller"}) }}
 					</Button>
 					<Button type="primary" @click="submit" :loading="!!loading">
-						{{ buttonSubmitText }}
+						{{ $translate({en: "Submit", da: "Gem"}) }}
 					</Button>
 				</div>
 
@@ -35,8 +40,8 @@
 </template>
 
 <script>
-import {translate, mergeData} from "@/modules/utils";
 import {Dialog, Button} from "element-ui";
+import {mergeData} from "@/modules/utils";
 import field from "@/components/field";
 
 export default {
@@ -44,17 +49,9 @@ export default {
 	props: {
 		endpoint: {type: Object, required: true},
 		payload: {type: Object, required: false},
-		width: {type: String, default: "700px"},
 		name: {type: String, required: false},
 		fields: {type: Array, required: true},
-		buttonSubmitText: {
-			type: String,
-			default: () => translate({en: "Submit", da: "Gem"})
-		},
-		buttonCancelText: {
-			type: String,
-			default: () => translate({en: "Cancel", da: "Annuller"})
-		}
+		width: {type: Number, default: 700}
 	},
 	data() {
 		return {
@@ -72,10 +69,6 @@ export default {
 		}
 	},
 	methods: {
-		enter({key}) {
-			if (key === "Enter") this.submit();
-		},
-
 		event({actions}) {
 			if (actions.update) {
 				this.data = mergeData(this.data, actions.update.data);
@@ -102,12 +95,6 @@ export default {
 				this.loading = false;
 			}
 		}
-	},
-	mounted() {
-		this.$el.addEventListener("keyup", this.enter);
-	},
-	beforeDestroy() {
-		this.$el.removeEventListener("keyup", this.enter);
 	}
 };
 </script>
