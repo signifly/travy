@@ -68,13 +68,13 @@ export default {
 		activity
 	},
 	props: {
-		tabs: {type: Array, required: true},
-		hero: {type: Object, required: true},
-		actions: {type: Array, required: true},
-		sidebar: {type: Object, required: true},
-		activity: {type: Object, required: true},
+		modifiers: {type: Object, required: false},
 		endpoint: {type: Object, required: true},
-		modifiers: {type: Object, required: false}
+		activity: {type: Object, required: true},
+		sidebar: {type: Object, required: true},
+		actions: {type: Array, required: true},
+		hero: {type: Object, required: true},
+		tabs: {type: Array, required: true}
 	},
 	data() {
 		return {
@@ -89,9 +89,9 @@ export default {
 		};
 	},
 	computed: {
-		data: (t) => t.res.data,
+		options: (t) => t.res.options,
 		query: (t) => t.$route.query,
-		options: (t) => t.res.options
+		data: (t) => t.res.data
 	},
 	methods: {
 		refresh() {

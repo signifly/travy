@@ -10,8 +10,8 @@ import page from "./page";
 export default {
 	components: {page},
 	data: () => ({
-		refreshKey: 0,
-		definitions: null
+		definitions: null,
+		refreshKey: 0
 	}),
 	computed: {
 		url: (t) => `/definitions/view/${t.indexId}`,

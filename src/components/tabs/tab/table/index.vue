@@ -59,11 +59,11 @@ export default {
 	},
 	data() {
 		return {
-			data: [],
-			meta: null,
-			halt: false,
 			loading: false,
 			metadata: null,
+			halt: false,
+			meta: null,
+			data: [],
 			selected: {
 				items: [],
 				active: this.definitions.batch || true
@@ -71,14 +71,14 @@ export default {
 		};
 	},
 	computed: {
-		query: () => state.query,
-		sort: (t) => t.definitions.sort,
-		batch: (t) => t.definitions.batch,
-		expand: (t) => t.definitions.expand,
-		actions: (t) => t.definitions.actions,
-		filters: (t) => t.definitions.filters,
-		columns: (t) => t.definitions.columns,
 		pagination: (t) => t.definitions.pagination,
+		columns: (t) => t.definitions.columns,
+		filters: (t) => t.definitions.filters,
+		actions: (t) => t.definitions.actions,
+		expand: (t) => t.definitions.expand,
+		batch: (t) => t.definitions.batch,
+		sort: (t) => t.definitions.sort,
+		query: () => state.query,
 
 		ws() {
 			return rStringProps({
