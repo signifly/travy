@@ -17,7 +17,7 @@ export default {
 	setQuery({type, query}) {
 		this.query = query;
 
-		if (router.currentRoute.name === "table") {
+		if (router.currentRoute.name === "index") {
 			router[type]({query}).catch(() => {});
 		}
 	},

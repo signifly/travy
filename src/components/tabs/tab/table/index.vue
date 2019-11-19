@@ -34,7 +34,7 @@
 				@event="event"
 			/>
 			<pagination v-if="meta" v-bind="[meta, {loading}]" @getData="getData" />
-			<batch v-bind="[batch, {selected}]" @event="event" />
+			<panel v-bind="{selected, batch, sort}" @event="event" />
 		</div>
 	</div>
 </template>
@@ -45,14 +45,14 @@ import actions from "@/components/page-actions";
 import {rStringProps} from "@/modules/utils";
 import filters from "./components/filters";
 import tableEl from "./components/table";
-import batch from "./components/batch";
+import panel from "./components/panel";
 import sort from "./components/sort";
 import top from "./components/top";
 import {merge, get} from "lodash";
 import state from "./state";
 
 export default {
-	components: {tableEl, filters, actions, pagination, sort, batch, top},
+	components: {tableEl, filters, actions, pagination, sort, panel, top},
 	props: {
 		definitions: {type: Object, required: true},
 		parentData: {type: Object, required: false}

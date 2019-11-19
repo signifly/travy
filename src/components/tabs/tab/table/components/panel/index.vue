@@ -3,18 +3,29 @@
 		<transition name="el-zoom-in-bottom">
 			<panel v-if="selected.items.length > 0">
 				<selected
+					v-bind="{selected}"
 					@unselect="unselect"
-					v-if="selectedOptions"
-					v-bind="{selected, selectedOptions}"
+					v-if="batch.selectedOptions"
+					:selectedOptions="batch.selectedOptions"
 				/>
 
-				<div class="actions">
+				<div class="items">
 					<div class="item">
-						<sequential v-if="sequential" v-bind="[sequential, {selected}]" />
+						<move v-bind="{sort}" />
+					</div>
+					<div class="item">
+						<sequential
+							v-if="batch.sequential"
+							v-bind="[batch.sequential, {selected}]"
+						/>
 					</div>
 
 					<div class="item">
-						<bulk v-if="bulk" v-bind="[bulk, {selected}]" @event="event" />
+						<bulk
+							@event="event"
+							v-if="batch.bulk"
+							v-bind="[batch.bulk, {selected}]"
+						/>
 					</div>
 				</div>
 			</panel>
@@ -26,15 +37,15 @@
 import panel from "@/components/panel";
 import sequential from "./sequential";
 import selected from "./selected";
+import move from "./move";
 import bulk from "./bulk";
 
 export default {
-	components: {panel, sequential, selected, bulk},
+	components: {panel, sequential, selected, bulk, move},
 	props: {
-		selectedOptions: {type: Object, required: false},
-		sequential: {type: Object, required: false},
 		selected: {type: Object, required: true},
-		bulk: {type: Object, required: false}
+		batch: {type: Object, required: true},
+		sort: {type: Object, required: true}
 	},
 	methods: {
 		unselect() {
@@ -53,8 +64,9 @@ export default {
 .batch {
 	position: relative;
 
-	.actions {
+	.items {
 		display: flex;
+
 		.item {
 			margin-left: 0.5em;
 		}

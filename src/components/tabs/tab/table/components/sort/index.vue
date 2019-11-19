@@ -13,8 +13,7 @@ import state from "../../state";
 export default {
 	components: {Select, Option},
 	props: {
-		items: {type: Array, required: true},
-		default: {type: String, required: false}
+		items: {type: Array, required: true}
 	},
 	data: () => ({state}),
 	computed: {
@@ -23,8 +22,12 @@ export default {
 			return this.items.reduce(
 				(sum, x) => [
 					...sum,
-					{label: `${x.label} (A-Z)`, value: x.value},
-					{label: `${x.label} (Z-A)`, value: `-${x.value}`}
+					...(x.manual
+						? [x]
+						: [
+								{label: `${x.label} (A-Z)`, value: x.value},
+								{label: `${x.label} (Z-A)`, value: `-${x.value}`}
+						  ])
 				],
 				[]
 			);
@@ -35,8 +38,8 @@ export default {
 			this.state.mergeQuery({
 				type: "replace",
 				query: {
-					sort: value,
-					page: undefined
+					page: undefined,
+					sort: value
 				}
 			});
 

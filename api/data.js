@@ -266,10 +266,10 @@ module.exports = {
 					},
 					pagination: {},
 					sort: {
-						default: "name",
 						items: [
 							{label: "Name", value: "name"},
-							{label: "Input", value: "input"}
+							{label: "Input", value: "input"},
+							{label: "Position", value: "pos", manual: true}
 						]
 					},
 					columns: [
