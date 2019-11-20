@@ -1,10 +1,18 @@
 <template>
-	<tbody>
+	<tbody class="row">
 		<tr>
+			<td class="space" />
+
+			<move v-if="sort" v-bind="{sort}" />
+
 			<td v-if="expand">
 				<expandToggle :expanded.sync="expanded" v-if="expand" />
 			</td>
-			<td v-if="selected.active"><vselect v-bind="{selected, row}" /></td>
+
+			<td v-if="selected.active">
+				<vselect v-bind="{selected, row}" />
+			</td>
+
 			<td v-for="column in columns" :key="column.attribute">
 				<rowField v-bind="{data: data, column}" @event="event" />
 			</td>
@@ -26,15 +34,17 @@ import expandView from "./expand/view";
 import vselect from "./select";
 import rowField from "./field";
 import produce from "immer";
+import move from "./move";
 
 export default {
-	components: {vselect, rowField, expandToggle, expandView},
+	components: {move, vselect, rowField, expandToggle, expandView},
 	props: {
 		modifiers: {type: Object, required: false},
 		endpoint: {type: Object, required: false},
 		selected: {type: Object, required: true},
 		expand: {type: Object, required: false},
 		columns: {type: Array, required: true},
+		sort: {type: Object, request: false},
 		row: {type: Object, required: true}
 	},
 	data: (t) => ({
@@ -85,3 +95,17 @@ export default {
 	}
 };
 </script>
+
+<style lang="scss" scoped>
+.row {
+	&:nth-child(odd) {
+		tr {
+			background-color: #fafafa;
+		}
+	}
+
+	&.sortable-chosen {
+		background-color: #fff;
+	}
+}
+</style>

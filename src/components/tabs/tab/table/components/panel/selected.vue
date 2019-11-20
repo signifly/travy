@@ -1,7 +1,7 @@
 <template>
 	<div class="selected">
 		<listTooltip :items="itemsC">
-			<Checkbox v-bind="{value}" @input="select">
+			<Checkbox v-bind="{value}" @input="unselect">
 				{{ selected.items.length }} selected
 			</Checkbox>
 		</listTooltip>
@@ -34,7 +34,7 @@ export default {
 		}
 	},
 	methods: {
-		select() {
+		unselect() {
 			this.selected.items = [];
 		}
 	}

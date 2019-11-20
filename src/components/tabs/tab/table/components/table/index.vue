@@ -1,20 +1,22 @@
 <template>
 	<div class="table">
-		<table>
+		<draggable tag="table" v-model="dataC" @end="move" handle=".move">
 			<vHead
-				v-bind="{columns, selected, data, expand}"
+				v-bind="{columns, selected, expand, sort}"
 				@getData="$emit('getData')"
+				:data="dataC"
+				slot="header"
 			/>
 
 			<row
 				:key="row.id"
-				v-for="row in data"
+				v-for="row in dataC"
 				@event="$emit('event', $event)"
-				v-bind="{row, columns, endpoint, selected, expand}"
+				v-bind="{row, columns, endpoint, selected, expand, sort}"
 			/>
-		</table>
+		</draggable>
 
-		<div class="info" v-if="data.length === 0">
+		<div class="info" v-if="dataC.length === 0">
 			<div class="nodata" v-if="!loading">no data</div>
 			<div class="loading" v-if="loading">loading</div>
 		</div>
@@ -22,18 +24,33 @@
 </template>
 
 <script>
+import {cloneDeep, debounce} from "lodash";
+import draggable from "vuedraggable";
 import vHead from "./head";
 import row from "./row";
 
 export default {
-	components: {vHead, row},
+	components: {draggable, vHead, row},
 	props: {
-		selected: {type: Object, default: () => ({})},
 		loading: {type: Boolean, required: false},
 		endpoint: {type: Object, required: false},
+		selected: {type: Object, required: true},
 		expand: {type: Object, required: false},
 		columns: {type: Array, required: true},
-		data: {type: Array, required: false}
+		data: {type: Array, required: false},
+		sort: {type: Object, request: false}
+	},
+	data: (t) => ({
+		dataC: cloneDeep(t.data)
+	}),
+	methods: {
+		move: debounce(async function() {
+			await this.$axios.post(`${this.endpoint.url}/move`, {
+				position: this.data[0][this.sort.move.value],
+				ids: this.dataC.map((x) => x.id),
+				value: this.$route.query.sort
+			});
+		}, 1000)
 	}
 };
 </script>
@@ -47,14 +64,6 @@ export default {
 		border-collapse: collapse;
 
 		::v-deep {
-			tbody {
-				&:nth-child(odd) {
-					tr {
-						background-color: #fafafa;
-					}
-				}
-			}
-
 			th,
 			td {
 				border: 1px solid #ebeef5;

@@ -1,13 +1,20 @@
 <template>
-	<div class="move">
-		<Popover placement="top" width="300" ref="popover">
-			<popover @close="close" />
-			<Button size="medium" slot="reference">
-				Move
-				<i class="el-icon-d-caret el-icon-right" />
-			</Button>
-		</Popover>
-	</div>
+	<transition name="el-fade-in">
+		<div class="move" v-if="sort && sort.move">
+			<Popover placement="top" width="300" ref="popover">
+				<popover
+					v-bind="{endpoint, selected, meta}"
+					@event="$emit('event', $event)"
+					@close="close"
+				/>
+
+				<Button size="medium" slot="reference">
+					{{ $translate({en: "Move", da: "Flyt"}) }}
+					<i class="el-icon-d-caret el-icon-right" />
+				</Button>
+			</Popover>
+		</div>
+	</transition>
 </template>
 
 <script>
@@ -17,7 +24,10 @@ import popover from "./popover";
 export default {
 	components: {popover, Popover, Button},
 	props: {
-		sort: {type: Object, required: true}
+		endpoint: {type: Object, required: true},
+		selected: {type: Object, required: true},
+		sort: {type: Object, required: false},
+		meta: {type: Object, required: true}
 	},
 	methods: {
 		close() {

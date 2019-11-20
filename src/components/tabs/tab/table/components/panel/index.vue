@@ -1,17 +1,20 @@
 <template>
 	<div class="batch">
 		<transition name="el-zoom-in-bottom">
-			<panel v-if="selected.items.length > 0">
+			<vPanel v-if="selected.items.length > 0">
 				<selected
 					v-bind="{selected}"
-					@unselect="unselect"
 					v-if="batch.selectedOptions"
 					:selectedOptions="batch.selectedOptions"
 				/>
 
 				<div class="items">
 					<div class="item">
-						<move v-bind="{sort}" />
+						<move
+							v-bind="{endpoint, selected, meta, sort}"
+							@event="event"
+							v-if="meta"
+						/>
 					</div>
 					<div class="item">
 						<sequential
@@ -28,32 +31,29 @@
 						/>
 					</div>
 				</div>
-			</panel>
+			</vPanel>
 		</transition>
 	</div>
 </template>
 
 <script>
-import panel from "@/components/panel";
+import vPanel from "@/components/panel";
 import sequential from "./sequential";
 import selected from "./selected";
 import move from "./move";
 import bulk from "./bulk";
 
 export default {
-	components: {panel, sequential, selected, bulk, move},
+	components: {vPanel, sequential, selected, bulk, move},
 	props: {
+		endpoint: {type: Object, required: true},
 		selected: {type: Object, required: true},
 		batch: {type: Object, required: true},
-		sort: {type: Object, required: true}
+		meta: {type: Object, required: false},
+		sort: {type: Object, required: false}
 	},
 	methods: {
-		unselect() {
-			this.$emit("unselect");
-		},
-
 		event(event) {
-			this.unselect();
 			this.$emit("event", event);
 		}
 	}

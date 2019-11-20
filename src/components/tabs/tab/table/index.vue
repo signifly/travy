@@ -21,6 +21,7 @@
 		<div class="content">
 			<top v-bind="{loading, meta}" />
 			<tableEl
+				v-if="data"
 				ref="table"
 				v-bind="{
 					selected,
@@ -28,13 +29,14 @@
 					columns,
 					loading,
 					expand,
+					sort,
 					data
 				}"
 				@getData="getData"
 				@event="event"
 			/>
 			<pagination v-if="meta" v-bind="[meta, {loading}]" @getData="getData" />
-			<panel v-bind="{selected, batch, sort}" @event="event" />
+			<panel v-bind="{endpoint, selected, batch, meta, sort}" @event="event" />
 		</div>
 	</div>
 </template>
@@ -59,11 +61,11 @@ export default {
 	},
 	data() {
 		return {
-			loading: false,
 			metadata: null,
+			loading: false,
 			halt: false,
 			meta: null,
-			data: [],
+			data: null,
 			selected: {
 				items: [],
 				active: this.definitions.batch || true
@@ -77,8 +79,20 @@ export default {
 		actions: (t) => t.definitions.actions,
 		expand: (t) => t.definitions.expand,
 		batch: (t) => t.definitions.batch,
-		sort: (t) => t.definitions.sort,
 		query: () => state.query,
+
+		sort() {
+			const {sort} = this.definitions;
+
+			return (
+				sort && {
+					...sort,
+					move: sort.items.find((x) => {
+						return x.manual && this.$route.query.sort === x.value;
+					})
+				}
+			);
+		},
 
 		ws() {
 			return rStringProps({
@@ -95,10 +109,6 @@ export default {
 		}
 	},
 	methods: {
-		async getDefinitions() {
-			console.log("get definitions");
-		},
-
 		async event({actions, done}) {
 			if (actions.refresh) {
 				await this.getData();
@@ -112,8 +122,8 @@ export default {
 			if (done) done();
 		},
 
-		async getData({loading = true} = {}) {
-			this.loading = loading;
+		async getData() {
+			this.loading = true;
 
 			const params = merge({}, this.endpoint.params, {
 				count: this.query.pagesize || 15,

@@ -1,15 +1,16 @@
 <template>
 	<div class="popover">
 		<div class="text">
-			Move to position out of 1334
+			{{ $translate({en: "Move", da: "Flyt"}) }}
+			{{ selected.items.length }}/{{ meta.total }}
 		</div>
 
 		<div class="position">
 			<Select
-				v-model="value"
 				size="small"
+				v-model="select"
 				placeholder="Select"
-				:style="{width: '60%'}"
+				:style="{width: '55%'}"
 			>
 				<Option label="Top" value="top" />
 				<Option label="Bottom" value="bottom" />
@@ -17,21 +18,25 @@
 			</Select>
 
 			<InputNumber
-				v-if="value === 'position'"
+				v-if="select === 'position'"
 				v-model="position"
 				controls-position="right"
-				:style="{width: '35%'}"
+				:style="{width: '40%'}"
+				:max="meta.total"
 				size="small"
 				:min="1"
-				:max="10"
 			/>
 		</div>
 
-		<div class="bottom">
-			<Button size="mini" type="primary" :disabled="!value" @click="move">
-				Confirm
-			</Button>
-		</div>
+		<Button
+			:disabled="!select"
+			v-bind="{loading}"
+			class="submit"
+			@click="move"
+			size="small"
+		>
+			{{ $translate({en: "Submit", da: "Gem"}) }}
+		</Button>
 	</div>
 </template>
 
@@ -40,15 +45,39 @@ import {Button, Select, Option, InputNumber} from "element-ui";
 
 export default {
 	components: {Button, Select, Option, InputNumber},
+	props: {
+		endpoint: {type: Object, required: true},
+		selected: {type: Object, required: true},
+		meta: {type: Object, required: true}
+	},
 	data: () => ({
 		loading: false,
 		position: 0,
-		value: ""
+		select: ""
 	}),
 	methods: {
-		move() {
-			this.value = "";
-			this.$emit("close");
+		async move() {
+			this.loading = true;
+
+			await this.$axios.post(`${this.endpoint.url}/move`, {
+				ids: this.selected.items.map((x) => x.id),
+				value: this.$route.query.sort,
+				position: {
+					position: this.position,
+					bottom: this.meta.total,
+					top: 0
+				}[this.select]
+			});
+
+			this.$emit("event", {
+				actions: {refresh: true},
+				done: () => {
+					this.select = "";
+					this.position = 0;
+					this.$emit("close");
+					this.loading = false;
+				}
+			});
 		}
 	}
 };
@@ -56,19 +85,18 @@ export default {
 
 <style lang="scss" scoped>
 .popover {
+	font-weight: 500;
 	padding: 0.75em;
 	font-size: 12px;
-	font-weight: 500;
 
 	.position {
-		margin: 1em 0 2em;
-		display: flex;
 		justify-content: space-between;
+		margin: 1em 0 1.5em;
+		display: flex;
 	}
 
-	.bottom {
-		display: flex;
-		justify-content: flex-end;
+	.submit {
+		width: 100%;
 	}
 }
 </style>

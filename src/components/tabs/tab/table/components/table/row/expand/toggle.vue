@@ -19,7 +19,6 @@ export default {
 <style lang="scss" scoped>
 .expand-toggle {
 	justify-content: center;
-	padding-left: 0.65em;
 	align-items: center;
 	padding: 1em 0;
 	display: flex;

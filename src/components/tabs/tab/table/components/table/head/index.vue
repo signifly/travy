@@ -1,8 +1,10 @@
 <template>
 	<thead align="left">
 		<tr>
-			<th width="30" v-if="expand" />
-			<th width="30" v-if="selected.active">
+			<th width="8" />
+			<th v-bind="{width}" v-if="sort && sort.move" />
+			<th v-bind="{width}" v-if="expand" />
+			<th v-bind="{width}" v-if="selected.active">
 				<vselect v-bind="{selected, data}" />
 			</th>
 			<item
@@ -25,8 +27,12 @@ export default {
 		selected: {type: Object, required: true},
 		expand: {type: Object, required: false},
 		columns: {type: Array, required: true},
+		sort: {type: Object, required: false},
 		data: {type: Array, required: false}
-	}
+	},
+	data: () => ({
+		width: 25
+	})
 };
 </script>
 
