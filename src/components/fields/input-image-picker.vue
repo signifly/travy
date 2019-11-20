@@ -19,7 +19,7 @@
 				<div class="header">
 					<div class="search">
 						<Input
-							v-model="searchInput"
+							v-model="input"
 							size="medium"
 							placeholder="Search"
 							@input="search"
@@ -95,7 +95,7 @@ export default {
 	},
 	data() {
 		return {
-			searchInput: "",
+			input: "",
 			image: null,
 			modal: {
 				loading: false,
@@ -131,9 +131,9 @@ export default {
 			this.modal.active = bool;
 		},
 
-		search(search) {
+		search() {
 			this.modal.loading = true;
-			this.getItemsDebounce({search});
+			this.getItemsDebounce();
 		},
 
 		getMore() {
@@ -143,7 +143,7 @@ export default {
 
 		getItemsDebounce() {},
 
-		async getItems({search, page = 1} = {}) {
+		async getItems({page = 1} = {}) {
 			const {
 				key,
 				endpoint: {params, url}
@@ -155,7 +155,7 @@ export default {
 					page,
 					filter: {
 						type: "image",
-						search
+						search: this.input
 					}
 				}
 			});
@@ -183,7 +183,7 @@ export default {
 		}
 	},
 	created() {
-		this.searchInput = "";
+		this.input = "";
 		this.getItemsDebounce = debounce(this.getItems, 400);
 		this.$watch("url", (url) => (this.image = url), {immediate: true});
 	}
