@@ -1,38 +1,50 @@
 <template>
-	<div class="loginform">
-		<div class="header">{{ header }}</div>
-		<div class="box">
-			<div class="title">{{ title }}</div>
-			<Form
-				class="form"
-				:model="data"
-				label-position="top"
-				@keydown.native.enter="$emit('submit')"
-			>
-				<field
-					v-for="field in fields"
-					:key="field.attribute"
-					v-bind="{field, data, error}"
-					@event="$emit('event', $event)"
-				/>
-
-				<div class="actions">
-					<slot name="actions" />
-				</div>
-			</Form>
-
-			<div class="text error" v-if="error.message">{{ error.message }}</div>
-			<div class="text message" v-if="message">{{ message }}</div>
+	<div class="layout">
+		<div class="logo">
+			<div class="img" :style="{backgroundImage: `url('${theme.logo}')`}" />
 		</div>
+
+		<div class="content">
+			<div class="box">
+				<div class="title">{{ title }}</div>
+				<Form
+					class="form"
+					:model="data"
+					label-position="top"
+					@keydown.native.enter="$emit('submit')"
+				>
+					<field
+						v-for="field in fields"
+						:key="field.attribute"
+						v-bind="{field, data, error}"
+						@event="$emit('event', $event)"
+					/>
+
+					<div class="actions">
+						<slot name="actions" />
+					</div>
+				</Form>
+
+				<div class="text error" v-if="error.message" v-text="error.message" />
+				<div class="text message" v-if="message" v-text="message" />
+			</div>
+		</div>
+
+		<div
+			class="image"
+			:style="{
+				backgroundColor: theme.color,
+				backgroundImage: `url('${theme.cover}')`
+			}"
+		/>
 	</div>
 </template>
 
 <script>
-import {Form} from "element-ui";
 import field from "@/components/field";
 
 export default {
-	components: {Form, field},
+	components: {field},
 	props: {
 		error: {type: Object, default: () => ({})},
 		loading: {type: Boolean, required: false},
@@ -42,63 +54,79 @@ export default {
 		data: {type: Object, required: true}
 	},
 	computed: {
-		header: (t) => t.$store.getters["config/title"]
+		theme: (t) => t.$store.getters["config/theme"]
 	}
 };
 </script>
 
 <style lang="scss" scoped>
-.loginform {
+.layout {
 	display: flex;
-	flex-direction: column;
-	height: 72vh;
-	align-items: center;
-	justify-content: center;
+	height: 100vh;
 
-	.header {
-		margin-bottom: 1em;
-		color: $blue4;
+	.logo {
+		justify-content: center;
+		display: inline-flex;
+		align-items: center;
+		position: absolute;
+		margin-right: 2em;
+		left: 2em;
+		top: 1em;
+
+		.img {
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: contain;
+			width: 180px;
+			height: 40px;
+		}
 	}
 
-	.box {
-		border: 1px solid $blue2;
-		border-radius: 4px;
-		padding: 1.5em 1.5em;
+	.content {
+		justify-content: center;
+		align-items: center;
+		display: flex;
+		width: 50%;
 
-		> .title {
-			font-weight: 500;
-			font-size: 1.4em;
-			margin-bottom: 1em;
-		}
+		.box {
+			margin-bottom: 5em;
 
-		.form {
-			width: 20em;
+			> .title {
+				margin-bottom: 1em;
+				font-weight: 700;
+				font-size: 32px;
+			}
 
-			.actions {
-				margin-top: 1.5em;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
+			.form {
+				width: 20em;
 
-				.reset {
-					font-size: 0.8em;
+				.actions {
+					justify-content: space-between;
+					align-items: center;
+					margin-top: 1.5em;
+					display: flex;
+				}
+			}
+
+			.text {
+				margin-top: 1.25em;
+				font-size: 0.8em;
+
+				&.error {
 					color: $danger;
-					text-decoration: underline;
+				}
+				&.message {
+					color: $success;
 				}
 			}
 		}
+	}
 
-		.text {
-			margin-top: 1.25em;
-			font-size: 0.875em;
-
-			&.error {
-				color: $danger;
-			}
-			&.message {
-				color: $success;
-			}
-		}
+	.image {
+		width: 50%;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
 	}
 }
 </style>

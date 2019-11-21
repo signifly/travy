@@ -28,7 +28,8 @@ module.exports = {
 		title: "Travy",
 		locale: "en",
 		theme: {
-			logo: "https://picsum.photos/id/11/200/50",
+			cover: "https://picsum.photos/id/135/2560/1920",
+			logo: "https://picsum.photos/id/135/200/50",
 			color: "#00233d"
 		},
 		header: {
@@ -184,6 +185,7 @@ module.exports = {
 	},
 
 	"/definitions/index/projects": {
+		title: "index title",
 		hero: {
 			title: "Hero title",
 			subtitle: "Subtitle"
@@ -513,6 +515,7 @@ module.exports = {
 	},
 
 	"/definitions/view/projects": {
+		title: "view title",
 		hero: {
 			title: "Hello {name}",
 			subtitle: "Subtitle"

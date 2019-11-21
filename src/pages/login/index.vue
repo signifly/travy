@@ -1,31 +1,29 @@
 <template>
-	<div class="login">
-		<vForm
-			title="Login"
-			v-bind="{loading, error, message, fields, data}"
-			@event="event"
-			@submit="login"
-		>
-			<template slot="actions">
-				<a class="reset" :class="{loading}" @click="resetPassword">
-					{{ $translate({en: "Reset password", da: "Nulstil password"}) }}
-				</a>
-				<Button type="primary" size="medium" v-bind="{loading}" @click="login">
-					Login
-				</Button>
-			</template>
-		</vForm>
-	</div>
+	<vForm
+		v-bind="{loading, error, message, fields, data}"
+		@submit="login"
+		@event="event"
+		title="Login"
+	>
+		<template slot="actions">
+			<a class="reset" :class="{loading}" @click="resetPassword">
+				{{ $translate({en: "Reset password", da: "Nulstil password"}) }}
+			</a>
+			<Button type="primary" size="medium" v-bind="{loading}" @click="login">
+				Login
+			</Button>
+		</template>
+	</vForm>
 </template>
 
 <script>
 import {Button} from "element-ui";
-import vForm from "./form.vue";
+import vForm from "./form";
 
 export default {
-	components: {vForm, Button},
+	components: {Button, vForm},
 	props: {
-		route: {type: Object, required: false, default: () => ({name: "index"})}
+		route: {type: Object, required: false, default: () => ({name: "home"})}
 	},
 	data() {
 		return {
@@ -115,21 +113,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login {
-	background-color: $white1;
-	min-height: 100vh;
+.reset {
+	font-size: 0.8em;
+	color: $info;
 
-	.reset {
-		font-size: 0.8em;
-		color: $info;
+	&:hover {
+		text-decoration: underline;
+	}
 
-		&:hover {
-			text-decoration: underline;
-		}
-
-		&.loading {
-			pointer-events: none;
-		}
+	&.loading {
+		pointer-events: none;
 	}
 }
 </style>

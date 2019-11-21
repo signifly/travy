@@ -52,7 +52,7 @@ export default {
 		.img {
 			background-repeat: no-repeat;
 			background-position: center;
-			background-size: cover;
+			background-size: contain;
 			width: 180px;
 			height: 40px;
 		}
