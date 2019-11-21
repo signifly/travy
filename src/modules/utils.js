@@ -71,9 +71,8 @@ export const translate = (locales) => {
 };
 
 export const operator = ({key, value, operator, data}) => {
-	operator = {eq, gt, gte, lt, lte}[operator];
-	key = get(data, key);
-	return operator(key, value);
+	const op = {eq, gt, gte, lt, lte}[operator];
+	return op(get(data, key), value);
 };
 
 export const mergeData = (srcData, newData) => {

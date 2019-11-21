@@ -305,7 +305,6 @@ module.exports = {
 						}
 					],
 					filters: {
-						width: 800,
 						data: {
 							name: "test"
 						},

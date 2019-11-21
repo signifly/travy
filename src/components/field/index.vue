@@ -1,5 +1,5 @@
 <template>
-	<div class="field" :style="{width: fWidth}" v-if="!disabled">
+	<div class="field" :style="{width}" v-if="!disabled">
 		<div class="content">
 			<vlabel v-bind="{field}" v-if="show.label" />
 
@@ -51,7 +51,7 @@ export default {
 			);
 		},
 
-		fWidth() {
+		width() {
 			const w = this.field.width || 100;
 
 			if (this.widthPx) {
