@@ -50,13 +50,13 @@ export default {
 <style lang="scss" scoped>
 .error {
 	.info {
+		padding: 12em 0 2em;
 		text-align: center;
-		padding: 7em 0 2em;
 
 		.title {
-			font-size: 5em;
 			margin-bottom: 0.75em;
 			font-weight: 600;
+			font-size: 5em;
 		}
 	}
 }

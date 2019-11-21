@@ -65,8 +65,8 @@ export default {
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: cover;
-		border-radius: 50%;
 		margin-right: 0.5em;
+		border-radius: 50%;
 		$s: 24px;
 		width: $s;
 		height: $s;

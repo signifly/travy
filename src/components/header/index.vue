@@ -28,9 +28,9 @@ import user from "./user";
 export default {
 	components: {Header, notification, vMenu, user},
 	computed: {
-		theme: (t) => t.$store.getters["config/theme"],
+		notifications: (t) => t.header.notifications !== false,
 		header: (t) => t.$store.getters["config/header"],
-		notifications: (t) => t.header.notifications !== false
+		theme: (t) => t.$store.getters["config/theme"]
 	}
 };
 </script>
