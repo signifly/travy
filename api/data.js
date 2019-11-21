@@ -185,7 +185,7 @@ module.exports = {
 	},
 
 	"/definitions/index/projects": {
-		title: "index title",
+		pageTitle: "index title",
 		hero: {
 			title: "Hero title",
 			subtitle: "Subtitle"
@@ -515,7 +515,7 @@ module.exports = {
 	},
 
 	"/definitions/view/projects": {
-		title: "view title",
+		pageTitle: "Project {name}",
 		hero: {
 			title: "Hello {name}",
 			subtitle: "Subtitle"

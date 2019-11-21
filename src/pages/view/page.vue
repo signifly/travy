@@ -48,6 +48,7 @@
 
 <script>
 import actions from "@/components/page-actions";
+import {rStringProps} from "@/modules/utils";
 import activity from "./components/activity";
 import sidebar from "./components/sidebar";
 import panels from "./components/panels";
@@ -69,6 +70,7 @@ export default {
 	},
 	props: {
 		modifiers: {type: Object, required: false},
+		pageTitle: {type: String, required: true},
 		endpoint: {type: Object, required: true},
 		activity: {type: Object, required: true},
 		sidebar: {type: Object, required: true},
@@ -137,6 +139,10 @@ export default {
 				const {data} = await this.$axios.get(`/${indexId}/${viewId}`, {
 					customErr: true,
 					params
+				});
+
+				this.$store.dispatch("base/meta", {
+					title: rStringProps({data: data.data, val: this.pageTitle})
 				});
 
 				this.res = data;

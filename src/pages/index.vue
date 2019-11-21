@@ -36,7 +36,7 @@ export default {
 					customErr: true
 				});
 
-				this.$store.dispatch("base/meta", {title: data.title});
+				this.$store.dispatch("base/meta", {title: data.pageTitle});
 				this.definitions = data;
 			} catch ({status}) {
 				this.$router.replace({name: "error", params: {status}});
