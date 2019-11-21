@@ -24,7 +24,7 @@ import show from "./show.vue";
 export default {
 	components: {dropdown, modal, popup, show},
 	props: {
-		onSubmit: {type: String, required: false},
+		onSubmit: {type: Object, required: false},
 		value: {type: Boolean, required: true},
 		props: {type: Object, required: true},
 		data: {type: Object, required: false}, // parent data
@@ -65,7 +65,14 @@ export default {
 			}
 
 			if (this.onSubmit) {
-				this.$router.push(rStringProps({data, val: this.onSubmit}));
+				const {url, external} = this.onSubmit;
+				const link = rStringProps({data, val: url});
+
+				if (external) {
+					window.location.href = link;
+				} else {
+					this.$router.push(link);
+				}
 			} else {
 				this.$emit("event", {
 					actions: {refresh: true},

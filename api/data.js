@@ -153,7 +153,9 @@ module.exports = {
 					id: "popup",
 					title: "Delete",
 					text: "Are you sure? Please confirm this action.",
-					onSubmit: "/i/account",
+					onSubmit: {
+						url: "/i/account"
+					},
 					endpoint: {
 						url: "http://localhost:3001/v1/admin/account/{id}",
 						method: "delete"
@@ -693,7 +695,9 @@ module.exports = {
 							props: {
 								id: "modal",
 								name: "Add project",
-								onSubmit: "/i/projects/{id}",
+								onSubmit: {
+									url: "/i/projects/{id}"
+								},
 								fields: [
 									{
 										name: "Client",
@@ -825,7 +829,9 @@ module.exports = {
 							props: {
 								id: "modal",
 								name: "Add project",
-								onSubmit: "/i/projects/{id}",
+								onSubmit: {
+									url: "/i/projects/{id}"
+								},
 								fields: [
 									{
 										name: "Client",
@@ -917,7 +923,9 @@ module.exports = {
 				icon: "delete",
 				name: "Delete",
 				actionType: {
-					onSubmit: "/i/projects",
+					onSubmit: {
+						url: "/i/projects"
+					},
 					id: "popup",
 					props: {
 						title: "Delete",
@@ -940,7 +948,9 @@ module.exports = {
 				icon: "delete",
 				name: "Delete2",
 				actionType: {
-					onSubmit: "/i/projects",
+					onSubmit: {
+						url: "/i/projects"
+					},
 					id: "popup",
 					props: {
 						title: "Delete",

@@ -114,7 +114,9 @@ export default {
 				props: {
 					title: "Add project",
 					id: "modal",
-					onSubmit: "/i/projects/{id}",
+					onSubmit: {
+						url: "/i/projects/{id}"
+					},
 					fields: [
 						{
 							name: "name",
