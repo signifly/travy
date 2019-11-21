@@ -6,9 +6,15 @@
 
 		<vMenu />
 
-		<div class="account">
-			<notification v-if="notifications" />
-			<user />
+		<div class="right">
+			<div class="link" v-if="header.link">
+				<a :href="header.link.url" v-text="header.link.name" />
+			</div>
+
+			<div class="account">
+				<notification v-if="notifications" />
+				<user />
+			</div>
 		</div>
 	</Header>
 </template>
@@ -38,21 +44,36 @@ export default {
 	display: flex;
 
 	.logo {
-		margin-right: 2em;
 		justify-content: center;
 		display: inline-flex;
 		align-items: center;
+		margin-right: 2em;
 
 		img {
 			max-height: 40px;
 		}
 	}
 
-	.account {
+	.right {
+		align-items: center;
 		margin-left: auto;
 		display: flex;
-		align-items: center;
-		padding-right: 1em;
+
+		.link {
+			font-size: 12px;
+			margin-right: 2.5em;
+
+			a {
+				text-decoration: none;
+				color: $black1;
+			}
+		}
+
+		.account {
+			align-items: center;
+			padding-right: 1em;
+			display: flex;
+		}
 	}
 }
 </style>
