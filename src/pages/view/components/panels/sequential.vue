@@ -50,14 +50,21 @@
 						type="success"
 						@click="next"
 						v-shortkey="{win: ['ctrl', 's'], mac: ['meta', 's']}"
-						@shortkey.native="nextSave"
+						@shortkey.native="next"
 						title="CTRL/CMD + S"
 					>
 						{{ $translate({en: "Next", da: "Næste"}) }}
 						<i class="el-icon-arrow-right el-icon-right" />
 					</Button>
 
-					<Button v-if="!nextPath" size="medium" type="success" @click="close">
+					<Button
+						v-if="!nextPath"
+						size="medium"
+						type="success"
+						@click="close"
+						v-shortkey="{win: ['ctrl', 's'], mac: ['meta', 's']}"
+						@shortkey.native="close"
+					>
 						{{ $translate({en: "Close", da: "Luk"}) }}
 						<i class="el-icon-check el-icon-right" />
 					</Button>

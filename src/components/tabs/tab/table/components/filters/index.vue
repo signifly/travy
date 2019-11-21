@@ -10,7 +10,7 @@
 				v-model="active"
 				ref="pop"
 				placement="bottom-end"
-				width="300"
+				:width="width"
 				transition="trans-fadeDown"
 			>
 				<div class="pop">
@@ -60,7 +60,8 @@ export default {
 		loading: {type: Boolean, required: true},
 		default: {type: String, required: false},
 		search: {type: Object, required: false},
-		fields: {type: Array, required: false}
+		fields: {type: Array, required: false},
+		width: {type: Number, default: 300}
 	},
 	data() {
 		return {

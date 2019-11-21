@@ -1,7 +1,12 @@
 <template>
 	<transition name="el-fade-in">
 		<div class="move" v-if="sort && sort.move">
-			<Popover placement="top" width="300" ref="popover">
+			<Popover
+				placement="top"
+				width="300"
+				ref="popover"
+				transition="trans-fadeUp"
+			>
 				<popover
 					v-bind="{endpoint, selected, meta}"
 					@event="$emit('event', $event)"
@@ -9,8 +14,10 @@
 				/>
 
 				<Button size="medium" slot="reference">
-					{{ $translate({en: "Move", da: "Flyt"}) }}
-					<i class="el-icon-d-caret el-icon-right" />
+					<div class="button">
+						{{ $translate({en: "Move", da: "Flyt"}) }}
+						<div class="icon" v-html="require('@/assets/icons/move.svg')" />
+					</div>
 				</Button>
 			</Popover>
 		</div>
@@ -41,5 +48,27 @@ export default {
 .move {
 	display: flex;
 	align-items: center;
+
+	.button {
+		display: flex;
+		align-items: center;
+
+		.icon {
+			display: flex;
+			position: relative;
+			margin-left: 0.5em;
+			margin-right: -0.2em;
+			width: 1.1em;
+
+			::v-deep svg {
+				position: absolute;
+				padding-top: 1px;
+				margin: auto;
+				width: 100%;
+				bottom: 0;
+				top: 0;
+			}
+		}
+	}
 }
 </style>

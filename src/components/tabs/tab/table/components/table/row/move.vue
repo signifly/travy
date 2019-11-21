@@ -1,8 +1,6 @@
 <template>
 	<td v-if="sort.move">
-		<div class="move">
-			<i class="el-icon-d-caret" />
-		</div>
+		<div class="move" v-html="require('@/assets/icons/move.svg')" />
 	</td>
 </template>
 <script>
@@ -19,5 +17,11 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+
+	::v-deep svg {
+		width: 1.1em;
+		display: inline-flex;
+		justify-content: center;
+	}
 }
 </style>

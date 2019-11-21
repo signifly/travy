@@ -42,6 +42,7 @@
 
 <script>
 import {Button, Select, Option, InputNumber} from "element-ui";
+import state from "../../../state";
 
 export default {
 	components: {Button, Select, Option, InputNumber},
@@ -53,7 +54,8 @@ export default {
 	data: () => ({
 		loading: false,
 		position: 0,
-		select: ""
+		select: "",
+		state
 	}),
 	methods: {
 		async move() {
@@ -61,7 +63,7 @@ export default {
 
 			await this.$axios.post(`${this.endpoint.url}/move`, {
 				ids: this.selected.items.map((x) => x.id),
-				value: this.$route.query.sort,
+				value: this.state.query.sort,
 				position: {
 					position: this.position,
 					bottom: this.meta.total,
@@ -86,8 +88,8 @@ export default {
 <style lang="scss" scoped>
 .popover {
 	font-weight: 500;
-	padding: 0.75em;
 	font-size: 12px;
+	padding: 0.75em;
 
 	.position {
 		justify-content: space-between;

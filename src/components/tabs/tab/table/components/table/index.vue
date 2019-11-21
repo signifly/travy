@@ -26,6 +26,7 @@
 <script>
 import {cloneDeep, debounce} from "lodash";
 import draggable from "vuedraggable";
+import state from "../../state";
 import vHead from "./head";
 import row from "./row";
 
@@ -41,14 +42,15 @@ export default {
 		sort: {type: Object, request: false}
 	},
 	data: (t) => ({
-		dataC: cloneDeep(t.data)
+		dataC: cloneDeep(t.data),
+		state
 	}),
 	methods: {
 		move: debounce(async function() {
 			await this.$axios.post(`${this.endpoint.url}/move`, {
 				position: this.data[0][this.sort.move.value],
 				ids: this.dataC.map((x) => x.id),
-				value: this.$route.query.sort
+				value: this.state.query.sort
 			});
 		}, 1000)
 	}
