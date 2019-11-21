@@ -16,7 +16,7 @@
 					v-for="action in actions"
 					:active="actAction === action"
 					:key="action.title"
-					v-bind="{action, ids}"
+					v-bind="{action, selected}"
 					@close="actAction = null"
 					@event="$emit('event', $event)"
 				/>
@@ -32,8 +32,8 @@ import bulkAction from "./action";
 export default {
 	components: {Button, Dropdown, DropdownMenu, bulkAction},
 	props: {
-		actions: {type: Array, required: true},
-		ids: {type: Array, required: true}
+		selected: {type: Object, required: true},
+		actions: {type: Array, required: true}
 	},
 	data() {
 		return {

@@ -19,14 +19,15 @@ import action from "@/components/actions";
 export default {
 	components: {DropdownItem, action},
 	props: {
+		selected: {type: Object, required: true},
 		active: {type: Boolean, required: true},
-		action: {type: Object, required: true},
-		ids: {type: Array, required: true}
+		action: {type: Object, required: true}
 	},
 	computed: {
+		ids: (t) => t.selected.items.map((x) => x.id),
 		actionC: (t) =>
 			merge({}, t.action, {
-				props: {payload: {data: {ids: t.ids}}}
+				actionType: {props: {payload: {bulk: t.ids}}}
 			})
 	}
 };

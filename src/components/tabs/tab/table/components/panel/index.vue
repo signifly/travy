@@ -1,11 +1,11 @@
 <template>
-	<div class="batch">
+	<div class="panel">
 		<transition name="el-zoom-in-bottom">
 			<vPanel v-if="selected.items.length > 0">
 				<selected
-					v-bind="{selected}"
-					v-if="batch.selectedOptions"
 					:selectedOptions="batch.selectedOptions"
+					v-if="batch.selectedOptions"
+					v-bind="{selected}"
 				/>
 
 				<div class="items">
@@ -17,17 +17,16 @@
 						/>
 					</div>
 					<div class="item">
-						<sequential
-							v-if="batch.sequential"
-							v-bind="[batch.sequential, {selected}]"
+						<bulk
+							v-bind="[batch.bulk, {selected}]"
+							v-if="batch.bulk"
+							@event="event"
 						/>
 					</div>
-
 					<div class="item">
-						<bulk
-							@event="event"
-							v-if="batch.bulk"
-							v-bind="[batch.bulk, {selected}]"
+						<sequential
+							v-bind="[batch.sequential, {selected}]"
+							v-if="batch.sequential"
 						/>
 					</div>
 				</div>
@@ -61,7 +60,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.batch {
+.panel {
 	position: relative;
 
 	.items {

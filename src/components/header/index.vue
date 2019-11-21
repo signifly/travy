@@ -1,7 +1,7 @@
 <template>
 	<Header height="64px">
 		<router-link class="logo" :to="{name: 'index'}">
-			<img :src="theme.logo" />
+			<div class="img" :style="{backgroundImage: `url('${theme.logo}')`}" />
 		</router-link>
 
 		<vMenu />
@@ -49,8 +49,12 @@ export default {
 		align-items: center;
 		margin-right: 2em;
 
-		img {
-			max-height: 40px;
+		.img {
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			width: 180px;
+			height: 40px;
 		}
 	}
 

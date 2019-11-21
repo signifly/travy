@@ -1,7 +1,9 @@
 <template>
-	<a class="expand-toggle" :class="{expanded}" @click="toggle">
-		<i class="el-icon-arrow-right" />
-	</a>
+	<td>
+		<a class="expand-toggle" :class="{expanded}" @click="toggle">
+			<i class="el-icon-arrow-right" />
+		</a>
+	</td>
 </template>
 <script>
 export default {

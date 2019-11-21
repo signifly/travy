@@ -1,5 +1,5 @@
 <template>
-	<div class="panel">
+	<div class="panel-comp">
 		<div class="wrap loading">
 			<slot />
 			<transition name="overlay">
@@ -18,13 +18,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.panel {
+.panel-comp {
 	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
 	margin: 0 auto;
 	z-index: 1;
+	bottom: 0;
+	right: 0;
+	left: 0;
 
 	.wrap {
 		display: flex;

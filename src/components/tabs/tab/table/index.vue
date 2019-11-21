@@ -35,8 +35,14 @@
 				@getData="getData"
 				@event="event"
 			/>
+
 			<pagination v-if="meta" v-bind="[meta, {loading}]" @getData="getData" />
-			<panel v-bind="{endpoint, selected, batch, meta, sort}" @event="event" />
+
+			<panel
+				v-bind="{endpoint, selected, batch, meta, sort}"
+				@event="event"
+				v-if="batch"
+			/>
 		</div>
 	</div>
 </template>
@@ -68,7 +74,7 @@ export default {
 			data: null,
 			selected: {
 				items: [],
-				active: this.definitions.batch || true
+				active: this.definitions.batch
 			}
 		};
 	},

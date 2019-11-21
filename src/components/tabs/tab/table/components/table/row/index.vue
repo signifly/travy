@@ -5,9 +5,7 @@
 
 			<move v-if="sort" v-bind="{sort}" />
 
-			<td v-if="expand">
-				<expandToggle :expanded.sync="expanded" v-if="expand" />
-			</td>
+			<expandToggle v-if="expand" :expanded.sync="expanded" />
 
 			<td v-if="selected.active">
 				<vselect v-bind="{selected, row}" />
