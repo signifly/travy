@@ -89,7 +89,7 @@ export default {
 		width: 50%;
 
 		.box {
-			margin-bottom: 5em;
+			margin-bottom: 25%;
 
 			> .title {
 				margin-bottom: 1em;
