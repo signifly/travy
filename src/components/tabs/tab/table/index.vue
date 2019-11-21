@@ -72,6 +72,7 @@ export default {
 			halt: false,
 			meta: null,
 			data: null,
+			state,
 			selected: {
 				items: [],
 				active: this.definitions.batch
@@ -85,7 +86,7 @@ export default {
 		actions: (t) => t.definitions.actions,
 		expand: (t) => t.definitions.expand,
 		batch: (t) => t.definitions.batch,
-		query: () => state.query,
+		query: (t) => t.state.query,
 
 		sort() {
 			const {sort} = this.definitions;
@@ -94,7 +95,7 @@ export default {
 				sort && {
 					...sort,
 					move: sort.items.find((x) => {
-						return x.manual && this.$route.query.sort === x.value;
+						return x.manual && this.query.sort === x.value;
 					})
 				}
 			);

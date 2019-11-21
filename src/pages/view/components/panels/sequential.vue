@@ -117,7 +117,7 @@ export default {
 				done: () => {
 					this.$router.push({
 						path: this.nextPath,
-						query: {modifiers: this.modifiers, sequential: true}
+						query: {modifiers: this.modifiers, seq: true}
 					});
 				}
 			});
@@ -128,7 +128,7 @@ export default {
 				done: () => {
 					this.$router.push({
 						path: this.prevPath,
-						query: {modifiers: this.modifiers, sequential: true}
+						query: {modifiers: this.modifiers, seq: true}
 					});
 				}
 			});
@@ -142,10 +142,7 @@ export default {
 			this.$emit("save", {
 				done: () => {
 					localStorage.removeItem("seq");
-					this.$router.push({
-						path: `/i/${this.indexId}`,
-						query: {modifiers: this.modifiers}
-					});
+					this.$router.push(this.data.route);
 				}
 			});
 		}

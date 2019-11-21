@@ -21,7 +21,13 @@ export default {
 	},
 	methods: {
 		start() {
-			localStorage.setItem("seq", JSON.stringify({items: this.items}));
+			localStorage.setItem(
+				"seq",
+				JSON.stringify({
+					route: this.$route.fullPath,
+					items: this.items
+				})
+			);
 
 			this.$router.push({
 				path: this.items[0],
