@@ -2,12 +2,14 @@
 	<div class="dashboard" v-if="definitions">
 		<hero v-bind="{hero, modifiers}" :data="user" @refresh="refresh" />
 
-		<div class="sections container" :key="refreshKey">
-			<Section
-				v-for="(section, i) in definitions.sections"
-				v-bind="section"
-				:key="i"
-			/>
+		<div class="container">
+			<div class="sections" :key="refreshKey">
+				<Section
+					v-for="(section, i) in definitions.sections"
+					v-bind="section"
+					:key="i"
+				/>
+			</div>
 		</div>
 	</div>
 </template>
@@ -57,9 +59,10 @@ export default {
 <style lang="scss" scoped>
 .dashboard {
 	.sections {
-		display: flex;
-		flex-wrap: wrap;
 		justify-content: space-between;
+		overflow: hidden;
+		flex-wrap: wrap;
+		display: flex;
 	}
 }
 </style>
