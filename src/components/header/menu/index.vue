@@ -4,7 +4,7 @@
 		menu-trigger="click"
 		:router="true"
 		ref="menu"
-		:text-color="config.theme.color"
+		text-color="#1e2d3e"
 	>
 		<item v-for="item in header.menu" v-bind="{item}" :key="item.name" />
 	</Menu>
