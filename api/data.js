@@ -30,7 +30,7 @@ module.exports = {
 		theme: {
 			cover: "https://picsum.photos/id/135/2560/1920",
 			logo: "https://picsum.photos/id/135/200/50",
-			color: "#00233d"
+			color: "slateblue"
 		},
 		header: {
 			notifications: false,
