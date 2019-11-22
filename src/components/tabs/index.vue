@@ -1,6 +1,6 @@
 <template>
 	<div class="tabs">
-		<labels v-bind="{tab, tabs, edit}" />
+		<labels v-bind="{tab, tabs, edit, state}" />
 		<tab
 			ref="tab"
 			v-bind="[tab, {data}]"
@@ -10,8 +10,21 @@
 </template>
 
 <script>
+import router from "@/modules/router";
 import labels from "./labels";
 import tab from "./tab";
+
+const state = () => ({
+	query: {...router.currentRoute.query},
+
+	setQuery(query) {
+		this.query = query;
+
+		if (router.currentRoute.name !== "dashboard") {
+			router.replace({query}).catch(() => {});
+		}
+	}
+});
 
 export default {
 	components: {labels, tab},
@@ -20,9 +33,12 @@ export default {
 		data: {type: Object, required: false},
 		tabs: {type: Array, required: true}
 	},
+	data: () => ({
+		state: state()
+	}),
 	computed: {
 		tab() {
-			const tab = this.tabs.find((x) => x.id === this.$route.query.tab);
+			const tab = this.tabs.find((x) => x.id === this.state.query.tab);
 			return tab || this.tabs[0];
 		}
 	},

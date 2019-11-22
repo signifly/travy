@@ -1,6 +1,6 @@
 <template>
 	<div class="index" v-if="definitions">
-		<hero v-if="definitions" v-bind="{modifiers, hero}" @refresh="refresh" />
+		<hero v-bind="{modifiers, hero}" :data="user" @refresh="refresh" />
 		<div class="container">
 			<tabs :tabs="definitions.tabs" :key="refreshKey" />
 		</div>
@@ -19,6 +19,7 @@ export default {
 	}),
 	computed: {
 		url: (t) => `definitions/index/${t.indexId}`,
+		user: (t) => t.$store.getters["user/data"],
 		modifiers: (t) => t.definitions.modifiers,
 		indexId: (t) => t.$route.params.indexId,
 		hero: (t) => t.definitions.hero,

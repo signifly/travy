@@ -4,6 +4,7 @@
 			v-for="item in tabs"
 			:active="tab === item"
 			:name="item.name"
+			:state="state"
 			:key="item.id"
 			:id="item.id"
 			:edit="edit"
@@ -18,6 +19,7 @@ export default {
 	components: {vLabel},
 	props: {
 		edit: {type: Boolean, required: false},
+		state: {type: Object, required: true},
 		tabs: {type: Array, required: true},
 		tab: {type: Object, required: true}
 	}

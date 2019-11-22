@@ -1,39 +1,65 @@
 <template>
-	<div class="dashboard" v-if="dashboard">
-		<page v-bind="{defsEndpoint, title}" :key="id" />
+	<div class="dashboard" v-if="definitions">
+		<hero v-bind="{hero, modifiers}" :data="user" @refresh="refresh" />
+
+		<div class="sections container" :key="refreshKey">
+			<Section
+				v-for="(section, i) in definitions.sections"
+				v-bind="section"
+				:key="i"
+			/>
+		</div>
 	</div>
 </template>
 
 <script>
-import page from "./page.vue";
-import {get} from "lodash";
+import hero from "@/components/hero";
+import Section from "./section";
 
 export default {
-	components: {page},
+	components: {Section, hero},
+	data: () => ({
+		definitions: null,
+		refreshKey: 0
+	}),
 	computed: {
-		defsEndpoint: (t) => ({url: `definitions/dashboard/${t.id}`}),
-		dashboard: (t) => t.$store.getters["config/dashboards"][t.id],
-		title: (t) => get(t.dashboard, "title", {}),
+		url: (t) => `definitions/dashboard/${t.id}`,
+		user: (t) => t.$store.getters["user/data"],
+		modifiers: (t) => t.definitions.modifiers,
+		hero: (t) => t.definitions.hero,
 		id: (t) => t.$route.params.id
 	},
-	watch: {
-		$route: {
-			immediate: true,
-			handler() {
-				this.$store.dispatch("base/meta", {title: this.title.text});
+	methods: {
+		async refresh() {
+			await this.getData();
+			this.refreshKey++;
+		},
+		async getData() {
+			try {
+				const {data} = await this.$axios.get(this.url, {
+					params: {modifiers: this.$route.query.modifiers},
+					customErr: true
+				});
+
+				this.definitions = data;
+				this.$store.dispatch("base/meta", {title: data.pageTitle});
+			} catch ({status}) {
+				this.$router.replace({name: "error", params: {status}});
 			}
 		}
 	},
 	created() {
-		if (!this.dashboard) {
-			this.$router.replace({name: "error"});
-		}
+		this.getData();
 	}
 };
 </script>
 
 <style lang="scss" scoped>
 .dashboard {
-	margin-bottom: 4em;
+	.sections {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
 }
 </style>

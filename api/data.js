@@ -44,6 +44,10 @@ module.exports = {
 					url: "/i/projects"
 				},
 				{
+					name: "Dash",
+					url: "/d/dash"
+				},
+				{
 					name: "Media",
 					items: [
 						{
@@ -84,7 +88,7 @@ module.exports = {
 	"/definitions/index/projects": {
 		pageTitle: "index title",
 		hero: {
-			title: "Hero title",
+			title: "Herro {name}",
 			subtitle: "Subtitle"
 		},
 		modifiers: {
@@ -827,5 +831,744 @@ module.exports = {
 			to: 1,
 			total: 1
 		}
+	},
+
+	"/definitions/dashboard/dash": {
+		pageTitle: "dashboard",
+		hero: {
+			title: "Hello {name}",
+			subtitle: "Subtitle"
+		},
+		modifiers: {
+			data: {
+				language_code: "dk"
+			},
+			fields: [
+				{
+					attribute: "language_code",
+					name: "Language",
+					width: 200,
+					fieldType: {
+						id: "input-select",
+						props: {
+							_clearable: false,
+							value: "language_code",
+							_entities: [
+								{label: "Danmark", emoji: "denmark", value: "dk"},
+								{label: "England", emoji: "uk", value: "uk"},
+								{label: "Murica", emoji: "us", value: "us", disabled: true}
+							]
+						}
+					}
+				}
+			]
+		},
+		sections: [
+			{
+				width: 50,
+				tabs: [
+					{
+						id: "stuff1",
+						name: "stuff1",
+						type: "table",
+						definitions: {
+							expand: {
+								type: "fields",
+								fields: [
+									{
+										width: 50,
+										name: "Name",
+										attribute: "name",
+										fieldType: {id: "text", props: {text: "name"}}
+									},
+									{
+										width: 50,
+										name: "Tags",
+										attribute: "tags",
+										fieldType: {
+											id: "list-tooltip",
+											props: {
+												items: {
+													_link: "/i/tags/{id}",
+													"@scope": "tags",
+													label: "key"
+												}
+											}
+										}
+									},
+									{
+										name: "input",
+										fieldType: {
+											id: "input-switch",
+											props: {
+												value: "test.switch"
+											}
+										}
+									}
+								]
+							},
+							batch: {
+								selectedOptions: {
+									label: "{name}",
+									link: "/i/projects/{id}"
+								},
+								sequential: {
+									url: "/i/projects/{id}"
+								}
+							},
+							endpoint: {
+								url: "http://localhost:3001/v1/admin/projects",
+								params: {include: ["tags"]}
+							},
+							sort: {
+								items: [
+									{label: "Name", value: "name"},
+									{label: "Input", value: "input"},
+									{label: "Position", value: "pos", manual: true}
+								]
+							},
+							columns: [
+								{
+									width: 350,
+									name: "Name",
+									fieldType: {id: "text", props: {text: "name"}},
+									onClick: "/i/projects/{id}"
+								},
+								{
+									name: "Tags",
+									fieldType: {
+										id: "list-tooltip",
+										props: {
+											items: {
+												_link: "/i/tags/{id}",
+												"@scope": "tags",
+												label: "key"
+											}
+										}
+									}
+								},
+								{
+									name: "input",
+									fieldType: {
+										id: "input-switch",
+										props: {
+											value: "test.switch"
+										}
+									}
+								}
+							],
+							filters: {
+								data: {
+									name: "test"
+								},
+								search: {
+									placeholder: "Search..."
+								},
+								fields: [
+									{
+										name: "Name",
+										attribute: "name",
+										fieldType: {id: "input-text", props: {value: "name"}}
+									}
+								]
+							},
+							actions: [
+								{
+									name: "Add project",
+									status: "primary",
+									icon: "eleme",
+									actionType: {
+										id: "modal",
+										props: {
+											id: "modal",
+											name: "Add project",
+											fields: [
+												{
+													name: "Country",
+													attribute: "country",
+													fieldType: {
+														id: "input-select",
+														props: {
+															value: "country",
+															_entities: [
+																{
+																	label: "Denmark",
+																	emoji: "denmark",
+																	value: "dk"
+																},
+																{
+																	label: "England",
+																	emoji: "uk",
+																	value: "uk"
+																},
+																{
+																	label: "Murica",
+																	emoji: "us",
+																	value: "us",
+																	disabled: true
+																}
+															]
+														}
+													}
+												},
+												{
+													attribute: "name",
+													name: "Name",
+													fieldType: {id: "input-text", props: {value: "name"}}
+												},
+												{
+													attribute: "start_date",
+													name: "Start Date",
+													fieldType: {
+														id: "input-date",
+														props: {
+															formatValue: "yyyy-MM-dd",
+															date: "start_date"
+														}
+													}
+												},
+												{
+													attribute: "description",
+													name: "Description",
+													fieldType: {
+														id: "input-editor-markdown",
+														props: {content: "description"}
+													}
+												}
+											],
+											payload: {
+												data: {
+													client_id: "",
+													name: "",
+													start_date: "",
+													tags: [],
+													description: ""
+												}
+											},
+											endpoint: {
+												url: "http://localhost:3001/v1/admin/projects",
+												method: "post"
+											}
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						id: "stuff2",
+						name: "stuff 2",
+						type: "table",
+						definitions: {
+							endpoint: {
+								url: "http://localhost:3001/v1/admin/projects",
+								params: {include: ["tags"]}
+							},
+							pagination: {},
+							columns: [
+								{
+									width: 350,
+									name: "Name",
+									fieldType: {id: "text", props: {text: "name"}},
+									onClick: "/i/projects/{id}"
+								},
+								{
+									name: "Tags",
+									fieldType: {
+										id: "list-tooltip",
+										props: {
+											items: {
+												_link: "/i/tags/{id}",
+												"@scope": "tags",
+												label: "key"
+											}
+										}
+									}
+								},
+								{
+									name: "input",
+									fieldType: {
+										id: "input-switch",
+										props: {
+											value: "switch"
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			},
+			{
+				width: 50,
+				tabs: [
+					{
+						id: "stuff1",
+						name: "stuff1",
+						type: "table",
+						definitions: {
+							expand: {
+								type: "fields",
+								fields: [
+									{
+										width: 50,
+										name: "Name",
+										attribute: "name",
+										fieldType: {id: "text", props: {text: "name"}}
+									},
+									{
+										width: 50,
+										name: "Tags",
+										attribute: "tags",
+										fieldType: {
+											id: "list-tooltip",
+											props: {
+												items: {
+													_link: "/i/tags/{id}",
+													"@scope": "tags",
+													label: "key"
+												}
+											}
+										}
+									},
+									{
+										name: "input",
+										fieldType: {
+											id: "input-switch",
+											props: {
+												value: "test.switch"
+											}
+										}
+									}
+								]
+							},
+							batch: {
+								selectedOptions: {
+									label: "{name}",
+									link: "/i/projects/{id}"
+								},
+								sequential: {
+									url: "/i/projects/{id}"
+								}
+							},
+							endpoint: {
+								url: "http://localhost:3001/v1/admin/projects",
+								params: {include: ["tags"]}
+							},
+							sort: {
+								items: [
+									{label: "Name", value: "name"},
+									{label: "Input", value: "input"},
+									{label: "Position", value: "pos", manual: true}
+								]
+							},
+							columns: [
+								{
+									width: 350,
+									name: "Name",
+									fieldType: {id: "text", props: {text: "name"}},
+									onClick: "/i/projects/{id}"
+								},
+								{
+									name: "Tags",
+									fieldType: {
+										id: "list-tooltip",
+										props: {
+											items: {
+												_link: "/i/tags/{id}",
+												"@scope": "tags",
+												label: "key"
+											}
+										}
+									}
+								},
+								{
+									name: "input",
+									fieldType: {
+										id: "input-switch",
+										props: {
+											value: "test.switch"
+										}
+									}
+								}
+							],
+							filters: {
+								data: {
+									name: "test"
+								},
+								search: {
+									placeholder: "Search..."
+								},
+								fields: [
+									{
+										name: "Name",
+										attribute: "name",
+										fieldType: {id: "input-text", props: {value: "name"}}
+									}
+								]
+							},
+							actions: [
+								{
+									name: "Add project",
+									status: "primary",
+									icon: "eleme",
+									actionType: {
+										id: "modal",
+										props: {
+											id: "modal",
+											name: "Add project",
+											fields: [
+												{
+													name: "Country",
+													attribute: "country",
+													fieldType: {
+														id: "input-select",
+														props: {
+															value: "country",
+															_entities: [
+																{
+																	label: "Denmark",
+																	emoji: "denmark",
+																	value: "dk"
+																},
+																{
+																	label: "England",
+																	emoji: "uk",
+																	value: "uk"
+																},
+																{
+																	label: "Murica",
+																	emoji: "us",
+																	value: "us",
+																	disabled: true
+																}
+															]
+														}
+													}
+												},
+												{
+													attribute: "name",
+													name: "Name",
+													fieldType: {id: "input-text", props: {value: "name"}}
+												},
+												{
+													attribute: "start_date",
+													name: "Start Date",
+													fieldType: {
+														id: "input-date",
+														props: {
+															formatValue: "yyyy-MM-dd",
+															date: "start_date"
+														}
+													}
+												},
+												{
+													attribute: "description",
+													name: "Description",
+													fieldType: {
+														id: "input-editor-markdown",
+														props: {content: "description"}
+													}
+												}
+											],
+											payload: {
+												data: {
+													client_id: "",
+													name: "",
+													start_date: "",
+													tags: [],
+													description: ""
+												}
+											},
+											endpoint: {
+												url: "http://localhost:3001/v1/admin/projects",
+												method: "post"
+											}
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						id: "stuff2",
+						name: "stuff 2",
+						type: "table",
+						definitions: {
+							endpoint: {
+								url: "http://localhost:3001/v1/admin/projects",
+								params: {include: ["tags"]}
+							},
+							pagination: {},
+							columns: [
+								{
+									width: 350,
+									name: "Name",
+									fieldType: {id: "text", props: {text: "name"}},
+									onClick: "/i/projects/{id}"
+								},
+								{
+									name: "Tags",
+									fieldType: {
+										id: "list-tooltip",
+										props: {
+											items: {
+												_link: "/i/tags/{id}",
+												"@scope": "tags",
+												label: "key"
+											}
+										}
+									}
+								},
+								{
+									name: "input",
+									fieldType: {
+										id: "input-switch",
+										props: {
+											value: "switch"
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			},
+			{
+				width: 50,
+				tabs: [
+					{
+						id: "stuff1",
+						name: "stuff1",
+						type: "table",
+						definitions: {
+							expand: {
+								type: "fields",
+								fields: [
+									{
+										width: 50,
+										name: "Name",
+										attribute: "name",
+										fieldType: {id: "text", props: {text: "name"}}
+									},
+									{
+										width: 50,
+										name: "Tags",
+										attribute: "tags",
+										fieldType: {
+											id: "list-tooltip",
+											props: {
+												items: {
+													_link: "/i/tags/{id}",
+													"@scope": "tags",
+													label: "key"
+												}
+											}
+										}
+									},
+									{
+										name: "input",
+										fieldType: {
+											id: "input-switch",
+											props: {
+												value: "test.switch"
+											}
+										}
+									}
+								]
+							},
+							batch: {
+								selectedOptions: {
+									label: "{name}",
+									link: "/i/projects/{id}"
+								},
+								sequential: {
+									url: "/i/projects/{id}"
+								}
+							},
+							endpoint: {
+								url: "http://localhost:3001/v1/admin/projects",
+								params: {include: ["tags"]}
+							},
+							sort: {
+								items: [
+									{label: "Name", value: "name"},
+									{label: "Input", value: "input"},
+									{label: "Position", value: "pos", manual: true}
+								]
+							},
+							columns: [
+								{
+									width: 350,
+									name: "Name",
+									fieldType: {id: "text", props: {text: "name"}},
+									onClick: "/i/projects/{id}"
+								},
+								{
+									name: "Tags",
+									fieldType: {
+										id: "list-tooltip",
+										props: {
+											items: {
+												_link: "/i/tags/{id}",
+												"@scope": "tags",
+												label: "key"
+											}
+										}
+									}
+								},
+								{
+									name: "input",
+									fieldType: {
+										id: "input-switch",
+										props: {
+											value: "test.switch"
+										}
+									}
+								}
+							],
+							filters: {
+								data: {
+									name: "test"
+								},
+								search: {
+									placeholder: "Search..."
+								},
+								fields: [
+									{
+										name: "Name",
+										attribute: "name",
+										fieldType: {id: "input-text", props: {value: "name"}}
+									}
+								]
+							},
+							actions: [
+								{
+									name: "Add project",
+									status: "primary",
+									icon: "eleme",
+									actionType: {
+										id: "modal",
+										props: {
+											id: "modal",
+											name: "Add project",
+											fields: [
+												{
+													name: "Country",
+													attribute: "country",
+													fieldType: {
+														id: "input-select",
+														props: {
+															value: "country",
+															_entities: [
+																{
+																	label: "Denmark",
+																	emoji: "denmark",
+																	value: "dk"
+																},
+																{
+																	label: "England",
+																	emoji: "uk",
+																	value: "uk"
+																},
+																{
+																	label: "Murica",
+																	emoji: "us",
+																	value: "us",
+																	disabled: true
+																}
+															]
+														}
+													}
+												},
+												{
+													attribute: "name",
+													name: "Name",
+													fieldType: {id: "input-text", props: {value: "name"}}
+												},
+												{
+													attribute: "start_date",
+													name: "Start Date",
+													fieldType: {
+														id: "input-date",
+														props: {
+															formatValue: "yyyy-MM-dd",
+															date: "start_date"
+														}
+													}
+												},
+												{
+													attribute: "description",
+													name: "Description",
+													fieldType: {
+														id: "input-editor-markdown",
+														props: {content: "description"}
+													}
+												}
+											],
+											payload: {
+												data: {
+													client_id: "",
+													name: "",
+													start_date: "",
+													tags: [],
+													description: ""
+												}
+											},
+											endpoint: {
+												url: "http://localhost:3001/v1/admin/projects",
+												method: "post"
+											}
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						id: "stuff2",
+						name: "stuff 2",
+						type: "table",
+						definitions: {
+							endpoint: {
+								url: "http://localhost:3001/v1/admin/projects",
+								params: {include: ["tags"]}
+							},
+							pagination: {},
+							columns: [
+								{
+									width: 350,
+									name: "Name",
+									fieldType: {id: "text", props: {text: "name"}},
+									onClick: "/i/projects/{id}"
+								},
+								{
+									name: "Tags",
+									fieldType: {
+										id: "list-tooltip",
+										props: {
+											items: {
+												_link: "/i/tags/{id}",
+												"@scope": "tags",
+												label: "key"
+											}
+										}
+									}
+								},
+								{
+									name: "input",
+									fieldType: {
+										id: "input-switch",
+										props: {
+											value: "switch"
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		]
 	}
 };

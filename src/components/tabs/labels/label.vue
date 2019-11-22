@@ -16,29 +16,25 @@ import {Tooltip} from "element-ui";
 export default {
 	components: {Tooltip},
 	props: {
-		id: {type: String, required: true},
-		name: {type: String, required: true},
+		active: {type: Boolean, required: true},
 		edit: {type: Boolean, required: false},
-		active: {type: Boolean, required: true}
+		state: {type: Object, required: true},
+		name: {type: String, required: true},
+		id: {type: String, required: true}
 	},
 	computed: {
-		query: (t) => t.$route.query,
+		disabled: (t) => t.edit && !t.active,
 		edited: (t) => t.edit && t.active,
-		disabled: (t) => t.edit && !t.active
+		query: (t) => t.state.query
 	},
 	methods: {
 		set() {
 			if (!this.edit) {
-				this.$router
-					.replace({
-						path: this.$route.path,
-						query: {
-							modifiers: this.query.modifiers,
-							seq: this.query.seq,
-							tab: this.id
-						}
-					})
-					.catch(() => {});
+				this.state.setQuery({
+					modifiers: this.query.modifiers,
+					seq: this.query.seq,
+					tab: this.id
+				});
 			}
 		}
 	}
