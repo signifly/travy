@@ -16,7 +16,7 @@ export default {
 	computed: {
 		widthC() {
 			const width = this.width;
-			return width === 100 ? `${width}%` : `calc(${width}% - 1em)`;
+			return width === 100 ? `${width}%` : `calc(${width}% - 10px)`;
 		}
 	}
 };
@@ -24,6 +24,6 @@ export default {
 
 <style lang="scss" scoped>
 .section {
-	margin-bottom: 2em;
+	margin-bottom: 20px;
 }
 </style>

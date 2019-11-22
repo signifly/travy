@@ -2,7 +2,7 @@
 	<div class="hero" :style="{backgroundColor: theme.color}">
 		<div class="container">
 			<div class="wrap">
-				<breadcrumbs v-if="breadcrumbs" />
+				<breadcrumbs />
 
 				<div class="bottom">
 					<div class="info">
@@ -35,7 +35,6 @@ import modifiers from "./modifiers";
 export default {
 	components: {breadcrumbs, modifiers},
 	props: {
-		breadcrumbs: {type: Array, required: false},
 		modifiers: {type: Object, required: false},
 		data: {type: Object, required: false},
 		hero: {type: Object, required: true}
