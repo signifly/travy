@@ -1,32 +1,30 @@
 <template>
-	<transition name="hero" appear>
-		<div class="hero" :style="{backgroundColor: theme.color}">
-			<div class="container">
-				<div class="wrap">
-					<breadcrumbs v-if="breadcrumbs" />
+	<div class="hero" :style="{backgroundColor: theme.color}">
+		<div class="container">
+			<div class="wrap">
+				<breadcrumbs v-if="breadcrumbs" />
 
-					<div class="bottom">
-						<div class="info">
-							<div class="title" v-text="heroC.title" />
-							<div class="sub" v-if="heroC.subtitle" v-text="heroC.subtitle" />
-						</div>
+				<div class="bottom">
+					<div class="info">
+						<div class="title" v-text="heroC.title" />
+						<div class="sub" v-if="heroC.subtitle" v-text="heroC.subtitle" />
+					</div>
 
-						<div class="settings">
-							<modifiers
-								v-if="modifiers"
-								v-bind="modifiers"
-								@refresh="$emit('refresh')"
-							/>
+					<div class="settings">
+						<modifiers
+							v-if="modifiers"
+							v-bind="modifiers"
+							@refresh="$emit('refresh')"
+						/>
 
-							<div class="slot" v-if="$slots.settings">
-								<slot name="settings" />
-							</div>
+						<div class="slot" v-if="$slots.settings">
+							<slot name="settings" />
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</transition>
+	</div>
 </template>
 
 <script>
@@ -52,16 +50,6 @@ export default {
 <style lang="scss" scoped>
 .hero {
 	margin-bottom: -55px;
-
-	&-enter-active,
-	&-leave-active {
-		transition: cubic(opacity, 0.05s);
-	}
-
-	&-enter,
-	&-leave-to {
-		opacity: 0;
-	}
 
 	.wrap {
 		height: 250px;
