@@ -8,14 +8,13 @@
 
 <script>
 import {Select, Option} from "element-ui";
-import state from "../../state";
 
 export default {
 	components: {Select, Option},
 	props: {
+		state: {type: Object, required: true},
 		items: {type: Array, required: true}
 	},
-	data: () => ({state}),
 	computed: {
 		value: (t) => t.state.query.sort,
 		options() {
@@ -48,3 +47,9 @@ export default {
 	}
 };
 </script>
+
+<style lang="scss" scoped>
+.sort {
+	max-width: 160px;
+}
+</style>

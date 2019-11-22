@@ -12,7 +12,7 @@
 			</td>
 
 			<td v-for="column in columns" :key="column.attribute">
-				<rowField v-bind="{data: data, column}" @event="event" />
+				<rowField v-bind="{data: data, column, state}" @event="event" />
 			</td>
 		</tr>
 
@@ -42,6 +42,7 @@ export default {
 		selected: {type: Object, required: true},
 		expand: {type: Object, required: false},
 		columns: {type: Array, required: true},
+		state: {type: Object, request: true},
 		sort: {type: Object, request: false},
 		row: {type: Object, required: true}
 	},

@@ -3,13 +3,13 @@
 		<div class="header" v-if="filters || actions">
 			<filters
 				v-if="filters"
-				v-bind="filters"
+				v-bind="[filters, {state}]"
 				:loading.sync="loading"
 				@getData="getData"
 			/>
 
 			<div class="right">
-				<sort v-if="sort" v-bind="sort" @getData="getData" />
+				<sort v-if="sort" v-bind="[sort, {state}]" @getData="getData" />
 				<actions
 					v-if="actions"
 					v-bind="{actions, data: parentData}"
@@ -19,7 +19,6 @@
 		</div>
 
 		<div class="content">
-			<top v-bind="{loading, meta}" />
 			<tableEl
 				v-if="data"
 				ref="table"
@@ -29,6 +28,7 @@
 					columns,
 					loading,
 					expand,
+					state,
 					sort,
 					data
 				}"
@@ -37,13 +37,13 @@
 			/>
 
 			<pagination
-				v-bind="[meta, {loading}]"
+				v-bind="[meta, {loading, state}]"
 				v-if="meta && pagination"
 				@getData="getData"
 			/>
 
 			<panel
-				v-bind="{endpoint, selected, batch, meta, sort}"
+				v-bind="{endpoint, selected, batch, meta, state, sort}"
 				@event="event"
 				v-if="batch"
 			/>
@@ -59,12 +59,11 @@ import filters from "./components/filters";
 import tableEl from "./components/table";
 import panel from "./components/panel";
 import sort from "./components/sort";
-import top from "./components/top";
 import {merge, get} from "lodash";
 import state from "./state";
 
 export default {
-	components: {tableEl, filters, actions, pagination, sort, panel, top},
+	components: {tableEl, filters, actions, pagination, sort, panel},
 	props: {
 		definitions: {type: Object, required: true},
 		parentData: {type: Object, required: false}
@@ -73,10 +72,10 @@ export default {
 		return {
 			metadata: null,
 			loading: false,
+			state: state(),
 			halt: false,
 			meta: null,
 			data: null,
-			state,
 			selected: {
 				items: [],
 				active: this.definitions.batch
@@ -155,7 +154,7 @@ export default {
 		}
 	},
 	async created() {
-		state.initQuery(this.definitions);
+		this.state.initQuery(this.definitions);
 		await this.getData();
 
 		if (this.ws) {
@@ -169,11 +168,13 @@ export default {
 
 <style lang="scss" scoped>
 .table {
+	// margin-bottom: -1px;
+
 	.header {
 		height: 40px;
 		display: flex;
 		align-items: center;
-		margin: 0 1.5em 1.5em;
+		margin: 1.5em;
 
 		.right {
 			display: flex;

@@ -13,15 +13,15 @@
 
 <script>
 import {Pagination} from "element-ui";
-import state from "../state";
 
 export default {
 	components: {Pagination},
 	props: {
-		total: {type: Number, required: true},
+		current_page: {type: Number, required: true},
 		loading: {type: Boolean, required: true},
 		per_page: {type: Number, required: true},
-		current_page: {type: Number, required: true}
+		total: {type: Number, required: true},
+		state: {type: Object, required: true}
 	},
 	computed: {
 		pagination: (t) => ({
@@ -34,7 +34,7 @@ export default {
 		updatePage(page) {
 			page = page === 1 ? undefined : page;
 
-			state.mergeQuery({
+			this.state.mergeQuery({
 				type: "replace",
 				query: {page}
 			});
@@ -45,7 +45,7 @@ export default {
 		updateSize(pagesize) {
 			pagesize = pagesize === 15 ? undefined : pagesize;
 
-			state.mergeQuery({
+			this.state.mergeQuery({
 				type: "replace",
 				query: {page: undefined, pagesize}
 			});
@@ -58,9 +58,10 @@ export default {
 
 <style lang="scss" scoped>
 .pagination {
-	margin: 2em 0;
+	padding: 2em 0;
 	text-align: center;
 	transition: cubic(opacity, 0.1s);
+	border-top: 1px solid #ebeef5;
 
 	&.loading {
 		pointer-events: none;

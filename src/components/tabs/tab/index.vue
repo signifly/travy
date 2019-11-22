@@ -1,10 +1,10 @@
 <template>
 	<div class="tab">
 		<component
-			ref="tab"
-			:is="`v${type}`"
 			v-bind="{definitions, parentData: data}"
 			@edit="$emit('edit', $event)"
+			:is="`v${type}`"
+			ref="tab"
 			:key="id"
 		/>
 	</div>
@@ -29,9 +29,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="scss" scoped>
-.tab {
-	margin: 1.5em 0;
-}
-</style>

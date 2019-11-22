@@ -42,20 +42,19 @@
 
 <script>
 import {Button, Select, Option, InputNumber} from "element-ui";
-import state from "../../../state";
 
 export default {
 	components: {Button, Select, Option, InputNumber},
 	props: {
 		endpoint: {type: Object, required: true},
 		selected: {type: Object, required: true},
+		state: {type: Object, required: true},
 		meta: {type: Object, required: true}
 	},
 	data: () => ({
 		loading: false,
 		position: 0,
-		select: "",
-		state
+		select: ""
 	}),
 	methods: {
 		async move() {

@@ -12,17 +12,17 @@
 <script>
 import {rStringProps} from "@/modules/utils";
 import field from "@/components/field";
-import state from "../../../state";
 
 export default {
 	components: {field},
 	props: {
+		column: {type: Object, required: true},
 		data: {type: Object, required: true},
-		column: {type: Object, required: true}
+		state: {type: Object, request: true}
 	},
 	computed: {
-		query: () => state.query,
 		onClick: (t) => t.column.onClick,
+		query: (t) => t.state.query,
 		link() {
 			const url = rStringProps({data: this.data, val: this.onClick});
 			return url

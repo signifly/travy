@@ -1,6 +1,6 @@
 import router from "@/modules/router";
 
-export default {
+export default () => ({
 	query: {},
 
 	initQuery({filters = {}, sort = {}}) {
@@ -31,4 +31,4 @@ export default {
 			}
 		});
 	}
-};
+});

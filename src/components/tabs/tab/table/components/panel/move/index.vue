@@ -8,7 +8,7 @@
 				transition="trans-fadeUp"
 			>
 				<popover
-					v-bind="{endpoint, selected, meta}"
+					v-bind="{endpoint, selected, state, meta}"
 					@event="$emit('event', $event)"
 					@close="close"
 				/>
@@ -33,6 +33,7 @@ export default {
 	props: {
 		endpoint: {type: Object, required: true},
 		selected: {type: Object, required: true},
+		state: {type: Object, required: true},
 		sort: {type: Object, required: false},
 		meta: {type: Object, required: true}
 	},

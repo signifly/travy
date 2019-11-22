@@ -90,7 +90,7 @@ export default {
 
 <style lang="scss" scoped>
 .fields {
-	padding: 0 1.5em;
+	margin: 0.5em 1.5em 1.5em;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;

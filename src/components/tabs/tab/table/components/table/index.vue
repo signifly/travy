@@ -12,7 +12,7 @@
 				:key="row.id"
 				v-for="row in dataC"
 				@event="$emit('event', $event)"
-				v-bind="{row, columns, endpoint, selected, expand, sort}"
+				v-bind="{row, columns, endpoint, selected, expand, state, sort}"
 			/>
 		</draggable>
 
@@ -26,7 +26,6 @@
 <script>
 import {cloneDeep, debounce} from "lodash";
 import draggable from "vuedraggable";
-import state from "../../state";
 import vHead from "./head";
 import row from "./row";
 
@@ -38,12 +37,12 @@ export default {
 		selected: {type: Object, required: true},
 		expand: {type: Object, required: false},
 		columns: {type: Array, required: true},
+		state: {type: Object, required: true},
 		data: {type: Array, required: false},
 		sort: {type: Object, request: false}
 	},
 	data: (t) => ({
-		dataC: cloneDeep(t.data),
-		state
+		dataC: cloneDeep(t.data)
 	}),
 	methods: {
 		move: debounce(async function() {
@@ -71,6 +70,12 @@ export default {
 				border: 1px solid #ebeef5;
 				border-right: 0;
 				border-left: 0;
+			}
+
+			tbody:last-child {
+				td {
+					border-bottom: 0;
+				}
 			}
 		}
 	}

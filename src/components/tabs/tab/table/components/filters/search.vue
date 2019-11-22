@@ -16,7 +16,6 @@
 
 <script>
 import {Input} from "element-ui";
-import state from "../../state";
 import {get} from "lodash";
 
 export default {
@@ -25,11 +24,9 @@ export default {
 		placeholder: {type: String, required: false},
 		loading: {type: Boolean, required: true},
 		active: {type: Boolean, required: true},
-		fields: {type: Array, required: false}
+		fields: {type: Array, required: false},
+		state: {type: Object, required: true}
 	},
-	data: () => ({
-		state
-	}),
 	computed: {
 		value: (t) => get(t.state.query, "filters.search", ""),
 		icon: (t) => (t.loading ? "el-icon-loading" : "el-icon-search")

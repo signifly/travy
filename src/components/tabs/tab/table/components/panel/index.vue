@@ -11,7 +11,7 @@
 				<div class="items">
 					<div class="item">
 						<move
-							v-bind="{endpoint, selected, meta, sort}"
+							v-bind="{endpoint, selected, state, meta, sort}"
 							@event="event"
 							v-if="meta"
 						/>
@@ -47,6 +47,7 @@ export default {
 	props: {
 		endpoint: {type: Object, required: true},
 		selected: {type: Object, required: true},
+		state: {type: Object, required: true},
 		batch: {type: Object, required: true},
 		meta: {type: Object, required: false},
 		sort: {type: Object, required: false}

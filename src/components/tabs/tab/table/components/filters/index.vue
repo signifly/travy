@@ -2,7 +2,7 @@
 	<div class="filters">
 		<search
 			v-if="search"
-			v-bind="[search, {loading, active, fields}]"
+			v-bind="[search, {loading, active, fields, state}]"
 			@event="event"
 		>
 			<Popover
@@ -50,7 +50,6 @@ import {Button, Popover} from "element-ui";
 import {mergeData} from "@/modules/utils";
 import {pickBy, debounce} from "lodash";
 import field from "@/components/field";
-import state from "../../state";
 import search from "./search";
 
 export default {
@@ -61,11 +60,11 @@ export default {
 		default: {type: String, required: false},
 		search: {type: Object, required: false},
 		fields: {type: Array, required: false},
+		state: {type: Object, required: true},
 		width: {type: Number, default: 300}
 	},
 	data() {
 		return {
-			state,
 			active: false
 		};
 	},
