@@ -38,8 +38,8 @@ export default {
 		expand: {type: Object, required: false},
 		columns: {type: Array, required: true},
 		state: {type: Object, required: true},
-		data: {type: Array, required: false},
-		sort: {type: Object, request: false}
+		sort: {type: Object, request: false},
+		data: {type: Array, required: true}
 	},
 	data: (t) => ({
 		dataC: cloneDeep(t.data)
@@ -72,9 +72,15 @@ export default {
 				border-left: 0;
 			}
 
-			tbody:last-child {
-				td {
-					border-bottom: 0;
+			th {
+				border-top: 0;
+			}
+
+			tbody {
+				&:last-child {
+					td {
+						border-bottom: 0;
+					}
 				}
 			}
 		}

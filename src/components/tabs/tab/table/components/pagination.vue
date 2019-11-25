@@ -58,10 +58,10 @@ export default {
 
 <style lang="scss" scoped>
 .pagination {
-	padding: 2em 0;
-	text-align: center;
 	transition: cubic(opacity, 0.1s);
 	border-top: 1px solid #ebeef5;
+	text-align: center;
+	padding: 1.5em 0;
 
 	&.loading {
 		pointer-events: none;

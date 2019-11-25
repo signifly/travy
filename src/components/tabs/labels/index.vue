@@ -29,6 +29,6 @@ export default {
 <style lang="scss" scoped>
 .labels {
 	height: 55px;
-	border-bottom: 1px solid #f5f7fa;
+	border-bottom: 1px solid #ebeef5;
 }
 </style>
