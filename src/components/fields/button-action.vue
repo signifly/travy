@@ -1,26 +1,28 @@
 <template>
-	<action
-		v-bind="_action.actionType"
-		v-model="active"
-		@event="$emit('event', $event)"
-	>
-		<div class="button-action">
-			<Button
-				plain
-				:size="_size"
-				:type="_status"
-				:icon="icon"
-				@click="active = !active"
-			>
-				{{ _title }}
-			</Button>
-		</div>
-	</action>
+	<div class="button-action">
+		<action
+			@event="$emit('event', $event)"
+			v-bind="_action.actionType"
+			v-model="active"
+		>
+			<div class="button-action">
+				<Button
+					@click="active = !active"
+					:type="_action.status"
+					:size="_action.size"
+					:icon="_action.icon"
+					plain
+				>
+					{{ _action.title }}
+				</Button>
+			</div>
+		</action>
+	</div>
 </template>
 
 <script>
-import {Button} from "element-ui";
 import action from "@/components/actions";
+import {Button} from "element-ui";
 
 export default {
 	components: {Button, action},
@@ -28,66 +30,67 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				status: "primary",
-				_title: "button",
-				icon: "plus",
-				size: "mini",
 				_action: {
+					status: "primary",
+					title: "button",
+					icon: "plus",
+					size: "mini",
 					actionType: {
-						id: "modal",
-						onSubmit: {
-							url: "#button-action"
-						},
+						id: "dropdown",
 						props: {
-							title: "Modal title",
-							endpoint: {
-								method: "post",
-								url: "https://example.com",
-								params: {}
-							},
-							fields: [
+							actions: [
 								{
-									name: "1",
-									label: "a field",
-									fieldType: {
-										id: "input-text",
+									name: "Modal",
+									actionType: {
+										id: "modal",
+										onSubmit: {
+											url: "#button-action"
+										},
 										props: {
-											value: "input"
-										}
-									}
-								},
-								{
-									name: "2",
-									label: "a field",
-									fieldType: {
-										id: "input-text",
-										props: {
-											value: "input2"
+											title: "Modal title",
+											endpoint: {
+												method: "post",
+												url: "/example"
+											},
+											fields: [
+												{
+													attribute: "1",
+													name: "a field",
+													fieldType: {
+														id: "input-text",
+														props: {
+															value: "input"
+														}
+													}
+												},
+												{
+													attribute: "2",
+													name: "a field",
+													fieldType: {
+														id: "input-text",
+														props: {
+															value: "input2"
+														}
+													}
+												}
+											],
+											payload: {
+												data: {
+													input: "32",
+													input2: "34"
+												}
+											}
 										}
 									}
 								}
-							],
-							data: {
-								input: "32",
-								input2: "34"
-							}
+							]
 						}
 					}
 				}
-			},
-			data: {}
+			}
 		}
 	},
 	props: {
-		alt: {type: Object, default: () => ({})},
-		_size: {
-			type: String,
-			default: "medium",
-			note: `medium/small/mini`
-		},
-		_status: {type: String, default: "primary"},
-		_title: {type: String, required: true},
-		_icon: {type: String, required: false},
 		_action: {type: Object, required: true}
 	},
 	data() {
@@ -103,5 +106,6 @@ export default {
 
 <style lang="scss" scoped>
 .button-action {
+	display: inline-block;
 }
 </style>

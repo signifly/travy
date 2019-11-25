@@ -20,12 +20,6 @@
 						<div class="value" v-text="value" />
 					</div>
 				</div>
-
-				<actions
-					v-if="item.actions"
-					v-bind="{_actions: item.actions, alt: {data: item.data}}"
-					@event="$emit('event', $event)"
-				/>
 			</div>
 		</draggable>
 
@@ -36,11 +30,10 @@
 </template>
 
 <script>
-import actions from "./button-actions.vue";
 import draggable from "vuedraggable";
 
 export default {
-	components: {draggable, actions},
+	components: {draggable},
 	meta: {
 		spec: {
 			_endpoint: {

@@ -2,13 +2,13 @@
 	<popup type="list">
 		<action
 			:value="selected === action"
+			v-bind="action.actionType"
 			v-for="action in actions"
-			:key="action.title"
+			:key="action.name"
 			v-on="$listeners"
-			v-bind="action"
 			:data="data"
 		>
-			<a class="item" @click="select(action)" v-text="action.title" />
+			<a class="item" @click="select(action)" v-text="action.name" />
 		</action>
 	</popup>
 </template>

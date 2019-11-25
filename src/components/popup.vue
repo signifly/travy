@@ -25,11 +25,10 @@ export default {
 
 <style lang="scss" scoped>
 .popup {
-	position: absolute;
 	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 	background-color: $white1;
 	border-radius: 4px;
-	z-index: 2;
+	position: absolute;
 
 	&.position {
 		&-top {
