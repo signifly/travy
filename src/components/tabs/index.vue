@@ -1,6 +1,6 @@
 <template>
 	<div class="tabs">
-		<labels v-bind="{tab, tabs, edit, state}" />
+		<labels v-bind="{tab, tabs: tabsC, edit, state}" />
 		<tab
 			ref="tab"
 			v-bind="[tab, {data}]"
@@ -37,9 +37,15 @@ export default {
 		state: state()
 	}),
 	computed: {
+		tabsC: (t) =>
+			t.tabs.map((x) => ({
+				...x,
+				id: x.name.replace(" ", "-").toLowerCase()
+			})),
+
 		tab() {
-			const tab = this.tabs.find((x) => x.id === this.state.query.tab);
-			return tab || this.tabs[0];
+			const tab = this.tabsC.find((x) => x.id === this.state.query.tab);
+			return tab || this.tabsC[0];
 		}
 	},
 	methods: {

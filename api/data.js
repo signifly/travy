@@ -59,7 +59,7 @@ module.exports = {
 							items: [
 								{
 									name: "Projects",
-									url: "/i/projects1"
+									url: "/i/projects"
 								},
 								{
 									name: "awdawd",
@@ -117,7 +117,6 @@ module.exports = {
 		},
 		tabs: [
 			{
-				id: "stuff1",
 				name: "stuff1",
 				type: "table",
 				definitions: {
@@ -166,7 +165,7 @@ module.exports = {
 						}
 					},
 					endpoint: {
-						url: "http://localhost:3001/v1/admin/projects",
+						url: "http://localhost:3001/projects",
 						params: {include: ["tags"]}
 					},
 					pagination: {},
@@ -293,7 +292,7 @@ module.exports = {
 										}
 									},
 									endpoint: {
-										url: "http://localhost:3001/v1/admin/projects",
+										url: "http://localhost:3001/projects",
 										method: "post"
 									}
 								}
@@ -303,12 +302,11 @@ module.exports = {
 				}
 			},
 			{
-				id: "stuff2",
 				name: "stuff 2",
 				type: "table",
 				definitions: {
 					endpoint: {
-						url: "http://localhost:3001/v1/admin/projects",
+						url: "http://localhost:3001/projects",
 						params: {include: ["tags"]}
 					},
 					pagination: {},
@@ -399,8 +397,8 @@ module.exports = {
 			}
 		],
 		links: {
-			first: "http://localhost:3001/v1/admin/projects?page=1",
-			last: "http://localhost:3001/v1/admin/projects?page=1",
+			first: "http://localhost:3001/projects?page=1",
+			last: "http://localhost:3001/projects?page=1",
 			prev: null,
 			next: null
 		},
@@ -408,7 +406,7 @@ module.exports = {
 			current_page: 1,
 			from: 1,
 			last_page: 1,
-			path: "http://localhost:3001/v1/admin/projects",
+			path: "http://localhost:3001/projects",
 			per_page: 15,
 			to: 6,
 			total: 6
@@ -536,7 +534,7 @@ module.exports = {
 						}
 					},
 					endpoint: {
-						url: "http://localhost:3001/v1/admin/projects",
+						url: "http://localhost:3001/projects",
 						params: {include: ["tags"]}
 					},
 					pagination: {},
@@ -664,7 +662,7 @@ module.exports = {
 										}
 									},
 									endpoint: {
-										url: "http://localhost:3001/v1/admin/projects",
+										url: "http://localhost:3001/projects",
 										method: "post"
 									}
 								}
@@ -674,7 +672,7 @@ module.exports = {
 				}
 			}
 		],
-		endpoint: {url: "http://localhost:3001/v1/admin/projects/{id}"},
+		endpoint: {url: "http://localhost:3001/projects/{id}"},
 		activity: {},
 		actions: [
 			{
@@ -690,7 +688,7 @@ module.exports = {
 						title: "Delete",
 						text: "Are you sure? Please confirm this action.",
 						endpoint: {
-							url: "http://localhost:3001/v1/admin/projects/{id}",
+							url: "http://localhost:3001/projects/{id}",
 							method: "delete"
 						},
 						payload: {
@@ -715,7 +713,7 @@ module.exports = {
 						title: "Delete",
 						text: "Are you sure? Please confirm this action.",
 						endpoint: {
-							url: "http://localhost:3001/v1/admin/projects/{id}",
+							url: "http://localhost:3001/projects/{id}",
 							method: "delete"
 						},
 						payload: {
@@ -817,8 +815,8 @@ module.exports = {
 			}
 		],
 		links: {
-			first: "http://localhost:3001/v1/admin/projects/3/activity?page=1",
-			last: "http://localhost:3001/v1/admin/projects/3/activity?page=1",
+			first: "http://localhost:3001/projects/3/activity?page=1",
+			last: "http://localhost:3001/projects/3/activity?page=1",
 			prev: null,
 			next: null
 		},
@@ -826,7 +824,7 @@ module.exports = {
 			current_page: 1,
 			from: 1,
 			last_page: 1,
-			path: "http://localhost:3001/v1/admin/projects/3/activity",
+			path: "http://localhost:3001/projects/3/activity",
 			per_page: 15,
 			to: 1,
 			total: 1
@@ -917,7 +915,7 @@ module.exports = {
 								}
 							},
 							endpoint: {
-								url: "http://localhost:3001/v1/admin/projects",
+								url: "http://localhost:3001/projects",
 								params: {include: ["tags"]}
 							},
 							sort: {
@@ -980,7 +978,7 @@ module.exports = {
 						type: "table",
 						definitions: {
 							endpoint: {
-								url: "http://localhost:3001/v1/admin/projects",
+								url: "http://localhost:3001/projects",
 								params: {include: ["tags"]}
 							},
 							pagination: {},
@@ -1071,7 +1069,7 @@ module.exports = {
 								}
 							},
 							endpoint: {
-								url: "http://localhost:3001/v1/admin/projects",
+								url: "http://localhost:3001/projects",
 								params: {include: ["tags"]}
 							},
 							sort: {
@@ -1134,7 +1132,7 @@ module.exports = {
 						type: "table",
 						definitions: {
 							endpoint: {
-								url: "http://localhost:3001/v1/admin/projects",
+								url: "http://localhost:3001/projects",
 								params: {include: ["tags"]}
 							},
 							pagination: {},
@@ -1225,7 +1223,7 @@ module.exports = {
 								}
 							},
 							endpoint: {
-								url: "http://localhost:3001/v1/admin/projects",
+								url: "http://localhost:3001/projects",
 								params: {include: ["tags"]}
 							},
 							sort: {
@@ -1288,7 +1286,7 @@ module.exports = {
 						type: "table",
 						definitions: {
 							endpoint: {
-								url: "http://localhost:3001/v1/admin/projects",
+								url: "http://localhost:3001/projects",
 								params: {include: ["tags"]}
 							},
 							pagination: {},

@@ -29,7 +29,7 @@ export default {
 	},
 	methods: {
 		set() {
-			if (!this.edit) {
+			if (!this.edit && this.id !== this.query.tab) {
 				this.state.setQuery({
 					modifiers: this.query.modifiers,
 					seq: this.query.seq,

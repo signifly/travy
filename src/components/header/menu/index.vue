@@ -1,10 +1,10 @@
 <template>
 	<Menu
-		mode="horizontal"
 		menu-trigger="click"
+		text-color="#1e2d3e"
+		mode="horizontal"
 		:router="true"
 		ref="menu"
-		text-color="#1e2d3e"
 	>
 		<item v-for="item in header.menu" v-bind="{item}" :key="item.name" />
 	</Menu>
@@ -50,6 +50,18 @@ export default {
 			border-bottom: 0;
 			border-color: transparent;
 			border-top-color: #1f2d3d;
+		}
+	}
+
+	.el-menu-item {
+		&.is-active {
+			pointer-events: none;
+		}
+	}
+
+	.el-menu--popup {
+		.el-menu-item.is-active {
+			font-weight: 600;
 		}
 	}
 }
