@@ -1,16 +1,19 @@
 <template>
 	<div class="table">
 		<vTable
-			ref="table"
-			:data="value"
-			:columns="_columns"
+			:selected="{active: false, items: []}"
 			@event="$emit('event', $event)"
+			:columns="_columns"
+			:state="state"
+			:data="value"
+			ref="table"
 		/>
 	</div>
 </template>
 
 <script>
 import vTable from "@/components/tabs/tab/table/components/table";
+import state from "@/components/tabs/tab/table/state";
 
 export default {
 	components: {vTable},
@@ -45,14 +48,14 @@ export default {
 			data: {
 				value: [
 					{
-						id: 0,
+						id: 1,
 						title: "title",
-						text: "text",
-						status: "warning",
-						dateStart1: 1325376000,
-						dateEnd1: 1356998400,
-						dateStart2: 1356998400,
-						dateEnd2: 1356998400
+						text: "text"
+					},
+					{
+						id: 2,
+						title: "title",
+						text: "text"
 					}
 				]
 			}
@@ -61,7 +64,10 @@ export default {
 	props: {
 		_columns: {type: Array, required: true, note: "see table definitions"},
 		value: {type: Array, required: true}
-	}
+	},
+	data: () => ({
+		state: state()
+	})
 };
 </script>
 

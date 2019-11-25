@@ -168,11 +168,12 @@ export default {
 
 <style lang="scss" scoped>
 .table {
+	margin-bottom: -1px;
+
 	.header {
-		display: flex;
 		align-items: center;
-		border-bottom: 1px solid #ebeef5;
 		padding: 1.5em;
+		display: flex;
 
 		.right {
 			display: flex;

@@ -14,7 +14,7 @@
 
 <script>
 import selectMultiSearch from "./input-select-multi-search.vue";
-import vTable from "./table.vue";
+import vTable from "./table";
 import produce from "immer";
 
 const selectProps = selectMultiSearch.meta.res.props;

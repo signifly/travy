@@ -28,7 +28,8 @@ export default {
 
 <style lang="scss" scoped>
 .labels {
-	height: 55px;
 	border-bottom: 1px solid #ebeef5;
+	margin-bottom: -1px;
+	height: 55px;
 }
 </style>

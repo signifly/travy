@@ -59,7 +59,6 @@ export default {
 <style lang="scss" scoped>
 .pagination {
 	transition: cubic(opacity, 0.1s);
-	border-top: 1px solid #ebeef5;
 	text-align: center;
 	padding: 1.5em 0;
 

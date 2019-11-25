@@ -61,8 +61,8 @@ export default {
 	font-size: 14px;
 
 	table {
-		width: 100%;
 		border-collapse: collapse;
+		width: 100%;
 
 		::v-deep {
 			th,
@@ -71,26 +71,14 @@ export default {
 				border-right: 0;
 				border-left: 0;
 			}
-
-			th {
-				border-top: 0;
-			}
-
-			tbody {
-				&:last-child {
-					td {
-						border-bottom: 0;
-					}
-				}
-			}
 		}
 	}
 
 	.info {
-		padding: 2em;
-		color: #909399;
-		text-align: center;
 		border-bottom: 1px solid #ebeef5;
+		text-align: center;
+		color: #909399;
+		padding: 2em;
 	}
 }
 </style>

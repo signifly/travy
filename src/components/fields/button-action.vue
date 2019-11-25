@@ -35,7 +35,9 @@ export default {
 				_action: {
 					actionType: {
 						id: "modal",
-						onSubmit: "#button-action",
+						onSubmit: {
+							url: "#button-action"
+						},
 						props: {
 							title: "Modal title",
 							endpoint: {
