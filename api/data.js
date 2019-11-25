@@ -231,43 +231,46 @@ module.exports = {
 								props: {
 									actions: [
 										{
-											id: "modal",
-											title: "modal",
-											onSubmit: {
-												url: "#button-action"
-											},
-											props: {
-												title: "Modal title",
-												endpoint: {
-													method: "post",
-													url: "/example"
+											name: "Modal",
+											actionType: {
+												id: "modal",
+												name: "modal",
+												onSubmit: {
+													url: "#button-action"
 												},
-												fields: [
-													{
-														attribute: "1",
-														name: "a field",
-														fieldType: {
-															id: "input-text",
-															props: {
-																value: "input"
-															}
-														}
+												props: {
+													title: "Modal title",
+													endpoint: {
+														method: "post",
+														url: "/example"
 													},
-													{
-														attribute: "2",
-														name: "a field",
-														fieldType: {
-															id: "input-text",
-															props: {
-																value: "input2"
+													fields: [
+														{
+															attribute: "1",
+															name: "a field",
+															fieldType: {
+																id: "input-text",
+																props: {
+																	value: "input"
+																}
+															}
+														},
+														{
+															attribute: "2",
+															name: "a field",
+															fieldType: {
+																id: "input-text",
+																props: {
+																	value: "input2"
+																}
 															}
 														}
-													}
-												],
-												payload: {
-													data: {
-														input: "32",
-														input2: "34"
+													],
+													payload: {
+														data: {
+															input: "32",
+															input2: "34"
+														}
 													}
 												}
 											}
