@@ -47,7 +47,7 @@ export default {
 											url: "#button-action"
 										},
 										props: {
-											title: "Modal title",
+											name: "Modal title",
 											endpoint: {
 												method: "post",
 												url: "/example"
