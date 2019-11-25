@@ -13,7 +13,7 @@
 					:icon="_action.icon"
 					plain
 				>
-					{{ _action.title }}
+					{{ _action.name }}
 				</Button>
 			</div>
 		</action>
@@ -32,7 +32,7 @@ export default {
 			props: {
 				_action: {
 					status: "primary",
-					title: "button",
+					name: "button",
 					icon: "plus",
 					size: "mini",
 					actionType: {
