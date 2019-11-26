@@ -1,11 +1,11 @@
 <template>
 	<div class="sidebar">
 		<div class="name" v-text="sidebar.name" />
-		<div class="sections">
-			<vSection
-				v-for="section in sidebar.sections"
-				v-bind="{section, error, options, data}"
-				:key="section.name"
+		<div class="groups">
+			<group
+				v-for="group in sidebar.groups"
+				v-bind="{group, error, options, data}"
+				:key="group.name"
 				@event="event"
 			/>
 		</div>
@@ -14,10 +14,10 @@
 
 <script>
 import {rStringProps, mergeData, mapPaths} from "@/modules/utils";
-import vSection from "./section";
+import group from "./group";
 
 export default {
-	components: {vSection},
+	components: {group},
 	props: {
 		endpoint: {type: Object, required: true},
 		options: {type: Object, required: false},
@@ -95,7 +95,7 @@ export default {
 		height: 55px;
 	}
 
-	.sections {
+	.groups {
 		padding: 24px;
 	}
 }

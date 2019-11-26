@@ -1,10 +1,10 @@
 <template>
-	<div class="section">
-		<div class="name" v-text="section.name" />
+	<div class="group">
+		<div class="name" v-text="group.name" />
 
 		<div class="fields">
 			<field
-				v-for="field in section.fields"
+				v-for="field in group.fields"
 				:key="field.attribute"
 				v-bind="{field, data, options}"
 				@event="$emit('event', $event)"
@@ -20,14 +20,14 @@ export default {
 	components: {field},
 	props: {
 		options: {type: Object, required: false},
-		section: {type: Object, required: true},
+		group: {type: Object, required: true},
 		data: {type: Object, required: true}
 	}
 };
 </script>
 
 <style lang="scss" scoped>
-.section {
+.group {
 	margin-bottom: 32px;
 
 	.name {

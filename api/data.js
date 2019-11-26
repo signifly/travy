@@ -528,7 +528,6 @@ module.exports = {
 		},
 		tabs: [
 			{
-				id: "fields",
 				name: "Fields",
 				type: "fields",
 				definitions: {
@@ -550,7 +549,6 @@ module.exports = {
 				}
 			},
 			{
-				id: "stuff1",
 				name: "stuff1",
 				type: "table",
 				definitions: {
@@ -839,7 +837,7 @@ module.exports = {
 		],
 		sidebar: {
 			name: "Name",
-			sections: [
+			groups: [
 				{
 					name: "History",
 					fields: [
@@ -977,7 +975,158 @@ module.exports = {
 				width: 50,
 				tabs: [
 					{
-						id: "stuff1",
+						name: "stuff1",
+						type: "table",
+						definitions: {
+							expand: {
+								type: "fields",
+								fields: [
+									{
+										width: 50,
+										name: "Name",
+										attribute: "name",
+										fieldType: {id: "text", props: {text: "name"}}
+									},
+									{
+										width: 50,
+										name: "Tags",
+										attribute: "tags",
+										fieldType: {
+											id: "list-tooltip",
+											props: {
+												items: {
+													_link: "/i/tags/{id}",
+													"@scope": "tags",
+													label: "key"
+												}
+											}
+										}
+									},
+									{
+										name: "input",
+										fieldType: {
+											id: "input-switch",
+											props: {
+												value: "test.switch"
+											}
+										}
+									}
+								]
+							},
+							batch: {
+								selectedOptions: {
+									label: "{name}",
+									link: "/i/projects/{id}"
+								},
+								sequential: {
+									url: "/i/projects/{id}"
+								}
+							},
+							endpoint: {
+								url: "http://localhost:3001/projects",
+								params: {include: ["tags"]}
+							},
+							sort: {
+								items: [
+									{label: "Name", value: "name"},
+									{label: "Input", value: "input"},
+									{label: "Position", value: "pos", manual: true}
+								]
+							},
+							columns: [
+								{
+									width: 350,
+									name: "Name",
+									fieldType: {id: "text", props: {text: "name"}},
+									onClick: "/i/projects/{id}"
+								},
+								{
+									name: "Tags",
+									fieldType: {
+										id: "list-tooltip",
+										props: {
+											items: {
+												_link: "/i/tags/{id}",
+												"@scope": "tags",
+												label: "key"
+											}
+										}
+									}
+								},
+								{
+									name: "input",
+									fieldType: {
+										id: "input-switch",
+										props: {
+											value: "test.switch"
+										}
+									}
+								}
+							],
+							filters: {
+								data: {
+									name: "test"
+								},
+								search: {
+									placeholder: "Search..."
+								},
+								fields: [
+									{
+										name: "Name",
+										attribute: "name",
+										fieldType: {id: "input-text", props: {value: "name"}}
+									}
+								]
+							}
+						}
+					},
+					{
+						name: "stuff 2",
+						type: "table",
+						definitions: {
+							endpoint: {
+								url: "http://localhost:3001/projects",
+								params: {include: ["tags"]}
+							},
+							pagination: {},
+							columns: [
+								{
+									width: 350,
+									name: "Name",
+									fieldType: {id: "text", props: {text: "name"}},
+									onClick: "/i/projects/{id}"
+								},
+								{
+									name: "Tags",
+									fieldType: {
+										id: "list-tooltip",
+										props: {
+											items: {
+												_link: "/i/tags/{id}",
+												"@scope": "tags",
+												label: "key"
+											}
+										}
+									}
+								},
+								{
+									name: "input",
+									fieldType: {
+										id: "input-switch",
+										props: {
+											value: "switch"
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			},
+			{
+				width: 50,
+				tabs: [
+					{
 						name: "stuff1",
 						type: "table",
 						definitions: {
@@ -1131,161 +1280,6 @@ module.exports = {
 				width: 50,
 				tabs: [
 					{
-						id: "stuff1",
-						name: "stuff1",
-						type: "table",
-						definitions: {
-							expand: {
-								type: "fields",
-								fields: [
-									{
-										width: 50,
-										name: "Name",
-										attribute: "name",
-										fieldType: {id: "text", props: {text: "name"}}
-									},
-									{
-										width: 50,
-										name: "Tags",
-										attribute: "tags",
-										fieldType: {
-											id: "list-tooltip",
-											props: {
-												items: {
-													_link: "/i/tags/{id}",
-													"@scope": "tags",
-													label: "key"
-												}
-											}
-										}
-									},
-									{
-										name: "input",
-										fieldType: {
-											id: "input-switch",
-											props: {
-												value: "test.switch"
-											}
-										}
-									}
-								]
-							},
-							batch: {
-								selectedOptions: {
-									label: "{name}",
-									link: "/i/projects/{id}"
-								},
-								sequential: {
-									url: "/i/projects/{id}"
-								}
-							},
-							endpoint: {
-								url: "http://localhost:3001/projects",
-								params: {include: ["tags"]}
-							},
-							sort: {
-								items: [
-									{label: "Name", value: "name"},
-									{label: "Input", value: "input"},
-									{label: "Position", value: "pos", manual: true}
-								]
-							},
-							columns: [
-								{
-									width: 350,
-									name: "Name",
-									fieldType: {id: "text", props: {text: "name"}},
-									onClick: "/i/projects/{id}"
-								},
-								{
-									name: "Tags",
-									fieldType: {
-										id: "list-tooltip",
-										props: {
-											items: {
-												_link: "/i/tags/{id}",
-												"@scope": "tags",
-												label: "key"
-											}
-										}
-									}
-								},
-								{
-									name: "input",
-									fieldType: {
-										id: "input-switch",
-										props: {
-											value: "test.switch"
-										}
-									}
-								}
-							],
-							filters: {
-								data: {
-									name: "test"
-								},
-								search: {
-									placeholder: "Search..."
-								},
-								fields: [
-									{
-										name: "Name",
-										attribute: "name",
-										fieldType: {id: "input-text", props: {value: "name"}}
-									}
-								]
-							}
-						}
-					},
-					{
-						id: "stuff2",
-						name: "stuff 2",
-						type: "table",
-						definitions: {
-							endpoint: {
-								url: "http://localhost:3001/projects",
-								params: {include: ["tags"]}
-							},
-							pagination: {},
-							columns: [
-								{
-									width: 350,
-									name: "Name",
-									fieldType: {id: "text", props: {text: "name"}},
-									onClick: "/i/projects/{id}"
-								},
-								{
-									name: "Tags",
-									fieldType: {
-										id: "list-tooltip",
-										props: {
-											items: {
-												_link: "/i/tags/{id}",
-												"@scope": "tags",
-												label: "key"
-											}
-										}
-									}
-								},
-								{
-									name: "input",
-									fieldType: {
-										id: "input-switch",
-										props: {
-											value: "switch"
-										}
-									}
-								}
-							]
-						}
-					}
-				]
-			},
-			{
-				width: 50,
-				tabs: [
-					{
-						id: "stuff1",
 						name: "stuff1",
 						type: "table",
 						definitions: {
