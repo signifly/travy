@@ -2,7 +2,7 @@
 	<div class="breadcrumb" v-if="viewId">
 		<Breadcrumb>
 			<BreadcrumbItem :to="`/i/${indexId}`">{{ home }}</BreadcrumbItem>
-			<BreadcrumbItem>#{{ viewId }}</BreadcrumbItem>
+			<BreadcrumbItem>{{ viewId }}</BreadcrumbItem>
 		</Breadcrumb>
 	</div>
 </template>

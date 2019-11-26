@@ -9,20 +9,15 @@
 			@close="close"
 			v-if="value"
 			:data="data"
-			:is="id"
+			:is="comp"
 		/>
 	</div>
 </template>
 
 <script>
 import {rStringProps, operator} from "@/modules/utils";
-import dropdown from "./dropdown";
-import modal from "./modal.vue";
-import popup from "./popup.vue";
-import show from "./show.vue";
 
 export default {
-	components: {dropdown, modal, popup, show},
 	props: {
 		onSubmit: {type: Object, required: false},
 		value: {type: Boolean, required: true},
@@ -32,6 +27,9 @@ export default {
 		id: {type: String, required: true}
 	},
 	computed: {
+		comp() {
+			return () => import(/* webpackMode: "eager" */ `./${this.id}.vue`);
+		},
 		propsC() {
 			return rStringProps({
 				data: this.data,

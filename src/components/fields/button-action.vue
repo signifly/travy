@@ -91,7 +91,7 @@ export default {
 		}
 	},
 	props: {
-		_action: {type: Object, required: true}
+		_action: {type: Object, required: true, note: "see actions"}
 	},
 	data() {
 		return {

@@ -59,7 +59,7 @@ module.exports = {
 							items: [
 								{
 									name: "Projects",
-									url: "/i/projects"
+									url: "/i/projects1"
 								},
 								{
 									name: "awdawd",
@@ -272,6 +272,15 @@ module.exports = {
 															input2: "34"
 														}
 													}
+												}
+											}
+										},
+										{
+											name: "Link",
+											actionType: {
+												id: "link",
+												props: {
+													url: "/"
 												}
 											}
 										}
@@ -732,6 +741,51 @@ module.exports = {
 		endpoint: {url: "http://localhost:3001/projects/{id}"},
 		activity: {},
 		actions: [
+			{
+				name: "Modal",
+				actionType: {
+					id: "modal",
+					name: "modal",
+					onSubmit: {
+						url: "#button-action"
+					},
+					props: {
+						title: "Modal title",
+						endpoint: {
+							method: "post",
+							url: "/example"
+						},
+						fields: [
+							{
+								attribute: "1",
+								name: "a field",
+								fieldType: {
+									id: "input-text",
+									props: {
+										value: "input"
+									}
+								}
+							},
+							{
+								attribute: "2",
+								name: "a field",
+								fieldType: {
+									id: "input-text",
+									props: {
+										value: "input2"
+									}
+								}
+							}
+						],
+						payload: {
+							data: {
+								input: "32",
+								input2: "34"
+							}
+						}
+					}
+				}
+			},
 			{
 				status: "danger",
 				icon: "delete",

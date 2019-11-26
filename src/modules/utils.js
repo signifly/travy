@@ -50,20 +50,6 @@ export const base64Encode = (file) => {
 	});
 };
 
-export const download = ({url, name}) => {
-	const link = document.createElement("a");
-	link.download = true;
-	link.href = url;
-
-	if (name) {
-		link.setAttribute("download", name);
-	}
-
-	document.body.appendChild(link);
-	link.click();
-	link.remove();
-};
-
 export const translate = (locales) => {
 	const {default: store} = require("@/store");
 	const config = store.getters["config/data"];
