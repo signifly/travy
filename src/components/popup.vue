@@ -29,6 +29,7 @@ export default {
 	background-color: $white1;
 	border-radius: 4px;
 	position: absolute;
+	z-index: 2;
 
 	&.position {
 		&-top {
