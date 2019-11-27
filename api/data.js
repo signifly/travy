@@ -260,6 +260,14 @@ module.exports = {
 																	value: "input2"
 																}
 															}
+														},
+														{
+															attribute: "3",
+															name: "upload",
+															fieldType: {
+																id: "input-upload",
+																props: {}
+															}
 														}
 													],
 													payload: {
