@@ -15,7 +15,6 @@
 <script>
 import selectMultiSearch from "./input-select-multi-search.vue";
 import vTable from "./table";
-import produce from "immer";
 
 const selectProps = selectMultiSearch.meta.res.props;
 const selectSpec = selectMultiSearch.meta.spec;
@@ -125,16 +124,7 @@ export default {
 		},
 
 		tableEvent(event) {
-			const update = event.actions.update;
-
-			if (update) {
-				const data = produce(this.data, (data) => {
-					const index = data.findIndex((x) => x.id === update.item.id);
-					data[index] = {...update.item, ...update.data};
-				});
-
-				this.update(data);
-			}
+			this.$emit("event", event);
 		},
 
 		update(value) {
