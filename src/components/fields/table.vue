@@ -38,7 +38,7 @@ export default {
 						name: "switch",
 						label: "switch",
 						fieldType: {
-							id: "input-switch",
+							id: "input-toggle",
 							props: {
 								value: "toggle"
 							}

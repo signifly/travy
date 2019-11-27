@@ -1,20 +1,20 @@
 <template>
 	<div class="selected">
-		<listTooltip :items="itemsC">
+		<itemListTooltip :items="itemsC">
 			<Checkbox v-bind="{value}" @input="unselect">
 				{{ selected.items.length }} selected
 			</Checkbox>
-		</listTooltip>
+		</itemListTooltip>
 	</div>
 </template>
 
 <script>
-import listTooltip from "@/components/fields/list-tooltip.vue";
+import itemListTooltip from "@/components/fields/item-list-tooltip";
 import {rStringProps} from "@/modules/utils";
 import {Checkbox} from "element-ui";
 
 export default {
-	components: {Checkbox, listTooltip},
+	components: {Checkbox, itemListTooltip},
 	props: {
 		selected: {type: Object, required: true},
 		selectedOptions: {type: Object, required: true}

@@ -1,5 +1,5 @@
 <template>
-	<div class="switch">
+	<div class="toggle">
 		<elSwitch :value="value" :disabled="_disabled" @change="update" />
 	</div>
 </template>

@@ -4,6 +4,7 @@ _entities<template>
 			v-bind="{value}"
 			:disabled="_disabled"
 			:clearable="_clearable"
+			:allow-create="_addable"
 			:filterable="true"
 			@change="update"
 		>
@@ -28,6 +29,7 @@ export default {
 			_clearable: {type: Boolean, required: false, default: true},
 			value: {type: [String, Number], required: false},
 			_disabled: {type: Boolean, required: false},
+			_addable: {type: Boolean, required: false},
 			_entities: {
 				type: Array,
 				required: true,
@@ -42,7 +44,7 @@ export default {
 		res: {
 			props: {
 				_clearable: false,
-				_disabled: false,
+				_addable: true,
 				value: "value",
 				_entities: [
 					{label: "Danmark", emoji: "denmark", value: "dk"},
@@ -56,9 +58,10 @@ export default {
 		}
 	},
 	props: {
-		_clearable: {type: Boolean, required: false, default: true},
 		value: {type: [String, Number], required: false},
 		_disabled: {type: Boolean, required: false},
+		_clearable: {type: Boolean, default: true},
+		_addable: {type: Boolean, default: false},
 		_entities: {type: Array, required: true}
 	},
 	methods: {

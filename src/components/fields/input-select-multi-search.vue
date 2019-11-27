@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {get, merge, uniqBy, pick} from "lodash";
+import {get, merge, uniqBy} from "lodash";
 import {Select, Option} from "element-ui";
 
 export default {
@@ -55,6 +55,7 @@ export default {
 		res: {
 			props: {
 				value: "value",
+				_addable: true,
 				_entities: {
 					endpoint: {
 						url: "items",
@@ -127,17 +128,16 @@ export default {
 
 			const value = data.map((val) => {
 				// [1, 2] => [{}, {}]
-				let item = this.allItems.find((x) => x[ent.value] === val);
+				const item = this.allItems.find((x) => x[ent.value] === val);
 
 				// if new item
-				item = item || {
-					[ent.value]: val,
-					[ent.label]: val,
-					new: true
-				};
-
-				// only emit label and value properties
-				return pick(item, [ent.value, ent.label, "new"]);
+				return (
+					item || {
+						[ent.value]: val,
+						[ent.label]: val,
+						new: true
+					}
+				);
 			});
 
 			this.$emit("event", {

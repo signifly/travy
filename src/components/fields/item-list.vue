@@ -1,5 +1,5 @@
 <template>
-	<div class="key-value-box">
+	<div class="item-list">
 		<div class="item" v-for="item in items" :key="item.label">
 			<div class="label" v-text="item.label" />
 			<div class="value" v-text="item.value" />
@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.key-value-box {
+.item-list {
 	padding: 12px 22px;
 	display: flex;
 	flex-direction: column;

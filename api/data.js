@@ -147,7 +147,7 @@ module.exports = {
 							{
 								name: "input",
 								fieldType: {
-									id: "input-switch",
+									id: "input-toggle",
 									props: {
 										value: "test.switch"
 									}
@@ -199,7 +199,7 @@ module.exports = {
 						{
 							name: "input",
 							fieldType: {
-								id: "input-switch",
+								id: "input-toggle",
 								props: {
 									value: "test.switch"
 								}
@@ -398,7 +398,7 @@ module.exports = {
 						{
 							name: "input",
 							fieldType: {
-								id: "input-switch",
+								id: "input-toggle",
 								props: {
 									value: "switch"
 								}
@@ -579,7 +579,7 @@ module.exports = {
 								name: "Input",
 								attribute: "input",
 								fieldType: {
-									id: "input-switch",
+									id: "input-toggle",
 									props: {
 										value: "switch"
 									}
@@ -632,7 +632,7 @@ module.exports = {
 						{
 							name: "input",
 							fieldType: {
-								id: "input-switch",
+								id: "input-toggle",
 								props: {
 									value: "switch"
 								}
@@ -1066,7 +1066,7 @@ module.exports = {
 									{
 										name: "input",
 										fieldType: {
-											id: "input-switch",
+											id: "input-toggle",
 											props: {
 												value: "test.switch"
 											}
@@ -1117,7 +1117,7 @@ module.exports = {
 								{
 									name: "input",
 									fieldType: {
-										id: "input-switch",
+										id: "input-toggle",
 										props: {
 											value: "test.switch"
 										}
@@ -1173,7 +1173,7 @@ module.exports = {
 								{
 									name: "input",
 									fieldType: {
-										id: "input-switch",
+										id: "input-toggle",
 										props: {
 											value: "switch"
 										}
@@ -1218,7 +1218,7 @@ module.exports = {
 									{
 										name: "input",
 										fieldType: {
-											id: "input-switch",
+											id: "input-toggle",
 											props: {
 												value: "test.switch"
 											}
@@ -1269,7 +1269,7 @@ module.exports = {
 								{
 									name: "input",
 									fieldType: {
-										id: "input-switch",
+										id: "input-toggle",
 										props: {
 											value: "test.switch"
 										}
@@ -1326,7 +1326,7 @@ module.exports = {
 								{
 									name: "input",
 									fieldType: {
-										id: "input-switch",
+										id: "input-toggle",
 										props: {
 											value: "switch"
 										}
@@ -1371,7 +1371,7 @@ module.exports = {
 									{
 										name: "input",
 										fieldType: {
-											id: "input-switch",
+											id: "input-toggle",
 											props: {
 												value: "test.switch"
 											}
@@ -1422,7 +1422,7 @@ module.exports = {
 								{
 									name: "input",
 									fieldType: {
-										id: "input-switch",
+										id: "input-toggle",
 										props: {
 											value: "test.switch"
 										}
@@ -1479,7 +1479,7 @@ module.exports = {
 								{
 									name: "input",
 									fieldType: {
-										id: "input-switch",
+										id: "input-toggle",
 										props: {
 											value: "switch"
 										}
