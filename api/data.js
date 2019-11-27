@@ -234,12 +234,11 @@ module.exports = {
 											name: "Modal",
 											actionType: {
 												id: "modal",
-												name: "modal",
 												onSubmit: {
 													url: "#button-action"
 												},
 												props: {
-													title: "Modal title",
+													name: "Modal title",
 													endpoint: {
 														method: "post",
 														url: "/example"
@@ -743,12 +742,11 @@ module.exports = {
 				name: "Modal",
 				actionType: {
 					id: "modal",
-					name: "modal",
 					onSubmit: {
 						url: "#button-action"
 					},
 					props: {
-						title: "Modal title",
+						name: "Modal title",
 						endpoint: {
 							method: "post",
 							url: "/example"
@@ -796,12 +794,11 @@ module.exports = {
 								name: "Modal",
 								actionType: {
 									id: "modal",
-									name: "modal",
 									onSubmit: {
 										url: "#button-action"
 									},
 									props: {
-										title: "Modal title",
+										name: "Modal title",
 										endpoint: {
 											method: "post",
 											url: "/example"
@@ -860,7 +857,6 @@ module.exports = {
 					},
 					id: "popup",
 					props: {
-						title: "Delete",
 						text: "Are you sure? Please confirm this action.",
 						endpoint: {
 							url: "http://localhost:3001/projects/{id}",
@@ -885,7 +881,6 @@ module.exports = {
 					},
 					id: "popup",
 					props: {
-						title: "Delete",
 						text: "Are you sure? Please confirm this action.",
 						endpoint: {
 							url: "http://localhost:3001/projects/{id}",
