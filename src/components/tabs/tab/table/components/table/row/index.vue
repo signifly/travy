@@ -76,6 +76,8 @@ export default {
 				} else {
 					this.$emit("event", newEvent);
 				}
+			} else {
+				this.$emit("event", event);
 			}
 		},
 

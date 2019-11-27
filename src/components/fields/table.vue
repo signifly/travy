@@ -2,8 +2,8 @@
 	<div class="table">
 		<vTable
 			:selected="{active: false, items: []}"
-			@event="$emit('event', $event)"
 			:columns="_columns"
+			@event="update"
 			:state="state"
 			:data="value"
 			ref="table"
@@ -14,6 +14,7 @@
 <script>
 import vTable from "@/components/tabs/tab/table/components/table";
 import state from "@/components/tabs/tab/table/state";
+import produce from "immer";
 
 export default {
 	components: {vTable},
@@ -24,16 +25,6 @@ export default {
 				value: "value",
 				_columns: [
 					{
-						name: "title",
-						label: "Title",
-						fieldType: {
-							id: "text",
-							props: {
-								text: "title"
-							}
-						}
-					},
-					{
 						name: "text",
 						label: "text",
 						fieldType: {
@@ -42,20 +33,30 @@ export default {
 								text: "text"
 							}
 						}
+					},
+					{
+						name: "switch",
+						label: "switch",
+						fieldType: {
+							id: "input-switch",
+							props: {
+								value: "toggle"
+							}
+						}
 					}
 				]
 			},
 			data: {
 				value: [
 					{
-						id: 1,
-						title: "title",
-						text: "text"
+						toggle: false,
+						text: "text",
+						id: 1
 					},
 					{
-						id: 2,
-						title: "title",
-						text: "text"
+						toggle: false,
+						text: "text",
+						id: 2
 					}
 				]
 			}
@@ -67,7 +68,26 @@ export default {
 	},
 	data: () => ({
 		state: state()
-	})
+	}),
+	methods: {
+		update(event) {
+			const update = event.actions.update;
+
+			if (update) {
+				const item = update.item;
+				const index = this.value.findIndex((x) => x.id === item.id);
+
+				const newEvent = produce(event, (event) => {
+					event.actions.update.data = {value: [...this.value]};
+					event.actions.update.data.value[index] = item;
+				});
+
+				this.$emit("event", newEvent);
+			} else {
+				this.$emit("event");
+			}
+		}
+	}
 };
 </script>
 
