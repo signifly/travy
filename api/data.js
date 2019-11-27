@@ -134,7 +134,7 @@ module.exports = {
 								name: "Tags",
 								attribute: "tags",
 								fieldType: {
-									id: "list-tooltip",
+									id: "item-list-tooltip",
 									props: {
 										items: {
 											_link: "/i/tags/{id}",
@@ -186,7 +186,7 @@ module.exports = {
 						{
 							name: "Tags",
 							fieldType: {
-								id: "list-tooltip",
+								id: "item-list-tooltip",
 								props: {
 									items: {
 										_link: "/i/tags/{id}",
@@ -234,14 +234,11 @@ module.exports = {
 											name: "Modal",
 											actionType: {
 												id: "modal",
-												onSubmit: {
-													url: "#button-action"
-												},
 												props: {
 													name: "Modal title",
 													endpoint: {
 														method: "post",
-														url: "/example"
+														url: "/projects"
 													},
 													fields: [
 														{
@@ -385,7 +382,7 @@ module.exports = {
 						{
 							name: "Tags",
 							fieldType: {
-								id: "list-tooltip",
+								id: "item-list-tooltip",
 								props: {
 									items: {
 										_link: "/i/tags/{id}",
@@ -565,7 +562,7 @@ module.exports = {
 								name: "Tags",
 								attribute: "tags",
 								fieldType: {
-									id: "list-tooltip",
+									id: "item-list-tooltip",
 									props: {
 										items: {
 											_link: "/i/tags/{id}",
@@ -619,7 +616,7 @@ module.exports = {
 						{
 							name: "Tags",
 							fieldType: {
-								id: "list-tooltip",
+								id: "item-list-tooltip",
 								props: {
 									items: {
 										_link: "/i/tags/{id}",
@@ -1053,7 +1050,7 @@ module.exports = {
 										name: "Tags",
 										attribute: "tags",
 										fieldType: {
-											id: "list-tooltip",
+											id: "item-list-tooltip",
 											props: {
 												items: {
 													_link: "/i/tags/{id}",
@@ -1104,7 +1101,7 @@ module.exports = {
 								{
 									name: "Tags",
 									fieldType: {
-										id: "list-tooltip",
+										id: "item-list-tooltip",
 										props: {
 											items: {
 												_link: "/i/tags/{id}",
@@ -1160,7 +1157,7 @@ module.exports = {
 								{
 									name: "Tags",
 									fieldType: {
-										id: "list-tooltip",
+										id: "item-list-tooltip",
 										props: {
 											items: {
 												_link: "/i/tags/{id}",
@@ -1205,7 +1202,7 @@ module.exports = {
 										name: "Tags",
 										attribute: "tags",
 										fieldType: {
-											id: "list-tooltip",
+											id: "item-list-tooltip",
 											props: {
 												items: {
 													_link: "/i/tags/{id}",
@@ -1256,7 +1253,7 @@ module.exports = {
 								{
 									name: "Tags",
 									fieldType: {
-										id: "list-tooltip",
+										id: "item-list-tooltip",
 										props: {
 											items: {
 												_link: "/i/tags/{id}",
@@ -1313,7 +1310,7 @@ module.exports = {
 								{
 									name: "Tags",
 									fieldType: {
-										id: "list-tooltip",
+										id: "item-list-tooltip",
 										props: {
 											items: {
 												_link: "/i/tags/{id}",
@@ -1358,7 +1355,7 @@ module.exports = {
 										name: "Tags",
 										attribute: "tags",
 										fieldType: {
-											id: "list-tooltip",
+											id: "item-list-tooltip",
 											props: {
 												items: {
 													_link: "/i/tags/{id}",
@@ -1409,7 +1406,7 @@ module.exports = {
 								{
 									name: "Tags",
 									fieldType: {
-										id: "list-tooltip",
+										id: "item-list-tooltip",
 										props: {
 											items: {
 												_link: "/i/tags/{id}",
@@ -1466,7 +1463,7 @@ module.exports = {
 								{
 									name: "Tags",
 									fieldType: {
-										id: "list-tooltip",
+										id: "item-list-tooltip",
 										props: {
 											items: {
 												_link: "/i/tags/{id}",

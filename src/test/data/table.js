@@ -22,7 +22,7 @@ export default {
 				name: "tags",
 				label: "Tags",
 				fieldType: {
-					id: "list-tooltip",
+					id: "item-list-tooltip",
 					props: {
 						itemKey: "name",
 						itemLink: "/i/tags/{id}",
