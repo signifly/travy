@@ -27,14 +27,17 @@ export default {
 		spec: "props",
 		res: {
 			props: {
+				_url: "/signedurls",
 				value: "files"
 			}
 		}
 	},
 	props: {
-		_fileTypes: {type: String, required: false},
+		_fileTypes: {type: String, required: false, note: "image/png, image/*"},
 		_multiple: {type: Boolean, required: false},
-		_limit: {type: Number, default: null}
+		_limit: {type: Number, default: null},
+		value: {type: Array, required: false},
+		_url: {type: String, required: true}
 	},
 	computed: {
 		label() {
