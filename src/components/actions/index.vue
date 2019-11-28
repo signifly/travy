@@ -47,7 +47,8 @@ export default {
 	},
 	methods: {
 		blur(e) {
-			if (!this.$el.contains(e.relatedTarget)) {
+			// close if not inside this element and inside browser (don't close when tabbing out)
+			if (!this.$el.contains(e.relatedTarget) && e.sourceCapabilities) {
 				this.close();
 			}
 		},

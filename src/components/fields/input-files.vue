@@ -1,20 +1,25 @@
 <template>
 	<div class="input-files">
 		<filepond
-			:label-idle="label"
+			:accepted-file-types="_fileTypes"
 			:allow-multiple="_multiple"
+			:label-idle="label"
 			:max-files="_limit"
 		/>
 	</div>
 </template>
 
 <script>
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond/dist/filepond.min.css";
 import Filepond from "vue-filepond";
 
-const filepond = Filepond(FilePondPluginImagePreview);
+const filepond = Filepond(
+	FilePondPluginImagePreview,
+	FilePondPluginFileValidateType
+);
 
 export default {
 	components: {filepond},
@@ -27,6 +32,7 @@ export default {
 		}
 	},
 	props: {
+		_fileTypes: {type: String, required: false},
 		_multiple: {type: Boolean, required: false},
 		_limit: {type: Number, default: null}
 	},

@@ -265,7 +265,7 @@ module.exports = {
 															attribute: "3",
 															name: "upload",
 															fieldType: {
-																id: "input-upload",
+																id: "input-files",
 																props: {}
 															}
 														}
@@ -297,74 +297,90 @@ module.exports = {
 							status: "primary",
 							icon: "eleme",
 							actionType: {
-								id: "modal",
+								id: "dropdown",
 								props: {
-									id: "modal",
-									name: "Add project",
-									fields: [
+									actions: [
 										{
-											name: "Country",
-											attribute: "country",
-											fieldType: {
-												id: "input-select",
+											name: "Modal",
+											actionType: {
+												id: "modal",
 												props: {
-													value: "country",
-													_entities: [
+													id: "modal",
+													name: "Add project",
+													fields: [
 														{
-															label: "Denmark",
-															emoji: "denmark",
-															value: "dk"
+															name: "Country",
+															attribute: "country",
+															fieldType: {
+																id: "input-select",
+																props: {
+																	value: "country",
+																	_entities: [
+																		{
+																			label: "Denmark",
+																			emoji: "denmark",
+																			value: "dk"
+																		},
+																		{
+																			label: "England",
+																			emoji: "uk",
+																			value: "uk"
+																		},
+																		{
+																			label: "Murica",
+																			emoji: "us",
+																			value: "us",
+																			disabled: true
+																		}
+																	]
+																}
+															}
 														},
 														{
-															label: "England",
-															emoji: "uk",
-															value: "uk"
+															attribute: "name",
+															name: "Name",
+															fieldType: {
+																id: "input-text",
+																props: {value: "name"}
+															}
 														},
 														{
-															label: "Murica",
-															emoji: "us",
-															value: "us",
-															disabled: true
+															attribute: "start_date",
+															name: "Start Date",
+															fieldType: {
+																id: "input-date",
+																props: {
+																	formatValue: "yyyy-MM-dd",
+																	date: "start_date"
+																}
+															}
+														},
+														{
+															attribute: "description",
+															name: "Description",
+															fieldType: {
+																id: "input-editor-markdown",
+																props: {content: "description"}
+															}
 														}
-													]
+													],
+													payload: {
+														data: {
+															client_id: "",
+															name: "",
+															start_date: "",
+															tags: [],
+															description: ""
+														}
+													},
+													endpoint: {
+														url: "http://localhost:3001/projects",
+														method: "post"
+													}
 												}
 											}
-										},
-										{
-											attribute: "name",
-											name: "Name",
-											fieldType: {id: "input-text", props: {value: "name"}}
-										},
-										{
-											attribute: "start_date",
-											name: "Start Date",
-											fieldType: {
-												id: "input-date",
-												props: {formatValue: "yyyy-MM-dd", date: "start_date"}
-											}
-										},
-										{
-											attribute: "description",
-											name: "Description",
-											fieldType: {
-												id: "input-editor-markdown",
-												props: {content: "description"}
-											}
 										}
-									],
-									payload: {
-										data: {
-											client_id: "",
-											name: "",
-											start_date: "",
-											tags: [],
-											description: ""
-										}
-									},
-									endpoint: {
-										url: "http://localhost:3001/projects",
-										method: "post"
-									}
+									]
 								}
 							}
 						}
