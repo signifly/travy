@@ -1,7 +1,6 @@
 import VueRouter from "vue-router";
 import store from "@/store";
 import urlon from "urlon";
-import Vue from "vue";
 
 // pages
 import home from "@/pages/home";
@@ -90,7 +89,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-	routes: [...routes, ...Vue.prototype.$settings.routes],
+	routes,
 	mode: "history",
 	parseQuery(query) {
 		return query ? urlon.parse(query) : {};

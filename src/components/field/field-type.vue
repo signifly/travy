@@ -18,8 +18,8 @@ export default {
 		id: {type: String, required: true}
 	},
 	computed: {
-		customField: (t) => t.$settings.fields[t.id],
 		mapProps: (t) => mapProps({props: t.props, data: t.data}),
+		customField: (t) => t.$opts.fields[t.id],
 
 		field() {
 			const id = this.id;

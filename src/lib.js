@@ -9,26 +9,26 @@ import "./modules/element";
 import * as utils from "./modules/utils";
 import favicon from "./modules/favicon";
 import errors from "./modules/errors";
-import app from "./app.vue";
+
+import app from "./app";
 
 const components = {
 	action: require("@/components/actions").default
 };
 
-const start = (options) => {
+const setup = ({init, ...opts}) => {
 	Vue.use(require("vue-shortkey"));
 	Vue.use(VueRouter);
 	Vue.use(Vuex);
 
-	const settings = (Vue.prototype.$settings = Object.assign(
+	opts = Vue.prototype.$opts = Object.assign(
 		{
 			test: false,
-			routes: [],
 			fields: {},
 			api: ""
 		},
-		options
-	));
+		opts
+	);
 
 	const {default: router} = require("./modules/router");
 	const {default: ws} = require("./modules/ws");
@@ -39,17 +39,21 @@ const start = (options) => {
 	Vue.prototype.$axios = api;
 	Vue.prototype.$ws = ws;
 
-	if (!settings.test) {
+	if (!opts.test) {
 		favicon();
 		errors();
+	}
+
+	if (init) {
+		init({store, router});
 	}
 
 	return new Vue({
 		store,
 		router,
 		render: (h) => h(app),
-		el: !settings.test && "#app"
+		el: !opts.test && "#app"
 	});
 };
 
-export {start as app, utils, Vue, components};
+export {components, setup, utils};

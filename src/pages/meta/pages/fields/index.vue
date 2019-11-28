@@ -18,7 +18,7 @@ import {sortBy} from "lodash";
 import Vue from "vue";
 
 const fields = (() => {
-	if (Vue.prototype.$settings.test) return {};
+	if (Vue.prototype.$opts.test) return {};
 	const ctx = require.context("@/components/fields", false, /\.vue$/);
 
 	return ctx.keys().reduce((obj, file) => {
@@ -32,7 +32,7 @@ export default {
 	components: {vItem},
 	computed: {
 		fieldsSorted() {
-			const array = Object.entries({...fields, ...this.$settings.fields}).map(
+			const array = Object.entries({...fields, ...this.$opts.fields}).map(
 				([name, comp]) => ({name, comp})
 			);
 

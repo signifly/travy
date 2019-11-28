@@ -51,7 +51,7 @@ const listeners = {
 
 		// get private channel token
 		if (item.channel.startsWith("private")) {
-			const url = Vue.prototype.$settings.api;
+			const url = Vue.prototype.$opts.api;
 
 			const {data} = await api.post(`${url}/broadcasting/auth`, {
 				socket_id: state.socketId,

@@ -82,7 +82,6 @@ export default {
 		return {
 			loading: false,
 			error: null,
-			update: 0,
 			edits: {},
 			res: {
 				data: null,
@@ -103,7 +102,6 @@ export default {
 		async event({actions = {}, done}) {
 			if (actions.refresh) {
 				await this.getData();
-				this.update++;
 			}
 
 			if (done) done();

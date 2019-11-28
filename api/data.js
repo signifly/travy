@@ -75,7 +75,7 @@ module.exports = {
 				},
 				{
 					name: "Test",
-					url: "/i/test"
+					url: "/test"
 				},
 				{
 					name: "404",

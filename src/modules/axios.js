@@ -16,7 +16,7 @@ export const api = (() => {
 	};
 
 	const api = axios.create({
-		baseURL: Vue.prototype.$settings.api,
+		baseURL: Vue.prototype.$opts.api,
 		paramsSerializer: (params) => qs.stringify(params)
 	});
 

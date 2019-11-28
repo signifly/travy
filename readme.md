@@ -11,26 +11,26 @@ $ npm install @signifly/travy
 ## Usage
 
 ```js
-import {Vue, app, utils, components} from "@signifly/travy";
+import {components, setup, utils} from "@signifly/travy";
 import "@signifly/travy/dist/lib.css";
 
-const instance = app({
+const vm = setup({
 	api: "https://domain", // required
-	routes: [],
+	init({router, store}) {},
 	fields: {}
 });
 ```
 
 ## Development
 
-```bash
+```sh
 # create .env to change environment variables
 
 # development
 $ docker-compose up
 
 # build
-$ docker-compose run --rm app yarn build-{app/lib}
+$ docker-compose run --rm app yarn build-app|lib
 
 # test
 $ docker-compose run --rm app yarn test

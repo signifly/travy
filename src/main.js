@@ -1,5 +1,5 @@
-import {app} from "./lib";
+import {setup} from "./lib";
 
-app({
+setup({
 	api: process.env.API
 });
