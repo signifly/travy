@@ -1,14 +1,10 @@
 const webpack = require("webpack");
 
+const script = process.env.npm_lifecycle_event;
+
 module.exports = {
-	parallel: false,
-
-	devServer: {
-		disableHostCheck: true,
-		public: "dev.signifly.io"
-	},
-
 	css: {
+		extract: script === "build-app",
 		loaderOptions: {
 			sass: {
 				data: `@import "@/style/var.scss";`
