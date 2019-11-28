@@ -1,7 +1,7 @@
 <template>
 	<div class="image-picker">
 		<a class="image" @click="modalActivate(true)">
-			<div class="img" :style="{backgroundImage: `url('${imageUrl}')`}" />
+			<div class="img" :style="imageStyle" />
 
 			<div class="overlay">
 				<i class="el-icon-picture" />
@@ -9,11 +9,11 @@
 		</a>
 
 		<Dialog
-			title="Select image"
-			width="700px"
+			:modal-append-to-body="true"
 			:visible.sync="modal.active"
 			:append-to-body="true"
-			:modal-append-to-body="true"
+			title="Select image"
+			width="700px"
 		>
 			<div class="modal">
 				<div class="header">
@@ -66,17 +66,46 @@ import {get, debounce} from "lodash";
 export default {
 	components: {Dialog, Input, Button},
 	meta: {
-		spec: "props",
+		spec: {
+			_fit: {type: String, default: "cover", note: "contain/cover"},
+			_height: {type: String, default: "200px"},
+			_width: {type: String, default: "200px"},
+			url: {type: String, required: false},
+			id: {type: Number, required: false},
+			_entities: {
+				type: Object,
+				required: true,
+				children: {
+					label: {type: String, required: true, note: "maps to an entity"},
+					url: {type: String, required: true, note: "maps to an entity"},
+					dataWrap: {type: String, required: false},
+					value: {
+						type: [String, Number],
+						required: true,
+						note: "maps to an entity"
+					},
+					endpoint: {
+						type: Object,
+						required: true,
+						children: {
+							url: {type: String, required: true},
+							params: {type: Object, required: false}
+						}
+					}
+				}
+			}
+		},
 		res: {
 			props: {
 				id: "file_id",
 				url: "image_url",
-				options: {
+				_width: "100%",
+				_entities: {
 					endpoint: {
 						url: "items",
 						params: {sort: "name"}
 					},
-					key: "",
+					dataWrap: "",
 					url: "image",
 					value: "id",
 					label: "name"
@@ -84,14 +113,17 @@ export default {
 			},
 			data: {
 				file_id: 1,
-				image_url: "https://picsum.photos/300/300"
+				image_url: "https://picsum.photos/id/135/2000/2000"
 			}
 		}
 	},
 	props: {
-		id: {type: Number, required: false},
+		_fit: {type: String, default: "cover", note: "contain/cover"},
+		_height: {type: String, default: "200px"},
+		_width: {type: String, default: "200px"},
+		_entities: {type: Object, required: true},
 		url: {type: String, required: false},
-		options: {type: Object, required: true}
+		id: {type: Number, required: false}
 	},
 	data() {
 		return {
@@ -109,6 +141,13 @@ export default {
 		searchIcon: (t) => (t.modal.loading ? "el-icon-loading" : "el-icon-search"),
 		more: (t) => t.modal.meta.current_page !== t.modal.meta.last_page,
 
+		imageStyle: (t) => ({
+			width: t._width,
+			height: t._height,
+			backgroundImage: `url('${t.imageUrl}')`,
+			backgroundSize: t._fit
+		}),
+
 		imageUrl() {
 			return (
 				this.image ||
@@ -120,9 +159,9 @@ export default {
 
 		modalItemsMap: (t) =>
 			t.modal.items.map((x) => ({
-				url: get(x, t._options.url),
-				id: get(x, t._options.value),
-				label: get(x, t._options.label)
+				url: get(x, t._entities.url),
+				id: get(x, t._entities.value),
+				label: get(x, t._entities.label)
 			}))
 	},
 	methods: {
@@ -145,9 +184,9 @@ export default {
 
 		async getItems({search, page = 1} = {}) {
 			const {
-				key,
+				dataWrap,
 				endpoint: {params, url}
-			} = this._options;
+			} = this._entities;
 
 			const {data} = await this.$axios.get(url, {
 				params: {
@@ -160,9 +199,9 @@ export default {
 				}
 			});
 
-			const items = get(data, key, data);
+			const items = get(data, dataWrap, data);
 
-			this.modal.items = page > 1 ? [...this.modal.items, ...items] : items;
+			this.modal.items = [...(page > 1 ? this.modal.items : []), ...items];
 			this.modal.meta = data.meta || {};
 			this.modal.loading = false;
 		},
@@ -193,20 +232,12 @@ export default {
 <style lang="scss" scoped>
 .image-picker {
 	.image {
-		display: block;
+		display: inline-block;
 		position: relative;
-		$s: 150px;
-		width: $s;
-		height: $s;
 
 		.img {
-			border-radius: 4px;
-			border: 1px dashed $blue3;
-			width: 100%;
-			height: 100%;
 			background-repeat: no-repeat;
 			background-position: center;
-			background-size: cover;
 		}
 
 		&:hover {
@@ -270,18 +301,18 @@ export default {
 				}
 
 				.img {
-					display: block;
-					border: 1px solid transparent;
-					width: 100%;
-					height: 100%;
 					background-repeat: no-repeat;
 					background-position: center;
 					background-size: cover;
+					display: block;
+					height: 100%;
+					width: 100%;
 				}
 
 				.label {
 					font-weight: 500;
 					font-size: 0.8em;
+					margin-top: 0.5em;
 					white-space: nowrap;
 					text-overflow: ellipsis;
 					overflow: hidden;

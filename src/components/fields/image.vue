@@ -21,7 +21,7 @@ export default {
 				_height: "300px"
 			},
 			data: {
-				src: "https://picsum.photos/1000/1000"
+				src: "https://picsum.photos/id/135/1000/1000"
 			}
 		}
 	},

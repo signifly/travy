@@ -4,7 +4,7 @@ export const data = {
 			id: 1,
 			name: "item1",
 			bool: false,
-			image: "https://picsum.photos/100/100",
+			image: "https://picsum.photos/id/135/500/500",
 			nested: {
 				name: "nested1"
 			}
@@ -13,7 +13,7 @@ export const data = {
 			id: 2,
 			name: "item2",
 			bool: false,
-			image: "https://picsum.photos/200/200",
+			image: "https://picsum.photos/id/11/500/500",
 			nested: {
 				name: "nested2"
 			}
@@ -22,7 +22,7 @@ export const data = {
 			id: 3,
 			name: "item3",
 			bool: false,
-			image: "https://picsum.photos/300/300",
+			image: "https://picsum.photos/id/135/500/500",
 			nested: {
 				name: "nested3"
 			}
@@ -31,7 +31,7 @@ export const data = {
 			id: 4,
 			name: "item4",
 			bool: false,
-			image: "https://picsum.photos/400/400",
+			image: "https://picsum.photos/id/135/500/500",
 			nested: {
 				name: "nested4"
 			}
@@ -40,7 +40,7 @@ export const data = {
 			id: 5,
 			name: "item5",
 			bool: false,
-			image: "https://picsum.photos/500/500",
+			image: "https://picsum.photos/id/135/500/500",
 			nested: {
 				name: "nested5"
 			}
@@ -49,7 +49,7 @@ export const data = {
 			id: 6,
 			name: "item6",
 			bool: false,
-			image: "https://picsum.photos/600/600",
+			image: "https://picsum.photos/id/135/500/500",
 			nested: {
 				name: "nested6"
 			}

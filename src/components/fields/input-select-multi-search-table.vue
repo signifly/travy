@@ -84,7 +84,7 @@ export default {
 						id: 1,
 						name: "item1",
 						bool: false,
-						image: "https://picsum.photos/600/600",
+						image: "https://picsum.photos/id/135/600/600",
 						is_mandatory: true
 					}
 				]

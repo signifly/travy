@@ -23,7 +23,7 @@ export default {
 				src: "src"
 			},
 			data: {
-				src: "https://picsum.photos/200/200"
+				src: "https://picsum.photos/id/135/200/200"
 			}
 		}
 	},
