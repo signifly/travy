@@ -54,8 +54,8 @@ export default {
 		},
 		res: {
 			props: {
-				_title: "Skatterapport",
-				_subtitle: "Beskrivelse af rapporten",
+				_title: "Download",
+				_subtitle: "Subtitle",
 				_entities: {
 					endpoint: {url: "items"},
 					value: "image",
