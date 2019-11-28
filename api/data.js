@@ -106,9 +106,9 @@ module.exports = {
 							_clearable: false,
 							value: "language_code",
 							_entities: [
-								{label: "Danmark", emoji: "denmark", value: "dk"},
-								{label: "England", emoji: "uk", value: "uk"},
-								{label: "Murica", emoji: "us", value: "us", disabled: true}
+								{label: "Danmark", value: "dk"},
+								{label: "England", value: "uk"},
+								{label: "Murica", value: "us", disabled: true}
 							]
 						}
 					}
@@ -318,17 +318,14 @@ module.exports = {
 																	_entities: [
 																		{
 																			label: "Denmark",
-																			emoji: "denmark",
 																			value: "dk"
 																		},
 																		{
 																			label: "England",
-																			emoji: "uk",
 																			value: "uk"
 																		},
 																		{
 																			label: "Murica",
-																			emoji: "us",
 																			value: "us",
 																			disabled: true
 																		}
@@ -520,9 +517,9 @@ module.exports = {
 							_clearable: false,
 							value: "language_code",
 							_entities: [
-								{label: "Danmark", emoji: "denmark", value: "dk"},
-								{label: "England", emoji: "uk", value: "uk"},
-								{label: "Murica", emoji: "us", value: "us", disabled: true}
+								{label: "Danmark", value: "dk"},
+								{label: "England", value: "uk"},
+								{label: "Murica", value: "us", disabled: true}
 							]
 						}
 					}
@@ -537,9 +534,9 @@ module.exports = {
 							_clearable: false,
 							value: "language_code",
 							_entities: [
-								{label: "Danmark", emoji: "denmark", value: "dk"},
-								{label: "England", emoji: "uk", value: "uk"},
-								{label: "Murica", emoji: "us", value: "us", disabled: true}
+								{label: "Danmark", value: "dk"},
+								{label: "England", value: "uk"},
+								{label: "Murica", value: "us", disabled: true}
 							]
 						}
 					}
@@ -696,17 +693,14 @@ module.exports = {
 													_entities: [
 														{
 															label: "Denmark",
-															emoji: "denmark",
 															value: "dk"
 														},
 														{
 															label: "England",
-															emoji: "uk",
 															value: "uk"
 														},
 														{
 															label: "Murica",
-															emoji: "us",
 															value: "us",
 															disabled: true
 														}
@@ -1043,9 +1037,9 @@ module.exports = {
 							_clearable: false,
 							value: "language_code",
 							_entities: [
-								{label: "Danmark", emoji: "denmark", value: "dk"},
-								{label: "England", emoji: "uk", value: "uk"},
-								{label: "Murica", emoji: "us", value: "us", disabled: true}
+								{label: "Danmark", value: "dk"},
+								{label: "England", value: "uk"},
+								{label: "Murica", value: "us", disabled: true}
 							]
 						}
 					}

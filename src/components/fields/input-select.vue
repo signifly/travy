@@ -9,10 +9,7 @@ _entities<template>
 			@change="update"
 		>
 			<Option v-for="item in _entities" v-bind="item" :key="item.value">
-				<div class="option">
-					<div class="emoji" v-if="item.emoji" v-html="emoji(item.emoji)" />
-					{{ item.label }}
-				</div>
+				{{ item.label }}
 			</Option>
 		</Select>
 	</div>
@@ -20,7 +17,6 @@ _entities<template>
 
 <script>
 import {Select, Option} from "element-ui";
-import emoji from "emojilib";
 
 export default {
 	components: {Select, Option},
@@ -36,7 +32,6 @@ export default {
 				children: {
 					value: {type: [String, Number], required: true},
 					disabled: {type: Boolean, required: false},
-					emoji: {type: String, required: false},
 					label: {type: String, required: true}
 				}
 			}
@@ -47,9 +42,9 @@ export default {
 				_addable: true,
 				value: "value",
 				_entities: [
-					{label: "Danmark", emoji: "denmark", value: "dk"},
-					{label: "England", emoji: "uk", value: "uk"},
-					{label: "Murica", emoji: "us", value: "us", disabled: true}
+					{label: "Danmark", value: "dk"},
+					{label: "England", value: "uk"},
+					{label: "Murica", value: "us", disabled: true}
 				]
 			},
 			data: {
@@ -65,10 +60,6 @@ export default {
 		_entities: {type: Array, required: true}
 	},
 	methods: {
-		emoji(name) {
-			return emoji.lib[name] && emoji.lib[name].char;
-		},
-
 		update(value) {
 			this.$emit("event", {
 				actions: {
@@ -90,10 +81,5 @@ export default {
 .option {
 	display: flex;
 	align-content: center;
-
-	.emoji {
-		margin-right: 0.75em;
-		margin-top: 0.1em;
-	}
 }
 </style>

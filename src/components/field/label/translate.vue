@@ -9,7 +9,6 @@
 
 			<div slot="content">
 				<div class="item" v-for="(item, i) in translated" :key="i">
-					<div class="emoji" v-text="emoji(item.emoji)" />
 					{{ item.label }}
 					<div class="outdated" v-if="item.outdated" />
 				</div>
@@ -20,7 +19,6 @@
 
 <script>
 import {Tooltip} from "element-ui";
-import emoji from "emojilib";
 
 export default {
 	components: {Tooltip},
@@ -29,11 +27,6 @@ export default {
 	},
 	computed: {
 		languages: (t) => t.translated.length
-	},
-	methods: {
-		emoji(name) {
-			return emoji.lib[name] && emoji.lib[name].char;
-		}
 	}
 };
 </script>
@@ -72,11 +65,6 @@ export default {
 
 	&:last-child {
 		margin-bottom: 0;
-	}
-
-	.emoji {
-		margin-right: 0.5em;
-		margin-top: 0.1em;
 	}
 
 	.outdated {
