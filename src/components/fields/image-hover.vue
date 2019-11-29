@@ -5,7 +5,8 @@
 		@mouseover="active = true"
 		@mouseleave="active = false"
 	>
-		<i class="el-icon-picture" />
+		<i class="el-icon-picture-outline-round" />
+
 		<transition name="img">
 			<div class="img" v-if="active">
 				<img :src="src" />
@@ -44,6 +45,15 @@ export default {
 	display: inline-block;
 	font-size: 1.5em;
 	overflow: visible;
+
+	i {
+		background-color: $white2;
+		border: 1px solid $blue3;
+		border-radius: 4px;
+		font-size: 18px;
+		padding: 0.2em;
+		color: $blue1;
+	}
 
 	.img {
 		display: flex;
