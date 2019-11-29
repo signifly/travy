@@ -102,13 +102,16 @@ export default {
 			this.getItems({search});
 		},
 
-		async getItems({search, ids} = {}) {
+		async getItems({search, filter} = {}) {
 			const {url, params} = this._entities.endpoint;
 			const {dataWrap} = this._entities;
 
 			const {data} = await this.$axios.get(url, {
 				params: merge({}, params, {
-					filter: {search, ids}
+					filter: {
+						search,
+						...filter
+					}
 				})
 			});
 
@@ -128,7 +131,7 @@ export default {
 			immediate: true,
 			handler(value) {
 				if (value && !this.selectedItem) {
-					this.getItems({ids: [value]});
+					this.getItems({filter: {[this._entities.value]: [value]}});
 				}
 			}
 		}
