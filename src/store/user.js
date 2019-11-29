@@ -23,6 +23,18 @@ export default {
 	},
 
 	actions: {
+		async data({commit, getters}, {customErr} = {}) {
+			if (localStorage.getItem("auth")) {
+				try {
+					const {data} = await api.get("account", {customErr});
+					commit("data", data);
+					return getters.data;
+				} catch (err) {
+					// error
+				}
+			}
+		},
+
 		async login({commit, dispatch}, {form, route}) {
 			try {
 				const {data} = await api.post("login", form, {customErr: true});
@@ -54,18 +66,6 @@ export default {
 
 		async resetPassword(ctx, {form}) {
 			return await api.post("password/email", form, {customErr: true});
-		},
-
-		async data({commit, getters}, {customErr} = {}) {
-			if (localStorage.getItem("auth")) {
-				try {
-					const {data} = await api.get("account", {customErr});
-					commit("data", data);
-					return getters.data;
-				} catch (err) {
-					// error
-				}
-			}
 		}
 	},
 

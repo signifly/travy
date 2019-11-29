@@ -66,7 +66,7 @@ const routes = [
 		props: true,
 		alias: "*",
 		component: error,
-		meta: {title: "Error"}
+		meta: {title: "Error", public: true}
 	},
 	{
 		path: "/meta",
