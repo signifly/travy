@@ -16,9 +16,7 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				src: "src",
-				_width: "100%",
-				_height: "300px"
+				src: "src"
 			},
 			data: {
 				src: "https://picsum.photos/id/135/1000/1000"
@@ -26,17 +24,17 @@ export default {
 		}
 	},
 	props: {
-		src: {type: String, required: false},
-		_width: {type: String, default: "200px"},
+		_fit: {type: String, default: "cover", note: "contain/cover"},
 		_height: {type: String, default: "200px"},
-		_fit: {type: String, default: "cover", note: "contain/cover"}
+		_width: {type: String, default: "100%"},
+		src: {type: String, required: false}
 	},
 	computed: {
 		style: (t) => ({
-			width: t._width,
-			height: t._height,
 			backgroundImage: `url('${t.src}')`,
-			backgroundSize: t._fit
+			backgroundSize: t._fit,
+			height: t._height,
+			width: t._width
 		})
 	}
 };
@@ -44,15 +42,14 @@ export default {
 
 <style lang="scss" scoped>
 .image {
-	width: 100%;
-
 	.img {
 		background-repeat: no-repeat;
 		background-position: center;
-		display: flex;
-		align-items: center;
 		justify-content: center;
+		align-items: center;
+		display: flex;
 		color: $blue2;
+		width: 100%;
 
 		&.noimage {
 			border: 1px solid $blue2;

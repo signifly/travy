@@ -266,7 +266,9 @@ module.exports = {
 															name: "upload",
 															fieldType: {
 																id: "input-files",
-																props: {}
+																props: {
+																	_url: "/signedurls"
+																}
 															}
 														}
 													],

@@ -1,10 +1,10 @@
 <template>
 	<div class="image-picker">
-		<a class="image" @click="modalActivate(true)">
-			<div class="img" :style="imageStyle" />
+		<a class="image" :style="imageStyle" @click="modalActivate(true)">
+			<div class="img" :style="imgStyle" />
 
-			<div class="overlay">
-				<i class="el-icon-picture" />
+			<div class="icon">
+				<i class="el-icon-files" />
 			</div>
 		</a>
 
@@ -97,9 +97,8 @@ export default {
 		},
 		res: {
 			props: {
-				id: "file_id",
 				url: "image_url",
-				_width: "100%",
+				id: "id",
 				_entities: {
 					endpoint: {
 						url: "items",
@@ -112,16 +111,16 @@ export default {
 				}
 			},
 			data: {
-				file_id: 1,
+				id: 1,
 				image_url: "https://picsum.photos/id/135/2000/2000"
 			}
 		}
 	},
 	props: {
 		_fit: {type: String, default: "cover", note: "contain/cover"},
-		_height: {type: String, default: "200px"},
-		_width: {type: String, default: "200px"},
 		_entities: {type: Object, required: true},
+		_height: {type: String, default: "200px"},
+		_width: {type: String, default: "100%"},
 		url: {type: String, required: false},
 		id: {type: Number, required: false}
 	},
@@ -142,8 +141,11 @@ export default {
 		more: (t) => t.modal.meta.current_page !== t.modal.meta.last_page,
 
 		imageStyle: (t) => ({
-			width: t._width,
 			height: t._height,
+			width: t._width
+		}),
+
+		imgStyle: (t) => ({
 			backgroundImage: `url('${t.imageUrl}')`,
 			backgroundSize: t._fit
 		}),
@@ -238,33 +240,23 @@ export default {
 		.img {
 			background-repeat: no-repeat;
 			background-position: center;
+			height: 100%;
+			width: 100%;
+		}
+
+		.icon {
+			background-color: transparentize($black1, 0.8);
+			transition: background-color 0.05s linear;
+			position: absolute;
+			padding: 0.2em;
+			color: $white1;
+			right: 0;
+			top: 0;
 		}
 
 		&:hover {
-			.overlay {
-				opacity: 1;
-			}
-		}
-
-		.overlay {
-			opacity: 0;
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-
-			transition: cubic(opacity, 0.075s);
-
-			i {
-				font-size: 1.2em;
-				background-color: #409eff;
-				color: white;
-				padding: 0.3em;
-				border-radius: 3px;
+			.icon {
+				background-color: transparentize($black1, 0.6);
 			}
 		}
 	}
