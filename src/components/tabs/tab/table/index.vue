@@ -1,6 +1,6 @@
 <template>
 	<div class="table" v-if="definitions">
-		<div class="header" v-if="filters || actions">
+		<div class="header" v-if="filters || actions || sort">
 			<filters
 				v-if="filters"
 				v-bind="[filters, {state}]"
@@ -20,6 +20,7 @@
 
 		<div class="content">
 			<tableEl
+				:key="update"
 				v-if="data"
 				ref="table"
 				v-bind="{
@@ -76,6 +77,7 @@ export default {
 			halt: false,
 			meta: null,
 			data: null,
+			update: 0,
 			selected: {
 				items: [],
 				active: this.definitions.batch
@@ -151,6 +153,7 @@ export default {
 			this.loading = false;
 			this.data = data;
 			this.meta = meta;
+			this.update++;
 		}
 	},
 	async created() {
