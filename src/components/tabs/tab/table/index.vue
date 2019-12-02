@@ -157,7 +157,7 @@ export default {
 		}
 	},
 	async created() {
-		this.state.initQuery(this.definitions);
+		this.state.init(this.definitions);
 		await this.getData();
 
 		if (this.ws) {

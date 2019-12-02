@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import {rStringProps, mergeData, mapPaths} from "@/modules/utils";
+import {rStringProps, mergeData} from "@/modules/utils";
 import group from "./group";
 
 export default {
@@ -39,8 +39,6 @@ export default {
 		async event({actions, done}) {
 			if (actions.update) {
 				let {data} = actions.update;
-
-				data = mapPaths(data);
 
 				// merge payload with data
 				this.payload = mergeData(this.payload, data);

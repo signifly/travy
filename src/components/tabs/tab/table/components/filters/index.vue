@@ -47,9 +47,8 @@
 
 <script>
 import {Button, Popover} from "element-ui";
-import {mergeData} from "@/modules/utils";
-import {pickBy, debounce} from "lodash";
 import field from "@/components/field";
+import {debounce} from "lodash";
 import search from "./search";
 
 export default {
@@ -81,34 +80,16 @@ export default {
 			const {update} = actions;
 
 			if (update) {
-				let data = update.data;
-
-				data = mergeData(this.filters, data);
-
-				// remove empty properties
-				data = pickBy(data);
-
-				// remove filters query if empty
-				data = Object.entries(data).length === 0 ? undefined : data;
-
-				this.state.mergeQuery({
-					type: "replace",
-					query: {page: undefined, filters: data}
-				});
-
+				this.state.set({page: undefined, filters: update.data});
 				this.$emit("update:loading", true);
 				this.reload();
 			}
 		},
 
 		async reset() {
-			this.state.mergeQuery({
-				type: "replace",
-				query: {filters: this.data}
-			});
-
-			this.active = false;
+			this.state.resetFilters();
 			this.$emit("getData");
+			this.active = false;
 		}
 	}
 };

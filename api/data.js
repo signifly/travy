@@ -170,6 +170,7 @@ module.exports = {
 					},
 					pagination: {},
 					sort: {
+						default: "input",
 						items: [
 							{label: "Name", value: "name"},
 							{label: "Input", value: "input"},
@@ -208,6 +209,7 @@ module.exports = {
 					],
 					filters: {
 						data: {
+							testing: "stay",
 							name: "test"
 						},
 						search: {

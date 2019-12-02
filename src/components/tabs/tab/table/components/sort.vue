@@ -1,6 +1,11 @@
 <template>
 	<div class="sort">
-		<Select :value="value" @change="select" placeholder="Sort">
+		<Select
+			placeholder="Sort"
+			:clearable="true"
+			@change="select"
+			:value="value"
+		>
 			<Option v-for="item in options" :key="item.value" v-bind="item" />
 		</Select>
 	</div>
@@ -34,12 +39,9 @@ export default {
 	},
 	methods: {
 		select(value) {
-			this.state.mergeQuery({
-				type: "replace",
-				query: {
-					page: undefined,
-					sort: value
-				}
+			this.state.set({
+				page: undefined,
+				sort: value || undefined
 			});
 
 			this.$emit("getData");

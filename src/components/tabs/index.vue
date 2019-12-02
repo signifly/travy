@@ -17,7 +17,7 @@ import tab from "./tab";
 const state = () => ({
 	query: {...router.currentRoute.query},
 
-	setQuery(query) {
+	set(query) {
 		this.query = query;
 
 		if (router.currentRoute.name !== "dashboard") {

@@ -33,23 +33,13 @@ export default {
 	methods: {
 		updatePage(page) {
 			page = page === 1 ? undefined : page;
-
-			this.state.mergeQuery({
-				type: "replace",
-				query: {page}
-			});
-
+			this.state.set({page});
 			this.$emit("getData");
 		},
 
 		updateSize(pagesize) {
 			pagesize = pagesize === 15 ? undefined : pagesize;
-
-			this.state.mergeQuery({
-				type: "replace",
-				query: {page: undefined, pagesize}
-			});
-
+			this.state.set({page: undefined, pagesize});
 			this.$emit("getData");
 		}
 	}

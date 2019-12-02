@@ -2,6 +2,7 @@ import {
 	mapValues,
 	mergeWith,
 	replace,
+	unset,
 	get,
 	set,
 	lte,
@@ -63,9 +64,14 @@ export const operator = ({key, value, operator, data}) => {
 
 export const mergeData = (srcData, newData) => {
 	// merge objects deep, but ignore arrays
-	return mergeWith({}, srcData, newData, (oldValue, newValue) => {
+	return mergeWith({}, srcData, newData, (oldValue, newValue, key, obj) => {
 		if (Array.isArray(newValue)) {
 			return newValue;
+		}
+
+		// overwrite if value is undefined
+		if (newValue === undefined) {
+			unset(obj, key);
 		}
 	});
 };
