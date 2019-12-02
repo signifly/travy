@@ -33,6 +33,7 @@ export default {
 				this.$router
 					.replace({
 						query: {
+							tab: this.query.tab,
 							modifiers: {
 								...this.dataComb,
 								...data
