@@ -14,7 +14,6 @@ export default () => ({
 	},
 
 	set query(query) {
-		console.log(query.filters);
 		if (this.route.name === "index") {
 			router.replace({query}).catch(() => {});
 		}
