@@ -5,7 +5,6 @@
 		@shortkey="submit"
 	>
 		<Dialog
-			:close-on-click-modal="false"
 			:modal-append-to-body="false"
 			:visible.sync="visible"
 			:append-to-body="false"

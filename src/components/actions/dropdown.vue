@@ -1,9 +1,10 @@
 <template>
-	<popup type="list">
+	<popup type="list" :position="actOptions.position">
 		<action
 			:value="selected === action"
 			v-bind="action.actionType"
 			v-for="action in actions"
+			:actOptions="actOptions"
 			:key="action.name"
 			v-on="$listeners"
 			:data="data"
@@ -20,8 +21,9 @@ import action from "./index.vue";
 export default {
 	components: {popup},
 	props: {
-		data: {type: Object, required: false},
-		actions: {type: Array, required: true}
+		actOptions: {type: Object, required: true},
+		actions: {type: Array, required: true},
+		data: {type: Object, required: false}
 	},
 	data() {
 		return {

@@ -4,6 +4,7 @@
 
 		<component
 			@event="$emit('event', $event)"
+			:actOptions="actOptions"
 			@submit="submit"
 			v-bind="propsC"
 			@close="close"
@@ -16,9 +17,11 @@
 
 <script>
 import {rStringProps, operator} from "@/modules/utils";
+import {merge} from "lodash";
 
 export default {
 	props: {
+		actOptions: {type: Object, default: () => ({})},
 		onSubmit: {type: Object, required: false},
 		value: {type: Boolean, required: true},
 		props: {type: Object, required: true},
@@ -33,7 +36,7 @@ export default {
 		propsC() {
 			return rStringProps({
 				data: this.data,
-				val: this.props
+				val: merge(this.props, {payload: this.actOptions.payload})
 			});
 		},
 

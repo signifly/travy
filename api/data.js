@@ -162,6 +162,79 @@ module.exports = {
 						},
 						sequential: {
 							url: "/i/projects/{id}"
+						},
+						bulk: {
+							action: {
+								name: "Bulk",
+								icon: "eleme",
+								actionType: {
+									id: "dropdown",
+									props: {
+										actions: [
+											{
+												name: "Modal",
+												actionType: {
+													id: "modal",
+													props: {
+														name: "Modal title",
+														endpoint: {
+															method: "post",
+															url: "/projects"
+														},
+														fields: [
+															{
+																attribute: "1",
+																name: "a field",
+																fieldType: {
+																	id: "input-text",
+																	props: {
+																		value: "input"
+																	}
+																}
+															},
+															{
+																attribute: "2",
+																name: "a field",
+																fieldType: {
+																	id: "input-text",
+																	props: {
+																		value: "input2"
+																	}
+																}
+															},
+															{
+																attribute: "3",
+																name: "upload",
+																fieldType: {
+																	id: "input-files",
+																	props: {
+																		_url: "/signedurls"
+																	}
+																}
+															}
+														],
+														payload: {
+															data: {
+																input: "32",
+																input2: "34"
+															}
+														}
+													}
+												}
+											},
+											{
+												name: "Link",
+												actionType: {
+													id: "link",
+													props: {
+														url: "/"
+													}
+												}
+											}
+										]
+									}
+								}
+							}
 						}
 					},
 					endpoint: {
