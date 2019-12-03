@@ -6,18 +6,13 @@
 
 		<div class="content">
 			<div class="box">
-				<div class="title">{{ title }}</div>
-				<Form
-					class="form"
-					:model="data"
-					label-position="top"
-					@keydown.native.enter="$emit('submit')"
-				>
+				<div class="title" v-text="title" />
+				<Form class="form" :model="data" @submit.prevent="$emit('submit')">
 					<field
+						@event="$emit('event', $event)"
+						v-bind="{field, data, error}"
 						v-for="field in fields"
 						:key="field.attribute"
-						v-bind="{field, data, error}"
-						@event="$emit('event', $event)"
 					/>
 
 					<div class="actions">

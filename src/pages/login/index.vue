@@ -9,7 +9,12 @@
 			<a class="reset" :class="{loading}" @click="resetPassword">
 				{{ $translate({en: "Reset password", da: "Nulstil password"}) }}
 			</a>
-			<Button type="primary" size="medium" v-bind="{loading}" @click="login">
+			<Button
+				native-type="submit"
+				v-bind="{loading}"
+				type="primary"
+				size="medium"
+			>
 				Login
 			</Button>
 		</template>

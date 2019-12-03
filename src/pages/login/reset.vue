@@ -1,15 +1,20 @@
 <template>
 	<vForm
-		title="Reset password"
 		v-bind="{loading, error, message, fields, data}"
-		@event="event"
+		title="Reset password"
 		@submit="reset"
+		@event="event"
 	>
 		<template slot="actions">
 			<Button size="medium" icon="el-icon-back" @click="login">
 				Login
 			</Button>
-			<Button type="primary" size="medium" v-bind="{loading}" @click="reset">
+			<Button
+				native-type="submit"
+				v-bind="{loading}"
+				type="primary"
+				size="medium"
+			>
 				{{ $translate({en: "Reset", da: "Nulstil"}) }}
 			</Button>
 		</template>
@@ -105,8 +110,8 @@ export default {
 	created() {
 		this.$store.dispatch("base/meta", {
 			title: this.$translate({
-				en: "Reset password",
-				da: "Nulstil password"
+				da: "Nulstil password",
+				en: "Reset password"
 			})
 		});
 	}
