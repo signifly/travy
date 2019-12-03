@@ -17,18 +17,12 @@ const components = {
 };
 
 const setup = ({init, ...opts}) => {
+	const test = process.env.NODE_ENV === "test";
 	Vue.use(require("vue-shortkey"));
 	Vue.use(VueRouter);
 	Vue.use(Vuex);
 
-	opts = Vue.prototype.$opts = Object.assign(
-		{
-			test: false,
-			fields: {},
-			api: ""
-		},
-		opts
-	);
+	Vue.prototype.$opts = Object.assign({fields: {}, api: ""}, opts);
 
 	const {default: router} = require("./modules/router");
 	const {default: ws} = require("./modules/ws");
@@ -39,7 +33,7 @@ const setup = ({init, ...opts}) => {
 	Vue.prototype.$axios = api;
 	Vue.prototype.$ws = ws;
 
-	if (!opts.test) {
+	if (!test) {
 		favicon();
 		errors();
 	}
@@ -51,8 +45,8 @@ const setup = ({init, ...opts}) => {
 	return new Vue({
 		store,
 		router,
-		render: (h) => h(app),
-		el: !opts.test && "#app"
+		el: !test && "#app",
+		render: (h) => h(app)
 	});
 };
 

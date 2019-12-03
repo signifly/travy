@@ -4,10 +4,10 @@ import fs from "fs";
 describe("env", () => {
 	test("api", (done) => {
 		const stream = fg.stream([
-			"src/**/*.js",
-			"src/**/*.vue",
 			"!src/**/*.test.js",
-			"!src/main.js"
+			"!src/main.js",
+			"src/**/*.vue",
+			"src/**/*.js"
 		]);
 
 		stream.on("data", (file) => {

@@ -106,9 +106,19 @@ module.exports = {
 							_clearable: false,
 							value: "language_code",
 							_entities: [
-								{label: "Danmark", value: "dk"},
-								{label: "England", value: "uk"},
-								{label: "Murica", value: "us", disabled: true}
+								{
+									label: "Danmark",
+									value: "dk"
+								},
+								{
+									label: "England",
+									value: "uk"
+								},
+								{
+									label: "Murica",
+									value: "us",
+									disabled: true
+								}
 							]
 						}
 					}
@@ -127,7 +137,12 @@ module.exports = {
 								width: 50,
 								name: "Name",
 								attribute: "name",
-								fieldType: {id: "text", props: {text: "name"}}
+								fieldType: {
+									id: "text",
+									props: {
+										text: "name"
+									}
+								}
 							},
 							{
 								width: 50,
@@ -238,23 +253,40 @@ module.exports = {
 						}
 					},
 					endpoint: {
-						url: "http://localhost:3001/projects",
-						params: {include: ["tags"]}
+						url: "/projects",
+						params: {
+							include: ["tags"]
+						}
 					},
 					pagination: {},
 					sort: {
 						default: "input",
 						items: [
-							{label: "Name", value: "name"},
-							{label: "Input", value: "input"},
-							{label: "Position", value: "pos", manual: true}
+							{
+								label: "Name",
+								value: "name"
+							},
+							{
+								label: "Input",
+								value: "input"
+							},
+							{
+								label: "Position",
+								value: "pos",
+								manual: true
+							}
 						]
 					},
 					columns: [
 						{
 							width: 350,
 							name: "Name",
-							fieldType: {id: "text", props: {text: "name"}},
+							fieldType: {
+								id: "text",
+								props: {
+									text: "name"
+								}
+							},
 							onClick: "/i/projects/{id}"
 						},
 						{
@@ -292,7 +324,12 @@ module.exports = {
 							{
 								name: "Name",
 								attribute: "name",
-								fieldType: {id: "input-text", props: {value: "name"}}
+								fieldType: {
+									id: "input-text",
+									props: {
+										value: "name"
+									}
+								}
 							}
 						]
 					},
@@ -415,7 +452,9 @@ module.exports = {
 															name: "Name",
 															fieldType: {
 																id: "input-text",
-																props: {value: "name"}
+																props: {
+																	value: "name"
+																}
 															}
 														},
 														{
@@ -434,7 +473,9 @@ module.exports = {
 															name: "Description",
 															fieldType: {
 																id: "input-editor-markdown",
-																props: {content: "description"}
+																props: {
+																	content: "description"
+																}
 															}
 														}
 													],
@@ -448,7 +489,7 @@ module.exports = {
 														}
 													},
 													endpoint: {
-														url: "http://localhost:3001/projects",
+														url: "/projects",
 														method: "post"
 													}
 												}
@@ -466,15 +507,22 @@ module.exports = {
 				type: "table",
 				definitions: {
 					endpoint: {
-						url: "http://localhost:3001/projects",
-						params: {include: ["tags"]}
+						url: "/projects",
+						params: {
+							include: ["tags"]
+						}
 					},
 					pagination: {},
 					columns: [
 						{
 							width: 350,
 							name: "Name",
-							fieldType: {id: "text", props: {text: "name"}},
+							fieldType: {
+								id: "text",
+								props: {
+									text: "name"
+								}
+							},
 							onClick: "/i/projects/{id}"
 						},
 						{
@@ -520,7 +568,16 @@ module.exports = {
 				created_by: null,
 				updated_by: null,
 				tags_count: 0,
-				tags: [{key: "item1", id: 1}, {key: "item2", id: 2}],
+				tags: [
+					{
+						key: "item1",
+						id: 1
+					},
+					{
+						key: "item2",
+						id: 2
+					}
+				],
 				is_deleted: false
 			},
 			{
@@ -557,8 +614,8 @@ module.exports = {
 			}
 		],
 		links: {
-			first: "http://localhost:3001/projects?page=1",
-			last: "http://localhost:3001/projects?page=1",
+			first: "/projects?page=1",
+			last: "/projects?page=1",
 			prev: null,
 			next: null
 		},
@@ -566,7 +623,7 @@ module.exports = {
 			current_page: 1,
 			from: 1,
 			last_page: 1,
-			path: "http://localhost:3001/projects",
+			path: "/projects",
 			per_page: 15,
 			to: 6,
 			total: 6
@@ -594,9 +651,19 @@ module.exports = {
 							_clearable: false,
 							value: "language_code",
 							_entities: [
-								{label: "Danmark", value: "dk"},
-								{label: "England", value: "uk"},
-								{label: "Murica", value: "us", disabled: true}
+								{
+									label: "Danmark",
+									value: "dk"
+								},
+								{
+									label: "England",
+									value: "uk"
+								},
+								{
+									label: "Murica",
+									value: "us",
+									disabled: true
+								}
 							]
 						}
 					}
@@ -611,9 +678,19 @@ module.exports = {
 							_clearable: false,
 							value: "language_code",
 							_entities: [
-								{label: "Danmark", value: "dk"},
-								{label: "England", value: "uk"},
-								{label: "Murica", value: "us", disabled: true}
+								{
+									label: "Danmark",
+									value: "dk"
+								},
+								{
+									label: "England",
+									value: "uk"
+								},
+								{
+									label: "Murica",
+									value: "us",
+									disabled: true
+								}
 							]
 						}
 					}
@@ -632,12 +709,22 @@ module.exports = {
 						{
 							name: "Name",
 							attribute: "name",
-							fieldType: {id: "text", props: {text: "name"}}
+							fieldType: {
+								id: "text",
+								props: {
+									text: "name"
+								}
+							}
 						},
 						{
 							name: "Text",
 							attribute: "text",
-							fieldType: {id: "input-text", props: {value: "text"}}
+							fieldType: {
+								id: "input-text",
+								props: {
+									value: "text"
+								}
+							}
 						}
 					]
 				}
@@ -653,7 +740,12 @@ module.exports = {
 								width: 50,
 								name: "Name",
 								attribute: "name",
-								fieldType: {id: "text", props: {text: "name"}}
+								fieldType: {
+									id: "text",
+									props: {
+										text: "name"
+									}
+								}
 							},
 							{
 								width: 50,
@@ -692,23 +784,40 @@ module.exports = {
 						}
 					},
 					endpoint: {
-						url: "http://localhost:3001/projects",
-						params: {include: ["tags"]}
+						url: "/projects",
+						params: {
+							include: ["tags"]
+						}
 					},
 					pagination: {},
 					sort: {
 						default: "name",
 						items: [
-							{label: "Name", value: "name"},
-							{label: "Input", value: "input"},
-							{label: "Position", value: "position", manual: true}
+							{
+								label: "Name",
+								value: "name"
+							},
+							{
+								label: "Input",
+								value: "input"
+							},
+							{
+								label: "Position",
+								value: "position",
+								manual: true
+							}
 						]
 					},
 					columns: [
 						{
 							width: 350,
 							name: "Name",
-							fieldType: {id: "text", props: {text: "name"}},
+							fieldType: {
+								id: "text",
+								props: {
+									text: "name"
+								}
+							},
 							onClick: "/i/projects/{id}"
 						},
 						{
@@ -745,7 +854,12 @@ module.exports = {
 							{
 								name: "Name",
 								attribute: "name",
-								fieldType: {id: "input-text", props: {value: "name"}}
+								fieldType: {
+									id: "input-text",
+									props: {
+										value: "name"
+									}
+								}
 							}
 						]
 					},
@@ -788,14 +902,22 @@ module.exports = {
 										{
 											attribute: "name",
 											name: "Name",
-											fieldType: {id: "input-text", props: {value: "name"}}
+											fieldType: {
+												id: "input-text",
+												props: {
+													value: "name"
+												}
+											}
 										},
 										{
 											attribute: "start_date",
 											name: "Start Date",
 											fieldType: {
 												id: "input-date",
-												props: {formatValue: "yyyy-MM-dd", date: "start_date"}
+												props: {
+													formatValue: "yyyy-MM-dd",
+													date: "start_date"
+												}
 											}
 										},
 										{
@@ -803,7 +925,9 @@ module.exports = {
 											name: "Description",
 											fieldType: {
 												id: "input-editor-markdown",
-												props: {content: "description"}
+												props: {
+													content: "description"
+												}
 											}
 										}
 									],
@@ -817,7 +941,7 @@ module.exports = {
 										}
 									},
 									endpoint: {
-										url: "http://localhost:3001/projects",
+										url: "/projects",
 										method: "post"
 									}
 								}
@@ -827,7 +951,9 @@ module.exports = {
 				}
 			}
 		],
-		endpoint: {url: "http://localhost:3001/projects/{id}"},
+		endpoint: {
+			url: "/projects/{id}"
+		},
 		activity: {},
 		actions: [
 			{
@@ -951,7 +1077,7 @@ module.exports = {
 					props: {
 						text: "Are you sure? Please confirm this action.",
 						endpoint: {
-							url: "http://localhost:3001/projects/{id}",
+							url: "/projects/{id}",
 							method: "delete"
 						},
 						payload: {
@@ -975,7 +1101,7 @@ module.exports = {
 					props: {
 						text: "Are you sure? Please confirm this action.",
 						endpoint: {
-							url: "http://localhost:3001/projects/{id}",
+							url: "/projects/{id}",
 							method: "delete"
 						},
 						payload: {
@@ -997,22 +1123,42 @@ module.exports = {
 						{
 							attribute: "created_at",
 							name: "Created At",
-							fieldType: {id: "date", props: {timestamp: "created_at"}}
+							fieldType: {
+								id: "date",
+								props: {
+									timestamp: "created_at"
+								}
+							}
 						},
 						{
 							attribute: "creator.name",
 							name: "Created By",
-							fieldType: {id: "text", props: {text: "creator.name"}}
+							fieldType: {
+								id: "text",
+								props: {
+									text: "creator.name"
+								}
+							}
 						},
 						{
 							attribute: "updated_at",
 							name: "Last Modified",
-							fieldType: {id: "date", props: {timestamp: "updated_at"}}
+							fieldType: {
+								id: "date",
+								props: {
+									timestamp: "updated_at"
+								}
+							}
 						},
 						{
 							attribute: "editor.name",
 							name: "Last Modified By",
-							fieldType: {id: "text", props: {text: "editor.name"}}
+							fieldType: {
+								id: "text",
+								props: {
+									text: "editor.name"
+								}
+							}
 						}
 					]
 				},
@@ -1022,7 +1168,12 @@ module.exports = {
 						{
 							name: "Name",
 							attribute: "name",
-							fieldType: {id: "input-text", props: {value: "name"}}
+							fieldType: {
+								id: "input-text",
+								props: {
+									value: "name"
+								}
+							}
 						}
 					]
 				}
@@ -1077,8 +1228,8 @@ module.exports = {
 			}
 		],
 		links: {
-			first: "http://localhost:3001/projects/3/activity?page=1",
-			last: "http://localhost:3001/projects/3/activity?page=1",
+			first: "/projects/3/activity?page=1",
+			last: "/projects/3/activity?page=1",
 			prev: null,
 			next: null
 		},
@@ -1086,7 +1237,7 @@ module.exports = {
 			current_page: 1,
 			from: 1,
 			last_page: 1,
-			path: "http://localhost:3001/projects/3/activity",
+			path: "/projects/3/activity",
 			per_page: 15,
 			to: 1,
 			total: 1
@@ -1114,9 +1265,19 @@ module.exports = {
 							_clearable: false,
 							value: "language_code",
 							_entities: [
-								{label: "Danmark", value: "dk"},
-								{label: "England", value: "uk"},
-								{label: "Murica", value: "us", disabled: true}
+								{
+									label: "Danmark",
+									value: "dk"
+								},
+								{
+									label: "England",
+									value: "uk"
+								},
+								{
+									label: "Murica",
+									value: "us",
+									disabled: true
+								}
 							]
 						}
 					}
@@ -1138,7 +1299,12 @@ module.exports = {
 										width: 50,
 										name: "Name",
 										attribute: "name",
-										fieldType: {id: "text", props: {text: "name"}}
+										fieldType: {
+											id: "text",
+											props: {
+												text: "name"
+											}
+										}
 									},
 									{
 										width: 50,
@@ -1176,21 +1342,38 @@ module.exports = {
 								}
 							},
 							endpoint: {
-								url: "http://localhost:3001/projects",
-								params: {include: ["tags"]}
+								url: "/projects",
+								params: {
+									include: ["tags"]
+								}
 							},
 							sort: {
 								items: [
-									{label: "Name", value: "name"},
-									{label: "Input", value: "input"},
-									{label: "Position", value: "pos", manual: true}
+									{
+										label: "Name",
+										value: "name"
+									},
+									{
+										label: "Input",
+										value: "input"
+									},
+									{
+										label: "Position",
+										value: "pos",
+										manual: true
+									}
 								]
 							},
 							columns: [
 								{
 									width: 350,
 									name: "Name",
-									fieldType: {id: "text", props: {text: "name"}},
+									fieldType: {
+										id: "text",
+										props: {
+											text: "name"
+										}
+									},
 									onClick: "/i/projects/{id}"
 								},
 								{
@@ -1227,7 +1410,12 @@ module.exports = {
 									{
 										name: "Name",
 										attribute: "name",
-										fieldType: {id: "input-text", props: {value: "name"}}
+										fieldType: {
+											id: "input-text",
+											props: {
+												value: "name"
+											}
+										}
 									}
 								]
 							}
@@ -1238,15 +1426,22 @@ module.exports = {
 						type: "table",
 						definitions: {
 							endpoint: {
-								url: "http://localhost:3001/projects",
-								params: {include: ["tags"]}
+								url: "/projects",
+								params: {
+									include: ["tags"]
+								}
 							},
 							pagination: {},
 							columns: [
 								{
 									width: 350,
 									name: "Name",
-									fieldType: {id: "text", props: {text: "name"}},
+									fieldType: {
+										id: "text",
+										props: {
+											text: "name"
+										}
+									},
 									onClick: "/i/projects/{id}"
 								},
 								{
@@ -1290,7 +1485,12 @@ module.exports = {
 										width: 50,
 										name: "Name",
 										attribute: "name",
-										fieldType: {id: "text", props: {text: "name"}}
+										fieldType: {
+											id: "text",
+											props: {
+												text: "name"
+											}
+										}
 									},
 									{
 										width: 50,
@@ -1328,21 +1528,38 @@ module.exports = {
 								}
 							},
 							endpoint: {
-								url: "http://localhost:3001/projects",
-								params: {include: ["tags"]}
+								url: "/projects",
+								params: {
+									include: ["tags"]
+								}
 							},
 							sort: {
 								items: [
-									{label: "Name", value: "name"},
-									{label: "Input", value: "input"},
-									{label: "Position", value: "pos", manual: true}
+									{
+										label: "Name",
+										value: "name"
+									},
+									{
+										label: "Input",
+										value: "input"
+									},
+									{
+										label: "Position",
+										value: "pos",
+										manual: true
+									}
 								]
 							},
 							columns: [
 								{
 									width: 350,
 									name: "Name",
-									fieldType: {id: "text", props: {text: "name"}},
+									fieldType: {
+										id: "text",
+										props: {
+											text: "name"
+										}
+									},
 									onClick: "/i/projects/{id}"
 								},
 								{
@@ -1379,7 +1596,12 @@ module.exports = {
 									{
 										name: "Name",
 										attribute: "name",
-										fieldType: {id: "input-text", props: {value: "name"}}
+										fieldType: {
+											id: "input-text",
+											props: {
+												value: "name"
+											}
+										}
 									}
 								]
 							}
@@ -1391,15 +1613,22 @@ module.exports = {
 						type: "table",
 						definitions: {
 							endpoint: {
-								url: "http://localhost:3001/projects",
-								params: {include: ["tags"]}
+								url: "/projects",
+								params: {
+									include: ["tags"]
+								}
 							},
 							pagination: {},
 							columns: [
 								{
 									width: 350,
 									name: "Name",
-									fieldType: {id: "text", props: {text: "name"}},
+									fieldType: {
+										id: "text",
+										props: {
+											text: "name"
+										}
+									},
 									onClick: "/i/projects/{id}"
 								},
 								{
@@ -1443,7 +1672,12 @@ module.exports = {
 										width: 50,
 										name: "Name",
 										attribute: "name",
-										fieldType: {id: "text", props: {text: "name"}}
+										fieldType: {
+											id: "text",
+											props: {
+												text: "name"
+											}
+										}
 									},
 									{
 										width: 50,
@@ -1481,21 +1715,38 @@ module.exports = {
 								}
 							},
 							endpoint: {
-								url: "http://localhost:3001/projects",
-								params: {include: ["tags"]}
+								url: "/projects",
+								params: {
+									include: ["tags"]
+								}
 							},
 							sort: {
 								items: [
-									{label: "Name", value: "name"},
-									{label: "Input", value: "input"},
-									{label: "Position", value: "pos", manual: true}
+									{
+										label: "Name",
+										value: "name"
+									},
+									{
+										label: "Input",
+										value: "input"
+									},
+									{
+										label: "Position",
+										value: "pos",
+										manual: true
+									}
 								]
 							},
 							columns: [
 								{
 									width: 350,
 									name: "Name",
-									fieldType: {id: "text", props: {text: "name"}},
+									fieldType: {
+										id: "text",
+										props: {
+											text: "name"
+										}
+									},
 									onClick: "/i/projects/{id}"
 								},
 								{
@@ -1532,7 +1783,12 @@ module.exports = {
 									{
 										name: "Name",
 										attribute: "name",
-										fieldType: {id: "input-text", props: {value: "name"}}
+										fieldType: {
+											id: "input-text",
+											props: {
+												value: "name"
+											}
+										}
 									}
 								]
 							}
@@ -1544,15 +1800,22 @@ module.exports = {
 						type: "table",
 						definitions: {
 							endpoint: {
-								url: "http://localhost:3001/projects",
-								params: {include: ["tags"]}
+								url: "/projects",
+								params: {
+									include: ["tags"]
+								}
 							},
 							pagination: {},
 							columns: [
 								{
 									width: 350,
 									name: "Name",
-									fieldType: {id: "text", props: {text: "name"}},
+									fieldType: {
+										id: "text",
+										props: {
+											text: "name"
+										}
+									},
 									onClick: "/i/projects/{id}"
 								},
 								{

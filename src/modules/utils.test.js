@@ -46,14 +46,16 @@ describe("utils", () => {
 				obj: {
 					key1: 1,
 					key2: 1,
-					key3: [{id: 1}, {id: 2}]
+					key3: [{id: 1}, {id: 2}],
+					key4: 4
 				}
 			},
 			{
 				obj: {
 					key2: 2,
 					key3: [{id: 3}],
-					key4: 4
+					key4: undefined,
+					key5: 5
 				}
 			}
 		);
@@ -63,7 +65,8 @@ describe("utils", () => {
 				key1: 1,
 				key2: 2,
 				key3: [{id: 3}],
-				key4: 4
+				key4: undefined,
+				key5: 5
 			}
 		});
 	});
