@@ -56,11 +56,16 @@ export default {
 			padding: 0.4em 0;
 
 			::v-deep .item {
-				display: block;
-				font-size: 0.8em;
+				display: flex;
+				align-items: center;
+				font-size: 0.9em;
 				white-space: nowrap;
 				user-select: none;
 				padding: 0.75em 1em;
+
+				i {
+					margin-left: 0.3em;
+				}
 
 				&:hover {
 					background-color: $--dropdown-menuItem-hover-fill;
