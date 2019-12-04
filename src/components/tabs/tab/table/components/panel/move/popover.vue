@@ -7,10 +7,10 @@
 
 		<div class="position">
 			<Select
-				size="small"
-				v-model="select"
-				placeholder="Select"
 				:style="{width: '55%'}"
+				placeholder="Select"
+				v-model="select"
+				size="small"
 			>
 				<Option label="Top" value="top" />
 				<Option label="Bottom" value="bottom" />
@@ -19,12 +19,12 @@
 
 			<InputNumber
 				v-if="select === 'position'"
-				v-model="position"
 				controls-position="right"
 				:style="{width: '40%'}"
+				v-model="position"
 				:max="meta.total"
 				size="small"
-				:min="1"
+				:min="0"
 			/>
 		</div>
 
