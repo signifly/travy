@@ -8,6 +8,11 @@
 			@size-change="updateSize"
 			@current-change="updatePage"
 		/>
+
+		<div class="info">
+			{{ from }}-{{ to }} {{ $translate({en: "of", da: "af"}) }} {{ total }}
+			{{ $translate({en: "items", da: "rækker"}) }}
+		</div>
 	</div>
 </template>
 
@@ -21,7 +26,9 @@ export default {
 		loading: {type: Boolean, required: true},
 		per_page: {type: Number, required: true},
 		total: {type: Number, required: true},
-		state: {type: Object, required: true}
+		state: {type: Object, required: true},
+		from: {type: Number, required: true},
+		to: {type: Number, required: true}
 	},
 	computed: {
 		pagination: (t) => ({
@@ -49,12 +56,25 @@ export default {
 <style lang="scss" scoped>
 .pagination {
 	transition: cubic(opacity, 0.1s);
+	position: relative;
 	text-align: center;
 	padding: 1.5em 0;
 
 	&.loading {
 		pointer-events: none;
 		opacity: 0.6;
+	}
+
+	.info {
+		align-items: center;
+		position: absolute;
+		font-size: 0.8em;
+		display: flex;
+		color: $blue4;
+		margin: auto;
+		right: 2em;
+		bottom: 0;
+		top: 0;
 	}
 }
 </style>
