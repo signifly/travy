@@ -27,7 +27,7 @@ export default {
 					data: x,
 					val: {
 						label: this.selectedOptions.label,
-						_link: this.selectedOptions.link
+						link: this.selectedOptions.link
 					}
 				});
 			});
