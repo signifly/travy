@@ -9,7 +9,10 @@
 			v-on="$listeners"
 			:data="data"
 		>
-			<a class="item" @click="select(action)" v-text="action.name" />
+			<a class="item" @click="select(action)">
+				<div v-text="action.name" />
+				<i :class="`el-icon-${action.icon}`" v-if="action.icon" />
+			</a>
 		</action>
 	</popup>
 </template>
