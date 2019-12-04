@@ -10,10 +10,14 @@
 					@click="active = !active"
 					:type="_action.status"
 					:size="_action.size"
-					:icon="_action.icon"
 					plain
 				>
 					{{ _action.name }}
+					<i
+						:class="`el-icon-${_action.icon}`"
+						class="el-icon-right"
+						v-if="_action.icon"
+					/>
 				</Button>
 			</div>
 		</action>
@@ -97,9 +101,6 @@ export default {
 		return {
 			active: false
 		};
-	},
-	computed: {
-		icon: (t) => (t._icon ? `el-icon-${t._icon}` : "")
 	}
 };
 </script>
