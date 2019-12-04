@@ -63,7 +63,7 @@ export default {
 			});
 
 			this.options = data.options;
-			this.data = data.data;
+			this.data = {...data.data, $parentData: this.parentData};
 		},
 
 		async save() {
