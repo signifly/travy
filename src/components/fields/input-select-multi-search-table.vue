@@ -92,9 +92,9 @@ export default {
 		}
 	},
 	props: {
+		value: {type: Array, default: () => []},
 		select: {type: Object, required: true},
-		_table: {type: Object, required: true},
-		value: {type: Array, required: true}
+		_table: {type: Object, required: true}
 	},
 	computed: {
 		data: (t) => t.select.value

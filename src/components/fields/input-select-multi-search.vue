@@ -84,7 +84,7 @@ export default {
 		_clearable: {type: Boolean, default: true},
 		_addable: {type: Boolean, required: false},
 		_entities: {type: Object, required: true},
-		value: {type: Array, required: true}
+		value: {type: Array, default: () => []}
 	},
 	data() {
 		return {
