@@ -41,16 +41,16 @@
 
 <script>
 import {Table, TableColumn, Button} from "element-ui";
-import {date, rStringProps} from "@/modules/utils";
 import pagination from "./pagination";
+import {date} from "@/modules/utils";
 import expand from "./expand";
 import {get} from "lodash";
 
 export default {
 	components: {Table, TableColumn, Button, expand, pagination},
 	props: {
-		endpoint: {type: Object, required: true},
-		data: {type: Object, required: true}
+		data: {type: Object, required: true},
+		url: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -61,7 +61,6 @@ export default {
 	},
 	computed: {
 		indexId: (t) => t.$route.params.indexId,
-		endpointUrl: (t) => rStringProps({data: t.data, val: t.endpoint.url}),
 
 		itemsMap: (t) =>
 			t.items.map((x) => ({
@@ -80,7 +79,7 @@ export default {
 		async getItems(page = 1) {
 			const {
 				data: {data, meta}
-			} = await this.$axios.get(`${this.endpointUrl}/activity`, {
+			} = await this.$axios.get(`${this.url}/activity`, {
 				params: {page, count: this.pageCount}
 			});
 			this.meta = meta;
@@ -88,7 +87,7 @@ export default {
 		},
 
 		async revert({id}) {
-			await this.$axios.post(`${this.endpointUrl}/activity/${id}/revert`);
+			await this.$axios.post(`${this.url}/activity/${id}/revert`);
 			this.$emit("event", {actions: {refresh: true}});
 		}
 	},

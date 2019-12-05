@@ -1,4 +1,65 @@
 module.exports = {
+	"/definitions/view/account": {
+		pageTitle: "Account",
+		hero: {
+			title: "Hello {name}",
+			subtitle: "Subtitle"
+		},
+		tabs: [
+			{
+				name: "Fields",
+				type: "fields",
+				definitions: {
+					endpoint: {
+						url: "/projects/{id}"
+					},
+					fields: [
+						{
+							name: "Name",
+							attribute: "name",
+							fieldType: {
+								id: "text",
+								props: {
+									text: "name"
+								}
+							}
+						},
+						{
+							name: "Text",
+							attribute: "text",
+							fieldType: {
+								id: "input-text",
+								props: {
+									value: "text"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		sidebar: {
+			name: "Name",
+			groups: [
+				{
+					name: "History",
+					fields: [
+						{
+							attribute: "created_at",
+							name: "Created At",
+							fieldType: {
+								id: "date",
+								props: {
+									timestamp: "created_at"
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+
 	"/account": {
 		data: {
 			image: "https://picsum.photos/id/11/50/50",
@@ -952,9 +1013,6 @@ module.exports = {
 				}
 			}
 		],
-		endpoint: {
-			url: "/projects/{id}"
-		},
 		activity: {},
 		actions: [
 			{

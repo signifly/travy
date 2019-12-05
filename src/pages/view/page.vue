@@ -20,7 +20,7 @@
 					<sidebar
 						v-if="sidebar"
 						ref="sidebar"
-						v-bind="{sidebar, endpoint, options}"
+						v-bind="{sidebar, url, options}"
 						:edit.sync="edits.sidebar"
 						:data.sync="res.data"
 						@event="event"
@@ -34,7 +34,7 @@
 						<activity
 							v-if="activity"
 							:key="data.updated_at"
-							v-bind="{data, endpoint}"
+							v-bind="{data, url}"
 							@event="event"
 						/>
 					</transition>
@@ -72,11 +72,11 @@ export default {
 		modifiers: {type: Object, required: false},
 		pageTitle: {type: String, required: true},
 		activity: {type: Object, required: false},
-		endpoint: {type: Object, required: true},
 		sidebar: {type: Object, required: true},
 		actions: {type: Array, required: false},
 		hero: {type: Object, required: true},
-		tabs: {type: Array, required: true}
+		tabs: {type: Array, required: true},
+		url: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -131,10 +131,9 @@ export default {
 
 		async getData() {
 			const params = {modifier: this.query.modifiers};
-			const {indexId, viewId} = this.$route.params;
 
 			try {
-				const {data} = await this.$axios.get(`/${indexId}/${viewId}`, {
+				const {data} = await this.$axios.get(this.url, {
 					customErr: true,
 					params
 				});

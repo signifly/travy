@@ -1,6 +1,11 @@
 <template>
 	<div class="view" v-if="definitions">
-		<page v-bind="definitions" :key="refreshKey" @refresh="getData" />
+		<page
+			:url="`/${indexId}/${viewId}`"
+			v-bind="definitions"
+			@refresh="getData"
+			:key="refreshKey"
+		/>
 	</div>
 </template>
 

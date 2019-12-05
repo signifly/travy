@@ -13,17 +13,17 @@
 </template>
 
 <script>
-import {rStringProps, mergeData} from "@/modules/utils";
+import {mergeData} from "@/modules/utils";
 import group from "./group";
 
 export default {
 	components: {group},
 	props: {
-		endpoint: {type: Object, required: true},
 		options: {type: Object, required: false},
 		sidebar: {type: Object, required: true},
 		edit: {type: Boolean, required: false},
-		data: {type: Object, required: true}
+		data: {type: Object, required: true},
+		url: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -32,7 +32,6 @@ export default {
 		};
 	},
 	computed: {
-		endpointUrl: (t) => rStringProps({data: t.data, val: t.endpoint.url}),
 		modifiers: (t) => t.$route.query.modifiers
 	},
 	methods: {
@@ -58,7 +57,7 @@ export default {
 
 			try {
 				await this.$axios.put(
-					this.endpointUrl,
+					this.url,
 					{
 						modifier: this.modifiers,
 						data: this.payload
