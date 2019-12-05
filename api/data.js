@@ -284,6 +284,7 @@ module.exports = {
 																fieldType: {
 																	id: "input-files",
 																	props: {
+																		value: "files",
 																		_url: "/signedurls"
 																	}
 																}
@@ -440,7 +441,9 @@ module.exports = {
 															fieldType: {
 																id: "input-files",
 																props: {
-																	_url: "/signedurls"
+																	value: "files",
+																	_url: "/signedurls",
+																	_multiple: true
 																}
 															}
 														}
