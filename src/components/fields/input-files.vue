@@ -46,7 +46,11 @@ export default {
 			server: {
 				process: async (name, file, metadata, load, error, progress) => {
 					try {
-						const {data} = (await this.$axios.get(this._url)).data;
+						const {
+							data: {data}
+						} = await this.$axios.post(this._url, {
+							content_type: file.type
+						});
 
 						await axios({
 							method: "put",
