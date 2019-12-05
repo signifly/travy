@@ -48,6 +48,8 @@
 				@event="event"
 				v-if="batch"
 			/>
+
+			<Link v-if="link && data" v-bind="{link}" />
 		</div>
 	</div>
 </template>
@@ -60,11 +62,12 @@ import filters from "./components/filters";
 import tableEl from "./components/table";
 import panel from "./components/panel";
 import sort from "./components/sort";
+import Link from "./components/link";
 import {merge, get} from "lodash";
 import state from "./state";
 
 export default {
-	components: {tableEl, filters, actions, pagination, sort, panel},
+	components: {tableEl, filters, actions, pagination, sort, panel, Link},
 	props: {
 		definitions: {type: Object, required: true},
 		parentData: {type: Object, required: false}
@@ -91,6 +94,7 @@ export default {
 		actions: (t) => t.definitions.actions,
 		expand: (t) => t.definitions.expand,
 		batch: (t) => t.definitions.batch,
+		link: (t) => t.definitions.link,
 		query: (t) => t.state.query,
 
 		sort() {
@@ -172,6 +176,7 @@ export default {
 <style lang="scss" scoped>
 .table {
 	margin-bottom: -1px;
+	position: relative;
 
 	.header {
 		align-items: center;

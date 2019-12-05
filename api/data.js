@@ -733,6 +733,7 @@ module.exports = {
 				name: "stuff1",
 				type: "table",
 				definitions: {
+					link: "/i/projects",
 					expand: {
 						type: "fields",
 						fields: [
