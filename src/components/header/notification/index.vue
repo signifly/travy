@@ -41,7 +41,10 @@ export default {
 
 		updateItem({id, ...data}) {
 			this.getUnread();
-			Object.assign(this.items.find((x) => x.id === id), data);
+			Object.assign(
+				this.items.find((x) => x.id === id),
+				data
+			);
 		},
 
 		updateItems(data) {

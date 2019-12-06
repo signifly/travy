@@ -32,9 +32,10 @@ export default {
 	components: {vItem},
 	computed: {
 		fieldsSorted() {
-			const array = Object.entries({...fields, ...this.$opts.fields}).map(
-				([name, comp]) => ({name, comp})
-			);
+			const array = Object.entries({
+				...fields,
+				...this.$opts.fields
+			}).map(([name, comp]) => ({name, comp}));
 
 			return sortBy(array, "name");
 		}

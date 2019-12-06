@@ -55,7 +55,10 @@ export default {
 				}
 			},
 			data: {
-				items: [{name: "item1", id: 1}, {name: "item2", id: 2}]
+				items: [
+					{name: "item1", id: 1},
+					{name: "item2", id: 2}
+				]
 			}
 		}
 	},
