@@ -1,5 +1,4 @@
 import {cloneDeep, get} from "lodash";
-import * as meta from "./meta";
 import router from "./router";
 import store from "@/store";
 import axios from "axios";
@@ -40,7 +39,7 @@ export const api = (() => {
 			console.log("res", res);
 
 			if (!res) {
-				console.log("no server response");
+				console.error("no server response");
 				return router.replace({name: "error", params: {status: 500}});
 			}
 
@@ -94,14 +93,20 @@ export const metaApi = (() => {
 				obj.req = cloneDeep(data);
 			}
 
+			const item = (i) => ({
+				id: i,
+				name: `item${i}`,
+				url: "https://picsum.photos/id/11/500/500"
+			});
+
 			// single item
 			if (url.includes("items/")) {
-				obj.res = {data: meta.data.item};
+				obj.res = {data: item(1)};
 			}
 
 			// multiple items
 			if (url.includes("items")) {
-				obj.res = {data: meta.data.items};
+				obj.res = {data: [...Array(6)].map((x, i) => item(i))};
 			}
 
 			console.log(obj);
