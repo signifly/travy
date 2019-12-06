@@ -50,10 +50,14 @@ export default {
 							content_type: file.type
 						});
 
+						// eslint-disable-next-line no-unused-vars
+						const {Host, ...headers} = data.headers;
+
 						await axios({
 							method: "put",
 							url: data.url,
 							data: file,
+							headers,
 							onUploadProgress(e) {
 								progress(e.lengthComputable, e.loaded, e.total);
 							}
