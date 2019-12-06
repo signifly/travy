@@ -21,9 +21,9 @@ export default {
 
 	i {
 		position: relative;
-		font-size: 0.85em;
+		font-size: 0.75em;
 		color: $blue4;
-		$s: 1px;
+		$s: 2px;
 		margin: 0 $s $s 0;
 	}
 

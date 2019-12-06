@@ -157,3 +157,9 @@ export default {
 	}
 };
 </script>
+
+<style lang="scss" scoped>
+.view-page {
+	margin-bottom: 4em;
+}
+</style>
