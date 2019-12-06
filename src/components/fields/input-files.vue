@@ -29,8 +29,8 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				_url: "/signedurls",
-				value: "files"
+				value: "files",
+				_url: "/url"
 			}
 		}
 	},
@@ -62,7 +62,7 @@ export default {
 						});
 
 						const item = {
-							"content-type": file.type,
+							content_type: file.type,
 							filename: file.name,
 							uuid: data.uuid
 						};
@@ -70,6 +70,7 @@ export default {
 						load(item);
 						this.update([...(this.value || []), item]);
 					} catch (err) {
+						console.error(err);
 						error(err);
 					}
 				},
