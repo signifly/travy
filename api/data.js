@@ -372,6 +372,58 @@ module.exports = {
 									value: "test.switch"
 								}
 							}
+						},
+						{
+							name: "Actions",
+							attribute: "actions",
+							fieldType: {
+								id: "button-action",
+								props: {
+									_action: {
+										name: "Actions",
+										status: "primary",
+										icon: "arrow-down",
+										actionType: {
+											id: "dropdown",
+											props: {
+												actions: [
+													{
+														name: "View",
+														status: "primary",
+														icon: null,
+														actionType: {
+															id: "link",
+															props: {
+																url: "/i/projects/{id}"
+															}
+														}
+													},
+													{
+														name: "Delete",
+														status: "primary",
+														icon: null,
+														actionType: {
+															id: "popup",
+															props: {
+																title: "Delete",
+																text:
+																	"Are you sure? Please confirm this action.",
+																endpoint: {
+																	url: "/projects/{id}",
+																	method: "delete"
+																},
+																payload: {}
+															}
+														}
+													}
+												]
+											}
+										},
+										size: "mini"
+									}
+								}
+							},
+							width: 120
 						}
 					],
 					filters: {

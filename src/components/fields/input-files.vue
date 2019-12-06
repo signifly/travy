@@ -12,9 +12,7 @@
 
 <script>
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import "filepond/dist/filepond.min.css";
 import Filepond from "vue-filepond";
 import axios from "axios";
 
@@ -101,3 +99,8 @@ export default {
 	}
 };
 </script>
+
+<style lang="scss" scoped>
+@import "~filepond/dist/filepond.min.css";
+@import "~filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+</style>

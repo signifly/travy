@@ -71,7 +71,8 @@ export default {
 		text-align: left;
 		margin-bottom: 1.25em;
 		line-height: 1.25em;
-		font-size: 13px;
+		font-size: 12px;
+		color: $blue1;
 	}
 	.buttons {
 		display: flex;

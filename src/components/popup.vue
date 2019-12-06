@@ -58,10 +58,12 @@ export default {
 			::v-deep .item {
 				display: flex;
 				align-items: center;
-				font-size: 0.9em;
+				font-size: 12px;
 				white-space: nowrap;
 				user-select: none;
 				padding: 0.75em 1em;
+				color: $blue4;
+				font-weight: 500;
 
 				i {
 					margin-left: 0.3em;
