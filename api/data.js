@@ -1068,7 +1068,141 @@ module.exports = {
 				}
 			}
 		],
-		activity: {},
+		activity: {
+			expand: {
+				type: "fields",
+				fields: [
+					{
+						width: 50,
+						name: "Name",
+						attribute: "name",
+						fieldType: {
+							id: "text",
+							props: {
+								text: "name"
+							}
+						}
+					},
+					{
+						width: 50,
+						name: "Tags",
+						attribute: "tags",
+						fieldType: {
+							id: "item-list-tooltip",
+							props: {
+								items: {
+									_link: "/i/tags/{id}",
+									"@scope": "tags",
+									label: "key"
+								}
+							}
+						}
+					},
+					{
+						name: "input",
+						fieldType: {
+							id: "input-toggle",
+							props: {
+								value: "test.switch"
+							}
+						}
+					}
+				]
+			},
+			endpoint: {
+				url: "/projects",
+				params: {
+					include: ["tags"]
+				}
+			},
+			pagination: {},
+			columns: [
+				{
+					width: 350,
+					name: "Name",
+					fieldType: {
+						id: "text",
+						props: {
+							text: "name"
+						}
+					},
+					onClick: "/i/projects/{id}"
+				},
+				{
+					name: "Tags",
+					fieldType: {
+						id: "item-list-tooltip",
+						props: {
+							items: {
+								_link: "/i/tags/{id}",
+								"@scope": "tags",
+								label: "key"
+							}
+						}
+					}
+				},
+				{
+					name: "input",
+					fieldType: {
+						id: "input-toggle",
+						props: {
+							value: "test.switch"
+						}
+					}
+				},
+				{
+					name: "Actions",
+					attribute: "actions",
+					fieldType: {
+						id: "button-action",
+						props: {
+							_action: {
+								name: "Actions",
+								status: "primary",
+								icon: "arrow-down",
+								actionType: {
+									id: "dropdown",
+									props: {
+										actions: [
+											{
+												name: "View",
+												status: "primary",
+												icon: null,
+												actionType: {
+													id: "link",
+													props: {
+														url: "/i/projects/{id}"
+													}
+												}
+											},
+											{
+												name: "Delete",
+												status: "primary",
+												icon: null,
+												actionType: {
+													id: "popup",
+													props: {
+														title: "Delete",
+														text: "Are you sure? Please confirm this action.",
+														endpoint: {
+															url: "/projects/{id}",
+															method: "delete"
+														},
+														payload: {}
+													}
+												}
+											}
+										]
+									}
+								},
+								size: "mini"
+							}
+						}
+					},
+					width: 120
+				}
+			]
+		},
 		actions: [
 			{
 				name: "Modal",
@@ -1322,6 +1456,29 @@ module.exports = {
 				log_name: "default",
 				description: "created",
 				subject_id: 3,
+				subject_type: "App\\Models\\Project",
+				causer_id: null,
+				causer_type: null,
+				properties: {
+					attributes: {
+						client_id: 8,
+						name: "Clemens Cassin",
+						start_date: null,
+						status: "open",
+						description: null
+					}
+				},
+				created_at: 1568191509,
+				updated_at: 1568191509,
+				humanized_subject: "project",
+				revertable: false,
+				causer: null
+			},
+			{
+				id: 23,
+				log_name: "default",
+				description: "created",
+				subject_id: 4,
 				subject_type: "App\\Models\\Project",
 				causer_id: null,
 				causer_type: null,

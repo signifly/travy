@@ -32,9 +32,9 @@
 				<Col class="left" :span="24">
 					<transition name="el-fade-in" mode="out-in" appear>
 						<activity
-							v-if="activity"
+							v-bind="{activity, data, url}"
 							:key="data.updated_at"
-							v-bind="{data, url}"
+							v-if="activity"
 							@event="event"
 						/>
 					</transition>
