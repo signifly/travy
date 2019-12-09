@@ -9,7 +9,7 @@
 			@current-change="updatePage"
 		/>
 
-		<div class="info">
+		<div class="info" v-if="from && to">
 			{{ from }}-{{ to }} {{ $translate({en: "of", da: "af"}) }} {{ total }}
 			{{ $translate({en: "items", da: "rækker"}) }}
 		</div>
@@ -27,8 +27,8 @@ export default {
 		per_page: {type: Number, required: true},
 		total: {type: Number, required: true},
 		state: {type: Object, required: true},
-		from: {type: Number, required: true},
-		to: {type: Number, required: true}
+		from: {type: Number, required: false},
+		to: {type: Number, required: false}
 	},
 	computed: {
 		pagination: (t) => ({
