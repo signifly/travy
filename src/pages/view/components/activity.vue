@@ -1,10 +1,7 @@
 <template>
 	<div class="activity">
 		<div class="title">Activity</div>
-
-		<div class="box">
-			<Table :definitions="activity" :parentData="data" />
-		</div>
+		<Table :definitions="activity" :parentData="data" />
 	</div>
 </template>
 
