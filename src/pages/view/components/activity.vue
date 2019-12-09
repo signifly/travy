@@ -1,7 +1,10 @@
 <template>
 	<div class="activity">
 		<div class="title">Activity</div>
-		<Table :definitions="activity" :parentData="data" />
+
+		<div class="box">
+			<Table :definitions="activity" :parentData="data" />
+		</div>
 	</div>
 </template>
 
@@ -20,15 +23,21 @@ export default {
 
 <style lang="scss" scoped>
 .activity {
-	background-color: $white1;
-	border: 1px solid #e0e6ed;
-	border-radius: 4px;
-	margin: 1.5em 0;
+	margin-top: 4em;
 
 	.title {
-		border-bottom: 1px solid #e0e6ed;
-		font-weight: 500;
-		padding: 1em;
+		margin-left: 0.25em;
+		margin-bottom: 1em;
+	}
+
+	.box {
+		background-color: $white1;
+		border: 1px solid #e0e6ed;
+		border-radius: 4px;
+
+		.table {
+			clip-path: inset(0 round 4px);
+		}
 	}
 }
 </style>

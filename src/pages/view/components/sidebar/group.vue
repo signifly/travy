@@ -28,7 +28,11 @@ export default {
 
 <style lang="scss" scoped>
 .group {
-	margin-bottom: 32px;
+	margin-bottom: 40px;
+
+	&:last-child {
+		margin-bottom: 20px;
+	}
 
 	.name {
 		text-transform: uppercase;
