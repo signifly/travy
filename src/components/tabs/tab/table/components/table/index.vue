@@ -77,7 +77,6 @@ export default {
 	}
 
 	.info {
-		border-bottom: 1px solid $blue6;
 		text-align: center;
 		color: #909399;
 		padding: 2em;
