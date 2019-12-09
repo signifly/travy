@@ -6,11 +6,10 @@
 			:class="{active}"
 			@input="update"
 			:value="value"
+			size="medium"
 			class="input"
 			clearable
-		>
-			<slot slot="append" v-if="fields && fields.length > 0" />
-		</Input>
+		/>
 	</div>
 </template>
 
@@ -43,6 +42,8 @@ export default {
 
 <style lang="scss" scoped>
 .search {
+	margin-right: 0.5em;
+
 	.input {
 		::v-deep {
 			.el-input__inner {

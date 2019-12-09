@@ -67,15 +67,17 @@ export default {
 		::v-deep {
 			th,
 			td {
-				border: 1px solid #ebeef5;
-				border-right: 0;
-				border-left: 0;
+				border-bottom: 1px solid $blue6;
+			}
+
+			tbody:last-child td {
+				border-bottom: 0;
 			}
 		}
 	}
 
 	.info {
-		border-bottom: 1px solid #ebeef5;
+		border-bottom: 1px solid $blue6;
 		text-align: center;
 		color: #909399;
 		padding: 2em;

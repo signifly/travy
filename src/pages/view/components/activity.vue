@@ -23,18 +23,15 @@ export default {
 
 <style lang="scss" scoped>
 .activity {
-	margin: 4em 0;
+	background-color: $white1;
+	border: 1px solid #e0e6ed;
+	border-radius: 4px;
+	margin: 1.5em 0;
 
 	.title {
-		font-size: 1.2em;
-		margin-bottom: 1em;
+		border-bottom: 1px solid #e0e6ed;
 		font-weight: 500;
-	}
-
-	.box {
-		background-color: $white1;
-		border: 1px solid #e0e6ed;
-		border-radius: 4px;
+		padding: 1em;
 	}
 }
 </style>

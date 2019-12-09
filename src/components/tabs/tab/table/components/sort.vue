@@ -5,6 +5,7 @@
 			:clearable="true"
 			@change="select"
 			:value="value"
+			size="medium"
 		>
 			<Option v-for="item in options" :key="item.value" v-bind="item" />
 		</Select>

@@ -1,6 +1,6 @@
 <template>
 	<div class="table" v-if="definitions">
-		<div class="header" v-if="filters || actions || sort">
+		<div class="header" :class="{data}" v-if="filters || actions || sort">
 			<filters
 				v-if="filters"
 				v-bind="[filters, {state}]"
@@ -175,13 +175,16 @@ export default {
 
 <style lang="scss" scoped>
 .table {
-	margin-bottom: -1px;
 	position: relative;
 
 	.header {
 		align-items: center;
 		padding: 1.5em;
 		display: flex;
+
+		&.data {
+			border-bottom: 1px solid $blue6;
+		}
 
 		.right {
 			display: flex;

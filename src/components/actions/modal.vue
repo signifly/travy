@@ -13,19 +13,24 @@
 		>
 			<div class="fields">
 				<field
+					v-bind="{field, data, error}"
 					v-for="field in fields"
 					:key="field.attribute"
-					v-bind="{field, data, error}"
 					@event="event"
 				/>
 			</div>
 
 			<div class="footer" slot="footer">
 				<div class="actions">
-					<Button @click="visible = false" :disabled="!!loading">
+					<Button size="medium" @click="visible = false" :disabled="loading">
 						{{ $translate({en: "Cancel", da: "Annuller"}) }}
 					</Button>
-					<Button type="primary" @click="submit" :loading="!!loading">
+					<Button
+						:loading="loading"
+						@click="submit"
+						type="primary"
+						size="medium"
+					>
 						{{ $translate({en: "Submit", da: "Gem"}) }}
 					</Button>
 				</div>

@@ -99,12 +99,6 @@ export default {
 
 <style lang="scss" scoped>
 .row {
-	&:nth-child(odd) {
-		tr {
-			background-color: #fafafa;
-		}
-	}
-
 	&.sortable-chosen {
 		background-color: #fff;
 	}

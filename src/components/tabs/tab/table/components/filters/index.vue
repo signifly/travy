@@ -4,44 +4,44 @@
 			v-if="search"
 			v-bind="[search, {loading, active, fields, state}]"
 			@event="event"
+		/>
+		<Popover
+			popper-class="pop"
+			v-model="active"
+			ref="pop"
+			placement="bottom-end"
+			:width="width"
+			transition="trans-fadeDown"
 		>
-			<Popover
-				popper-class="pop"
-				v-model="active"
-				ref="pop"
-				placement="bottom-end"
-				:width="width"
-				transition="trans-fadeDown"
-			>
-				<div class="pop">
-					<div class="fields">
-						<field
-							v-for="field in fields"
-							:key="field.attribute"
-							v-bind="{field}"
-							:data="filters"
-							@event="event"
-						/>
-					</div>
-
-					<div class="reset">
-						<Button
-							plain
-							size="mini"
-							type="info"
-							icon="el-icon-refresh"
-							@click="reset"
-						>
-							{{ $translate({en: "Reset", da: "Nulstil"}) }}
-						</Button>
-					</div>
+			<div class="pop">
+				<div class="fields">
+					<field
+						v-for="field in fields"
+						:key="field.attribute"
+						v-bind="{field}"
+						:data="filters"
+						@event="event"
+					/>
 				</div>
 
-				<Button slot="reference" icon="el-icon-tickets">
-					Filter
-				</Button>
-			</Popover>
-		</search>
+				<div class="reset">
+					<Button
+						plain
+						size="mini"
+						type="info"
+						icon="el-icon-refresh"
+						@click="reset"
+					>
+						{{ $translate({en: "Reset", da: "Nulstil"}) }}
+					</Button>
+				</div>
+			</div>
+
+			<Button slot="reference" size="medium">
+				Filter
+				<i class="el-icon-right el-icon-caret-bottom" />
+			</Button>
+		</Popover>
 	</div>
 </template>
 
@@ -96,9 +96,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.filters {
+	display: flex;
+}
+
 .pop {
 	margin-top: -1.5em;
-	padding: 0.75em;
+	padding: 1em 0.5em;
 
 	.reset {
 		margin-top: 1.5em;
