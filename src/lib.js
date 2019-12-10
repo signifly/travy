@@ -22,7 +22,7 @@ const setup = ({init, ...opts}) => {
 	Vue.use(VueRouter);
 	Vue.use(Vuex);
 
-	Vue.prototype.$opts = Object.assign({fields: {}, api: ""}, opts);
+	Vue.prototype.$opts = Object.assign({fields: {}}, opts);
 
 	const {default: router} = require("./modules/router");
 	const {default: ws} = require("./modules/ws");

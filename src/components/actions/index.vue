@@ -61,9 +61,9 @@ export default {
 			this.$emit("input", false);
 		},
 
-		submit({data, title, message}) {
-			if (title && message) {
-				this.$store.dispatch("notify/send", {type: "info", title, message});
+		submit({data, notification}) {
+			if (notification) {
+				this.$store.dispatch("notify/send", {type: "info", ...notification});
 			}
 
 			if (this.onSubmit) {

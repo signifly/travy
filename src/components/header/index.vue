@@ -1,6 +1,6 @@
 <template>
 	<Header height="64px">
-		<router-link class="logo" :to="{name: 'index'}">
+		<router-link class="logo" :to="{name: 'home'}">
 			<div class="img" :style="{backgroundImage: `url('${theme.logo}')`}" />
 		</router-link>
 
