@@ -67,7 +67,7 @@ export default {
 		},
 
 		async save() {
-			const body = {modifer: this.modifiers, data: this.payload};
+			const body = {modifier: this.modifiers, data: this.payload};
 
 			try {
 				await this.$axios.put(this.endpoint.url, body, {customErr: true});
