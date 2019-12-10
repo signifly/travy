@@ -1,7 +1,7 @@
 <template>
 	<div class="field" :style="{width}" v-if="!disabled">
 		<div class="content">
-			<vlabel v-bind="{field}" v-if="show.label" />
+			<vlabel v-bind="{field, options}" v-if="show.label" />
 
 			<fieldType
 				@event="$emit('event', $event)"
@@ -32,6 +32,7 @@ export default {
 	components: {vlabel, fieldType},
 	props: {
 		widthPx: {type: Boolean, required: false},
+		options: {type: Object, required: false},
 		error: {type: Object, required: false},
 		hide: {type: Array, default: () => []},
 		field: {type: Object, required: true},
