@@ -19,7 +19,10 @@ import produce from "immer";
 export default {
 	components: {vTable},
 	meta: {
-		spec: "props",
+		spec: {
+			_columns: {type: Array, required: true, note: "see table definitions"},
+			value: {type: Array, required: true}
+		},
 		res: {
 			props: {
 				value: "value",
@@ -63,8 +66,8 @@ export default {
 		}
 	},
 	props: {
-		_columns: {type: Array, required: true, note: "see table definitions"},
-		value: {type: Array, required: true}
+		_columns: {type: Array, required: true},
+		value: {type: Array, default: () => []}
 	},
 	data: () => ({
 		state: state()
@@ -93,8 +96,6 @@ export default {
 
 <style lang="scss" scoped>
 .table {
-	border: 0.5px solid $blue2;
-	border-top: 0;
-	border-bottom: 0;
+	border: 0.5px solid $blue6;
 }
 </style>

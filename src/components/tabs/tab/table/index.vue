@@ -20,6 +20,9 @@
 
 		<div class="content">
 			<tableEl
+				@getData="getData"
+				:data.sync="data"
+				@event="event"
 				:key="update"
 				v-if="data"
 				ref="table"
@@ -30,11 +33,8 @@
 					loading,
 					expand,
 					state,
-					sort,
-					data
+					sort
 				}"
-				@getData="getData"
-				@event="event"
 			/>
 
 			<pagination

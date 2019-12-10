@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import {cloneDeep, debounce} from "lodash";
 import draggable from "vuedraggable";
+import {debounce} from "lodash";
 import vHead from "./head";
 import row from "./row";
 
@@ -41,9 +41,16 @@ export default {
 		sort: {type: Object, request: false},
 		data: {type: Array, required: true}
 	},
-	data: (t) => ({
-		dataC: cloneDeep(t.data)
-	}),
+	computed: {
+		dataC: {
+			get() {
+				return this.data;
+			},
+			set(data) {
+				this.$emit("update:data", data);
+			}
+		}
+	},
 	methods: {
 		move: debounce(async function() {
 			await this.$axios.post(`${this.endpoint.url}/move`, {

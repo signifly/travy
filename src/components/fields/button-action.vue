@@ -4,6 +4,7 @@
 			@event="$emit('event', $event)"
 			v-bind="_action.actionType"
 			v-model="active"
+			:data="data"
 		>
 			<div class="button-action">
 				<Button
@@ -34,6 +35,7 @@ export default {
 		spec: "props",
 		res: {
 			props: {
+				data: "$root",
 				_action: {
 					status: "primary",
 					name: "button",
@@ -95,7 +97,8 @@ export default {
 		}
 	},
 	props: {
-		_action: {type: Object, required: true, note: "see actions"}
+		_action: {type: Object, required: true, note: "see actions"},
+		data: {type: Object, required: true, note: "$root"}
 	},
 	data() {
 		return {
