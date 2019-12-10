@@ -2,9 +2,9 @@
 	<div class="translate" v-if="translated">
 		<Tooltip placement="right" effect="light" :disabled="!languages">
 			<div
-				class="icon"
-				:class="{active: languages}"
 				v-html="require('@/assets/icons/globe.svg')"
+				:class="{active: languages}"
+				class="icon"
 			/>
 
 			<div slot="content">
@@ -34,8 +34,8 @@ export default {
 <style lang="scss" scoped>
 .translate {
 	.icon {
-		display: flex;
 		align-items: center;
+		display: flex;
 
 		&.active {
 			::v-deep svg {
@@ -45,11 +45,12 @@ export default {
 			}
 		}
 
+		$s: 12px;
+
 		::v-deep svg {
-			$s: 12px;
 			display: block;
-			width: $s;
 			height: $s;
+			width: $s;
 
 			path {
 				fill: $blue4;
@@ -59,22 +60,23 @@ export default {
 }
 
 .item {
-	display: flex;
-	align-items: center;
 	margin-bottom: 0.25em;
+	align-items: center;
+	display: flex;
 
 	&:last-child {
 		margin-bottom: 0;
 	}
 
+	$s: 8px;
+
 	.outdated {
+		background-color: $warning;
+		border-radius: 50%;
 		margin-left: 0.5em;
 		display: block;
-		$s: 8px;
-		width: $s;
 		height: $s;
-		border-radius: 50%;
-		background-color: $warning;
+		width: $s;
 	}
 }
 </style>
