@@ -1249,7 +1249,7 @@ module.exports = {
 				}
 			},
 			{
-				name: "Drop",
+				name: "Drop2",
 				status: "primary",
 				icon: "eleme",
 				actionType: {
@@ -1303,6 +1303,7 @@ module.exports = {
 							{
 								name: "Link",
 								actionType: {
+									hide: {key: "is_deleted", operator: "eq", value: false},
 									id: "link",
 									props: {
 										url: "/"
@@ -1857,24 +1858,9 @@ module.exports = {
 								}
 							],
 							filters: {
-								data: {
-									name: "test"
-								},
 								search: {
 									placeholder: "Search..."
-								},
-								fields: [
-									{
-										name: "Name",
-										attribute: "name",
-										fieldType: {
-											id: "input-text",
-											props: {
-												value: "name"
-											}
-										}
-									}
-								]
+								}
 							}
 						}
 					},

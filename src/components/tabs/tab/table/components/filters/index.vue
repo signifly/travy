@@ -1,17 +1,18 @@
 <template>
 	<div class="filters">
 		<search
-			v-if="search"
 			v-bind="[search, {loading, active, fields, state}]"
 			@event="event"
+			v-if="search"
 		/>
 		<Popover
+			transition="trans-fadeDown"
+			placement="bottom-end"
 			popper-class="pop"
 			v-model="active"
-			ref="pop"
-			placement="bottom-end"
 			:width="width"
-			transition="trans-fadeDown"
+			v-if="fields"
+			ref="pop"
 		>
 			<div class="pop">
 				<div class="fields">
