@@ -1,7 +1,14 @@
 <template>
 	<div class="image-picker">
-		<a class="image" :style="imageStyle" @click="modalActivate(true)">
-			<div class="img" :style="imgStyle" />
+		<a
+			class="image"
+			:class="{noimage: !image}"
+			:style="imageStyle"
+			@click="modalActivate(true)"
+		>
+			<div class="img" v-if="image" :style="imgStyle" />
+
+			<i v-else class="placeholder el-icon-picture-outline-round" />
 
 			<div class="icon">
 				<i class="el-icon-files" />
@@ -69,7 +76,7 @@ export default {
 		spec: {
 			_fit: {type: String, default: "cover", note: "contain/cover"},
 			_height: {type: String, default: "200px"},
-			_width: {type: String, default: "200px"},
+			_width: {type: String, default: "100%"},
 			url: {type: String, required: false},
 			id: {type: Number, required: false},
 			_entities: {
@@ -105,7 +112,7 @@ export default {
 						params: {sort: "name"}
 					},
 					dataWrap: "",
-					url: "image",
+					url: "url",
 					value: "id",
 					label: "name"
 				}
@@ -146,18 +153,9 @@ export default {
 		}),
 
 		imgStyle: (t) => ({
-			backgroundImage: `url('${t.imageUrl}')`,
+			backgroundImage: `url('${t.image}')`,
 			backgroundSize: t._fit
 		}),
-
-		imageUrl() {
-			return (
-				this.image ||
-				`data:image/svg+xml;utf8,${encodeURIComponent(
-					require("@/assets/icons/noimage.svg")
-				)}`
-			);
-		},
 
 		modalItemsMap: (t) =>
 			t.modal.items.map((x) => ({
@@ -236,6 +234,21 @@ export default {
 	.image {
 		display: inline-block;
 		position: relative;
+		border-radius: 4px;
+		overflow: hidden;
+
+		&.noimage {
+			background-color: $blue6;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			display: flex;
+		}
+
+		.placeholder {
+			font-size: 24px;
+			color: $blue4;
+		}
 
 		.img {
 			background-repeat: no-repeat;

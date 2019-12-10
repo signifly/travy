@@ -1,9 +1,9 @@
 <template>
 	<div
-		class="image"
-		v-if="src"
-		@mouseover="active = true"
 		@mouseleave="active = false"
+		@mouseover="active = true"
+		:class="{noimage: !src}"
+		class="image"
 	>
 		<i class="el-icon-picture-outline-round" />
 
@@ -45,6 +45,10 @@ export default {
 	display: inline-block;
 	font-size: 1.5em;
 	overflow: visible;
+
+	&.noimage {
+		opacity: 0.5;
+	}
 
 	i {
 		background-color: $white2;

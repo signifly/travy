@@ -1,11 +1,7 @@
 <template>
 	<div class="image">
 		<div class="img" :style="style" :class="{noimage: !src}">
-			<div
-				v-if="!src"
-				class="placeholder"
-				v-html="require('@/assets/icons/noimage.svg')"
-			/>
+			<i v-if="!src" class="placeholder el-icon-picture-outline-round" />
 		</div>
 	</div>
 </template>
@@ -47,20 +43,18 @@ export default {
 		background-position: center;
 		justify-content: center;
 		align-items: center;
+		border-radius: 4px;
 		display: flex;
 		color: $blue2;
 		width: 100%;
 
 		&.noimage {
-			border: 1px solid $blue2;
-			border-radius: 4px;
+			background-color: $blue6;
 		}
 
 		.placeholder {
-			max-width: 50%;
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
+			font-size: 24px;
+			color: $blue4;
 		}
 	}
 }
