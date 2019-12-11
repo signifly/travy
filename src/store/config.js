@@ -24,14 +24,14 @@ export default {
 		data(state) {
 			return state.data;
 		},
+		ws(state, {data = {}}) {
+			return data.websockets;
+		},
 		theme(state, {data = {}}) {
 			return data.theme;
 		},
 		header(state, {data = {}}) {
 			return data.header;
-		},
-		ws(state, {data = {}}) {
-			return data.websockets;
 		},
 		title(state, {data = {}}) {
 			return data.title || "Travy";

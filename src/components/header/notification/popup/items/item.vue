@@ -26,9 +26,9 @@ import {Button} from "element-ui";
 export default {
 	components: {Button},
 	props: {
-		id: {type: String, required: true},
 		title: {type: String, required: true},
 		message: {type: String, required: true},
+		id: {type: String, required: true},
 		link: {type: String, required: false},
 		link_text: {type: String, required: false},
 		is_read: {type: Boolean, required: true},

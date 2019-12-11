@@ -31,7 +31,6 @@ export default {
 		path: ""
 	}),
 	computed: {
-		ready: (t) => t.$store.getters["base/ready"],
 		info: (t) => info[t.status]
 	},
 	watch: {

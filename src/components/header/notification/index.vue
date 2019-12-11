@@ -2,7 +2,7 @@
 	<div class="notification">
 		<a class="badge" @mousedown="toggle">
 			<Badge :hidden="!unread" :value="unread || 1" :max="99" type="primary">
-				<div class="icon" v-html="require('@/assets/icons/bell.svg')" />
+				<i class="el-icon-bell" />
 			</Badge>
 		</a>
 
@@ -83,11 +83,6 @@ export default {
 	created() {
 		this.getItems();
 		this.getUnread();
-
-		this.$ws.on(`private-user.${this.user.id}`, () => {
-			this.getItems();
-			this.getUnread();
-		});
 	}
 };
 </script>
@@ -105,19 +100,6 @@ export default {
 		justify-content: center;
 		width: 60px;
 		margin-top: 4px;
-
-		.icon {
-			display: inline-flex;
-
-			::v-deep svg {
-				$s: 1.5em;
-				width: $s;
-				height: $s;
-				path {
-					fill: $white1;
-				}
-			}
-		}
 
 		.el-badge {
 			::v-deep {

@@ -50,17 +50,14 @@ const listeners = {
 		item.subscribed = true;
 
 		// get private channel token
-		if (item.channel.startsWith("private")) {
-			const url = Vue.prototype.$opts.api;
+		const url = Vue.prototype.$opts.api;
 
-			const {data} = await api.post(`${url}/broadcasting/auth`, {
-				socket_id: state.socketId,
-				channel_name: item.channel
-			});
+		const {data} = await api.post(`${url}/broadcasting/auth`, {
+			socket_id: state.socketId,
+			channel_name: item.channel
+		});
 
-			// eslint-disable-next-line
-			item.auth = data.auth;
-		}
+		item.auth = data.auth;
 
 		// subscribe to channel
 		state.ws.send(
@@ -111,8 +108,7 @@ const reset = () => {
 };
 
 const connect = () => {
-	const {url} = store.getters["config/ws"];
-
+	const url = store.getters["config/ws"];
 	state.ws = new WebSocket(url);
 
 	state.ws.addEventListener("open", (e) => {
@@ -148,27 +144,22 @@ const connect = () => {
 	});
 
 	state.ws.addEventListener("close", (e) => {
-		const user = store.getters["user/data"];
 		if (dev) console.log("ws close", e);
-
 		reset();
 
-		if (user) {
-			// if still logged in
-			setTimeout(connect, 5000);
+		setTimeout(() => {
+			const user = store.getters["user/data"];
 
-			store.dispatch("notify/send", {
-				message: "Connection closed",
-				type: "warning",
-				title: `WS`
-			});
-		}
+			if (user) {
+				connect();
+			}
+		}, 3000);
 	});
 };
 
 export default {
 	on(channel, cb) {
-		listeners.add({channel, cb});
+		listeners.add({channel: `private-${channel}`, cb});
 
 		// if never started or closed
 		if (state.wsState === undefined || state.wsState === "closed") {

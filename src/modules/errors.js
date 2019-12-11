@@ -7,9 +7,9 @@ export default () => {
 		console.error("Custom vue error:", msg, vm.name, trace);
 
 		store.dispatch("notify/send", {
-			message: msg,
 			title: "Vue error",
-			type: "error"
+			type: "error",
+			message: msg
 		});
 	};
 
@@ -17,9 +17,9 @@ export default () => {
 		console.warn("Custom vue warning:", msg, vm.name, trace);
 
 		store.dispatch("notify/send", {
-			message: msg,
 			title: "Vue warning",
-			type: "warning"
+			type: "warning",
+			message: msg
 		});
 	};
 };

@@ -23,11 +23,11 @@ export default {
 	},
 
 	actions: {
-		async data({commit, getters}, {customErr} = {}) {
+		async data({getters, commit, dispatch}, {customErr} = {}) {
 			if (localStorage.getItem("auth")) {
 				try {
-					const {data} = await api.get("account", {customErr});
-					commit("data", data);
+					commit("data", (await api.get("account", {customErr})).data);
+					dispatch("notifications");
 					return getters.data;
 				} catch (err) {
 					// error
@@ -60,6 +60,18 @@ export default {
 				router.push({
 					name: "login",
 					params: {route: {path: window.location.pathname}}
+				});
+			}
+		},
+
+		notifications({rootGetters, getters, dispatch}) {
+			const active = rootGetters["config/ws"];
+			const user = getters["data"];
+
+			if (active) {
+				ws.on(`users.${user.id}`, ({data}) => {
+					const payload = {...data, type: data.status};
+					dispatch("notify/send", payload, {root: true});
 				});
 			}
 		},

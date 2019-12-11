@@ -108,11 +108,21 @@ const go = ({to, next}) => {
 	next();
 };
 
-router.beforeEach(async (to, from, next) => {
-	if (to.meta.public) return go({to, next});
+const init = async () => {
+	const [config, user] = await Promise.all([
+		store.getters["config/data"] || (await store.dispatch("config/data")),
+		store.getters["user/data"] || (await store.dispatch("user/data"))
+	]);
 
-	const user =
-		store.getters["user/data"] || (await store.dispatch("user/data"));
+	return {config, user};
+};
+
+router.beforeEach(async (to, from, next) => {
+	const {user} = await init();
+
+	if (to.meta.public) {
+		return go({to, next});
+	}
 
 	if (!user) {
 		return store.dispatch("user/logout");

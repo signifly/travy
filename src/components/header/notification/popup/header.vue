@@ -17,7 +17,7 @@ export default {
 	},
 	methods: {
 		async markAllRead() {
-			await this.$axios.post("account/read-notifications", {data: {all: true}});
+			await this.$axios.post("account/notifications", {data: {all: true}});
 			this.$emit("updateItems", {is_read: true});
 		}
 	}
