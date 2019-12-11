@@ -12,8 +12,8 @@
 			</div>
 
 			<div class="account">
-				<notification v-if="notifications" />
 				<user />
+				<notification v-if="notifications" />
 			</div>
 		</div>
 	</Header>
@@ -28,9 +28,9 @@ import user from "./user";
 export default {
 	components: {Header, notification, vMenu, user},
 	computed: {
-		notifications: (t) => t.header.notifications !== false,
 		header: (t) => t.$store.getters["config/header"],
-		theme: (t) => t.$store.getters["config/theme"]
+		theme: (t) => t.$store.getters["config/theme"],
+		notifications: (t) => t.header.notifications
 	}
 };
 </script>

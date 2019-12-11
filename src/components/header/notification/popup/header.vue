@@ -1,7 +1,7 @@
 <template>
 	<div class="header">
 		<div class="loading"><i class="el-icon-loading" v-if="loading" /></div>
-		<Button size="mini" icon="el-icon-check" plain @click="markAllRead">
+		<Button size="mini" icon="el-icon-check" plain @click="itemsRead">
 			{{ $translate({en: "Mark all as read", da: "Markér alle som læst"}) }}
 		</Button>
 	</div>
@@ -16,9 +16,9 @@ export default {
 		loading: {type: Boolean, required: true}
 	},
 	methods: {
-		async markAllRead() {
+		async itemsRead() {
 			await this.$axios.post("account/notifications", {data: {all: true}});
-			this.$emit("updateItems", {is_read: true});
+			this.$emit("itemsRead");
 		}
 	}
 };

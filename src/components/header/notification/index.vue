@@ -2,16 +2,15 @@
 	<div class="notification">
 		<a class="badge" @mousedown="toggle">
 			<Badge :hidden="!unread" :value="unread || 1" :max="99" type="primary">
-				<i class="el-icon-bell" />
+				<i class="el-icon-news" />
 			</Badge>
 		</a>
 
 		<popup
-			v-bind="{loading, meta}"
-			:items.sync="items"
-			v-show="active"
-			@updateItems="updateItems"
-			@updateItem="updateItem"
+			:unread.sync="unread"
+			:active.sync="active"
+			v-bind="{user}"
+			v-if="active"
 		/>
 	</div>
 </template>
@@ -24,11 +23,8 @@ export default {
 	components: {Badge, popup},
 	data() {
 		return {
-			loading: false,
 			active: false,
-			items: [],
-			unread: 0,
-			meta: {}
+			unread: 0
 		};
 	},
 	computed: {
@@ -39,19 +35,6 @@ export default {
 			this.active = !this.active;
 		},
 
-		updateItem({id, ...data}) {
-			this.getUnread();
-			Object.assign(
-				this.items.find((x) => x.id === id),
-				data
-			);
-		},
-
-		updateItems(data) {
-			this.getUnread();
-			this.items = this.items.map((x) => ({...x, ...data}));
-		},
-
 		async getUnread() {
 			const {
 				data: {meta}
@@ -59,30 +42,11 @@ export default {
 				params: {count: 1, filter: {read: false}}
 			});
 			this.unread = meta.total;
-		},
-
-		async getItems({page} = {page: 1}) {
-			if (this.loading) return;
-			this.loading = true;
-
-			try {
-				const {
-					data: {data, meta}
-				} = await this.$axios.get("account/notifications", {
-					params: {page, count: 20}
-				});
-				this.items = page > 1 ? [...this.items, ...data] : data;
-				this.meta = meta;
-			} catch (err) {
-				// error
-			} finally {
-				this.loading = false;
-			}
 		}
 	},
 	created() {
-		this.getItems();
 		this.getUnread();
+		this.$ws.on(`users.${this.user.id}`, () => this.unread++);
 	}
 };
 </script>
@@ -90,18 +54,20 @@ export default {
 <style lang="scss" scoped>
 .notification {
 	position: relative;
-	outline: none;
+	margin-left: 1em;
 	color: $black1;
 
 	.badge {
-		display: inline-flex;
-		height: 100%;
-		align-items: center;
 		justify-content: center;
-		width: 60px;
-		margin-top: 4px;
+		display: inline-flex;
+		align-items: center;
+		height: 100%;
 
 		.el-badge {
+			i {
+				font-size: 18px;
+			}
+
 			::v-deep {
 				.is-dot {
 					border: 0px;

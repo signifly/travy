@@ -53,8 +53,8 @@ const listeners = {
 		const url = Vue.prototype.$opts.api;
 
 		const {data} = await api.post(`${url}/broadcasting/auth`, {
-			socket_id: state.socketId,
-			channel_name: item.channel
+			channel_name: item.channel,
+			socket_id: state.socketId
 		});
 
 		item.auth = data.auth;
@@ -76,11 +76,19 @@ const listeners = {
 	},
 
 	add(item) {
-		if (state.wsState === "open") {
-			this.subscribe(item);
-		}
+		const current = this.list.find(
+			(x) =>
+				x.channel === item.channel && x.cb.toString() === item.cb.toString()
+		);
 
-		this.list.push(item);
+		if (current) {
+			current.cb = item.cb;
+		} else {
+			this.list.push(item);
+			if (state.wsState === "open") {
+				this.subscribe(item);
+			}
+		}
 	},
 
 	remove({channel}) {

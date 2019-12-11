@@ -1,5 +1,5 @@
 <template>
-	<div class="item" :class="{is_read}" @click="markRead">
+	<div class="item" :class="{is_read}" @click="itemRead">
 		<div class="unread">
 			<div class="dot" :class="{is_read}" />
 		</div>
@@ -26,29 +26,30 @@ import {Button} from "element-ui";
 export default {
 	components: {Button},
 	props: {
-		title: {type: String, required: true},
-		message: {type: String, required: true},
-		id: {type: String, required: true},
-		link: {type: String, required: false},
 		link_text: {type: String, required: false},
-		is_read: {type: Boolean, required: true},
 		status: {type: String, default: "primary"},
-		created_at: {type: Number, required: true}
+		created_at: {type: Number, required: true},
+		is_read: {type: Boolean, required: true},
+		message: {type: String, required: true},
+		link: {type: String, required: false},
+		title: {type: String, required: true},
+		id: {type: String, required: true}
 	},
 	computed: {
 		date: (t) => date(t.created_at).sDateTime
 	},
 	methods: {
-		async markRead() {
+		async itemRead() {
 			if (!this.is_read) {
-				await this.$axios.post("account/read-notifications", {
+				await this.$axios.post("account/notifications", {
 					data: {ids: [this.id]}
 				});
-				this.$emit("updateItem", {id: this.id, is_read: true});
+
+				this.$emit("itemRead", this.id);
 			}
 		},
 		async goToLink() {
-			await this.markRead();
+			await this.itemRead();
 			this.$router.push(this.link);
 		}
 	}

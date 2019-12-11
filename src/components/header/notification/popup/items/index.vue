@@ -1,12 +1,12 @@
 <template>
 	<div class="items">
 		<div class="wrap">
-			<template v-if="items.length">
+			<template v-if="data.length">
 				<item
+					@itemRead="$emit('itemRead', $event)"
 					v-for="item in items"
-					v-bind="item"
 					:key="item.id"
-					@updateItem="$emit('updateItem', $event)"
+					v-bind="item"
 				/>
 			</template>
 
@@ -23,8 +23,15 @@ import item from "./item";
 export default {
 	components: {item},
 	props: {
-		items: {type: Array, required: true},
-		meta: {type: Object, required: false}
+		meta: {type: Object, required: false},
+		data: {type: Array, required: true}
+	},
+	computed: {
+		items() {
+			return this.data.filter(
+				(val, i, arr) => arr.findIndex((x) => x.id === val.id) === i
+			);
+		}
 	},
 	methods: {
 		scroll({target}) {
