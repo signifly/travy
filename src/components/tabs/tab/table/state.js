@@ -13,9 +13,9 @@ export default () => ({
 		return mergeData(this.data, this.route.query);
 	},
 
-	set query(query) {
+	async setQuery(query) {
 		if (this.route.name === "index") {
-			router.replace({query}).catch(() => {});
+			await router.replace({query}).catch(() => {});
 		}
 	},
 
@@ -26,13 +26,13 @@ export default () => ({
 		};
 	},
 
-	set(data) {
-		this.query = mergeData(this.route.query, data);
+	async set(data) {
+		await this.setQuery(mergeData(this.route.query, data));
 		this.data = mergeData(this.data, data);
 	},
 
-	resetFilters() {
+	async resetFilters() {
 		this.data.filters = {};
-		this.query = {...this.query, filters: undefined};
+		await this.setQuery({...this.query, filters: undefined});
 	}
 });

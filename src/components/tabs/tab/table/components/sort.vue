@@ -39,8 +39,8 @@ export default {
 		}
 	},
 	methods: {
-		select(value) {
-			this.state.set({
+		async select(value) {
+			await this.state.set({
 				page: undefined,
 				sort: value || undefined
 			});

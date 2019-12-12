@@ -38,15 +38,15 @@ export default {
 		})
 	},
 	methods: {
-		updatePage(page) {
+		async updatePage(page) {
 			page = page === 1 ? undefined : page;
-			this.state.set({page});
+			await this.state.set({page});
 			this.$emit("getData");
 		},
 
-		updateSize(pagesize) {
+		async updateSize(pagesize) {
 			pagesize = pagesize === 15 ? undefined : pagesize;
-			this.state.set({page: undefined, pagesize});
+			await this.state.set({page: undefined, pagesize});
 			this.$emit("getData");
 		}
 	}

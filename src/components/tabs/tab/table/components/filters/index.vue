@@ -88,7 +88,7 @@ export default {
 		},
 
 		async reset() {
-			this.state.resetFilters();
+			await this.state.resetFilters();
 			this.$emit("getData");
 			this.active = false;
 		}
