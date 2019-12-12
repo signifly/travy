@@ -36,15 +36,13 @@ const ping = {
 };
 
 const listeners = {
-	list: [], // {channel, auth, cb, subscribed};
+	list: {}, // channel: {subscribed, auth, cbs: []};
 
-	async subscribe(item) {
-		const subscribed = this.list.find(
-			(x) => x.channel === item.channel && x.subscribed
-		);
+	async subscribe({channel}) {
+		const item = this.list[channel];
 
-		// channel is already subscribed to
-		if (subscribed) return;
+		// if already subscribed
+		if (item.subscribed) return;
 
 		// mark current listener as subscribed
 		item.subscribed = true;
@@ -53,8 +51,8 @@ const listeners = {
 		const url = Vue.prototype.$opts.api;
 
 		const {data} = await api.post(`${url}/broadcasting/auth`, {
-			channel_name: item.channel,
-			socket_id: state.socketId
+			socket_id: state.socketId,
+			channel_name: channel
 		});
 
 		item.auth = data.auth;
@@ -64,7 +62,7 @@ const listeners = {
 			JSON.stringify({
 				event: "pusher:subscribe",
 				data: {
-					channel: item.channel,
+					channel: channel,
 					auth: item.auth
 				}
 			})
@@ -72,45 +70,47 @@ const listeners = {
 	},
 
 	subscribeAll() {
-		this.list.forEach((x) => this.subscribe(x));
+		Object.keys(this.list).forEach((channel) => this.subscribe({channel}));
 	},
 
-	add(item) {
-		const current = this.list.find(
-			(x) =>
-				x.channel === item.channel && x.cb.toString() === item.cb.toString()
-		);
+	add({channel, cb}) {
+		const current = this.list[channel];
 
 		if (current) {
-			current.cb = item.cb;
+			current.cbs.push(cb);
 		} else {
-			this.list.push(item);
+			this.list[channel] = {subscribed: false, cbs: [cb]};
+
 			if (state.wsState === "open") {
-				this.subscribe(item);
+				this.subscribe({channel});
 			}
 		}
 	},
 
-	remove({channel}) {
-		const item = this.list.find((x) => x.channel === channel);
-		this.list = this.list.filter((x) => x.channel !== channel);
-
+	remove({channel, cb}) {
+		const item = this.list[channel];
 		if (!item) return;
+
+		// remove callback
+		item.cbs = item.cbs.filter((x) => x !== cb);
 
 		if (state.wsState !== "open") return;
 
-		// unsubscribe
-		state.ws.send(
-			JSON.stringify({
-				event: "pusher:unsubscribe",
-				data: {channel}
-			})
-		);
+		// unsubscribe and remove item if no callbacks
+		if (!item.cbs.length) {
+			delete this.list[channel];
+			state.ws.send(
+				JSON.stringify({
+					event: "pusher:unsubscribe",
+					data: {channel}
+				})
+			);
+		}
 	}
 };
 
 const reset = () => {
-	listeners.list.forEach((item) => (item.subscribed = false));
+	Object.values(listeners.list).forEach((item) => (item.subscribed = false));
 	state.ws = {};
 	ping.stop();
 };
@@ -135,11 +135,9 @@ const connect = () => {
 			listeners.subscribeAll();
 		}
 
-		// emit non-subscribe messages
-		if (msg.event !== "pusher_internal:subscription_succeeded") {
-			listeners.list
-				.filter((x) => x.channel === msg.channel)
-				.forEach((x) => x.cb(msg));
+		// emit non-pusher messages
+		if (!msg.event.startsWith("pusher")) {
+			(listeners.list[msg.channel] || {cbs: []}).cbs.forEach((cb) => cb(msg));
 		}
 
 		if (dev && msg.event !== "pusher:pong") {
@@ -153,6 +151,7 @@ const connect = () => {
 
 	state.ws.addEventListener("close", (e) => {
 		if (dev) console.log("ws close", e);
+
 		reset();
 
 		setTimeout(() => {
@@ -175,8 +174,8 @@ export default {
 		}
 	},
 
-	stop(channel) {
-		listeners.remove({channel});
+	stop(channel, cb) {
+		listeners.remove({channel: `private-${channel}`, cb});
 	},
 
 	close() {

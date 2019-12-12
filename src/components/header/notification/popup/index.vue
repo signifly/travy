@@ -76,16 +76,17 @@ export default {
 
 	async created() {
 		await this.getItems();
-
-		this.$ws.on(`users.${this.user.id}`, ({data}) => {
-			this.data.unshift(data);
-		});
+		this.$ws.on(`users.${this.user.id}`, this.getItems);
 	},
 
 	mounted() {
 		setTimeout(() => {
 			this.$refs.popup.focus();
 		}, 50);
+	},
+
+	beforeDestroy() {
+		this.$ws.stop(`users.${this.user.id}`, this.getItems);
 	}
 };
 </script>
