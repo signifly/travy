@@ -118,7 +118,11 @@ const init = async () => {
 };
 
 router.beforeEach(async (to, from, next) => {
-	const {user} = await init();
+	const {user, config} = await init();
+
+	if (!config && to.name !== "error") {
+		return next({name: "error", params: {status: 500}});
+	}
 
 	if (to.meta.public) {
 		return go({to, next});
