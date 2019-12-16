@@ -20,7 +20,6 @@ export default {
 				commit("data", data);
 				return data;
 			} catch (err) {
-				console.log("nooo");
 				// error
 			}
 		}
