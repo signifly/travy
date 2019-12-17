@@ -120,7 +120,7 @@ const connect = () => {
 	state.ws = new WebSocket(url);
 
 	state.ws.addEventListener("open", (e) => {
-		if (dev) console.log("ws open", e);
+		if (dev) console.log("ws", e);
 	});
 
 	state.ws.addEventListener("message", ({data}) => {

@@ -77,7 +77,7 @@ export default {
 			metadata: null,
 			loading: false,
 			state: state(),
-			halt: false,
+			pause: false,
 			meta: null,
 			data: null,
 			update: 0,
@@ -125,14 +125,20 @@ export default {
 		}
 	},
 	methods: {
+		getWs() {
+			if (!this.pause) {
+				this.getData();
+			}
+		},
+
 		async event({actions, done}) {
 			if (actions.refresh) {
 				await this.getData();
 				this.selected.items = [];
 			}
 
-			if (actions.halt) {
-				this.halt = actions.halt.state;
+			if (actions.pause) {
+				this.pause = actions.pause.state;
 			}
 
 			if (done) done();
@@ -165,9 +171,12 @@ export default {
 		await this.getData();
 
 		if (this.ws) {
-			this.$ws.on(this.ws.channel, () => {
-				if (!this.halt) this.getData();
-			});
+			this.$ws.on(this.ws.channel, this.getWs);
+		}
+	},
+	beforeDestroy() {
+		if (this.ws) {
+			this.$ws.stop(this.ws.channel, this.getWs);
 		}
 	}
 };
