@@ -49,7 +49,10 @@ export const translate = (locales) => {
 };
 
 export const operator = ({key, value, operator, data}) => {
-	const op = {eq, gt, gte, lt, lte}[operator];
+	const _in = (src, value) => src.includes(value);
+	const neq = (src, value) => src !== value;
+
+	const op = {eq, gt, gte, lt, lte, neq, in: _in}[operator];
 	return op(get(data, key), value);
 };
 
