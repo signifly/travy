@@ -72,7 +72,7 @@ export default {
 		modifiers: {type: Object, required: false},
 		pageTitle: {type: String, required: true},
 		activity: {type: Object, required: false},
-		sidebar: {type: Object, required: true},
+		sidebar: {type: Object, required: false},
 		actions: {type: Array, required: false},
 		hero: {type: Object, required: true},
 		tabs: {type: Array, required: true},
