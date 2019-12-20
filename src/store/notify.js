@@ -5,7 +5,10 @@ export default {
 
 	actions: {
 		send(ctx, {message, title, type}) {
-			Notification({message, title, type, offset: 40});
+			// make notification work on first load
+			setTimeout(() => {
+				Notification({message, title, type, offset: 40});
+			}, 1);
 		}
 	}
 };
