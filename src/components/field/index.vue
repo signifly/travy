@@ -1,5 +1,5 @@
 <template>
-	<div class="field" :style="{width}" v-if="!disabled">
+	<div class="field" :style="{width, margin}" v-if="!disabled">
 		<div class="content">
 			<vlabel v-bind="{field, options}" v-if="show.label" />
 
@@ -33,6 +33,7 @@ export default {
 	props: {
 		widthPx: {type: Boolean, required: false},
 		options: {type: Object, required: false},
+		margin: {type: String, required: false},
 		error: {type: Object, required: false},
 		hide: {type: Array, default: () => []},
 		field: {type: Object, required: true},

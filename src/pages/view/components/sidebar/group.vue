@@ -4,10 +4,11 @@
 
 		<div class="fields">
 			<field
-				v-for="field in group.fields"
-				:key="field.attribute"
 				v-bind="{field, data, options}"
 				@event="$emit('event', $event)"
+				v-for="field in group.fields"
+				:key="field.attribute"
+				margin="0.5em 0"
 			/>
 		</div>
 	</div>
@@ -28,24 +29,25 @@ export default {
 
 <style lang="scss" scoped>
 .group {
-	margin-bottom: 40px;
+	margin-bottom: 50px;
 
 	&:last-child {
-		margin-bottom: 20px;
+		margin-bottom: 10px;
 	}
 
 	.name {
 		text-transform: uppercase;
-		margin-bottom: 1em;
+		margin-bottom: 0.75em;
 		font-weight: 600;
 		font-size: 12px;
 	}
 
 	.fields {
-		margin: -$fieldMargin 0;
-		display: flex;
-		flex-wrap: wrap;
 		justify-content: space-between;
+		transform: scale(0.95);
+		margin: -0.5em -2.5%;
+		flex-wrap: wrap;
+		display: flex;
 	}
 }
 </style>
