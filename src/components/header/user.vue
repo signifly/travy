@@ -1,6 +1,6 @@
 <template>
 	<div class="user">
-		<div class="image" :style="{backgroundImage: `url('${user.image}')`}" />
+		<div class="image" :style="{backgroundImage: `url('${user.image_url}')`}" />
 
 		<Dropdown
 			trigger="click"

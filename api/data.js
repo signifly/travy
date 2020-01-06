@@ -62,7 +62,7 @@ module.exports = {
 
 	"/account": {
 		data: {
-			image: "https://picsum.photos/id/11/50/50",
+			image_url: "https://picsum.photos/id/11/50/50",
 			email: "mtm@signifly.com",
 			email_verified_at: null,
 			updated_at: 1568191509,
