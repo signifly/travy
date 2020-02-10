@@ -1,9 +1,30 @@
 <template>
 	<div class="reorder">
+		<div class="move" v-if="isSelected">
+			<ButtonGroup>
+				<Button
+					@click="moveSelected('top')"
+					icon="el-icon-arrow-up"
+					size="mini"
+				>
+					Top
+				</Button>
+				<Button
+					@click="moveSelected('bottom')"
+					icon="el-icon-arrow-down"
+					size="mini"
+				>
+					Bottom
+				</Button>
+			</ButtonGroup>
+		</div>
+
 		<div class="table" v-if="loaded">
 			<table>
 				<thead>
 					<tr>
+						<th />
+						<th />
 						<th />
 						<th
 							v-for="column in _columns"
@@ -15,7 +36,17 @@
 
 				<draggable v-model="items" handle=".drag" @end="update" tag="tbody">
 					<tr v-for="item in items" :key="item.id">
-						<td class="top" @click="moveTop(item)" title="Move to top">
+						<td class="select">
+							<input type="checkbox" v-model="selected[item.id]" />
+						</td>
+						<td class="top" @click="moveTop([item])" title="Move to top">
+							<i class="el-icon-d-arrow-left" />
+						</td>
+						<td
+							class="bottom"
+							@click="moveBottom([item])"
+							title="Move to Bottom"
+						>
 							<i class="el-icon-d-arrow-left" />
 						</td>
 						<td
@@ -38,11 +69,12 @@
 </template>
 
 <script>
+import {ButtonGroup, Button} from "element-ui";
 import draggable from "vuedraggable";
 import {get} from "lodash";
 
 export default {
-	components: {draggable},
+	components: {draggable, ButtonGroup, Button},
 	meta: {
 		res: {
 			props: {
@@ -77,16 +109,34 @@ export default {
 	data() {
 		return {
 			loaded: false,
+			selected: {},
 			items: []
 		};
+	},
+	computed: {
+		isSelected: (t) => Object.values(t.selected).some((x) => x)
 	},
 	methods: {
 		get,
 
-		moveTop(item) {
-			const items = this.items.filter((x) => x !== item);
-			items.unshift(item);
-			this.items = items;
+		moveSelected(dir) {
+			const items = this.items.filter((x) => this.selected[x.id]);
+			if (dir === "bottom") this.moveBottom(items);
+			if (dir === "top") this.moveTop(items);
+			this.selected = {};
+		},
+
+		moveTop(items) {
+			let defItems = this.items.filter((item) => !items.includes(item));
+			defItems = [...items, ...defItems];
+			this.items = defItems;
+			this.update();
+		},
+
+		moveBottom(items) {
+			let defItems = this.items.filter((item) => !items.includes(item));
+			defItems = [...defItems, ...items];
+			this.items = defItems;
 			this.update();
 		},
 
@@ -117,9 +167,19 @@ export default {
 
 <style lang="scss" scoped>
 .reorder {
+	position: relative;
+
+	.move {
+		position: absolute;
+		right: 0;
+		top: -2.5em;
+	}
+
 	.table {
 		border: 1px solid $blue2;
 		border-radius: 4px;
+		max-height: calc(100vh - 35em);
+		overflow: auto;
 
 		table {
 			width: 100%;
@@ -151,12 +211,25 @@ export default {
 				td {
 					background-color: $white1;
 
+					&.select {
+						width: 1.25em;
+					}
+
 					&.top {
-						width: 1.5em;
+						width: 1.25em;
 						cursor: pointer;
 
 						i {
 							transform: rotate(90deg);
+						}
+					}
+
+					&.bottom {
+						width: 1.25em;
+						cursor: pointer;
+
+						i {
+							transform: rotate(-90deg);
 						}
 					}
 				}
