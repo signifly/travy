@@ -20,7 +20,7 @@
 		</div>
 
 		<div class="table" v-if="loaded">
-			<table>
+			<table :class="{isSelected}">
 				<thead>
 					<tr>
 						<th />
@@ -186,6 +186,15 @@ export default {
 			border-collapse: collapse;
 			font-size: em(12);
 
+			&.isSelected {
+				tr td {
+					&:nth-child(1n + 2) {
+						pointer-events: none;
+						opacity: 0.7;
+					}
+				}
+			}
+
 			tr {
 				&.sortable-ghost {
 					color: $blue5;
@@ -210,6 +219,7 @@ export default {
 
 				td {
 					background-color: $white1;
+					user-select: none;
 
 					&.select {
 						width: 1.25em;
