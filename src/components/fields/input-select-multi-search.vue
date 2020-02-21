@@ -12,7 +12,6 @@
 			:reserve-keyword="true"
 			:remote-method="getItems"
 			@change="update"
-			@visible-change="initSearch"
 		>
 			<Option v-for="item in optionItemsC" v-bind="item" :key="item.value" />
 		</Select>
@@ -22,6 +21,8 @@
 <script>
 import {get, merge, uniqBy, pick} from "lodash";
 import {Select, Option} from "element-ui";
+const {Sema} = require("async-sema");
+const s = new Sema(1);
 
 export default {
 	components: {Select, Option},
@@ -65,7 +66,6 @@ export default {
 	},
 	data() {
 		return {
-			opened: false,
 			optionItems: []
 		};
 	},
@@ -88,21 +88,18 @@ export default {
 			}))
 	},
 	methods: {
-		initSearch() {
-			if (!this.opened) {
-				this.opened = true;
-				this.getItems();
-			}
-		},
-
 		async getItems(search) {
 			const key = this._options.key;
+
+			await s.acquire();
 
 			const {data} = await this.$axios.get(this.endpoint.url, {
 				params: merge({}, this.endpoint.params, {
 					filter: {search}
 				})
 			});
+
+			s.release();
 
 			this.optionItems = key ? get(data, key) : data;
 		},
