@@ -1,5 +1,5 @@
 <template>
-	<div class="fields">
+	<div class="fields" v-if="data">
 		<field
 			v-bind="{field, data, options, error}"
 			v-for="field in fields"
@@ -8,14 +8,17 @@
 			type="fields"
 		/>
 	</div>
+
+	<loader v-else />
 </template>
 
 <script>
 import {rStringProps, mergeData} from "@/modules/utils";
 import field from "@/components/field";
+import loader from "./loader";
 
 export default {
-	components: {field},
+	components: {field, loader},
 	props: {
 		parentData: {type: Object, required: false},
 		definitions: {type: Object, required: true}

@@ -51,7 +51,7 @@ export default {
 	margin-bottom: -55px;
 
 	.wrap {
-		height: 250px;
+		height: $heroHeight;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
