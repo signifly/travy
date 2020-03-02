@@ -8,7 +8,7 @@
 		<div class="view-action">
 			<Button size="medium" :type="status" @click="active = !active">
 				{{ name }}
-				<i class="el-icon-right" :class="`el-icon-${icon}`" v-if="icon" />
+				<i :class="`el-icon-${icon}`" v-if="icon" />
 			</Button>
 		</div>
 	</action>

@@ -14,11 +14,7 @@
 					plain
 				>
 					{{ _action.name }}
-					<i
-						:class="`el-icon-${_action.icon}`"
-						class="el-icon-right"
-						v-if="_action.icon"
-					/>
+					<i :class="`el-icon-${_action.icon}`" v-if="_action.icon" />
 				</Button>
 			</div>
 		</action>

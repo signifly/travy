@@ -9,11 +9,7 @@
 			<div class="button-action">
 				<Button size="medium" :type="action.status" @click="active = !active">
 					{{ action.name }}
-					<i
-						:class="`el-icon-${action.icon}`"
-						class="el-icon-right"
-						v-if="action.icon"
-					/>
+					<i :class="`el-icon-${action.icon}`" v-if="action.icon" />
 				</Button>
 			</div>
 		</action>
