@@ -21,6 +21,7 @@ export const api = (() => {
 
 	api.interceptors.request.use((config) => {
 		const auth = JSON.parse(localStorage.getItem("auth"));
+		config.headers["X-Travy"] = true;
 
 		if (auth) {
 			config.headers.common["Authorization"] = `
