@@ -1,5 +1,10 @@
 <template>
-	<div class="pagination" :class="{loading}">
+	<div
+		v-shortkey="{right: ['arrowright'], left: ['arrowleft']}"
+		@shortkey="shortkey"
+		class="pagination"
+		:class="{loading}"
+	>
 		<Pagination
 			background
 			layout="sizes, prev, pager, next"
@@ -48,6 +53,16 @@ export default {
 			pagesize = pagesize === 15 ? undefined : pagesize;
 			await this.state.set({page: undefined, pagesize});
 			this.$emit("getData");
+		},
+
+		shortkey({srcKey}) {
+			if (srcKey === "right" && this.to !== this.total) {
+				this.updatePage(this.current_page + 1);
+			}
+
+			if (srcKey === "left" && this.current_page !== 1) {
+				this.updatePage(this.current_page - 1);
+			}
 		}
 	}
 };
