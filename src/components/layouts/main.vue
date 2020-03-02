@@ -20,7 +20,7 @@ import {Container} from "element-ui";
 export default {
 	components: {Container, vHeader},
 	computed: {
-		theme: (t) => t.$store.getters["config/theme"],
+		theme: (t) => t.$store.getters["config/theme"] || {},
 		ready: (t) => t.$store.getters["base/ready"]
 	}
 };

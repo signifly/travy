@@ -1,5 +1,5 @@
 <template>
-	<div class="hero" :style="{backgroundColor: theme.color}">
+	<div class="hero">
 		<div class="container">
 			<div class="wrap">
 				<breadcrumbs :breadcrumbs="heroC.breadcrumbs" />
@@ -40,8 +40,7 @@ export default {
 		hero: {type: Object, required: true}
 	},
 	computed: {
-		heroC: (t) => rStringProps({data: t.data, val: t.hero}),
-		theme: (t) => t.$store.getters["config/theme"]
+		heroC: (t) => rStringProps({data: t.data, val: t.hero})
 	}
 };
 </script>
