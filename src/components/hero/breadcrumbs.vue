@@ -1,8 +1,13 @@
 <template>
-	<div class="breadcrumb" v-if="viewId">
+	<div class="breadcrumb" v-if="breadcrumbs.length">
 		<Breadcrumb>
-			<BreadcrumbItem :to="`/i/${indexId}`">{{ home }}</BreadcrumbItem>
-			<BreadcrumbItem>{{ viewId }}</BreadcrumbItem>
+			<BreadcrumbItem
+				v-for="item in breadcrumbs"
+				:key="item.url"
+				:to="item.url"
+			>
+				{{ item.name }}
+			</BreadcrumbItem>
 		</Breadcrumb>
 	</div>
 </template>
@@ -12,15 +17,8 @@ import {Breadcrumb, BreadcrumbItem} from "element-ui";
 
 export default {
 	components: {Breadcrumb, BreadcrumbItem},
-	computed: {
-		indexId: (t) => t.$route.params.indexId,
-		viewId: (t) => t.$route.params.viewId,
-		home() {
-			return this.indexId
-				.split("-")
-				.map((x) => x.charAt(0).toUpperCase() + x.slice(1))
-				.join(" ");
-		}
+	props: {
+		breadcrumbs: {type: Array, default: () => []}
 	}
 };
 </script>

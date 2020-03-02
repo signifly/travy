@@ -2,7 +2,7 @@
 	<div class="hero" :style="{backgroundColor: theme.color}">
 		<div class="container">
 			<div class="wrap">
-				<breadcrumbs />
+				<breadcrumbs :breadcrumbs="heroC.breadcrumbs" />
 
 				<div class="bottom">
 					<div class="info">
