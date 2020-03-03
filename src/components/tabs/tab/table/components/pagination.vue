@@ -28,6 +28,7 @@ export default {
 	components: {Pagination},
 	props: {
 		current_page: {type: Number, required: true},
+		last_page: {type: Number, required: true},
 		loading: {type: Boolean, required: true},
 		per_page: {type: Number, required: true},
 		total: {type: Number, required: true},
@@ -56,7 +57,7 @@ export default {
 		},
 
 		shortkey({srcKey}) {
-			if (srcKey === "right" && this.to !== this.total) {
+			if (srcKey === "right" && this.current_page !== this.last_page) {
 				this.updatePage(this.current_page + 1);
 			}
 

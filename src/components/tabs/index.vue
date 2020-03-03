@@ -17,12 +17,12 @@ import tab from "./tab";
 const state = () => ({
 	query: {...router.currentRoute.query},
 
-	set(query) {
-		this.query = query;
-
+	async set(query) {
 		if (router.currentRoute.name !== "dashboard") {
-			router.replace({query}).catch(() => {});
+			await router.replace({query}).catch(() => {});
 		}
+
+		this.query = query;
 	}
 });
 
