@@ -9,6 +9,7 @@
 			:filterable="true"
 			:remote="true"
 			@change="update"
+			@visible-change="open"
 		>
 			<Option v-for="item in itemsC" :key="item.value" v-bind="item" />
 		</Select>
@@ -53,11 +54,18 @@ export default {
 		value: {type: [String, Number], required: false, doc: true},
 		_value: {type: String, required: true},
 		options: {type: Object, required: false},
-		_options: {type: Object, required: true, doc: true}
+		_options: {type: Object, required: true, doc: true},
+		_disableOpen: {
+			type: Boolean,
+			required: false,
+			doc: true,
+			note: "disables get request on open"
+		}
 	},
 	data() {
 		return {
 			selectedItem: null,
+			opened: false,
 			items: []
 		};
 	},
@@ -82,6 +90,13 @@ export default {
 		}
 	},
 	methods: {
+		open() {
+			if (!this.opened && !this._disableOpen) {
+				this.opened = true;
+				this.getItems();
+			}
+		},
+
 		async getItems(search) {
 			const key = this._options.key;
 

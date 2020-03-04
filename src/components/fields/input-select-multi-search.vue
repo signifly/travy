@@ -11,6 +11,7 @@
 			:remote="true"
 			:reserve-keyword="true"
 			:remote-method="getItems"
+			@visible-change="open"
 			@change="update"
 		>
 			<Option v-for="item in optionItemsC" v-bind="item" :key="item.value" />
@@ -62,11 +63,18 @@ export default {
 		_addable: {type: Boolean, required: false, doc: true},
 		_options: {type: Object, required: true, doc: true},
 		values: {default: () => [], doc: true},
-		_values: {type: String, required: true}
+		_values: {type: String, required: true},
+		_disableOpen: {
+			type: Boolean,
+			required: false,
+			doc: true,
+			note: "disables get request on open"
+		}
 	},
 	data() {
 		return {
-			optionItems: []
+			optionItems: [],
+			opened: false
 		};
 	},
 	computed: {
@@ -88,6 +96,13 @@ export default {
 			}))
 	},
 	methods: {
+		open() {
+			if (!this.opened && !this._disableOpen) {
+				this.opened = true;
+				this.getItems();
+			}
+		},
+
 		async getItems(search) {
 			const key = this._options.key;
 
