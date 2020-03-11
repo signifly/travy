@@ -46,7 +46,7 @@ export default {
 		command: (action = () => {}) => action(),
 
 		logout() {
-			this.$store.dispatch("user/logout", {post: true});
+			this.$store.dispatch("user/logout");
 		},
 
 		account() {

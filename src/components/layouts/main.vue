@@ -2,7 +2,11 @@
 	<div class="main">
 		<Container class="is-vertical">
 			<vHeader v-if="ready" />
-			<div class="hero-placeholder" :style="{backgroundColor: theme.color}" />
+			<div
+				:style="{backgroundColor: theme.color}"
+				class="hero-placeholder"
+				v-if="hero"
+			/>
 
 			<div class="page">
 				<transition name="router">
@@ -21,7 +25,13 @@ export default {
 	components: {Container, vHeader},
 	computed: {
 		theme: (t) => t.$store.getters["config/theme"] || {},
-		ready: (t) => t.$store.getters["base/ready"]
+		ready: (t) => t.$store.getters["base/ready"],
+
+		hero() {
+			return ["index", "indexView", "dashboard", "account"].includes(
+				this.$route.name
+			);
+		}
 	}
 };
 </script>

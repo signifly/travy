@@ -49,19 +49,14 @@ export default {
 			}
 		},
 
-		async logout({commit}, {post} = {}) {
-			try {
-				if (post) await api.post("logout");
-			} catch (err) {
-				// error
-			} finally {
-				ws.close();
-				commit("logout");
-				router.push({
-					name: "login",
-					params: {route: {path: window.location.pathname}}
-				});
-			}
+		logout({commit}) {
+			ws.close();
+			commit("logout");
+
+			router.push({
+				name: "login",
+				params: {route: {path: window.location.pathname}}
+			});
 		},
 
 		notifications({rootGetters, getters, dispatch}) {

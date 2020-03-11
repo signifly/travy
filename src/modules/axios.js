@@ -58,7 +58,7 @@ export const api = (() => {
 				});
 			}
 
-			if (status === 401 && !res.config.url.endsWith("logout")) {
+			if (status === 401) {
 				// if token is invalid, logout
 				return store.dispatch("user/logout");
 			}
