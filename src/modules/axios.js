@@ -34,10 +34,11 @@ export const api = (() => {
 
 	api.interceptors.response.use(
 		(res) => res,
-		(err) => {
+		async (err) => {
+			const auth = JSON.parse(localStorage.getItem("auth"));
 			const res = err.response;
-			console.log("err", err);
-			console.log("res", res);
+			console.error("err", err);
+			console.error("res", res);
 
 			if (!res) {
 				console.error("no server response");
@@ -48,19 +49,41 @@ export const api = (() => {
 			const customErr = res.config.customErr;
 			const status = res.status;
 
+			// token expired
+			if (status === 401 && auth) {
+				try {
+					const {data} = await axios.post(
+						`${Vue.prototype.$opts.api}/refresh`,
+						null,
+						{
+							headers: {
+								Authorization: `${auth.token_type} ${auth.access_token}`
+							}
+						}
+					);
+
+					// save new auth
+					localStorage.setItem("auth", JSON.stringify(data));
+
+					// remove old auth from current request
+					delete err.config.headers["Authorization"];
+
+					// retry request
+					return await api.request(err.config);
+				} catch (err) {
+					store.dispatch("user/logout");
+					return Promise.reject(err);
+				}
+			}
+
+			// if the request catches the error itself, stop global error handling.
 			if (customErr) {
-				// if the request catches the error itself, stop global error handling.
 				if (status === 500) error({status, message});
 
 				return Promise.reject({
 					...res.data,
 					status
 				});
-			}
-
-			if (status === 401) {
-				// if token is invalid, logout
-				return store.dispatch("user/logout");
 			}
 
 			error({status, message});
