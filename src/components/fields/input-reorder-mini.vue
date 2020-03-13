@@ -53,6 +53,7 @@
 							v-for="column in _columns"
 							:key="column.key"
 							class="drag"
+							:class="{selected: selected[item.id]}"
 							v-text="get(item, column.key)"
 						/>
 					</tr>
@@ -191,6 +192,13 @@ export default {
 					&:nth-child(1n + 2) {
 						pointer-events: none;
 						opacity: 0.7;
+					}
+
+					&.selected {
+						color: black;
+						&:nth-child(n + 4) {
+							opacity: 1;
+						}
 					}
 				}
 			}
