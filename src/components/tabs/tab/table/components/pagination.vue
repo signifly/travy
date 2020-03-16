@@ -15,8 +15,9 @@
 		/>
 
 		<div class="info" v-if="from && to">
-			{{ from }}-{{ to }} {{ $translate({en: "of", da: "af"}) }} {{ total }}
-			{{ $translate({en: "items", da: "rækker"}) }}
+			{{ from.toLocaleString("en-US") }}-{{ to.toLocaleString("en-US") }}
+			{{ $translate({en: "of", da: "af"}) }}
+			{{ total.toLocaleString("en-US") }}
 		</div>
 	</div>
 </template>
