@@ -81,7 +81,7 @@ export default {
 			const {update} = actions;
 
 			if (update) {
-				this.state.set({page: undefined, filters: update.data});
+				await this.state.set({page: undefined, filters: update.data});
 				this.$emit("update:loading", true);
 				this.reload();
 			}

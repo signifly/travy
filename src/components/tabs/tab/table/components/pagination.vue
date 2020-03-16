@@ -57,6 +57,8 @@ export default {
 		},
 
 		shortkey({srcKey}) {
+			if (this.loading) return;
+
 			if (srcKey === "right" && this.current_page !== this.last_page) {
 				this.updatePage(this.current_page + 1);
 			}

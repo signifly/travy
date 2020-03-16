@@ -145,7 +145,6 @@ export default {
 		},
 
 		async getData() {
-			if (this.loading) return;
 			this.loading = true;
 
 			const params = merge({}, this.endpoint.params, {
