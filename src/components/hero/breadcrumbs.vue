@@ -3,7 +3,7 @@
 		<Breadcrumb>
 			<BreadcrumbItem
 				v-for="item in breadcrumbs"
-				:key="item.url"
+				:key="item.name"
 				:to="item.url"
 			>
 				{{ item.name }}
