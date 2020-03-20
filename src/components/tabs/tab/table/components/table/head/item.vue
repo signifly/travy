@@ -7,8 +7,8 @@
 <script>
 export default {
 	props: {
+		width: {type: Number, default: 100},
 		name: {type: String, required: true},
-		width: {type: Number, required: false},
 		onClick: {type: String, required: false},
 		fieldType: {type: Object, required: true}
 	}

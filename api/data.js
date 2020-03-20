@@ -160,7 +160,7 @@ module.exports = {
 				{
 					attribute: "language_code",
 					name: "Language",
-					width: 200,
+					width: 50,
 					fieldType: {
 						id: "input-select",
 						props: {
@@ -341,7 +341,7 @@ module.exports = {
 					},
 					columns: [
 						{
-							width: 350,
+							width: 50,
 							name: "Name",
 							fieldType: {
 								id: "text",
@@ -423,7 +423,7 @@ module.exports = {
 									}
 								}
 							},
-							width: 120
+							width: 30
 						}
 					],
 					filters: {
@@ -629,9 +629,25 @@ module.exports = {
 						}
 					},
 					pagination: {},
+					expand: {
+						type: "fields",
+						fields: [
+							{
+								width: 100,
+								name: "Name",
+								attribute: "name",
+								fieldType: {
+									id: "text",
+									props: {
+										text: "name"
+									}
+								}
+							}
+						]
+					},
 					columns: [
 						{
-							width: 350,
+							width: 20,
 							name: "Name",
 							fieldType: {
 								id: "text",
@@ -640,19 +656,6 @@ module.exports = {
 								}
 							},
 							onClick: "/i/projects/{id}"
-						},
-						{
-							name: "Tags",
-							fieldType: {
-								id: "item-list-tooltip",
-								props: {
-									items: {
-										_link: "/i/tags/{id}",
-										"@scope": "tags",
-										label: "key"
-									}
-								}
-							}
 						},
 						{
 							name: "input",
@@ -760,7 +763,7 @@ module.exports = {
 				{
 					attribute: "language_code1",
 					name: "Language",
-					width: 200,
+					width: 20,
 					fieldType: {
 						id: "input-select",
 						props: {
@@ -787,7 +790,7 @@ module.exports = {
 				{
 					attribute: "language_code2",
 					name: "Language",
-					width: 200,
+					width: 20,
 					fieldType: {
 						id: "input-select",
 						props: {
@@ -854,7 +857,7 @@ module.exports = {
 						type: "fields",
 						fields: [
 							{
-								width: 50,
+								width: 20,
 								name: "Name",
 								attribute: "name",
 								fieldType: {
@@ -865,7 +868,7 @@ module.exports = {
 								}
 							},
 							{
-								width: 50,
+								width: 20,
 								name: "Tags",
 								attribute: "tags",
 								fieldType: {
@@ -927,7 +930,7 @@ module.exports = {
 					},
 					columns: [
 						{
-							width: 350,
+							width: 30,
 							name: "Name",
 							fieldType: {
 								id: "text",
@@ -1073,7 +1076,7 @@ module.exports = {
 				type: "fields",
 				fields: [
 					{
-						width: 50,
+						width: 20,
 						name: "Name",
 						attribute: "name",
 						fieldType: {
@@ -1084,7 +1087,7 @@ module.exports = {
 						}
 					},
 					{
-						width: 50,
+						width: 20,
 						name: "Tags",
 						attribute: "tags",
 						fieldType: {
@@ -1118,7 +1121,7 @@ module.exports = {
 			pagination: {},
 			columns: [
 				{
-					width: 350,
+					width: 30,
 					name: "Name",
 					fieldType: {
 						id: "text",
@@ -1199,7 +1202,7 @@ module.exports = {
 							}
 						}
 					},
-					width: 120
+					width: 20
 				}
 			]
 		},
@@ -1568,7 +1571,7 @@ module.exports = {
 								type: "fields",
 								fields: [
 									{
-										width: 50,
+										width: 20,
 										name: "Name",
 										attribute: "name",
 										fieldType: {
@@ -1579,7 +1582,7 @@ module.exports = {
 										}
 									},
 									{
-										width: 50,
+										width: 20,
 										name: "Tags",
 										attribute: "tags",
 										fieldType: {
@@ -1638,7 +1641,7 @@ module.exports = {
 							},
 							columns: [
 								{
-									width: 350,
+									width: 30,
 									name: "Name",
 									fieldType: {
 										id: "text",
@@ -1706,7 +1709,7 @@ module.exports = {
 							pagination: {},
 							columns: [
 								{
-									width: 350,
+									width: 30,
 									name: "Name",
 									fieldType: {
 										id: "text",
@@ -1754,7 +1757,7 @@ module.exports = {
 								type: "fields",
 								fields: [
 									{
-										width: 50,
+										width: 20,
 										name: "Name",
 										attribute: "name",
 										fieldType: {
@@ -1765,7 +1768,7 @@ module.exports = {
 										}
 									},
 									{
-										width: 50,
+										width: 20,
 										name: "Tags",
 										attribute: "tags",
 										fieldType: {
@@ -1824,7 +1827,7 @@ module.exports = {
 							},
 							columns: [
 								{
-									width: 350,
+									width: 30,
 									name: "Name",
 									fieldType: {
 										id: "text",
@@ -1878,7 +1881,7 @@ module.exports = {
 							pagination: {},
 							columns: [
 								{
-									width: 350,
+									width: 30,
 									name: "Name",
 									fieldType: {
 										id: "text",
@@ -1926,7 +1929,7 @@ module.exports = {
 								type: "fields",
 								fields: [
 									{
-										width: 50,
+										width: 20,
 										name: "Name",
 										attribute: "name",
 										fieldType: {
@@ -1937,7 +1940,7 @@ module.exports = {
 										}
 									},
 									{
-										width: 50,
+										width: 20,
 										name: "Tags",
 										attribute: "tags",
 										fieldType: {
@@ -1996,7 +1999,7 @@ module.exports = {
 							},
 							columns: [
 								{
-									width: 350,
+									width: 30,
 									name: "Name",
 									fieldType: {
 										id: "text",
@@ -2065,7 +2068,7 @@ module.exports = {
 							pagination: {},
 							columns: [
 								{
-									width: 350,
+									width: 30,
 									name: "Name",
 									fieldType: {
 										id: "text",
