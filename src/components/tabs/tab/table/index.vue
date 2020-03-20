@@ -33,6 +33,7 @@
 					loading,
 					expand,
 					state,
+					row,
 					sort
 				}"
 			/>
@@ -95,6 +96,7 @@ export default {
 		expand: (t) => t.definitions.expand,
 		batch: (t) => t.definitions.batch,
 		link: (t) => t.definitions.link,
+		row: (t) => t.definitions.row,
 		query: (t) => t.state.query,
 
 		sort() {

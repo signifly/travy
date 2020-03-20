@@ -1,5 +1,5 @@
 <template>
-	<tbody class="row">
+	<tbody class="row" :style="style">
 		<tr>
 			<td class="space" />
 
@@ -8,11 +8,11 @@
 			<expandToggle v-if="expand" :expanded.sync="expanded" />
 
 			<td v-if="selected.active">
-				<vselect v-bind="{selected, row}" />
+				<vselect v-bind="{selected, rowData}" />
 			</td>
 
 			<td v-for="column in columns" :key="column.attribute">
-				<rowField v-bind="{data: data, column, state}" @event="event" />
+				<rowField v-bind="{data, column, state}" @event="event" />
 			</td>
 		</tr>
 
@@ -28,6 +28,7 @@
 import {mergeData, rStringProps} from "@/modules/utils";
 import {debounce, cloneDeep} from "lodash";
 import expandToggle from "./expand/toggle";
+import {operator} from "@/modules/utils";
 import expandView from "./expand/view";
 import vselect from "./select";
 import rowField from "./field";
@@ -40,14 +41,15 @@ export default {
 		modifiers: {type: Object, required: false},
 		endpoint: {type: Object, required: false},
 		selected: {type: Object, required: true},
+		row: {type: Object, default: () => ({})},
 		expand: {type: Object, required: false},
+		rowData: {type: Object, required: true},
 		columns: {type: Array, required: true},
 		state: {type: Object, request: true},
-		sort: {type: Object, request: false},
-		row: {type: Object, required: true}
+		sort: {type: Object, request: false}
 	},
 	data: (t) => ({
-		data: cloneDeep(t.row),
+		data: cloneDeep(t.rowData),
 		expanded: false,
 		payload: {}
 	}),
@@ -56,7 +58,25 @@ export default {
 			rStringProps({
 				val: `${t.endpoint.url}/{id}`,
 				data: t.data
-			})
+			}),
+
+		style() {
+			const rowData = this.rowData;
+			const row = this.row;
+
+			return {
+				get background() {
+					if (!row.background) return null;
+
+					const active = operator({
+						...row.background.active,
+						data: rowData
+					});
+
+					return active && row.background.color;
+				}
+			};
+		}
 	},
 	methods: {
 		event(event) {

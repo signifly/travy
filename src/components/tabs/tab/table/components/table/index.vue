@@ -9,10 +9,19 @@
 			/>
 
 			<row
-				:key="row.id"
-				v-for="row in dataC"
 				@event="$emit('event', $event)"
-				v-bind="{row, columns, endpoint, selected, expand, state, sort}"
+				v-for="rowData in dataC"
+				:key="rowData.id"
+				v-bind="{
+					endpoint,
+					selected,
+					rowData,
+					columns,
+					expand,
+					state,
+					sort,
+					row
+				}"
 			/>
 		</draggable>
 
@@ -39,6 +48,7 @@ export default {
 		columns: {type: Array, required: true},
 		state: {type: Object, required: true},
 		sort: {type: Object, request: false},
+		row: {type: Object, required: false},
 		data: {type: Array, required: true}
 	},
 	computed: {

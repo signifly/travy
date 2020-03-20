@@ -622,6 +622,12 @@ module.exports = {
 				name: "stuff 2",
 				type: "table",
 				definitions: {
+					row: {
+						background: {
+							color: "azure",
+							active: {key: "have_background", operator: "eq", value: true}
+						}
+					},
 					endpoint: {
 						url: "/projects",
 						params: {
@@ -729,7 +735,8 @@ module.exports = {
 				updated_by: null,
 				tags_count: 0,
 				tags: [],
-				is_deleted: false
+				is_deleted: false,
+				have_background: true
 			}
 		],
 		links: {
