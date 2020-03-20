@@ -7,10 +7,10 @@
 <script>
 export default {
 	props: {
-		width: {type: Number, default: 100},
-		name: {type: String, required: true},
+		fieldType: {type: Object, required: true},
 		onClick: {type: String, required: false},
-		fieldType: {type: Object, required: true}
+		width: {type: Number, required: false},
+		name: {type: String, required: true}
 	}
 };
 </script>
