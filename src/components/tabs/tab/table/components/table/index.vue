@@ -69,12 +69,14 @@ export default {
 
 	table {
 		border-collapse: collapse;
+		table-layout: fixed;
 		width: 100%;
 
 		::v-deep {
 			th,
 			td {
 				border-bottom: 1px solid $blue6;
+				word-break: break-word;
 			}
 
 			tbody:last-child td {

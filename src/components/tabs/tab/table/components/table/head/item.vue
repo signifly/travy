@@ -1,5 +1,5 @@
 <template>
-	<th class="item" :width="width">
+	<th class="item" :width="width && `${width}%`">
 		{{ name }}
 	</th>
 </template>

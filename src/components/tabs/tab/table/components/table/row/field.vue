@@ -1,10 +1,10 @@
 <template>
 	<component :is="link ? 'router-link' : 'div'" class="table-field" :to="link">
 		<field
-			:data="data"
-			:field="column"
-			:hide="['label']"
+			:field="{...column, width: undefined}"
 			@event="$emit('event', $event)"
+			:hide="['label']"
+			:data="data"
 		/>
 	</component>
 </template>
