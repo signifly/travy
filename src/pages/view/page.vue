@@ -6,24 +6,24 @@
 			</template>
 		</hero>
 
-		<div class="container">
+		<div class="container" :key="refreshKey">
 			<Row class="mid" :gutter="20">
 				<Col class="left" :span="16">
 					<tabs
-						ref="tabs"
 						v-bind="{tabs, data: res.data}"
 						:edit.sync="edits.tabs"
 						@event="event"
+						ref="tabs"
 					/>
 				</Col>
 				<Col class="right" :span="8">
 					<sidebar
-						v-if="sidebar"
-						ref="sidebar"
 						v-bind="{sidebar, url, options}"
 						:edit.sync="edits.sidebar"
 						:data.sync="res.data"
 						@event="event"
+						v-if="sidebar"
+						ref="sidebar"
 					/>
 				</Col>
 			</Row>
@@ -33,7 +33,6 @@
 					<transition name="el-fade-in" mode="out-in" appear>
 						<activity
 							v-bind="{activity, data, url}"
-							:key="data.updated_at"
 							v-if="activity"
 							@event="event"
 						/>
@@ -59,14 +58,14 @@ import {merge} from "lodash";
 
 export default {
 	components: {
-		Col,
-		Row,
-		hero,
-		tabs,
-		panels,
-		sidebar,
+		activity,
 		actions,
-		activity
+		sidebar,
+		panels,
+		tabs,
+		hero,
+		Col,
+		Row
 	},
 	props: {
 		modifiers: {type: Object, required: false},
@@ -81,6 +80,7 @@ export default {
 	data() {
 		return {
 			loading: false,
+			refreshKey: 0,
 			error: null,
 			edits: {},
 			res: {
@@ -98,6 +98,7 @@ export default {
 		async event({actions = {}, done}) {
 			if (actions.refresh) {
 				await this.getData();
+				this.refreshKey++;
 			}
 
 			if (done) done();
