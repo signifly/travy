@@ -12,9 +12,9 @@
 
 					<div class="settings">
 						<modifiers
-							v-if="modifiers"
-							v-bind="modifiers"
 							@refresh="$emit('refresh')"
+							v-bind="modifiers"
+							v-if="modifiers"
 						/>
 
 						<div class="slot" v-if="$slots.settings">

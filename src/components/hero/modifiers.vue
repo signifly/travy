@@ -1,13 +1,7 @@
 <template>
 	<div class="modifiers">
 		<div class="modifiers-field" v-for="field in fields" :key="field.attribute">
-			<field
-				v-bind="{field}"
-				:hide="['label']"
-				:widthPx="true"
-				:data="dataC"
-				@event="event"
-			/>
+			<field v-bind="{field}" :hide="['label']" :data="dataC" @event="event" />
 		</div>
 	</div>
 </template>
@@ -51,9 +45,7 @@ export default {
 
 <style lang="scss" scoped>
 .modifiers {
-	max-width: 550px;
 	display: flex;
-	width: 100%;
 
 	&-field {
 		margin: -1em 0 -1em 1em;

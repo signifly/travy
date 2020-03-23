@@ -31,7 +31,6 @@ import {get} from "lodash";
 export default {
 	components: {vlabel, fieldType},
 	props: {
-		widthPx: {type: Boolean, required: false},
 		options: {type: Object, required: false},
 		margin: {type: String, required: false},
 		error: {type: Object, required: false},
@@ -55,12 +54,7 @@ export default {
 
 		width() {
 			const w = this.field.width || 100;
-
-			if (this.widthPx) {
-				return `${w}px`;
-			} else {
-				return w === 100 ? `${w}%` : `calc(${w}% - 1em)`;
-			}
+			return w === 100 ? `${w}%` : `calc(${w}% - 1em)`;
 		}
 	}
 };

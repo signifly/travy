@@ -1,6 +1,6 @@
 <template>
 	<div class="view-page" v-if="data">
-		<hero v-bind="{modifiers, hero, data}" @refresh="refresh">
+		<hero v-bind="{modifiers, hero, data}" @refresh="$emit('refresh')">
 			<template v-slot:settings>
 				<actions v-if="actions" v-bind="{actions, data}" @event="event" />
 			</template>
@@ -95,10 +95,6 @@ export default {
 		data: (t) => t.res.data
 	},
 	methods: {
-		refresh() {
-			this.$emit("refresh");
-		},
-
 		async event({actions = {}, done}) {
 			if (actions.refresh) {
 				await this.getData();

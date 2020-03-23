@@ -16,11 +16,7 @@
 			</td>
 		</tr>
 
-		<tr v-if="expanded">
-			<td colspan="100%">
-				<expandView v-bind="{data, expand}" @event="event" />
-			</td>
-		</tr>
+		<expandView v-if="expanded" v-bind="{data, expand}" @event="event" />
 	</tbody>
 </template>
 

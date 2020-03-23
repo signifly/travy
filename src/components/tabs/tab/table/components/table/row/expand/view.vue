@@ -1,14 +1,18 @@
 <template>
-	<div class="expand">
-		<div class="fields">
-			<field
-				v-for="field in expand.fields"
-				v-bind="{field, data}"
-				:key="field.attribute"
-				@event="$emit('event', $event)"
-			/>
-		</div>
-	</div>
+	<tr>
+		<td colspan="100%">
+			<div class="expand">
+				<div class="fields">
+					<field
+						v-for="field in expand.fields"
+						v-bind="{field, data}"
+						:key="field.attribute"
+						@event="$emit('event', $event)"
+					/>
+				</div>
+			</div>
+		</td>
+	</tr>
 </template>
 
 <script>
