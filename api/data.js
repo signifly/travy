@@ -160,7 +160,6 @@ module.exports = {
 				{
 					attribute: "language_code",
 					name: "Language",
-					width: 50,
 					fieldType: {
 						id: "input-select",
 						props: {
@@ -1538,7 +1537,6 @@ module.exports = {
 				{
 					attribute: "language_code",
 					name: "Language",
-					width: 200,
 					fieldType: {
 						id: "input-select",
 						props: {
