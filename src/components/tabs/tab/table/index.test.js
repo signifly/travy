@@ -31,7 +31,7 @@ beforeEach(async () => {
 describe("table", () => {
 	test("get data", async () => {
 		expect(wrapper.vm.data).toEqual(
-			data["/projects"].data.map((x) => ({...x, $parentData: {}}))
+			data["/projects"].data.map((x) => ({...x, $root: {}}))
 		);
 	});
 });

@@ -161,7 +161,7 @@ export default {
 				data: {data, meta, metadata}
 			} = await this.$axios.get(this.endpoint.url, {params});
 
-			this.data = data.map((x) => ({...x, $parentData: this.parentData}));
+			this.data = data.map((x) => ({...x, $root: this.parentData}));
 			this.metadata = metadata;
 			this.loading = false;
 			this.meta = meta;

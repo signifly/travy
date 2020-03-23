@@ -61,12 +61,12 @@ export default {
 		},
 
 		async getData() {
-			const {data} = await this.$axios.get(this.endpoint.url, {
+			const {data: res} = await this.$axios.get(this.endpoint.url, {
 				params: {...this.endpoint.params, modifier: this.modifiers}
 			});
 
-			this.options = data.options;
-			this.data = {...data.data, $parentData: this.parentData};
+			this.options = res.options;
+			this.data = {...res.data, $root: this.parentData};
 		},
 
 		async save() {
