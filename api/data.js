@@ -348,7 +348,6 @@ module.exports = {
 										{
 											name: "Name1",
 											attribute: "name1",
-											width: 50,
 											fieldType: {
 												id: "text",
 												props: {
@@ -357,13 +356,16 @@ module.exports = {
 											}
 										},
 										{
-											name: "status",
-											attribute: "status",
+											name: "Name2",
+											attribute: "name2",
 											fieldType: {
-												id: "status",
+												id: "text",
 												props: {
-													text: "Processing",
-													status: "primary"
+													text: "sub: {name}",
+													textStyle: {
+														fontSize: "12px",
+														color: "grey"
+													}
 												}
 											}
 										}

@@ -3,9 +3,8 @@
 		<field
 			v-for="field in fields"
 			:key="field.attribute"
+			v-bind="{field, data}"
 			:hide="['label']"
-			v-bind="{field}"
-			:data="__data"
 		/>
 	</div>
 </template>
@@ -52,7 +51,8 @@ export default {
 		__data: {type: Object, required: true}
 	},
 	computed: {
-		fields: (t) => t.__props.fields
+		fields: (t) => t.__props.fields,
+		data: (t) => t.__data
 	}
 };
 </script>
