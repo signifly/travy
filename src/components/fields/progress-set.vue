@@ -3,10 +3,10 @@
 		<div class="rows">
 			<div class="row" v-for="(row, i) in rows" :key="i">
 				<div
-					class="item"
-					v-for="item in row"
 					:class="item.status"
+					v-for="item in row"
 					:key="item.title"
+					class="item"
 				>
 					<div class="title">{{ item.title }}</div>
 					<div class="bar">
@@ -40,10 +40,10 @@ export default {
 		res: {
 			props: {
 				items: {
-					percentage: "percentage",
+					percentage: "{percentage}",
+					status: "{status}",
 					"@scope": "items",
-					status: "status",
-					title: "title"
+					title: "{title}"
 				}
 			},
 			data: {

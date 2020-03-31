@@ -1,6 +1,6 @@
 <template>
 	<div class="toggle">
-		<elSwitch :value="value" :disabled="_disabled" @change="update" />
+		<elSwitch v-bind="{value, disabled}" @change="update" />
 	</div>
 </template>
 
@@ -13,8 +13,8 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				_disabled: false,
-				value: "value"
+				disabled: false,
+				value: "{value}"
 			},
 			data: {
 				value: false
@@ -22,7 +22,7 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false},
+		disabled: {type: Boolean, required: false},
 		value: {type: Boolean, required: false}
 	},
 	methods: {

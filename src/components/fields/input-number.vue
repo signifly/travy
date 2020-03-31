@@ -2,12 +2,12 @@
 	<div class="input" @keypress="validate">
 		<Input
 			v-model="data.value"
-			@input="update"
-			:disabled="_disabled"
+			:disabled="disabled"
 			:controls="false"
+			@input="update"
 			size="medium"
 		/>
-		<div class="unit" v-if="_unit">{{ _unit }}</div>
+		<div class="unit" v-if="unit">{{ unit }}</div>
 	</div>
 </template>
 
@@ -21,9 +21,9 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				value: "inputVal",
-				_disabled: false,
-				_unit: "cm"
+				value: "{inputVal}",
+				disabled: false,
+				unit: "cm"
 			},
 			data: {
 				inputVal: 3
@@ -31,9 +31,9 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false},
-		_unit: {type: String, required: false},
-		value: {type: Number, required: false}
+		disabled: {type: Boolean, required: false},
+		value: {type: Number, required: false},
+		unit: {type: String, required: false}
 	},
 	data() {
 		return {

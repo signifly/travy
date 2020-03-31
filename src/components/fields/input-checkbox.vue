@@ -13,7 +13,7 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				value: "checkbox"
+				value: "{checkbox}"
 			},
 			data: {
 				checkbox: false

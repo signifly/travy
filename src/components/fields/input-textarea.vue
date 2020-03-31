@@ -1,13 +1,12 @@
 <template>
 	<div class="textarea">
 		<Input
-			:value="value"
-			@input="update"
-			:disabled="_disabled"
-			type="textarea"
-			:rows="3"
+			v-bind="{value, disabled}"
 			:controls="false"
+			@input="update"
+			type="textarea"
 			size="medium"
+			:rows="3"
 		/>
 	</div>
 </template>
@@ -21,8 +20,8 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				_disabled: false,
-				value: "value"
+				value: "{value}",
+				disabled: false
 			},
 			data: {
 				value: ""
@@ -30,7 +29,7 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false},
+		disabled: {type: Boolean, required: false},
 		value: {type: String, required: false}
 	},
 	methods: {

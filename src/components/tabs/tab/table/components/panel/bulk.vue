@@ -3,7 +3,7 @@
 		<action
 			@event="$emit('event', $event)"
 			v-bind="action.actionType"
-			:actOptions="actOptions"
+			:actionOpts="actionOpts"
 			v-model="active"
 		>
 			<div class="button-action">
@@ -30,7 +30,7 @@ export default {
 		active: false
 	}),
 	computed: {
-		actOptions: (t) => ({
+		actionOpts: (t) => ({
 			position: "top-right",
 			payload: {
 				bulk: {ids: t.selected.items.map((x) => x.id)}

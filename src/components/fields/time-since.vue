@@ -39,9 +39,6 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				timestamp: "timestamp"
-			},
-			data: {
 				timestamp: 1556021849
 			}
 		}

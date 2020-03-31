@@ -1,19 +1,19 @@
 <template>
 	<div class="select-multi-search">
 		<Select
+			@visible-change="initSearch"
+			:remote-method="getItems"
+			:allow-create="addable"
+			:reserve-keyword="true"
 			:value="selectedItems"
-			:disabled="_disabled"
-			:clearable="_clearable"
-			:allow-create="_addable"
+			:clearable="clearable"
+			:disabled="disabled"
 			:filterable="true"
+			@change="update"
 			:multiple="true"
 			:remote="true"
-			:reserve-keyword="true"
-			:remote-method="getItems"
-			@change="update"
-			@visible-change="initSearch"
 		>
-			<Option v-for="item in itemsC" v-bind="item" :key="item.value" />
+			<Option v-for="item in Items" v-bind="item" :key="item.value" />
 		</Select>
 	</div>
 </template>
@@ -26,11 +26,11 @@ export default {
 	components: {Select, Option},
 	meta: {
 		spec: {
-			_disabled: {type: Boolean, required: false},
-			_clearable: {type: Boolean, default: true},
-			_addable: {type: Boolean, required: false},
+			disabled: {type: Boolean, required: false},
+			clearable: {type: Boolean, default: true},
+			addable: {type: Boolean, required: false},
 			value: {type: Array, required: true},
-			_entities: {
+			entities: {
 				type: Object,
 				required: true,
 				children: {
@@ -54,9 +54,9 @@ export default {
 		},
 		res: {
 			props: {
-				value: "value",
-				_addable: true,
-				_entities: {
+				value: "{value}",
+				addable: true,
+				entities: {
 					endpoint: {
 						url: "items",
 						params: {filter: {test: "test"}}
@@ -80,10 +80,10 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false},
-		_clearable: {type: Boolean, default: true},
-		_addable: {type: Boolean, required: false},
-		_entities: {type: Object, required: true},
+		disabled: {type: Boolean, required: false},
+		clearable: {type: Boolean, default: true},
+		addable: {type: Boolean, required: false},
+		entities: {type: Object, required: true},
 		value: {type: Array, default: () => []}
 	},
 	data() {
@@ -93,13 +93,13 @@ export default {
 		};
 	},
 	computed: {
-		selectedItems: (t) => t.value.map((x) => get(x, t._entities.value)),
-		allItems: (t) => uniqBy([...t.items, ...t.value], t._entities.value),
+		selectedItems: (t) => t.value.map((x) => get(x, t.entities.value)),
+		allItems: (t) => uniqBy([...t.items, ...t.value], t.entities.value),
 
-		itemsC: (t) =>
+		Items: (t) =>
 			t.allItems.map((x) => ({
-				value: get(x, t._entities.value),
-				label: get(x, t._entities.label)
+				value: get(x, t.entities.value),
+				label: get(x, t.entities.label)
 			}))
 	},
 	methods: {
@@ -111,8 +111,8 @@ export default {
 		},
 
 		async getItems(search) {
-			const {url, params} = this._entities.endpoint;
-			const {dataWrap} = this._entities;
+			const {url, params} = this.entities.endpoint;
+			const {dataWrap} = this.entities;
 
 			const {data} = await this.$axios.get(url, {
 				params: merge({}, params, {
@@ -124,7 +124,7 @@ export default {
 		},
 
 		update(data) {
-			const ent = this._entities;
+			const ent = this.entities;
 
 			const value = data.map((val) => {
 				// [1, 2] => [{}, {}]

@@ -1,7 +1,12 @@
 <template>
-	<div class="text" :class="[`align-${_align}`, {subtitle}]">
+	<div class="text" :class="[`align-${align}`, {subtitle}]">
 		<div class="content">
-			<div class="title" :class="[statusC, {bold: _bold}]" v-text="textC" />
+			<div
+				v-text="text || '-'"
+				:style="textStyle"
+				:class="status"
+				class="title"
+			/>
 			<div class="subtitle" v-if="subtitle" v-text="subtitle" />
 		</div>
 
@@ -19,37 +24,24 @@
 
 <script>
 import {Tooltip} from "element-ui";
-import {toString} from "lodash";
 
 export default {
 	components: {Tooltip},
 	meta: {
-		spec: {
-			subtitle: {type: [String, Number], required: false},
-			text: {type: [String, Number], required: false},
-			tooltip: {type: String, required: false},
-			_align: {type: String, default: "left"},
-			_bold: {type: Boolean, required: false},
-			_fallback: {
-				type: Object,
-				required: false,
-				children: {
-					text: {type: [String, Number], required: false},
-					status: {type: String, required: false}
-				}
-			}
-		},
+		spec: "props",
 		res: {
 			props: {
-				text: "text",
-				subtitle: "subtitle",
-				status: "primary",
-				tooltip: "tooltip"
+				subtitle: "{subtitle}",
+				tooltip: "{tooltip}",
+				text: "{text}",
+				textStyle: {
+					textDecoration: "line-through"
+				}
 			},
 			data: {
-				text: "some text",
 				subtitle: "a subtitle",
 				status: "warning",
+				text: "some text",
 				tooltip: "text"
 			}
 		}
@@ -57,15 +49,10 @@ export default {
 	props: {
 		subtitle: {type: [String, Number], required: false},
 		text: {type: [String, Number], required: false},
-		_fallback: {type: Object, default: () => ({})},
+		textStyle: {type: Object, required: false},
 		tooltip: {type: String, required: false},
 		status: {type: String, required: false},
-		_align: {type: String, default: "left"},
-		_bold: {type: Boolean, required: false}
-	},
-	computed: {
-		statusC: (t) => t.status || t._fallback.status,
-		textC: (t) => toString(t.text) || t._fallback.text || "—"
+		align: {type: String, default: "left"}
 	}
 };
 </script>
@@ -91,10 +78,6 @@ export default {
 
 	.content {
 		.title {
-			&.bold {
-				font-weight: 600;
-			}
-
 			&.danger {
 				color: $danger;
 			}

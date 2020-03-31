@@ -1,17 +1,15 @@
 <template>
 	<div class="select-search">
 		<Select
-			:value="value"
+			v-bind="{value, disabled, clearable}"
 			:remote-method="elementGet"
-			:disabled="_disabled"
-			:clearable="_clearable"
-			:allow-create="_addable"
-			:filterable="true"
-			:remote="true"
-			@change="update"
+			:allow-create="addable"
 			@visible-change="open"
+			:filterable="true"
+			@change="update"
+			:remote="true"
 		>
-			<Option v-for="item in itemsC" :key="item.value" v-bind="item" />
+			<Option v-for="item in Items" :key="item.value" v-bind="item" />
 		</Select>
 	</div>
 </template>
@@ -25,10 +23,10 @@ export default {
 	meta: {
 		spec: {
 			value: {type: [String, Number], required: false},
-			_disabled: {type: Boolean, required: false},
-			_clearable: {type: Boolean, default: true},
-			_addable: {type: Boolean, required: false},
-			_entities: {
+			disabled: {type: Boolean, required: false},
+			clearable: {type: Boolean, default: true},
+			addable: {type: Boolean, required: false},
+			entities: {
 				type: Object,
 				required: true,
 				children: {
@@ -52,8 +50,8 @@ export default {
 		},
 		res: {
 			props: {
-				value: "value",
-				_entities: {
+				value: "{value}",
+				entities: {
 					endpoint: {
 						url: "items",
 						params: {filter: {test: "test"}}
@@ -69,10 +67,10 @@ export default {
 	},
 	props: {
 		value: {type: [String, Number], required: false},
-		_disabled: {type: Boolean, required: false},
-		_clearable: {type: Boolean, default: true},
-		_addable: {type: Boolean, required: false},
-		_entities: {type: Object, required: true}
+		disabled: {type: Boolean, required: false},
+		clearable: {type: Boolean, default: true},
+		addable: {type: Boolean, required: false},
+		entities: {type: Object, required: true}
 	},
 	data() {
 		return {
@@ -81,12 +79,12 @@ export default {
 		};
 	},
 	computed: {
-		selectedItem: (t) => t.itemsC.find((x) => x.value === t.value),
+		selectedItem: (t) => t.Items.find((x) => x.value === t.value),
 
-		itemsC() {
+		Items() {
 			return this.items.map((x) => ({
-				value: get(x, this._entities.value),
-				label: get(x, this._entities.label)
+				value: get(x, this.entities.value),
+				label: get(x, this.entities.label)
 			}));
 		}
 	},
@@ -103,8 +101,8 @@ export default {
 		},
 
 		async getItems({search, filter} = {}) {
-			const {url, params} = this._entities.endpoint;
-			const {dataWrap} = this._entities;
+			const {url, params} = this.entities.endpoint;
+			const {dataWrap} = this.entities;
 
 			const {data} = await this.$axios.get(url, {
 				params: merge({}, params, {
@@ -126,14 +124,9 @@ export default {
 			});
 		}
 	},
-	watch: {
-		value: {
-			immediate: true,
-			handler(value) {
-				if (value && !this.selectedItem) {
-					this.getItems({filter: {[this._entities.value]: [value]}});
-				}
-			}
+	created() {
+		if (this.value) {
+			this.getItems({filter: {[this.entities.value]: [this.value]}});
 		}
 	}
 };

@@ -1,10 +1,10 @@
 <template>
 	<div class="input-radio-group">
-		<RadioGroup :value="value" size="medium" @input="update">
+		<RadioGroup v-bind="{value}" size="medium" @input="update">
 			<RadioButton
-				v-for="item in _items"
-				:label="item.value"
 				:disabled="item.disabled"
+				v-for="item in items"
+				:label="item.value"
 				:key="item.value"
 			>
 				{{ item.label }}
@@ -21,7 +21,7 @@ export default {
 	meta: {
 		spec: {
 			value: {type: [String, Number, Boolean], required: false},
-			_items: {
+			items: {
 				type: Array,
 				required: true,
 				children: {
@@ -33,8 +33,8 @@ export default {
 		},
 		res: {
 			props: {
-				value: "option",
-				_items: [
+				value: "{option}",
+				items: [
 					{label: "Option A", value: true},
 					{label: "Option B", value: false},
 					{label: "Option C", value: 3},
@@ -48,7 +48,7 @@ export default {
 	},
 	props: {
 		value: {type: [String, Number, Boolean], required: false},
-		_items: {type: Array, required: true}
+		items: {type: Array, required: true}
 	},
 	methods: {
 		update(value) {

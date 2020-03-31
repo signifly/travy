@@ -34,9 +34,9 @@ export default {
 			props: {
 				items: {
 					"@scope": "items",
-					status: "status",
-					title: "title",
-					text: "text"
+					status: "{status}",
+					title: "{title}",
+					text: "{text}"
 				}
 			},
 			data: {

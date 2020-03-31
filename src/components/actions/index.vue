@@ -4,9 +4,9 @@
 
 		<component
 			@event="$emit('event', $event)"
-			:actOptions="actOptions"
+			:actionOpts="actionOpts"
 			@submit="submit"
-			v-bind="propsC"
+			v-bind="props"
 			@close="close"
 			v-if="value"
 			:data="data"
@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import {rStringProps, operator} from "@/modules/utils";
-import {merge} from "lodash";
+import {transProps, operator} from "@/modules/utils";
+// import {merge} from "lodash";
 
 export default {
 	props: {
-		actOptions: {type: Object, default: () => ({})},
+		actionOpts: {type: Object, default: () => ({})},
 		onSubmit: {type: Object, required: false},
 		value: {type: Boolean, required: true},
 		props: {type: Object, required: true},
@@ -32,12 +32,6 @@ export default {
 	computed: {
 		comp() {
 			return () => import(/* webpackMode: "eager" */ `./${this.id}.vue`);
-		},
-		propsC() {
-			return rStringProps({
-				data: this.data,
-				val: merge(this.props, {payload: this.actOptions.payload})
-			});
 		},
 
 		disabled() {
@@ -68,7 +62,7 @@ export default {
 
 			if (this.onSubmit) {
 				const {url, external} = this.onSubmit;
-				const link = rStringProps({data, val: url});
+				const link = transProps({data, val: url});
 
 				if (external) {
 					window.location.href = link;

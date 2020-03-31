@@ -10,17 +10,14 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				timestamp: "timestamp",
-				_format: "yyyy-MM-dd"
-			},
-			data: {
-				timestamp: 1517529600
+				timestamp: 1517529600,
+				format: "yyyy-MM-dd"
 			}
 		}
 	},
 	props: {
 		timestamp: {type: Number, required: false},
-		_format: {
+		format: {
 			type: String,
 			default: "yyyy-MM-dd HH:mm:ss",
 			note: `
@@ -32,7 +29,7 @@ export default {
 		datetime: (t) => new Date(t.timestamp * 1000),
 		date() {
 			if (this.timestamp) {
-				return formatDate(this.timestamp * 1000, this._format);
+				return formatDate(this.timestamp * 1000, this.format);
 			} else {
 				return "-";
 			}

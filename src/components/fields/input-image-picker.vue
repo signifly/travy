@@ -43,7 +43,7 @@
 					<a
 						class="item"
 						v-for="item in modalItemsMap"
-						:key="item.id"
+						:key="item.value"
 						:title="item.label"
 						@click="update(item)"
 					>
@@ -74,12 +74,16 @@ export default {
 	components: {Dialog, Input, Button},
 	meta: {
 		spec: {
-			_fit: {type: String, default: "cover", note: "contain/cover"},
-			_height: {type: String, default: "200px"},
-			_width: {type: String, default: "100%"},
+			fit: {type: String, default: "cover", note: "contain/cover"},
+			height: {type: String, default: "200px"},
+			width: {type: String, default: "100%"},
 			url: {type: String, required: false},
-			id: {type: Number, required: false},
-			_entities: {
+			value: {
+				note: "image id to update on data",
+				type: [Number, String],
+				required: false
+			},
+			entities: {
 				type: Object,
 				required: true,
 				children: {
@@ -104,9 +108,9 @@ export default {
 		},
 		res: {
 			props: {
-				url: "image_url",
-				id: "id",
-				_entities: {
+				value: "{image_id}",
+				url: "{image_url}",
+				entities: {
 					endpoint: {
 						url: "items",
 						params: {sort: "name"}
@@ -118,23 +122,23 @@ export default {
 				}
 			},
 			data: {
-				id: 1,
+				image_id: 1,
 				image_url: "https://picsum.photos/id/135/2000/2000"
 			}
 		}
 	},
 	props: {
-		_fit: {type: String, default: "cover", note: "contain/cover"},
-		_entities: {type: Object, required: true},
-		_height: {type: String, default: "200px"},
-		_width: {type: String, default: "100%"},
-		url: {type: String, required: false},
-		id: {type: Number, required: false}
+		value: {type: [Number, String], required: false},
+		entities: {type: Object, required: true},
+		height: {type: String, default: "200px"},
+		width: {type: String, default: "100%"},
+		fit: {type: String, default: "cover"},
+		url: {type: String, required: true}
 	},
 	data() {
 		return {
 			searchInput: "",
-			image: null,
+			image: this.url,
 			modal: {
 				loading: false,
 				active: false,
@@ -148,20 +152,20 @@ export default {
 		more: (t) => t.modal.meta.current_page !== t.modal.meta.last_page,
 
 		imageStyle: (t) => ({
-			height: t._height,
-			width: t._width
+			height: t.height,
+			width: t.width
 		}),
 
 		imgStyle: (t) => ({
 			backgroundImage: `url('${t.image}')`,
-			backgroundSize: t._fit
+			backgroundSize: t.fit
 		}),
 
 		modalItemsMap: (t) =>
 			t.modal.items.map((x) => ({
-				url: get(x, t._entities.url),
-				id: get(x, t._entities.value),
-				label: get(x, t._entities.label)
+				url: get(x, t.entities.url),
+				value: get(x, t.entities.value),
+				label: get(x, t.entities.label)
 			}))
 	},
 	methods: {
@@ -186,7 +190,7 @@ export default {
 			const {
 				dataWrap,
 				endpoint: {params, url}
-			} = this._entities;
+			} = this.entities;
 
 			const {data} = await this.$axios.get(url, {
 				params: {
@@ -207,24 +211,22 @@ export default {
 		},
 
 		remove() {
-			this.update({url: null, id: null});
+			this.update({url: null, value: null});
 		},
 
-		update({url, id}) {
+		update({url, value}) {
 			this.modal.active = false;
 			this.image = url;
 
 			this.$emit("event", {
 				actions: {
-					update: {data: {id}}
+					update: {data: {value}}
 				}
 			});
 		}
 	},
 	created() {
-		this.searchInput = "";
 		this.getItemsDebounce = debounce(this.getItems, 400);
-		this.$watch("url", (url) => (this.image = url), {immediate: true});
 	}
 };
 </script>

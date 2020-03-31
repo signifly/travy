@@ -1,13 +1,13 @@
 <template>
 	<div class="fieldType">
-		<component :is="customField || field" v-bind="mapProps" @event="event" />
+		<component :is="customField || field" v-bind="fieldProps" @event="event" />
 	</div>
 </template>
 
 <script>
-import {mapProps, mapPaths} from "@/modules/utils";
-import {FormItem} from "element-ui";
+import {transProps, mapPaths} from "@/modules/utils";
 import {mapKeys, get} from "lodash";
+import {FormItem} from "element-ui";
 import produce from "immer";
 
 export default {
@@ -18,8 +18,16 @@ export default {
 		id: {type: String, required: true}
 	},
 	computed: {
-		mapProps: (t) => mapProps({props: t.props, data: t.data}),
+		transProps: (t) => transProps({data: t.data, val: t.props}),
 		customField: (t) => t.$opts.fields[t.id],
+		fieldProps() {
+			// add untransformed props and data for fields that does their own transforms like button-action, table
+			return {
+				...this.transProps,
+				__props: this.props,
+				__data: this.data
+			};
+		},
 
 		field() {
 			const id = this.id;
@@ -34,7 +42,9 @@ export default {
 				if (update) {
 					// reverse map props
 					update.data = mapKeys(update.data, (val, key) => {
-						return get(this.props, key);
+						// {key} ==> key
+						const [, propValue] = /\{(.*?)\}/g.exec(get(this.props, key));
+						return propValue;
 					});
 
 					update.data = mapPaths(update.data);

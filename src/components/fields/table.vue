@@ -2,7 +2,7 @@
 	<div class="table">
 		<vTable
 			:selected="{active: false, items: []}"
-			:columns="_columns"
+			:columns="columns"
 			@event="update"
 			:state="state"
 			:data="value"
@@ -20,20 +20,20 @@ export default {
 	components: {vTable},
 	meta: {
 		spec: {
-			_columns: {type: Array, required: true, note: "see table definitions"},
+			columns: {type: Array, required: true, note: "see table definitions"},
 			value: {type: Array, required: true}
 		},
 		res: {
 			props: {
-				value: "value",
-				_columns: [
+				value: "{value}",
+				columns: [
 					{
 						name: "text",
 						label: "text",
 						fieldType: {
 							id: "text",
 							props: {
-								text: "text"
+								text: "{text}"
 							}
 						}
 					},
@@ -43,7 +43,7 @@ export default {
 						fieldType: {
 							id: "input-toggle",
 							props: {
-								value: "toggle"
+								value: "{toggle}"
 							}
 						}
 					}
@@ -57,7 +57,7 @@ export default {
 						id: 1
 					},
 					{
-						toggle: false,
+						toggle: true,
 						text: "text",
 						id: 2
 					}
@@ -66,12 +66,15 @@ export default {
 		}
 	},
 	props: {
-		_columns: {type: Array, required: true},
+		__props: {type: Object, required: true},
 		value: {type: Array, default: () => []}
 	},
 	data: () => ({
 		state: state()
 	}),
+	computed: {
+		columns: (t) => t.__props.columns
+	},
 	methods: {
 		update(event) {
 			const update = event.actions.update;

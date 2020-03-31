@@ -58,7 +58,7 @@
 <script>
 import pagination from "./components/pagination";
 import actions from "@/components/page-actions";
-import {rStringProps} from "@/modules/utils";
+import {transProps} from "@/modules/utils";
 import filters from "./components/filters";
 import tableEl from "./components/table";
 import panel from "./components/panel";
@@ -113,14 +113,14 @@ export default {
 		},
 
 		ws() {
-			return rStringProps({
+			return transProps({
 				val: get(this.definitions, "ws"),
 				data: this.parentData
 			});
 		},
 
 		endpoint() {
-			return rStringProps({
+			return transProps({
 				val: this.definitions.endpoint,
 				data: this.parentData
 			});
@@ -161,7 +161,7 @@ export default {
 				data: {data, meta, metadata}
 			} = await this.$axios.get(this.endpoint.url, {params});
 
-			this.data = data.map((x) => ({...x, $root: this.parentData}));
+			this.data = data.map((x) => ({...x, $parent: this.parentData}));
 			this.metadata = metadata;
 			this.loading = false;
 			this.meta = meta;

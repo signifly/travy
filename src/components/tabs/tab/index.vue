@@ -3,7 +3,7 @@
 		<component
 			v-bind="{definitions, parentData: data}"
 			@edit="$emit('edit', $event)"
-			:is="`v${type}`"
+			:is="comp"
 			ref="tab"
 			:key="id"
 		/>
@@ -11,16 +11,21 @@
 </template>
 
 <script>
-import vfields from "./fields";
-import vtable from "./table";
+import Fields from "./fields";
+import Table from "./table";
 
 export default {
-	components: {vfields, vtable},
+	components: {Fields, Table},
 	props: {
 		definitions: {type: Object, required: true},
 		data: {type: Object, required: false},
 		type: {type: String, required: true},
 		id: {type: String, required: true}
+	},
+	computed: {
+		comp() {
+			return this.type.charAt(0).toUpperCase() + this.type.slice(1);
+		}
 	},
 	methods: {
 		async save() {

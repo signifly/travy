@@ -2,6 +2,8 @@ const fastify = require("fastify")({logger: false});
 const cors = require("fastify-cors");
 const data = require("./data");
 
+// allow uploades
+fastify.addContentTypeParser("*", (req, done) => done());
 fastify.register(cors);
 
 fastify.register(async (instance, opts) => {

@@ -1,17 +1,17 @@
 <template>
 	<div class="datepicker">
 		<DatePicker
-			:value="dateC"
-			size="medium"
-			align="center"
-			:type="_type"
-			:editable="false"
-			:clearable="_clearable"
-			:disabled="_disabled"
 			:picker-options="pickerOpts"
+			:value-format="formatValue"
+			:clearable="clearable"
+			:disabled="disabled"
+			:editable="false"
 			:format="format"
-			:value-format="_formatValue"
 			@input="update"
+			:value="dateC"
+			align="center"
+			size="medium"
+			:type="type"
 		/>
 	</div>
 </template>
@@ -25,10 +25,10 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				_type: "month",
-				date: "somedate",
-				_clearable: true,
-				_formatValue: "timestamp"
+				formatValue: "timestamp",
+				date: "{somedate}",
+				clearable: true,
+				type: "month"
 			},
 			data: {
 				somedate: 1325376000
@@ -36,12 +36,12 @@ export default {
 		}
 	},
 	props: {
-		_type: {type: String, required: false, note: "year, month, date, datetime"},
-		_formatValue: {type: String, default: "timestamp"},
+		type: {type: String, default: "date", note: "year, month, date, datetime"},
+		formatValue: {type: String, default: "timestamp"},
 		date: {type: [Number, String], required: false},
-		_clearable: {type: Boolean, required: false},
-		_disabled: {type: Boolean, required: false},
-		_format: {type: String, required: false}
+		format: {type: String, default: "dd-MM-yyyy"},
+		clearable: {type: Boolean, required: false},
+		disabled: {type: Boolean, required: false}
 	},
 	data() {
 		return {
@@ -51,16 +51,7 @@ export default {
 		};
 	},
 	computed: {
-		format: (t) =>
-			t._format ||
-			{
-				year: "yyyy",
-				month: "MM-yyyy",
-				date: "dd-MM-yyyy",
-				datetime: "yyyy-MM-dd HH:mm:ss"
-			}[t._type],
-
-		timestamp: (t) => t._formatValue === "timestamp",
+		timestamp: (t) => t.formatValue === "timestamp",
 		dateC: (t) => (t.timestamp && t.date ? t.date * 1000 : t.date)
 	},
 	methods: {

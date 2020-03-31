@@ -12,11 +12,11 @@
 				<div class="item-list-tooltip-content">
 					<template v-for="item in items">
 						<a
-							v-if="item._link"
-							class="item"
-							:key="item._link"
-							:href="item._link"
 							@click.prevent="go(item)"
+							:href="item.link"
+							v-if="item.link"
+							:key="item.link"
+							class="item"
 						>
 							{{ item.label }}
 						</a>
@@ -41,7 +41,7 @@ export default {
 				required: true,
 				children: {
 					"@scope": {type: Array, required: true},
-					_link: {type: String, required: false},
+					link: {type: String, required: false},
 					label: {type: String, required: true}
 				}
 			}
@@ -49,9 +49,9 @@ export default {
 		res: {
 			props: {
 				items: {
-					_link: "/view/{id}",
+					link: "/view/{id}",
 					"@scope": "items",
-					label: "name"
+					label: "{name}"
 				}
 			},
 			data: {
@@ -69,8 +69,8 @@ export default {
 		disabled: (t) => t.items.length < 1
 	},
 	methods: {
-		go({_link}) {
-			this.$router.push(_link);
+		go({link}) {
+			this.$router.push(link);
 		}
 	}
 };

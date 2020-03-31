@@ -1,6 +1,6 @@
 <template>
-	<div class="editor" :class="{disabled: _disabled}">
-		<div class="overlay" v-if="_disabled" />
+	<div class="editor" :class="{disabled}">
+		<div class="overlay" v-if="disabled" />
 		<editor ref="editor" v-bind="{configs, value}" @input="update" />
 	</div>
 </template>
@@ -23,7 +23,7 @@ export default {
 		}
 	},
 	props: {
-		_disabled: {type: Boolean, required: false},
+		disabled: {type: Boolean, required: false},
 		content: {type: String, required: false}
 	},
 	data() {

@@ -4,7 +4,7 @@
 			<selectMultiSearch ref="select" v-bind="select" @event="selectEvent" />
 		</div>
 		<vTable
-			:_columns="_table.columns"
+			:__props="{columns: table.columns}"
 			@event="tableEvent"
 			:key="data.length"
 			:value="data"
@@ -24,7 +24,7 @@ export default {
 	meta: {
 		spec: {
 			select: {type: Object, required: true, children: selectSpec},
-			_table: {
+			table: {
 				type: Object,
 				required: true,
 				note: "see table definitions",
@@ -37,9 +37,9 @@ export default {
 		},
 		res: {
 			props: {
-				value: "value",
+				value: "{value}",
 				select: selectProps,
-				_table: {
+				table: {
 					columns: [
 						{
 							name: "title",
@@ -47,7 +47,7 @@ export default {
 							fieldType: {
 								id: "text",
 								props: {
-									text: "name"
+									text: "{name}"
 								}
 							}
 						},
@@ -57,7 +57,7 @@ export default {
 							fieldType: {
 								id: "input-toggle",
 								props: {
-									value: "bool"
+									value: "{bool}"
 								}
 							}
 						},
@@ -67,7 +67,7 @@ export default {
 							fieldType: {
 								id: "input-text",
 								props: {
-									value: "text"
+									value: "{text}"
 								}
 							}
 						}
@@ -93,10 +93,11 @@ export default {
 	},
 	props: {
 		value: {type: Array, default: () => []},
-		select: {type: Object, required: true},
-		_table: {type: Object, required: true}
+		__props: {type: Object, required: true},
+		select: {type: Object, required: true}
 	},
 	computed: {
+		table: (t) => t.__props.table,
 		data: (t) => t.select.value
 	},
 	methods: {
@@ -115,7 +116,7 @@ export default {
 					return {
 						...value,
 						...item,
-						...this._table.columnsData
+						...this.table.columnsData
 					};
 				});
 

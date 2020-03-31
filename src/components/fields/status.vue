@@ -13,7 +13,7 @@ export default {
 		spec: {
 			text: {type: String, required: true},
 			status: {type: String, required: false},
-			_fallback: {
+			fallback: {
 				type: Object,
 				required: false,
 				children: {
@@ -24,10 +24,6 @@ export default {
 		},
 		res: {
 			props: {
-				text: "text",
-				status: "status"
-			},
-			data: {
 				text: "4/8",
 				status: "primary"
 			}
@@ -36,11 +32,11 @@ export default {
 	props: {
 		text: {type: String, required: true},
 		status: {type: String, required: false},
-		_fallback: {type: Object, default: () => ({})}
+		fallback: {type: Object, default: () => ({})}
 	},
 	computed: {
-		textC: (t) => t.text || t._fallback.text,
-		statusC: (t) => t.status || t._fallback.status
+		textC: (t) => t.text || t.fallback.text,
+		statusC: (t) => t.status || t.fallback.status
 	}
 };
 </script>

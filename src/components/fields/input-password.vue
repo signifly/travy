@@ -1,10 +1,8 @@
 <template>
 	<div class="input">
 		<Input
-			:autocomplete="_autocomplete"
-			:disabled="_disabled"
+			v-bind="{value, disabled, autocomplete}"
 			:controls="false"
-			v-bind="{value}"
 			type="password"
 			@input="update"
 			size="medium"
@@ -21,8 +19,8 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				_disabled: false,
-				value: "password"
+				disabled: false,
+				value: "{password}"
 			},
 			data: {
 				password: ""
@@ -30,8 +28,8 @@ export default {
 		}
 	},
 	props: {
-		_autocomplete: {type: String, required: false},
-		_disabled: {type: Boolean, required: false},
+		autocomplete: {type: String, required: false},
+		disabled: {type: Boolean, required: false},
 		value: {type: String, required: false}
 	},
 	methods: {

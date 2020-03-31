@@ -13,7 +13,7 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				value: "color"
+				value: "{color}"
 			},
 			data: {
 				color: "#000"

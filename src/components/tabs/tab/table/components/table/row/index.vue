@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {mergeData, rStringProps} from "@/modules/utils";
+import {transProps, mergeData} from "@/modules/utils";
 import {debounce, cloneDeep} from "lodash";
 import expandToggle from "./expand/toggle";
 import {operator} from "@/modules/utils";
@@ -51,7 +51,7 @@ export default {
 	}),
 	computed: {
 		url: (t) =>
-			rStringProps({
+			transProps({
 				val: `${t.endpoint.url}/{id}`,
 				data: t.data
 			}),

@@ -1,43 +1,41 @@
 import * as utils from "./utils";
 
 describe("utils", () => {
-	test("rStringProps object", () => {
-		const res = utils.rStringProps({
+	test("transProps", () => {
+		const obj = utils.transProps({
+			val: {
+				scoped: {
+					parentId: "{$parent.id}",
+					"@scope": "items",
+					id: "{id}"
+				},
+				obj: {name: "id: {id}", rec: "{rec}"},
+				arr: [{id: "{id}", deepArr: [{id: "{id}"}]}],
+				id: "{id}",
+				null: null
+			},
+
 			data: {
 				id: 1,
-				person: {name: "pete"}
-			},
-			val: {
-				number: 1,
-				null: null,
-				boolean: true,
-				obj: {
-					key: "{id}/{person.name}"
-				},
-				array: [
-					"{id}/{person.name}",
-					{key: "{id}/{person.name}"},
-					{deepArr: [{id: "id: {id}"}]}
-				]
+				rec: "{id}",
+				items: [{id: 2, text: "text"}]
 			}
 		});
 
-		expect(res).toEqual({
-			number: 1,
-			null: null,
-			boolean: true,
-			obj: {key: "1/pete"},
-			array: ["1/pete", {key: "1/pete"}, {deepArr: [{id: "id: 1"}]}]
-		});
-	});
-
-	test("rStringProps string", () => {
-		const res = utils.rStringProps({
-			data: {id: 1},
-			val: "test/{id}"
+		expect(obj).toEqual({
+			scoped: [{parentId: 1, id: 2}],
+			obj: {name: "id: 1", rec: 1},
+			arr: [{id: 1, deepArr: [{id: 1}]}],
+			id: 1,
+			null: null
 		});
 
-		expect(res).toBe("test/1");
+		const string = utils.transProps({
+			val: "endpoint/{id}/{uuid}",
+			data: {id: 1, uuid: 2}
+		});
+
+		expect(string).toEqual("endpoint/1/2");
 	});
 
 	test("mergeData", () => {
@@ -68,41 +66,6 @@ describe("utils", () => {
 				key4: undefined,
 				key5: 5
 			}
-		});
-	});
-
-	test("mapProps", () => {
-		const res = utils.mapProps({
-			props: {
-				scope: {
-					rootId: "$root.id",
-					"@scope": "scope",
-					id: "id"
-				},
-				obj: {_text: "text"},
-				_obj: {text: "text"},
-				array: [{id: "id", deepArr: [{id: "id"}]}],
-				_array: [{id: 2, deepArr: [{id: 2}]}],
-				id: "id",
-				_null: null,
-				nothing: "nothing"
-			},
-
-			data: {
-				id: 1,
-				scope: [{id: 2, text: "text", rootId: "$root.id"}]
-			}
-		});
-
-		expect(res).toEqual({
-			scope: [{"@scope": "scope", rootId: 1, id: 2}],
-			obj: {_text: "text"},
-			_obj: {text: "text"},
-			array: [{id: 1, deepArr: [{id: 1}]}],
-			_array: [{id: 2, deepArr: [{id: 2}]}],
-			id: 1,
-			_null: null,
-			nothing: undefined
 		});
 	});
 

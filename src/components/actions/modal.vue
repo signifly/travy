@@ -9,11 +9,11 @@
 			:visible.sync="visible"
 			:append-to-body="false"
 			:width="`${width}px`"
-			:title="name"
+			:title="trans.name"
 		>
 			<div class="fields">
 				<field
-					v-bind="{field, data, error}"
+					v-bind="{field, error, data: modalData}"
 					v-for="field in fields"
 					:key="field.attribute"
 					@event="event"
@@ -44,27 +44,41 @@
 </template>
 
 <script>
+import {transProps, mergeData} from "@/modules/utils";
 import {Dialog, Button} from "element-ui";
-import {mergeData} from "@/modules/utils";
 import field from "@/components/field";
+import {get} from "lodash";
 
 export default {
 	components: {Dialog, Button, field},
 	props: {
+		actionOpts: {type: Object, required: true},
 		endpoint: {type: Object, required: true},
 		payload: {type: Object, required: false},
-		name: {type: String, required: false},
 		fields: {type: Array, required: true},
+		data: {type: Object, required: false},
+		name: {type: String, required: false},
 		width: {type: Number, default: 700}
 	},
 	data() {
 		return {
-			data: this.payload.data,
 			loading: false,
+			modalData: {},
 			error: {}
 		};
 	},
 	computed: {
+		trans() {
+			return transProps({
+				data: this.data,
+				val: {
+					endpoint: this.endpoint,
+					payload: this.payload,
+					name: this.name
+				}
+			});
+		},
+
 		visible: {
 			get: () => true,
 			set() {
@@ -75,21 +89,23 @@ export default {
 	methods: {
 		event({actions}) {
 			if (actions.update) {
-				this.data = mergeData(this.data, actions.update.data);
+				this.modalData = mergeData(this.modalData, actions.update.data);
 			}
 		},
 
 		async submit() {
 			try {
+				const {endpoint, payload} = this.trans;
 				this.loading = true;
 
 				const {data} = await this.$axios({
-					method: this.endpoint.method,
-					url: this.endpoint.url,
+					method: endpoint.method,
+					url: endpoint.url,
 					customErr: true,
 					data: {
-						...this.payload,
-						data: this.data
+						...this.actionOpts.payload,
+						...payload,
+						data: this.modalData
 					}
 				});
 
@@ -99,6 +115,9 @@ export default {
 				this.loading = false;
 			}
 		}
+	},
+	created() {
+		this.modalData = get(this.trans.payload, "data", {});
 	}
 };
 </script>

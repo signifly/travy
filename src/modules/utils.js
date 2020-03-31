@@ -1,8 +1,8 @@
 import {
-	mapValues,
 	mergeWith,
 	replace,
 	unset,
+	omit,
 	get,
 	set,
 	lte,
@@ -70,78 +70,52 @@ export const mergeData = (srcData, newData) => {
 	});
 };
 
-export const rStringProps = ({data, val}) => {
-	const reg = (str) => {
-		// find all {KEY} in string and replace with data value
-		return replace(str, /\{.*?\}/g, (key) => get(data, key.slice(1, -1), key));
-	};
-
-	if (Array.isArray(val)) {
-		return val.map((val) => rStringProps({data, val}));
-	}
-
-	if (val instanceof Object) {
-		return mapValues(val, (val) => rStringProps({data, val}));
-	}
-
-	if (typeof val === "string") {
-		return reg(val);
-	}
-
-	return val;
-};
-
-export const mapProps = ({props, data}) => {
-	return mapValues(props, (val, key) => {
-		if (Array.isArray(val)) {
-			return val.map((props) => {
-				if (key.startsWith("_")) {
-					return rStringProps({data, val: props});
-				} else {
-					return mapProps({props, data});
-				}
-			});
-		}
-
-		if (val instanceof Object) {
-			const scope = val["@scope"];
-
-			if (scope) {
-				const items = get(data, scope, []);
-
-				return items.map((item) =>
-					mapProps({
-						props: val,
-						data: {...item, $root: data}
-					})
-				);
-			}
-
-			if (!key.startsWith("_")) {
-				return mapProps({props: val, data});
-			}
-		}
-
-		if (key.startsWith("_")) {
-			return rStringProps({data, val});
-		}
-
-		if (key.startsWith("@")) {
-			return val;
-		}
-
-		if (val === "$root") {
-			return data;
-		}
-
-		return get(data, val);
-	});
-};
-
 export const mapPaths = (data) => {
 	// {"key1.key2": 1} ===> {key1: {key2: 1}}
 	return Object.entries(data).reduce(
 		(obj, [key, val]) => set(obj, key, val),
 		{}
 	);
+};
+
+export const transProps = ({data, val}) => {
+	if (Array.isArray(val)) {
+		return val.map((val) => transProps({data, val}));
+	}
+
+	if (val instanceof Object) {
+		const scope = val["@scope"];
+
+		if (scope) {
+			const items = get(data, scope, []);
+			return items.map((x) =>
+				transProps({
+					data: {...x, $parent: data},
+					val: omit(val, "@scope")
+				})
+			);
+		}
+
+		return Object.fromEntries(
+			Object.entries(val).map(([key, val]) => {
+				return [key, transProps({val, data})];
+			})
+		);
+	}
+
+	if (typeof val === "string") {
+		// value is "{key}"
+		const map = !!val.match(/^{[^{]+}$/g);
+
+		if (map) {
+			const [, key] = /\{(.*?)\}/g.exec(val);
+			return transProps({data, val: get(data, key)});
+		} else {
+			return replace(val, /\{.*?\}/g, (key) =>
+				transProps({data, val: get(data, key.slice(1, -1), key)})
+			);
+		}
+	}
+
+	return val;
 };

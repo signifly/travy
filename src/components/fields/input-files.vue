@@ -1,10 +1,10 @@
 <template>
 	<div class="input-files">
 		<filepond
-			:accepted-file-types="_fileTypes"
-			:allow-multiple="_multiple"
+			:accepted-file-types="fileTypes"
+			:allow-multiple="multiple"
 			:label-idle="label"
-			:max-files="_limit"
+			:max-files="limit"
 			:server="server"
 		/>
 	</div>
@@ -27,17 +27,17 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				value: "files",
-				_url: "/url"
+				url: "/signedurls",
+				value: "{files}"
 			}
 		}
 	},
 	props: {
-		_fileTypes: {type: String, required: false, note: "image/png, image/*"},
-		_multiple: {type: Boolean, required: false},
-		_limit: {type: Number, default: null},
+		fileTypes: {type: String, required: false, note: "image/png, image/*"},
+		multiple: {type: Boolean, required: false},
+		limit: {type: Number, default: null},
 		value: {type: Array, required: false},
-		_url: {type: String, required: true}
+		url: {type: String, required: true}
 	},
 	data() {
 		return {
@@ -46,7 +46,7 @@ export default {
 					try {
 						const {
 							data: {data}
-						} = await this.$axios.post(this._url, {
+						} = await this.$axios.post(this.url, {
 							content_type: file.type
 						});
 

@@ -1,14 +1,12 @@
 <template>
 	<div class="input">
 		<Input
-			v-bind="{value}"
-			@input="update"
-			:disabled="_disabled"
-			:type="_type"
+			v-bind="{value, type, disabled}"
 			:controls="false"
+			@input="update"
 			size="medium"
 		/>
-		<div class="unit" v-if="_unit">{{ _unit }}</div>
+		<div class="unit" v-if="unit">{{ unit }}</div>
 	</div>
 </template>
 
@@ -22,8 +20,8 @@ export default {
 		res: {
 			props: {
 				value: "value",
-				_type: "text",
-				_unit: "cm"
+				type: "text",
+				unit: "cm"
 			},
 			data: {
 				value: ""
@@ -32,9 +30,9 @@ export default {
 	},
 	props: {
 		value: {type: [String, Number], required: false},
-		_disabled: {type: Boolean, required: false},
-		_unit: {type: String, required: false},
-		_type: {type: String, default: "text"}
+		disabled: {type: Boolean, required: false},
+		unit: {type: String, required: false},
+		type: {type: String, default: "text"}
 	},
 	methods: {
 		update(value) {

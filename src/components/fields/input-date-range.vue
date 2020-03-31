@@ -1,19 +1,19 @@
 <template>
 	<div class="dateRange">
 		<DatePicker
-			:value="dates"
-			size="medium"
-			align="center"
-			:type="_type"
-			:format="format"
-			:editable="false"
-			:clearable="_clearable"
-			:disabled="_disabled"
-			:picker-options="pickerOpts"
-			:value-format="_formatValue"
 			start-placeholder="Start Date"
+			:picker-options="pickerOpts"
+			:value-format="formatValue"
 			end-placeholder="End Date"
+			:clearable="clearable"
+			:disabled="disabled"
+			:editable="false"
+			:format="format"
 			@input="update"
+			:value="dates"
+			align="center"
+			size="medium"
+			:type="type"
 		/>
 	</div>
 </template>
@@ -27,10 +27,10 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				_type: "daterange",
-				dateStart: "date1",
-				dateEnd: "date2",
-				_clearable: true
+				dateStart: "{date1}",
+				dateEnd: "{date2}",
+				type: "daterange",
+				clearable: true
 			},
 			data: {
 				date1: 1543878000,
@@ -41,15 +41,15 @@ export default {
 	props: {
 		dateStart: {type: [Number, String], required: false},
 		dateEnd: {type: [Number, String], required: false},
-		_formatValue: {type: String, default: "timestamp"},
-		_clearable: {type: Boolean, required: false},
-		_disabled: {type: Boolean, required: false},
-		_format: {type: String, required: false},
-		_type: {
+		formatValue: {type: String, default: "timestamp"},
+		format: {type: String, default: "dd-MM-yyyy"},
+		clearable: {type: Boolean, required: false},
+		disabled: {type: Boolean, required: false},
+		type: {
 			type: String,
 			required: false,
 			default: "daterange",
-			note: `daterange/datetimerange`
+			note: `daterange, datetimerange`
 		}
 	},
 	data() {
@@ -60,21 +60,14 @@ export default {
 		};
 	},
 	computed: {
-		timestamp: (t) => t._formatValue === "timestamp",
+		timestamp: (t) => t.formatValue === "timestamp",
 
 		dates: (t) =>
 			[t.dateStart, t.dateEnd]
 				.filter((x) => x)
 				.map((date) => {
 					return t.timestamp && date ? date * 1000 : date;
-				}),
-
-		format: (t) =>
-			t._format ||
-			{
-				daterange: "dd-MM-yyyy",
-				datetimerange: "yyyy-MM-dd HH:mm:ss"
-			}[t._type]
+				})
 	},
 	methods: {
 		update(dates) {

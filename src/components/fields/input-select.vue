@@ -1,14 +1,12 @@
 _entities<template>
 	<div class="select">
 		<Select
-			v-bind="{value}"
-			:disabled="_disabled"
-			:clearable="_clearable"
-			:allow-create="_addable"
+			v-bind="{value, disabled, clearable}"
+			:allow-create="addable"
 			:filterable="true"
 			@change="update"
 		>
-			<Option v-for="item in _entities" v-bind="item" :key="item.value">
+			<Option v-for="item in entities" v-bind="item" :key="item.value">
 				{{ item.label }}
 			</Option>
 		</Select>
@@ -22,11 +20,11 @@ export default {
 	components: {Select, Option},
 	meta: {
 		spec: {
-			_clearable: {type: Boolean, required: false, default: true},
+			clearable: {type: Boolean, required: false, default: true},
 			value: {type: [String, Number], required: false},
-			_disabled: {type: Boolean, required: false},
-			_addable: {type: Boolean, required: false},
-			_entities: {
+			disabled: {type: Boolean, required: false},
+			addable: {type: Boolean, required: false},
+			entities: {
 				type: Array,
 				required: true,
 				children: {
@@ -38,10 +36,10 @@ export default {
 		},
 		res: {
 			props: {
-				_clearable: false,
-				_addable: true,
-				value: "value",
-				_entities: [
+				clearable: false,
+				value: "{value}",
+				addable: true,
+				entities: [
 					{label: "Danmark", value: "dk"},
 					{label: "England", value: "uk"},
 					{label: "Murica", value: "us", disabled: true}
@@ -54,10 +52,10 @@ export default {
 	},
 	props: {
 		value: {type: [String, Number], required: false},
-		_disabled: {type: Boolean, required: false},
-		_clearable: {type: Boolean, default: true},
-		_addable: {type: Boolean, default: false},
-		_entities: {type: Array, required: true}
+		disabled: {type: Boolean, required: false},
+		clearable: {type: Boolean, default: true},
+		addable: {type: Boolean, default: false},
+		entities: {type: Array, required: true}
 	},
 	methods: {
 		update(value) {

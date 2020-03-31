@@ -8,7 +8,6 @@
 					<TableColumn prop="name" label="Name" />
 					<TableColumn prop="typePretty" label="Type" />
 					<TableColumn prop="required" label="Required" />
-					<TableColumn prop="mapPretty" label="Map" />
 					<TableColumn prop="default" label="Default" />
 					<TableColumn label="Note" v-slot="{row}">
 						<div class="note" v-html="row.note" />
@@ -76,7 +75,7 @@ export default {
 			const spec = this.spec;
 			let rowKey = 1;
 
-			const mapProps = ({props = {}, map = true}) => {
+			const mapProps = (props = {}) => {
 				return Object.entries(props).map(([key, prop]) => ({
 					...prop,
 					get type() {
@@ -96,18 +95,8 @@ export default {
 
 						return JSON.stringify(def());
 					},
-					get map() {
-						if (key.startsWith("_")) {
-							return false;
-						} else {
-							return map;
-						}
-					},
-					get mapPretty() {
-						return this.map.toString();
-					},
 					get children() {
-						return mapProps({props: prop.children, map: this.map});
+						return mapProps(prop.children);
 					},
 					name: key,
 					required: (!!prop.required).toString(),
@@ -115,7 +104,7 @@ export default {
 				}));
 			};
 
-			return mapProps({props: spec === "props" ? this.props : spec});
+			return mapProps(spec === "props" ? this.props : spec);
 		}
 	},
 	methods: {

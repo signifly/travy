@@ -1,16 +1,16 @@
 <template>
 	<div class="select-download">
-		<div class="title" v-text="_title" />
-		<div class="sub" v-text="_subtitle" />
+		<div class="title" v-text="title" />
+		<div class="sub" v-text="subtitle" />
 
 		<div class="download">
 			<Select
-				size="small"
-				v-model="value"
 				:remote-method="getData"
-				:filterable="true"
-				:remote="true"
 				@visible-change="open"
+				:filterable="true"
+				v-model="value"
+				:remote="true"
+				size="small"
 			>
 				<Option v-for="item in items" :key="item.value" v-bind="item" />
 			</Select>
@@ -32,9 +32,9 @@ export default {
 	components: {Select, Option, Button},
 	meta: {
 		spec: {
-			_title: {type: String, required: true},
-			_subtitle: {type: String, required: true},
-			_entities: {
+			title: {type: String, required: true},
+			subtitle: {type: String, required: true},
+			entities: {
 				type: Object,
 				required: true,
 				children: {
@@ -54,9 +54,9 @@ export default {
 		},
 		res: {
 			props: {
-				_title: "Download",
-				_subtitle: "Subtitle",
-				_entities: {
+				title: "Download",
+				subtitle: "Subtitle",
+				entities: {
 					endpoint: {url: "items"},
 					value: "image",
 					label: "name"
@@ -65,9 +65,9 @@ export default {
 		}
 	},
 	props: {
-		_title: {type: String, required: true},
-		_subtitle: {type: String, required: true},
-		_entities: {type: Object, required: true}
+		title: {type: String, required: true},
+		subtitle: {type: String, required: true},
+		entities: {type: Object, required: true}
 	},
 	data() {
 		return {
@@ -79,8 +79,8 @@ export default {
 	computed: {
 		items: (t) =>
 			t.data.map((x) => ({
-				value: get(x, t._entities.value),
-				label: get(x, t._entities.label)
+				value: get(x, t.entities.value),
+				label: get(x, t.entities.label)
 			}))
 	},
 	methods: {
@@ -92,8 +92,8 @@ export default {
 		},
 
 		async getData(search) {
-			const {url, params} = this._entities.endpoint;
-			const {dataWrap} = this._entities;
+			const {url, params} = this.entities.endpoint;
+			const {dataWrap} = this.entities;
 
 			const {data} = await this.$axios.get(url, {
 				params: merge({}, params, {

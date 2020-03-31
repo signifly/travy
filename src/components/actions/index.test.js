@@ -1,5 +1,6 @@
 import {mount} from "@vue/test-utils";
-import comp from "./index";
+import Comp from "./index";
+import Vue from "vue";
 
 const propsData = {
 	onSubmit: {
@@ -17,7 +18,7 @@ const propsData = {
 			url: "https://localhost/{obj.id}"
 		},
 		payload: {
-			type: "aType",
+			type: "a type",
 			data: {id: "{obj.id}", value: 2}
 		}
 	}
@@ -25,9 +26,7 @@ const propsData = {
 
 describe("action", () => {
 	test("hide", () => {
-		const wrapper = mount(comp, {
-			propsData
-		});
+		const wrapper = mount(Comp, {propsData});
 
 		wrapper.setProps({
 			hide: {
@@ -38,21 +37,5 @@ describe("action", () => {
 		});
 
 		expect(wrapper.vm.disabled).toBe(true);
-	});
-
-	test("propsC", () => {
-		const wrapper = mount(comp, {propsData});
-
-		// dataComb
-		expect(wrapper.vm.propsC).toHaveProperty("payload.data.value", 2);
-
-		// payload map values
-		expect(wrapper.vm.propsC).toHaveProperty("payload.data.id", "1");
-
-		// endpoint
-		expect(wrapper.vm.propsC).toHaveProperty(
-			"endpoint.url",
-			"https://localhost/1"
-		);
 	});
 });

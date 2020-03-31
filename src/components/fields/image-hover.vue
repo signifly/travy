@@ -21,9 +21,6 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				src: "src"
-			},
-			data: {
 				src: "https://picsum.photos/id/135/200/200"
 			}
 		}

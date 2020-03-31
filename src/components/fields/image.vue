@@ -12,25 +12,22 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				src: "src"
-			},
-			data: {
 				src: "https://picsum.photos/id/135/1000/1000"
 			}
 		}
 	},
 	props: {
-		_fit: {type: String, default: "cover", note: "contain/cover"},
-		_height: {type: String, default: "200px"},
-		_width: {type: String, default: "100%"},
+		fit: {type: String, default: "cover", note: "contain/cover"},
+		height: {type: String, default: "200px"},
+		width: {type: String, default: "100%"},
 		src: {type: String, required: false}
 	},
 	computed: {
 		style: (t) => ({
 			backgroundImage: `url('${t.src}')`,
-			backgroundSize: t._fit,
-			height: t._height,
-			width: t._width
+			backgroundSize: t.fit,
+			height: t.height,
+			width: t.width
 		})
 	}
 };

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import {rStringProps, mergeData} from "@/modules/utils";
+import {transProps, mergeData} from "@/modules/utils";
 import field from "@/components/field";
 import loader from "./loader";
 
@@ -34,7 +34,7 @@ export default {
 		fields: (t) => t.definitions.fields,
 
 		endpoint() {
-			return rStringProps({
+			return transProps({
 				val: this.definitions.endpoint,
 				data: this.parentData
 			});
@@ -66,7 +66,7 @@ export default {
 			});
 
 			this.options = res.options;
-			this.data = {...res.data, $root: this.parentData};
+			this.data = {...res.data, $parent: this.parentData};
 		},
 
 		async save() {

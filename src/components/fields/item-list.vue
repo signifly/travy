@@ -25,8 +25,8 @@ export default {
 			props: {
 				items: {
 					"@scope": "items",
-					label: "label",
-					value: "value"
+					label: "{label}",
+					value: "{value}"
 				}
 			},
 			data: {

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {rStringProps} from "@/modules/utils";
+import {transProps} from "@/modules/utils";
 import field from "@/components/field";
 
 export default {
@@ -24,7 +24,7 @@ export default {
 		onClick: (t) => t.column.onClick,
 		query: (t) => t.state.query,
 		link() {
-			const url = rStringProps({data: this.data, val: this.onClick});
+			const url = transProps({data: this.data, val: this.onClick});
 			return url
 				? {path: url, query: {modifiers: this.query.modifiers}}
 				: false;

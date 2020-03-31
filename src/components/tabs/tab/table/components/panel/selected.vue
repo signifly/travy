@@ -1,6 +1,6 @@
 <template>
 	<div class="selected">
-		<itemListTooltip :items="itemsC">
+		<itemListTooltip v-bind="{items}">
 			<Checkbox v-bind="{value}" @input="unselect">
 				{{ selected.items.length }} selected
 			</Checkbox>
@@ -10,7 +10,7 @@
 
 <script>
 import itemListTooltip from "@/components/fields/item-list-tooltip";
-import {rStringProps} from "@/modules/utils";
+import {transProps} from "@/modules/utils";
 import {Checkbox} from "element-ui";
 
 export default {
@@ -21,13 +21,13 @@ export default {
 	},
 	computed: {
 		value: (t) => t.selected.items.length > 0,
-		itemsC() {
+		items() {
 			return this.selected.items.map((x) => {
-				return rStringProps({
+				return transProps({
 					data: x,
 					val: {
 						label: this.selectedOptions.label,
-						_link: this.selectedOptions.link
+						link: this.selectedOptions.link
 					}
 				});
 			});

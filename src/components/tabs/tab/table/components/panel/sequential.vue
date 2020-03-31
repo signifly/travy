@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import {rStringProps} from "@/modules/utils";
+import {transProps} from "@/modules/utils";
 import {Button} from "element-ui";
 
 export default {
@@ -15,7 +15,7 @@ export default {
 	computed: {
 		items() {
 			return this.selected.items.map((data) =>
-				rStringProps({val: this.url, data})
+				transProps({val: this.url, data})
 			);
 		}
 	},

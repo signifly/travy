@@ -15,16 +15,17 @@
 </template>
 
 <script>
-import {translate} from "@/modules/utils";
+import {transProps, translate} from "@/modules/utils";
 import popup from "@/components/popup";
 import {Button} from "element-ui";
 
 export default {
 	components: {Button, popup},
 	props: {
-		position: {type: String, required: false, default: "bottom-right"},
+		actionOpts: {type: Object, required: true},
 		endpoint: {type: Object, required: true},
 		payload: {type: Object, required: false},
+		data: {type: Object, required: false},
 		text: {
 			type: String,
 			required: false,
@@ -35,10 +36,20 @@ export default {
 				})
 		}
 	},
-	data() {
-		return {
-			loading: false
-		};
+	data: () => ({
+		loading: false
+	}),
+	computed: {
+		position: (t) => t.actionOpts.position || "bottom-right",
+		trans() {
+			return transProps({
+				data: this.data,
+				val: {
+					endpoint: this.endpoint,
+					payload: this.payload
+				}
+			});
+		}
 	},
 	methods: {
 		close() {
@@ -47,12 +58,13 @@ export default {
 
 		async submit() {
 			try {
+				const {payload, endpoint} = this.trans;
 				this.loading = true;
 
 				const {data} = await this.$axios({
-					method: this.endpoint.method,
-					url: this.endpoint.url,
-					data: this.payload
+					method: endpoint.method,
+					url: endpoint.url,
+					data: payload
 				});
 
 				this.$emit("submit", data);

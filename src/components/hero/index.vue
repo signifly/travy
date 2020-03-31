@@ -2,12 +2,12 @@
 	<div class="hero">
 		<div class="container">
 			<div class="wrap">
-				<breadcrumbs :breadcrumbs="heroC.breadcrumbs" />
+				<breadcrumbs :breadcrumbs="Hero.breadcrumbs" />
 
 				<div class="bottom">
 					<div class="info">
-						<div class="title" v-text="heroC.title" />
-						<div class="sub" v-if="heroC.subtitle" v-text="heroC.subtitle" />
+						<div class="title" v-text="Hero.title" />
+						<div class="sub" v-if="Hero.subtitle" v-text="Hero.subtitle" />
 					</div>
 
 					<div class="settings">
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import {rStringProps} from "@/modules/utils";
+import {transProps} from "@/modules/utils";
 import breadcrumbs from "./breadcrumbs";
 import modifiers from "./modifiers";
 
@@ -40,7 +40,7 @@ export default {
 		hero: {type: Object, required: true}
 	},
 	computed: {
-		heroC: (t) => rStringProps({data: t.data, val: t.hero})
+		Hero: (t) => transProps({data: t.data, val: t.hero})
 	}
 };
 </script>

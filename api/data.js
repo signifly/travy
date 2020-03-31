@@ -20,7 +20,7 @@ module.exports = {
 							fieldType: {
 								id: "text",
 								props: {
-									text: "name"
+									text: "{name}"
 								}
 							}
 						},
@@ -30,7 +30,7 @@ module.exports = {
 							fieldType: {
 								id: "input-text",
 								props: {
-									value: "text"
+									value: "{text}"
 								}
 							}
 						}
@@ -50,7 +50,7 @@ module.exports = {
 							fieldType: {
 								id: "date",
 								props: {
-									timestamp: "created_at"
+									timestamp: "{created_at}"
 								}
 							}
 						}
@@ -163,9 +163,9 @@ module.exports = {
 					fieldType: {
 						id: "input-select",
 						props: {
-							_clearable: false,
-							value: "language_code",
-							_entities: [
+							clearable: false,
+							value: "{language_code}",
+							entities: [
 								{
 									label: "Danmark",
 									value: "dk"
@@ -200,7 +200,7 @@ module.exports = {
 								fieldType: {
 									id: "text",
 									props: {
-										text: "name"
+										text: "{name}"
 									}
 								}
 							},
@@ -212,9 +212,9 @@ module.exports = {
 									id: "item-list-tooltip",
 									props: {
 										items: {
-											_link: "/i/tags/{id}",
+											link: "/i/tags/{id}",
 											"@scope": "tags",
-											label: "key"
+											label: "{key}"
 										}
 									}
 								}
@@ -224,7 +224,7 @@ module.exports = {
 								fieldType: {
 									id: "input-toggle",
 									props: {
-										value: "test.switch"
+										value: "{test.switch}"
 									}
 								}
 							}
@@ -263,7 +263,7 @@ module.exports = {
 																fieldType: {
 																	id: "input-text",
 																	props: {
-																		value: "input"
+																		value: "{input}"
 																	}
 																}
 															},
@@ -273,7 +273,7 @@ module.exports = {
 																fieldType: {
 																	id: "input-text",
 																	props: {
-																		value: "input2"
+																		value: "{input2}"
 																	}
 																}
 															},
@@ -283,8 +283,8 @@ module.exports = {
 																fieldType: {
 																	id: "input-files",
 																	props: {
-																		value: "files",
-																		_url: "/signedurls"
+																		value: "{files}",
+																		url: "/signedurls"
 																	}
 																}
 															}
@@ -345,7 +345,7 @@ module.exports = {
 							fieldType: {
 								id: "text",
 								props: {
-									text: "name"
+									text: "{name}"
 								}
 							},
 							onClick: "/i/projects/{id}"
@@ -356,9 +356,9 @@ module.exports = {
 								id: "item-list-tooltip",
 								props: {
 									items: {
-										_link: "/i/tags/{id}",
+										link: "/i/tags/{id}",
 										"@scope": "tags",
-										label: "key"
+										label: "{key}"
 									}
 								}
 							}
@@ -368,7 +368,7 @@ module.exports = {
 							fieldType: {
 								id: "input-toggle",
 								props: {
-									value: "test.switch"
+									value: "{test.switch}"
 								}
 							}
 						},
@@ -378,7 +378,7 @@ module.exports = {
 							fieldType: {
 								id: "button-action",
 								props: {
-									_action: {
+									action: {
 										name: "Actions",
 										status: "primary",
 										icon: "arrow-down",
@@ -386,6 +386,47 @@ module.exports = {
 											id: "dropdown",
 											props: {
 												actions: [
+													{
+														name: "Modal",
+														actionType: {
+															id: "modal",
+															props: {
+																name: "Modal title post",
+																endpoint: {
+																	method: "post",
+																	url: "/projects/{id}"
+																},
+																fields: [
+																	{
+																		attribute: "1",
+																		name: "a field",
+																		fieldType: {
+																			id: "input-text",
+																			props: {
+																				value: "{input}"
+																			}
+																		}
+																	},
+																	{
+																		attribute: "2",
+																		name: "a field",
+																		fieldType: {
+																			id: "input-text",
+																			props: {
+																				value: "{input2}"
+																			}
+																		}
+																	}
+																],
+																payload: {
+																	data: {
+																		input: "32",
+																		input2: "34"
+																	}
+																}
+															}
+														}
+													},
 													{
 														name: "View",
 														status: "primary",
@@ -440,7 +481,7 @@ module.exports = {
 								fieldType: {
 									id: "input-text",
 									props: {
-										value: "name"
+										value: "{name}"
 									}
 								}
 							}
@@ -472,7 +513,7 @@ module.exports = {
 															fieldType: {
 																id: "input-text",
 																props: {
-																	value: "input"
+																	value: "{input}"
 																}
 															}
 														},
@@ -482,7 +523,7 @@ module.exports = {
 															fieldType: {
 																id: "input-text",
 																props: {
-																	value: "input2"
+																	value: "{input2}"
 																}
 															}
 														},
@@ -492,9 +533,9 @@ module.exports = {
 															fieldType: {
 																id: "input-files",
 																props: {
-																	value: "files",
-																	_url: "/signedurls",
-																	_multiple: true
+																	value: "{files}",
+																	url: "/signedurls",
+																	multiple: true
 																}
 															}
 														}
@@ -543,8 +584,8 @@ module.exports = {
 															fieldType: {
 																id: "input-select",
 																props: {
-																	value: "country",
-																	_entities: [
+																	value: "{country}",
+																	entities: [
 																		{
 																			label: "Denmark",
 																			value: "dk"
@@ -568,7 +609,7 @@ module.exports = {
 															fieldType: {
 																id: "input-text",
 																props: {
-																	value: "name"
+																	value: "{name}"
 																}
 															}
 														},
@@ -579,7 +620,7 @@ module.exports = {
 																id: "input-date",
 																props: {
 																	formatValue: "yyyy-MM-dd",
-																	date: "start_date"
+																	date: "{start_date}"
 																}
 															}
 														},
@@ -589,7 +630,7 @@ module.exports = {
 															fieldType: {
 																id: "input-editor-markdown",
 																props: {
-																	content: "description"
+																	content: "{description}"
 																}
 															}
 														}
@@ -644,7 +685,7 @@ module.exports = {
 								fieldType: {
 									id: "text",
 									props: {
-										text: "name"
+										text: "{name}"
 									}
 								}
 							}
@@ -657,7 +698,7 @@ module.exports = {
 							fieldType: {
 								id: "text",
 								props: {
-									text: "name"
+									text: "{name}"
 								}
 							},
 							onClick: "/i/projects/{id}"
@@ -667,7 +708,7 @@ module.exports = {
 							fieldType: {
 								id: "input-toggle",
 								props: {
-									value: "switch"
+									value: "{switch}"
 								}
 							}
 						}
@@ -772,9 +813,9 @@ module.exports = {
 					fieldType: {
 						id: "input-select",
 						props: {
-							_clearable: false,
-							value: "language_code",
-							_entities: [
+							clearable: false,
+							value: "{language_code}",
+							entities: [
 								{
 									label: "Danmark",
 									value: "dk"
@@ -798,9 +839,9 @@ module.exports = {
 					fieldType: {
 						id: "input-select",
 						props: {
-							_clearable: false,
-							value: "language_code",
-							_entities: [
+							clearable: false,
+							value: "{language_code}",
+							entities: [
 								{
 									label: "Danmark",
 									value: "dk"
@@ -835,7 +876,7 @@ module.exports = {
 							fieldType: {
 								id: "text",
 								props: {
-									text: "name"
+									text: "{name}"
 								}
 							}
 						},
@@ -845,7 +886,7 @@ module.exports = {
 							fieldType: {
 								id: "input-text",
 								props: {
-									value: "text"
+									value: "{text}"
 								}
 							}
 						}
@@ -867,7 +908,7 @@ module.exports = {
 								fieldType: {
 									id: "text",
 									props: {
-										text: "name"
+										text: "{name}"
 									}
 								}
 							},
@@ -879,9 +920,9 @@ module.exports = {
 									id: "item-list-tooltip",
 									props: {
 										items: {
-											_link: "/i/tags/{id}",
+											link: "/i/tags/{id}",
 											"@scope": "tags",
-											label: "key"
+											label: "{key}"
 										}
 									}
 								}
@@ -892,7 +933,7 @@ module.exports = {
 								fieldType: {
 									id: "input-toggle",
 									props: {
-										value: "switch"
+										value: "{switch}"
 									}
 								}
 							}
@@ -950,9 +991,9 @@ module.exports = {
 								id: "item-list-tooltip",
 								props: {
 									items: {
-										_link: "/i/tags/{id}",
+										link: "/i/tags/{id}",
 										"@scope": "tags",
-										label: "key"
+										label: "{key}"
 									}
 								}
 							}
@@ -962,7 +1003,7 @@ module.exports = {
 							fieldType: {
 								id: "input-toggle",
 								props: {
-									value: "switch"
+									value: "{switch}"
 								}
 							}
 						}
@@ -981,7 +1022,7 @@ module.exports = {
 								fieldType: {
 									id: "input-text",
 									props: {
-										value: "name"
+										value: "{name}"
 									}
 								}
 							}
@@ -1004,8 +1045,8 @@ module.exports = {
 											fieldType: {
 												id: "input-select",
 												props: {
-													value: "country",
-													_entities: [
+													value: "{country}",
+													entities: [
 														{
 															label: "Denmark",
 															value: "dk"
@@ -1029,7 +1070,7 @@ module.exports = {
 											fieldType: {
 												id: "input-text",
 												props: {
-													value: "name"
+													value: "{name}"
 												}
 											}
 										},
@@ -1040,7 +1081,7 @@ module.exports = {
 												id: "input-date",
 												props: {
 													formatValue: "yyyy-MM-dd",
-													date: "start_date"
+													date: "{start_date}"
 												}
 											}
 										},
@@ -1050,7 +1091,7 @@ module.exports = {
 											fieldType: {
 												id: "input-editor-markdown",
 												props: {
-													content: "description"
+													content: "{description}"
 												}
 											}
 										}
@@ -1058,7 +1099,7 @@ module.exports = {
 									payload: {
 										data: {
 											client_id: "",
-											name: "",
+											name: "{name}",
 											start_date: "",
 											tags: [],
 											description: ""
@@ -1086,7 +1127,7 @@ module.exports = {
 						fieldType: {
 							id: "text",
 							props: {
-								text: "name"
+								text: "{name}"
 							}
 						}
 					},
@@ -1098,9 +1139,9 @@ module.exports = {
 							id: "item-list-tooltip",
 							props: {
 								items: {
-									_link: "/i/tags/{id}",
+									link: "/i/tags/{id}",
 									"@scope": "tags",
-									label: "key"
+									label: "{key}"
 								}
 							}
 						}
@@ -1110,7 +1151,7 @@ module.exports = {
 						fieldType: {
 							id: "input-toggle",
 							props: {
-								value: "test.switch"
+								value: "{test.switch}"
 							}
 						}
 					}
@@ -1130,7 +1171,7 @@ module.exports = {
 					fieldType: {
 						id: "text",
 						props: {
-							text: "name"
+							text: "{name}"
 						}
 					},
 					onClick: "/i/projects/{id}"
@@ -1141,9 +1182,9 @@ module.exports = {
 						id: "item-list-tooltip",
 						props: {
 							items: {
-								_link: "/i/tags/{id}",
+								link: "/i/tags/{id}",
 								"@scope": "tags",
-								label: "key"
+								label: "{key}"
 							}
 						}
 					}
@@ -1153,7 +1194,7 @@ module.exports = {
 					fieldType: {
 						id: "input-toggle",
 						props: {
-							value: "test.switch"
+							value: "{test.switch}"
 						}
 					}
 				},
@@ -1163,7 +1204,7 @@ module.exports = {
 					fieldType: {
 						id: "button-action",
 						props: {
-							_action: {
+							action: {
 								name: "Actions",
 								status: "primary",
 								icon: "arrow-down",
@@ -1215,14 +1256,11 @@ module.exports = {
 				name: "Modal",
 				actionType: {
 					id: "modal",
-					onSubmit: {
-						url: "#button-action"
-					},
 					props: {
-						name: "Modal title",
+						name: "Modal title post",
 						endpoint: {
 							method: "post",
-							url: "/example"
+							url: "/projects/{id}"
 						},
 						fields: [
 							{
@@ -1231,7 +1269,7 @@ module.exports = {
 								fieldType: {
 									id: "input-text",
 									props: {
-										value: "input"
+										value: "{input}"
 									}
 								}
 							},
@@ -1241,7 +1279,7 @@ module.exports = {
 								fieldType: {
 									id: "input-text",
 									props: {
-										value: "input2"
+										value: "{input2}"
 									}
 								}
 							}
@@ -1267,14 +1305,11 @@ module.exports = {
 								name: "Modal",
 								actionType: {
 									id: "modal",
-									onSubmit: {
-										url: "#button-action"
-									},
 									props: {
 										name: "Modal title",
 										endpoint: {
 											method: "post",
-											url: "/example"
+											url: "/example/{id}"
 										},
 										fields: [
 											{
@@ -1283,7 +1318,7 @@ module.exports = {
 												fieldType: {
 													id: "input-text",
 													props: {
-														value: "input"
+														value: "{input}"
 													}
 												}
 											},
@@ -1293,7 +1328,7 @@ module.exports = {
 												fieldType: {
 													id: "input-text",
 													props: {
-														value: "input2"
+														value: "{input2}"
 													}
 												}
 											}
@@ -1382,7 +1417,7 @@ module.exports = {
 							fieldType: {
 								id: "date",
 								props: {
-									timestamp: "created_at"
+									timestamp: "{created_at}"
 								}
 							}
 						},
@@ -1392,7 +1427,7 @@ module.exports = {
 							fieldType: {
 								id: "text",
 								props: {
-									text: "creator.name"
+									text: "{creator.name}"
 								}
 							}
 						},
@@ -1402,7 +1437,7 @@ module.exports = {
 							fieldType: {
 								id: "date",
 								props: {
-									timestamp: "updated_at"
+									timestamp: "{updated_at}"
 								}
 							}
 						},
@@ -1412,7 +1447,7 @@ module.exports = {
 							fieldType: {
 								id: "text",
 								props: {
-									text: "editor.name"
+									text: "{editor.name}"
 								}
 							}
 						}
@@ -1427,7 +1462,7 @@ module.exports = {
 							fieldType: {
 								id: "input-text",
 								props: {
-									value: "name"
+									value: "{name}"
 								}
 							}
 						}
@@ -1444,7 +1479,6 @@ module.exports = {
 			name: "Clemens Cassin",
 			start_date: null,
 			status: "open",
-			description: null,
 			created_at: 1568191509,
 			updated_at: 1568191509,
 			deleted_at: null,
@@ -1540,9 +1574,9 @@ module.exports = {
 					fieldType: {
 						id: "input-select",
 						props: {
-							_clearable: false,
-							value: "language_code",
-							_entities: [
+							clearable: false,
+							value: "{language_code}",
+							entities: [
 								{
 									label: "Danmark",
 									value: "dk"
@@ -1580,7 +1614,7 @@ module.exports = {
 										fieldType: {
 											id: "text",
 											props: {
-												text: "name"
+												text: "{name}"
 											}
 										}
 									},
@@ -1592,9 +1626,9 @@ module.exports = {
 											id: "item-list-tooltip",
 											props: {
 												items: {
-													_link: "/i/tags/{id}",
+													link: "/i/tags/{id}",
 													"@scope": "tags",
-													label: "key"
+													label: "{key}"
 												}
 											}
 										}
@@ -1604,7 +1638,7 @@ module.exports = {
 										fieldType: {
 											id: "input-toggle",
 											props: {
-												value: "test.switch"
+												value: "{test.switch}"
 											}
 										}
 									}
@@ -1649,7 +1683,7 @@ module.exports = {
 									fieldType: {
 										id: "text",
 										props: {
-											text: "name"
+											text: "{name}"
 										}
 									},
 									onClick: "/i/projects/{id}"
@@ -1660,9 +1694,9 @@ module.exports = {
 										id: "item-list-tooltip",
 										props: {
 											items: {
-												_link: "/i/tags/{id}",
+												link: "/i/tags/{id}",
 												"@scope": "tags",
-												label: "key"
+												label: "{key}"
 											}
 										}
 									}
@@ -1672,7 +1706,7 @@ module.exports = {
 									fieldType: {
 										id: "input-toggle",
 										props: {
-											value: "test.switch"
+											value: "{test.switch}"
 										}
 									}
 								}
@@ -1691,7 +1725,7 @@ module.exports = {
 										fieldType: {
 											id: "input-text",
 											props: {
-												value: "name"
+												value: "{name}"
 											}
 										}
 									}
@@ -1717,7 +1751,7 @@ module.exports = {
 									fieldType: {
 										id: "text",
 										props: {
-											text: "name"
+											text: "{name}"
 										}
 									},
 									onClick: "/i/projects/{id}"
@@ -1730,7 +1764,7 @@ module.exports = {
 											items: {
 												_link: "/i/tags/{id}",
 												"@scope": "tags",
-												label: "key"
+												label: "{key}"
 											}
 										}
 									}
@@ -1740,7 +1774,7 @@ module.exports = {
 									fieldType: {
 										id: "input-toggle",
 										props: {
-											value: "switch"
+											value: "{switch}"
 										}
 									}
 								}
@@ -1766,7 +1800,7 @@ module.exports = {
 										fieldType: {
 											id: "text",
 											props: {
-												text: "name"
+												text: "{name}"
 											}
 										}
 									},
@@ -1778,9 +1812,9 @@ module.exports = {
 											id: "item-list-tooltip",
 											props: {
 												items: {
-													_link: "/i/tags/{id}",
+													link: "/i/tags/{id}",
 													"@scope": "tags",
-													label: "key"
+													label: "{key}"
 												}
 											}
 										}
@@ -1790,7 +1824,7 @@ module.exports = {
 										fieldType: {
 											id: "input-toggle",
 											props: {
-												value: "test.switch"
+												value: "{test.switch}"
 											}
 										}
 									}
@@ -1835,7 +1869,7 @@ module.exports = {
 									fieldType: {
 										id: "text",
 										props: {
-											text: "name"
+											text: "{name}"
 										}
 									},
 									onClick: "/i/projects/{id}"
@@ -1846,9 +1880,9 @@ module.exports = {
 										id: "item-list-tooltip",
 										props: {
 											items: {
-												_link: "/i/tags/{id}",
+												link: "/i/tags/{id}",
 												"@scope": "tags",
-												label: "key"
+												label: "{key}"
 											}
 										}
 									}
@@ -1858,7 +1892,7 @@ module.exports = {
 									fieldType: {
 										id: "input-toggle",
 										props: {
-											value: "test.switch"
+											value: "{test.switch}"
 										}
 									}
 								}
@@ -1867,6 +1901,193 @@ module.exports = {
 								search: {
 									placeholder: "Search..."
 								}
+							}
+						}
+					},
+					{
+						id: "stuff2",
+						name: "stuff 2",
+						type: "table",
+						definitions: {
+							endpoint: {
+								url: "/projects",
+								params: {
+									include: ["tags"]
+								}
+							},
+							pagination: {},
+							columns: [
+								{
+									width: 30,
+									name: "Name",
+									fieldType: {
+										id: "text",
+										props: {
+											text: "{name}"
+										}
+									},
+									onClick: "/i/projects/{id}"
+								},
+								{
+									name: "Tags",
+									fieldType: {
+										id: "item-list-tooltip",
+										props: {
+											items: {
+												link: "/i/tags/{id}",
+												"@scope": "tags",
+												label: "{key}"
+											}
+										}
+									}
+								},
+								{
+									name: "input",
+									fieldType: {
+										id: "input-toggle",
+										props: {
+											value: "{switch}"
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			},
+			{
+				width: 50,
+				tabs: [
+					{
+						name: "stuff1",
+						type: "table",
+						definitions: {
+							expand: {
+								type: "fields",
+								fields: [
+									{
+										width: 20,
+										name: "Name",
+										attribute: "name",
+										fieldType: {
+											id: "text",
+											props: {
+												text: "{name}"
+											}
+										}
+									},
+									{
+										width: 20,
+										name: "Tags",
+										attribute: "tags",
+										fieldType: {
+											id: "item-list-tooltip",
+											props: {
+												items: {
+													link: "/i/tags/{id}",
+													"@scope": "tags",
+													label: "{key}"
+												}
+											}
+										}
+									},
+									{
+										name: "input",
+										fieldType: {
+											id: "input-toggle",
+											props: {
+												value: "{test.switch}"
+											}
+										}
+									}
+								]
+							},
+							batch: {
+								selectedOptions: {
+									label: "{name}",
+									link: "/i/projects/{id}"
+								},
+								sequential: {
+									url: "/i/projects/{id}"
+								}
+							},
+							endpoint: {
+								url: "/projects",
+								params: {
+									include: ["tags"]
+								}
+							},
+							sort: {
+								items: [
+									{
+										label: "Name",
+										value: "name"
+									},
+									{
+										label: "Input",
+										value: "input"
+									},
+									{
+										label: "Position",
+										value: "pos",
+										manual: true
+									}
+								]
+							},
+							columns: [
+								{
+									width: 30,
+									name: "Name",
+									fieldType: {
+										id: "text",
+										props: {
+											text: "{name}"
+										}
+									},
+									onClick: "/i/projects/{id}"
+								},
+								{
+									name: "Tags",
+									fieldType: {
+										id: "item-list-tooltip",
+										props: {
+											items: {
+												link: "/i/tags/{id}",
+												"@scope": "tags",
+												label: "{key}"
+											}
+										}
+									}
+								},
+								{
+									name: "input",
+									fieldType: {
+										id: "input-toggle",
+										props: {
+											value: "{test.switch}"
+										}
+									}
+								}
+							],
+							filters: {
+								data: {
+									name: "test"
+								},
+								search: {
+									placeholder: "Search..."
+								},
+								fields: [
+									{
+										name: "Name",
+										attribute: "name",
+										fieldType: {
+											id: "input-text",
+											props: {
+												value: "{name}"
+											}
+										}
+									}
+								]
 							}
 						}
 					},
@@ -1900,9 +2121,9 @@ module.exports = {
 										id: "item-list-tooltip",
 										props: {
 											items: {
-												_link: "/i/tags/{id}",
+												link: "/i/tags/{id}",
 												"@scope": "tags",
-												label: "key"
+												label: "{key}"
 											}
 										}
 									}
@@ -1912,194 +2133,7 @@ module.exports = {
 									fieldType: {
 										id: "input-toggle",
 										props: {
-											value: "switch"
-										}
-									}
-								}
-							]
-						}
-					}
-				]
-			},
-			{
-				width: 50,
-				tabs: [
-					{
-						name: "stuff1",
-						type: "table",
-						definitions: {
-							expand: {
-								type: "fields",
-								fields: [
-									{
-										width: 20,
-										name: "Name",
-										attribute: "name",
-										fieldType: {
-											id: "text",
-											props: {
-												text: "name"
-											}
-										}
-									},
-									{
-										width: 20,
-										name: "Tags",
-										attribute: "tags",
-										fieldType: {
-											id: "item-list-tooltip",
-											props: {
-												items: {
-													_link: "/i/tags/{id}",
-													"@scope": "tags",
-													label: "key"
-												}
-											}
-										}
-									},
-									{
-										name: "input",
-										fieldType: {
-											id: "input-toggle",
-											props: {
-												value: "test.switch"
-											}
-										}
-									}
-								]
-							},
-							batch: {
-								selectedOptions: {
-									label: "{name}",
-									link: "/i/projects/{id}"
-								},
-								sequential: {
-									url: "/i/projects/{id}"
-								}
-							},
-							endpoint: {
-								url: "/projects",
-								params: {
-									include: ["tags"]
-								}
-							},
-							sort: {
-								items: [
-									{
-										label: "Name",
-										value: "name"
-									},
-									{
-										label: "Input",
-										value: "input"
-									},
-									{
-										label: "Position",
-										value: "pos",
-										manual: true
-									}
-								]
-							},
-							columns: [
-								{
-									width: 30,
-									name: "Name",
-									fieldType: {
-										id: "text",
-										props: {
-											text: "name"
-										}
-									},
-									onClick: "/i/projects/{id}"
-								},
-								{
-									name: "Tags",
-									fieldType: {
-										id: "item-list-tooltip",
-										props: {
-											items: {
-												_link: "/i/tags/{id}",
-												"@scope": "tags",
-												label: "key"
-											}
-										}
-									}
-								},
-								{
-									name: "input",
-									fieldType: {
-										id: "input-toggle",
-										props: {
-											value: "test.switch"
-										}
-									}
-								}
-							],
-							filters: {
-								data: {
-									name: "test"
-								},
-								search: {
-									placeholder: "Search..."
-								},
-								fields: [
-									{
-										name: "Name",
-										attribute: "name",
-										fieldType: {
-											id: "input-text",
-											props: {
-												value: "name"
-											}
-										}
-									}
-								]
-							}
-						}
-					},
-					{
-						id: "stuff2",
-						name: "stuff 2",
-						type: "table",
-						definitions: {
-							endpoint: {
-								url: "/projects",
-								params: {
-									include: ["tags"]
-								}
-							},
-							pagination: {},
-							columns: [
-								{
-									width: 30,
-									name: "Name",
-									fieldType: {
-										id: "text",
-										props: {
-											text: "name"
-										}
-									},
-									onClick: "/i/projects/{id}"
-								},
-								{
-									name: "Tags",
-									fieldType: {
-										id: "item-list-tooltip",
-										props: {
-											items: {
-												_link: "/i/tags/{id}",
-												"@scope": "tags",
-												label: "key"
-											}
-										}
-									}
-								},
-								{
-									name: "input",
-									fieldType: {
-										id: "input-toggle",
-										props: {
-											value: "switch"
+											value: "{switch}"
 										}
 									}
 								}
@@ -2109,5 +2143,18 @@ module.exports = {
 				]
 			}
 		]
-	}
+	},
+
+	"/signedurls": {
+		data: {
+			id: "d85eba1e-979c-448c-9a4a-8a8c3e23b397",
+			key: "string",
+			url: "http://localhost:3001/s3-upload",
+			headers: {
+				"Content-Type": "application/octet-stream"
+			}
+		}
+	},
+
+	"/s3-upload": {}
 };

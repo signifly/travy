@@ -1,11 +1,11 @@
 <template>
 	<div class="progress" :class="status">
 		<Tooltip
+			transition="trans-fadeRight"
 			:content="`${percentage}%`"
 			placement="right"
-			transition="trans-fadeRight"
 		>
-			<Progress class="bar" :percentage="percentage" :show-text="false" />
+			<Progress class="bar" v-bind="{percentage}" :show-text="false" />
 		</Tooltip>
 	</div>
 </template>
@@ -19,10 +19,6 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				percentage: "percentage",
-				status: "status"
-			},
-			data: {
 				percentage: 60,
 				status: "warning"
 			}

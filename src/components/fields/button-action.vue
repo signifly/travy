@@ -2,19 +2,19 @@
 	<div class="button-action">
 		<action
 			@event="$emit('event', $event)"
-			v-bind="_action.actionType"
+			v-bind="action.actionType"
 			v-model="active"
-			:data="data"
+			:data="__data"
 		>
 			<div class="button-action">
 				<Button
 					@click="active = !active"
-					:type="_action.status"
-					:size="_action.size"
+					:type="action.status"
+					:size="action.size"
 					plain
 				>
-					{{ _action.name }}
-					<i :class="`el-icon-${_action.icon}`" v-if="_action.icon" />
+					{{ action.name }}
+					<i :class="`el-icon-${action.icon}`" v-if="action.icon" />
 				</Button>
 			</div>
 		</action>
@@ -28,11 +28,12 @@ import {Button} from "element-ui";
 export default {
 	components: {Button, action},
 	meta: {
-		spec: "props",
+		spec: {
+			action: {type: Object, required: true, note: "see actions"}
+		},
 		res: {
 			props: {
-				data: "$root",
-				_action: {
+				action: {
 					status: "primary",
 					name: "button",
 					icon: "plus",
@@ -45,9 +46,6 @@ export default {
 									name: "Modal",
 									actionType: {
 										id: "modal",
-										onSubmit: {
-											url: "#button-action"
-										},
 										props: {
 											name: "Modal title",
 											endpoint: {
@@ -61,7 +59,7 @@ export default {
 													fieldType: {
 														id: "input-text",
 														props: {
-															value: "input"
+															value: "{input}"
 														}
 													}
 												},
@@ -71,7 +69,7 @@ export default {
 													fieldType: {
 														id: "input-text",
 														props: {
-															value: "input2"
+															value: "{input2}"
 														}
 													}
 												}
@@ -93,13 +91,16 @@ export default {
 		}
 	},
 	props: {
-		_action: {type: Object, required: true, note: "see actions"},
-		data: {type: Object, required: false, note: "$root"}
+		__props: {type: Object, required: true},
+		__data: {type: Object, required: false}
 	},
 	data() {
 		return {
 			active: false
 		};
+	},
+	computed: {
+		action: (t) => t.__props.action
 	}
 };
 </script>

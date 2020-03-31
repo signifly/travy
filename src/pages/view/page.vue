@@ -47,8 +47,8 @@
 
 <script>
 import actions from "@/components/page-actions";
-import {rStringProps} from "@/modules/utils";
 import activity from "./components/activity";
+import {transProps} from "@/modules/utils";
 import sidebar from "./components/sidebar";
 import panels from "./components/panels";
 import tabs from "@/components/tabs";
@@ -136,7 +136,7 @@ export default {
 				});
 
 				this.$store.dispatch("base/meta", {
-					title: rStringProps({data: data.data, val: this.pageTitle})
+					title: transProps({data: data.data, val: this.pageTitle})
 				});
 
 				this.res = data;
