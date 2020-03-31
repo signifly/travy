@@ -340,7 +340,38 @@ module.exports = {
 					},
 					columns: [
 						{
-							width: 50,
+							name: "Fields",
+							fieldType: {
+								id: "fields",
+								props: {
+									fields: [
+										{
+											name: "Name1",
+											attribute: "name1",
+											width: 50,
+											fieldType: {
+												id: "text",
+												props: {
+													text: "{name}"
+												}
+											}
+										},
+										{
+											name: "status",
+											attribute: "status",
+											fieldType: {
+												id: "status",
+												props: {
+													text: "Processing",
+													status: "primary"
+												}
+											}
+										}
+									]
+								}
+							}
+						},
+						{
 							name: "Name",
 							fieldType: {
 								id: "text",

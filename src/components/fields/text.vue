@@ -1,19 +1,13 @@
 <template>
-	<div class="text" :class="[`align-${align}`, {subtitle}]">
+	<div class="text" :class="{subtitle}">
 		<div class="content">
-			<div
-				v-text="text || '-'"
-				:style="textStyle"
-				:class="status"
-				class="title"
-			/>
+			<div v-text="text || '-'" :style="textStyle" class="title" />
 			<div class="subtitle" v-if="subtitle" v-text="subtitle" />
 		</div>
 
 		<div class="tooltip" v-if="tooltip">
 			<Tooltip placement="right">
 				<i class="el-icon-info" />
-
 				<div slot="content">
 					{{ tooltip }}
 				</div>
@@ -35,12 +29,12 @@ export default {
 				tooltip: "{tooltip}",
 				text: "{text}",
 				textStyle: {
-					textDecoration: "line-through"
+					textDecoration: "line-through",
+					textAlign: "left"
 				}
 			},
 			data: {
 				subtitle: "a subtitle",
-				status: "warning",
 				text: "some text",
 				tooltip: "text"
 			}
@@ -50,9 +44,7 @@ export default {
 		subtitle: {type: [String, Number], required: false},
 		text: {type: [String, Number], required: false},
 		textStyle: {type: Object, required: false},
-		tooltip: {type: String, required: false},
-		status: {type: String, required: false},
-		align: {type: String, default: "left"}
+		tooltip: {type: String, required: false}
 	}
 };
 </script>
@@ -66,35 +58,7 @@ export default {
 		align-items: center;
 	}
 
-	&.align {
-		&-left {
-			text-align: left;
-		}
-
-		&-right {
-			text-align: right;
-		}
-	}
-
 	.content {
-		.title {
-			&.danger {
-				color: $danger;
-			}
-			&.warning {
-				color: $warning;
-			}
-			&.info {
-				color: $info;
-			}
-			&.primary {
-				color: $primary;
-			}
-			&.success {
-				color: $success;
-			}
-		}
-
 		.subtitle {
 			font-style: italic;
 			font-size: 14px;

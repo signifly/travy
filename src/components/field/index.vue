@@ -63,6 +63,8 @@ export default {
 <style lang="scss" scoped>
 .field {
 	margin: $fieldMargin 0;
+	align-items: center;
+	display: flex;
 
 	.content {
 		width: 100%;
