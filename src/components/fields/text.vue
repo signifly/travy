@@ -1,7 +1,7 @@
 <template>
 	<div class="text" :class="{subtitle}">
 		<div class="content">
-			<div v-text="text || '-'" :style="textStyle" class="title" />
+			<div v-text="text || fallback || '—'" :style="textStyle" class="title" />
 			<div class="subtitle" v-if="subtitle" v-text="subtitle" />
 		</div>
 
@@ -44,6 +44,7 @@ export default {
 		subtitle: {type: [String, Number], required: false},
 		text: {type: [String, Number], required: false},
 		textStyle: {type: Object, required: false},
+		fallback: {type: String, required: false},
 		tooltip: {type: String, required: false}
 	}
 };

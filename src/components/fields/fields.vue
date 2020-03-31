@@ -15,6 +15,38 @@ import field from "@/components/field";
 
 export default {
 	components: {field},
+	meta: {
+		spec: {
+			fields: {type: Array, required: true}
+		},
+		res: {
+			props: {
+				fields: [
+					{
+						name: "text1",
+						attribute: "text1",
+						width: 50,
+						fieldType: {
+							id: "text",
+							props: {
+								text: "text1"
+							}
+						}
+					},
+					{
+						name: "text2",
+						attribute: "text2",
+						fieldType: {
+							id: "text",
+							props: {
+								text: "text2"
+							}
+						}
+					}
+				]
+			}
+		}
+	},
 	props: {
 		__props: {type: Object, required: true},
 		__data: {type: Object, required: true}

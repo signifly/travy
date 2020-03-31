@@ -42,24 +42,24 @@ export default {
 			data: {
 				items: [
 					{
-						title: "English",
 						text: "translated",
-						status: "success"
+						status: "success",
+						title: "English"
 					},
 					{
+						status: "primary",
 						title: "Danish",
-						text: "Ready",
-						status: "primary"
+						text: "Ready"
 					},
 					{
+						status: "warning",
 						title: "Chinese",
-						text: "Partial",
-						status: "warning"
+						text: "Partial"
 					},
 					{
-						title: "Khmer",
+						status: "danger",
 						text: "No data",
-						status: "danger"
+						title: "Khmer"
 					}
 				]
 			}

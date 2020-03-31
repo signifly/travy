@@ -31,7 +31,7 @@ export default {
 			if (this.timestamp) {
 				return formatDate(this.timestamp * 1000, this.format);
 			} else {
-				return "-";
+				return "—";
 			}
 		}
 	}
