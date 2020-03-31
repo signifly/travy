@@ -30,7 +30,7 @@ describe("action", () => {
 
 		wrapper.setProps({
 			hide: {
-				key: "obj.isHidden",
+				key: "{obj.isHidden}",
 				operator: "eq",
 				value: true
 			}

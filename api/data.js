@@ -375,6 +375,16 @@ module.exports = {
 						},
 						{
 							name: "Name",
+							tooltip: [
+								{
+									active: {key: "{id}", value: 1, operator: "eq"},
+									text: "value is 1"
+								},
+								{
+									active: {key: "{id}", value: 5, operator: "eq"},
+									text: "value is 5"
+								}
+							],
 							fieldType: {
 								id: "text",
 								props: {
@@ -698,7 +708,11 @@ module.exports = {
 					row: {
 						background: {
 							color: "azure",
-							active: {key: "have_background", operator: "eq", value: true}
+							active: {
+								key: "{have_background}",
+								operator: "eq",
+								value: true
+							}
 						}
 					},
 					endpoint: {
@@ -1378,7 +1392,11 @@ module.exports = {
 							{
 								name: "Link",
 								actionType: {
-									hide: {key: "is_deleted", operator: "eq", value: false},
+									hide: {
+										key: "{is_deleted}",
+										operator: "eq",
+										value: false
+									},
 									id: "link",
 									props: {
 										url: "/"

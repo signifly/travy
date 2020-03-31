@@ -63,7 +63,6 @@ export default {
 			return {
 				get background() {
 					if (!row.background) return null;
-
 					const active = operator({
 						...row.background.active,
 						data: rowData

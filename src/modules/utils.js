@@ -48,14 +48,6 @@ export const translate = (locales) => {
 	return locales[config.locale] || locales.en;
 };
 
-export const operator = ({key, value, operator, data}) => {
-	const _in = (src, value) => src.includes(value);
-	const neq = (src, value) => src !== value;
-
-	const op = {eq, gt, gte, lt, lte, neq, in: _in}[operator];
-	return op(get(data, key), value);
-};
-
 export const mergeData = (srcData, newData) => {
 	// merge objects deep, but ignore arrays
 	return mergeWith({}, srcData, newData, (oldValue, newValue, key, obj) => {
@@ -118,4 +110,13 @@ export const transProps = ({data, val}) => {
 	}
 
 	return val;
+};
+
+export const operator = ({data, ...val}) => {
+	const {key, value, operator} = transProps({data, val});
+	const _in = (src, value) => src.includes(value);
+	const neq = (src, value) => src !== value;
+
+	const op = {eq, gt, gte, lt, lte, neq, in: _in}[operator];
+	return op(key, value);
 };

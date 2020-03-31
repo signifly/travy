@@ -8,8 +8,8 @@
 			<div class="dot outdated" v-if="option.outdated" />
 		</transition>
 
-		<div class="tooltip" v-if="tooltip">
-			<Tooltip :content="tooltip" placement="top">
+		<div class="hint" v-if="field.hint">
+			<Tooltip :content="field.hint" placement="top">
 				<i class="el-icon-info" />
 			</Tooltip>
 		</div>
@@ -25,7 +25,6 @@ export default {
 	components: {Tooltip, translate},
 	props: {
 		options: {type: Object, required: false},
-		tooltip: {type: String, required: false},
 		field: {type: Object, required: true}
 	},
 	computed: {
@@ -64,7 +63,7 @@ export default {
 		}
 	}
 
-	.tooltip {
+	.hint {
 		font-size: 0.8em;
 		color: $blue3;
 	}
