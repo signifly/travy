@@ -5,7 +5,11 @@
 			:content="`${percentage}%`"
 			placement="right"
 		>
-			<Progress class="bar" v-bind="{percentage}" :show-text="false" />
+			<Progress
+				class="bar"
+				v-bind="{percentage, color, status}"
+				:show-text="false"
+			/>
 		</Tooltip>
 	</div>
 </template>
@@ -19,12 +23,14 @@ export default {
 		spec: "props",
 		res: {
 			props: {
-				percentage: 60,
-				status: "warning"
+				status: "warning",
+				color: "purple",
+				percentage: 60
 			}
 		}
 	},
 	props: {
+		color: {type: String, required: false, note: "overrides status"},
 		status: {type: String, default: "primary"},
 		percentage: {type: Number, default: 0}
 	}
@@ -34,25 +40,5 @@ export default {
 <style lang="scss" scoped>
 .progress {
 	width: 100%;
-}
-
-::v-deep {
-	.el-progress-bar__inner {
-		.danger & {
-			background-color: $danger;
-		}
-		.warning & {
-			background-color: $warning;
-		}
-		.info & {
-			background-color: $info;
-		}
-		.primary & {
-			background-color: $primary;
-		}
-		.success & {
-			background-color: $success;
-		}
-	}
 }
 </style>

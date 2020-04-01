@@ -9,8 +9,12 @@
 					class="item"
 				>
 					<div class="title">{{ item.title }}</div>
-					<div class="bar">
-						<Progress class="progressbar" :percentage="item.percentage" />
+					<div class="bar" :style="{color: item.color}">
+						<Progress
+							:percentage="item.percentage"
+							:color="item.color"
+							class="progressbar"
+						/>
 					</div>
 				</div>
 			</div>
@@ -30,9 +34,10 @@ export default {
 				type: Object,
 				required: true,
 				children: {
+					color: {type: String, required: false, note: "overrides status"},
 					percentage: {type: Number, required: true},
 					"@scope": {type: Array, required: true},
-					status: {type: String, required: true},
+					status: {type: String, required: false},
 					title: {type: String, required: true}
 				}
 			}
@@ -43,15 +48,17 @@ export default {
 					percentage: "{percentage}",
 					status: "{status}",
 					"@scope": "items",
-					title: "{title}"
+					title: "{title}",
+					color: "{color}"
 				}
 			},
 			data: {
 				items: [
 					{
+						status: "primary",
 						title: "English",
 						percentage: 60,
-						status: "primary"
+						color: "purple"
 					},
 					{
 						title: "Danish",

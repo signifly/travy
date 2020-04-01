@@ -2,9 +2,16 @@
 	<div class="status-set">
 		<div class="rows">
 			<div class="row" v-for="(row, i) in rows" :key="i">
-				<div class="item" v-for="item in row" :key="item.title">
+				<div
+					:class="{color: item.color}"
+					v-for="item in row"
+					:key="item.title"
+					class="item"
+				>
 					<div class="title">{{ item.title }}</div>
-					<Tag size="small" :type="item.status">{{ item.text }}</Tag>
+					<Tag size="small" :type="item.status" :color="item.color">
+						{{ item.text }}
+					</Tag>
 				</div>
 			</div>
 		</div>
@@ -23,8 +30,9 @@ export default {
 				type: Object,
 				required: true,
 				children: {
+					color: {type: String, required: false, note: "overrides status"},
 					"@scope": {type: Array, required: true},
-					status: {type: String, required: true},
+					status: {type: String, required: false},
 					title: {type: String, required: true},
 					text: {type: String, required: true}
 				}
@@ -33,8 +41,9 @@ export default {
 		res: {
 			props: {
 				items: {
-					"@scope": "items",
 					status: "{status}",
+					"@scope": "items",
+					color: "{color}",
 					title: "{title}",
 					text: "{text}"
 				}
@@ -57,9 +66,9 @@ export default {
 						text: "Partial"
 					},
 					{
-						status: "danger",
 						text: "No data",
-						title: "Khmer"
+						title: "Khmer",
+						color: "#e6e6ff"
 					}
 				]
 			}
@@ -93,6 +102,10 @@ export default {
 				justify-content: space-between;
 				align-items: center;
 				padding: 1em;
+
+				&.color .el-tag {
+					color: transparentize(black, 0.6);
+				}
 
 				.title {
 					font-size: 0.85em;

@@ -1,6 +1,6 @@
 <template>
-	<div class="status">
-		<Tag :type="status" size="small">{{ text }}</Tag>
+	<div class="status" :class="{color}">
+		<Tag :type="status" :color="color" size="small">{{ text }}</Tag>
 	</div>
 </template>
 
@@ -10,18 +10,17 @@ import {Tag} from "element-ui";
 export default {
 	components: {Tag},
 	meta: {
-		spec: {
-			text: {type: String, required: true},
-			status: {type: String, required: false}
-		},
+		spec: "props",
 		res: {
 			props: {
 				status: "primary",
+				color: "#e6e6ff",
 				text: "4/8"
 			}
 		}
 	},
 	props: {
+		color: {type: String, required: false, note: "overrides status"},
 		status: {type: String, required: false},
 		text: {type: String, required: true}
 	}
@@ -33,6 +32,10 @@ export default {
 	.el-tag {
 		min-width: 6em;
 		text-align: center;
+	}
+
+	&.color .el-tag {
+		color: transparentize(black, 0.6);
 	}
 }
 </style>
