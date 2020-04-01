@@ -35,6 +35,7 @@ export default {
 	}
 
 	&.color .el-tag {
+		border-color: #dedede;
 		color: transparentize(black, 0.6);
 	}
 }

@@ -104,6 +104,7 @@ export default {
 				padding: 1em;
 
 				&.color .el-tag {
+					border-color: #dedede;
 					color: transparentize(black, 0.6);
 				}
 
