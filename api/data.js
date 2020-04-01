@@ -364,14 +364,11 @@ module.exports = {
 						},
 						{
 							name: "Name",
+							onClick: "/i/projects/{id}",
 							tooltip: [
 								{
 									active: {key: "{id}", value: 1, operator: "eq"},
 									text: "value is 1"
-								},
-								{
-									active: {key: "{id}", value: 5, operator: "eq"},
-									text: "value is 5"
 								}
 							],
 							fieldType: {
@@ -379,8 +376,7 @@ module.exports = {
 								props: {
 									text: "{name}"
 								}
-							},
-							onClick: "/i/projects/{id}"
+							}
 						},
 						{
 							name: "Tags",

@@ -49,14 +49,14 @@ export default {
 		},
 
 		attributes() {
-			// find all mapped attributes for field, {key} is an attribute
+			// find all mapped attributes for field, "{key}" is an attribute
 			return Object.entries(this.props)
 				.map(([, val]) => getMapKey(val))
 				.filter((x) => x);
 		},
 
 		errorMsg() {
-			// find first message for first attribute
+			// find first error for first attribute
 			return this.attributes
 				.map((attr) => get(this.errors, [attr, 0]))
 				.filter((x) => x)[0];
