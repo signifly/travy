@@ -39,15 +39,22 @@ export default {
 		data: {type: Object, required: false}
 	},
 	computed: {
-		disabled: (t) => t.field.hide && operator({...t.field.hide, data: t.data}),
 		errors: (t) => get(t.error, "errors", {}),
 		props: (t) => t.field.fieldType.props,
+
+		disabled() {
+			return (this.field.hide || []).some((x) =>
+				operator({...x, data: this.data})
+			);
+		},
+
 		attributes() {
 			// find all mapped attributes for field, {key} is an attribute
 			return Object.entries(this.props)
 				.map(([, val]) => getMapKey(val))
 				.filter((x) => x);
 		},
+
 		errorMsg() {
 			// find first message for first attribute
 			return this.attributes

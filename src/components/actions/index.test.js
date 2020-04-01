@@ -29,11 +29,13 @@ describe("action", () => {
 		const wrapper = mount(Comp, {propsData});
 
 		wrapper.setProps({
-			hide: {
-				key: "{obj.isHidden}",
-				operator: "eq",
-				value: true
-			}
+			hide: [
+				{
+					key: "{obj.isHidden}",
+					operator: "eq",
+					value: true
+				}
+			]
 		});
 
 		expect(wrapper.vm.disabled).toBe(true);

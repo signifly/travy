@@ -995,8 +995,8 @@ module.exports = {
 					},
 					columns: [
 						{
-							width: 30,
 							name: "Name",
+							width: 30,
 							fieldType: {
 								id: "text",
 								props: {
@@ -1024,6 +1024,16 @@ module.exports = {
 								id: "input-toggle",
 								props: {
 									value: "{switch}"
+								}
+							}
+						},
+						{
+							name: "Hidden",
+							width: 10,
+							fieldType: {
+								id: "text",
+								props: {
+									text: "hidden"
 								}
 							}
 						}
@@ -1353,11 +1363,13 @@ module.exports = {
 							{
 								name: "Link",
 								actionType: {
-									hide: {
-										key: "{is_deleted}",
-										operator: "eq",
-										value: false
-									},
+									hide: [
+										{
+											key: "{is_deleted}",
+											operator: "eq",
+											value: false
+										}
+									],
 									id: "link",
 									props: {
 										url: "/"
@@ -1488,13 +1500,13 @@ module.exports = {
 			status: "open",
 			created_at: 1568191509,
 			updated_at: 1568191509,
+			is_deleted: false,
 			deleted_at: null,
 			created_by: null,
 			updated_by: null,
 			creator: null,
 			editor: null,
-			tags: [],
-			is_deleted: false
+			tags: []
 		}
 	},
 
