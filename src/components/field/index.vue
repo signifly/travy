@@ -77,6 +77,7 @@ export default {
 .field {
 	margin: $fieldMargin 0;
 	align-items: center;
+	flex-wrap: wrap;
 	display: flex;
 
 	.content {
@@ -84,6 +85,7 @@ export default {
 	}
 
 	.error {
+		width: 100%;
 		font-weight: 500;
 		font-size: 0.75em;
 		color: $danger;
@@ -104,6 +106,7 @@ export default {
 	}
 
 	.description {
+		width: 100%;
 		margin-top: 0.6em;
 		margin-bottom: 0.5em;
 		font-size: em(12);
