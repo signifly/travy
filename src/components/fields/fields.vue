@@ -24,7 +24,6 @@ export default {
 				fields: [
 					{
 						name: "text1",
-						width: 50,
 						fieldType: {
 							id: "text",
 							props: {

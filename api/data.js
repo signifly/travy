@@ -684,14 +684,16 @@ module.exports = {
 				type: "table",
 				definitions: {
 					row: {
-						background: {
-							color: "azure",
-							active: {
-								key: "{have_background}",
-								operator: "eq",
-								value: true
+						background: [
+							{
+								color: "azure",
+								active: {key: "{have_background}", operator: "eq", value: true}
+							},
+							{
+								color: "PapayaWhip",
+								active: {key: "{have_background}", operator: "eq", value: false}
 							}
-						}
+						]
 					},
 					endpoint: {
 						url: "/projects",
@@ -783,7 +785,8 @@ module.exports = {
 				updated_by: null,
 				tags_count: 0,
 				tags: [],
-				is_deleted: false
+				is_deleted: false,
+				have_background: false
 			},
 			{
 				id: 4,

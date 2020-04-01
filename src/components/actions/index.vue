@@ -24,22 +24,17 @@ export default {
 		actionOpts: {type: Object, default: () => ({})},
 		onSubmit: {type: Object, required: false},
 		value: {type: Boolean, required: true},
+		hide: {type: Array, default: () => []}, // [{key, operator, value}]
 		props: {type: Object, required: true},
 		data: {type: Object, required: false}, // parent data
-		hide: {type: Object, required: false}, // {key, operator, value}
 		id: {type: String, required: true}
 	},
 	computed: {
 		comp() {
 			return () => import(/* webpackMode: "eager" */ `./${this.id}.vue`);
 		},
-
 		disabled() {
-			if (this.hide) {
-				return operator({...this.hide, data: this.data});
-			} else {
-				return false;
-			}
+			return this.hide.some((x) => operator({...x, data: this.data}));
 		}
 	},
 	methods: {

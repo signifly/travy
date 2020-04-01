@@ -21,10 +21,9 @@
 </template>
 
 <script>
-import {transProps, mergeData} from "@/modules/utils";
+import {transProps, mergeData, operator} from "@/modules/utils";
 import {debounce, cloneDeep} from "lodash";
 import expandToggle from "./expand/toggle";
-import {operator} from "@/modules/utils";
 import expandView from "./expand/view";
 import vselect from "./select";
 import rowField from "./field";
@@ -57,18 +56,14 @@ export default {
 			}),
 
 		style() {
-			const rowData = this.rowData;
+			const data = this.rowData;
 			const row = this.row;
 
 			return {
 				get background() {
-					if (!row.background) return null;
-					const active = operator({
-						...row.background.active,
-						data: rowData
-					});
-
-					return active && row.background.color;
+					return (row.background || [])
+						.map((item) => operator({...item.active, data}) && item.color)
+						.filter((x) => x)[0];
 				}
 			};
 		}
