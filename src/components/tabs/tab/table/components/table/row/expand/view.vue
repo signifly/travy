@@ -4,10 +4,10 @@
 			<div class="expand">
 				<div class="fields">
 					<field
-						v-for="field in expand.fields"
-						v-bind="{field, data}"
-						:key="field.attribute"
+						v-for="(field, i) in expand.fields"
 						@event="$emit('event', $event)"
+						v-bind="{field, data}"
+						:key="i"
 					/>
 				</div>
 			</div>

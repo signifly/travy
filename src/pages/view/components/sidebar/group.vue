@@ -6,9 +6,9 @@
 			<field
 				v-bind="{field, data, options}"
 				@event="$emit('event', $event)"
-				v-for="field in group.fields"
-				:key="field.attribute"
+				v-for="(field, i) in group.fields"
 				margin="0.5em 0"
+				:key="i"
 			/>
 		</div>
 	</div>

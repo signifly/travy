@@ -14,9 +14,9 @@
 			<div class="fields">
 				<field
 					v-bind="{field, error, data: modalData}"
-					v-for="field in fields"
-					:key="field.attribute"
+					v-for="(field, i) in fields"
 					@event="event"
+					:key="i"
 				/>
 			</div>
 

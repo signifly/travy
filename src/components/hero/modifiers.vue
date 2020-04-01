@@ -1,6 +1,6 @@
 <template>
 	<div class="modifiers">
-		<div class="modifiers-field" v-for="field in fields" :key="field.attribute">
+		<div class="modifiers-field" v-for="(field, i) in fields" :key="i">
 			<field v-bind="{field}" :hide="['label']" :data="dataC" @event="event" />
 		</div>
 	</div>

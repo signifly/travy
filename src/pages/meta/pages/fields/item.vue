@@ -67,8 +67,7 @@ export default {
 	},
 	computed: {
 		field: (t) => ({
-			fieldType: {id: t.id, props: t.res.props},
-			attribute: t.id
+			fieldType: {id: t.id, props: t.res.props}
 		}),
 
 		propsTable() {

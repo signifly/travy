@@ -40,31 +40,28 @@ export default {
 			fields: [
 				{
 					name: "Email",
-					attribute: "email",
 					fieldType: {
 						id: "input-text",
 						props: {
-							value: "email"
+							value: "{email}"
 						}
 					}
 				},
 				{
 					name: "New password",
-					attribute: "password",
 					fieldType: {
 						id: "input-password",
 						props: {
-							value: "password"
+							value: "{password}"
 						}
 					}
 				},
 				{
 					name: "Confirm password",
-					attribute: "password-confirmation",
 					fieldType: {
 						id: "input-password",
 						props: {
-							value: "password_confirmation"
+							value: "{password_confirmation}"
 						}
 					}
 				}

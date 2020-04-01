@@ -17,11 +17,11 @@
 			<div class="pop">
 				<div class="fields">
 					<field
-						v-for="field in fields"
-						:key="field.attribute"
+						v-for="(field, i) in fields"
 						v-bind="{field}"
 						:data="filters"
 						@event="event"
+						:key="i"
 					/>
 				</div>
 

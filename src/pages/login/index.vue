@@ -39,21 +39,19 @@ export default {
 			fields: [
 				{
 					name: "Email",
-					attribute: "email",
 					fieldType: {
 						id: "input-text",
 						props: {
-							value: "email"
+							value: "{email}"
 						}
 					}
 				},
 				{
 					name: "Password",
-					attribute: "password",
 					fieldType: {
 						id: "input-password",
 						props: {
-							value: "password"
+							value: "{password}"
 						}
 					}
 				}

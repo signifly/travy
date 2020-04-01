@@ -11,7 +11,7 @@
 				<vselect v-bind="{selected, rowData}" />
 			</td>
 
-			<td v-for="column in columns" :key="column.attribute">
+			<td v-for="(column, i) in columns" :key="i">
 				<rowField v-bind="{data, column, state}" @event="event" />
 			</td>
 		</tr>

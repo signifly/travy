@@ -2,10 +2,9 @@
 	<div class="fields" v-if="data">
 		<field
 			v-bind="{field, data, options, error}"
-			v-for="field in fields"
-			:key="field.attribute"
+			v-for="(field, i) in fields"
 			@event="event"
-			type="fields"
+			:key="i"
 		/>
 	</div>
 

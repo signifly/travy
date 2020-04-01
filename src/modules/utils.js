@@ -70,6 +70,14 @@ export const mapPaths = (data) => {
 	);
 };
 
+export const getMapKey = (val) => {
+	// value is "{key}"
+	const map = !!(typeof val === "string" && val.match(/^{[^{]+}$/g));
+
+	// get key from {key}
+	return map ? /\{(.*?)\}/g.exec(val)[1] : false;
+};
+
 export const transProps = ({data, val}) => {
 	if (Array.isArray(val)) {
 		return val.map((val) => transProps({data, val}));
@@ -96,11 +104,9 @@ export const transProps = ({data, val}) => {
 	}
 
 	if (typeof val === "string") {
-		// value is "{key}"
-		const map = !!val.match(/^{[^{]+}$/g);
+		const key = getMapKey(val);
 
-		if (map) {
-			const [, key] = /\{(.*?)\}/g.exec(val);
+		if (key) {
 			return transProps({data, val: get(data, key)});
 		} else {
 			return replace(val, /\{.*?\}/g, (key) =>

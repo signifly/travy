@@ -24,11 +24,12 @@ import translate from "./translate";
 export default {
 	components: {Tooltip, translate},
 	props: {
+		attributes: {type: Array, required: true},
 		options: {type: Object, required: false},
 		field: {type: Object, required: true}
 	},
 	computed: {
-		option: (t) => get(t.options, t.field.attribute, {})
+		option: (t) => get(t.options, t.attributes[0], {})
 	}
 };
 </script>

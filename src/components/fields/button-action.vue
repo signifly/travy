@@ -54,7 +54,6 @@ export default {
 											},
 											fields: [
 												{
-													attribute: "1",
 													name: "a field",
 													fieldType: {
 														id: "input-text",
@@ -64,7 +63,6 @@ export default {
 													}
 												},
 												{
-													attribute: "2",
 													name: "a field",
 													fieldType: {
 														id: "input-text",

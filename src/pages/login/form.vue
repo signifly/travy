@@ -11,8 +11,8 @@
 					<field
 						@event="$emit('event', $event)"
 						v-bind="{field, data, error}"
-						v-for="field in fields"
-						:key="field.attribute"
+						v-for="(field, i) in fields"
+						:key="i"
 					/>
 
 					<div class="actions">

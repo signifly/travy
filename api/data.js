@@ -16,7 +16,6 @@ module.exports = {
 					fields: [
 						{
 							name: "Name",
-							attribute: "name",
 							fieldType: {
 								id: "text",
 								props: {
@@ -26,7 +25,6 @@ module.exports = {
 						},
 						{
 							name: "Text",
-							attribute: "text",
 							fieldType: {
 								id: "input-text",
 								props: {
@@ -45,7 +43,6 @@ module.exports = {
 					name: "History",
 					fields: [
 						{
-							attribute: "created_at",
 							name: "Created At",
 							fieldType: {
 								id: "date",
@@ -158,7 +155,6 @@ module.exports = {
 			},
 			fields: [
 				{
-					attribute: "language_code",
 					name: "Language",
 					fieldType: {
 						id: "input-select",
@@ -196,7 +192,6 @@ module.exports = {
 							{
 								width: 50,
 								name: "Name",
-								attribute: "name",
 								fieldType: {
 									id: "text",
 									props: {
@@ -207,7 +202,6 @@ module.exports = {
 							{
 								width: 50,
 								name: "Tags",
-								attribute: "tags",
 								fieldType: {
 									id: "item-list-tooltip",
 									props: {
@@ -258,7 +252,6 @@ module.exports = {
 														},
 														fields: [
 															{
-																attribute: "1",
 																name: "a field",
 																fieldType: {
 																	id: "input-text",
@@ -268,7 +261,6 @@ module.exports = {
 																}
 															},
 															{
-																attribute: "2",
 																name: "a field",
 																fieldType: {
 																	id: "input-text",
@@ -278,7 +270,6 @@ module.exports = {
 																}
 															},
 															{
-																attribute: "3",
 																name: "upload",
 																fieldType: {
 																	id: "input-files",
@@ -347,7 +338,6 @@ module.exports = {
 									fields: [
 										{
 											name: "Name1",
-											attribute: "name1",
 											fieldType: {
 												id: "text",
 												props: {
@@ -357,7 +347,6 @@ module.exports = {
 										},
 										{
 											name: "Name2",
-											attribute: "name2",
 											fieldType: {
 												id: "text",
 												props: {
@@ -417,7 +406,6 @@ module.exports = {
 						},
 						{
 							name: "Actions",
-							attribute: "actions",
 							fieldType: {
 								id: "button-action",
 								props: {
@@ -441,7 +429,6 @@ module.exports = {
 																},
 																fields: [
 																	{
-																		attribute: "1",
 																		name: "a field",
 																		fieldType: {
 																			id: "input-text",
@@ -451,7 +438,6 @@ module.exports = {
 																		}
 																	},
 																	{
-																		attribute: "2",
 																		name: "a field",
 																		fieldType: {
 																			id: "input-text",
@@ -520,7 +506,6 @@ module.exports = {
 						fields: [
 							{
 								name: "Name",
-								attribute: "name",
 								fieldType: {
 									id: "input-text",
 									props: {
@@ -551,7 +536,6 @@ module.exports = {
 													},
 													fields: [
 														{
-															attribute: "1",
 															name: "a field",
 															fieldType: {
 																id: "input-text",
@@ -561,7 +545,6 @@ module.exports = {
 															}
 														},
 														{
-															attribute: "2",
 															name: "a field",
 															fieldType: {
 																id: "input-text",
@@ -571,7 +554,6 @@ module.exports = {
 															}
 														},
 														{
-															attribute: "3",
 															name: "upload",
 															fieldType: {
 																id: "input-files",
@@ -623,7 +605,6 @@ module.exports = {
 													fields: [
 														{
 															name: "Country",
-															attribute: "country",
 															fieldType: {
 																id: "input-select",
 																props: {
@@ -647,7 +628,6 @@ module.exports = {
 															}
 														},
 														{
-															attribute: "name",
 															name: "Name",
 															fieldType: {
 																id: "input-text",
@@ -657,7 +637,6 @@ module.exports = {
 															}
 														},
 														{
-															attribute: "start_date",
 															name: "Start Date",
 															fieldType: {
 																id: "input-date",
@@ -668,7 +647,6 @@ module.exports = {
 															}
 														},
 														{
-															attribute: "description",
 															name: "Description",
 															fieldType: {
 																id: "input-editor-markdown",
@@ -728,7 +706,6 @@ module.exports = {
 							{
 								width: 100,
 								name: "Name",
-								attribute: "name",
 								fieldType: {
 									id: "text",
 									props: {
@@ -855,7 +832,6 @@ module.exports = {
 			},
 			fields: [
 				{
-					attribute: "language_code1",
 					name: "Language",
 					fieldType: {
 						id: "input-select",
@@ -881,7 +857,6 @@ module.exports = {
 					}
 				},
 				{
-					attribute: "language_code2",
 					name: "Language",
 					fieldType: {
 						id: "input-select",
@@ -919,7 +894,6 @@ module.exports = {
 					fields: [
 						{
 							name: "Name",
-							attribute: "name",
 							fieldType: {
 								id: "text",
 								props: {
@@ -929,7 +903,6 @@ module.exports = {
 						},
 						{
 							name: "Text",
-							attribute: "text",
 							fieldType: {
 								id: "input-text",
 								props: {
@@ -951,7 +924,6 @@ module.exports = {
 							{
 								width: 20,
 								name: "Name",
-								attribute: "name",
 								fieldType: {
 									id: "text",
 									props: {
@@ -962,7 +934,6 @@ module.exports = {
 							{
 								width: 20,
 								name: "Tags",
-								attribute: "tags",
 								fieldType: {
 									id: "item-list-tooltip",
 									props: {
@@ -976,7 +947,6 @@ module.exports = {
 							},
 							{
 								name: "Input",
-								attribute: "input",
 								fieldType: {
 									id: "input-toggle",
 									props: {
@@ -1027,7 +997,7 @@ module.exports = {
 							fieldType: {
 								id: "text",
 								props: {
-									text: "name"
+									text: "{name}"
 								}
 							},
 							onClick: "/i/projects/{id}"
@@ -1065,7 +1035,6 @@ module.exports = {
 						fields: [
 							{
 								name: "Name",
-								attribute: "name",
 								fieldType: {
 									id: "input-text",
 									props: {
@@ -1088,7 +1057,6 @@ module.exports = {
 									fields: [
 										{
 											name: "Country",
-											attribute: "country",
 											fieldType: {
 												id: "input-select",
 												props: {
@@ -1112,7 +1080,6 @@ module.exports = {
 											}
 										},
 										{
-											attribute: "name",
 											name: "Name",
 											fieldType: {
 												id: "input-text",
@@ -1122,7 +1089,6 @@ module.exports = {
 											}
 										},
 										{
-											attribute: "start_date",
 											name: "Start Date",
 											fieldType: {
 												id: "input-date",
@@ -1133,7 +1099,6 @@ module.exports = {
 											}
 										},
 										{
-											attribute: "description",
 											name: "Description",
 											fieldType: {
 												id: "input-editor-markdown",
@@ -1170,7 +1135,6 @@ module.exports = {
 					{
 						width: 20,
 						name: "Name",
-						attribute: "name",
 						fieldType: {
 							id: "text",
 							props: {
@@ -1181,7 +1145,6 @@ module.exports = {
 					{
 						width: 20,
 						name: "Tags",
-						attribute: "tags",
 						fieldType: {
 							id: "item-list-tooltip",
 							props: {
@@ -1247,7 +1210,6 @@ module.exports = {
 				},
 				{
 					name: "Actions",
-					attribute: "actions",
 					fieldType: {
 						id: "button-action",
 						props: {
@@ -1311,7 +1273,6 @@ module.exports = {
 						},
 						fields: [
 							{
-								attribute: "1",
 								name: "a field",
 								fieldType: {
 									id: "input-text",
@@ -1321,7 +1282,6 @@ module.exports = {
 								}
 							},
 							{
-								attribute: "2",
 								name: "a field",
 								fieldType: {
 									id: "input-text",
@@ -1360,7 +1320,6 @@ module.exports = {
 										},
 										fields: [
 											{
-												attribute: "1",
 												name: "a field",
 												fieldType: {
 													id: "input-text",
@@ -1370,7 +1329,6 @@ module.exports = {
 												}
 											},
 											{
-												attribute: "2",
 												name: "a field",
 												fieldType: {
 													id: "input-text",
@@ -1463,7 +1421,6 @@ module.exports = {
 					name: "History",
 					fields: [
 						{
-							attribute: "created_at",
 							name: "Created At",
 							fieldType: {
 								id: "date",
@@ -1473,7 +1430,6 @@ module.exports = {
 							}
 						},
 						{
-							attribute: "creator.name",
 							name: "Created By",
 							fieldType: {
 								id: "text",
@@ -1483,7 +1439,6 @@ module.exports = {
 							}
 						},
 						{
-							attribute: "updated_at",
 							name: "Last Modified",
 							fieldType: {
 								id: "date",
@@ -1493,7 +1448,6 @@ module.exports = {
 							}
 						},
 						{
-							attribute: "editor.name",
 							name: "Last Modified By",
 							fieldType: {
 								id: "text",
@@ -1509,7 +1463,6 @@ module.exports = {
 					fields: [
 						{
 							name: "Name",
-							attribute: "name",
 							fieldType: {
 								id: "input-text",
 								props: {
@@ -1553,13 +1506,11 @@ module.exports = {
 				causer_id: null,
 				causer_type: null,
 				properties: {
-					attributes: {
-						client_id: 8,
-						name: "Clemens Cassin",
-						start_date: null,
-						status: "open",
-						description: null
-					}
+					client_id: 8,
+					name: "Clemens Cassin",
+					start_date: null,
+					status: "open",
+					description: null
 				},
 				created_at: 1568191509,
 				updated_at: 1568191509,
@@ -1576,13 +1527,11 @@ module.exports = {
 				causer_id: null,
 				causer_type: null,
 				properties: {
-					attributes: {
-						client_id: 8,
-						name: "Clemens Cassin",
-						start_date: null,
-						status: "open",
-						description: null
-					}
+					client_id: 8,
+					name: "Clemens Cassin",
+					start_date: null,
+					status: "open",
+					description: null
 				},
 				created_at: 1568191509,
 				updated_at: 1568191509,
@@ -1620,7 +1569,6 @@ module.exports = {
 			},
 			fields: [
 				{
-					attribute: "language_code",
 					name: "Language",
 					fieldType: {
 						id: "input-select",
@@ -1661,7 +1609,6 @@ module.exports = {
 									{
 										width: 20,
 										name: "Name",
-										attribute: "name",
 										fieldType: {
 											id: "text",
 											props: {
@@ -1672,7 +1619,6 @@ module.exports = {
 									{
 										width: 20,
 										name: "Tags",
-										attribute: "tags",
 										fieldType: {
 											id: "item-list-tooltip",
 											props: {
@@ -1772,7 +1718,6 @@ module.exports = {
 								fields: [
 									{
 										name: "Name",
-										attribute: "name",
 										fieldType: {
 											id: "input-text",
 											props: {
@@ -1847,7 +1792,6 @@ module.exports = {
 									{
 										width: 20,
 										name: "Name",
-										attribute: "name",
 										fieldType: {
 											id: "text",
 											props: {
@@ -1858,7 +1802,6 @@ module.exports = {
 									{
 										width: 20,
 										name: "Tags",
-										attribute: "tags",
 										fieldType: {
 											id: "item-list-tooltip",
 											props: {
@@ -2019,7 +1962,6 @@ module.exports = {
 									{
 										width: 20,
 										name: "Name",
-										attribute: "name",
 										fieldType: {
 											id: "text",
 											props: {
@@ -2030,7 +1972,6 @@ module.exports = {
 									{
 										width: 20,
 										name: "Tags",
-										attribute: "tags",
 										fieldType: {
 											id: "item-list-tooltip",
 											props: {
@@ -2130,7 +2071,6 @@ module.exports = {
 								fields: [
 									{
 										name: "Name",
-										attribute: "name",
 										fieldType: {
 											id: "input-text",
 											props: {
@@ -2161,7 +2101,7 @@ module.exports = {
 									fieldType: {
 										id: "text",
 										props: {
-											text: "name"
+											text: "{name}"
 										}
 									},
 									onClick: "/i/projects/{id}"

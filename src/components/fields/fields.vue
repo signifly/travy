@@ -1,10 +1,11 @@
 <template>
 	<div class="fields">
 		<field
-			v-for="field in fields"
-			:key="field.attribute"
+			:hide="['description', 'label']"
+			v-for="(field, i) in fields"
 			v-bind="{field, data}"
-			:hide="['label']"
+			margin="3px 0"
+			:key="i"
 		/>
 	</div>
 </template>
@@ -23,7 +24,6 @@ export default {
 				fields: [
 					{
 						name: "text1",
-						attribute: "text1",
 						width: 50,
 						fieldType: {
 							id: "text",
@@ -34,7 +34,6 @@ export default {
 					},
 					{
 						name: "text2",
-						attribute: "text2",
 						fieldType: {
 							id: "text",
 							props: {
@@ -62,9 +61,5 @@ export default {
 	flex-wrap: wrap;
 	margin: -3px 0;
 	display: flex;
-
-	.field {
-		margin: 3px;
-	}
 }
 </style>

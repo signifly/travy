@@ -1,7 +1,7 @@
 <template>
 	<div class="field" :style="{width, margin}" v-if="!disabled">
 		<div class="content">
-			<vlabel v-bind="{field, options}" v-if="show.label" />
+			<vlabel v-bind="{field, options, attributes}" v-if="show.label" />
 
 			<fieldType
 				@event="$emit('event', $event)"
@@ -15,15 +15,15 @@
 		</transition>
 
 		<div
-			class="description"
-			v-if="field.description"
+			v-if="field.description && show.description"
 			v-text="field.description"
+			class="description"
 		/>
 	</div>
 </template>
 
 <script>
-import {operator} from "@/modules/utils";
+import {operator, getMapKey} from "@/modules/utils";
 import fieldType from "./field-type";
 import vlabel from "./label";
 import {get} from "lodash";
@@ -40,10 +40,23 @@ export default {
 	},
 	computed: {
 		disabled: (t) => t.field.hide && operator({...t.field.hide, data: t.data}),
-		errorMsg: (t) => get(t.error, ["errors", t.field.attribute, 0]),
+		errors: (t) => get(t.error, "errors", {}),
+		props: (t) => t.field.fieldType.props,
+		attributes() {
+			// find all mapped attributes for field, {key} is an attribute
+			return Object.entries(this.props)
+				.map(([, val]) => getMapKey(val))
+				.filter((x) => x);
+		},
+		errorMsg() {
+			// find first message for first attribute
+			return this.attributes
+				.map((attr) => get(this.errors, [attr, 0]))
+				.filter((x) => x)[0];
+		},
 
 		show() {
-			return ["label"].reduce(
+			return ["description", "label"].reduce(
 				(sum, rule) => ({
 					...sum,
 					[rule]: !this.hide.includes(rule)

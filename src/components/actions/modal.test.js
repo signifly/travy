@@ -15,7 +15,6 @@ const propsData = {
 	props: {
 		fields: [
 			{
-				attribute: "field",
 				name: "field",
 				fieldType: {
 					id: "input-text",
