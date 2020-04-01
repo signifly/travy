@@ -18,7 +18,7 @@ export default {
 	computed: {
 		Tooltip() {
 			return this.tooltip
-				.map((item) => operator({...item.active, data: this.data}) && item.text)
+				.map((item) => operator({...item.show, data: this.data}) && item.text)
 				.filter((x) => x)[0];
 		}
 	}

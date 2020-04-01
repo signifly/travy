@@ -13,8 +13,9 @@ import produce from "immer";
 export default {
 	components: {FormItem},
 	props: {
-		data: {type: Object, default: () => ({})},
+		error: {type: Object, required: true},
 		props: {type: Object, required: true},
+		data: {type: Object, required: true},
 		id: {type: String, required: true}
 	},
 	computed: {
@@ -25,6 +26,7 @@ export default {
 			return {
 				...this.transProps,
 				__props: this.props,
+				__error: this.error,
 				__data: this.data
 			};
 		},

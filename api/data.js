@@ -367,7 +367,7 @@ module.exports = {
 							onClick: "/i/projects/{id}",
 							tooltip: [
 								{
-									active: {key: "{id}", value: 1, operator: "eq"},
+									show: {key: "{id}", value: 1, operator: "eq"},
 									text: "value is 1"
 								}
 							],
@@ -489,6 +489,49 @@ module.exports = {
 								}
 							},
 							width: 30
+						},
+						{
+							name: "dot",
+							fieldType: {
+								id: "fields",
+								props: {
+									fields: [
+										{
+											name: "dot",
+											show: [{key: "{id}", value: 1, operator: "eq"}],
+											fieldType: {
+												id: "dot",
+												props: {
+													color: "MediumSeaGreen",
+													icon: "check"
+												}
+											}
+										},
+										{
+											name: "dot",
+											show: [{key: "{id}", value: 2, operator: "eq"}],
+											fieldType: {
+												id: "dot",
+												props: {
+													color: "SlateBlue",
+													icon: "reading"
+												}
+											}
+										},
+										{
+											name: "dot",
+											show: [{key: "{id}", value: 3, operator: "eq"}],
+											fieldType: {
+												id: "dot",
+												props: {
+													color: "red",
+													icon: "close"
+												}
+											}
+										}
+									]
+								}
+							}
 						}
 					],
 					filters: {
@@ -683,11 +726,11 @@ module.exports = {
 						background: [
 							{
 								color: "azure",
-								active: {key: "{have_background}", operator: "eq", value: true}
+								show: {key: "{have_background}", operator: "eq", value: true}
 							},
 							{
 								color: "PapayaWhip",
-								active: {key: "{have_background}", operator: "eq", value: false}
+								show: {key: "{have_background}", operator: "eq", value: false}
 							}
 						]
 					},
@@ -768,7 +811,7 @@ module.exports = {
 				is_deleted: false
 			},
 			{
-				id: 5,
+				id: 2,
 				client_id: 10,
 				name: "Miss Sienna Lebsack",
 				start_date: null,
@@ -785,7 +828,7 @@ module.exports = {
 				have_background: false
 			},
 			{
-				id: 4,
+				id: 3,
 				client_id: 9,
 				name: "Mr. Israel Marks DVM",
 				start_date: null,
@@ -1359,10 +1402,10 @@ module.exports = {
 							{
 								name: "Link",
 								actionType: {
-									hide: [
+									show: [
 										{
 											key: "{is_deleted}",
-											operator: "eq",
+											operator: "neq",
 											value: false
 										}
 									],

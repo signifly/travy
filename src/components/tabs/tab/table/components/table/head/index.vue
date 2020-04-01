@@ -8,10 +8,10 @@
 				<vselect v-bind="{selected, data}" />
 			</th>
 			<item
+				v-for="(column, i) in columns"
 				@getData="$emit('getData')"
-				v-for="column in columns"
-				:key="column.name"
 				v-bind="column"
+				:key="i"
 			/>
 		</tr>
 	</thead>

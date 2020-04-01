@@ -62,7 +62,7 @@ export default {
 			return {
 				get background() {
 					return (row.background || [])
-						.map((item) => operator({...item.active, data}) && item.color)
+						.map((item) => operator({...item.show, data}) && item.color)
 						.filter((x) => x)[0];
 				}
 			};

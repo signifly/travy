@@ -1,12 +1,11 @@
 <template>
-	<div class="field" :style="{width, margin}" v-if="!disabled">
+	<div class="field" :style="{width, margin}" v-if="show">
 		<div class="content">
-			<vlabel v-bind="{field, options, attributes}" v-if="show.label" />
+			<vlabel v-bind="{field, options, attributes}" v-if="!hidden.label" />
 
 			<fieldType
+				v-bind="[field.fieldType, {data, error}]"
 				@event="$emit('event', $event)"
-				v-bind="field.fieldType"
-				:data="data"
 			/>
 		</div>
 
@@ -15,7 +14,7 @@
 		</transition>
 
 		<div
-			v-if="field.description && show.description"
+			v-if="field.description && !hidden.description"
 			v-text="field.description"
 			class="description"
 		/>
@@ -31,21 +30,23 @@ import {get} from "lodash";
 export default {
 	components: {vlabel, fieldType},
 	props: {
+		error: {type: Object, default: () => ({})},
+		data: {type: Object, default: () => ({})},
 		options: {type: Object, required: false},
 		margin: {type: String, required: false},
-		error: {type: Object, required: false},
 		hide: {type: Array, default: () => []},
-		field: {type: Object, required: true},
-		data: {type: Object, required: false}
+		field: {type: Object, required: true}
 	},
 	computed: {
 		errors: (t) => get(t.error, "errors", {}),
 		props: (t) => t.field.fieldType.props,
 
-		disabled() {
-			return (this.field.hide || []).some((x) =>
-				operator({...x, data: this.data})
-			);
+		show() {
+			if (this.field.show) {
+				return this.field.show.some((x) => operator({...x, data: this.data}));
+			} else {
+				return true;
+			}
 		},
 
 		attributes() {
@@ -62,11 +63,11 @@ export default {
 				.filter((x) => x)[0];
 		},
 
-		show() {
+		hidden() {
 			return ["description", "label"].reduce(
 				(sum, rule) => ({
 					...sum,
-					[rule]: !this.hide.includes(rule)
+					[rule]: this.hide.includes(rule)
 				}),
 				{}
 			);

@@ -1,5 +1,5 @@
 <template>
-	<div class="action" v-if="!disabled" tabindex="0" @blur="blur">
+	<div class="action" v-if="Show" tabindex="0" @blur="blur">
 		<slot />
 
 		<component
@@ -24,17 +24,21 @@ export default {
 		actionOpts: {type: Object, default: () => ({})},
 		onSubmit: {type: Object, required: false},
 		value: {type: Boolean, required: true},
-		hide: {type: Array, default: () => []}, // [{key, operator, value}]
 		props: {type: Object, required: true},
 		data: {type: Object, required: false}, // parent data
+		show: {type: Array, required: false}, // [{key, operator, value}]
 		id: {type: String, required: true}
 	},
 	computed: {
 		comp() {
 			return () => import(/* webpackMode: "eager" */ `./${this.id}.vue`);
 		},
-		disabled() {
-			return this.hide.some((x) => operator({...x, data: this.data}));
+		Show() {
+			if (this.show) {
+				return this.show.some((x) => operator({...x, data: this.data}));
+			} else {
+				return true;
+			}
 		}
 	},
 	methods: {

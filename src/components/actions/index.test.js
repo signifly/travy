@@ -10,7 +10,7 @@ const propsData = {
 	id: "popup",
 	data: {
 		value: 1,
-		obj: {isHidden: true, id: 1}
+		obj: {show: true, id: 1}
 	},
 	props: {
 		endpoint: {
@@ -25,19 +25,19 @@ const propsData = {
 };
 
 describe("action", () => {
-	test("hide", () => {
+	test("show", () => {
 		const wrapper = mount(Comp, {propsData});
 
 		wrapper.setProps({
-			hide: [
+			show: [
 				{
-					key: "{obj.isHidden}",
+					key: "{obj.show}",
 					operator: "eq",
 					value: true
 				}
 			]
 		});
 
-		expect(wrapper.vm.disabled).toBe(true);
+		expect(wrapper.vm.Show).toBe(true);
 	});
 });

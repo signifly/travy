@@ -2,8 +2,8 @@
 	<div class="fields">
 		<field
 			:hide="['description', 'label']"
+			v-bind="{field, error, data}"
 			v-for="(field, i) in fields"
-			v-bind="{field, data}"
 			margin="3px 0"
 			:key="i"
 		/>
@@ -45,11 +45,13 @@ export default {
 		}
 	},
 	props: {
+		__error: {type: Object, required: false},
 		__props: {type: Object, required: true},
 		__data: {type: Object, required: true}
 	},
 	computed: {
 		fields: (t) => t.__props.fields,
+		error: (t) => t.__error,
 		data: (t) => t.__data
 	}
 };
