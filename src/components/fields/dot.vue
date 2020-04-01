@@ -1,6 +1,6 @@
 <template>
 	<div class="dot" :style="{backgroundColor: color, fontSize: size}">
-		<i v-if="icon" :class="`el-icon-${icon}`" />
+		<i :class="`el-icon-${icon}`" />
 	</div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
 	props: {
 		color: {type: String, required: true},
 		icon: {type: String, required: false},
-		size: {type: String, default: "24px"}
+		size: {type: String, default: "32px"}
 	}
 };
 </script>
@@ -32,6 +32,7 @@ export default {
 	color: white;
 	height: 1em;
 	width: 1em;
+	overflow: hidden;
 
 	i {
 		font-size: 60%;
