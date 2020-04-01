@@ -7,7 +7,7 @@
 			:value="value"
 			size="medium"
 		>
-			<Option v-for="item in options" :key="item.value" v-bind="item" />
+			<Option v-for="item in items" :key="item.value" v-bind="item" />
 		</Select>
 	</div>
 </template>
@@ -22,21 +22,7 @@ export default {
 		items: {type: Array, required: true}
 	},
 	computed: {
-		value: (t) => t.state.query.sort,
-		options() {
-			return this.items.reduce(
-				(sum, x) => [
-					...sum,
-					...(x.manual
-						? [x]
-						: [
-								{label: `${x.label} (A-Z)`, value: x.value},
-								{label: `${x.label} (Z-A)`, value: `-${x.value}`}
-						  ])
-				],
-				[]
-			);
-		}
+		value: (t) => t.state.query.sort
 	},
 	methods: {
 		async select(value) {

@@ -13,7 +13,7 @@ import produce from "immer";
 export default {
 	components: {FormItem},
 	props: {
-		error: {type: Object, required: true},
+		error: {type: Object, required: false},
 		props: {type: Object, required: true},
 		data: {type: Object, required: true},
 		id: {type: String, required: true}

@@ -30,10 +30,10 @@ import {get} from "lodash";
 export default {
 	components: {vlabel, fieldType},
 	props: {
-		error: {type: Object, default: () => ({})},
 		data: {type: Object, default: () => ({})},
 		options: {type: Object, required: false},
 		margin: {type: String, required: false},
+		error: {type: Object, required: false},
 		hide: {type: Array, default: () => []},
 		field: {type: Object, required: true}
 	},

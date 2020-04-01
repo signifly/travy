@@ -312,15 +312,15 @@ module.exports = {
 					},
 					pagination: {},
 					sort: {
-						default: "input",
+						default: "name",
 						items: [
 							{
-								label: "Name",
+								label: "Name (A-Z)",
 								value: "name"
 							},
 							{
-								label: "Input",
-								value: "input"
+								label: "Name (Z-A)",
+								value: "-name"
 							},
 							{
 								label: "Position",
@@ -1018,16 +1018,16 @@ module.exports = {
 						default: "name",
 						items: [
 							{
-								label: "Name",
+								label: "Name (A-Z)",
 								value: "name"
 							},
 							{
-								label: "Input",
-								value: "input"
+								label: "Name (Z-A)",
+								value: "-name"
 							},
 							{
 								label: "Position",
-								value: "position",
+								value: "pos",
 								manual: true
 							}
 						]
@@ -1711,14 +1711,15 @@ module.exports = {
 								}
 							},
 							sort: {
+								default: "name",
 								items: [
 									{
-										label: "Name",
+										label: "Name (A-Z)",
 										value: "name"
 									},
 									{
-										label: "Input",
-										value: "input"
+										label: "Name (Z-A)",
+										value: "-name"
 									},
 									{
 										label: "Position",
@@ -1894,14 +1895,15 @@ module.exports = {
 								}
 							},
 							sort: {
+								default: "name",
 								items: [
 									{
-										label: "Name",
+										label: "Name (A-Z)",
 										value: "name"
 									},
 									{
-										label: "Input",
-										value: "input"
+										label: "Name (Z-A)",
+										value: "-name"
 									},
 									{
 										label: "Position",
@@ -2064,14 +2066,15 @@ module.exports = {
 								}
 							},
 							sort: {
+								default: "name",
 								items: [
 									{
-										label: "Name",
+										label: "Name (A-Z)",
 										value: "name"
 									},
 									{
-										label: "Input",
-										value: "input"
+										label: "Name (Z-A)",
+										value: "-name"
 									},
 									{
 										label: "Position",
