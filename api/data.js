@@ -468,7 +468,7 @@ module.exports = {
 														status: "primary",
 														icon: null,
 														actionType: {
-															id: "popup",
+															id: "confirm",
 															props: {
 																title: "Delete",
 																text:
@@ -1289,7 +1289,7 @@ module.exports = {
 												status: "primary",
 												icon: null,
 												actionType: {
-													id: "popup",
+													id: "confirm",
 													props: {
 														title: "Delete",
 														text: "Are you sure? Please confirm this action.",
@@ -1427,7 +1427,7 @@ module.exports = {
 					onSubmit: {
 						url: "/i/projects"
 					},
-					id: "popup",
+					id: "confirm",
 					props: {
 						text: "Are you sure? Please confirm this action.",
 						endpoint: {
@@ -1451,7 +1451,7 @@ module.exports = {
 					onSubmit: {
 						url: "/i/projects"
 					},
-					id: "popup",
+					id: "confirm",
 					props: {
 						text: "Are you sure? Please confirm this action.",
 						endpoint: {

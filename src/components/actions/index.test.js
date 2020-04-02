@@ -7,7 +7,7 @@ const propsData = {
 		url: "https://localhost/{obj.id}"
 	},
 	value: true,
-	id: "popup",
+	id: "confirm",
 	data: {
 		value: 1,
 		obj: {show: true, id: 1}
