@@ -1,5 +1,5 @@
 <template>
-	<div class="traffic-switch">
+	<div class="input-dot">
 		<div
 			@mouseleave="hover = false"
 			@mouseover="hover = true"
@@ -58,9 +58,9 @@ export default {
 		}
 	},
 	props: {
-		items: {type: Array, required: true},
+		value: {type: [String, Number, Boolean], required: true},
 		size: {type: String, default: "32px"},
-		value: {type: [String, Number, Boolean], required: true}
+		items: {type: Array, required: true}
 	},
 	data: () => ({
 		hover: false
@@ -83,7 +83,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.traffic-switch {
+.input-dot {
 	.color {
 		display: inline-block;
 		position: relative;
