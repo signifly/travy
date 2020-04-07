@@ -13,7 +13,7 @@
 		>
 			<div class="fields">
 				<field
-					v-bind="{field, error, data: {...modalData, $parentData: data}}"
+					v-bind="{field, error, data: {...modalData, $parent: data}}"
 					v-for="(field, i) in fields"
 					@event="event"
 					:key="i"
