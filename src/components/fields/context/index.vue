@@ -14,8 +14,15 @@ export default {
 	meta: {
 		spec: {
 			attribute: {type: [String, Number], required: false},
-			endpoint: {type: Array, required: true},
-			fields: {type: Array, required: true}
+			fields: {type: Array, required: true},
+			endpoint: {
+				type: Object,
+				required: true,
+				children: {
+					url: {type: String, required: true},
+					params: {type: Object, required: false}
+				}
+			}
 		},
 		res: {
 			props: {
