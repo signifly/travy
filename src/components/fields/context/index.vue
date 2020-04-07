@@ -1,7 +1,6 @@
 <template>
 	<contextView
 		v-bind="{endpoint, fields, error}"
-		@event="$emit('event', $event)"
 		:parentData="data"
 		:key="attribute"
 	/>
@@ -44,13 +43,16 @@ export default {
 					{
 						name: "text2",
 						fieldType: {
-							id: "text",
+							id: "input-text",
 							props: {
-								text: "id is: {id}"
+								value: "{$parent.text}"
 							}
 						}
 					}
 				]
+			},
+			data: {
+				text: "some text"
 			}
 		}
 	},

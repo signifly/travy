@@ -2,7 +2,6 @@
 	<div class="context-view" v-if="data">
 		<field
 			v-bind="{field, options, data, error}"
-			@event="$emit('event', $event)"
 			v-for="(field, i) in fields"
 			:key="i"
 		/>
@@ -55,8 +54,9 @@ export default {
 
 <style lang="scss" scoped>
 .context-view {
-	display: flex;
-	flex-wrap: wrap;
 	justify-content: space-between;
+	margin: -$fieldMargin 0;
+	flex-wrap: wrap;
+	display: flex;
 }
 </style>
