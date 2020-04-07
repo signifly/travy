@@ -115,7 +115,7 @@ export default {
 						url: "items",
 						params: {sort: "name"}
 					},
-					dataWrap: "",
+					dataWrap: "data",
 					url: "url",
 					value: "id",
 					label: "name"

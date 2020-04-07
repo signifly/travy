@@ -33,7 +33,7 @@ export default {
 
 		field() {
 			const id = this.id;
-			return () => import(/* webpackMode: "eager" */ `../fields/${id}.vue`);
+			return () => import(/* webpackMode: "eager" */ `../fields/${id}`);
 		}
 	},
 	methods: {

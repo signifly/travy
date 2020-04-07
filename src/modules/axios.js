@@ -118,19 +118,18 @@ export const metaApi = (() => {
 			}
 
 			const item = (i) => ({
-				id: i,
+				url: "https://picsum.photos/id/11/500/500",
 				name: `item${i}`,
-				url: "https://picsum.photos/id/11/500/500"
+				id: i
 			});
 
 			// single item
 			if (url.includes("items/")) {
-				obj.res = {data: item(1)};
-			}
+				obj.res = {data: {data: item(1)}};
 
-			// multiple items
-			if (url.includes("items")) {
-				obj.res = {data: [...Array(6)].map((x, i) => item(i))};
+				// multiple items
+			} else if (url.includes("items")) {
+				obj.res = {data: {data: [...Array(6)].map((x, i) => item(i))}};
 			}
 
 			console.log(obj);

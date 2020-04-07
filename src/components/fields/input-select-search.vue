@@ -56,6 +56,7 @@ export default {
 						url: "items",
 						params: {filter: {test: "test"}}
 					},
+					dataWrap: "data",
 					label: "name",
 					value: "id"
 				}

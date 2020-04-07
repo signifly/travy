@@ -58,6 +58,7 @@ export default {
 				subtitle: "Subtitle",
 				entities: {
 					endpoint: {url: "items"},
+					dataWrap: "data",
 					value: "image",
 					label: "name"
 				}
