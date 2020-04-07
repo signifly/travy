@@ -2,6 +2,7 @@
 	<div class="context-view" v-if="data">
 		<field
 			v-bind="{field, options, data, error}"
+			@event="$emit('event', $event)"
 			v-for="(field, i) in fields"
 			:key="i"
 		/>

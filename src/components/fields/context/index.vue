@@ -1,6 +1,7 @@
 <template>
 	<contextView
 		v-bind="{endpoint, fields, error}"
+		@event="$emit('event', $event)"
 		:parentData="data"
 		:key="attribute"
 	/>
