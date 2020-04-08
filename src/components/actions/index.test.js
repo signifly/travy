@@ -1,6 +1,5 @@
 import {mount} from "@vue/test-utils";
 import Comp from "./index";
-import Vue from "vue";
 
 const propsData = {
 	onSubmit: {
