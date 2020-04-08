@@ -22,7 +22,7 @@ export default {
 		transProps: (t) => transProps({data: t.data, val: t.props}),
 		customField: (t) => t.$opts.fields[t.id],
 		fieldProps() {
-			// add untransformed props and data for fields that does their own transforms like button-action, table
+			// add untransformed props, error, data for fields that does their own transforms like fields, context, button-action.
 			return {
 				...this.transProps,
 				__props: this.props,
@@ -45,8 +45,8 @@ export default {
 					// reverse map props
 					update.data = mapKeys(update.data, (val, key) => {
 						// {key} ==> key
-						const [, propValue] = /\{(.*?)\}/g.exec(get(this.props, key));
-						return propValue;
+						const [, propValue] = /\{(.*?)\}/g.exec(get(this.props, key)) || [];
+						return propValue || key;
 					});
 
 					update.data = mapPaths(update.data);

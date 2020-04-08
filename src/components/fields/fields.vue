@@ -2,6 +2,7 @@
 	<div class="fields">
 		<field
 			:hide="['description', 'label']"
+			@event="$emit('event', $event)"
 			v-bind="{field, error, data}"
 			v-for="(field, i) in fields"
 			margin="3px 0"
@@ -34,13 +35,16 @@ export default {
 					{
 						name: "text2",
 						fieldType: {
-							id: "text",
+							id: "input-text",
 							props: {
-								text: "text2"
+								value: "{text}"
 							}
 						}
 					}
 				]
+			},
+			data: {
+				text: "some text"
 			}
 		}
 	},

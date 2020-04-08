@@ -1,6 +1,7 @@
 <template>
 	<contextView
 		v-bind="{endpoint, fields, error}"
+		@event="$emit('event', $event)"
 		:parentData="data"
 		:key="attribute"
 	/>
@@ -13,7 +14,11 @@ export default {
 	components: {contextView},
 	meta: {
 		spec: {
-			attribute: {type: [String, Number], required: false},
+			attribute: {
+				note: "the context field can't update $parent data",
+				type: [String, Number],
+				required: false
+			},
 			fields: {type: Array, required: true},
 			endpoint: {
 				type: Object,
@@ -43,16 +48,16 @@ export default {
 					{
 						name: "text2",
 						fieldType: {
-							id: "input-text",
+							id: "text",
 							props: {
-								value: "{$parent.text}"
+								text: "parent id is: {$parent.id}"
 							}
 						}
 					}
 				]
 			},
 			data: {
-				text: "some text"
+				id: 2
 			}
 		}
 	},
