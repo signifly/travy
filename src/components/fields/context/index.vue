@@ -14,12 +14,12 @@ export default {
 	components: {contextView},
 	meta: {
 		spec: {
+			fields: {type: Array, required: true, note: "fields can't update data."},
 			attribute: {
-				note: "the context field can't update $parent data",
+				note: "If the attribute changes, the context field reloads.",
 				type: [String, Number],
 				required: false
 			},
-			fields: {type: Array, required: true},
 			endpoint: {
 				type: Object,
 				required: true,
