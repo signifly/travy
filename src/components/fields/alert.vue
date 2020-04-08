@@ -1,9 +1,10 @@
 <template>
 	<div class="alert">
 		<Alert
-			v-bind="{title, description}"
+			:description="text"
 			:closable="false"
 			:showIcon="icon"
+			:title="title"
 			:type="status"
 		/>
 	</div>
@@ -23,9 +24,9 @@ export default {
 		}
 	},
 	props: {
-		description: {type: String, required: false},
 		status: {type: String, default: "info"},
 		icon: {type: Boolean, required: false},
+		text: {type: String, required: false},
 		title: {type: String, required: true}
 	}
 };
