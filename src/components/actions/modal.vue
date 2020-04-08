@@ -13,9 +13,9 @@
 		>
 			<div class="fields">
 				<field
-					:data="{...modalData, $parent: data}"
 					v-for="(field, i) in fields"
 					v-bind="{field, error}"
+					:data="fieldsData"
 					@event="event"
 					:key="i"
 				/>
@@ -27,7 +27,7 @@
 						{{ $translate({en: "Cancel", da: "Annuller"}) }}
 					</Button>
 					<Button
-						:loading="loading"
+						v-bind="{loading, disabled}"
 						@click="submit"
 						type="primary"
 						size="medium"
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import {transProps, mergeData} from "@/modules/utils";
+import {transProps, mergeData, operator} from "@/modules/utils";
 import {Dialog, Button} from "element-ui";
 import field from "@/components/field";
 import {get} from "lodash";
@@ -53,6 +53,7 @@ import {get} from "lodash";
 export default {
 	components: {Dialog, Button, field},
 	props: {
+		disableSubmit: {type: Array, default: () => []},
 		actionOpts: {type: Object, required: true},
 		endpoint: {type: Object, required: true},
 		payload: {type: Object, required: false},
@@ -69,6 +70,13 @@ export default {
 		};
 	},
 	computed: {
+		fieldsData: (t) => ({...t.modalData, $parent: t.data}),
+		disabled() {
+			return this.disableSubmit.some((x) =>
+				operator({...x, data: this.fieldsData})
+			);
+		},
+
 		trans() {
 			return transProps({
 				data: this.data,

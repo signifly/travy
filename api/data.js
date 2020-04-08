@@ -573,6 +573,9 @@ module.exports = {
 														method: "post",
 														url: "/projects"
 													},
+													disableSubmit: [
+														{key: "{input2}", operator: "eq", value: ""}
+													],
 													fields: [
 														{
 															name: "a field",

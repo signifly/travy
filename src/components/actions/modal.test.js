@@ -57,4 +57,22 @@ describe("modal", () => {
 
 		expect(modal._data).toHaveProperty("modalData.id", 1);
 	});
+
+	test("disableSubmit", async () => {
+		const wrapper = mount(Comp, {propsData});
+		await Vue.nextTick();
+
+		const modal = wrapper.vm.$children[0];
+
+		expect(modal.disabled).toBe(false);
+
+		wrapper.setProps({
+			props: {
+				...propsData.props,
+				disableSubmit: [{key: "{value}", operator: "eq", value: 2}]
+			}
+		});
+
+		expect(modal.disabled).toBe(true);
+	});
 });
