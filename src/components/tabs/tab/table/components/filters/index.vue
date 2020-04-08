@@ -103,7 +103,7 @@ export default {
 
 .pop {
 	margin-top: -1.5em;
-	padding: 1em 0.5em;
+	padding: 1em 0.75em;
 
 	.reset {
 		margin-top: 1.5em;
