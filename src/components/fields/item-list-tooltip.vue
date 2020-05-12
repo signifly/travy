@@ -40,6 +40,7 @@ export default {
 				type: Object,
 				required: true,
 				children: {
+					external: {type: Boolean, required: false},
 					"@scope": {type: Array, required: true},
 					link: {type: String, required: false},
 					label: {type: String, required: true}
@@ -69,8 +70,12 @@ export default {
 		disabled: (t) => t.items.length < 1
 	},
 	methods: {
-		go({link}) {
-			this.$router.push(link);
+		go({link, external}) {
+			if (external) {
+				window.location.href = link;
+			} else {
+				this.$router.push(link);
+			}
 		}
 	}
 };
