@@ -1,28 +1,34 @@
 <template>
 	<div class="button-action">
-		<action
-			@event="$emit('event', $event)"
-			v-bind="action.actionType"
-			v-model="active"
-			:data="__data"
-		>
-			<div class="button-action">
-				<Button
-					@click="active = !active"
-					:type="action.status"
-					:size="action.size"
-					plain
-				>
-					{{ action.name }}
-					<i :class="`el-icon-${action.icon}`" v-if="action.icon" />
-				</Button>
-			</div>
-		</action>
+		<template v-if="show">
+			<action
+				@event="$emit('event', $event)"
+				v-bind="action.actionType"
+				v-model="active"
+				:data="__data"
+			>
+				<div class="button-action">
+					<Button
+						@click="active = !active"
+						:type="action.status"
+						:size="action.size"
+						plain
+					>
+						{{ action.name }}
+						<i :class="`el-icon-${action.icon}`" v-if="action.icon" />
+					</Button>
+				</div>
+			</action>
+		</template>
+		<template v-else>
+			––
+		</template>
 	</div>
 </template>
 
 <script>
 import action from "@/components/actions";
+import {operator} from "@/modules/utils";
 import {Button} from "element-ui";
 
 export default {
@@ -98,7 +104,21 @@ export default {
 		};
 	},
 	computed: {
-		action: (t) => t.__props.action
+		action: (t) => t.__props.action,
+		show() {
+			if (this.action.actionType.id !== "dropdown") {
+				return true;
+			}
+			const actions = this.action.actionType.props.actions;
+			return actions
+				.flatMap((action) => {
+					if (!action.actionType.show) return true;
+					return action.actionType.show.some((x) =>
+						operator({...x, data: this.__data})
+					);
+				})
+				.some((x) => x);
+		}
 	}
 };
 </script>
