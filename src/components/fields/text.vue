@@ -1,7 +1,13 @@
 <template>
 	<div class="text" :class="{subtitle}">
 		<div class="content">
-			<div v-text="text || fallback || '—'" :style="textStyle" class="title" />
+			<div v-if="markdown && text" class="markdown" v-html="renderedMarkdown" />
+			<div
+				v-else
+				v-text="text || fallback || '—'"
+				:style="textStyle"
+				class="title"
+			/>
 			<div class="subtitle" v-if="subtitle" v-text="subtitle" />
 		</div>
 
@@ -21,6 +27,8 @@
 </template>
 
 <script>
+import marked from "marked";
+import DOMPurify from "dompurify";
 import {Tooltip} from "element-ui";
 
 export default {
@@ -51,7 +59,8 @@ export default {
 		text: {type: [String, Number], required: false},
 		fallback: {type: String, required: false},
 		tooltip: {type: String, required: false},
-		copy: {type: Boolean, required: false}
+		copy: {type: Boolean, required: false},
+		markdown: {type: Boolean, default: false}
 	},
 	data: () => ({
 		copied: false
@@ -71,6 +80,13 @@ export default {
 				this.copied = false;
 			}, 2000);
 		}
+	},
+	computed: {
+		renderedMarkdown() {
+			const rawHtml = marked(this.text);
+			const sanitized = DOMPurify.sanitize(rawHtml);
+			return sanitized;
+		}
 	}
 };
 </script>
@@ -79,6 +95,12 @@ export default {
 .text {
 	display: flex;
 	align-items: flex-end;
+
+	.markdown {
+		> :first-child {
+			margin-top: 0;
+		}
+	}
 
 	&.subtitle {
 		align-items: center;
