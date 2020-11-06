@@ -27,7 +27,8 @@ export default {
 		props: {type: Object, required: true},
 		data: {type: Object, required: false}, // parent data
 		show: {type: Array, required: false}, // [{key, operator, value}]
-		id: {type: String, required: true}
+		id: {type: String, required: true},
+		reloadAfterSuccess: {type: Boolean, default: false}
 	},
 	computed: {
 		comp() {
@@ -68,6 +69,8 @@ export default {
 				} else {
 					this.$router.push(link);
 				}
+			} else if (this.reloadAfterSuccess) {
+				window.location.reload();
 			} else {
 				this.$emit("event", {
 					actions: {refresh: true},
