@@ -1,5 +1,5 @@
 <template>
-	<th class="item" :width="width && `${width}%`">
+	<th class="item" :width="width && `${width}%`" :style="style">
 		{{ name }}
 	</th>
 </template>
@@ -11,6 +11,11 @@ export default {
 		onClick: {type: String, required: false},
 		width: {type: Number, required: false},
 		name: {type: String, required: true}
+	},
+	computed: {
+		style() {
+			return this.fieldType.props.headerStyle || {};
+		}
 	}
 };
 </script>
