@@ -5,14 +5,14 @@
 			:limit="_limit"
 			:on-exceed="limitError"
 			:auto-upload="false"
-      :file-list="fileList"
+			:file-list="fileList"
 			:accept="_fileTypes"
 			:on-change="addFile"
-      :on-preview="preview"
+			:on-preview="preview"
 			:on-remove="removeFile"
 			multiple
 		>
-      <Button type="primary" size="small" v-bind="{loading}">Upload</Button>
+			<Button type="primary" size="small" v-bind="{loading}">Upload</Button>
 			<div class="el-upload__tip" slot="tip">
 				{{ _note }}
 				<template v-if="_limit">
@@ -39,63 +39,67 @@ export default {
 				files: "key"
 			},
 			data: {
-			  urls: ["https://pbs.twimg.com/media/DVnfJkqVAAAqS91.jpg"]
-      }
+				urls: ["https://pbs.twimg.com/media/DVnfJkqVAAAqS91.jpg"]
+			}
 		}
 	},
 	props: {
-    urls: {type: Array, required: false, default: () => []},
+		urls: {type: Array, required: false, default: () => []},
 		_note: {type: String, required: false, doc: true},
 		_fileTypes: {type: String, required: false, doc: true},
 		_limit: {type: Number, required: false, doc: true},
-    _files: {type: String, required: true, doc: true},
-    // files: {type: Array, required: true, doc: true},
+		_files: {type: String, required: true, doc: true}
+		// files: {type: Array, required: true, doc: true},
 	},
 	data() {
 		return {
-      loading: false,
+			loading: false,
 			limitNote: false,
 			fileList: [],
-      files: [],
-      deletes: [],
+			files: [],
+			deletes: []
 		};
 	},
 	methods: {
-    preview({url}) {
-      if (!url.startsWith("blob")) {
-        window.open(url, "_blank");
-      }
-    },
+		preview({url}) {
+			if (!url.startsWith("blob")) {
+				window.open(url, "_blank");
+			}
+		},
 
 		async addFile(file) {
-      this.loading = true;
+			this.loading = true;
 			this.limitNote = false;
 
-      const base64 = await base64Encode(file.raw);
-			this.files.push({ file: base64, title: file.name });
+			const base64 = await base64Encode(file.raw);
+			this.files.push({file: base64, title: file.name});
 
 			this.update();
 
-      this.loading = false;
+			this.loading = false;
 		},
 
 		removeFile(file) {
-		  if (file.id) {
-		    this.deletes.push(file.id)
-      } else {
-        const index = this.files.findIndex((x) => x === file.raw);
-        this.files.splice(index, 1);
-      }
+			if (file.id) {
+				this.deletes.push(file.id);
+			} else {
+				const index = this.files.findIndex((x) => x === file.raw);
+				this.files.splice(index, 1);
+			}
 			this.update();
 		},
 
 		update() {
 			this.$emit("event", {
 				actions: {
-					update: {data: {[this._files]: [
-					    ...this.files,
-              ...this.deletes.map(id => ({ id, delete: true}))
-					]}}
+					update: {
+						data: {
+							[this._files]: [
+								...this.files,
+								...this.deletes.map((id) => ({id, delete: true}))
+							]
+						}
+					}
 				}
 			});
 		},
@@ -108,23 +112,23 @@ export default {
 		}
 	},
 
-  watch: {
-    urls: {
-      immediate: true,
-      handler(urls) {
-        this.fileList = [];
-        urls.forEach(item => {
-          if (typeof item.url === 'string') {
-            this.fileList.push({
-              id: item.id,
-              url: item.url,
-              name: item.url.split("/").slice(-1)[0]
-            });
-          }
-        })
-      }
-    }
-  }
+	watch: {
+		urls: {
+			immediate: true,
+			handler(urls) {
+				this.fileList = [];
+				urls.forEach((item) => {
+					if (typeof item.url === "string") {
+						this.fileList.push({
+							id: item.id,
+							url: item.url,
+							name: item.url.split("/").slice(-1)[0]
+						});
+					}
+				});
+			}
+		}
+	}
 };
 </script>
 
