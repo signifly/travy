@@ -32,7 +32,7 @@
 				</Col>
 			</Row>
 
-			<!-- <Row class="bottom" :gutter="20">
+			<Row class="bottom" :gutter="20">
 				<Col class="left" :span="24">
 					<transition name="el-fade-in" mode="out-in" appear>
 						<activity
@@ -43,7 +43,7 @@
 						/>
 					</transition>
 				</Col>
-			</Row> -->
+			</Row>
 
 			<panels v-bind="{loading, error, data, edits}" @save="save" />
 		</div>
@@ -58,7 +58,7 @@ import panels from "./components/panels";
 import vHeader from "./components/header";
 import sidebar from "./components/sidebar";
 import actions from "./components/actions";
-//import activity from "./components/activity";
+import activity from "./components/activity";
 import modifiers from "./components/modifiers";
 
 export default {
@@ -70,7 +70,7 @@ export default {
 		vHeader,
 		sidebar,
 		actions,
-		//activity,
+		activity,
 		modifiers
 	},
 	props: {
@@ -97,7 +97,7 @@ export default {
 		header: (t) => t.definitions.header,
 		actions: (t) => t.definitions.actions,
 		sidebar: (t) => t.definitions.sidebar,
-		//activity: (t) => t.definitions.activity,
+		activity: (t) => t.definitions.activity,
 		endpoint: (t) => t.definitions.endpoint,
 		modifiers: (t) => t.definitions.modifiers
 	},
